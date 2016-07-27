@@ -1,0 +1,68 @@
+﻿@using CKWMS.App_Code;
+@using CKWMS.EFModels
+@model base_chanpinxian
+@{
+    ViewBag.Title = "产品线修改";
+    base_chanpinxian item = ViewBag.base_chanpinxian;
+}
+
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    </script>
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="/Home">首页</a>
+        </li>
+        <li>
+            <a href="/base_chanpinxian">产品线</a>
+        </li>
+        <li class="active"> 编辑</li>
+    </ul>
+</div>
+
+<div class="page-content">
+    <form role="form" action="/base_chanpinxian/Update" method="post">
+        <input type="hidden" name="ob_base_chanpinxian_id" value="@item.ID" />
+        <div class="page-header">
+            <p>
+                <button type="submit" class="btn btn-default"><i class="icon-save"></i>更新</button>
+                <button type="button" class="btn btn-default" onclick="javascript: history.back(-1); "><i class="icon-hand-left"></i>返回</button>
+            </p>
+        </div>
+        <div class="container">
+            <div class="form-group">
+                <label for="name" class="col-sm-2">货主</label>
+                <div class="col-sm-10">
+                    @*<input type="text" class="form-control" name="ob_base_chanpinxian_huozhuxuhao" value="@item.Huozhuxuhao">*@
+                    @Html.SelectList_Auto("ob_base_chanpinxian_huozhuxuhao", "货主","名称",(int)item.Huozhuxuhao)
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-2">名称</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="ob_base_chanpinxian_mingcheng" value="@item.Mingcheng">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-2">说明</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="ob_base_chanpinxian_miaoshu" value="@item.Miaoshu">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-2">录入日期</label>
+                <div class="col-sm-10">
+                    <input type="date" class="form-control" name="ob_base_chanpinxian_makedate" value="@string.Format("{0:yyyy-MM-dd}",item.MakeDate)">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-2">输入人</label>
+                <div class="col-sm-10">
+                    @Html.SelectList_Auto("ob_base_chanpinxian_makeman", "userinfo", "fullname", (long)item.MakeMan)
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -210,3 +210,15 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+/BSL
+/CKWMS.BSL
+/CKWMS.Common
+/CKWMS.DAL
+/CKWMS.EFModels
+/CKWMS.IBSL
+/CKWMS.IDAL
+/CKWMS.MP
+/DAL
+/EFModels
+/IDAL
+/oth

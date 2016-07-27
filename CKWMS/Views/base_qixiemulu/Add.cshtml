@@ -1,0 +1,63 @@
+﻿@using CKWMS.App_Code;
+@{ViewBag.Title="医疗器械目录添加";}
+
+<div class="breadcrumbs" id="breadcrumbs">
+<script type="text/javascript">
+try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+</script>
+<ul class="breadcrumb">
+<li>
+<i class="icon-home home-icon"></i>
+<a href="/Home">首页</a>
+</li>
+<li>
+<a href="/base_qixiemulu">医疗器械目录</a>
+</li>
+<li class="active"> 新增</li>
+</ul>
+</div>
+
+<div class="page-content">
+<form role="form" action="/base_qixiemulu/Save" method="post">
+<input type="hidden" name="ob_base_qixiemulu_id" />
+<div class="page-header">
+<p>
+<button type="submit" class="btn btn-default"><i class="icon-save"></i>保存</button>
+<button type="button" class="btn btn-default" onclick="javascript:history.back(-1); "><i class="icon-hand-left"></i>返回</button>
+</p>
+</div>
+<div class="container">
+<div class="form-group">
+<label for="name" class="col-sm-2">编号</label>
+<div class="col-sm-10">
+<input type="text" class="form-control" name="ob_base_qixiemulu_bianhao" >
+</div>
+</div>
+<div class="form-group">
+<label for="name" class="col-sm-2">名称</label>
+<div class="col-sm-10">
+<input type="text" class="form-control" name="ob_base_qixiemulu_mingcheng" >
+</div>
+</div>
+<div class="form-group">
+<label for="name" class="col-sm-2">描述</label>
+<div class="col-sm-10">
+<input type="text" class="form-control" name="ob_base_qixiemulu_miaoshu" >
+</div>
+</div>
+<div class="form-group">
+<label for="name" class="col-sm-2">录入日期</label>
+<div class="col-sm-10">
+<input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="ob_base_qixiemulu_makedate" >
+</div>
+</div>
+<div class="form-group">
+<label for="name" class="col-sm-2">输入人</label>
+<div class="col-sm-10">
+@Html.SelectList_Auto("ob_base_qixiemulu_makeman", "userinfo","fullname")
+</div>
+</div>
+</div>
+</form>
+</div>
+

@@ -1,0 +1,133 @@
+ERROR 2016-07-09 12:16:02,751 168465ms davislog               Index              - user list now
+ERROR 2016-07-09 12:23:46,609 632323ms davislog               Index              - user list now
+INFO  2016-07-09 12:24:58,232 37199ms 1                      Index              - list user info
+INFO  2016-07-09 12:39:09,462 26939ms cn                     Index              - list user info
+INFO  2016-07-09 12:40:14,369 91845ms cn                     Index              - list user info
+INFO  2016-07-13 13:55:30,045 33297ms 1                      MoveNext           - davisyao login at 2016/7/13 13:55:30!
+INFO  2016-07-13 13:56:30,878 94130ms 1                      LogOut             - davisyao log out at 2016/7/13 13:56:30
+INFO  2016-07-13 14:08:28,840 812092ms 1                      MoveNext           - davisyao login at 2016/7/13 14:08:28!
+INFO  2016-07-13 14:10:03,459 906711ms 1                      LogOut             - davisyao log out at 2016/7/13 14:10:03
+INFO  2016-07-13 14:34:52,245 2395497ms 1                      MoveNext           - davisyao login at 2016/7/13 14:34:52!
+INFO  2016-07-13 14:34:59,834 2403086ms 1                      LogOut             - davisyao log out at 2016/7/13 14:34:59
+INFO  2016-07-13 14:35:20,692 2423944ms 1                      MoveNext           - davisyao login at 2016/7/13 14:35:20!
+INFO  2016-07-13 15:08:04,629 63995ms 1                      MoveNext           - davisyao login at 2016/7/13 15:08:04!
+INFO  2016-07-13 15:09:18,035 137401ms 1                      Index              - list user info
+INFO  2016-07-13 15:09:32,743 152108ms 1                      Index              - list user info
+INFO  2016-07-13 15:09:51,489 170855ms 1                      Index              - list user info
+INFO  2016-07-13 15:19:11,901 731267ms 1                      Index              - list user info
+INFO  2016-07-13 15:19:26,118 745484ms 1                      Index              - list user info
+INFO  2016-07-14 08:26:28,822 20837ms 1                      MoveNext           - davisyao login at 2016/7/14 8:26:28!
+INFO  2016-07-14 10:32:14,540 80464ms 1                      MoveNext           - davisyao login at 2016/7/14 10:32:14!
+INFO  2016-07-14 10:38:15,450 441375ms 1                      Index              - list user info
+INFO  2016-07-14 10:44:43,680 18244ms 1                      MoveNext           - davisyao login at 2016/7/14 10:44:43!
+INFO  2016-07-14 10:44:52,130 26693ms 1                      Index              - list user info
+INFO  2016-07-14 17:10:59,195 32122ms 3                      MoveNext           - lh login at 2016/7/14 17:10:59!
+ERROR 2016-07-14 17:14:40,910 253838ms AppLog                 Index              - userinfo,索引(从零开始)必须大于或等于零，且小于参数列表的大小。
+INFO  2016-07-14 17:24:33,324 20878ms 1                      MoveNext           - davisyao login at 2016/7/14 17:24:33!
+INFO  2016-07-15 09:51:47,176 568303ms 1                      MoveNext           - davisyao login at 2016/7/15 9:51:47!
+ERROR 2016-07-15 09:59:54,560 1055687ms AppLog                 Index              - userinfo_index,索引(从零开始)必须大于或等于零，且小于参数列表的大小。
+INFO  2016-07-15 13:20:45,391 13106518ms 1                      MoveNext           - davisyao login at 2016/7/15 13:20:45!
+ERROR 2016-07-15 13:21:26,017 13147144ms AppLog                 Index              - userinfo_index,索引(从零开始)必须大于或等于零，且小于参数列表的大小。
+INFO  2016-07-15 13:23:14,605 19043ms 1                      MoveNext           - davisyao login at 2016/7/15 13:23:14!
+INFO  2016-07-15 13:25:22,151 146589ms 1                      Index              - list user info
+ERROR 2016-07-15 13:27:12,519 256957ms AppLog                 Index              - userinfo_index,索引(从零开始)必须大于或等于零，且小于参数列表的大小。
+INFO  2016-07-15 13:29:17,753 75390ms 1                      MoveNext           - davisyao login at 2016/7/15 13:29:17!
+INFO  2016-07-15 13:30:32,461 150099ms 1                      Index              - list user info
+INFO  2016-07-15 13:32:34,998 27690ms 1                      MoveNext           - davisyao login at 2016/7/15 13:32:34!
+INFO  2016-07-15 13:33:41,015 93708ms 1                      Index              - list user info
+INFO  2016-07-15 13:34:15,538 128231ms 1                      Index              - list user info
+INFO  2016-07-15 13:39:13,237 425930ms 1                      Index              - list user info
+INFO  2016-07-15 13:42:09,493 602186ms 1                      Index              - list user info
+INFO  2016-07-15 14:16:14,905 56155ms 1                      MoveNext           - davisyao login at 2016/7/15 14:16:14!
+INFO  2016-07-15 15:21:15,389 39024ms 1                      MoveNext           - davisyao login at 2016/7/15 15:21:15!
+INFO  2016-07-15 15:47:13,687 341138ms 1                      MoveNext           - davisyao login at 2016/7/15 15:47:13!
+INFO  2016-07-15 16:11:07,461 20899ms 1                      MoveNext           - davisyao login at 2016/7/15 16:11:07!
+INFO  2016-07-15 16:58:55,602 30142ms 1                      MoveNext           - davisyao login at 2016/7/15 16:58:55!
+INFO  2016-07-18 09:13:07,810 30321ms 1                      MoveNext           - davisyao login at 2016/7/18 9:13:07!
+INFO  2016-07-18 09:14:18,814 101326ms 1                      Index              - list user info
+INFO  2016-07-18 14:50:55,962 20298474ms 1                      MoveNext           - davisyao login at 2016/7/18 14:50:55!
+INFO  2016-07-18 14:54:00,101 20482613ms 1                      Index              - list user info
+INFO  2016-07-18 14:57:37,885 20700396ms 1                      Index              - list user info
+INFO  2016-07-18 14:57:47,754 20710266ms 1                      Index              - list user info
+INFO  2016-07-18 14:57:50,531 20713043ms 1                      Index              - list user info
+INFO  2016-07-18 14:58:15,290 20737802ms 1                      Index              - list user info
+INFO  2016-07-18 16:32:53,980 26416492ms 1                      MoveNext           - davisyao login at 2016/7/18 16:32:53!
+INFO  2016-07-19 09:17:15,692 21198ms 1                      MoveNext           - davisyao login at 2016/7/19 9:17:15!
+INFO  2016-07-19 09:18:14,990 80495ms 1                      Index              - list user info
+INFO  2016-07-19 09:18:18,240 83745ms 1                      Index              - list user info
+INFO  2016-07-19 09:54:07,550 36336ms 1                      MoveNext           - davisyao login at 2016/7/19 9:54:07!
+INFO  2016-07-19 10:08:50,931 287405ms 1                      MoveNext           - davisyao login at 2016/7/19 10:08:50!
+INFO  2016-07-19 10:10:50,648 407122ms 1                      Index              - list user info
+INFO  2016-07-19 10:12:11,853 488327ms 1                      Index              - list user info
+INFO  2016-07-19 10:12:25,208 501682ms 1                      Index              - list user info
+INFO  2016-07-19 10:12:39,111 515585ms 1                      Index              - list user info
+INFO  2016-07-19 10:12:55,773 532247ms 1                      Index              - list user info
+INFO  2016-07-19 10:18:54,467 890941ms 1                      Index              - list user info
+INFO  2016-07-19 10:19:07,584 904058ms 1                      Index              - list user info
+INFO  2016-07-19 10:29:58,802 1555275ms 1                      MoveNext           - davisyao login at 2016/7/19 10:29:58!
+INFO  2016-07-19 10:29:58,805 1555278ms 1                      MoveNext           - davisyao login at 2016/7/19 10:29:58!
+INFO  2016-07-19 10:30:16,378 1572852ms 1                      Index              - list user info
+INFO  2016-07-19 10:30:36,929 1593402ms 1                      Index              - list user info
+INFO  2016-07-19 10:30:41,647 1598120ms 1                      Index              - list user info
+INFO  2016-07-19 10:30:46,506 1602980ms 1                      Index              - list user info
+INFO  2016-07-19 10:38:52,336 2088809ms 1                      Index              - list user info
+INFO  2016-07-19 10:48:46,941 27572ms 1                      MoveNext           - davisyao login at 2016/7/19 10:48:46!
+INFO  2016-07-19 10:49:52,857 93488ms 1                      Index              - list user info
+INFO  2016-07-19 10:52:55,182 275813ms 1                      Index              - list user info
+INFO  2016-07-19 12:42:02,961 40094ms 1                      MoveNext           - davisyao login at 2016/7/19 12:42:02!
+INFO  2016-07-20 10:10:19,637 29822ms 1                      MoveNext           - davisyao login at 2016/7/20 10:10:19!
+INFO  2016-07-20 10:20:06,000 13632ms 1                      MoveNext           - davisyao login at 2016/7/20 10:20:06!
+INFO  2016-07-20 10:23:04,803 192435ms 1                      Index              - list user info
+INFO  2016-07-20 14:12:55,102 13982734ms 1                      MoveNext           - davisyao login at 2016/7/20 14:12:55!
+INFO  2016-07-20 14:16:34,181 14201813ms 1                      Index              - list user info
+INFO  2016-07-20 14:16:44,064 14211696ms 1                      Index              - list user info
+INFO  2016-07-20 14:16:52,188 14219820ms 1                      Index              - list user info
+INFO  2016-07-20 14:16:56,506 14224138ms 1                      Index              - list user info
+INFO  2016-07-20 14:17:07,535 14235167ms 1                      Index              - list user info
+INFO  2016-07-21 09:38:45,862 286330ms 1                      MoveNext           - davisyao login at 2016/7/21 9:38:45!
+INFO  2016-07-21 10:33:15,413 142191ms 1                      MoveNext           - davisyao login at 2016/7/21 10:33:15!
+INFO  2016-07-21 12:05:49,135 5695913ms 1                      MoveNext           - davisyao login at 2016/7/21 12:05:49!
+INFO  2016-07-21 13:22:36,154 10302931ms 1                      MoveNext           - davisyao login at 2016/7/21 13:22:36!
+ERROR 2016-07-21 13:23:44,505 10371282ms AppLog                 SearchValueString  - search condition init fail,值不能为 null。
+参数名: String
+INFO  2016-07-21 14:25:31,826 14078603ms 1                      MoveNext           - davisyao login at 2016/7/21 14:25:31!
+INFO  2016-07-21 15:43:35,387 247200ms 1                      MoveNext           - davisyao login at 2016/7/21 15:43:35!
+INFO  2016-07-21 16:39:28,181 13116ms 1                      MoveNext           - davisyao login at 2016/7/21 16:39:28!
+ERROR 2016-07-21 16:41:21,828 126763ms AppLog                 SearchValueString  - search condition init fail,值不能为 null。
+参数名: String
+ERROR 2016-07-21 16:41:50,903 155837ms AppLog                 SearchValueString  - search condition init fail,值不能为 null。
+参数名: String
+ERROR 2016-07-21 16:41:57,477 162412ms AppLog                 SearchValueString  - search condition init fail,值不能为 null。
+参数名: String
+ERROR 2016-07-21 16:42:02,844 167779ms AppLog                 SearchValueString  - search condition init fail,值不能为 null。
+参数名: String
+INFO  2016-07-21 16:58:37,321 144706ms 1                      MoveNext           - davisyao login at 2016/7/21 16:58:37!
+INFO  2016-07-21 20:01:59,733 14393ms 1                      MoveNext           - davisyao login at 2016/7/21 20:01:59!
+INFO  2016-07-22 12:04:38,604 34636ms 1                      MoveNext           - davisyao login at 2016/7/22 12:04:38!
+INFO  2016-07-22 12:22:34,571 109380ms 1                      MoveNext           - davisyao login at 2016/7/22 12:22:34!
+INFO  2016-07-22 14:27:34,683 7609492ms 1                      MoveNext           - davisyao login at 2016/7/22 14:27:34!
+INFO  2016-07-22 16:03:56,560 13391369ms 1                      MoveNext           - davisyao login at 2016/7/22 16:03:56!
+INFO  2016-07-22 16:07:08,869 52542ms 1                      MoveNext           - davisyao login at 2016/7/22 16:07:08!
+ERROR 2016-07-22 16:19:44,388 808061ms AppLog                 SearchValueString  - search condition init fail,值不能为 null。
+参数名: String
+ERROR 2016-07-22 16:24:50,627 1114300ms AppLog                 SearchValueString  - search condition init fail,值不能为 null。
+参数名: String
+ERROR 2016-07-22 16:29:54,517 1418190ms AppLog                 SearchValueString  - search condition init fail,值不能为 null。
+参数名: String
+INFO  2016-07-22 17:29:35,740 159863ms 1                      MoveNext           - davisyao login at 2016/7/22 17:29:35!
+INFO  2016-07-22 17:47:35,518 15695ms 1                      MoveNext           - davisyao login at 2016/7/22 17:47:35!
+INFO  2016-07-23 10:21:36,499 2104079ms 3                      MoveNext           - lh login at 2016/7/23 10:21:36!
+ERROR 2016-07-23 10:22:58,001 2185582ms AppLog                 SearchValueString  - search condition init fail,值不能为 null。
+参数名: String
+ERROR 2016-07-23 10:23:45,992 2233573ms AppLog                 SearchValueString  - search condition init fail,值不能为 null。
+参数名: String
+INFO  2016-07-23 10:46:02,934 95786ms 1                      MoveNext           - davisyao login at 2016/7/23 10:46:02!
+INFO  2016-07-23 11:17:30,563 1983416ms 1                      MoveNext           - davisyao login at 2016/7/23 11:17:30!
+INFO  2016-07-23 12:07:20,723 4973575ms 1                      MoveNext           - davisyao login at 2016/7/23 12:07:20!
+INFO  2016-07-23 12:07:25,334 4978187ms 1                      MoveNext           - davisyao login at 2016/7/23 12:07:25!
+INFO  2016-07-23 22:18:17,741 79071ms 1                      MoveNext           - davisyao login at 2016/7/23 22:18:17!
+INFO  2016-07-25 09:03:47,936 21848ms 1                      MoveNext           - davisyao login at 2016/7/25 9:03:47!
+INFO  2016-07-26 09:18:30,579 342984ms 3                      MoveNext           - lh login at 2016/7/26 9:18:30!
+INFO  2016-07-27 09:24:15,879 20507ms 1                      MoveNext           - davisyao login at 2016/7/27 9:24:15!
+INFO  2016-07-27 09:53:17,429 17096ms 1                      MoveNext           - davisyao login at 2016/7/27 9:53:17!
+INFO  2016-07-27 16:21:41,103 24762ms 1                      MoveNext           - davisyao login at 2016/7/27 16:21:41!
