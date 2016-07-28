@@ -51,6 +51,18 @@ namespace CKWMS
         /// 出库计划状态
         /// </summary>
         public static Dictionary<int, string> OutPlanState;
+        /// <summary>
+        /// 验收状态
+        /// </summary>
+        public static Dictionary<int, string> CheckState;
+        /// <summary>
+        /// 验收结果
+        /// </summary>
+        public static Dictionary<int, string> CheckResult;
+        /// <summary>
+        /// 验收不符合项说明
+        /// </summary>
+        public static Dictionary<int, string> CheckMemo;
 
         protected void Application_Start()
         {
@@ -134,6 +146,24 @@ namespace CKWMS
             OutPlanState.Add(3, "部分出库");
             OutPlanState.Add(4, "出库完成");
             OutPlanState.Add(5, "历史出库");
+
+            CheckState = new Dictionary<int, string>();
+            CheckState.Add(1, "未检验");//没有检验
+            CheckState.Add(2, "待检验");//正在检验
+            CheckState.Add(3, "已检验");//完成检验
+
+            CheckResult = new Dictionary<int, string>();
+            CheckResult.Add(1, "合格");
+            CheckResult.Add(2, "部分合格");
+            CheckResult.Add(3, "不合格");
+
+            CheckMemo = new Dictionary<int, string>();
+            CheckMemo.Add(1, "未见异常，检查验收合格");
+            CheckMemo.Add(2, "近效期，包装外观未见异常");
+            CheckMemo.Add(3, "退货经检查验收，包装外观符合要求，可入库");
+            CheckMemo.Add(4, "包装损坏，货品经检验后合格，可入库");
+            CheckMemo.Add(5, "包装破损，不合格");
+            CheckMemo.Add(6, "货品经检验后判定不合格");
         }
     }
 }
