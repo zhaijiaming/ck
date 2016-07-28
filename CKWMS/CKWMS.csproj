@@ -550,24 +550,6 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CKWMS.BSL\CKWMS.BSL.csproj">
-      <Project>{8aaa9bdb-de48-4022-bbe0-51a1310aecee}</Project>
-      <Name>CKWMS.BSL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CKWMS.Common\CKWMS.Common.csproj">
-      <Project>{8a14a097-a652-4ba4-9b42-45745f20f4f3}</Project>
-      <Name>CKWMS.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CKWMS.EFModels\CKWMS.EFModels.csproj">
-      <Project>{d0e274d8-d3ad-49af-a073-bf07ddc68512}</Project>
-      <Name>CKWMS.EFModels</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CKWMS.IBSL\CKWMS.IBSL.csproj">
-      <Project>{f599192b-e768-4d49-9e89-39d9aabd2f44}</Project>
-      <Name>CKWMS.IBSL</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
