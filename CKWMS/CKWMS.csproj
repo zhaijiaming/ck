@@ -398,6 +398,10 @@
     <Content Include="cssview\ace.css" />
     <Content Include="cssview\fontawesome.css" />
     <Content Include="cssview\StyleSheet1.css" />
+    <Content Include="dlls\CKWMS.BSL.dll" />
+    <Content Include="dlls\CKWMS.Common.dll" />
+    <Content Include="dlls\CKWMS.EFModels.dll" />
+    <Content Include="dlls\CKWMS.IBSL.dll" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -540,15 +544,6 @@
     <Content Include="Views\searchcondition\Edit.cshtml" />
     <Content Include="Views\searchcondition\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="packages.config" />
-    <None Include="Project_Readme.html" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CKWMS.BSL\CKWMS.BSL.csproj">
       <Project>{8aaa9bdb-de48-4022-bbe0-51a1310aecee}</Project>
@@ -568,8 +563,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
