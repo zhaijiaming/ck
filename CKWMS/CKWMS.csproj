@@ -433,6 +433,46 @@
     <Content Include="dlls\CKWMS.IBSL.dll" />
     <Content Include="dlls\CKWMS.IDAL.dll" />
     <Content Include="favicon.ico" />
+    <Content Include="files\yewu\wtkh_1_20160630104344642.jpg" />
+    <Content Include="files\zhengzhao\cus_0_2016063015030555.jpg" />
+    <Content Include="files\zhengzhao\cus_0_2016063015060897.jpg" />
+    <Content Include="files\zhengzhao\cus_0_2016063015315084.jpg" />
+    <Content Include="files\zhengzhao\cus_0_2016063015320115.jpg" />
+    <Content Include="files\zhengzhao\cus_0_2016063015321587.jpg" />
+    <Content Include="files\zhengzhao\cus_0_2016063015341326.jpg" />
+    <Content Include="files\zhengzhao\cus_0_2016063015342575.jpg" />
+    <Content Include="files\zhengzhao\cus_0_2016072217343840.png" />
+    <Content Include="files\zhengzhao\cus_0_2016072217345509.jpg" />
+    <Content Include="files\zhengzhao\cus_0_2016072217422830.jpg" />
+    <Content Include="files\zhengzhao\cus_0_2016072217462544.png" />
+    <Content Include="files\zhengzhao\cus_0_2016072217463399.jpg" />
+    <Content Include="files\zhengzhao\cus_0_2016072217475645.png" />
+    <Content Include="files\zhengzhao\cus_0_2016072217480238.jpg" />
+    <Content Include="files\zhengzhao\cus_0_2016072310221105.jpg" />
+    <Content Include="files\zhengzhao\cus_0_2016072310222483.png" />
+    <Content Include="files\zhengzhao\cus_0_2016072310235644.png" />
+    <Content Include="files\zhengzhao\cus_0_2016072310240388.png" />
+    <Content Include="files\zhengzhao\cus_0_2016072310391525.png" />
+    <Content Include="files\zhengzhao\cus_0_2016072310393486.png" />
+    <Content Include="files\zhengzhao\cus_0_2016072310394368.png" />
+    <Content Include="files\zhengzhao\cus_0_2016072310462049.png" />
+    <Content Include="files\zhengzhao\cus_0_2016072310463341.png" />
+    <Content Include="files\zhengzhao\cus_0_2016072311174394.png" />
+    <Content Include="files\zhengzhao\cus_0_2016072311180025.png" />
+    <Content Include="files\zhengzhao\cus_0_2016072311230476.png" />
+    <Content Include="files\zhengzhao\cus_0_2016072311231149.png" />
+    <Content Include="files\zhengzhao\cus_0_2016072311282826.png" />
+    <Content Include="files\zhengzhao\cus_0_2016072311283673.png" />
+    <Content Include="files\zhengzhao\gys_0_2016063015423528.jpg" />
+    <Content Include="files\zhengzhao\gys_0_2016063015435885.jpg" />
+    <Content Include="files\zhengzhao\gys_0_2016063015441082.jpg" />
+    <Content Include="files\zhengzhao\gys_0_2016072310230806.png" />
+    <Content Include="files\zhengzhao\gys_0_2016072310231889.png" />
+    <Content Include="files\zhengzhao\gys_2_20160630114609583.jpg" />
+    <Content Include="files\zhengzhao\gys_2_20160630114621449.jpg" />
+    <Content Include="files\zhengzhao\gys_3_20160630113740113.jpg" />
+    <Content Include="files\zhengzhao\gys_3_20160630114317187.jpg" />
+    <Content Include="files\zhengzhao\gys_3_20160630114327220.jpg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -440,6 +480,7 @@
     <Content Include="Imgs\cachet0.png" />
     <Content Include="Imgs\ckflow.jpg" />
     <Content Include="Imgs\page1_pic4.jpg" />
+    <Content Include="logs\log.txt" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -452,6 +493,11 @@
     <Content Include="assets\font\fontawesome-webfont.woff" />
     <Content Include="App_Code\HelpersView.cshtml" />
     <Content Include="CommonValue.json" />
+    <Content Include="files\zhengzhao\cus_0_2016072217371641.xlsx" />
+    <Content Include="files\zhengzhao\gys_0_2016063015492947.doc" />
+    <Content Include="files\zhengzhao\gys_2_20160630115530406.doc" />
+    <Content Include="files\zhengzhao\gys_2_20160630115530814.doc" />
+    <Content Include="files\zhengzhao\gys_3_20160630113801430.doc" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\davisfunction.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -587,6 +633,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="files\other\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
