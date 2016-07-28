@@ -131,3 +131,4 @@ INFO  2016-07-26 09:18:30,579 342984ms 3                      MoveNext          
 INFO  2016-07-27 09:24:15,879 20507ms 1                      MoveNext           - davisyao login at 2016/7/27 9:24:15!
 INFO  2016-07-27 09:53:17,429 17096ms 1                      MoveNext           - davisyao login at 2016/7/27 9:53:17!
 INFO  2016-07-27 16:21:41,103 24762ms 1                      MoveNext           - davisyao login at 2016/7/27 16:21:41!
+INFO  2016-07-28 11:50:27,692 47800ms 1                      MoveNext           - davisyao login at 2016/7/28 11:50:27!
