@@ -223,3 +223,11 @@ ModelManifest.xml
 /IDAL
 /oth
 /CKWMS/logs/log.txt
+/CKWMS/dlls/MySql.Data.Entity.EF6.dll
+/CKWMS/dlls/MySql.Data.dll
+/CKWMS/dlls/EntityFramework.xml
+/CKWMS/dlls/EntityFramework.SqlServer.xml
+/CKWMS/dlls/EntityFramework.SqlServer.dll
+/CKWMS/dlls/EntityFramework.dll
+/CKWMS/dlls/CKWMS.EFModels.dll.config
+/CKWMS/dlls/CKWMS.DAL.dll.config
