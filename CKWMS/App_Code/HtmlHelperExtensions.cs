@@ -599,6 +599,10 @@ namespace CKWMS.App_Code
                     if (MvcApplication.ShouYingZhuangTai.ContainsKey(dataValue))
                         returnvalue = MvcApplication.ShouYingZhuangTai[dataValue];
                     break;
+                case "存货状态":
+                    if (MvcApplication.ShouYingType.ContainsKey(dataValue))
+                        returnvalue = MvcApplication.ShouYingType[dataValue];
+                    break;
                 case "性别":
                     if (MvcApplication.Sex.ContainsKey(dataValue))
                         returnvalue = MvcApplication.Sex[dataValue];
@@ -606,6 +610,50 @@ namespace CKWMS.App_Code
                 case "教育程度":
                     if (MvcApplication.Education.ContainsKey(dataValue))
                         returnvalue = MvcApplication.Education[dataValue];
+                    break;
+                case "是否":
+                    if (MvcApplication.YesOrNo.ContainsKey(dataValue))
+                        returnvalue = MvcApplication.YesOrNo[dataValue];
+                    break;
+                case "医疗器械管理类别":
+                    if (MvcApplication.ManageType.ContainsKey(dataValue))
+                        returnvalue = MvcApplication.ManageType[dataValue];
+                    break;
+                case "储运要求":
+                    if (MvcApplication.TranCondition.ContainsKey(dataValue))
+                        returnvalue = MvcApplication.TranCondition[dataValue];
+                    break;
+                case "入库类型":
+                    if (MvcApplication.EntryType.ContainsKey(dataValue))
+                        returnvalue = MvcApplication.EntryType[dataValue];
+                    break;
+                case "出库类型":
+                    if (MvcApplication.OutgoingType.ContainsKey(dataValue))
+                        returnvalue = MvcApplication.OutgoingType[dataValue];
+                    break;
+                case "入库计划状态":
+                    if (MvcApplication.EntryPlanState.ContainsKey(dataValue))
+                        returnvalue = MvcApplication.EntryPlanState[dataValue];
+                    break;
+                case "出库计划状态":
+                    if (MvcApplication.OutPlanState.ContainsKey(dataValue))
+                        returnvalue = MvcApplication.OutPlanState[dataValue];
+                    break;
+                case "验收状态":
+                    if (MvcApplication.CheckState.ContainsKey(dataValue))
+                        returnvalue = MvcApplication.CheckState[dataValue];
+                    break;
+                case "验收结果":
+                    if (MvcApplication.CheckResult.ContainsKey(dataValue))
+                        returnvalue = MvcApplication.CheckResult[dataValue];
+                    break;
+                case "验收不符合项":
+                    if (MvcApplication.CheckMemo.ContainsKey(dataValue))
+                        returnvalue = MvcApplication.CheckMemo[dataValue];
+                    break;
+                case "存货状态":
+                    if (MvcApplication.CargoState.ContainsKey(dataValue))
+                        returnvalue = MvcApplication.CargoState[dataValue];
                     break;
                 default:
                     break;
