@@ -15,7 +15,8 @@ namespace CKWMS.Controllers
 {
     public class searchconditionController : Controller
     {
-        private IsearchconditionService ob_searchconditionservice = ServiceFactory.searchconditionservice;
+        //private IsearchconditionService ob_searchconditionservice = ServiceFactory.searchconditionservice;
+        private IsearchconditionService ob_searchconditionservice =searchconditionService.GetInstance();
         //private List<SearchConditionModel> _searchconditions;
         [OutputCache(Duration = 30)]
         public ActionResult Index(string page)

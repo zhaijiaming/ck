@@ -262,6 +262,93 @@ namespace CKWMS.App_Code
         {
             return SelectList_Common(html, showName, itemName, 0);
         }
+
+        public static MvcHtmlString Search_UserRights(this HtmlHelper html, int userid)
+        {
+            string curmodule = "";
+            StringBuilder sb = new StringBuilder();
+            Iview_rolepersonService personrole = ServiceFactory.view_rolepersonservice;
+            var rps = personrole.LoadSortEntities(view_roleperson => view_roleperson.ryid == userid && view_roleperson.grade==1, true, view_roleperson => view_roleperson.module);
+            foreach (view_roleperson rp in rps)
+            {
+                if (curmodule.Equals(rp.module.Trim()))
+                {
+                    sb.AppendLine("<li><i class=\"icon-double-angle-right\"></i><a href=\"/" + rp.controller.Trim() + "\">" + rp.name + "</a></li>");
+                }
+                else
+                {
+                    if (curmodule.Length > 1)
+                    {
+                        sb.AppendLine("</ul>");
+                        sb.AppendLine("</li>");
+                        //sb.AppendLine("<li>");
+                        //sb.AppendLine("<a href=\"#\" clase=\"dropdown-toggle\">");
+                        //sb.AppendLine("<i class=\"icon-check\"></i>");
+                        //sb.AppendLine("<span class=\"menu-text\">"+rp.name+"</span>");
+                        //sb.AppendLine("<b class=\"arrow icon-angle-down\"></b>");
+                        //sb.AppendLine("</a>");
+                        //sb.AppendLine("<ul class=\"submenu\">");
+                    }
+                    sb.AppendLine("<li>");
+                    sb.AppendLine("<a href=\"#\" class=\"dropdown-toggle\">");
+                    sb.AppendLine("<i class=\""+getIcon(rp.module.Trim())+"\"></i>");
+                    sb.AppendLine("<span class=\"menu-text\">" + rp.module.Trim() + "</span>");
+                    sb.AppendLine("<b class=\"arrow icon-angle-down\"></b>");
+                    sb.AppendLine("</a>");
+                    sb.AppendLine("<ul class=\"submenu\">");
+                    curmodule = rp.module.Trim();
+                    //<li><iclass="icon-double-angle-right"></i>@Html.ActionLink("收货单位", "Index", "base_shouhuodanwei")</li>
+                    sb.AppendLine("<li><i class=\"icon-double-angle-right\"></i><a href=\"/"+rp.controller.Trim()+"\">"+rp.name+"</a></li>");
+                }
+            }
+            sb.AppendLine("</ul>");
+            sb.AppendLine("</li>");
+
+            return MvcHtmlString.Create(sb.ToString());
+        }
+        private static string getIcon(string modulename)
+        {
+            string icon = "";
+            switch (modulename)
+            {
+                case "首营管理":
+                    icon = "icon-check";
+                    break;
+                case "基础数据":
+                    icon = "icon-bookmark";
+                    break;
+                case "仓库操作":
+                    icon = "icon-move";
+                    break;
+                case "仓库定义":
+                    icon = "icon-gear";
+                    break;
+                case "质量管理":
+                    icon = "icon-check-minus";
+                    break;
+                case "费用结算":
+                    icon = "icon-money";
+                    break;
+                case "权限管理":
+                    icon = "icon-ban-circle";
+                    break;
+                case "药监查核":
+                    icon = "icon-fighter-jet";
+                    break;
+                case "客户服务":
+                    icon = "icon-bullseye";
+                    break;
+                case "帐表查询":
+                    icon = "icon-book";
+                    break;
+                case "系统管理":
+                    icon = "icon-magic";
+                    break;
+                default:
+                    break;
+            }
+            return icon;
+        }
         #endregion
 
         #region 查询
@@ -429,14 +516,14 @@ namespace CKWMS.App_Code
                             svs = string.Format("<input type =\"text\" class=\"form-control\" name=\"{0}\" id=\"{1}\" placeholder=\"请输入{2}\" value=\"{3}\">", sc.ItemCode, sc.ItemCode, sc.ItemTitle, sc.ItemValue);
                             break;
                         case "System.Boolean":
-                            if(sc.ItemValue==null)
+                            if (sc.ItemValue == null)
                                 svs = string.Format("<select class=\"width-100\" name=\"{0}\"><option value=\"\" selected=\"selected\"></option><option value=\"yes\">是</option><option value=\"no\">否</option></select>", sc.ItemCode);
                             else
                             {
-                            if (sc.ItemValue.Equals("True"))
-                                svs = string.Format("<select class=\"width-100\" name=\"{0}\"><option value=\"\"></option><option value=\"yes\" selected=\"selected\">是</option><option value=\"no\">否</option></select>", sc.ItemCode);
-                            else
-                                svs = string.Format("<select class=\"width-100\" name=\"{0}\"><option value=\"\"></option><option value=\"yes\">是</option><option value=\"no\" selected=\"selected\">否</option></select>", sc.ItemCode);
+                                if (sc.ItemValue.Equals("True"))
+                                    svs = string.Format("<select class=\"width-100\" name=\"{0}\"><option value=\"\"></option><option value=\"yes\" selected=\"selected\">是</option><option value=\"no\">否</option></select>", sc.ItemCode);
+                                else
+                                    svs = string.Format("<select class=\"width-100\" name=\"{0}\"><option value=\"\"></option><option value=\"yes\">是</option><option value=\"no\" selected=\"selected\">否</option></select>", sc.ItemCode);
                             }
                             break;
                         default:
@@ -508,17 +595,17 @@ namespace CKWMS.App_Code
                 }
                 else
                 {
-                sb.AppendLine("<li>");
-                sb.AppendLine("<ul class=\"list-inline\">");
-                sb.AppendFormat("<li class=\"width-20\"><label for=\"{0}\">{1}</label></li>", scm.ItemCode, scm.ItemTitle);
-                sb.AppendFormat("<li class=\"width-20\"><select name=\"{0}Equal\" class=\"width-100\">{1}</select></li>", scm.ItemCode, OperatorString(scm.ItemType, scm.ItemOpValue));
-                sb.AppendFormat("<li class=\"width-40\">{0}</li>", SearchValueString(scm));
-                if (scm.ItemJion.Equals("and"))
-                    sb.AppendFormat("<li class=\"width-10\"><select name=\"{0}And\" class=\"width-100\"><option value=\"and\" selected=\"selected\">与</option><option value=\"or\">或</option></select></li>", scm.ItemCode);
-                else
-                    sb.AppendFormat("<li class=\"width-10\"><select name=\"{0}And\" class=\"width-100\"><option value=\"and\">与</option><option value=\"or\" selected=\"selected\">或</option></select></li>", scm.ItemCode);
-                sb.AppendLine("</ul>");
-                sb.AppendLine("</li>");
+                    sb.AppendLine("<li>");
+                    sb.AppendLine("<ul class=\"list-inline\">");
+                    sb.AppendFormat("<li class=\"width-20\"><label for=\"{0}\">{1}</label></li>", scm.ItemCode, scm.ItemTitle);
+                    sb.AppendFormat("<li class=\"width-20\"><select name=\"{0}Equal\" class=\"width-100\">{1}</select></li>", scm.ItemCode, OperatorString(scm.ItemType, scm.ItemOpValue));
+                    sb.AppendFormat("<li class=\"width-40\">{0}</li>", SearchValueString(scm));
+                    if (scm.ItemJion.Equals("and"))
+                        sb.AppendFormat("<li class=\"width-10\"><select name=\"{0}And\" class=\"width-100\"><option value=\"and\" selected=\"selected\">与</option><option value=\"or\">或</option></select></li>", scm.ItemCode);
+                    else
+                        sb.AppendFormat("<li class=\"width-10\"><select name=\"{0}And\" class=\"width-100\"><option value=\"and\">与</option><option value=\"or\" selected=\"selected\">或</option></select></li>", scm.ItemCode);
+                    sb.AppendLine("</ul>");
+                    sb.AppendLine("</li>");
                 }
             }
             sb.AppendLine("</ul>");
@@ -599,7 +686,7 @@ namespace CKWMS.App_Code
                     if (MvcApplication.ShouYingZhuangTai.ContainsKey(dataValue))
                         returnvalue = MvcApplication.ShouYingZhuangTai[dataValue];
                     break;
-                case "存货状态":
+                case "首营类型":
                     if (MvcApplication.ShouYingType.ContainsKey(dataValue))
                         returnvalue = MvcApplication.ShouYingType[dataValue];
                     break;

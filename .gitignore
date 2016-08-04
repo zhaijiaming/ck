@@ -231,3 +231,6 @@ ModelManifest.xml
 /CKWMS/dlls/EntityFramework.dll
 /CKWMS/dlls/CKWMS.EFModels.dll.config
 /CKWMS/dlls/CKWMS.DAL.dll.config
+/CKWMS/Properties/PublishProfiles/davis1.pubxml
+/CKWMS/Metadata/deploymentTemplates/apiappconfig.azureresource.json
+/CKWMS/apiapp.json

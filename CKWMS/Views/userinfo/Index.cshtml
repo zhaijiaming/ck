@@ -40,76 +40,80 @@
 </script>
 @{
     List<SearchConditionModel> scms = new List<SearchConditionModel>();
-    string[] scs = _searchcondition.Split(';');
-    if (scs.Length > 0)
+    if (_searchcondition == null || _searchcondition == "")
     {
         SearchConditionModel scm = new SearchConditionModel();
         scm.ItemCode = "Account";
         scm.ItemTitle = "账号";
         scm.ItemType = "System.String";
-        if (scs.Length > 1)
-        {
-            scm.ItemValue = scs[0].Split(',')[1];
-            scm.ItemOpValue = scs[0].Split(',')[2];
-            scm.ItemJion = scs[0].Split(',')[3];
-        }
         scms.Add(scm);
         scm = new SearchConditionModel();
         scm.ItemCode = "FullName";
         scm.ItemTitle = "姓名";
         scm.ItemType = "System.String";
-        if (scs.Length>2)
-        {
-            scm.ItemValue = scs[1].Split(',')[1];
-            scm.ItemOpValue = scs[1].Split(',')[2];
-            scm.ItemJion = scs[1].Split(',')[3];
-        }
         scms.Add(scm);
         scm = new SearchConditionModel();
         scm.ItemCode = "EmployeeID";
         scm.ItemTitle = "员工号";
         scm.ItemType = "System.Int";
-        if (scs.Length > 3)
-        {
-            scm.ItemValue = scs[2].Split(',')[1];
-            scm.ItemOpValue = scs[2].Split(',')[2];
-            scm.ItemJion = scs[2].Split(',')[3];
-        }
         scms.Add(scm);
         scm = new SearchConditionModel();
         scm.ItemCode = "Status";
         scm.ItemTitle = "状态";
         scm.ItemType = "System.Int";
-        if (scs.Length > 4)
-        {
-            scm.ItemValue = scs[3].Split(',')[1];
-            scm.ItemOpValue = scs[3].Split(',')[2];
-            scm.ItemJion = scs[3].Split(',')[3];
-        }
         scms.Add(scm);
     }
     else
     {
-        SearchConditionModel scm = new SearchConditionModel();
-        scm.ItemCode = "Account";
-        scm.ItemTitle = "账号";
-        scm.ItemType = "System.String";
-        scms.Add(scm);
-        scm = new SearchConditionModel();
-        scm.ItemCode = "FullName";
-        scm.ItemTitle = "姓名";
-        scm.ItemType = "System.String";
-        scms.Add(scm);
-        scm = new SearchConditionModel();
-        scm.ItemCode = "EmployeeID";
-        scm.ItemTitle = "员工号";
-        scm.ItemType = "System.Int";
-        scms.Add(scm);
-        scm = new SearchConditionModel();
-        scm.ItemCode = "Status";
-        scm.ItemTitle = "状态";
-        scm.ItemType = "System.Int";
-        scms.Add(scm);
+        string[] scs = _searchcondition.Split(';');
+        if (scs.Length > 0)
+        {
+            SearchConditionModel scm = new SearchConditionModel();
+            scm.ItemCode = "Account";
+            scm.ItemTitle = "账号";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[0].Split(',')[1];
+                scm.ItemOpValue = scs[0].Split(',')[2];
+                scm.ItemJion = scs[0].Split(',')[3];
+            }
+            scms.Add(scm);
+            scm = new SearchConditionModel();
+            scm.ItemCode = "FullName";
+            scm.ItemTitle = "姓名";
+            scm.ItemType = "System.String";
+            if (scs.Length > 2)
+            {
+                scm.ItemValue = scs[1].Split(',')[1];
+                scm.ItemOpValue = scs[1].Split(',')[2];
+                scm.ItemJion = scs[1].Split(',')[3];
+            }
+            scms.Add(scm);
+            scm = new SearchConditionModel();
+            scm.ItemCode = "EmployeeID";
+            scm.ItemTitle = "员工号";
+            scm.ItemType = "System.Int";
+            if (scs.Length > 3)
+            {
+                scm.ItemValue = scs[2].Split(',')[1];
+                scm.ItemOpValue = scs[2].Split(',')[2];
+                scm.ItemJion = scs[2].Split(',')[3];
+            }
+            scms.Add(scm);
+            scm = new SearchConditionModel();
+            scm.ItemCode = "Status";
+            scm.ItemTitle = "状态";
+            scm.ItemType = "System.Int";
+            if (scs.Length > 4)
+            {
+                scm.ItemValue = scs[3].Split(',')[1];
+                scm.ItemOpValue = scs[3].Split(',')[2];
+                scm.ItemJion = scs[3].Split(',')[3];
+            }
+            scms.Add(scm);
+
+        }
     }
 }
 

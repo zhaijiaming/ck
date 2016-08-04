@@ -179,6 +179,19 @@ namespace CKWMS.Controllers
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     await UserManager.SendEmailAsync(user.Id, "确认你的帐户", "请通过单击 <a href=\"" + callbackUrl + "\">這裏</a>来确认你的帐户");
 
+                    //add user info
+                    IuserinfoService uiservice = ServiceFactory.userinfoservice;
+                    userinfo ui = new userinfo();
+                    ui.Account = model.Email;
+                    ui.FullName = model.Email.Substring(0, model.Email.IndexOf('@'));
+                    ui.AccountType = 1;
+                    ui.Status = 1;
+                    ui.InputDate = DateTime.Now;
+                    ui.ModifyDate = DateTime.Now;
+                    ui=uiservice.AddEntity(ui);
+                    Session["user_account"] = ui.Account;
+                    Session["user_id"] = ui.ID;
+                    Session["user_name"] = ui.FullName;
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
