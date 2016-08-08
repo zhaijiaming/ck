@@ -268,7 +268,7 @@ namespace CKWMS.App_Code
             string curmodule = "";
             StringBuilder sb = new StringBuilder();
             Iview_rolepersonService personrole = ServiceFactory.view_rolepersonservice;
-            var rps = personrole.LoadSortEntities(view_roleperson => view_roleperson.ryid == userid && view_roleperson.grade==1, true, view_roleperson => view_roleperson.module);
+            var rps = personrole.LoadSortEntities(view_roleperson => view_roleperson.ryid == userid && view_roleperson.grade == 1, true, view_roleperson => view_roleperson.module);
             foreach (view_roleperson rp in rps)
             {
                 if (curmodule.Equals(rp.module.Trim()))
@@ -291,14 +291,14 @@ namespace CKWMS.App_Code
                     }
                     sb.AppendLine("<li>");
                     sb.AppendLine("<a href=\"#\" class=\"dropdown-toggle\">");
-                    sb.AppendLine("<i class=\""+getIcon(rp.module.Trim())+"\"></i>");
+                    sb.AppendLine("<i class=\"" + getIcon(rp.module.Trim()) + "\"></i>");
                     sb.AppendLine("<span class=\"menu-text\">" + rp.module.Trim() + "</span>");
                     sb.AppendLine("<b class=\"arrow icon-angle-down\"></b>");
                     sb.AppendLine("</a>");
                     sb.AppendLine("<ul class=\"submenu\">");
                     curmodule = rp.module.Trim();
                     //<li><iclass="icon-double-angle-right"></i>@Html.ActionLink("收货单位", "Index", "base_shouhuodanwei")</li>
-                    sb.AppendLine("<li><i class=\"icon-double-angle-right\"></i><a href=\"/"+rp.controller.Trim()+"\">"+rp.name+"</a></li>");
+                    sb.AppendLine("<li><i class=\"icon-double-angle-right\"></i><a href=\"/" + rp.controller.Trim() + "\">" + rp.name + "</a></li>");
                 }
             }
             sb.AppendLine("</ul>");
@@ -627,6 +627,50 @@ namespace CKWMS.App_Code
         #endregion
 
         #region 检索值
+        public static MvcHtmlString GetTreeData(this HtmlHelper html, string treedata)
+        {
+            StringBuilder sb = new StringBuilder();
+            string modulestr = "";
+            string funstr = "";
+            string funstr0 = "";
+            StringBuilder sb1 = new StringBuilder();
+            //module:fun1,fun2;
+            if (treedata.Length > 0)
+            {
+                modulestr= "var tree_data11={";
+                string[] mods = treedata.Split(';');
+                foreach (string ms in mods)
+                {
+                    if (ms.Length > 0)
+                    {
+                        string modname = ms.Substring(0, ms.IndexOf(':'));
+                        string modfuns = ms.Substring(ms.IndexOf(':')+1);
+                        if (modfuns.Length > 0 && modfuns!=";")
+                        {
+                            modulestr = modulestr +"'"+modname+"':{ name:'"+modname+"',type:'folder'},";
+                            funstr ="tree_data11['"+modname+"']['additionalParameters']={'children':{";
+                            string[] funs = modfuns.Split(',');
+                            foreach (string funname in funs)
+                            {
+                                if (funname.Length > 0)
+                                {
+                                    funstr = funstr +"'"+funname+"':{name:'"+funname+"',type:'item'},";
+                                }
+                            }
+                            funstr = funstr.Substring(0, funstr.Length - 1);
+                            funstr = funstr + "}}";
+                        }
+                    }
+                    sb1.AppendLine(funstr);
+                    //funstr0 = funstr0 + funstr;
+                }
+                modulestr = modulestr.Substring(0, modulestr.Length - 1);
+                modulestr = modulestr + "}";
+            }
+            sb.AppendLine(modulestr);
+            sb.AppendLine(sb1.ToString());
+            return MvcHtmlString.Create(sb.ToString());
+        }
         /// <summary>
         /// 通过id获取信息
         /// </summary>

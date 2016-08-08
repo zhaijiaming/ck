@@ -69,7 +69,7 @@
         <input type="hidden" id="jsid" name="jsid" value="@Model.RoleID" />
         <input type="hidden" id="users" name="users" value="" />
         <div class="page-content">
-            <div id="yh" class="col-sm-5 overflow-scroll" style="height:500px">
+            <div id="yh" class="col-sm-5 overflow-auto" style="height:500px">
                 <p><h3 class="center">用户列表</h3></p>
                 <ul class="item-list ui-sortable">
                     @foreach (userinfo us in Model.AllUser)
@@ -92,7 +92,7 @@
                 <p><button type="button" class="btn btn-default " id="bt_deleteInfo"><i class="icon-remove"></i>删除</button></p>
                 <p><button type="submit" class="btn btn-default " id="bt_saveinfo"><i class="icon-save"></i>保存</button></p>
             </div>
-            <div id="qx" class="col-sm-5 overflow-scroll" style="height:500px">
+            <div id="qx" class="col-sm-5 overflow-auto" style="height:500px">
                 <p><h3 class="center">授权用户</h3></p>
                 <ul class="item-list ui-sortable">
                     @foreach (auth_quanxian qx in Model.AuthorizedUser)

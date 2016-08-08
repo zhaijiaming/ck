@@ -25,9 +25,53 @@ namespace CKWMS.Controllers
             string jsid = Request["jsid"] ?? "";
             if (jsid == "")
                 jsid = "0";
-            var tempData = ob_view_roledetailservice.LoadSortEntities(view_roledetail => view_roledetail.ID == int.Parse(jsid), false, view_roledetail => view_roledetail.ID);
-            ViewBag.view_roledetail = tempData;
-            return View(tempData);
+            string gnstring = "";
+            string modstr = "";
+            Iauth_gongnengService gnservice = ServiceFactory.auth_gongnengservice;
+            IList<auth_gongneng> gnlist = gnservice.LoadSortEntities(auth_gongneng => auth_gongneng.IsDelete == false, true, auth_gongneng => auth_gongneng.Module).ToList<auth_gongneng>();
+            foreach (auth_gongneng gn in gnlist)
+            {
+                if (modstr.Equals(gn.Module))
+                {
+                    gnstring = gnstring + gn.Name + "(" + gn.ID.ToString() + "),";
+                }
+                else
+                {
+                    modstr = gn.Module;
+                    if (gnstring.Length > 0)
+                    {
+                        gnstring = gnstring.Substring(0, gnstring.Length - 1);
+                        gnstring = gnstring + ";";
+                    }
+                    gnstring = gnstring + gn.Module + ":" + gn.Name + "(" + gn.ID.ToString() + "),";
+                }
+            }
+            //var tmpdata= ob_view_roledetailservice.LoadSortEntities(view_roledetail => view_roledetail.ID == int.Parse(jsid), true, view_roledetail => view_roledetail.module);
+            //ViewBag.roledetails = tmpdata;
+            string gnstring1 = "";
+            string modstr1 = "";
+            IList<view_roledetail> rdlist = ob_view_roledetailservice.LoadSortEntities(view_roledetail => view_roledetail.ID == int.Parse(jsid), true, view_roledetail => view_roledetail.module).ToList<view_roledetail>();
+            foreach (view_roledetail rd in rdlist)
+            {
+                if (modstr1.Equals(rd.module))
+                {
+                    gnstring1 = gnstring1 + rd.name + ",";
+                }
+                else
+                {
+                    modstr1 = rd.module;
+                    if (gnstring1.Length > 0)
+                    {
+                        gnstring1 = gnstring1.Substring(0, gnstring1.Length - 1);
+                        gnstring1 = gnstring1 + ";";
+                    }
+                    gnstring1 = gnstring1 + rd.module + ":" + rd.name + ",";
+                }
+            }
+            ViewBag.fundata = gnstring;
+            ViewBag.funs = gnstring1;
+            ViewBag.jsid = jsid;
+            return View();
         }
         [OutputCache(Duration = 30)]
         public ActionResult Index(string page)
