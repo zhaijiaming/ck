@@ -50,7 +50,7 @@ namespace CKWMS.Controllers
             //ViewBag.roledetails = tmpdata;
             string gnstring1 = "";
             string modstr1 = "";
-            IList<view_roledetail> rdlist = ob_view_roledetailservice.LoadSortEntities(view_roledetail => view_roledetail.ID == int.Parse(jsid), true, view_roledetail => view_roledetail.module).ToList<view_roledetail>();
+            IList<view_roledetail> rdlist = ob_view_roledetailservice.LoadSortEntities(view_roledetail => view_roledetail.roleid== int.Parse(jsid), true, view_roledetail => view_roledetail.module).ToList<view_roledetail>();
             foreach (view_roledetail rd in rdlist)
             {
                 if (modstr1.Equals(rd.module))
