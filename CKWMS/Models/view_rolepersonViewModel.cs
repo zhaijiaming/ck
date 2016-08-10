@@ -11,7 +11,7 @@ namespace CKWMS.Models
         [Display(Name = "角色名称")]
         public string rolename { get; set; }
         [Display(Name = "功能序号")]
-        public int funid { get; set; }
+        public int? funid { get; set; }
         [Display(Name = "功能")]
         public string name { get; set; }
         [Display(Name = "模块")]

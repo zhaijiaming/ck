@@ -113,12 +113,12 @@
                                 <label><input type="checkbox" value="@item.ID"></label>
                             </div>
                         </td>
-                        <td>@item.JSID</td>
-                        <td>@item.RYID</td>
+                        <td>@Html.GetDataValue_ID("角色","名称",(int)item.JSID)</td>
+                        <td>@Html.GetDataValue_ID("userinfo","全名",(int)item.RYID)</td>
                         <td>@item.SXDate</td>
                         <td>@item.GuanbiSF</td>
                         <td>@item.MakeDate</td>
-                        <td>@item.MakeMan</td>
+                        <td>@Html.GetDataValue_ID("userinfo","全名",(int)item.MakeMan)</td>
                     </tr>
                 }
             </tbody>
