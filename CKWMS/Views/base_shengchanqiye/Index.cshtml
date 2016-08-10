@@ -126,9 +126,11 @@
                         <td>@item.ShengchanxukeBH</td>
                         <td>@item.ShengchanxukeYXQ</td>
                         <td>@item.ShengchanxukeTP</td>
-                        <td>@item.Shouying</td>
+                        @*<td>@item.Shouying</td>*@
+                        <td>@Html.GetCommonValue_ID("首营状态", (int)item.Shouying)</td>
                         <td>@item.MakeDate</td>
-                        <td>@item.MakeMan</td>
+                        @*<td>@item.MakeMan</td>*@
+                        <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
                     </tr>
                 }
             </tbody>

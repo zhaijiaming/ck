@@ -142,7 +142,7 @@ namespace CKWMS.Controllers
 
         public ActionResult Add()
         {
-            ViewBag.userid =(int) Session["user_id"];
+            ViewBag.userid = (int)Session["user_id"];
             return View();
         }
 
