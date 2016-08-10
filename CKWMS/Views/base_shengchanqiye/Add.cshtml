@@ -94,7 +94,8 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.MakeMan, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.SelectList_Auto("MakeMan", "userinfo", "fullname")
+                    @Html.SelectList_Auto("MakeMan", "userinfo", "fullname", (long)ViewBag.userid)
+                    @*@Html.SelectList_Auto("MakeMan","userinfo","fullname",int.Parse(ViewBag.userid))*@
                 </div>
             </div>
         </div>

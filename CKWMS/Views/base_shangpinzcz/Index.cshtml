@@ -122,7 +122,7 @@
                         <td>@item.ZhucezhengYXQ</td>
                         <td>@item.ZhucezhengTP</td>
                         <td>@item.MakeDate</td>
-                        <td>@item.MakeMan</td>
+                        <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
                     </tr>
                 }
             </tbody>

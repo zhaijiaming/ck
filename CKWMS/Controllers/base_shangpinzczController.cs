@@ -142,6 +142,8 @@ namespace CKWMS.Controllers
 
         public ActionResult Add()
         {
+
+            ViewBag.userid = (int)Session["user_id"];
             return View();
         }
 
@@ -235,7 +237,7 @@ namespace CKWMS.Controllers
                 Console.WriteLine(ex.Message);
                 ViewBag.saveok = ViewAddTag.ModifyNo;
             }
-            return RedirectToAction("Edit", new { id = uid });
+            return RedirectToAction("Index", new { id = uid });
         }
         public ActionResult Delete()
         {
