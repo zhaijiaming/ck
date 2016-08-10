@@ -46,16 +46,16 @@ namespace CKWMS.Controllers
                     gnstring = gnstring + gn.Module + ":" + gn.Name + "(" + gn.ID.ToString() + "),";
                 }
             }
-            //var tmpdata= ob_view_roledetailservice.LoadSortEntities(view_roledetail => view_roledetail.ID == int.Parse(jsid), true, view_roledetail => view_roledetail.module);
-            //ViewBag.roledetails = tmpdata;
+            var tmpdata = ob_view_roledetailservice.LoadSortEntities(view_roledetail => view_roledetail.roleid== int.Parse(jsid) && view_roledetail.IsDelete==false, true, view_roledetail => view_roledetail.module);
             string gnstring1 = "";
             string modstr1 = "";
-            IList<view_roledetail> rdlist = ob_view_roledetailservice.LoadSortEntities(view_roledetail => view_roledetail.roleid== int.Parse(jsid), true, view_roledetail => view_roledetail.module).ToList<view_roledetail>();
+            //IList<view_roledetail> rdlist = ob_view_roledetailservice.LoadSortEntities(view_roledetail => view_roledetail.roleid== int.Parse(jsid), true, view_roledetail => view_roledetail.module).ToList<view_roledetail>();
+            IList<view_roledetail> rdlist=tmpdata.ToList<view_roledetail>();
             foreach (view_roledetail rd in rdlist)
             {
                 if (modstr1.Equals(rd.module))
                 {
-                    gnstring1 = gnstring1 + rd.name + ",";
+                    gnstring1 = gnstring1 + rd.name + "(" + rd.funid.ToString() + ")" + ",";
                 }
                 else
                 {
@@ -65,12 +65,13 @@ namespace CKWMS.Controllers
                         gnstring1 = gnstring1.Substring(0, gnstring1.Length - 1);
                         gnstring1 = gnstring1 + ";";
                     }
-                    gnstring1 = gnstring1 + rd.module + ":" + rd.name + ",";
+                    gnstring1 = gnstring1 + rd.module + ":" + rd.name+ "(" + rd.funid.ToString() + ")" + ",";
                 }
             }
             ViewBag.fundata = gnstring;
             ViewBag.funs = gnstring1;
             ViewBag.jsid = jsid;
+            ViewBag.roledetails = tmpdata;
             return View();
         }
         [OutputCache(Duration = 30)]

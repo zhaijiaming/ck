@@ -269,6 +269,7 @@ namespace CKWMS.App_Code
             StringBuilder sb = new StringBuilder();
             Iview_rolepersonService personrole = ServiceFactory.view_rolepersonservice;
             var rps = personrole.LoadSortEntities(view_roleperson => view_roleperson.ryid == userid && view_roleperson.grade == 1, true, view_roleperson => view_roleperson.module);
+            if (rps !=null) { 
             foreach (view_roleperson rp in rps)
             {
                 if (curmodule.Equals(rp.module.Trim()))
@@ -303,7 +304,7 @@ namespace CKWMS.App_Code
             }
             sb.AppendLine("</ul>");
             sb.AppendLine("</li>");
-
+}
             return MvcHtmlString.Create(sb.ToString());
         }
         private static string getIcon(string modulename)

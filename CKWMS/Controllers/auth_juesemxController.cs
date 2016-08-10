@@ -180,6 +180,65 @@ namespace CKWMS.Controllers
         {
             return View();
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdataMX()
+        {
+            var jsid = Request["jsid"] ?? "";
+            var funs = Request["funs"] ?? "";
+            var funsave = Request["funsave"] ?? "";
+            int userid = (int)Session["user_id"];
+            if (jsid == "")
+                jsid = "0";
+            else
+            {
+                string[] ofunlist = funs.Split(',');
+                Dictionary<int, bool> dicfun = new Dictionary<int, bool>();
+                string ofunid = "";
+                foreach(string ofun in ofunlist)
+                {
+                    if (ofun.Length > 0)
+                    {
+                        ofunid = ofun.Substring(ofun.IndexOf('('),ofun.IndexOf(')')-ofun.IndexOf('('));
+                        dicfun.Add(int.Parse(ofunid), false);
+                    }
+                }
+                string[] funlist = funsave.Split(',');
+                foreach(string funid in funlist)
+                {
+                    if (funid.Length > 0)
+                    {
+                        if (dicfun.ContainsKey(int.Parse(funid)))
+                            dicfun[int.Parse(funid)] = true;
+                        else
+                        {
+                            auth_juesemx juesemx = new auth_juesemx();
+                            juesemx.RoleID = int.Parse(jsid);
+                            juesemx.FuncID = int.Parse(funid);
+                            juesemx.MakeMan = userid;
+                            ob_auth_juesemxservice.AddEntity(juesemx);
+                        }
+                    }
+                }
+                foreach(var b in dicfun)
+                {
+                    if (!b.Value)
+                    {
+                        auth_juesemx juesemx = ob_auth_juesemxservice.GetEntityById(auth_juesemx => auth_juesemx.RoleID == int.Parse(jsid) && auth_juesemx.FuncID ==b.Key && auth_juesemx.IsDelete==false);
+                        if (juesemx !=null)
+                        {
+                            juesemx.IsDelete = true;
+                            juesemx.MakeDate = DateTime.Now;
+                            juesemx.MakeMan = userid;
+                            ob_auth_juesemxservice.UpdateEntity(juesemx);
+                        }
+                    }
+                }
+            }
+
+            return RedirectToAction("Index","auth_juese");
+        }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
