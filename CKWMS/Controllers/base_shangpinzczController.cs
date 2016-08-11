@@ -10,6 +10,7 @@ using CKWMS.BSL;
 using CKWMS.Common;
 using CKWMS.Models;
 using CKWMS.Filters;
+using System.ComponentModel.DataAnnotations;
 
 namespace CKWMS.Controllers
 {
@@ -80,6 +81,14 @@ namespace CKWMS.Controllers
             string bianhao = Request["bianhao"] ?? "";
             string bianhaoequal = Request["bianhaoequal"] ?? "";
             string bianhaoand = Request["bianhaoand"] ?? "";
+
+            string shangpingmingcheng = Request["shangpingmingcheng"] ?? "";
+            string shangpingmingchengequal = Request["shangpingmingchengequal"] ?? "";
+            string shangpingmingchengand = Request["shangpingmingchengand"] ?? "";
+
+            string zhucezhengyxq = Request["zhucezhengyxq"] ?? "";
+            string zhucezhengyxqequal = Request["zhucezhengyxqequal"] ?? "";
+            string zhucezhengyxqand = Request["zhucezhengyxqand"] ?? "";
             Expression<Func<base_shangpinzcz, bool>> where = PredicateExtensionses.True<base_shangpinzcz>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -87,6 +96,7 @@ namespace CKWMS.Controllers
                 sc = new searchcondition();
                 sc.UserID = userid;
                 sc.PageBrief = pagetag;
+                //biaohao
                 if (!string.IsNullOrEmpty(bianhao))
                 {
                     if (bianhaoequal.Equals("="))
@@ -106,6 +116,48 @@ namespace CKWMS.Controllers
                 }
                 if (!string.IsNullOrEmpty(bianhao))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bianhao", bianhao, bianhaoequal, bianhaoand);
+                
+                //shangpingmingcheng
+                if (!string.IsNullOrEmpty(shangpingmingcheng))
+                {
+                    if (shangpingmingchengequal.Equals("="))
+                    {
+                        if (shangpingmingchengand.Equals("and"))
+                            where = where.And(base_shangpinzcz => base_shangpinzcz.Mingcheng == shangpingmingcheng);
+                        else
+                            where = where.Or(base_shangpinzcz => base_shangpinzcz.Mingcheng == shangpingmingcheng);
+                    }
+                    if (shangpingmingchengequal.Equals("like"))
+                    {
+                        if (shangpingmingchengand.Equals("and"))
+                            where = where.And(base_shangpinzcz => base_shangpinzcz.Mingcheng.Contains(shangpingmingcheng));
+                        else
+                            where = where.Or(base_shangpinzcz => base_shangpinzcz.Mingcheng.Contains(shangpingmingcheng));
+                    }
+                }
+                if (!string.IsNullOrEmpty(shangpingmingcheng))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpingmingcheng", shangpingmingcheng, shangpingmingchengequal, shangpingmingchengand);
+                //zhucezhengyxq
+                if (!string.IsNullOrEmpty(zhucezhengyxq))
+                {
+                    if (zhucezhengyxqequal.Equals("="))
+                    {
+                        if (zhucezhengyxqand.Equals("and"))
+                            where = where.And(base_shangpinzcz => base_shangpinzcz.ZhucezhengYXQ == DateTime.Parse(zhucezhengyxq));
+                        else
+                            where = where.Or(base_shangpinzcz => base_shangpinzcz.ZhucezhengYXQ == DateTime.Parse(zhucezhengyxq));
+                    }
+                    if (zhucezhengyxqequal.Equals("like"))
+                    {
+                        if (zhucezhengyxqand.Equals("and"))
+                            where = where.And(base_shangpinzcz => base_shangpinzcz.ZhucezhengYXQ == DateTime.Parse(zhucezhengyxq));
+                        else
+                            where = where.Or(base_shangpinzcz => base_shangpinzcz.ZhucezhengYXQ == DateTime.Parse(zhucezhengyxq));
+                    }
+                }
+                if (!string.IsNullOrEmpty(zhucezhengyxq))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "zhucezhengyxq", zhucezhengyxq, zhucezhengyxqequal, zhucezhengyxqand);
+
                 searchconditionService.GetInstance().AddEntity(sc);
             }
             else
@@ -130,6 +182,27 @@ namespace CKWMS.Controllers
                 }
                 if (!string.IsNullOrEmpty(bianhao))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bianhao", bianhao, bianhaoequal, bianhaoand);
+                //shangpingmingcheng
+                if (!string.IsNullOrEmpty(shangpingmingcheng))
+                {
+                    if (bianhaoequal.Equals("="))
+                    {
+                        if (bianhaoand.Equals("and"))
+                            where = where.And(base_shangpinzcz => base_shangpinzcz.Mingcheng == shangpingmingcheng);
+                        else
+                            where = where.Or(base_shangpinzcz => base_shangpinzcz.Mingcheng == shangpingmingcheng);
+                    }
+                    if (bianhaoequal.Equals("like"))
+                    {
+                        if (bianhaoand.Equals("and"))
+                            where = where.And(base_shangpinzcz => base_shangpinzcz.Mingcheng.Contains(shangpingmingcheng));
+                        else
+                            where = where.Or(base_shangpinzcz => base_shangpinzcz.Mingcheng.Contains(shangpingmingcheng));
+                    }
+                }
+                if (!string.IsNullOrEmpty(shangpingmingcheng))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpingmingcheng", shangpingmingcheng, shangpingmingchengequal, shangpingmingchengand);
+
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;
@@ -139,7 +212,7 @@ namespace CKWMS.Controllers
             ViewBag.base_shangpinzcz = tempData;
             return View(tempData);
         }
-
+        
         public ActionResult Add()
         {
 

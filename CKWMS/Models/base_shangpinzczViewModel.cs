@@ -1,3 +1,4 @@
+using CKWMS.Controllers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,16 +9,19 @@ namespace CKWMS.Models
     {
         [Display(Name = "序号")]
         public int ID { get; set; }
+        [Required(ErrorMessage = "注册证编号不能为空")]
         [Display(Name = "注册证编号")]
         public string Bianhao { get; set; }
+        [Required(ErrorMessage = "商品名称不能为空")]
         [Display(Name = "商品名称")]
         public string Mingcheng { get; set; }
         [Display(Name = "规格")]
         public string Guige { get; set; }
         [Display(Name = "产品标准")]
+        [Required]
         public string Bianzhun { get; set; }
         [Display(Name = "注册证有效期")]
-        [DataType(DataType.Date)]
+        [DataType(DataType.Currency)]
         public DateTime? ZhucezhengYXQ { get; set; }
         [Display(Name = "注册证照片")]
         public string ZhucezhengTP { get; set; }
