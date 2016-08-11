@@ -2,10 +2,13 @@
 @using CKWMS.Models
 @using X.PagedList
 @using X.PagedList.Mvc
+
 @{
     ViewBag.Title = "生产企业清单";
     string _searchcondition = ViewBag.SearchCondition;
 }
+@Html.GetFileUpload("item.YingyezhizhaoTP", "yyzz", "z", "cus", 2, 0, new Dictionary<string, string>() { { "yyzz", "item.YingyezhizhaoTP" }, { "xktp", "item.Shengchanxuketp" } })
+
 <script type="text/javascript">
     $(document).ready(function () {
         $("tr").bind("dblclick", function () {
@@ -36,7 +39,11 @@
         var url_go = "/base_shengchanqiye/Delete/?del=" + sDel;
         location.href = url_go;
     }
+
+
+
 </script>
+
 @{
     List<SearchConditionModel> scms = new List<SearchConditionModel>();
     if (_searchcondition == null || _searchcondition == "")
@@ -52,6 +59,11 @@
         scm.ItemTitle = "名称";
         scm.ItemType = "System.String";
         scms.Add(scm);
+        //scm = new SearchConditionModel();
+        //scm.ItemCode = "Shouying";
+        //scm.ItemTitle = "首营状态";
+        //scm.ItemType = "System.String";
+        //scms.Add(scm);
     }
     else
     {
@@ -69,11 +81,19 @@
                 scm.ItemOpValue = scs[0].Split(',')[2];
                 scm.ItemJion = scs[0].Split(',')[3];
             }
+
             scms.Add(scm);
             scm = new SearchConditionModel();
             scm.ItemCode = "Qiyemingcheng";
             scm.ItemTitle = "名称";
             scm.ItemType = "System.String";
+
+            //scms.Add(scm);
+            //scm = new SearchConditionModel();
+            //scm.ItemCode = "Shouying";
+            //scm.ItemTitle = "首营状态";
+            //scm.ItemType = "System.String";
+
             //if (scs.Length > 1)
             //{
             //    scm.ItemValue = scs[1].Split(',')[1];
@@ -128,8 +148,11 @@
                 </tr>
             </thead>
             <tbody>
+
+
                 @foreach (var item in ViewBag.base_shengchanqiye)
                 {
+
                     <tr>
                         <td>
                             <div class="checkbox">
@@ -139,14 +162,22 @@
                         <td>@item.Daima</td>
                         <td>@item.Qiyemingcheng</td>
                         <td>@item.YingyezhizhaoBH</td>
-                        <td>@item.YingyezhizhaoYXQ</td>
-                        <td>@item.YingyezhizhaoTP</td>
+                        <td>@item.YingyezhizhaoYXQ.ToString("yyyy-MM-dd")</td>
+
+                        <td>
+
+                            <a href="/files/zhengzhao/@item.YingyezhizhaoTP" target="_blank">浏览</a>
+
+                        </td>
                         <td>@item.ShengchanxukeBH</td>
-                        <td>@item.ShengchanxukeYXQ</td>
-                        <td>@item.ShengchanxukeTP</td>
+                        <td>@item.ShengchanxukeYXQ.ToString("yyyy-MM-dd")</td>
+                        <td>
+                            <a href="/files/zhengzhao/@item.ShengchanxukeTP" target="_blank">浏览</a>
+
+                        </td>
                         @*<td>@item.Shouying</td>*@
                         <td>@Html.GetCommonValue_ID("首营状态", (int)item.Shouying)</td>
-                        <td>@item.MakeDate</td>
+                        <td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
                         @*<td>@item.MakeMan</td>*@
                         <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
                     </tr>
