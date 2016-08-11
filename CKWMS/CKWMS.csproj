@@ -312,6 +312,7 @@
     <Compile Include="Controllers\base_weituokehuController.cs" />
     <Compile Include="Controllers\base_xiaoshouController.cs" />
     <Compile Include="Controllers\base_yonghuController.cs" />
+    <Compile Include="Controllers\base_zhucezhengggController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\operatelogController.cs" />
@@ -349,6 +350,7 @@
     <Compile Include="Models\base_weituokehuViewModel.cs" />
     <Compile Include="Models\base_xiaoshouViewModel.cs" />
     <Compile Include="Models\base_yonghuViewModel.cs" />
+    <Compile Include="Models\base_zhucezhengggViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\operatelogViewModel.cs" />
@@ -634,6 +636,9 @@
     <Content Include="Views\auth_juesemx\RoleDetail.cshtml" />
     <Content Include="Views\view_roledetail\RoleDetail.cshtml" />
     <Content Include="Views\auth_quanxian\Authority.cshtml" />
+    <Content Include="Views\base_zhucezhenggg\Add.cshtml" />
+    <Content Include="Views\base_zhucezhenggg\Edit.cshtml" />
+    <Content Include="Views\base_zhucezhenggg\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
