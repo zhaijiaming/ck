@@ -638,9 +638,6 @@ namespace CKWMS.App_Code
             }
             sb.AppendLine("</ul>");
             sb.AppendLine("<div class=\"center\">");
-            //sb.AppendLine("<button type=\"button\" class=\"btn btn - default\" onclick=\"CleanCondition()\"><i class=\"icon-remove\"></i>");
-            //sb.AppendLine("清空条件");
-            //sb.AppendLine("</button>");
             sb.AppendLine("<button type=\"submit\" class=\"btn btn - default\"><i class=\"icon-upload\"></i>提交查询</button>");
             sb.AppendLine("</div>");
             sb.AppendLine("</form>");
@@ -773,6 +770,36 @@ namespace CKWMS.App_Code
                     }
                     break;
                 default:
+                    break;
+            }
+            return MvcHtmlString.Create(returnvalue);
+        }
+        /// <summary>
+        /// 文件名转浏览方法
+        /// </summary>
+        /// <param name="html"></param>
+        /// <param name="filename">文件名</param>
+        /// <param name="showname">显示名</param>
+        /// <param name="filetype">文件类型：1，证照；2，业务；3，其他</param>
+        /// <returns></returns>
+        public static MvcHtmlString GetCommonURL(this HtmlHelper html,string filename,string showname,int filetype)
+        {
+            string returnvalue = "";
+            if (filename.Length < 1)
+                return MvcHtmlString.Create(returnvalue);
+            switch (filetype)
+            {
+                case 1:
+                    returnvalue = "<a href='/files/zhengzhao/"+filename+ "'  target='_blank'>"+showname+"</a>";
+                    break;
+                case 2:
+                    returnvalue = "<a href='/files/yewu/" + filename + "'  target='_blank'>" + showname + "</a>";
+                    break;
+                case 3:
+                    returnvalue = "<a href='/files/other/" + filename + "'  target='_blank'>" + showname + "</a>";
+                    break;
+                default:
+                    returnvalue = filename;
                     break;
             }
             return MvcHtmlString.Create(returnvalue);

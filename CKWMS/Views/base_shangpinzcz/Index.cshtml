@@ -6,6 +6,7 @@
     ViewBag.Title = "商品注册证清单";
     string _searchcondition = ViewBag.SearchCondition;
 }
+
 <script type="text/javascript">
     $(document).ready(function () {
         $("tr").bind("dblclick", function () {
@@ -46,6 +47,19 @@
         scm.ItemTitle = "注册证编号";
         scm.ItemType = "System.String";
         scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "Mingcheng";
+        scm.ItemTitle = "商品名称";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "ZhucezhengYXQ";
+        scm.ItemTitle = "注册有效期";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+
     }
     else
     {
@@ -62,6 +76,24 @@
                 scm.ItemOpValue = scs[0].Split(',')[2];
                 scm.ItemJion = scs[0].Split(',')[3];
             }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "Mingcheng";
+            scm.ItemTitle = "商品名称";
+            scm.ItemType = "System.String";
+            //if (scs.Length > 1)
+            //{
+            //    scm.ItemValue = scs[1].Split(',')[1];
+            //    scm.ItemOpValue = scs[1].Split(',')[2];
+            //    scm.ItemJion = scs[1].Split(',')[3];
+            //}
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "ZhucezhengYXQ";
+            scm.ItemTitle = "注册有效期";
+            scm.ItemType = "System.String";
             scms.Add(scm);
         }
     }
@@ -119,9 +151,9 @@
                         <td>@item.Mingcheng</td>
                         <td>@item.Guige</td>
                         <td>@item.Bianzhun</td>
-                        <td>@item.ZhucezhengYXQ</td>
-                        <td>@item.ZhucezhengTP</td>
-                        <td>@item.MakeDate</td>
+                        <td>@item.ZhucezhengYXQ.ToString("yyyy-MM-dd")</td>
+                        <td><a href="/files/zhengzhao/@item.ZhucezhengTP" target="_blank">浏览</a></td>
+                        <td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
                         <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
                     </tr>
                 }
