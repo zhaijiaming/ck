@@ -9,17 +9,13 @@ namespace CKWMS.Models
         [Display(Name = "序号")]
         public int ID { get; set; }
         [Display(Name = "代码")]
-        [Required(ErrorMessage = "代码不能为空")]
         public string Daima { get; set; }
         [Display(Name = "名称")]
-        [Required(ErrorMessage = "名称不能为空")]
         public string Qiyemingcheng { get; set; }
         [Display(Name = "营业执照编号")]
         public string YingyezhizhaoBH { get; set; }
         [Display(Name = "营业执照有效期")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        
         public DateTime? YingyezhizhaoYXQ { get; set; }
         [Display(Name = "营业执照图片")]
         public string YingyezhizhaoTP { get; set; }
@@ -27,7 +23,6 @@ namespace CKWMS.Models
         public string ShengchanxukeBH { get; set; }
         [Display(Name = "生产许可有效期")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? ShengchanxukeYXQ { get; set; }
         [Display(Name = "生产许可照片")]
         public string ShengchanxukeTP { get; set; }
@@ -47,7 +42,6 @@ namespace CKWMS.Models
         public string Col6 { get; set; }
         [Display(Name = "录入日期")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime MakeDate { get; set; }
         [Display(Name = "输入人")]
         public int? MakeMan { get; set; }
