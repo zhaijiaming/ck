@@ -111,10 +111,10 @@
                                 <label><input type="checkbox" value="@item.ID"></label>
                             </div>
                         </td>
-                        <td>@item.RoleID</td>
-                        <td>@item.FuncID</td>
+                        <td>@Html.GetDataValue_ID("角色","名称",(int)item.RoleID)</td>
+                        <td>@Html.GetDataValue_ID("功能","名称",(int)item.FuncID)</td>
                         <td>@item.MakeDate</td>
-                        <td>@item.MakeMan</td>
+                        <td>@Html.GetDataValue_ID("userinfo","全名",(int)item.MakeMan)</td>
                     </tr>
                 }
             </tbody>

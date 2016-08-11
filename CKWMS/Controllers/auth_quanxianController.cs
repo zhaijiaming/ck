@@ -129,7 +129,7 @@ namespace CKWMS.Controllers
             string pagetag = "auth_quanxian_index";
             Expression<Func<auth_quanxian, bool>> where = PredicateExtensionses.True<auth_quanxian>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
-            if (sc != null)
+            if (sc != null && sc.ConditionInfo!=null)
             {
                 string[] sclist = sc.ConditionInfo.Split(';');
                 foreach (string scl in sclist)
@@ -266,6 +266,7 @@ namespace CKWMS.Controllers
 
         public ActionResult Add()
         {
+            ViewBag.userid = (int)Session["user_id"];
             return View();
         }
 

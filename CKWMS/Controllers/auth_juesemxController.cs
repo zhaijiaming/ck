@@ -16,21 +16,62 @@ namespace CKWMS.Controllers
     public class auth_juesemxController : Controller
     {
         private Iauth_juesemxService ob_auth_juesemxservice = ServiceFactory.auth_juesemxservice;
-        [OutputCache(Duration =10)]
+        [OutputCache(Duration = 10)]
         public ActionResult RoleDetail(string page)
         {
             if (string.IsNullOrEmpty(page))
                 page = "1";
             int userid = (int)Session["user_id"];
             string jsid = Request["jsid"] ?? "";
-            if(jsid=="")
-            return View();
-            else
+            if (jsid == "")
+                jsid = "0";
+            string gnstring = "";
+            string modstr = "";
+            Iauth_gongnengService gnservice = ServiceFactory.auth_gongnengservice;
+            IList<auth_gongneng> gnlist = gnservice.LoadSortEntities(auth_gongneng => auth_gongneng.IsDelete == false, true, auth_gongneng => auth_gongneng.Module).ToList<auth_gongneng>();
+            foreach (auth_gongneng gn in gnlist)
             {
-                var tempData = ob_auth_juesemxservice.LoadSortEntities(auth_juesemx=>auth_juesemx.RoleID==int.Parse(jsid) && auth_juesemx.IsDelete==false, false, auth_juesemx => auth_juesemx.ID).ToPagedList<auth_juesemx>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
-                ViewBag.auth_juesemx = tempData;
-                return View(tempData);
+                if (modstr.Equals(gn.Module))
+                {
+                    gnstring = gnstring + gn.Name + "(" + gn.ID.ToString() + "),";
+                }
+                else
+                {
+                    modstr = gn.Module;
+                    if (gnstring.Length > 0)
+                    {
+                        gnstring = gnstring.Substring(0, gnstring.Length - 1);
+                        gnstring = gnstring + ";";
+                    }
+                    gnstring = gnstring + gn.Module + ":" + gn.Name + "(" + gn.ID.ToString() + "),";
+                }
             }
+            var tmpdata = ob_auth_juesemxservice.GetRoleDetailsByRole(int.Parse(jsid));
+            string gnstring1 = "";
+            string modstr1 = "";
+            IList<auth_roledetail> rdlist = tmpdata.ToList<auth_roledetail>();
+            foreach (auth_roledetail rd in rdlist)
+            {
+                if (modstr1.Equals(rd.module))
+                {
+                    gnstring1 = gnstring1 + rd.name + "(" + rd.funid.ToString() + ")" + ",";
+                }
+                else
+                {
+                    modstr1 = rd.module;
+                    if (gnstring1.Length > 0)
+                    {
+                        gnstring1 = gnstring1.Substring(0, gnstring1.Length - 1);
+                        gnstring1 = gnstring1 + ";";
+                    }
+                    gnstring1 = gnstring1 + rd.module + ":" + rd.name + "(" + rd.funid.ToString() + ")" + ",";
+                }
+            }
+            ViewBag.fundata = gnstring;
+            ViewBag.funs = gnstring1;
+            ViewBag.jsid = jsid;
+            ViewBag.roledetails = tmpdata;
+            return View();
         }
         [OutputCache(Duration = 30)]
         public ActionResult Index(string page)
@@ -178,33 +219,42 @@ namespace CKWMS.Controllers
 
         public ActionResult Add()
         {
+            ViewBag.userid = (int)Session["user_id"];
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult UpdataMX()
+        public ActionResult UpdateMX()
         {
             var jsid = Request["jsid"] ?? "";
-            var funs = Request["funs"] ?? "";
+            var funs = Request["funids"] ?? "";
             var funsave = Request["funsave"] ?? "";
             int userid = (int)Session["user_id"];
             if (jsid == "")
                 jsid = "0";
             else
             {
-                string[] ofunlist = funs.Split(',');
+                string[] originlist = funs.Split(';');
                 Dictionary<int, bool> dicfun = new Dictionary<int, bool>();
                 string ofunid = "";
-                foreach(string ofun in ofunlist)
+                foreach (string originfun in originlist)
                 {
-                    if (ofun.Length > 0)
+                    if (originfun.Length > 0)
                     {
-                        ofunid = ofun.Substring(ofun.IndexOf('('),ofun.IndexOf(')')-ofun.IndexOf('('));
-                        dicfun.Add(int.Parse(ofunid), false);
+                        string[] ofunlist = funs.Split(',');
+                        foreach (string ofun in ofunlist)
+                        {
+                            if (ofun.Length > 0)
+                            {
+                                ofunid = ofun.Substring(ofun.IndexOf('(') + 1, ofun.IndexOf(')') - ofun.IndexOf('(') - 1);
+                                if (!dicfun.ContainsKey(int.Parse(ofunid)))
+                                    dicfun.Add(int.Parse(ofunid), false);
+                            }
+                        }
                     }
                 }
                 string[] funlist = funsave.Split(',');
-                foreach(string funid in funlist)
+                foreach (string funid in funlist)
                 {
                     if (funid.Length > 0)
                     {
@@ -220,12 +270,12 @@ namespace CKWMS.Controllers
                         }
                     }
                 }
-                foreach(var b in dicfun)
+                foreach (var b in dicfun)
                 {
                     if (!b.Value)
                     {
-                        auth_juesemx juesemx = ob_auth_juesemxservice.GetEntityById(auth_juesemx => auth_juesemx.RoleID == int.Parse(jsid) && auth_juesemx.FuncID ==b.Key && auth_juesemx.IsDelete==false);
-                        if (juesemx !=null)
+                        auth_juesemx juesemx = ob_auth_juesemxservice.GetEntityById(auth_juesemx => auth_juesemx.RoleID == int.Parse(jsid) && auth_juesemx.FuncID == b.Key && auth_juesemx.IsDelete == false);
+                        if (juesemx != null)
                         {
                             juesemx.IsDelete = true;
                             juesemx.MakeDate = DateTime.Now;
@@ -236,7 +286,7 @@ namespace CKWMS.Controllers
                 }
             }
 
-            return RedirectToAction("Index","auth_juese");
+            return RedirectToAction("Index", "auth_juese");
         }
 
 

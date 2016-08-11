@@ -65,7 +65,8 @@ namespace CKWMS.App_Code
             {
                 case "货主": //"base_weituokehu":
                     Ibase_weituokehuService wtkh = ServiceFactory.base_weituokehuservice;
-                    foreach (var i in wtkh.LoadSortEntities(base_weituokehu => base_weituokehu.IsDelete == false, true, base_weituokehu => base_weituokehu.Daima))
+                    var tmpwtkh = wtkh.LoadSortEntities(base_weituokehu => base_weituokehu.IsDelete == false, true, base_weituokehu => base_weituokehu.Daima);
+                    foreach (var i in tmpwtkh)
                     {
                         switch (itemname)
                         {
@@ -99,7 +100,8 @@ namespace CKWMS.App_Code
                     break;
                 case "供应商": //"base_gongyingshang":
                     Ibase_gongyingshangService gys = ServiceFactory.base_gongyingshangservice;
-                    foreach (var i in gys.LoadSortEntities(base_gongyingshang => base_gongyingshang.IsDelete == false, true, base_gongyingshang => base_gongyingshang.Daima))
+                    var tmpgys =gys.LoadSortEntities(base_gongyingshang => base_gongyingshang.IsDelete == false, true, base_gongyingshang => base_gongyingshang.Daima);
+                    foreach (var i in tmpgys)
                     {
                         if (i.ID == selectedvalue && selectedvalue != 0)
                             sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}_{2}</option>", i.ID, i.Daima, i.Mingcheng);
@@ -109,7 +111,8 @@ namespace CKWMS.App_Code
                     break;
                 case "厂家": //"base_shengchanqiye":
                     Ibase_shengchanqiyeService scqy = ServiceFactory.base_shengchanqiyeservice;
-                    foreach (var i in scqy.LoadSortEntities(base_shengchanqiye => base_shengchanqiye.IsDelete == false, true, base_shengchanqiye => base_shengchanqiye.Daima))
+                    var tmpscqy =scqy.LoadSortEntities(base_shengchanqiye => base_shengchanqiye.IsDelete == false, true, base_shengchanqiye => base_shengchanqiye.Daima);
+                    foreach (var i in tmpscqy)
                     {
                         if (i.ID == selectedvalue && selectedvalue != 0)
                             sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}_{2}</option>", i.ID, i.Daima, i.Qiyemingcheng);
@@ -117,12 +120,35 @@ namespace CKWMS.App_Code
                             sb.AppendFormat("<option value=\"{0}\">{1}_{2}</option>", i.ID, i.Daima, i.Qiyemingcheng);
                     }
                     break;
+                case "角色"://auth_juese
+                    Iauth_jueseService jueseservice = ServiceFactory.auth_jueseservice;
+                    var tmpjs =jueseservice.LoadSortEntities(auth_juese =>auth_juese.IsDelete == false, true, auth_juese =>auth_juese.RoleName);
+                    foreach (var i in tmpjs)
+                    {
+                        if (i.ID == selectedvalue && selectedvalue != 0)
+                            sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.ID, i.RoleName);
+                        else
+                            sb.AppendFormat("<option value=\"{0}\">{1}</option>", i.ID, i.RoleName);
+                    }
+                    break;
+                case "功能":
+                    Iauth_gongnengService gongnengservice = ServiceFactory.auth_gongnengservice;
+                    var tmpgn = gongnengservice.LoadSortEntities(auth_gongneng=>auth_gongneng.IsDelete==false,true,auth_gongneng=>auth_gongneng.Name);
+                    foreach(var i in tmpgn)
+                    {
+                        if (i.ID == selectedvalue && selectedvalue != 0)
+                            sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}_{2}</option>", i.ID, i.Name,i.Module);
+                        else
+                            sb.AppendFormat("<option value=\"{0}\">{1}_{2}</option>", i.ID, i.Name,i.Module);
+                    }
+                    break;
                 case "userinfo"://用户
                     IuserinfoService uis = ServiceFactory.userinfoservice;
+                    var tmpus =uis.LoadSortEntities(userinfo => userinfo.IsDelete == false, true, userinfo => userinfo.Account);
                     switch (itemname)
                     {
                         case "account":
-                            foreach (var i in uis.LoadSortEntities(userinfo => userinfo.IsDelete == false, true, userinfo => userinfo.Account))
+                            foreach (var i in tmpus)
                             {
                                 if (i.ID == selectedvalue && selectedvalue != 0)
                                     sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.ID, i.Account);
@@ -267,44 +293,45 @@ namespace CKWMS.App_Code
         {
             string curmodule = "";
             StringBuilder sb = new StringBuilder();
-            Iview_rolepersonService personrole = ServiceFactory.view_rolepersonservice;
-            var rps = personrole.LoadSortEntities(view_roleperson => view_roleperson.ryid == userid && view_roleperson.grade == 1, true, view_roleperson => view_roleperson.module);
-            if (rps !=null) { 
-            foreach (view_roleperson rp in rps)
+            Iauth_quanxianService qxservice = ServiceFactory.auth_quanxianservice;
+            var rps = qxservice.GetPersonRightsFirst(userid).Distinct();
+            if (rps != null)
             {
-                if (curmodule.Equals(rp.module.Trim()))
+                foreach (auth_personrights rp in rps)
                 {
-                    sb.AppendLine("<li><i class=\"icon-double-angle-right\"></i><a href=\"/" + rp.controller.Trim() + "\">" + rp.name + "</a></li>");
-                }
-                else
-                {
-                    if (curmodule.Length > 1)
+                    if (rp.ryid == userid)
                     {
-                        sb.AppendLine("</ul>");
-                        sb.AppendLine("</li>");
-                        //sb.AppendLine("<li>");
-                        //sb.AppendLine("<a href=\"#\" clase=\"dropdown-toggle\">");
-                        //sb.AppendLine("<i class=\"icon-check\"></i>");
-                        //sb.AppendLine("<span class=\"menu-text\">"+rp.name+"</span>");
-                        //sb.AppendLine("<b class=\"arrow icon-angle-down\"></b>");
-                        //sb.AppendLine("</a>");
-                        //sb.AppendLine("<ul class=\"submenu\">");
+
+                        if (curmodule.Equals(rp.module.Trim()))
+                        {
+                            sb.AppendLine("<li><i class=\"icon-double-angle-right\"></i><a href=\"/" + rp.controller.Trim() + "\">" + rp.name + "</a></li>");
+                        }
+                        else
+                        {
+                            if (curmodule.Length > 1)
+                            {
+                                sb.AppendLine("</ul>");
+                                sb.AppendLine("</li>");
+                            }
+                            sb.AppendLine("<li>");
+                            sb.AppendLine("<a href=\"#\" class=\"dropdown-toggle\">");
+                            sb.AppendLine("<i class=\"" + getIcon(rp.module.Trim()) + "\"></i>");
+                            sb.AppendLine("<span class=\"menu-text\">" + rp.module.Trim() + "</span>");
+                            sb.AppendLine("<b class=\"arrow icon-angle-down\"></b>");
+                            sb.AppendLine("</a>");
+                            sb.AppendLine("<ul class=\"submenu\">");
+                            curmodule = rp.module.Trim();
+                            sb.AppendLine("<li><i class=\"icon-double-angle-right\"></i><a href=\"/" + rp.controller.Trim() + "\">" + rp.name + "</a></li>");
+                        }
                     }
-                    sb.AppendLine("<li>");
-                    sb.AppendLine("<a href=\"#\" class=\"dropdown-toggle\">");
-                    sb.AppendLine("<i class=\"" + getIcon(rp.module.Trim()) + "\"></i>");
-                    sb.AppendLine("<span class=\"menu-text\">" + rp.module.Trim() + "</span>");
-                    sb.AppendLine("<b class=\"arrow icon-angle-down\"></b>");
-                    sb.AppendLine("</a>");
-                    sb.AppendLine("<ul class=\"submenu\">");
-                    curmodule = rp.module.Trim();
-                    //<li><iclass="icon-double-angle-right"></i>@Html.ActionLink("收货单位", "Index", "base_shouhuodanwei")</li>
-                    sb.AppendLine("<li><i class=\"icon-double-angle-right\"></i><a href=\"/" + rp.controller.Trim() + "\">" + rp.name + "</a></li>");
+                    else
+                    {
+                        Console.WriteLine(rp.ryid);
+                    }
                 }
+                sb.AppendLine("</ul>");
+                sb.AppendLine("</li>");
             }
-            sb.AppendLine("</ul>");
-            sb.AppendLine("</li>");
-}
             return MvcHtmlString.Create(sb.ToString());
         }
         private static string getIcon(string modulename)
@@ -611,9 +638,6 @@ namespace CKWMS.App_Code
             }
             sb.AppendLine("</ul>");
             sb.AppendLine("<div class=\"center\">");
-            //sb.AppendLine("<button type=\"button\" class=\"btn btn - default\" onclick=\"CleanCondition()\"><i class=\"icon-remove\"></i>");
-            //sb.AppendLine("清空条件");
-            //sb.AppendLine("</button>");
             sb.AppendLine("<button type=\"submit\" class=\"btn btn - default\"><i class=\"icon-upload\"></i>提交查询</button>");
             sb.AppendLine("</div>");
             sb.AppendLine("</form>");
@@ -638,24 +662,24 @@ namespace CKWMS.App_Code
             //module:fun1,fun2;
             if (treedata.Length > 0)
             {
-                modulestr= "var tree_data11={";
+                modulestr = "var tree_data11={";
                 string[] mods = treedata.Split(';');
                 foreach (string ms in mods)
                 {
                     if (ms.Length > 0)
                     {
                         string modname = ms.Substring(0, ms.IndexOf(':'));
-                        string modfuns = ms.Substring(ms.IndexOf(':')+1);
-                        if (modfuns.Length > 0 && modfuns!=";")
+                        string modfuns = ms.Substring(ms.IndexOf(':') + 1);
+                        if (modfuns.Length > 0 && modfuns != ";")
                         {
-                            modulestr = modulestr +"'"+modname+"':{ name:'"+modname+"',type:'folder'},";
-                            funstr ="tree_data11['"+modname+"']['additionalParameters']={'children':{";
+                            modulestr = modulestr + "'" + modname + "':{ name:'" + modname + "',type:'folder'},";
+                            funstr = "tree_data11['" + modname + "']['additionalParameters']={'children':{";
                             string[] funs = modfuns.Split(',');
                             foreach (string funname in funs)
                             {
                                 if (funname.Length > 0)
                                 {
-                                    funstr = funstr +"'"+funname+"':{name:'"+funname+"',type:'item'},";
+                                    funstr = funstr + "'" + funname + "':{name:'" + funname + "',type:'item'},";
                                 }
                             }
                             funstr = funstr.Substring(0, funstr.Length - 1);
@@ -685,6 +709,34 @@ namespace CKWMS.App_Code
             string returnvalue = "";
             switch (className)
             {
+                case "功能":
+                    Iauth_gongnengService gnservice = ServiceFactory.auth_gongnengservice;
+                    auth_gongneng gongneng = gnservice.GetEntityById(auth_gongneng => auth_gongneng.ID == dataValue);
+                    if (gongneng == null)
+                        returnvalue = "";
+                    else
+                    {
+                        if (itemName == "名称")
+                            returnvalue = gongneng.Name;
+                        if (itemName == "控制")
+                            returnvalue = gongneng.Controller;
+                        if (itemName == "函数")
+                            returnvalue = gongneng.Function;
+                    }
+                    break;
+                case "角色":
+                    Iauth_jueseService jss = ServiceFactory.auth_jueseservice;
+                    auth_juese juese = jss.GetEntityById(auth_juese => auth_juese.ID == dataValue);
+                    if (juese == null)
+                        returnvalue = "";
+                    else
+                    {
+                        if (itemName == "名称")
+                            returnvalue = juese.RoleName;
+                        if (itemName == "描述")
+                            returnvalue = juese.RoleName;
+                    }
+                    break;
                 case "userinfo":
                     IuserinfoService us = ServiceFactory.userinfoservice;
                     userinfo ui = us.GetEntityById(userinfo => userinfo.ID == dataValue);
@@ -718,6 +770,36 @@ namespace CKWMS.App_Code
                     }
                     break;
                 default:
+                    break;
+            }
+            return MvcHtmlString.Create(returnvalue);
+        }
+        /// <summary>
+        /// 文件名转浏览方法
+        /// </summary>
+        /// <param name="html"></param>
+        /// <param name="filename">文件名</param>
+        /// <param name="showname">显示名</param>
+        /// <param name="filetype">文件类型：1，证照；2，业务；3，其他</param>
+        /// <returns></returns>
+        public static MvcHtmlString GetCommonURL(this HtmlHelper html,string filename,string showname,int filetype)
+        {
+            string returnvalue = "";
+            if (filename.Length < 1)
+                return MvcHtmlString.Create(returnvalue);
+            switch (filetype)
+            {
+                case 1:
+                    returnvalue = "<a href='/files/zhengzhao/"+filename+ "'  target='_blank'>"+showname+"</a>";
+                    break;
+                case 2:
+                    returnvalue = "<a href='/files/yewu/" + filename + "'  target='_blank'>" + showname + "</a>";
+                    break;
+                case 3:
+                    returnvalue = "<a href='/files/other/" + filename + "'  target='_blank'>" + showname + "</a>";
+                    break;
+                default:
+                    returnvalue = filename;
                     break;
             }
             return MvcHtmlString.Create(returnvalue);
