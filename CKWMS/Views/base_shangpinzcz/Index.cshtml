@@ -139,7 +139,7 @@
                         <td>录入日期</td>
                         <td>中文编号</td>
                         <td>产地</td>
-                        <td>生产企业序号</td>
+                        <td>生产企业</td>
                         <td>服务机构</td>
                         <td>注册证照片</td>
                         <td>输入人</td>
@@ -167,7 +167,7 @@
                             <td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
                             <td>@item.BianhaoZW</td>
                             <td>@item.Chandi</td>
-                            <td>@item.ShengchanqiyeID</td>
+                            <td>@Html.GetDataValue_ID("厂家","",(int)item.ShengchanqiyeID)</td>
                             <td>@item.ShouhuoJG</td>
                             <td><a href="/files/zhengzhao/@item.ZhucezhengTP" target="_blank">浏览</a></td>
                             <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>

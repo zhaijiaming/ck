@@ -199,13 +199,13 @@
                     @Html.ValidationMessageFor(m => m.Chandi)
                 </div>
             </div>
-            @*生产企业序号*@
+            @*生产企业*@
             <div class="form-group">
                 <div class="control-label col-sm-2">
                     @Html.LabelFor(m => m.ShengchanqiyeID)
                 </div>
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.ShengchanqiyeID, new { @class = "form-control" })
+                    @Html.SelectList_Auto("Shengchanqiyeid", "厂家", "",(long)ViewData.Model.ShengchanqiyeID)
                     @Html.ValidationMessageFor(m => m.ShengchanqiyeID)
                 </div>
             </div>

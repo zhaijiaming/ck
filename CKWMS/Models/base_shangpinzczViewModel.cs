@@ -44,7 +44,7 @@ namespace CKWMS.Models
         public string BianhaoZW { get; set; }
         [Display(Name = "产地")]
         public string Chandi { get; set; }
-        [Display(Name = "生产企业序号")]
+        [Display(Name = "生产企业")]
         public int ShengchanqiyeID { get; set; }
         [Display(Name = "适用范围")]
         public string ShiyongFW { get; set; }

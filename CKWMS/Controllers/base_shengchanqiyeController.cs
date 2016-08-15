@@ -207,6 +207,10 @@ namespace CKWMS.Controllers
             string shouying = Request["shouying"] ?? "";
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
+            //新增
+            string qiyedizhi = Request["qiyedizhi"] ?? "";
+            string shengchandizhi = Request["shengchandizhi"] ?? "";
+            string hezuosf = Request["hezuosf"] ?? "";
             try
             {
                 base_shengchanqiye ob_base_shengchanqiye = new base_shengchanqiye();
@@ -221,6 +225,11 @@ namespace CKWMS.Controllers
                 ob_base_shengchanqiye.Shouying = shouying == "" ? 0 : int.Parse(shouying);
                 ob_base_shengchanqiye.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 ob_base_shengchanqiye.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
+                //新增
+                ob_base_shengchanqiye.Qiyedizhi = qiyedizhi.Trim();
+                ob_base_shengchanqiye.Shengchandizhi = shengchandizhi.Trim();
+                ob_base_shengchanqiye.HezuoSF = hezuosf == "true" ? true : false;
+
                 ob_base_shengchanqiye = ob_base_shengchanqiyeservice.AddEntity(ob_base_shengchanqiye);
                 ViewBag.base_shengchanqiye = ob_base_shengchanqiye;
             }
@@ -253,6 +262,10 @@ namespace CKWMS.Controllers
                 base_shengchanqiyeviewmodel.Shouying = tempData.Shouying;
                 base_shengchanqiyeviewmodel.MakeDate = tempData.MakeDate;
                 base_shengchanqiyeviewmodel.MakeMan = tempData.MakeMan;
+                //新增
+                base_shengchanqiyeviewmodel.Qiyedizhi = tempData.Qiyedizhi;
+                base_shengchanqiyeviewmodel.Shengchandizhi = tempData.Shengchandizhi;
+                base_shengchanqiyeviewmodel.ShenchaSF = tempData.ShenchaSF;
                 return View(base_shengchanqiyeviewmodel);
             }
         }
@@ -273,6 +286,10 @@ namespace CKWMS.Controllers
             string shouying = Request["shouying"] ?? "";
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
+            //新增
+            string qiyedizhi = Request["qiyedizhi"] ?? "";
+            string shengchandizhi = Request["shengchandizhi"] ?? "";
+            string hezuosf = Request["hezuosf"] ?? "";
             int uid = int.Parse(id);
             try
             {
@@ -288,6 +305,11 @@ namespace CKWMS.Controllers
                 p.Shouying = shouying == "" ? 0 : int.Parse(shouying);
                 p.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 p.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
+                //新增
+                p.Qiyedizhi = qiyedizhi.Trim();
+                p.Shengchandizhi = shengchandizhi.Trim();
+                p.HezuoSF = hezuosf == "true" ? true : false;
+
                 ob_base_shengchanqiyeservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;
             }

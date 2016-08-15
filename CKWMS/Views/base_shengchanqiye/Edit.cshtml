@@ -224,6 +224,36 @@
                     @Html.SelectList_Auto("MakeMan", "userinfo", "fullname", (long)ViewData.Model.MakeMan)
                 </div>
             </div>
+            @*企业地址*@
+            <div class="form-group">
+                @Html.LabelFor(m => m.Qiyedizhi, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.Qiyedizhi, new { @class = "form-control" })
+                </div>
+            </div>
+            @*生产地址*@
+            <div class="form-group">
+                @Html.LabelFor(m => m.Shengchandizhi, new { @class = "control-labe col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.Shengchandizhi, new { @class = "form-control" })
+                </div>
+            </div>
+            @*是否合作*@
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    @Html.LabelFor(m => m.HezuoSF)
+                </div>
+                <div>
+                    <label class="radio-inline">
+                        <input type="radio" name="hezuosf" value="true" checked>
+                        是
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="hezuosf" value="false">
+                        否
+                    </label>
+                </div>
+            </div>
         </div>
     }
 </div>
