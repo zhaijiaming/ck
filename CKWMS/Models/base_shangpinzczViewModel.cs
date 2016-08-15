@@ -21,7 +21,7 @@ namespace CKWMS.Models
         [Required]
         public string Bianzhun { get; set; }
         [Display(Name = "注册证有效期")]
-        [DataType(DataType.Currency)]
+        [DataType(DataType.Date)]
         public DateTime? ZhucezhengYXQ { get; set; }
         [Display(Name = "注册证照片")]
         public string ZhucezhengTP { get; set; }

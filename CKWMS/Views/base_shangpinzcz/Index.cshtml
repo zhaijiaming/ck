@@ -37,6 +37,8 @@
         var url_go = "/base_shangpinzcz/Delete/?del=" + sDel;
         location.href = url_go;
     }
+
+    
 </script>
 @{
     List<SearchConditionModel> scms = new List<SearchConditionModel>();
@@ -122,45 +124,67 @@
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
         </p>
     </div>
-    <div class="row">
-        <table class="table" id="mydatatable">
-            <caption></caption>
-            <thead>
-                <tr>
-                    <td></td>
-                    <td>注册证编号</td>
-                    <td>商品名称</td>
-                    <td>规格</td>
-                    <td>产品标准</td>
-                    <td>注册证有效期</td>
-                    <td>注册证照片</td>
-                    <td>录入日期</td>
-                    <td>输入人</td>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in ViewBag.base_shangpinzcz)
-                {
+    <div style="width:1390px;height:500px; overflow:scroll;">
+        <div class="table-responsive">
+            <table class="table" style="overflow: hidden;text-overflow:ellipsis;white-space: nowrap;" id="mydatatable">
+                <caption></caption>
+                <thead>
                     <tr>
-                        <td>
-                            <div class="checkbox">
-                                <label><input type="checkbox" value="@item.ID"></label>
-                            </div>
-                        </td>
-                        <td>@item.Bianhao</td>
-                        <td>@item.Mingcheng</td>
-                        <td>@item.Guige</td>
-                        <td>@item.Bianzhun</td>
-                        <td>@item.ZhucezhengYXQ.ToString("yyyy-MM-dd")</td>
-                        <td><a href="/files/zhengzhao/@item.ZhucezhengTP" target="_blank">浏览</a></td>
-                        <td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
-                        <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
+                        <td></td>
+                        <td>注册证编号</td>
+                        <td>商品名称</td>
+                        <td>规格</td>
+                        <td>产品标准</td>
+                        <td>注册证有效期</td>
+                        <td>录入日期</td>
+                        <td>中文编号</td>
+                        <td>产地</td>
+                        <td>生产企业序号</td>
+                        <td>服务机构</td>
+                        <td>注册证照片</td>
+                        <td>输入人</td>
+                        <td>备注</td>
+                        <td>是否失效</td>
+                        @*<td>适用范围</td>
+                            <td>注册代理</td>*@
+                       
                     </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in ViewBag.base_shangpinzcz)
+                {
+                        <tr>
+                            <td>
+                                <div class="checkbox">
+                                    <label><input type="checkbox" value="@item.ID"></label>
+                                </div>
+                            </td>
+                            <td>@item.Bianhao</td>
+                            <td>@item.Mingcheng</td>
+                            <td>@item.Guige</td>
+                            <td>@item.Bianzhun</td>
+                            <td>@item.ZhucezhengYXQ.ToString("yyyy-MM-dd")</td>
+                            <td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
+                            <td>@item.BianhaoZW</td>
+                            <td>@item.Chandi</td>
+                            <td>@item.ShengchanqiyeID</td>
+                            <td>@item.ShouhuoJG</td>
+                            <td><a href="/files/zhengzhao/@item.ZhucezhengTP" target="_blank">浏览</a></td>
+                            <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
+                            <td>@item.Beizhu</td>
+                            <td id="changeText">@item.ShixiaoSF</td>
+                            @*<td>@item.ShiyongFW</td>
+                                <td>@item.ZhuceDL</td>*@
+                        </tr>
                 }
-            </tbody>
-        </table>
-    </div>
-    <div class="pager">
-        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+                </tbody>
+            </table>
+
+
+            <div class="pager">
+                @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+            </div>
+
+        </div>
     </div>
 </div>
