@@ -21,22 +21,7 @@
         });
         $("#bt_quancheck").click(function () {
             var findcheck = false;
-            var seltime = 0;
-            $("#mydatatable tr input[type=checkbox]").each(function () {
-                if (this.checked) {
-                    findcheck = true;
-                    seltime++;
-                }
-            });
-            if (seltime > 1)
-                $("#aumsg").text("同时审核多条申请吗？");
-            if (findcheck)
-                $("#authorpanel").show();
-            else
-                alert("请先选择需要审核的申请！");
-        });
-        $("#bt_topcheck").click(function () {
-            var findcheck = false;
+            var checkshow = true;
             var seltime = 0;
             var sqs = "";
             $("#mydatatable tr input[type=checkbox]").each(function () {
@@ -44,14 +29,47 @@
                     findcheck = true;
                     seltime++;
                     sqs = $(this).data("sqs");
-                    if (val(sqs) < 3)
+                    if (eval(sqs) < 3)
                         $("#topmsg").text("质量部还未做审核，需要直接完成吗？");
+                    if (eval(sqs) >= 3) {
+                        alert("已经审批完成的申请，不能再审批！");
+                        checkshow=false;
+                    }
                 }
             });
             if (seltime > 1)
-                $("#topmsg").text().append("同时审核多条申请吗？");
-            if (findcheck)
-                $("#toppanel").show();
+                $("#aumsg").text("同时审核多条申请吗？");
+            if (findcheck){
+                if(checkshow)
+                    $("#authorpanel").show();
+            }
+            else
+                alert("请先选择需要审核的申请！");
+        });
+        $("#bt_topcheck").click(function () {
+            var findcheck = false;
+            var checkshow = true;
+            var seltime = 0;
+            var sqs = "";
+            $("#mydatatable tr input[type=checkbox]").each(function () {
+                if (this.checked) {
+                    findcheck = true;
+                    seltime++;
+                    sqs = $(this).data("sqs");
+                    if (eval(sqs) < 3)
+                        $("#topmsg").text("质量部还未做审核，需要直接完成吗？");
+                    if (eval(sqs) >=4) {
+                        alert("已经审批完成的申请，不能再审批！");
+                        checkshow = false;
+                    }
+                }
+            });
+            if (seltime > 1)
+                $("#topmsg").append("<b>同时审核多条申请吗？</b>");
+            if (findcheck) {
+                if (checkshow)
+                    $("#toppanel").show();
+            }
             else
                 alert("请先选择需要审核的申请！");
         });
@@ -62,7 +80,7 @@
             $(this).parent().parent().parent().hide();
         });
         $("#authorok").click(function () {
-            if (this.checked){
+            if (this.checked) {
                 _authorok = true;
                 $("#authorng").removeAttr("checked");
             }
@@ -70,31 +88,61 @@
                 _authorok = false;
         });
         $("#authorng").click(function () {
-            if (this.checked)
-            {
+            if (this.checked) {
                 _authorok = false;
                 $("#authorok").removeAttr("checked");
             }
         });
         $("#authorsave").click(function () {
             var _auval = [];
-            //objJson.push(jQuery.parseJSON('{"PID":' + iPID + ',"Cnt":' + iCnt + '}'));
-            //var _authormsg = $.parseJSON(_auval);
             $("#mydatatable tr input[type=checkbox]").each(function () {
                 if (this.checked) {
-                    if ($("#authorok").checked==true)
-                        _auval.push(JSON.parse('{"sq":"' + $(this).val() + '","msg":"' + $("#authortext").text() + '","ok":"1"}'));
-                    if($("#authorng").checked==true)
-                        _auval.push(JSON.parse('{"sq":"' + $(this).val() + '","msg":"' + $("#authortext").text() + '","ok":"0"}'));
+                    if (_authorok) {
+                        _auval.push(JSON.parse('{"sq":"' + $(this).val() + '","msg":"' + $("#authortext").val() + '","ok":"true"}'));
+                    }
+                    else
+                        _auval.push(JSON.parse('{"sq":"' + $(this).val() + '","msg":"' + $("#authortext").val() + '","ok":"false"}'));
                 }
             });
-            //for(var p in _auval){
-            //    //遍历json数组时，这么写p为索引，0,1 
-            //    alert(_auval[p].sq + " " + _auval[p].msg+_auval[p].ok);
-            //}
-            $.post("", _auval, function () { });
+            $.post("/quan_shouyingsq/authorcheck", { authorval: JSON.stringify(_auval) }, function (data, status) {
+                if (data == 1) {
+                    window.location.reload();
+
+                } else {
+                    alert("审核失败，请重新审核！");
+                }
+            });
+        });
+        $("#topok").click(function () {
+            if (this.checked) {
+                _topok = true;
+                $("#topng").removeAttr("checked");
+            }
+            else
+                _topok = false;
+        });
+        $("#topng").click(function () {
+            if (this.checked) {
+                _topok = false;
+                $("#topok").removeAttr("checked");
+            }
         });
         $("#topsave").click(function () {
+            var _topval = [];
+            $("#mydatatable tr input[type=checkbox]").each(function () {
+                if (this.checked) {
+                    if (_topok) 
+                        _topval.push(JSON.parse('{"sq":"' + $(this).val() + '","msg":"' + $("#toptext").val() + '","ok":"true"}'));
+                    else
+                        _topval.push(JSON.parse('{"sq":"' + $(this).val() + '","msg":"' + $("#toptext").val() + '","ok":"false"}'));
+                }
+            });
+            $.post("/quan_shouyingsq/topcheck", { topval: JSON.stringify(_topval) }, function (data, status) {
+                if (data == 1)
+                    window.location.reload();
+                else
+                    alert("审核失败，请重新审核！");
+            });
         });
     });
     function AddInfo() {

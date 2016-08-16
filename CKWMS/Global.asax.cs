@@ -123,7 +123,7 @@ namespace CKWMS
             ShouYingZhuangTai.Add(3, "质量部通过");
             ShouYingZhuangTai.Add(4, "负责人通过");
             ShouYingZhuangTai.Add(5, "已通过");
-            ShouYingZhuangTai.Add(6, "未通过");
+            ShouYingZhuangTai.Add(-1, "未通过");
 
             //储运要求
             TranCondition = new Dictionary<int, string>();
