@@ -161,13 +161,14 @@
                             </td>
                             <td>@item.Bianhao</td>
                             <td>@item.Mingcheng</td>
-                            <td>@item.Guige</td>
+                            @*规格*@
+                            <td><input class="btn btn-default" type="button" value="Input"></td>
                             <td>@item.Bianzhun</td>
                             <td>@item.ZhucezhengYXQ.ToString("yyyy-MM-dd")</td>
                             <td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
                             <td>@item.BianhaoZW</td>
                             <td>@item.Chandi</td>
-                            <td>@Html.GetDataValue_ID("厂家","",(int)item.ShengchanqiyeID)</td>
+                            <td>@Html.GetDataValue_ID("","名称",(int)item.ShengchanqiyeID)</td>
                             <td>@item.ShouhuoJG</td>
                             <td><a href="/files/zhengzhao/@item.ZhucezhengTP" target="_blank">浏览</a></td>
                             <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
@@ -180,7 +181,7 @@
                 </tbody>
             </table>
 
-
+            
             <div class="pager">
                 @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
             </div>

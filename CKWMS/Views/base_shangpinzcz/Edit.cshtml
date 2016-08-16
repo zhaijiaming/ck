@@ -4,104 +4,7 @@
 @{
     ViewBag.Title = "商品注册证修改";
 }
-<script type="text/javascript">
-    function doUpload() {
-        var formData = new FormData($("#uploadForm")[0]);
-        var strBack = "";
-        var strWrite = "";
-        var strSel = $("#btnSelect").val();
-        $.ajax({
-            url: 'http://localhost:6446/upload/UploadOK',
-            type: 'POST',
-            data: formData,
-            async: false,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function (returndata) {
-                strBack = returndata;
-            },
-            error: function (returndata) {
-                strBack = "fail";
-            }
-        });
-        switch (strBack) {
-            case "0":
-                strWrite = "无传送值，上传失败！";
-                break;
-            case "1":
-                strWrite = "空文件，上传失败！";
-                break;
-            case "2":
-                strWrite = "错误，上传失败！";
-                break;
-            case "3":
-                strWrite = "文件尺寸超过4M，上传失败！";
-                break;
-            case "fail":
-                strWrite = "文件太大，上传失败！";
-                break;
-            default:
-                strWrite = "文件上传成功！";
-                break;
-        }
-        switch (strSel) {
-            case "picsel1":
-                $("#ZhucezhengTP").val(strBack);
-                $("#zcztp").html("<a href='/files/zhengzhao/" + strBack + "'  target='_blank'>浏览</a>");
-                break;
-            case "":
-            default:
-                $("#ZhucezhengTP").val(strBack);
-                $("#zcztp").html("<a href='/files/zhengzhao/" + strBack + "'  target='_blank'>浏览</a>");
-                break;
-        }
-        alert(strWrite);
-    }
-    function bt1() {
-        $("#btnSelect").val("picsel1");
-    }
-
-    function check() {
-        var today = new Date();
-        var begin = new Date(today.replace(/-/g, "/"));
-        var end = new Date($("#nowDate").val().replace(/-/g, "/"));
-        if (begin - end > 0) {
-            window.alert("no");
-        } else {
-            window.alert("yes");
-        }
-    }
-
-</script>
-<div class="modal fade" id="myModalUpload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                    &times;
-                </button>
-                <h3 class="modal-title center" id="myModalLabel">
-                    <i class="icon-file blue"></i><span class="large">
-                        文件上传
-                    </span>
-                </h3>
-            </div>
-            <div class="modal-body center">
-                <form id="uploadForm">
-                    <input type="hidden" name="uploadtype" id="uploadtype" value="z" />
-                    <input type="hidden" name="uploaditemName" id="uploaditemName" value="gys_@ViewData.Model.ID" />
-                    <div class="form-group">
-                        <input type="file" name="file" />
-                    </div>
-                    <div class="form-group">
-                        <input type="button" class="btn btn-default" value="确 定" onclick="doUpload()" />
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+@Html.GetFileUpload("zhucezhengtp", "zcz", "z", "cus", 1, 0, new Dictionary<string, string>() { { "zcz", "zhucezhengtp" } })
 
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
@@ -223,13 +126,13 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2">注册证照片</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" readonly name="ZhucezhengTP" id="ZhucezhengTP" value="@ViewData.Model.ZhucezhengTP">
+                    <input type="text" class="form-control" readonly name="zhucezhengtp" id="zhucezhengtp" value="@ViewData.Model.ZhucezhengTP">
                 </div>
                 <div class="col-sm-2">
-                    <button class="form-control" data-toggle="modal" data-target="#myModalUpload" onclick="bt1()">上传</button>
+                    <button class="form-control" data-toggle="modal" data-target="#myModalUpload" onclick="btn1()">上传</button>
                 </div>
                 <div class="col-sm-2">
-                    <span id="zcztp" class="form-control">
+                    <span id="zcz" class="form-control">
                         <a href="/files/zhengzhao/@ViewData.Model.ZhucezhengTP" target="_blank">浏览</a>
                     </span>
                 </div>
@@ -278,14 +181,16 @@
                 </div>
                 <div class="radio-inline">
                     <label>
-                        <input type="radio" name="shixiaosf" value="是">
+                        <input type="radio" name="shixiaosf" value="true">
                         是
+                        
                     </label>
                 </div>
                 <div class="radio-inline">
                     <label>
-                        <input type="radio" name="shixiaosf" value="否">
+                        <input type="radio" name="shixiaosf" value="false">
                         否
+                        
                     </label>
                 </div>
             </div>

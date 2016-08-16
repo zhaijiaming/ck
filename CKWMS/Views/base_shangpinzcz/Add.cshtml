@@ -75,7 +75,6 @@
                     @Html.ValidationMessageFor(m => m.ZhucezhengYXQ)
                 </div>
             </div>
-            
             @*录入日期*@
             <div class="form-group">
                 @Html.LabelFor(m => m.MakeDate, new { @class = "control-label col-sm-2" })
@@ -83,7 +82,6 @@
                     <input type="date" class="form-control" readonly value="@DateTime.Now.ToString("yyyy-MM-dd")" name="MakeDate">
                 </div>
             </div>
-            
             @*中文编号*@
             <div class="form-group">
                 <div class="control-label col-sm-2">
@@ -127,7 +125,7 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2">注册证照片</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="zhucezhengtp" id="zhucezhengtp">
+                    <input type="text" class="form-control" readonly name="zhucezhengtp" id="zhucezhengtp">
                 </div>
                 <div class="col-sm-2">
                     <button class="form-control" data-toggle="modal" data-target="#myModalUpload" onclick="btn1()">上传</button>
