@@ -20,7 +20,6 @@
         <li class="active"> 编辑</li>
     </ul>
 </div>
-
 <div class="page-content">
     @using (Html.BeginForm("Update", "base_weituokehu", FormMethod.Post, new { @role = "form" }))
     {
@@ -33,151 +32,241 @@
                 <button type="button" class="btn btn-default"><i class="icon-check-sign"></i>送审</button>
            </p>
         </div>
+
         <div class="container">
-            <div class="form-group">
-                @Html.LabelFor(m => m.Daima, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Daima, new { @class = "form-control" })
+
+            <div class="widget-container-span ui-sortable">
+                <div class="widget-box transparent">
+                    <div class="widget-header">
+                        <h3 class="lighter">货主定义</h3>
+
+                        <div class="widget-toolbar no-border">
+                            <ul class="nav nav-tabs" id="myTab2">
+                                <li class="active">
+                                    <a data-toggle="tab" href="#home2">基本信息</a>
+                                </li>
+                                <li class="">
+                                    <a data-toggle="tab" href="#profile2">经营范围</a>
+                                </li>
+                                <li class="">
+                                    <a data-toggle="tab" href="#info2">证照资料</a>
+                                </li>
+                                <li class="">
+                                    <a data-toggle="tab" href="#info3">物流中心</a>
+                                </li>
+                                <li class="">
+                                    <a data-toggle="tab" href="#info4">运输策略</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="widget-body">
+                        <div class="widget-main padding-12 no-padding-left no-padding-right">
+                            <div class="tab-content padding-4">
+                                <div id="home2" class="tab-pane active">
+                                    <div class="slimScrollDiv">
+                                        <div class="slim-scroll">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.Daima, new { @class = "control-label col-sm-2" })
+                                                <div class="col-sm-10">
+                                                    @Html.TextBoxFor(m => m.Daima, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.Jiancheng, new { @class = "control-label col-sm-2" })
+                                                <div class="col-sm-10">
+                                                    @Html.TextBoxFor(m => m.Jiancheng, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.Kehumingcheng, new { @class = "control-label col-sm-2" })
+                                                <div class="col-sm-10">
+                                                    @Html.TextBoxFor(m => m.Kehumingcheng, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.Hetongbianhao, new { @class = "control-label col-sm-2" })
+                                                <div class="col-sm-10">
+                                                    @Html.TextBoxFor(m => m.Hetongbianhao, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.Lianxiren, new { @class = "control-label col-sm-2" })
+                                                <div class="col-sm-10">
+                                                    @Html.TextBoxFor(m => m.Lianxiren, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.Lianxidianhua, new { @class = "control-label col-sm-2" })
+                                                <div class="col-sm-10">
+                                                    @Html.TextBoxFor(m => m.Lianxidianhua, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.Beizhu, new { @class = "control-label col-sm-2" })
+                                                <div class="col-sm-10">
+                                                    @Html.TextBoxFor(m => m.Beizhu, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.Shouying, new { @class = "control-label col-sm-2" })
+                                                <div class="col-sm-10">
+                                                    @Html.TextBoxFor(m => m.Shouying, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.ShenchaSF, new { @class = "control-label col-sm-2" })
+                                                <div class="col-sm-10">
+                                                    @*@Html.TextBoxFor(m => m.ShenchaSF,new {@class="form-control"} )*@
+                                                    @Html.CheckBoxFor(m => m.ShenchaSF, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.HezuoSF, new { @class = "control-label col-sm-2" })
+                                                <div class="col-sm-10">
+                                                    @*@Html.TextBoxFor(m => m.HezuoSF,new {@class="form-control"} )*@
+                                                    @Html.CheckBoxFor(m => m.HezuoSF, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.MakeDate, new { @class = "control-label col-sm-2" })
+                                                <div class="col-sm-10">
+                                                    <input type="date" class="form-control" name="MakeDate" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.MakeDate)">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.MakeMan, new { @class = "control-label col-sm-2" })
+                                                <div class="col-sm-10">
+                                                    @Html.SelectList_Auto("MakeMan", "userinfo", "fullname", (long)ViewData.Model.MakeMan)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="profile2" class="tab-pane">
+                                    <div class="slimScrollDiv">
+                                        <div class="slim-scroll">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.Jingyingfanwei, new { @class = "control-label col-sm-2" })
+                                                <div class="col-sm-10">
+                                                    @Html.TextAreaFor(m => m.Jingyingfanwei, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.JingyingfanweiDM, new { @class = "control-label col-sm-2" })
+                                                <div class="col-sm-10">
+                                                    @Html.TextAreaFor(m => m.JingyingfanweiDM, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="info2" class="tab-pane">
+                                    <div class="slimScrollDiv">
+                                        <div class="slim-scroll">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.YingyezhizhaoBH, new { @class = "control-label col-sm-2" })
+                                                <div class="col-sm-10">
+                                                    @Html.TextBoxFor(m => m.YingyezhizhaoBH, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.YingyezhizhaoYXQ, new { @class = "control-label col-sm-2" })
+                                                <div class="col-sm-10">
+                                                    <input type="date" class="form-control" name="YingyezhizhaoYXQ" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.YingyezhizhaoYXQ)">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.YingyezhizhaoTP, new { @class = "control-label col-sm-2" })
+                                                <div class="col-sm-10">
+                                                    @Html.TextBoxFor(m => m.YingyezhizhaoTP, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.ZuzhijigouBH, new { @class = "control-label col-sm-2" })
+                                                <div class="col-sm-10">
+                                                    @Html.TextBoxFor(m => m.ZuzhijigouBH, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.ZuzhijigouYXQ, new { @class = "control-label col-sm-2" })
+                                                <div class="col-sm-10">
+                                                    <input type="date" class="form-control" name="ZuzhijigouYXQ" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.ZuzhijigouYXQ)">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.ZuzhijigouTP, new { @class = "control-label col-sm-2" })
+                                                <div class="col-sm-10">
+                                                    @Html.TextBoxFor(m => m.ZuzhijigouTP, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.ShuiwudengjiBH, new { @class = "control-label col-sm-2" })
+                                                <div class="col-sm-10">
+                                                    @Html.TextBoxFor(m => m.ShuiwudengjiBH, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.ShuiwudengjiYXQ, new { @class = "control-label col-sm-2" })
+                                                <div class="col-sm-10">
+                                                    <input type="date" class="form-control" name="ShuiwudengjiYXQ" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.ShuiwudengjiYXQ)">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.ShuiwudengjiTP, new { @class = "control-label col-sm-2" })
+                                                <div class="col-sm-10">
+                                                    @Html.TextBoxFor(m => m.ShuiwudengjiTP, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.JingyingxukeBH, new { @class = "control-label col-sm-2" })
+                                                <div class="col-sm-10">
+                                                    @Html.TextBoxFor(m => m.JingyingxukeBH, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.JingyingxukeYXQ, new { @class = "control-label col-sm-2" })
+                                                <div class="col-sm-10">
+                                                    <input type="date" class="form-control" name="JingyingxukeYXQ" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.JingyingxukeYXQ)">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.JingyingxukeTP, new { @class = "control-label col-sm-2" })
+                                                <div class="col-sm-10">
+                                                    @Html.TextBoxFor(m => m.JingyingxukeTP, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="info3" class="tab-pane">
+                                    <div class="slimScrollDiv">
+                                        <div class="slim-scroll">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="info4" class="tab-pane">
+                                    <div class="slimScrollDiv">
+                                        <div class="slim-scroll">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Jiancheng, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Jiancheng, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Kehumingcheng, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Kehumingcheng, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Hetongbianhao, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Hetongbianhao, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.YingyezhizhaoBH, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.YingyezhizhaoBH, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.YingyezhizhaoYXQ, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    <input type="date" class="form-control" name="YingyezhizhaoYXQ" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.YingyezhizhaoYXQ)">
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.YingyezhizhaoTP, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.YingyezhizhaoTP, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.ZuzhijigouBH, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.ZuzhijigouBH, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.ZuzhijigouYXQ, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    <input type="date" class="form-control" name="ZuzhijigouYXQ" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.ZuzhijigouYXQ)">
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.ZuzhijigouTP, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.ZuzhijigouTP, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.ShuiwudengjiBH, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.ShuiwudengjiBH, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.ShuiwudengjiYXQ, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    <input type="date" class="form-control" name="ShuiwudengjiYXQ" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.ShuiwudengjiYXQ)">
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.ShuiwudengjiTP, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.ShuiwudengjiTP, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.JingyingxukeBH, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.JingyingxukeBH, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.JingyingxukeYXQ, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    <input type="date" class="form-control" name="JingyingxukeYXQ" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.JingyingxukeYXQ)">
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.JingyingxukeTP, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.JingyingxukeTP, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Jingyingfanwei, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Jingyingfanwei, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.JingyingfanweiDM, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.JingyingfanweiDM, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Lianxiren, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Lianxiren, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Lianxidianhua, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Lianxidianhua, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Beizhu, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Beizhu, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Shouying, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Shouying, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.MakeDate, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    <input type="date" class="form-control" name="MakeDate" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.MakeDate)">
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.MakeMan, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.SelectList_Auto("MakeMan", "userinfo", "fullname", (long)ViewData.Model.MakeMan)
-                </div>
-            </div>
+
+
+
+
+
         </div>
     }
 </div>

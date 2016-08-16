@@ -16,7 +16,6 @@ namespace CKWMS.Controllers
     public class base_weituokehuController : Controller
     {
         private Ibase_weituokehuService ob_base_weituokehuservice = ServiceFactory.base_weituokehuservice;
-        //private List<SearchConditionModel> _searchconditions;
         [OutputCache(Duration = 30)]
         public ActionResult Index(string page)
         {
@@ -26,7 +25,7 @@ namespace CKWMS.Controllers
             string pagetag = "base_weituokehu_index";
             Expression<Func<base_weituokehu, bool>> where = PredicateExtensionses.True<base_weituokehu>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
-            if (sc != null)
+            if (sc != null && sc.ConditionInfo != null)
             {
                 string[] sclist = sc.ConditionInfo.Split(';');
                 foreach (string scl in sclist)
@@ -142,6 +141,7 @@ namespace CKWMS.Controllers
 
         public ActionResult Add()
         {
+            ViewBag.userid = (int)Session["user_id"];
             return View();
         }
 
@@ -172,8 +172,16 @@ namespace CKWMS.Controllers
             string lianxidianhua = Request["lianxidianhua"] ?? "";
             string beizhu = Request["beizhu"] ?? "";
             string shouying = Request["shouying"] ?? "";
+            string col1 = Request["col1"] ?? "";
+            string col2 = Request["col2"] ?? "";
+            string col3 = Request["col3"] ?? "";
+            string col4 = Request["col4"] ?? "";
+            string col5 = Request["col5"] ?? "";
+            string col6 = Request["col6"] ?? "";
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
+            string shenchasf = Request["shenchasf"] ?? "";
+            string hezuosf = Request["hezuosf"] ?? "";
             try
             {
                 base_weituokehu ob_base_weituokehu = new base_weituokehu();
@@ -199,8 +207,16 @@ namespace CKWMS.Controllers
                 ob_base_weituokehu.Lianxidianhua = lianxidianhua.Trim();
                 ob_base_weituokehu.Beizhu = beizhu.Trim();
                 ob_base_weituokehu.Shouying = shouying == "" ? 0 : int.Parse(shouying);
+                ob_base_weituokehu.Col1 = col1.Trim();
+                ob_base_weituokehu.Col2 = col2.Trim();
+                ob_base_weituokehu.Col3 = col3.Trim();
+                ob_base_weituokehu.Col4 = col4.Trim();
+                ob_base_weituokehu.Col5 = col5.Trim();
+                ob_base_weituokehu.Col6 = col6.Trim();
                 ob_base_weituokehu.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 ob_base_weituokehu.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
+                ob_base_weituokehu.ShenchaSF = shenchasf == "" ? false : Boolean.Parse(shenchasf);
+                ob_base_weituokehu.HezuoSF = hezuosf == "" ? false : Boolean.Parse(hezuosf);
                 ob_base_weituokehu = ob_base_weituokehuservice.AddEntity(ob_base_weituokehu);
                 ViewBag.base_weituokehu = ob_base_weituokehu;
             }
@@ -244,8 +260,16 @@ namespace CKWMS.Controllers
                 base_weituokehuviewmodel.Lianxidianhua = tempData.Lianxidianhua;
                 base_weituokehuviewmodel.Beizhu = tempData.Beizhu;
                 base_weituokehuviewmodel.Shouying = tempData.Shouying;
+                base_weituokehuviewmodel.Col1 = tempData.Col1;
+                base_weituokehuviewmodel.Col2 = tempData.Col2;
+                base_weituokehuviewmodel.Col3 = tempData.Col3;
+                base_weituokehuviewmodel.Col4 = tempData.Col4;
+                base_weituokehuviewmodel.Col5 = tempData.Col5;
+                base_weituokehuviewmodel.Col6 = tempData.Col6;
                 base_weituokehuviewmodel.MakeDate = tempData.MakeDate;
                 base_weituokehuviewmodel.MakeMan = tempData.MakeMan;
+                base_weituokehuviewmodel.ShenchaSF = tempData.ShenchaSF;
+                base_weituokehuviewmodel.HezuoSF = tempData.HezuoSF;
                 return View(base_weituokehuviewmodel);
             }
         }
@@ -277,8 +301,16 @@ namespace CKWMS.Controllers
             string lianxidianhua = Request["lianxidianhua"] ?? "";
             string beizhu = Request["beizhu"] ?? "";
             string shouying = Request["shouying"] ?? "";
+            string col1 = Request["col1"] ?? "";
+            string col2 = Request["col2"] ?? "";
+            string col3 = Request["col3"] ?? "";
+            string col4 = Request["col4"] ?? "";
+            string col5 = Request["col5"] ?? "";
+            string col6 = Request["col6"] ?? "";
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
+            string shenchasf = Request["shenchasf"] ?? "";
+            string hezuosf = Request["hezuosf"] ?? "";
             int uid = int.Parse(id);
             try
             {
@@ -305,8 +337,16 @@ namespace CKWMS.Controllers
                 p.Lianxidianhua = lianxidianhua.Trim();
                 p.Beizhu = beizhu.Trim();
                 p.Shouying = shouying == "" ? 0 : int.Parse(shouying);
+                p.Col1 = col1.Trim();
+                p.Col2 = col2.Trim();
+                p.Col3 = col3.Trim();
+                p.Col4 = col4.Trim();
+                p.Col5 = col5.Trim();
+                p.Col6 = col6.Trim();
                 p.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 p.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
+                p.ShenchaSF = shenchasf == "" ? false : Boolean.Parse(shenchasf);
+                p.HezuoSF = hezuosf == "" ? false : Boolean.Parse(hezuosf);
                 ob_base_weituokehuservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;
             }

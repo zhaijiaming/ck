@@ -36,6 +36,7 @@
     <WarningLevel>4</WarningLevel>
     <ExcludeGeneratedDebugSymbol>false</ExcludeGeneratedDebugSymbol>
     <UseVSHostingProcess>true</UseVSHostingProcess>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -316,6 +317,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\operatelogController.cs" />
+    <Compile Include="Controllers\quan_shouyingsqController.cs" />
     <Compile Include="Controllers\searchconditionController.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
@@ -354,6 +356,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\operatelogViewModel.cs" />
+    <Compile Include="Models\quan_shouyingsqViewModel.cs" />
     <Compile Include="Models\SearchConditionModel.cs" />
     <Compile Include="Models\searchconditionViewModel.cs" />
     <Compile Include="Models\userinfoViewModel.cs" />
@@ -639,6 +642,9 @@
     <Content Include="Views\base_zhucezhenggg\Add.cshtml" />
     <Content Include="Views\base_zhucezhenggg\Edit.cshtml" />
     <Content Include="Views\base_zhucezhenggg\Index.cshtml" />
+    <Content Include="Views\quan_shouyingsq\Add.cshtml" />
+    <Content Include="Views\quan_shouyingsq\Edit.cshtml" />
+    <Content Include="Views\quan_shouyingsq\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

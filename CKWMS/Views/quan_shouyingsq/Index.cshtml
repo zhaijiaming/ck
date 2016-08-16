@@ -1,0 +1,277 @@
+﻿@using CKWMS.App_Code
+@using CKWMS.Models
+@using X.PagedList
+@using X.PagedList.Mvc
+@{
+    ViewBag.Title = "首营申请清单";
+    string _searchcondition = ViewBag.SearchCondition;
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var _authorok = false;
+        var _topok = false;
+        $("#authorpanel").hide();
+        $("#toppanel").hide();
+        $("tr").bind("dblclick", function () {
+            var u_id = $(this).find('td').eq(0).find('input').val();
+            if (u_id != null) {
+                var url_go = "/quan_shouyingsq/Edit/" + u_id;
+                location.href = url_go;
+            }
+        });
+        $("#bt_quancheck").click(function () {
+            var findcheck = false;
+            var seltime = 0;
+            $("#mydatatable tr input[type=checkbox]").each(function () {
+                if (this.checked) {
+                    findcheck = true;
+                    seltime++;
+                }
+            });
+            if (seltime > 1)
+                $("#aumsg").text("同时审核多条申请吗？");
+            if (findcheck)
+                $("#authorpanel").show();
+            else
+                alert("请先选择需要审核的申请！");
+        });
+        $("#bt_topcheck").click(function () {
+            var findcheck = false;
+            var seltime = 0;
+            var sqs = "";
+            $("#mydatatable tr input[type=checkbox]").each(function () {
+                if (this.checked) {
+                    findcheck = true;
+                    seltime++;
+                    sqs = $(this).data("sqs");
+                    if (val(sqs) < 3)
+                        $("#topmsg").text("质量部还未做审核，需要直接完成吗？");
+                }
+            });
+            if (seltime > 1)
+                $("#topmsg").text().append("同时审核多条申请吗？");
+            if (findcheck)
+                $("#toppanel").show();
+            else
+                alert("请先选择需要审核的申请！");
+        });
+        $("#authorclose").click(function () {
+            $(this).parent().parent().parent().hide();
+        });
+        $("#topclose").click(function () {
+            $(this).parent().parent().parent().hide();
+        });
+        $("#authorok").click(function () {
+            if (this.checked){
+                _authorok = true;
+                $("#authorng").removeAttr("checked");
+            }
+            else
+                _authorok = false;
+        });
+        $("#authorng").click(function () {
+            if (this.checked)
+            {
+                _authorok = false;
+                $("#authorok").removeAttr("checked");
+            }
+        });
+        $("#authorsave").click(function () {
+            var _auval = [];
+            //objJson.push(jQuery.parseJSON('{"PID":' + iPID + ',"Cnt":' + iCnt + '}'));
+            //var _authormsg = $.parseJSON(_auval);
+            $("#mydatatable tr input[type=checkbox]").each(function () {
+                if (this.checked) {
+                    if ($("#authorok").checked==true)
+                        _auval.push(JSON.parse('{"sq":"' + $(this).val() + '","msg":"' + $("#authortext").text() + '","ok":"1"}'));
+                    if($("#authorng").checked==true)
+                        _auval.push(JSON.parse('{"sq":"' + $(this).val() + '","msg":"' + $("#authortext").text() + '","ok":"0"}'));
+                }
+            });
+            //for(var p in _auval){
+            //    //遍历json数组时，这么写p为索引，0,1 
+            //    alert(_auval[p].sq + " " + _auval[p].msg+_auval[p].ok);
+            //}
+            $.post("", _auval, function () { });
+        });
+        $("#topsave").click(function () {
+        });
+    });
+    function AddInfo() {
+        location.href = "/quan_shouyingsq/Add";
+    }
+    function EditInfo() {
+        $("#mydatatable tr input[type=checkbox]").each(function () {
+            if (this.checked)
+                location.href = "/quan_shouyingsq/Edit/" + $(this).val();
+        });
+    }
+    function DelInfo() {
+        var sDel = "";
+        $("#mydatatable tr input[type=checkbox]").each(function () {
+            if (this.checked)
+                sDel = sDel + ", " + $(this).val()
+        });
+        if (sDel.length < 2)
+            return;
+        var url_go = "/quan_shouyingsq/Delete/?del=" + sDel;
+        location.href = url_go;
+    }
+</script>
+@{
+    List<SearchConditionModel> scms = new List<SearchConditionModel>();
+    if (_searchcondition == null || _searchcondition == "")
+    {
+        SearchConditionModel scm = new SearchConditionModel();
+        scm.ItemCode = "Leibie";
+        scm.ItemTitle = "类别";
+        scm.ItemType = "System.Int32";
+        scms.Add(scm);
+    }
+    else
+    {
+        string[] scs = _searchcondition.Split(';');
+        if (scs.Length > 0)
+        {
+            SearchConditionModel scm = new SearchConditionModel();
+            scm.ItemCode = "Leibie";
+            scm.ItemTitle = "类别";
+            scm.ItemType = "System.Int32";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[0].Split(',')[1];
+                scm.ItemOpValue = scs[0].Split(',')[2];
+                scm.ItemJion = scs[0].Split(',')[3];
+            }
+            scms.Add(scm);
+        }
+    }
+}
+<div id="authorpanel" class="panel panel-primary" style="position:absolute;top:100px;left:300px;width:500px;height:400px;z-index:999;">
+    <div class="panel-heading">
+        <h3 class="panel-title">质量部审批<button id="authorclose" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="center">
+            <span id="aumsg" class="red"></span>
+            <div class="form-group">
+                <label class="control-label">审批通过</label>
+                <input id="authorok" type="checkbox" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">不通过</label>
+                <input id="authorng" type="checkbox" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">审批说明</label>
+            </div>
+            <div class="form-group">
+                <textarea id="authortext" style="height:100px;width:300px;overflow:auto;"></textarea>
+            </div>
+            <button id="authorsave" class="btn btn-default">保存</button>
+        </div>
+    </div>
+</div>
+<div id="toppanel" class="panel panel-primary" style="position:absolute;top:100px;left:300px;width:500px;height:400px;z-index:999;">
+    <div class="panel-heading">
+        <h3 class="panel-title">质量负责人审批<button id="topclose" class="pull-right">X</button></h3>
+
+    </div>
+    <div class="panel-body">
+        <div class="center">
+            <span id="topmsg" class="red"></span>
+            <div class="form-group">
+                <input id="topok" type="checkbox" />
+                <label class="control-label">审批通过</label>
+            </div>
+            <div class="form-group">
+                <input id="topng" type="checkbox" />
+                <label class="control-label">不通过</label>
+            </div>
+            <div class="form-group">
+                <label class="control-label">审批说明</label>
+            </div>
+            <div class="form-group">
+                <textarea id="toptext" style="height:100px;width:300px;overflow:auto;"></textarea>
+            </div>
+            <button id="topsave" class="btn btn-default">保存</button>
+
+        </div>
+    </div>
+</div>
+
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    </script>
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="/Home">首页</a>
+        </li>
+        <li class="active">首营申请</li>
+    </ul>
+</div>
+<div class="page-content">
+    @Html.Search_Condition((int)Session["user_id"], "首营申请_条件组合查询", "/quan_shouyingsq/index", "quan_shouyingsqindex", scms)
+    <div class="page-header">
+        <p>
+            <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
+            <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
+            <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
+            <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
+            <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
+            <button type="button" class="btn btn-default " id="bt_quancheck"><i class="icon-remove"></i>质量部审核</button>
+            <button type="button" class="btn btn-default " id="bt_topcheck"><i class="icon-refresh"></i>质量负责人审核</button>
+        </p>
+    </div>
+    <div class="row">
+        <table class="table" id="mydatatable">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>类别</td>
+                    <td>内容</td>
+                    <td>申请时间</td>
+                    <td>申请人</td>
+                    <td>状态</td>
+                    <td>审核人</td>
+                    <td>审核说明</td>
+                    <td>负责人</td>
+                    <td>负责人说明</td>
+                    @*<td>制单人</td>
+                        <td>制单日期</td>*@
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.quan_shouyingsq)
+                {
+                    <tr>
+                        <td>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="@item.ID" data-sq="@item.ShenqingID" data-sqt="@item.Leibie" data-sqs="@item.Zhuangtai">
+                                </label>
+                            </div>
+                        </td>
+                        <td>@Html.GetCommonValue_ID("首营类型", (int)item.Leibie)</td>
+                        <td>@item.Neirong</td>
+                        <td>@string.Format("{0:yyyy-MM-dd HH:mm}", item.SQshijian)</td>
+                        <td>@item.SQren</td>
+                        <td>@Html.GetCommonValue_ID("首营状态", (int)item.Zhuangtai)</td>
+                        <td>@item.Shenheren</td>
+                        <td>@item.Shenheshuoming</td>
+                        <td>@item.Fuzeren</td>
+                        <td>@item.FuzerenSM</td>
+                        @*<td>@Html.GetDataValue_ID("userinfo", "fullname", (int)item.MakeMan)</td>
+                            <td>@item.MakeDate</td>*@
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="pager">
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+    </div>
+</div>

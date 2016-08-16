@@ -81,6 +81,10 @@ namespace CKWMS.Models
         public int? MakeMan { get; set; }
         [Display(Name = "已删除")]
         public bool IsDelete { get; set; }
+        [Display(Name = "是否审查")]
+        public bool ShenchaSF { get; set; }
+        [Display(Name = "是否合作")]
+        public bool HezuoSF { get; set; }
     }
 }
 

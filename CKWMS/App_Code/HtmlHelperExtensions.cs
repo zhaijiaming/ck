@@ -13,6 +13,17 @@ namespace CKWMS.App_Code
 {
     public static class HtmlHelperExtensions
     {
+        public static IEnumerable<TSource> DistinctBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
+        {
+            HashSet<TKey> seenKeys = new HashSet<TKey>();
+            foreach (TSource element in source)
+            {
+                if (seenKeys.Add(keySelector(element)))
+                {
+                    yield return element;
+                }
+            }
+        }
         #region 下拉列表
         /// <summary>
         /// 用户信息下拉列表框,选中指定的项
@@ -100,7 +111,7 @@ namespace CKWMS.App_Code
                     break;
                 case "供应商": //"base_gongyingshang":
                     Ibase_gongyingshangService gys = ServiceFactory.base_gongyingshangservice;
-                    var tmpgys =gys.LoadSortEntities(base_gongyingshang => base_gongyingshang.IsDelete == false, true, base_gongyingshang => base_gongyingshang.Daima);
+                    var tmpgys = gys.LoadSortEntities(base_gongyingshang => base_gongyingshang.IsDelete == false, true, base_gongyingshang => base_gongyingshang.Daima);
                     foreach (var i in tmpgys)
                     {
                         if (i.ID == selectedvalue && selectedvalue != 0)
@@ -111,7 +122,7 @@ namespace CKWMS.App_Code
                     break;
                 case "厂家": //"base_shengchanqiye":
                     Ibase_shengchanqiyeService scqy = ServiceFactory.base_shengchanqiyeservice;
-                    var tmpscqy =scqy.LoadSortEntities(base_shengchanqiye => base_shengchanqiye.IsDelete == false, true, base_shengchanqiye => base_shengchanqiye.Daima);
+                    var tmpscqy = scqy.LoadSortEntities(base_shengchanqiye => base_shengchanqiye.IsDelete == false, true, base_shengchanqiye => base_shengchanqiye.Daima);
                     foreach (var i in tmpscqy)
                     {
                         if (i.ID == selectedvalue && selectedvalue != 0)
@@ -122,7 +133,7 @@ namespace CKWMS.App_Code
                     break;
                 case "角色"://auth_juese
                     Iauth_jueseService jueseservice = ServiceFactory.auth_jueseservice;
-                    var tmpjs =jueseservice.LoadSortEntities(auth_juese =>auth_juese.IsDelete == false, true, auth_juese =>auth_juese.RoleName);
+                    var tmpjs = jueseservice.LoadSortEntities(auth_juese => auth_juese.IsDelete == false, true, auth_juese => auth_juese.RoleName);
                     foreach (var i in tmpjs)
                     {
                         if (i.ID == selectedvalue && selectedvalue != 0)
@@ -133,18 +144,18 @@ namespace CKWMS.App_Code
                     break;
                 case "功能":
                     Iauth_gongnengService gongnengservice = ServiceFactory.auth_gongnengservice;
-                    var tmpgn = gongnengservice.LoadSortEntities(auth_gongneng=>auth_gongneng.IsDelete==false,true,auth_gongneng=>auth_gongneng.Name);
-                    foreach(var i in tmpgn)
+                    var tmpgn = gongnengservice.LoadSortEntities(auth_gongneng => auth_gongneng.IsDelete == false, true, auth_gongneng => auth_gongneng.Name);
+                    foreach (var i in tmpgn)
                     {
                         if (i.ID == selectedvalue && selectedvalue != 0)
-                            sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}_{2}</option>", i.ID, i.Name,i.Module);
+                            sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}_{2}</option>", i.ID, i.Name, i.Module);
                         else
-                            sb.AppendFormat("<option value=\"{0}\">{1}_{2}</option>", i.ID, i.Name,i.Module);
+                            sb.AppendFormat("<option value=\"{0}\">{1}_{2}</option>", i.ID, i.Name, i.Module);
                     }
                     break;
                 case "userinfo"://用户
                     IuserinfoService uis = ServiceFactory.userinfoservice;
-                    var tmpus =uis.LoadSortEntities(userinfo => userinfo.IsDelete == false, true, userinfo => userinfo.Account);
+                    var tmpus = uis.LoadSortEntities(userinfo => userinfo.IsDelete == false, true, userinfo => userinfo.Account);
                     switch (itemname)
                     {
                         case "account":
@@ -230,52 +241,71 @@ namespace CKWMS.App_Code
             switch (itemName)
             {
                 case "首营状态":
-                    //Dictionary<int, string> syzt = new Dictionary<int, string>();
-                    //syzt.Add(1,  "新建");
-                    //syzt.Add(2,"待审核");
-                    //syzt.Add(3,"审核中");
-                    //syzt.Add(4,"已通过");
-                    //syzt.Add(5,"未通过");                    
-                    foreach (var i in MvcApplication.ShouYingZhuangTai)
-                    {
-                        if (i.Key == selectedValue && selectedValue != 0)
-                            sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.Key, i.Value);
-                        else
-                            sb.AppendFormat("<option value=\"{0}\">{1}</option>", i.Key, i.Value);
-                    }
+                    //foreach (var i in MvcApplication.ShouYingZhuangTai)
+                    //{
+                    //    if (i.Key == selectedValue && selectedValue != 0)
+                    //        sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.Key, i.Value);
+                    //    else
+                    //        sb.AppendFormat("<option value=\"{0}\">{1}</option>", i.Key, i.Value);
+                    //}
+                    sb.Append(GetCommonSelect(selectedValue,MvcApplication.ShouYingZhuangTai));
                     break;
                 case "教育程度":
-                    foreach (var i in MvcApplication.Education)
-                    {
-                        if (i.Key == selectedValue && selectedValue != 0)
-                            sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.Key, i.Value);
-                        else
-                            sb.AppendFormat("<option value=\"{0}\">{1}</option>", i.Key, i.Value);
-                    }
+                    //foreach (var i in MvcApplication.Education)
+                    //{
+                    //    if (i.Key == selectedValue && selectedValue != 0)
+                    //        sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.Key, i.Value);
+                    //    else
+                    //        sb.AppendFormat("<option value=\"{0}\">{1}</option>", i.Key, i.Value);
+                    //}
+                    sb.Append(GetCommonSelect(selectedValue,MvcApplication.Education));
                     break;
                 case "性别":
-                    foreach (var i in MvcApplication.Sex)
-                    {
-                        if (i.Key == selectedValue && selectedValue != 0)
-                            sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.Key, i.Value);
-                        else
-                            sb.AppendFormat("<option value=\"{0}\">{1}</option>", i.Key, i.Value);
-                    }
+                    //foreach (var i in MvcApplication.Sex)
+                    //{
+                    //    if (i.Key == selectedValue && selectedValue != 0)
+                    //        sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.Key, i.Value);
+                    //    else
+                    //        sb.AppendFormat("<option value=\"{0}\">{1}</option>", i.Key, i.Value);
+                    //}
+                    sb.Append(GetCommonSelect(selectedValue,MvcApplication.Sex));
                     break;
                 case "是否":
-                    foreach (var i in MvcApplication.YesOrNo)
-                    {
-                        if (i.Key == selectedValue && selectedValue != 0)
-                            sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.Key, i.Value);
-                        else
-                            sb.AppendFormat("<option value=\"{0}\">{1}</option>", i.Key, i.Value);
-                    }
+                    //foreach (var i in MvcApplication.YesOrNo)
+                    //{
+                    //    if (i.Key == selectedValue && selectedValue != 0)
+                    //        sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.Key, i.Value);
+                    //    else
+                    //        sb.AppendFormat("<option value=\"{0}\">{1}</option>", i.Key, i.Value);
+                    //}
+                    sb.Append(GetCommonSelect(selectedValue,MvcApplication.YesOrNo));
+                    break;
+                case "医疗器械管理类别":
+                    sb.Append(GetCommonSelect(selectedValue, MvcApplication.ManageType));
+                    break;
+                case "首营种类":
+                    sb.Append(GetCommonSelect(selectedValue,MvcApplication.ShouYingType));
+                    break;
+                case "储运要求":
+                    sb.Append(GetCommonSelect(selectedValue, MvcApplication.TranCondition));
                     break;
                 default:
                     break;
             }
             sb.Append("</select>");
             return MvcHtmlString.Create(sb.ToString());
+        }
+        private static string GetCommonSelect(long selectedvalue,Dictionary<int,string> commonselect)
+        {
+            string _comsel = "";
+            foreach (var i in commonselect)
+            {
+                if (i.Key == selectedvalue && selectedvalue != 0)
+                    _comsel=_comsel+string.Format("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.Key, i.Value);
+                else
+                    _comsel=_comsel+string.Format("<option value=\"{0}\">{1}</option>", i.Key, i.Value);
+            }
+            return _comsel;
         }
         /// <summary>
         /// 常量下拉框
@@ -294,7 +324,7 @@ namespace CKWMS.App_Code
             string curmodule = "";
             StringBuilder sb = new StringBuilder();
             Iauth_quanxianService qxservice = ServiceFactory.auth_quanxianservice;
-            var rps = qxservice.GetPersonRightsFirst(userid).Distinct();
+            var rps = qxservice.GetPersonRightsFirst(userid).DistinctBy(auth_personrights => auth_personrights.ID);//.GroupBy(p=>p.ID).Select(g=>g.First());
             if (rps != null)
             {
                 foreach (auth_personrights rp in rps)
@@ -769,6 +799,22 @@ namespace CKWMS.App_Code
                             returnvalue = wt.Jiancheng;
                     }
                     break;
+                case "":
+                    Ibase_shengchanqiyeService _scqyservice = ServiceFactory.base_shengchanqiyeservice;
+                    base_shengchanqiye _scqy = _scqyservice.GetEntityById(p => p.ID == dataValue && p.IsDelete == false);
+                    if (_scqy == null)
+                        returnvalue = "";
+                    else
+                    {
+                        if (itemName == "代码")
+                            returnvalue = _scqy.Daima;
+                        if (itemName == "名称")
+                            returnvalue = _scqy.Qiyemingcheng;
+                        if (itemName == "企业地址")
+                            returnvalue = _scqy.Qiyedizhi;
+
+                    }
+                    break;
                 default:
                     break;
             }
@@ -782,7 +828,7 @@ namespace CKWMS.App_Code
         /// <param name="showname">显示名</param>
         /// <param name="filetype">文件类型：1，证照；2，业务；3，其他</param>
         /// <returns></returns>
-        public static MvcHtmlString GetCommonURL(this HtmlHelper html,string filename,string showname,int filetype)
+        public static MvcHtmlString GetCommonURL(this HtmlHelper html, string filename, string showname, int filetype)
         {
             string returnvalue = "";
             if (filename.Length < 1)
@@ -790,7 +836,7 @@ namespace CKWMS.App_Code
             switch (filetype)
             {
                 case 1:
-                    returnvalue = "<a href='/files/zhengzhao/"+filename+ "'  target='_blank'>"+showname+"</a>";
+                    returnvalue = "<a href='/files/zhengzhao/" + filename + "'  target='_blank'>" + showname + "</a>";
                     break;
                 case 2:
                     returnvalue = "<a href='/files/yewu/" + filename + "'  target='_blank'>" + showname + "</a>";

@@ -8,12 +8,23 @@
 }
 <script type="text/javascript">
     $(document).ready(function () {
+
         $("tr").bind("dblclick", function () {
             var u_id = $(this).find('td').eq(0).find('input').val();
             if (u_id != null) {
                 var url_go = "/base_weituokehu/Edit/" + u_id;
                 location.href = url_go;
             }
+        });
+        $("#bt_sendcheck").click(function () {
+            var sendval = "";
+            $("tr input[type=checkbox]").each(function () {
+                if (this.checked)
+                    sendval = sendval + $(this).val()+",";
+            });
+            $.post("/quan_shouyingsq/checkadd", { checkval: sendval,checktype:"2" }, function (data, status) {
+                alert("Data: " + data + "\nStatus: " + status);
+            });
         });
     });
     function AddInfo() {
@@ -66,7 +77,6 @@
         }
     }
 }
-
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
@@ -88,7 +98,7 @@
             <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
             <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
-            <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick=""><i class="icon-check-sign"></i>送审</button>
+            <button type="button" class="btn btn-default " id="bt_sendcheck"><i class="icon-check-sign"></i>送审</button>
         </p>
     </div>
     <div class="row">
@@ -127,16 +137,16 @@
                         <td>@item.Jiancheng</td>
                         <td>@item.Hetongbianhao</td>
                         <td>@item.YingyezhizhaoBH</td>
-                        <td>@string.Format("{0:d}",item.YingyezhizhaoYXQ)</td>
+                        <td>@string.Format("{0:d}", item.YingyezhizhaoYXQ)</td>
                         <td>@item.YingyezhizhaoTP</td>
                         <td>@item.JingyingxukeBH</td>
-                        <td>@string.Format("{0:d}",item.JingyingxukeYXQ)</td>
+                        <td>@string.Format("{0:d}", item.JingyingxukeYXQ)</td>
                         <td>@item.JingyingxukeTP</td>
                         <td>@item.Lianxiren</td>
                         <td>@item.Lianxidianhua</td>
                         <td>@item.Beizhu</td>
                         <td>@Html.GetCommonValue_ID("首营状态", (int)item.Shouying)</td>
-                        <td>@string.Format("{0:yyyy-MM-dd hh:mm}",item.MakeDate)</td>
+                        <td>@string.Format("{0:yyyy-MM-dd hh:mm}", item.MakeDate)</td>
                         <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
                     </tr>
                 }
@@ -147,3 +157,4 @@
         @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
     </div>
 </div>
+
