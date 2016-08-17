@@ -55,12 +55,7 @@
         scm.ItemTitle = "商品名称";
         scm.ItemType = "System.String";
         scms.Add(scm);
-
-        scm = new SearchConditionModel();
-        scm.ItemCode = "ZhucezhengYXQ";
-        scm.ItemTitle = "注册有效期";
-        scm.ItemType = "System.String";
-        scms.Add(scm);
+        
 
     }
     else
@@ -72,31 +67,20 @@
             scm.ItemCode = "Bianhao";
             scm.ItemTitle = "注册证编号";
             scm.ItemType = "System.String";
-            if (scs.Length > 1)
-            {
-                scm.ItemValue = scs[0].Split(',')[1];
-                scm.ItemOpValue = scs[0].Split(',')[2];
-                scm.ItemJion = scs[0].Split(',')[3];
-            }
             scms.Add(scm);
 
             scm = new SearchConditionModel();
             scm.ItemCode = "Mingcheng";
             scm.ItemTitle = "商品名称";
             scm.ItemType = "System.String";
-            //if (scs.Length > 1)
-            //{
-            //    scm.ItemValue = scs[1].Split(',')[1];
-            //    scm.ItemOpValue = scs[1].Split(',')[2];
-            //    scm.ItemJion = scs[1].Split(',')[3];
-            //}
             scms.Add(scm);
-
-            scm = new SearchConditionModel();
-            scm.ItemCode = "ZhucezhengYXQ";
-            scm.ItemTitle = "注册有效期";
-            scm.ItemType = "System.String";
-            scms.Add(scm);
+            
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[0].Split(',')[1];
+                scm.ItemOpValue = scs[0].Split(',')[2];
+                scm.ItemJion = scs[0].Split(',')[3];
+            }
         }
     }
 }

@@ -68,10 +68,11 @@
                     <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="YingyezhizhaoYXQ">
                 </div>
             </div>
+            @*YingyezhizhaoTP*@
             <div class="form-group">
                 @Html.LabelFor(m => m.YingyezhizhaoTP, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-6">
-                    @Html.TextBoxFor(m => m.YingyezhizhaoTP, new { @class = "form-control" })
+                    <input type="text" class="form-control" readonly name="YingyezhizhaoTP" id="YingyezhizhaoTP">
                 </div>
                 <div class="col-sm-2">
                     <button class="form-control" data-toggle="modal" data-target="#myModalUpload" onclick="btn1()">上传</button>
@@ -94,10 +95,12 @@
                     <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="ZuzhijigouYXQ">
                 </div>
             </div>
+
+            @*ZuzhijigouTP*@
             <div class="form-group">
                 @Html.LabelFor(m => m.ZuzhijigouTP, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-6">
-                    @Html.TextBoxFor(m => m.ZuzhijigouTP, new { @class = "form-control" })
+                    <input type="text" class="form-control" readonly name="ZuzhijigouTP" id="ZuzhijigouTP">
                 </div>
                 <div class="col-sm-2">
                     <button class="form-control" data-toggle="modal" data-target="#myModalUpload" onclick="btn2()">上传</button>
@@ -120,10 +123,11 @@
                     <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="ShuiwudengjiYXQ">
                 </div>
             </div>
+            @*ShuiwudengjiTP*@
             <div class="form-group">
                 @Html.LabelFor(m => m.ShuiwudengjiTP, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-6">
-                    @Html.TextBoxFor(m => m.ShuiwudengjiTP, new { @class = "form-control" })
+                    <input type="text" class="form-control" readonly name="ShuiwudengjiTP" id="ShuiwudengjiTP">
                 </div>
                 <div class="col-sm-2">
                     <button class="form-control" data-toggle="modal" data-target="#myModalUpload" onclick="btn3()">上传</button>
@@ -146,10 +150,11 @@
                     <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="JingyingxukeYXQ">
                 </div>
             </div>
+            @*JingyingxukeTP*@
             <div class="form-group">
                 @Html.LabelFor(m => m.JingyingxukeTP, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-6">
-                    @Html.TextBoxFor(m => m.JingyingxukeTP, new { @class = "form-control" })
+                    <input type="text" class="form-control" readonly name="JingyingxukeTP" id="JingyingxukeTP">
                 </div>
                 <div class="col-sm-2">
                     <button class="form-control" data-toggle="modal" data-target="#myModalUpload" onclick="btn4()">上传</button>
@@ -206,7 +211,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.MakeMan, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.SelectList_Auto("MakeMan", "userinfo", "fullname")
+                    @Html.SelectList_Auto("MakeMan", "userinfo", "fullname",(long)ViewBag.userid)
                 </div>
             </div>
         </div>

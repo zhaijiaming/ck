@@ -140,15 +140,15 @@
                         <td>@item.Hetongbianhao</td>
                         <td>@item.YingyezhizhaoBH</td>
                         <td>@string.Format("{0:d}", item.YingyezhizhaoYXQ)</td>
-                        <td>@item.YingyezhizhaoTP</td>
+                        <td><a href='/files/zhengzhao/@item.YingyezhizhaoTP' target='_blank'>浏览</a></td>
                         <td>@item.JingyingxukeBH</td>
                         <td>@string.Format("{0:d}", item.JingyingxukeYXQ)</td>
-                        <td>@item.JingyingxukeTP</td>
+                        <td><a href='/files/zhengzhao/@item.JingyingxukeTP' target='_blank'>浏览</a></td>
                         <td>@item.Lianxiren</td>
                         <td>@item.Lianxidianhua</td>
                         <td>@item.Beizhu</td>
                         <td>@Html.GetCommonValue_ID("首营状态", (int)item.Shouying)</td>
-                        <td>@string.Format("{0:yyyy-MM-dd hh:mm}", item.MakeDate)</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.MakeDate)</td>
                         <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
                     </tr>
                 }
