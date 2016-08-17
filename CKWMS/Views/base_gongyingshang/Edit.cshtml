@@ -1,10 +1,114 @@
 ﻿@using CKWMS.App_Code;
 @using CKWMS.EFModels
-@model base_gongyingshang
+
+@using CKWMS.Models
+@model base_gongyingshangViewModel
 @{
     ViewBag.Title = "供应商修改";
     base_gongyingshang item = ViewBag.base_gongyingshang;
 }
+<script type="text/javascript">
+    function doUpload() {
+        var formData = new FormData($("#uploadForm")[0]);
+        var strBack = "";
+        var strWrite = "";
+        var strSel = $("#btnSelect").val();
+        $.ajax({
+            url: 'http://localhost:6446/upload/UploadOK',
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (returndata) {
+                strBack = returndata;
+            },
+            error: function (returndata) {
+                strBack = "fail";
+            }
+        });
+        switch (strBack) {
+            case "0":
+                strWrite = "无传送值，上传失败！";
+                break;
+            case "1":
+                strWrite = "空文件，上传失败！";
+                break;
+            case "2":
+                strWrite = "错误，上传失败！";
+                break;
+            case "3":
+                strWrite = "文件尺寸超过4M，上传失败！";
+                break;
+            case "fail":
+                strWrite = "文件太大，上传失败！";
+                break;
+            default:
+                strWrite = "文件上传成功！";
+                break;
+        }
+        switch (strSel) {
+            case "picsel1":
+                $("#ob_base_gongyingshang_yingyezhizhaotp").val(strBack);
+                $("#zztp").html("<a href='/files/zhengzhao/" + strBack + "'  target='_blank'>浏览</a>");
+                break;
+            case "picsel2":
+                $("#ob_base_gongyingshang_jingyingxuketp").val(strBack);
+                $("#yxtp").html("<a href='/files/zhengzhao/" + strBack + "'  target='_blank'>浏览</a>");
+                break;
+            case "":
+            default:
+                $("#ob_base_gongyingshang_yingyezhizhaotp").val(strBack);
+                $("#zztp").html("<a href='/files/zhengzhao/" + strBack + "'  target='_blank'>浏览</a>");
+                break;
+        }
+        alert(strWrite);
+    }
+    function bt1() {
+        $("#btnSelect").val("picsel1");
+    }
+    function bt2() {
+        $("#btnSelect").val("picsel2");
+    }
+    function GetSpell() {
+        $.post("/Service/GetSpellCode",
+            {
+                yourwords: $("#shengcheng").val()
+            },
+        function (response) {
+            $("#daima").val(response);
+        });
+    }
+</script>
+<div class="modal fade" id="myModalUpload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h3 class="modal-title center" id="myModalLabel">
+                    <i class="icon-file blue"></i><span class="large">
+                        文件上传
+                    </span>
+                </h3>
+            </div>
+            <div class="modal-body center">
+                <form id="uploadForm">
+                    <input type="hidden" name="uploadtype" id="uploadtype" value="z" />
+                    <input type="hidden" name="uploaditemName" id="uploaditemName" value="gys_@item.ID" />
+                    <div class="form-group">
+                        <input type="file" name="file" />
+                    </div>
+                    <div class="form-group">
+                        <input type="button" class="btn btn-default" value="确 定" onclick="doUpload()" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
@@ -25,6 +129,7 @@
 <div class="page-content">
     <form role="form" action="/base_gongyingshang/Update" method="post">
         <input type="hidden" name="ob_base_gongyingshang_id" value="@item.ID" />
+        <input type="hidden" id="btnSelect" value="" />
         <div class="page-header">
             <p>
                 <button type="submit" class="btn btn-default"><i class="icon-save"></i>更新</button>
@@ -33,51 +138,73 @@
         </div>
         <div class="container">
             <div class="form-group">
-                <label for="name" class="col-sm-2">代码</label>
+                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>代码</label>
+                
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="ob_base_gongyingshang_daima" value="@item.Daima">
+                    <input type="text" class="form-control" id = "daima" name="ob_base_gongyingshang_daima" value="@item.Daima">
+                    @*@Html.TextBoxFor(m => m.Daima, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Daima)*@
                 </div>
             </div>
             <div class="form-group">
-                <label for="name" class="col-sm-2">名称</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="ob_base_gongyingshang_mingcheng" value="@item.Mingcheng">
+                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>名称</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id = "shengcheng" name="ob_base_gongyingshang_mingcheng" value="@item.Mingcheng">
+                    @*@Html.TextBoxFor(m => m.Mingcheng, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Mingcheng)*@
                 </div>
+                <button type="button" class="btn btn-default " onclick="GetSpell()">生成代码</button>
             </div>
             <div class="form-group">
-                <label for="name" class="col-sm-2">营业执照编号</label>
+                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>营业执照编号</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" name="ob_base_gongyingshang_yingyezhizhaobh" value="@item.YingyezhizhaoBH">
                 </div>
             </div>
             <div class="form-group">
-                <label for="name" class="col-sm-2">营业执照有效期</label>
+                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>营业执照有效期</label>
                 <div class="col-sm-10">
                     <input type="date" class="form-control" name="ob_base_gongyingshang_yingyezhizhaoyxq" value="@string.Format("{0:yyyy-MM-dd}",item.YingyezhizhaoYXQ)">
                 </div>
             </div>
             <div class="form-group">
                 <label for="name" class="col-sm-2">营业执照照片</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="ob_base_gongyingshang_yingyezhizhaotp" value="@item.YingyezhizhaoTP">
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" readonly name="ob_base_gongyingshang_yingyezhizhaotp" id="ob_base_gongyingshang_yingyezhizhaotp" value="@item.YingyezhizhaoTP">
+                </div>
+                <div class="col-sm-2">
+                    <button class="form-control" data-toggle="modal" data-target="#myModalUpload" onclick="bt1()">上传</button>
+                </div>
+                <div class="col-sm-2">
+                    <span id="zztp" class="form-control">
+                        <a href="/files/zhengzhao/@item.YingyezhizhaoTP" target="_blank">浏览</a>
+                    </span>
                 </div>
             </div>
             <div class="form-group">
-                <label for="name" class="col-sm-2">经营许可编号</label>
+                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>经营许可编号</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" name="ob_base_gongyingshang_jingyingxukebh" value="@item.JingyingxukeBH">
                 </div>
             </div>
             <div class="form-group">
-                <label for="name" class="col-sm-2">经营许可有效期</label>
+                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>经营许可有效期</label>
                 <div class="col-sm-10">
                     <input type="date" class="form-control" name="ob_base_gongyingshang_jingyingxukeyxq" value="@string.Format("{0:yyyy-MM-dd}",item.JingyingxukeYXQ)">
                 </div>
             </div>
             <div class="form-group">
                 <label for="name" class="col-sm-2">经营许可照片</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="ob_base_gongyingshang_jingyingxuketp" value="@item.JingyingxukeTP">
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" readonly id="ob_base_gongyingshang_jingyingxuketp" name="ob_base_gongyingshang_jingyingxuketp" value="@item.JingyingxukeTP">
+                </div>
+                <div class="col-sm-2">
+                    <button class="form-control" data-toggle="modal" data-target="#myModalUpload" onclick="bt2()">上传</button>
+                </div>
+                <div class="col-sm-2">
+                    <span class="form-control" id="yxtp">
+                        <a href="/files/zhengzhao/@item.JingyingxukeTP" target="_blank">浏览</a>
+                    </span>
                 </div>
             </div>
             <div class="form-group">
@@ -95,7 +222,8 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2">首营状态</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="ob_base_gongyingshang_shouying" value="@item.Shouying">
+                    @*<input type="text" class="form-control" name="ob_base_gongyingshang_shouying" value="@item.Shouying">*@
+                    @Html.SelectList_Common("ob_base_gongyingshang_shouying", "首营状态", (int)item.Shouying)
                 </div>
             </div>
             <div class="form-group">

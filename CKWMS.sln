@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CKWMS", "CKWMS\CKWMS.csproj", "{8216081D-C78E-4DAF-BDF8-8266B9F1B67A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContosoUniversity", "..\..\Documents\Visual Studio 2015\Projects\ContosoUniversity\ContosoUniversity\ContosoUniversity.csproj", "{D09C72FC-297C-4EBC-AD8F-06E998D5BF79}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{8216081D-C78E-4DAF-BDF8-8266B9F1B67A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8216081D-C78E-4DAF-BDF8-8266B9F1B67A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8216081D-C78E-4DAF-BDF8-8266B9F1B67A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D09C72FC-297C-4EBC-AD8F-06E998D5BF79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D09C72FC-297C-4EBC-AD8F-06E998D5BF79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D09C72FC-297C-4EBC-AD8F-06E998D5BF79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D09C72FC-297C-4EBC-AD8F-06E998D5BF79}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

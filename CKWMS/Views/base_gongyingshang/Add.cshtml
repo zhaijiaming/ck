@@ -1,6 +1,49 @@
-﻿@using CKWMS.App_Code;
+﻿
+
+@using CKWMS.App_Code;
+@using CKWMS.Models
+@model base_gongyingshangViewModel
 @{ViewBag.Title = "供应商添加";}
-@Html.GetFileUpload("ob_base_gongyingshang_yingyezhizhaotp", "yyzz","z","gys",2,0,new Dictionary<string, string>() { { "yyzz", "ob_base_gongyingshang_yingyezhizhaotp" }, { "xkz", "ob_base_gongyingshang_jingyingxuketp" } })
+@Html.GetFileUpload("ob_base_gongyingshang_yingyezhizhaotp", "yyzz", "z", "gys", 2, 0, new Dictionary<string, string>() { { "yyzz", "ob_base_gongyingshang_yingyezhizhaotp" }, { "xkz", "ob_base_gongyingshang_jingyingxuketp" } })
+
+<script src="/Scripts/jquery.validate.js" type="text/javascript"></script>
+<script src="/Scripts/jquery.validate.unobtrusive.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("form").validate({
+
+            rules: {
+                ob_base_gongyingshang_daima: { required: true },
+                ob_base_gongyingshang_mingcheng: { required: true },
+                
+            },
+
+            messages: {
+                ob_base_gongyingshang_daima: { required: "请输入daima" },
+                ob_base_gongyingshang_mingcheng: { required: "请输入mingcheng" },
+                
+            }
+        });
+    });
+
+    function GetSpell() {
+        $.post("/Service/GetSpellCode",
+            {
+                yourwords: $("#shengcheng").val()
+            },
+        function (response) {
+            $("#daima").val(response);
+        });
+    }
+
+
+
+</script>
+
+
+
+
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
@@ -29,27 +72,35 @@
         </div>
         <div class="container">
             <div class="form-group">
-                <label for="name" class="col-sm-2">代码</label>
+                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>代码</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="ob_base_gongyingshang_daima">
+                    <input type="text" class="form-control" onblur="validate()" data-val="true" data-val-required="UserName 字段是必需的。" id = "daima" name="ob_base_gongyingshang_daima"  >
+                    @*@Html.TextBoxFor(m => m.Daima, new { @class = "form-control", id = "daima" })*@
+                    @*@Html.ValidationMessageFor(m => m.Daima)*@
+
                 </div>
             </div>
             <div class="form-group">
-                <label for="name" class="col-sm-2">名称</label>
+                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>名称</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" onblur="validate()" data-val="true" data-val-required="UserName 字段是必需的。" id = "shengcheng" name="ob_base_gongyingshang_mingcheng">
+                    @*@Html.TextBoxFor(m => m.Mingcheng, new { @class = "form-control", id = "shengcheng" })
+                    @Html.ValidationMessageFor(m => m.Mingcheng)*@
+                </div>
+
+                <button type="button" class="btn btn-default " onclick="GetSpell()">生成代码</button>
+
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>营业执照编号</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="ob_base_gongyingshang_mingcheng">
+                    <input type="text" class="form-control required:true" name="ob_base_gongyingshang_yingyezhizhaobh">
                 </div>
             </div>
             <div class="form-group">
-                <label for="name" class="col-sm-2">营业执照编号</label>
+                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>营业执照有效期</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="ob_base_gongyingshang_yingyezhizhaobh">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="name" class="col-sm-2">营业执照有效期</label>
-                <div class="col-sm-10">
-                    <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="ob_base_gongyingshang_yingyezhizhaoyxq">
+                    <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="ob_base_gongyingshang_yingyezhizhaoyxq" onchange="aaaa" id="sss">
                 </div>
             </div>
             <div class="form-group">
@@ -67,15 +118,16 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="name" class="col-sm-2">经营许可编号</label>
+                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>经营许可编号</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" name="ob_base_gongyingshang_jingyingxukebh">
                 </div>
             </div>
             <div class="form-group">
-                <label for="name" class="col-sm-2">经营许可有效期</label>
+                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>经营许可有效期</label>
                 <div class="col-sm-10">
                     <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="ob_base_gongyingshang_jingyingxukeyxq">
+
                 </div>
             </div>
             <div class="form-group">
@@ -107,7 +159,8 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2">首营状态</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="ob_base_gongyingshang_shouying">
+                    @*<input type="text" class="form-control" name="ob_base_gongyingshang_shouying">*@
+                    @Html.SelectList_Common("ob_base_gongyingshang_shouying", "首营状态", 1)
                 </div>
             </div>
             <div class="form-group">
@@ -119,10 +172,9 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2">输入人</label>
                 <div class="col-sm-10">
-                    @Html.SelectList_Auto("ob_base_gongyingshang_makeman", "userinfo", "fullname")
+                    @Html.SelectList_Auto("ob_base_gongyingshang_makeman", "userinfo", "fullname", (long)@ViewBag.userid)
                 </div>
             </div>
         </div>
     </form>
 </div>
-
