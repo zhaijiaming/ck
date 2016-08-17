@@ -7,11 +7,115 @@
 @Html.GetFileUpload("zhucezhengtp", "zcz", "z", "cus", 1, 0, new Dictionary<string, string>() { { "zcz", "zhucezhengtp" } })
 <script type="text/javascript">
     $(document).ready(function () {
+        var _zczid = $("#zczbh").val();
         $("#pl_guige").hide();
+        $("#pl_guige_add").hide();
         $("#bt_guige").click(function () {
+            getGuiGe();
             $("#pl_guige").show();
         });
+        $("#pl_close").click(function () {
+            $("#pl_guige").hide();
+        });
+        $("#bt_guige_delete").click(function () {
+            var _ggdel = "";
+            $("#ggdatatable tr input[type=checkbox]").each(function () {
+                if (this.checked)
+                {
+                    _ggdel = _ggdel + $(this).val()+",";
+                }
+            });
+            if (_ggdel.length > 0) {
+                var _delok = confirm("确定要删除这些规格吗？");
+                if (_delok) {
+                    $.post(
+                        "/base_zhucezhenggg/deletenow",
+                        {
+                            del:_ggdel
+                        },
+                        function (data) {
+                            if (data == 1)
+                                getGuiGe();
+                            else
+                                alert("删除失败，请重试！");
+                        }
+                    );
+                }
+            }
+        });
+        $("#bt_guige_refresh").click(function () {
+            getGuiGe();
+        });
+        $("#bt_guige_add").click(function () {
+            $("#pl_guige_add").show();
+        });
+        $("#pl_add_close").click(function () {
+            $("#pl_guige_add").hide();
+        });
+        $("#bt_add_save").click(function () {
+            saveGuiGe(1);
+        });
+        $("#bt_add_save1").click(function () {
+            saveGuiGe(2);
+        });
     });
+    function saveGuiGe(aftersave) {
+        var _fillall = true;
+        var _zczid = $("#zczbh").val();
+        var _guige = $("#pl_add_guige").val();
+        var _memo = $("#pl_add_memo").val();
+        if (_zczid == "")
+            _fillall = false;
+        if (_guige == "")
+            _fillall = false;
+        if (_fillall) {
+            $.post("/base_zhucezhenggg/addnow",
+                {
+                    addzcz: _zczid,
+                    addguige: _guige,
+                    addmemo: _memo
+                },
+                function (data, status) {
+                    if (data == 1) {
+                        if (aftersave == 1)
+                            $("#pl_guige_add").hide();
+                        if (aftersave == 2) {
+                            $("#pl_add_guige").val("");
+                            $("#pl_add_memo").val("");
+                        }
+                    }
+                    else
+                        alert("添加失败，请重新添加");
+                });
+        }
+        else
+            alert("规格信息必须填写！");
+    }
+    function getGuiGe() {
+        var _zczid = $("#zczbh").val();
+        var filltable = "";
+        $.post(
+            "/base_zhucezhenggg/getdetail",
+            {
+                zczbh: _zczid
+            },
+            function (data) {
+                for (var i in data) {
+                    filltable = filltable + '<tr><td><div class="checkbox"><label><input type="checkbox" value="';
+                    filltable = filltable + data[i].ID;
+                    filltable = filltable + '"></label></div></td><td>';
+                    filltable = filltable + data[i].Guige;
+                    filltable = filltable + '</td><td>';
+                    filltable = filltable + data[i].Memo;
+                    filltable = filltable + '</td><td>';
+                    filltable = filltable + data[i].Makedate;
+                    filltable = filltable + '</td><td>';
+                    filltable = filltable + data[i].Makeman;
+                    filltable = filltable + '</td></tr>';
+                }
+                $("#pl_guige tbody").html(filltable);
+            });
+    }
 </script>
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
@@ -32,7 +136,7 @@
     @using (Html.BeginForm("Update", "base_shangpinzcz", FormMethod.Post, new { @role = "form" }))
     {
         @Html.AntiForgeryToken()
-        <input type="hidden" name="id" value="@ViewData.Model.ID" />
+        <input id="zczbh" type="hidden" name="id" value="@ViewData.Model.ID" />
         <div class="page-header">
             <p>
                 <button type="submit" class="btn btn-default"><i class="icon-save"></i>更新</button>
@@ -65,7 +169,8 @@
                 @Html.LabelFor(m => m.Guige, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     @*@Html.TextBoxFor(m => m.Guige, new { @class = "form-control" })*@
-                    <button class="btn" id="bt_guige">明细管理</button>
+                    <p class="btn btn-default" id="bt_guige"><i class="icon-list"></i>浏览</p>
+                    <p class="btn btn-default" id="bt_guige_add"><i class="icon-adn"></i>添加</p>
                 </div>
             </div>
             @*产品标准*@
@@ -211,10 +316,8 @@
     </div>
     <div class="panel-body">
         <div class="center">
-            <button type="button" class="btn btn-default " id="bt_addInfo"><i class="icon-adn"></i>新增</button>
-            <button type="button" class="btn btn-default " id="bt_updateInfo"><i class="icon-edit"></i>编辑</button>
-            <button type="button" class="btn btn-default " id="bt_deleteInfo"><i class="icon-remove"></i>删除</button>
-            <button type="button" class="btn btn-default " id="bt_refreshInfo"><i class="icon-refresh"></i>刷新</button>
+            <button type="button" class="btn btn-default " id="bt_guige_delete"><i class="icon-remove"></i>删除</button>
+            <button type="button" class="btn btn-default " id="bt_guige_refresh"><i class="icon-refresh"></i>刷新</button>
             <table class="table" id="ggdatatable">
                 <caption></caption>
                 <thead>
@@ -227,29 +330,37 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td></td>
-                        <td>规格</td>
-                        <td>说明</td>
-                        <td>制单日期</td>
-                        <td>制单人</td>
-                    </tr>
-                    @*@foreach (var item in ViewBag.base_zhucezhenggg)
-                        {
-                            <tr>
-                                <td>
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" value="@item.ID"></label>
-                                    </div>
-                                </td>
-                                <td>@item.Guige</td>
-                                <td>@item.Memo</td>
-                                <td>@item.MakeDate</td>
-                                <td>@item.MakeMan</td>
-                            </tr>
-                        }*@
                 </tbody>
             </table>
+        </div>
+    </div>
+</div>
+<div id="pl_guige_add" class="panel panel-primary" style="position:absolute;top:200px;left:400px;width:400px;height:200px;z-index:999;">
+    <div class="panel-heading">
+        <h3 class="panel-title">规格添加<button id="pl_add_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="center">
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="Guige">规格</label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="pl_add_guige" name="Guige" type="text" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="Memo">说明</label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="pl_add_memo" name="Memo" type="text" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-6">
+                    <p id="bt_add_save" class="btn btn-default">保存并关闭</p>
+                </div>
+                <div class="col-sm-6">
+                    <p id="bt_add_save1" class="btn btn-default">保存后继续</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -13,6 +13,15 @@ using CKWMS.Filters;
 
 namespace CKWMS.Controllers
 {
+    public class ZhuCeZhengGG
+    {
+        public int ID { get; set; }
+        public int ZCZID { get; set; }
+        public string Guige { get; set; }
+        public string Memo { get; set; }
+        public string Makedate { get; set; }
+        public string Makeman { get; set; }
+    }
     public class base_zhucezhengggController : Controller
     {
         private Ibase_zhucezhengggService ob_base_zhucezhengggservice = ServiceFactory.base_zhucezhengggservice;
@@ -159,7 +168,71 @@ namespace CKWMS.Controllers
             ViewBag.base_zhucezhenggg = tempData;
             return View(tempData);
         }
-
+        public JsonResult GetDetail()
+        {
+            int _userid = (int)Session["user_id"];
+            string _username = (string)Session["user_name"];
+            string _zczid = Request["zczbh"] ?? "";
+            IList<ZhuCeZhengGG> _guiges;
+            if (_zczid == "")
+                return Json("");
+            else
+            {
+                _guiges = new List<ZhuCeZhengGG>();
+                var tempdata = ob_base_zhucezhengggservice.LoadSortEntities(p => p.IsDelete == false && p.ZCZID == int.Parse(_zczid), false, p => p.Guige);
+                //_guiges = tempdata.ToList<base_zhucezhenggg>();
+                foreach (base_zhucezhenggg _zczgg in tempdata)
+                {
+                    if (_zczgg.ID > 0)
+                    {
+                        ZhuCeZhengGG _guige = new ZhuCeZhengGG();
+                        _guige.ID = _zczgg.ID;
+                        _guige.ZCZID = (int)_zczgg.ZCZID;
+                        _guige.Guige = _zczgg.Guige;
+                        _guige.Memo = _zczgg.Memo;
+                        _guige.Makedate = _zczgg.MakeDate.ToShortDateString();
+                        userinfo _user = ServiceFactory.userinfoservice.GetEntityById(p => p.ID == _zczgg.MakeMan);
+                        _guige.Makeman = _user.FullName;
+                        _guiges.Add(_guige);
+                    }
+                }
+            }
+            return Json(_guiges);
+        }
+        public int AddNow()
+        {
+            int _userid = (int)Session["user_id"];
+            string _username = (string)Session["user_name"];
+            string _zczid = Request["addzcz"] ?? "";
+            string _guige = Request["addguige"] ?? "";
+            string _memo = Request["addmemo"] ?? "";
+            try
+            {
+                if (_zczid == "" || _guige == "")
+                    return 0;
+                else
+                {
+                    base_zhucezhenggg ob_base_zhucezhenggg = ob_base_zhucezhengggservice.GetEntityById(p => p.Guige == _guige.Trim() && p.IsDelete == false);
+                    if (ob_base_zhucezhenggg == null)
+                    {
+                        ob_base_zhucezhenggg = new base_zhucezhenggg();
+                        ob_base_zhucezhenggg.ZCZID = int.Parse(_zczid);
+                        ob_base_zhucezhenggg.Guige = _guige.Trim();
+                        ob_base_zhucezhenggg.Memo = _memo.Trim();
+                        ob_base_zhucezhenggg.MakeDate = DateTime.Now;
+                        ob_base_zhucezhenggg.MakeMan = _userid;
+                        ob_base_zhucezhenggg = ob_base_zhucezhengggservice.AddEntity(ob_base_zhucezhenggg);
+                        ViewBag.base_zhucezhenggg = ob_base_zhucezhenggg;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return -1;
+            }
+            return 1;
+        }
         public ActionResult Add()
         {
             ViewBag.userid = (int)Session["user_id"];
@@ -264,6 +337,23 @@ namespace CKWMS.Controllers
                 }
             }
             return RedirectToAction("Index");
+        }
+        public int DeleteNow()
+        {
+            string sdel = Request["del"] ?? "";
+            int id;
+            base_zhucezhenggg ob_base_zhucezhenggg;
+            foreach (string sD in sdel.Split(','))
+            {
+                if (sD.Length > 0)
+                {
+                    id = int.Parse(sD);
+                    ob_base_zhucezhenggg = ob_base_zhucezhengggservice.GetEntityById(base_zhucezhenggg => base_zhucezhenggg.ID == id && base_zhucezhenggg.IsDelete == false);
+                    ob_base_zhucezhenggg.IsDelete = true;
+                    ob_base_zhucezhengggservice.UpdateEntity(ob_base_zhucezhenggg);
+                }
+            }
+            return 1;
         }
     }
 }
