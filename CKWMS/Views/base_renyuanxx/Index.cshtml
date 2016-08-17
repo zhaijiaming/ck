@@ -68,12 +68,24 @@
             scm.ItemCode = "Bianhao";
             scm.ItemTitle = "编号";
             scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[0].Split(',')[1];
+                scm.ItemOpValue = scs[0].Split(',')[2];
+                scm.ItemJion = scs[0].Split(',')[3];
+            }
             scms.Add(scm);
 
             scm = new SearchConditionModel();
             scm.ItemCode = "Mingcheng";
             scm.ItemTitle = "姓名";
             scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[1].Split(',')[1];
+                scm.ItemOpValue = scs[1].Split(',')[2];
+                scm.ItemJion = scs[1].Split(',')[3];
+            }
             scms.Add(scm);
 
             scm = new SearchConditionModel();
@@ -83,9 +95,9 @@
             scms.Add(scm);
             if (scs.Length > 1)
             {
-                scm.ItemValue = scs[0].Split(',')[1];
-                scm.ItemOpValue = scs[0].Split(',')[2];
-                scm.ItemJion = scs[0].Split(',')[3];
+                scm.ItemValue = scs[2].Split(',')[1];
+                scm.ItemOpValue = scs[2].Split(',')[2];
+                scm.ItemJion = scs[2].Split(',')[3];
             }
         }
     }

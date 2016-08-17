@@ -115,6 +115,8 @@ namespace CKWMS.Controllers
                 }
                 if (!string.IsNullOrEmpty(bianhao))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bianhao", bianhao, bianhaoequal, bianhaoand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bianhao", "", bianhaoequal, bianhaoand);
                 //mingcheng
                 if (!string.IsNullOrEmpty(mingcheng))
                 {
@@ -135,6 +137,8 @@ namespace CKWMS.Controllers
                 }
                 if (!string.IsNullOrEmpty(mingcheng))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", mingcheng, mingchengequal, mingchengand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", "", mingchengequal, mingchengand);
                 //bumen
                 if (!string.IsNullOrEmpty(bumen))
                 {
@@ -155,7 +159,8 @@ namespace CKWMS.Controllers
                 }
                 if (!string.IsNullOrEmpty(bumen))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bumen", bumen, bumenequal, bumenand);
-
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bumen", "", bumenequal, bumenand);
                 searchconditionService.GetInstance().AddEntity(sc);
             }
             else
@@ -181,6 +186,8 @@ namespace CKWMS.Controllers
                 }
                 if (!string.IsNullOrEmpty(bianhao))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bianhao", bianhao, bianhaoequal, bianhaoand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bianhao", "", bianhaoequal, bianhaoand);
                 //mingcheng
                 if (!string.IsNullOrEmpty(mingcheng))
                 {
@@ -201,6 +208,8 @@ namespace CKWMS.Controllers
                 }
                 if (!string.IsNullOrEmpty(mingcheng))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", mingcheng, mingchengequal, mingchengand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", "", mingchengequal, mingchengand);
                 //bumen
                 if (!string.IsNullOrEmpty(bumen))
                 {
@@ -221,7 +230,8 @@ namespace CKWMS.Controllers
                 }
                 if (!string.IsNullOrEmpty(bumen))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bumen", bumen, bumenequal, bumenand);
-
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bumen", "", bumenequal, bumenand);
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;
