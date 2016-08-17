@@ -5,7 +5,14 @@
     ViewBag.Title = "商品注册证修改";
 }
 @Html.GetFileUpload("zhucezhengtp", "zcz", "z", "cus", 1, 0, new Dictionary<string, string>() { { "zcz", "zhucezhengtp" } })
-
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#pl_guige").hide();
+        $("#bt_guige").click(function () {
+            $("#pl_guige").show();
+        });
+    });
+</script>
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
@@ -21,7 +28,6 @@
         <li class="active"> 编辑</li>
     </ul>
 </div>
-
 <div class="page-content">
     @using (Html.BeginForm("Update", "base_shangpinzcz", FormMethod.Post, new { @role = "form" }))
     {
@@ -58,7 +64,8 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.Guige, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Guige, new { @class = "form-control" })
+                    @*@Html.TextBoxFor(m => m.Guige, new { @class = "form-control" })*@
+                    <button class="btn" id="bt_guige">明细管理</button>
                 </div>
             </div>
             @*产品标准*@
@@ -108,7 +115,7 @@
                     @Html.LabelFor(m => m.ShengchanqiyeID)
                 </div>
                 <div class="col-sm-10">
-                    @Html.SelectList_Auto("Shengchanqiyeid", "厂家", "",(long)ViewData.Model.ShengchanqiyeID)
+                    @Html.SelectList_Auto("Shengchanqiyeid", "厂家", "", (long)ViewData.Model.ShengchanqiyeID)
                     @Html.ValidationMessageFor(m => m.ShengchanqiyeID)
                 </div>
             </div>
@@ -183,18 +190,66 @@
                     <label>
                         <input type="radio" name="shixiaosf" value="true">
                         是
-                        
+
                     </label>
                 </div>
                 <div class="radio-inline">
                     <label>
                         <input type="radio" name="shixiaosf" value="false">
                         否
-                        
+
                     </label>
                 </div>
             </div>
-            
+
         </div>
     }
+</div>
+<div id="pl_guige" class="panel panel-primary" style="position:absolute;top:100px;left:200px;width:600px;height:400px;z-index:999;">
+    <div class="panel-heading">
+        <h3 class="panel-title">规格管理<button id="pl_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="center">
+            <button type="button" class="btn btn-default " id="bt_addInfo"><i class="icon-adn"></i>新增</button>
+            <button type="button" class="btn btn-default " id="bt_updateInfo"><i class="icon-edit"></i>编辑</button>
+            <button type="button" class="btn btn-default " id="bt_deleteInfo"><i class="icon-remove"></i>删除</button>
+            <button type="button" class="btn btn-default " id="bt_refreshInfo"><i class="icon-refresh"></i>刷新</button>
+            <table class="table" id="ggdatatable">
+                <caption></caption>
+                <thead>
+                    <tr>
+                        <td></td>
+                        <td>规格</td>
+                        <td>说明</td>
+                        <td>制单日期</td>
+                        <td>制单人</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td>规格</td>
+                        <td>说明</td>
+                        <td>制单日期</td>
+                        <td>制单人</td>
+                    </tr>
+                    @*@foreach (var item in ViewBag.base_zhucezhenggg)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="@item.ID"></label>
+                                    </div>
+                                </td>
+                                <td>@item.Guige</td>
+                                <td>@item.Memo</td>
+                                <td>@item.MakeDate</td>
+                                <td>@item.MakeMan</td>
+                            </tr>
+                        }*@
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

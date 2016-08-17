@@ -65,7 +65,6 @@ namespace CKWMS.Controllers
             }
 
             where = where.And(base_shangpinzcz => base_shangpinzcz.IsDelete == false);
-
             var tempData = ob_base_shangpinzczservice.LoadSortEntities(where.Compile(), false, base_shangpinzcz => base_shangpinzcz.ID).ToPagedList<base_shangpinzcz>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.base_shangpinzcz = tempData;
             return View(tempData);
