@@ -2,7 +2,9 @@
 @using CKWMS.Models;
 @using X.PagedList;
 @using X.PagedList.Mvc;
-@{ ViewBag.Title = "供应商清单";}
+@{ ViewBag.Title = "供应商清单";
+    string _searchcondition = ViewBag.SearchCondition;
+    }
 <script type="text/javascript">
     $(document).ready(function () {
         $("tr").bind("dblclick", function () {
@@ -12,7 +14,37 @@
                 location.href = url_go;
             }
         });
+        
+
+        var t = document.getElementsByClassName('yyzztp');
+
+        for (var i = 0; i < t.length; i++) {
+            if (t[i].href.length < 42) {
+                $(".yyzztp").eq(i).removeAttr("href")
+                $(".yyzztp").eq(i).html("暂无")
+            }
+            else {
+                $(".yyzztp").eq(i).html("浏览")
+            }
+        }
+
+        var t = document.getElementsByClassName('jjxktp');
+
+        for (var i = 0; i < t.length; i++) {
+            if (t[i].href.length < 42) {
+                $(".jjxktp").eq(i).removeAttr("href")
+                $(".jjxktp").eq(i).html("暂无")
+            }
+            else {
+                $(".jjxktp").eq(i).html("浏览")
+            }
+        }
+
+        
     });
+
+    
+
     function AddInfo() {
         location.href = "/base_gongyingshang/Add";
     }
@@ -36,13 +68,67 @@
 </script>
 @{
     List<SearchConditionModel> scms = new List<SearchConditionModel>();
-    SearchConditionModel scm = new SearchConditionModel();
-    scm.ItemCode = "Daima";
-    scm.ItemTitle = "代码";
-    scm.ItemType = "System.String";
-    scms.Add(scm);
-}
+    if (_searchcondition == null || _searchcondition == "")
+    {
+        SearchConditionModel scm = new SearchConditionModel();
+        scm.ItemCode = "Daima";
+        scm.ItemTitle = "代码";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
 
+        scm = new SearchConditionModel();
+        scm.ItemCode = "Qiyemingcheng";
+        scm.ItemTitle = "名称";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "Shouying";
+        scm.ItemTitle = "首营状态";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+    }
+    else
+    {
+        //analysis condition
+        string[] scs = _searchcondition.Split(';');
+        if (scs.Length > 0)
+        {
+            SearchConditionModel scm = new SearchConditionModel();
+            scm.ItemCode = "Daima";
+            scm.ItemTitle = "代码";
+            scm.ItemType = "System.String";
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "Qiyemingcheng";
+            scm.ItemTitle = "名称";
+            scm.ItemType = "System.String";
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "Shouying";
+            scm.ItemTitle = "首营状态";
+            scm.ItemType = "System.String";
+            scms.Add(scm);
+
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[0].Split(',')[1];
+                scm.ItemOpValue = scs[0].Split(',')[2];
+                scm.ItemJion = scs[0].Split(',')[3];
+            }
+
+            //if (scs.Length > 1)
+            //{
+            //    scm.ItemValue = scs[1].Split(',')[1];
+            //    scm.ItemOpValue = scs[1].Split(',')[2];
+            //    scm.ItemJion = scs[1].Split(',')[3];
+            //}
+
+        }
+    }
+}
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
@@ -72,7 +158,11 @@
             <thead>
                 <tr>
                     <td></td>
-                    <td>代码</td>
+                    <td>@Html.ActionLink("代码", "Index", new
+                   {
+                       sortOrder = ViewBag.DaimaSortParm,
+                        })
+                    </td>
                     <td>名称</td>
                     <td>营业执照编号</td>
                     <td>营业执照有效期</td>
@@ -90,6 +180,9 @@
             <tbody>
                 @foreach (var item in ViewBag.base_gongyingshang)
                 {
+
+                    
+
                     <tr>
                         <td>
                             <div class="checkbox">
@@ -99,22 +192,28 @@
                         <td>@item.Daima</td>
                         <td>@item.Mingcheng</td>
                         <td>@item.YingyezhizhaoBH</td>
-                        <td>@item.YingyezhizhaoYXQ</td>
-                        <td>@item.YingyezhizhaoTP</td>
+                        <td>@item.YingyezhizhaoYXQ.ToString("yyyy-MM-dd")</td>
+                        <td><a href="/files/zhengzhao/@item.YingyezhizhaoTP" target="_blank" class="yyzztp">浏览</a></td>
                         <td>@item.JingyingxukeBH</td>
-                        <td>@item.JingyingxukeYXQ</td>
-                        <td>@item.JingyingxukeTP</td>
+                        <td>@item.JingyingxukeYXQ.ToString("yyyy-MM-dd")</td>
+                        <td><a href="/files/zhengzhao/@item.JingyingxukeTP" target="_blank" class="jjxktp">浏览</a></td>
                         <td>@item.Jingyingfanwei</td>
                         <td>@item.JingyingfanweiDM</td>
-                        <td>@item.Shouying</td>
-                        <td>@item.MakeDate</td>
+                        @*<td>@item.Shouying</td>*@
+                        <td>@Html.GetCommonValue_ID("首营状态", (int)item.Shouying)</td>
+                        <td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
                         <td>@item.MakeMan</td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
+
+    
+
     <div class="pager">
         @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
     </div>
 </div>
+
+

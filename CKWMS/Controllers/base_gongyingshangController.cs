@@ -7,20 +7,50 @@ using CKWMS.EFModels;
 using CKWMS.IBSL;
 using CKWMS.BSL;
 using CKWMS.Common;
+using CKWMS.Models;
+using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
+
 
 namespace CKWMS.Controllers
 {
     public class base_gongyingshangController : Controller
     {
         private Ibase_gongyingshangService ob_base_gongyingshangservice = ServiceFactory.base_gongyingshangservice;
-        public ActionResult Index(string page)
+
+
+
+        //public class GongyingshangContext : DbContext
+        //{
+        //    public GongyingshangContext() : base("GongyingshangContext")
+        //    {
+        //    }
+
+        //    public DbSet<base_gongyingshang> Gongyingshangs { get; set; }
+            
+
+        //    protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //    {
+        //        modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+        //    }
+        //}
+
+        //private GongyingshangContext db = new GongyingshangContext();
+
+        public ActionResult Index(string sortOrder,string page)
         {
             if (string.IsNullOrEmpty(page))
                 page = "1";
-
+            
             string daima = Request["daima"] ?? "";
             string daimaequal = Request["daimaequal"] ?? "";
             string daimaand = Request["daimaand"] ?? "";
+            //string mingcheng = Request["mingcheng"] ?? "";
+            //string mingchengequal = Request["mingchengequal"] ?? "";
+            //string mingchengand = Request["mingchengand"] ?? "";
+            //string shouying = Request["shouying"] ?? "";
+            //string shouyingequal = Request["shouyingequal"] ?? "";
+            //string shouyingand = Request["shouyingand"] ?? "";
 
             Expression<Func<base_gongyingshang, bool>> where = PredicateExtensionses.True<base_gongyingshang>();
             if (!string.IsNullOrEmpty(daima))
@@ -46,10 +76,38 @@ namespace CKWMS.Controllers
             var tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), false, base_gongyingshang => base_gongyingshang.ID).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.base_gongyingshang = tempData;
             return View(tempData);
+
+
+
+
+
+
+
+            //ViewBag.DaimaSortParm = String.IsNullOrEmpty(sortOrder) ? "daima_desc" : "";
+
+            //var gongyingshangs = from s in tempData
+            //                     select s;
+            //switch (sortOrder)
+            //{
+            //    case "daima_desc":
+            //        gongyingshangs = gongyingshangs.OrderByDescending(s => s.Daima);
+            //        break;
+
+            //    default:
+            //        gongyingshangs = gongyingshangs.OrderBy(s => s.Daima);
+            //        break;
+            //}
+            //return View(gongyingshangs.ToList());
+            
+
+
+
+
         }
 
         public ActionResult Add()
         {
+            ViewBag.userid = (int)Session["user_id"];
             return View();
         }
 
@@ -87,11 +145,13 @@ namespace CKWMS.Controllers
                 ob_base_gongyingshang.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
                 ob_base_gongyingshang = ob_base_gongyingshangservice.AddEntity(ob_base_gongyingshang);
                 ViewBag.base_gongyingshang = ob_base_gongyingshang;
+                
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
+
             return RedirectToAction("Index");
         }
 
