@@ -248,7 +248,7 @@ namespace CKWMS.App_Code
                     //    else
                     //        sb.AppendFormat("<option value=\"{0}\">{1}</option>", i.Key, i.Value);
                     //}
-                    sb.Append(GetCommonSelect(selectedValue,MvcApplication.ShouYingZhuangTai));
+                    sb.Append(GetCommonSelect(selectedValue, MvcApplication.ShouYingZhuangTai));
                     break;
                 case "教育程度":
                     //foreach (var i in MvcApplication.Education)
@@ -258,7 +258,7 @@ namespace CKWMS.App_Code
                     //    else
                     //        sb.AppendFormat("<option value=\"{0}\">{1}</option>", i.Key, i.Value);
                     //}
-                    sb.Append(GetCommonSelect(selectedValue,MvcApplication.Education));
+                    sb.Append(GetCommonSelect(selectedValue, MvcApplication.Education));
                     break;
                 case "性别":
                     //foreach (var i in MvcApplication.Sex)
@@ -268,7 +268,7 @@ namespace CKWMS.App_Code
                     //    else
                     //        sb.AppendFormat("<option value=\"{0}\">{1}</option>", i.Key, i.Value);
                     //}
-                    sb.Append(GetCommonSelect(selectedValue,MvcApplication.Sex));
+                    sb.Append(GetCommonSelect(selectedValue, MvcApplication.Sex));
                     break;
                 case "是否":
                     //foreach (var i in MvcApplication.YesOrNo)
@@ -278,13 +278,13 @@ namespace CKWMS.App_Code
                     //    else
                     //        sb.AppendFormat("<option value=\"{0}\">{1}</option>", i.Key, i.Value);
                     //}
-                    sb.Append(GetCommonSelect(selectedValue,MvcApplication.YesOrNo));
+                    sb.Append(GetCommonSelect(selectedValue, MvcApplication.YesOrNo));
                     break;
                 case "医疗器械管理类别":
                     sb.Append(GetCommonSelect(selectedValue, MvcApplication.ManageType));
                     break;
                 case "首营种类":
-                    sb.Append(GetCommonSelect(selectedValue,MvcApplication.ShouYingType));
+                    sb.Append(GetCommonSelect(selectedValue, MvcApplication.ShouYingType));
                     break;
                 case "储运要求":
                     sb.Append(GetCommonSelect(selectedValue, MvcApplication.TranCondition));
@@ -295,15 +295,15 @@ namespace CKWMS.App_Code
             sb.Append("</select>");
             return MvcHtmlString.Create(sb.ToString());
         }
-        private static string GetCommonSelect(long selectedvalue,Dictionary<int,string> commonselect)
+        private static string GetCommonSelect(long selectedvalue, Dictionary<int, string> commonselect)
         {
             string _comsel = "";
             foreach (var i in commonselect)
             {
                 if (i.Key == selectedvalue && selectedvalue != 0)
-                    _comsel=_comsel+string.Format("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.Key, i.Value);
+                    _comsel = _comsel + string.Format("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.Key, i.Value);
                 else
-                    _comsel=_comsel+string.Format("<option value=\"{0}\">{1}</option>", i.Key, i.Value);
+                    _comsel = _comsel + string.Format("<option value=\"{0}\">{1}</option>", i.Key, i.Value);
             }
             return _comsel;
         }
@@ -334,7 +334,7 @@ namespace CKWMS.App_Code
 
                         if (curmodule.Equals(rp.module.Trim()))
                         {
-                            sb.AppendLine("<li><i class=\"icon-double-angle-right\"></i><a href=\"/" + rp.controller.Trim() + "/"+rp.function.Trim()+"\">" + rp.name + "</a></li>");
+                            sb.AppendLine("<li><i class=\"icon-double-angle-right\"></i><a href=\"/" + rp.controller.Trim() + "/" + rp.function.Trim() + "\">" + rp.name + "</a></li>");
                         }
                         else
                         {
@@ -351,7 +351,7 @@ namespace CKWMS.App_Code
                             sb.AppendLine("</a>");
                             sb.AppendLine("<ul class=\"submenu\">");
                             curmodule = rp.module.Trim();
-                            sb.AppendLine("<li><i class=\"icon-double-angle-right\"></i><a href=\"/" + rp.controller.Trim() + "/"+rp.function.Trim()+"\">" + rp.name + "</a></li>");
+                            sb.AppendLine("<li><i class=\"icon-double-angle-right\"></i><a href=\"/" + rp.controller.Trim() + "/" + rp.function.Trim() + "\">" + rp.name + "</a></li>");
                         }
                     }
                     else
@@ -598,7 +598,10 @@ namespace CKWMS.App_Code
                         case "货主":
                         case "供应商":
                         case "厂家":
-                            svs = SelectItem_Auto(sc.ItemCode, myclassname, myclassitem, long.Parse(sc.ItemValue));
+                            if (sc.ItemValue == null)
+                                svs = SelectItem_Auto(sc.ItemCode, myclassname, myclassitem, 0);
+                            else
+                                svs = SelectItem_Auto(sc.ItemCode, myclassname, myclassitem, long.Parse(sc.ItemValue));
                             break;
                         default:
                             break;
