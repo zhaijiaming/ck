@@ -26,7 +26,9 @@ namespace CKWMS.Models
         [Display(Name = "输入人")]
         public int? MakeMan { get; set; }
         [Display(Name = "已删除")]
-        public bool IsDelete { get; set; }
+        public bool? IsDelete { get; set; }
+        [Display(Name = "管理分类")]
+        public int? GuanliFL { get; set; }
     }
 }
 

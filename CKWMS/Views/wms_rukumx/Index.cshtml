@@ -3,7 +3,7 @@
 @using X.PagedList
 @using X.PagedList.Mvc
 @{
-    ViewBag.Title = "医疗器械目录清单";
+    ViewBag.Title = "入库明细清单";
     string _searchcondition = ViewBag.SearchCondition;
 }
 <script type="text/javascript">
@@ -11,18 +11,18 @@
         $("tr").bind("dblclick", function () {
             var u_id = $(this).find('td').eq(0).find('input').val();
             if (u_id != null) {
-                var url_go = "/base_qixiemulu/Edit/" + u_id;
+                var url_go = "/wms_rukumx/Edit/" + u_id;
                 location.href = url_go;
             }
         });
     });
     function AddInfo() {
-        location.href = "/base_qixiemulu/Add";
+        location.href = "/wms_rukumx/Add";
     }
     function EditInfo() {
         $("#mydatatable tr input[type=checkbox]").each(function () {
             if (this.checked)
-                location.href = "/base_qixiemulu/Edit/" + $(this).val();
+                location.href = "/wms_rukumx/Edit/" + $(this).val();
         });
     }
     function DelInfo() {
@@ -33,7 +33,7 @@
         });
         if (sDel.length < 2)
             return;
-        var url_go = "/base_qixiemulu/Delete/?del=" + sDel;
+        var url_go = "/wms_rukumx/Delete/?del=" + sDel;
         location.href = url_go;
     }
 </script>
@@ -42,9 +42,9 @@
     if (_searchcondition == null || _searchcondition == "")
     {
         SearchConditionModel scm = new SearchConditionModel();
-        scm.ItemCode = "Bianhao";
-        scm.ItemTitle = "编号";
-        scm.ItemType = "System.String";
+        scm.ItemCode = "RukuID";
+        scm.ItemTitle = "入库序号";
+        scm.ItemType = "System.Int32";
         scms.Add(scm);
     }
     else
@@ -53,9 +53,9 @@
         if (scs.Length > 0)
         {
             SearchConditionModel scm = new SearchConditionModel();
-            scm.ItemCode = "Bianhao";
-            scm.ItemTitle = "编号";
-            scm.ItemType = "System.String";
+            scm.ItemCode = "RukuID";
+            scm.ItemTitle = "入库序号";
+            scm.ItemType = "System.Int32";
             if (scs.Length > 1)
             {
                 scm.ItemValue = scs[0].Split(',')[1];
@@ -76,11 +76,11 @@
             <i class="icon-home home-icon"></i>
             <a href="/Home">首页</a>
         </li>
-        <li class="active">医疗器械目录</li>
+        <li class="active">入库明细</li>
     </ul>
 </div>
 <div class="page-content">
-    @Html.Search_Condition((int)Session["user_id"], "医疗器械目录_条件组合查询", "/base_qixiemulu/index", "base_qixiemuluindex", scms)
+    @Html.Search_Condition((int)Session["user_id"], "入库明细_条件组合查询", "/wms_rukumx/index", "wms_rukumxindex", scms)
     <div class="page-header">
         <p>
             <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
@@ -96,16 +96,35 @@
             <thead>
                 <tr>
                     <td></td>
-                    <td>编号</td>
-                    <td>名称</td>
-                    <td>描述</td>
-                    <td>录入日期</td>
-                    <td>输入人</td>
-                    <td>管理分类</td>
+                    <td>入库序号</td>
+                    <td>商品序号</td>
+                    <td>商品名称</td>
+                    <td>注册证</td>
+                    <td>规格型号</td>
+                    <td>批号</td>
+                    <td>次批号</td>
+                    <td>序列码</td>
+                    <td>生产日期</td>
+                    <td>失效日期</td>
+                    <td>到货数量</td>
+                    <td>已收数量</td>
+                    <td>基本单位</td>
+                    <td>包装单位</td>
+                    <td>换算率</td>
+                    <td>厂家</td>
+                    <td>产地</td>
+                    <td>商品条码</td>
+                    <td>重量</td>
+                    <td>净重</td>
+                    <td>体积</td>
+                    <td>计费吨</td>
+                    <td>备注</td>
+                    <td>制单日期</td>
+                    <td>制单人</td>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in ViewBag.base_qixiemulu)
+                @foreach (var item in ViewBag.wms_rukumx)
                 {
                     <tr>
                         <td>
@@ -113,12 +132,31 @@
                                 <label><input type="checkbox" value="@item.ID"></label>
                             </div>
                         </td>
-                        <td>@item.Bianhao</td>
-                        <td>@item.Mingcheng</td>
-                        <td>@item.Miaoshu</td>
+                        <td>@item.RukuID</td>
+                        <td>@item.ShangpinID</td>
+                        <td>@item.ShangpinMC</td>
+                        <td>@item.Zhucezheng</td>
+                        <td>@item.Guige</td>
+                        <td>@item.Pihao</td>
+                        <td>@item.Pihao1</td>
+                        <td>@item.Xuliema</td>
+                        <td>@item.ShengchanRQ</td>
+                        <td>@item.ShixiaoRQ</td>
+                        <td>@item.DaohuoSL</td>
+                        <td>@item.YishouSL</td>
+                        <td>@item.JibenDW</td>
+                        <td>@item.BaozhuangDW</td>
+                        <td>@item.Huansuanlv</td>
+                        <td>@item.Changjia</td>
+                        <td>@item.Chandi</td>
+                        <td>@item.ShangpinTM</td>
+                        <td>@item.Zhongliang</td>
+                        <td>@item.Jingzhong</td>
+                        <td>@item.Tiji</td>
+                        <td>@item.Jifeidun</td>
+                        <td>@item.Beizhu</td>
                         <td>@item.MakeDate</td>
                         <td>@item.MakeMan</td>
-                        <td>@item.GuanliFL</td>
                     </tr>
                 }
             </tbody>

@@ -911,6 +911,10 @@ namespace CKWMS.App_Code
                     if (MvcApplication.CheckMemo.ContainsKey(dataValue))
                         returnvalue = MvcApplication.CheckMemo[dataValue];
                     break;
+                case "验收标准":
+                    if (MvcApplication.CheckMemo.ContainsKey(dataValue))
+                        returnvalue = MvcApplication.CheckStandard[dataValue];
+                    break;
                 case "存货状态":
                     if (MvcApplication.CargoState.ContainsKey(dataValue))
                         returnvalue = MvcApplication.CargoState[dataValue];

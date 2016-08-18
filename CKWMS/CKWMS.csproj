@@ -317,6 +317,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\operatelogController.cs" />
+    <Compile Include="Controllers\quan_rukuysController.cs" />
     <Compile Include="Controllers\quan_shouyingsqController.cs" />
     <Compile Include="Controllers\searchconditionController.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
@@ -324,6 +325,10 @@
     <Compile Include="Controllers\userinfoController.cs" />
     <Compile Include="Controllers\view_roledetailController.cs" />
     <Compile Include="Controllers\view_rolepersonController.cs" />
+    <Compile Include="Controllers\wms_cunhuoController.cs" />
+    <Compile Include="Controllers\wms_rukudanController.cs" />
+    <Compile Include="Controllers\wms_rukumxController.cs" />
+    <Compile Include="Controllers\wms_shouhuomxController.cs" />
     <Compile Include="Filters\YaoAuthorizeAttribute.cs" />
     <Compile Include="Filters\YaoLog.cs" />
     <Compile Include="Global.asax.cs">
@@ -356,12 +361,18 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\operatelogViewModel.cs" />
+    <Compile Include="Models\quan_rukuysViewModel.cs" />
     <Compile Include="Models\quan_shouyingsqViewModel.cs" />
     <Compile Include="Models\SearchConditionModel.cs" />
     <Compile Include="Models\searchconditionViewModel.cs" />
     <Compile Include="Models\userinfoViewModel.cs" />
     <Compile Include="Models\view_roledetailViewModel.cs" />
     <Compile Include="Models\view_rolepersonViewModel.cs" />
+    <Compile Include="Models\wms_chukudanViewModel.cs" />
+    <Compile Include="Models\wms_cunhuoViewModel.cs" />
+    <Compile Include="Models\wms_rukudanViewModel.cs" />
+    <Compile Include="Models\wms_rukumxViewModel.cs" />
+    <Compile Include="Models\wms_shouhuomxViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -645,6 +656,21 @@
     <Content Include="Views\quan_shouyingsq\Add.cshtml" />
     <Content Include="Views\quan_shouyingsq\Edit.cshtml" />
     <Content Include="Views\quan_shouyingsq\Index.cshtml" />
+    <Content Include="Views\quan_rukuys\Add.cshtml" />
+    <Content Include="Views\quan_rukuys\Edit.cshtml" />
+    <Content Include="Views\quan_rukuys\Index.cshtml" />
+    <Content Include="Views\wms_rukudan\Add.cshtml" />
+    <Content Include="Views\wms_rukudan\Edit.cshtml" />
+    <Content Include="Views\wms_rukudan\Index.cshtml" />
+    <Content Include="Views\wms_rukumx\Add.cshtml" />
+    <Content Include="Views\wms_rukumx\Edit.cshtml" />
+    <Content Include="Views\wms_rukumx\Index.cshtml" />
+    <Content Include="Views\wms_shouhuomx\Add.cshtml" />
+    <Content Include="Views\wms_shouhuomx\Edit.cshtml" />
+    <Content Include="Views\wms_shouhuomx\Index.cshtml" />
+    <Content Include="Views\wms_cunhuo\Add.cshtml" />
+    <Content Include="Views\wms_cunhuo\Edit.cshtml" />
+    <Content Include="Views\wms_cunhuo\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

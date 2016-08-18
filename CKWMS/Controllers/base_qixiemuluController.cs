@@ -16,7 +16,6 @@ namespace CKWMS.Controllers
     public class base_qixiemuluController : Controller
     {
         private Ibase_qixiemuluService ob_base_qixiemuluservice = ServiceFactory.base_qixiemuluservice;
-        //private List<SearchConditionModel> _searchconditions;
         [OutputCache(Duration = 30)]
         public ActionResult Index(string page)
         {
@@ -26,7 +25,7 @@ namespace CKWMS.Controllers
             string pagetag = "base_qixiemulu_index";
             Expression<Func<base_qixiemulu, bool>> where = PredicateExtensionses.True<base_qixiemulu>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
-            if (sc != null)
+            if (sc != null && sc.ConditionInfo != null)
             {
                 string[] sclist = sc.ConditionInfo.Split(';');
                 foreach (string scl in sclist)
@@ -106,6 +105,8 @@ namespace CKWMS.Controllers
                 }
                 if (!string.IsNullOrEmpty(bianhao))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bianhao", bianhao, bianhaoequal, bianhaoand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bianhao", "", bianhaoequal, bianhaoand);
                 searchconditionService.GetInstance().AddEntity(sc);
             }
             else
@@ -130,6 +131,8 @@ namespace CKWMS.Controllers
                 }
                 if (!string.IsNullOrEmpty(bianhao))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bianhao", bianhao, bianhaoequal, bianhaoand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bianhao", "", bianhaoequal, bianhaoand);
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;
@@ -142,6 +145,7 @@ namespace CKWMS.Controllers
 
         public ActionResult Add()
         {
+            ViewBag.userid = (int)Session["user_id"];
             return View();
         }
 
@@ -153,16 +157,24 @@ namespace CKWMS.Controllers
             string bianhao = Request["bianhao"] ?? "";
             string mingcheng = Request["mingcheng"] ?? "";
             string miaoshu = Request["miaoshu"] ?? "";
+            string col1 = Request["col1"] ?? "";
+            string col2 = Request["col2"] ?? "";
+            string col3 = Request["col3"] ?? "";
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
+            string guanlifl = Request["guanlifl"] ?? "";
             try
             {
                 base_qixiemulu ob_base_qixiemulu = new base_qixiemulu();
                 ob_base_qixiemulu.Bianhao = bianhao.Trim();
                 ob_base_qixiemulu.Mingcheng = mingcheng.Trim();
                 ob_base_qixiemulu.Miaoshu = miaoshu.Trim();
+                ob_base_qixiemulu.Col1 = col1.Trim();
+                ob_base_qixiemulu.Col2 = col2.Trim();
+                ob_base_qixiemulu.Col3 = col3.Trim();
                 ob_base_qixiemulu.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 ob_base_qixiemulu.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
+                ob_base_qixiemulu.GuanliFL = guanlifl == "" ? 0 : int.Parse(guanlifl);
                 ob_base_qixiemulu = ob_base_qixiemuluservice.AddEntity(ob_base_qixiemulu);
                 ViewBag.base_qixiemulu = ob_base_qixiemulu;
             }
@@ -187,8 +199,12 @@ namespace CKWMS.Controllers
                 base_qixiemuluviewmodel.Bianhao = tempData.Bianhao;
                 base_qixiemuluviewmodel.Mingcheng = tempData.Mingcheng;
                 base_qixiemuluviewmodel.Miaoshu = tempData.Miaoshu;
+                base_qixiemuluviewmodel.Col1 = tempData.Col1;
+                base_qixiemuluviewmodel.Col2 = tempData.Col2;
+                base_qixiemuluviewmodel.Col3 = tempData.Col3;
                 base_qixiemuluviewmodel.MakeDate = tempData.MakeDate;
                 base_qixiemuluviewmodel.MakeMan = tempData.MakeMan;
+                base_qixiemuluviewmodel.GuanliFL = tempData.GuanliFL;
                 return View(base_qixiemuluviewmodel);
             }
         }
@@ -201,8 +217,12 @@ namespace CKWMS.Controllers
             string bianhao = Request["bianhao"] ?? "";
             string mingcheng = Request["mingcheng"] ?? "";
             string miaoshu = Request["miaoshu"] ?? "";
+            string col1 = Request["col1"] ?? "";
+            string col2 = Request["col2"] ?? "";
+            string col3 = Request["col3"] ?? "";
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
+            string guanlifl = Request["guanlifl"] ?? "";
             int uid = int.Parse(id);
             try
             {
@@ -210,8 +230,12 @@ namespace CKWMS.Controllers
                 p.Bianhao = bianhao.Trim();
                 p.Mingcheng = mingcheng.Trim();
                 p.Miaoshu = miaoshu.Trim();
+                p.Col1 = col1.Trim();
+                p.Col2 = col2.Trim();
+                p.Col3 = col3.Trim();
                 p.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 p.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
+                p.GuanliFL = guanlifl == "" ? 0 : int.Parse(guanlifl);
                 ob_base_qixiemuluservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;
             }

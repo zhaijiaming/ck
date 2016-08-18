@@ -68,6 +68,10 @@ namespace CKWMS
         /// </summary>
         public static Dictionary<int, string> CheckMemo;
         /// <summary>
+        /// 验收标准
+        /// </summary>
+        public static Dictionary<int, string> CheckStandard;
+        /// <summary>
         /// 存货状态
         /// </summary>
         public static Dictionary<int, string> CargoState;
@@ -205,6 +209,17 @@ namespace CKWMS
             ShouYingType.Add(6, "销售");
             ShouYingType.Add(7, "发货方");
             ShouYingType.Add(8, "运输单位");
+
+            CheckStandard = new Dictionary<int, string>();
+            CheckStandard.Add(0, "");
+            CheckStandard.Add(1, "包装质量");
+            CheckStandard.Add(2, "外观质量");
+            CheckStandard.Add(3, "检验报告");
+            CheckStandard.Add(4, "检验证标志");
+            CheckStandard.Add(5, "合格证标志");
+            CheckStandard.Add(6, "注册证");
+            CheckStandard.Add(7, "存储质量");
+            CheckStandard.Add(8, "运输温度");
         }
     }
 }

@@ -3,7 +3,7 @@
 @using X.PagedList
 @using X.PagedList.Mvc
 @{
-    ViewBag.Title = "医疗器械目录清单";
+    ViewBag.Title = "入库验收清单";
     string _searchcondition = ViewBag.SearchCondition;
 }
 <script type="text/javascript">
@@ -11,18 +11,18 @@
         $("tr").bind("dblclick", function () {
             var u_id = $(this).find('td').eq(0).find('input').val();
             if (u_id != null) {
-                var url_go = "/base_qixiemulu/Edit/" + u_id;
+                var url_go = "/quan_rukuys/Edit/" + u_id;
                 location.href = url_go;
             }
         });
     });
     function AddInfo() {
-        location.href = "/base_qixiemulu/Add";
+        location.href = "/quan_rukuys/Add";
     }
     function EditInfo() {
         $("#mydatatable tr input[type=checkbox]").each(function () {
             if (this.checked)
-                location.href = "/base_qixiemulu/Edit/" + $(this).val();
+                location.href = "/quan_rukuys/Edit/" + $(this).val();
         });
     }
     function DelInfo() {
@@ -33,7 +33,7 @@
         });
         if (sDel.length < 2)
             return;
-        var url_go = "/base_qixiemulu/Delete/?del=" + sDel;
+        var url_go = "/quan_rukuys/Delete/?del=" + sDel;
         location.href = url_go;
     }
 </script>
@@ -42,9 +42,9 @@
     if (_searchcondition == null || _searchcondition == "")
     {
         SearchConditionModel scm = new SearchConditionModel();
-        scm.ItemCode = "Bianhao";
-        scm.ItemTitle = "编号";
-        scm.ItemType = "System.String";
+        scm.ItemCode = "MingxiID";
+        scm.ItemTitle = "明细序号";
+        scm.ItemType = "System.Int32";
         scms.Add(scm);
     }
     else
@@ -53,9 +53,9 @@
         if (scs.Length > 0)
         {
             SearchConditionModel scm = new SearchConditionModel();
-            scm.ItemCode = "Bianhao";
-            scm.ItemTitle = "编号";
-            scm.ItemType = "System.String";
+            scm.ItemCode = "MingxiID";
+            scm.ItemTitle = "明细序号";
+            scm.ItemType = "System.Int32";
             if (scs.Length > 1)
             {
                 scm.ItemValue = scs[0].Split(',')[1];
@@ -76,11 +76,11 @@
             <i class="icon-home home-icon"></i>
             <a href="/Home">首页</a>
         </li>
-        <li class="active">医疗器械目录</li>
+        <li class="active">入库验收</li>
     </ul>
 </div>
 <div class="page-content">
-    @Html.Search_Condition((int)Session["user_id"], "医疗器械目录_条件组合查询", "/base_qixiemulu/index", "base_qixiemuluindex", scms)
+    @Html.Search_Condition((int)Session["user_id"], "入库验收_条件组合查询", "/quan_rukuys/index", "quan_rukuysindex", scms)
     <div class="page-header">
         <p>
             <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
@@ -96,16 +96,18 @@
             <thead>
                 <tr>
                     <td></td>
-                    <td>编号</td>
-                    <td>名称</td>
-                    <td>描述</td>
-                    <td>录入日期</td>
-                    <td>输入人</td>
-                    <td>管理分类</td>
+                    <td>明细序号</td>
+                    <td>验收数量</td>
+                    <td>验收</td>
+                    <td>验收人</td>
+                    <td>验收说明</td>
+                    <td>验收状态</td>
+                    <td>制单日期</td>
+                    <td>制单人</td>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in ViewBag.base_qixiemulu)
+                @foreach (var item in ViewBag.quan_rukuys)
                 {
                     <tr>
                         <td>
@@ -113,12 +115,14 @@
                                 <label><input type="checkbox" value="@item.ID"></label>
                             </div>
                         </td>
-                        <td>@item.Bianhao</td>
-                        <td>@item.Mingcheng</td>
-                        <td>@item.Miaoshu</td>
+                        <td>@item.MingxiID</td>
+                        <td>@item.YanshouSL</td>
+                        <td>@item.Yanshou</td>
+                        <td>@item.Yanshouren</td>
+                        <td>@item.YanshouSM</td>
+                        <td>@item.YanshouZT</td>
                         <td>@item.MakeDate</td>
                         <td>@item.MakeMan</td>
-                        <td>@item.GuanliFL</td>
                     </tr>
                 }
             </tbody>
