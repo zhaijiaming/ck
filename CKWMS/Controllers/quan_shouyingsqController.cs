@@ -120,6 +120,9 @@ namespace CKWMS.Controllers
                 }
                 if (!string.IsNullOrEmpty(leibie))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "leibie", leibie, leibieequal, leibieand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "leibie", "", leibieequal, leibieand);
+
                 searchconditionService.GetInstance().AddEntity(sc);
             }
             else
@@ -151,6 +154,9 @@ namespace CKWMS.Controllers
                 }
                 if (!string.IsNullOrEmpty(leibie))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "leibie", leibie, leibieequal, leibieand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "leibie", "", leibieequal, leibieand);
+
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;

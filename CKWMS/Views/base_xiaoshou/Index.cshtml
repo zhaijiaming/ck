@@ -128,11 +128,11 @@
                         <td>@item.ShenfenzhengBH</td>
                         <td>@item.Shenfenzheng0TP</td>
                         <td>@item.Shenfenzheng1TP</td>
-                        <td>@item.ShouquanshuYXQ</td>
+                        <td>@item.ShouquanshuYXQ.ToString("yyyy-MM-dd")</td>
                         <td>@item.ShouquanshuTP</td>
                         <td>@item.Shouying</td>
-                        <td>@item.MakeDate</td>
-                        <td>@item.MakeMan</td>
+                        <td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
+                        <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
                     </tr>
                 }
             </tbody>

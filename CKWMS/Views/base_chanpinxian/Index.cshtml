@@ -97,7 +97,7 @@
                         <td>@Html.GetDataValue_ID("货主","简称",(int)item.Huozhuxuhao)</td>
                         <td>@item.Mingcheng</td>
                         <td>@item.Miaoshu</td>
-                        <td>@item.MakeDate</td>
+                        <td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
                         <td>@Html.GetDataValue_ID("userinfo","全名",(int)item.MakeMan)</td>
                     </tr>
                 }

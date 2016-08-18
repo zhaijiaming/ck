@@ -121,6 +121,9 @@ namespace CKWMS.Controllers
                 }
                 if (!string.IsNullOrEmpty(userid))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "userid", userid, useridequal, useridand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "userid", "", useridequal, useridand);
+
                 searchconditionService.GetInstance().AddEntity(sc);
             }
             else

@@ -176,6 +176,9 @@ namespace CKWMS.Controllers
                 }
                 if (!string.IsNullOrEmpty(roleid))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "roleid", roleid, roleidequal, roleidand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "roleid", "", roleidequal, roleidand);
+
                 searchconditionService.GetInstance().AddEntity(sc);
             }
             else
@@ -207,6 +210,9 @@ namespace CKWMS.Controllers
                 }
                 if (!string.IsNullOrEmpty(roleid))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "roleid", roleid, roleidequal, roleidand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "roleid", "", roleidequal, roleidand);
+
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;

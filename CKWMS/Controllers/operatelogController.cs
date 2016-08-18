@@ -107,6 +107,9 @@ namespace CKWMS.Controllers
                 }
                 if (!string.IsNullOrEmpty(modelid))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "modelid", modelid, modelidequal, modelidand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "modelid", "", modelidequal, modelidand);
+
                 searchconditionService.GetInstance().AddEntity(sc);
             }
             else
@@ -131,6 +134,9 @@ namespace CKWMS.Controllers
                 }
                 if (!string.IsNullOrEmpty(modelid))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "modelid", modelid, modelidequal, modelidand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "modelid", "", modelidequal, modelidand);
+
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;

@@ -81,13 +81,11 @@ namespace CKWMS.Controllers
             string bianhaoequal = Request["bianhaoequal"] ?? "";
             string bianhaoand = Request["bianhaoand"] ?? "";
 
-            string shangpingmingcheng = Request["shangpingmingcheng"] ?? "";
-            string shangpingmingchengequal = Request["shangpingmingchengequal"] ?? "";
-            string shangpingmingchengand = Request["shangpingmingchengand"] ?? "";
+            string mingcheng = Request["mingcheng"] ?? "";
+            string mingchengequal = Request["mingchengequal"] ?? "";
+            string mingchengand = Request["mingchengand"] ?? "";
 
-            string zhucezhengyxq = Request["zhucezhengyxq"] ?? "";
-            string zhucezhengyxqequal = Request["zhucezhengyxqequal"] ?? "";
-            string zhucezhengyxqand = Request["zhucezhengyxqand"] ?? "";
+            
             Expression<Func<base_shangpinzcz, bool>> where = PredicateExtensionses.True<base_shangpinzcz>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -115,47 +113,31 @@ namespace CKWMS.Controllers
                 }
                 if (!string.IsNullOrEmpty(bianhao))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bianhao", bianhao, bianhaoequal, bianhaoand);
-                
-                //shangpingmingcheng
-                if (!string.IsNullOrEmpty(shangpingmingcheng))
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bianhao", "", bianhaoequal, bianhaoand);
+
+                //mingcheng
+                if (!string.IsNullOrEmpty(mingcheng))
                 {
-                    if (shangpingmingchengequal.Equals("="))
+                    if (mingchengequal.Equals("="))
                     {
-                        if (shangpingmingchengand.Equals("and"))
-                            where = where.And(base_shangpinzcz => base_shangpinzcz.Mingcheng == shangpingmingcheng);
+                        if (mingchengand.Equals("and"))
+                            where = where.And(base_shangpinzcz => base_shangpinzcz.Mingcheng == mingcheng);
                         else
-                            where = where.Or(base_shangpinzcz => base_shangpinzcz.Mingcheng == shangpingmingcheng);
+                            where = where.Or(base_shangpinzcz => base_shangpinzcz.Mingcheng == mingcheng);
                     }
-                    if (shangpingmingchengequal.Equals("like"))
+                    if (mingchengequal.Equals("like"))
                     {
-                        if (shangpingmingchengand.Equals("and"))
-                            where = where.And(base_shangpinzcz => base_shangpinzcz.Mingcheng.Contains(shangpingmingcheng));
+                        if (mingchengand.Equals("and"))
+                            where = where.And(base_shangpinzcz => base_shangpinzcz.Mingcheng.Contains(mingcheng));
                         else
-                            where = where.Or(base_shangpinzcz => base_shangpinzcz.Mingcheng.Contains(shangpingmingcheng));
+                            where = where.Or(base_shangpinzcz => base_shangpinzcz.Mingcheng.Contains(mingcheng));
                     }
                 }
-                if (!string.IsNullOrEmpty(shangpingmingcheng))
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpingmingcheng", shangpingmingcheng, shangpingmingchengequal, shangpingmingchengand);
-                //zhucezhengyxq
-                if (!string.IsNullOrEmpty(zhucezhengyxq))
-                {
-                    if (zhucezhengyxqequal.Equals("="))
-                    {
-                        if (zhucezhengyxqand.Equals("and"))
-                            where = where.And(base_shangpinzcz => base_shangpinzcz.ZhucezhengYXQ == DateTime.Parse(zhucezhengyxq));
-                        else
-                            where = where.Or(base_shangpinzcz => base_shangpinzcz.ZhucezhengYXQ == DateTime.Parse(zhucezhengyxq));
-                    }
-                    if (zhucezhengyxqequal.Equals("like"))
-                    {
-                        if (zhucezhengyxqand.Equals("and"))
-                            where = where.And(base_shangpinzcz => base_shangpinzcz.ZhucezhengYXQ == DateTime.Parse(zhucezhengyxq));
-                        else
-                            where = where.Or(base_shangpinzcz => base_shangpinzcz.ZhucezhengYXQ == DateTime.Parse(zhucezhengyxq));
-                    }
-                }
-                if (!string.IsNullOrEmpty(zhucezhengyxq))
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "zhucezhengyxq", zhucezhengyxq, zhucezhengyxqequal, zhucezhengyxqand);
+                if (!string.IsNullOrEmpty(mingcheng))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpingmingcheng", mingcheng, mingchengequal, mingchengand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpingmingcheng", "", mingchengequal, mingchengand);
 
                 searchconditionService.GetInstance().AddEntity(sc);
             }
@@ -181,26 +163,31 @@ namespace CKWMS.Controllers
                 }
                 if (!string.IsNullOrEmpty(bianhao))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bianhao", bianhao, bianhaoequal, bianhaoand);
-                //shangpingmingcheng
-                if (!string.IsNullOrEmpty(shangpingmingcheng))
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bianhao", "", bianhaoequal, bianhaoand);
+
+                //mingcheng
+                if (!string.IsNullOrEmpty(mingcheng))
                 {
                     if (bianhaoequal.Equals("="))
                     {
-                        if (bianhaoand.Equals("and"))
-                            where = where.And(base_shangpinzcz => base_shangpinzcz.Mingcheng == shangpingmingcheng);
+                        if (mingchengand.Equals("and"))
+                            where = where.And(base_shangpinzcz => base_shangpinzcz.Mingcheng == mingcheng);
                         else
-                            where = where.Or(base_shangpinzcz => base_shangpinzcz.Mingcheng == shangpingmingcheng);
+                            where = where.Or(base_shangpinzcz => base_shangpinzcz.Mingcheng == mingcheng);
                     }
-                    if (bianhaoequal.Equals("like"))
+                    if (mingchengequal.Equals("like"))
                     {
                         if (bianhaoand.Equals("and"))
-                            where = where.And(base_shangpinzcz => base_shangpinzcz.Mingcheng.Contains(shangpingmingcheng));
+                            where = where.And(base_shangpinzcz => base_shangpinzcz.Mingcheng.Contains(mingcheng));
                         else
-                            where = where.Or(base_shangpinzcz => base_shangpinzcz.Mingcheng.Contains(shangpingmingcheng));
+                            where = where.Or(base_shangpinzcz => base_shangpinzcz.Mingcheng.Contains(mingcheng));
                     }
                 }
-                if (!string.IsNullOrEmpty(shangpingmingcheng))
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpingmingcheng", shangpingmingcheng, shangpingmingchengequal, shangpingmingchengand);
+                if (!string.IsNullOrEmpty(mingcheng))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpingmingcheng", mingcheng, mingchengequal, mingchengand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpingmingcheng", "", mingchengequal, mingchengand);
 
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }

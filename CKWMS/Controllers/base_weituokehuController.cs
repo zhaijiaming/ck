@@ -76,9 +76,21 @@ namespace CKWMS.Controllers
             int userid = (int)Session["user_id"];
             string pagetag = "base_weituokehu_index";
             string page = "1";
+            //daima
             string daima = Request["daima"] ?? "";
             string daimaequal = Request["daimaequal"] ?? "";
             string daimaand = Request["daimaand"] ?? "";
+            
+            //jiancheng
+            string jiancheng = Request["jiancheng"] ?? "";
+            string jianchengequal = Request["jianchengequal"] ?? "";
+            string jianchengand = Request["jianchengand"] ?? "";
+
+            //hetongbianhao
+            string hetongbianhao = Request["hetongbianhao"] ?? "";
+            string hetongbianhaoequal = Request["hetongbianhaoequal"] ?? "";
+            string hetongbianhaoand = Request["hetongbianhaoand"] ?? "";
+
             Expression<Func<base_weituokehu, bool>> where = PredicateExtensionses.True<base_weituokehu>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -86,6 +98,7 @@ namespace CKWMS.Controllers
                 sc = new searchcondition();
                 sc.UserID = userid;
                 sc.PageBrief = pagetag;
+                //daima
                 if (!string.IsNullOrEmpty(daima))
                 {
                     if (daimaequal.Equals("="))
@@ -105,11 +118,61 @@ namespace CKWMS.Controllers
                 }
                 if (!string.IsNullOrEmpty(daima))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "daima", daima, daimaequal, daimaand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "daima", "", daimaequal, daimaand);
+                
+                //jiancheng
+                if (!string.IsNullOrEmpty(jiancheng))
+                {
+                    if (jianchengequal.Equals("="))
+                    {
+                        if (jianchengand.Equals("and"))
+                            where = where.And(base_weituokehu => base_weituokehu.Jiancheng == jiancheng);
+                        else
+                            where = where.Or(base_weituokehu => base_weituokehu.Jiancheng == jiancheng);
+                    }
+                    if (jianchengequal.Equals("like"))
+                    {
+                        if (jianchengand.Equals("and"))
+                            where = where.And(base_weituokehu => base_weituokehu.Jiancheng.Contains(jiancheng));
+                        else
+                            where = where.Or(base_weituokehu => base_weituokehu.Jiancheng.Contains(jiancheng));
+                    }
+                }
+                if (!string.IsNullOrEmpty(jiancheng))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "jiancheng", jiancheng, jianchengequal, jianchengand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "jiancheng", "", jianchengequal, jianchengand);
+
+                //hetongbianhao
+                if (!string.IsNullOrEmpty(hetongbianhao))
+                {
+                    if (hetongbianhaoequal.Equals("="))
+                    {
+                        if (hetongbianhaoand.Equals("and"))
+                            where = where.And(base_weituokehu => base_weituokehu.Hetongbianhao == hetongbianhao);
+                        else
+                            where = where.Or(base_weituokehu => base_weituokehu.Hetongbianhao == hetongbianhao);
+                    }
+                    if (hetongbianhaoequal.Equals("like"))
+                    {
+                        if (hetongbianhaoand.Equals("and"))
+                            where = where.And(base_weituokehu => base_weituokehu.Hetongbianhao.Contains(hetongbianhao));
+                        else
+                            where = where.Or(base_weituokehu => base_weituokehu.Hetongbianhao.Contains(hetongbianhao));
+                    }
+                }
+                if (!string.IsNullOrEmpty(hetongbianhao))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "hetongbianhao", hetongbianhao, hetongbianhaoequal, hetongbianhaoand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "hetongbianhao", "", hetongbianhaoequal, hetongbianhaoand);
+
                 searchconditionService.GetInstance().AddEntity(sc);
             }
             else
             {
                 sc.ConditionInfo = "";
+                //daima
                 if (!string.IsNullOrEmpty(daima))
                 {
                     if (daimaequal.Equals("="))
@@ -129,6 +192,55 @@ namespace CKWMS.Controllers
                 }
                 if (!string.IsNullOrEmpty(daima))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "daima", daima, daimaequal, daimaand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "daima", "", daimaequal, daimaand);
+
+                //jiancheng
+                if (!string.IsNullOrEmpty(jiancheng))
+                {
+                    if (jianchengequal.Equals("="))
+                    {
+                        if (jianchengand.Equals("and"))
+                            where = where.And(base_weituokehu => base_weituokehu.Jiancheng == jiancheng);
+                        else
+                            where = where.Or(base_weituokehu => base_weituokehu.Jiancheng == jiancheng);
+                    }
+                    if (jianchengequal.Equals("like"))
+                    {
+                        if (jianchengand.Equals("and"))
+                            where = where.And(base_weituokehu => base_weituokehu.Jiancheng.Contains(jiancheng));
+                        else
+                            where = where.Or(base_weituokehu => base_weituokehu.Jiancheng.Contains(jiancheng));
+                    }
+                }
+                if (!string.IsNullOrEmpty(jiancheng))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "jiancheng", jiancheng, jianchengequal, jianchengand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "jiancheng", "", jianchengequal, jianchengand);
+
+                //hetongbianhao
+                if (!string.IsNullOrEmpty(hetongbianhao))
+                {
+                    if (hetongbianhaoequal.Equals("="))
+                    {
+                        if (hetongbianhaoand.Equals("and"))
+                            where = where.And(base_weituokehu => base_weituokehu.Hetongbianhao == hetongbianhao);
+                        else
+                            where = where.Or(base_weituokehu => base_weituokehu.Hetongbianhao == hetongbianhao);
+                    }
+                    if (hetongbianhaoequal.Equals("like"))
+                    {
+                        if (hetongbianhaoand.Equals("and"))
+                            where = where.And(base_weituokehu => base_weituokehu.Hetongbianhao.Contains(hetongbianhao));
+                        else
+                            where = where.Or(base_weituokehu => base_weituokehu.Hetongbianhao.Contains(hetongbianhao));
+                    }
+                }
+                if (!string.IsNullOrEmpty(hetongbianhao))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "hetongbianhao", hetongbianhao, hetongbianhaoequal, hetongbianhaoand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "hetongbianhao", "", hetongbianhaoequal, hetongbianhaoand);
+
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;

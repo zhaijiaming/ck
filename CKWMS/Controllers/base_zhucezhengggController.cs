@@ -128,6 +128,9 @@ namespace CKWMS.Controllers
                 }
                 if (!string.IsNullOrEmpty(zczid))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "zczid", zczid, zczidequal, zczidand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "zczid", "", zczidequal, zczidand);
+
                 searchconditionService.GetInstance().AddEntity(sc);
             }
             else
@@ -159,6 +162,9 @@ namespace CKWMS.Controllers
                 }
                 if (!string.IsNullOrEmpty(zczid))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "zczid", zczid, zczidequal, zczidand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "zczid", "", zczidequal, zczidand);
+
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;

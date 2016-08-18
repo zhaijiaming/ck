@@ -163,6 +163,9 @@ namespace CKWMS.Controllers
                 }
                 if (!string.IsNullOrEmpty(rolename))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rolename", rolename, rolenameequal, rolenameand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rolename", "", rolenameequal, rolenameand);
+
                 searchconditionService.GetInstance().AddEntity(sc);
             }
             else

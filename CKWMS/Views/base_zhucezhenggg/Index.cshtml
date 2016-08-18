@@ -115,8 +115,8 @@
                         <td>@item.ZCZID</td>
                         <td>@item.Guige</td>
                         <td>@item.Memo</td>
-                        <td>@item.MakeDate</td>
-                        <td>@item.MakeMan</td>
+                        <td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
+                        <td>@Html.GetDataValue_ID("userinfo","全名",(int)item.MakeMan)</td>
                     </tr>
                 }
             </tbody>

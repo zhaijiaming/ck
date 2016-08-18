@@ -120,6 +120,9 @@ namespace CKWMS.Controllers
                 }
                 if (!string.IsNullOrEmpty(shouhuofangid))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouhuofangid", shouhuofangid, shouhuofangidequal, shouhuofangidand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouhuofangid", "", shouhuofangidequal, shouhuofangidand);
+
                 searchconditionService.GetInstance().AddEntity(sc);
             }
             else
@@ -151,6 +154,9 @@ namespace CKWMS.Controllers
                 }
                 if (!string.IsNullOrEmpty(shouhuofangid))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouhuofangid", shouhuofangid, shouhuofangidequal, shouhuofangidand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouhuofangid", "", shouhuofangidequal, shouhuofangidand);
+
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;
@@ -163,6 +169,7 @@ namespace CKWMS.Controllers
 
         public ActionResult Add()
         {
+            ViewBag.userid = (int)Session["user_id"];
             return View();
         }
 
