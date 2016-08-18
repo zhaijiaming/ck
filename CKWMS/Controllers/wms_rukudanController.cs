@@ -163,6 +163,14 @@ namespace CKWMS.Controllers
             ViewBag.wms_rukudan = tempData;
             return View(tempData);
         }
+        public ActionResult OperateList()
+        {
+            int userid = (int)Session["user_id"];
+
+            var tempData = ob_wms_rukudanservice.LoadSortEntities(p=>p.IsDelete==false, false, s=>s.MakeDate);
+            ViewBag.wms_rukudan = tempData;
+            return View();
+        }
 
         public ActionResult Add()
         {

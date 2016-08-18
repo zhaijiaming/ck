@@ -56,6 +56,14 @@ namespace CKWMS
         /// </summary>
         public static Dictionary<int, string> OutPlanState;
         /// <summary>
+        /// 入库状态
+        /// </summary>
+        public static Dictionary<int, string> EntryState;
+        /// <summary>
+        /// 出库状态
+        /// </summary>
+        public static Dictionary<int, string> OutState;
+        /// <summary>
         /// 验收状态
         /// </summary>
         public static Dictionary<int, string> CheckState;
@@ -220,6 +228,22 @@ namespace CKWMS
             CheckStandard.Add(6, "注册证");
             CheckStandard.Add(7, "存储质量");
             CheckStandard.Add(8, "运输温度");
+
+            EntryState = new Dictionary<int, string>();
+            EntryState.Add(0, "");
+            EntryState.Add(1, "新建");
+            EntryState.Add(2, "收货");
+            EntryState.Add(3, "验收");
+            EntryState.Add(4, "上架");
+            EntryState.Add(5, "完成");
+
+            OutState = new Dictionary<int, string>();
+            OutState.Add(0, "");
+            OutState.Add(1, "新建");
+            OutState.Add(2, "拣货");
+            OutState.Add(3, "复核");
+            OutState.Add(4, "装箱");
+            OutState.Add(5, "完成");
         }
     }
 }

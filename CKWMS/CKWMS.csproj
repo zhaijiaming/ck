@@ -671,6 +671,7 @@
     <Content Include="Views\wms_cunhuo\Add.cshtml" />
     <Content Include="Views\wms_cunhuo\Edit.cshtml" />
     <Content Include="Views\wms_cunhuo\Index.cshtml" />
+    <Content Include="Views\wms_rukudan\OperateList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

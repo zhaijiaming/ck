@@ -334,7 +334,7 @@ namespace CKWMS.App_Code
 
                         if (curmodule.Equals(rp.module.Trim()))
                         {
-                            sb.AppendLine("<li><i class=\"icon-double-angle-right\"></i><a href=\"/" + rp.controller.Trim() + "\">" + rp.name + "</a></li>");
+                            sb.AppendLine("<li><i class=\"icon-double-angle-right\"></i><a href=\"/" + rp.controller.Trim() + "/"+rp.function.Trim()+"\">" + rp.name + "</a></li>");
                         }
                         else
                         {
@@ -351,7 +351,7 @@ namespace CKWMS.App_Code
                             sb.AppendLine("</a>");
                             sb.AppendLine("<ul class=\"submenu\">");
                             curmodule = rp.module.Trim();
-                            sb.AppendLine("<li><i class=\"icon-double-angle-right\"></i><a href=\"/" + rp.controller.Trim() + "\">" + rp.name + "</a></li>");
+                            sb.AppendLine("<li><i class=\"icon-double-angle-right\"></i><a href=\"/" + rp.controller.Trim() + "/"+rp.function.Trim()+"\">" + rp.name + "</a></li>");
                         }
                     }
                     else
@@ -898,6 +898,14 @@ namespace CKWMS.App_Code
                 case "出库计划状态":
                     if (MvcApplication.OutPlanState.ContainsKey(dataValue))
                         returnvalue = MvcApplication.OutPlanState[dataValue];
+                    break;
+                case "入库状态":
+                    if (MvcApplication.OutPlanState.ContainsKey(dataValue))
+                        returnvalue = MvcApplication.EntryState[dataValue];
+                    break;
+                case "出库状态":
+                    if (MvcApplication.OutPlanState.ContainsKey(dataValue))
+                        returnvalue = MvcApplication.OutState[dataValue];
                     break;
                 case "验收状态":
                     if (MvcApplication.CheckState.ContainsKey(dataValue))
