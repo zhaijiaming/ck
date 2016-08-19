@@ -29,6 +29,11 @@ namespace CKWMS.Controllers
         //    ViewBag.auth_quanxian = tempData;
         //    return View(tempData);
         //}
+        public ActionResult PersonRightList()
+        {
+            int user_id = (int)Session["user_id"];
+            return View();
+        }
         [OutputCache(Duration = 30)]
         public ActionResult Authority()
         {

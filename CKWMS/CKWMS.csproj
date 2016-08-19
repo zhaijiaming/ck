@@ -116,6 +116,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
       <Private>True</Private>
@@ -284,6 +285,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="reports\ReportDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReportDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="reports\ReportNow.aspx.cs">
+      <DependentUpon>ReportNow.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="reports\ReportNow.aspx.designer.cs">
+      <DependentUpon>ReportNow.aspx</DependentUpon>
+    </Compile>
     <Content Include="App_Code\HtmlHelperExtensions.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -497,6 +510,7 @@
     <Content Include="Imgs\cachet0.png" />
     <Content Include="Imgs\ckflow.jpg" />
     <Content Include="Imgs\page1_pic4.jpg" />
+    <Content Include="reports\ReportNow.aspx" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -512,6 +526,17 @@
     <Content Include="Metadata\deploymentTemplates\apiappconfig.azureresource.json" />
     <Content Include="apiapp.json" />
     <None Include="Properties\PublishProfiles\davis1.pubxml" />
+    <Content Include="reports\ReportDataSet.xsc">
+      <DependentUpon>ReportDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="reports\ReportDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ReportDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="reports\ReportDataSet.xss">
+      <DependentUpon>ReportDataSet.xsd</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\davisfunction.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -672,6 +697,7 @@
     <Content Include="Views\wms_cunhuo\Edit.cshtml" />
     <Content Include="Views\wms_cunhuo\Index.cshtml" />
     <Content Include="Views\wms_rukudan\OperateList.cshtml" />
+    <Content Include="Views\auth_quanxian\PersonRightList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -689,6 +715,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="logs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="reports\rptQuanxian.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
