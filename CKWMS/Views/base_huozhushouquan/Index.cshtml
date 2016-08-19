@@ -43,8 +43,9 @@
     {
         SearchConditionModel scm = new SearchConditionModel();
         scm.ItemCode = "HuozhuID";
+        scm.ItemShowName = "huozhuid";
         scm.ItemTitle = "货主编号";
-        scm.ItemType = "System.Int32";
+        scm.ItemType = "货主.都有";
         scms.Add(scm);
     }
     else
@@ -54,8 +55,9 @@
         {
             SearchConditionModel scm = new SearchConditionModel();
             scm.ItemCode = "HuozhuID";
+            scm.ItemShowName = "huozhuid";
             scm.ItemTitle = "货主编号";
-            scm.ItemType = "System.Int32";
+            scm.ItemType = "货主.都有";
             if (scs.Length > 1)
             {
                 scm.ItemValue = scs[0].Split(',')[1];

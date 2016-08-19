@@ -2,7 +2,10 @@
 @using CKWMS.Models;
 @using X.PagedList;
 @using X.PagedList.Mvc;
-@{ ViewBag.Title = "产品线清单";}
+@{ 
+    ViewBag.Title = "产品线清单";
+    string _searchcondition = ViewBag.SearchCondition;
+}
 <script type="text/javascript">
     $(document).ready(function () {
         $("tr").bind("dblclick", function () {
@@ -36,17 +39,51 @@
 </script>
 @{
     List<SearchConditionModel> scms = new List<SearchConditionModel>();
-    SearchConditionModel scm = new SearchConditionModel();
-    scm.ItemCode = "Huozhuxuhao";
-    scm.ItemTitle = "货主序号";
-    scm.ItemType = "System.Int32";
-    scms.Add(scm);
-    scm = new SearchConditionModel();
-    scm.ItemCode = "mingcheng";
-    scm.ItemTitle = "名称";
-    scm.ItemType = "System.String";
-    scm.ItemShowName = "mingcheng";
-    scms.Add(scm);
+    if (_searchcondition == null || _searchcondition == "")
+    {
+        SearchConditionModel scm = new SearchConditionModel();
+        scm.ItemCode = "Huozhuxuhao";
+        scm.ItemTitle = "货主序号";
+        scm.ItemType = "System.Int32";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "Mingcheng";
+        scm.ItemTitle = "名称";
+        scm.ItemType = "System.String";
+        
+        scms.Add(scm);
+    }
+    else
+    {
+        string[] scs = _searchcondition.Split(';');
+        if (scs.Length > 0)
+        {
+            SearchConditionModel scm = new SearchConditionModel();
+            scm.ItemCode = "Huozhuxuhao";
+            scm.ItemTitle = "货主序号";
+            scm.ItemType = "System.Int32";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[0].Split(',')[1];
+                scm.ItemOpValue = scs[0].Split(',')[2];
+                scm.ItemJion = scs[0].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "Mingcheng";
+            scm.ItemTitle = "名称";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[1].Split(',')[1];
+                scm.ItemOpValue = scs[1].Split(',')[2];
+                scm.ItemJion = scs[1].Split(',')[3];
+            }
+            scms.Add(scm);
+        }
+    }
 }
 
 <div class="breadcrumbs" id="breadcrumbs">

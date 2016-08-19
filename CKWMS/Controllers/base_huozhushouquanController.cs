@@ -13,46 +13,158 @@ namespace CKWMS.Controllers
     public class base_huozhushouquanController : Controller
     {
         private Ibase_huozhushouquanService ob_base_huozhushouquanservice = ServiceFactory.base_huozhushouquanservice;
+        //private List<SearchConditionModel> _searchconditions;
+        [OutputCache(Duration = 30)]
         public ActionResult Index(string page)
         {
             if (string.IsNullOrEmpty(page))
                 page = "1";
+            int userid = (int)Session["user_id"];
+            string pagetag = "base_huozhushouquan_index";
+            Expression<Func<base_huozhushouquan, bool>> where = PredicateExtensionses.True<base_huozhushouquan>();
+            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            if (sc != null)
+            {
+                string[] sclist = sc.ConditionInfo.Split(';');
+                foreach (string scl in sclist)
+                {
+                    string[] scld = scl.Split(',');
+                    switch (scld[0])
+                    {
+                        case "huozhuid":
+                            string huozhuid = scld[1];
+                            string huozhuidequal = scld[2];
+                            string huozhuidand = scld[3];
+                            if (!string.IsNullOrEmpty(huozhuid))
+                            {
+                                if (huozhuidequal.Equals("="))
+                                {
+                                    if (huozhuidand.Equals("and"))
+                                        where = where.And(base_huozhushouquan => base_huozhushouquan.HuozhuID == int.Parse(huozhuid));
+                                    else
+                                        where = where.Or(base_huozhushouquan => base_huozhushouquan.HuozhuID == int.Parse(huozhuid));
+                                }
+                                if (huozhuidequal.Equals(">"))
+                                {
+                                    if (huozhuidand.Equals("and"))
+                                        where = where.And(base_huozhushouquan => base_huozhushouquan.HuozhuID > int.Parse(huozhuid));
+                                    else
+                                        where = where.Or(base_huozhushouquan => base_huozhushouquan.HuozhuID > int.Parse(huozhuid));
+                                }
+                                if (huozhuidequal.Equals("<"))
+                                {
+                                    if (huozhuidand.Equals("and"))
+                                        where = where.And(base_huozhushouquan => base_huozhushouquan.HuozhuID < int.Parse(huozhuid));
+                                    else
+                                        where = where.Or(base_huozhushouquan => base_huozhushouquan.HuozhuID < int.Parse(huozhuid));
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                ViewBag.SearchCondition = sc.ConditionInfo;
+            }
+
+            where = where.And(base_huozhushouquan => base_huozhushouquan.IsDelete == false);
+            var tempData = ob_base_huozhushouquanservice.LoadSortEntities(where.Compile(), false, base_huozhushouquan => base_huozhushouquan.ID).ToPagedList<base_huozhushouquan>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            ViewBag.base_huozhushouquan = tempData;
+            return View(tempData);
+        }
+        [HttpPost]
+        [OutputCache(Duration = 30)]
+        public ActionResult Index()
+        {
+            int userid = (int)Session["user_id"];
+            string pagetag = "base_huozhushouquan_index";
+            string page = "1";
 
             string huozhuid = Request["huozhuid"] ?? "";
             string huozhuidequal = Request["huozhuidequal"] ?? "";
             string huozhuidand = Request["huozhuidand"] ?? "";
 
             Expression<Func<base_huozhushouquan, bool>> where = PredicateExtensionses.True<base_huozhushouquan>();
-            if (!string.IsNullOrEmpty(huozhuid))
+            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            if (sc == null)
             {
-                if (huozhuidequal.Equals("="))
+                sc = new searchcondition();
+                sc.UserID = userid;
+                sc.PageBrief = pagetag;
+                //huozhuid
+                if (!string.IsNullOrEmpty(huozhuid))
                 {
-                    if (huozhuidand.Equals("and"))
-                        where = where.And(base_huozhushouquan => base_huozhushouquan.HuozhuID == int.Parse(huozhuid));
-                    else
-                        where = where.Or(base_huozhushouquan => base_huozhushouquan.HuozhuID == int.Parse(huozhuid));
+                    if (huozhuidequal.Equals("="))
+                    {
+                        if (huozhuidand.Equals("and"))
+                            where = where.And(base_huozhushouquan => base_huozhushouquan.HuozhuID == int.Parse(huozhuid));
+                        else
+                            where = where.Or(base_huozhushouquan => base_huozhushouquan.HuozhuID == int.Parse(huozhuid));
+                    }
+                    if (huozhuidequal.Equals(">"))
+                    {
+                        if (huozhuidand.Equals("and"))
+                            where = where.And(base_huozhushouquan => base_huozhushouquan.HuozhuID > int.Parse(huozhuid));
+                        else
+                            where = where.Or(base_huozhushouquan => base_huozhushouquan.HuozhuID > int.Parse(huozhuid));
+                    }
+                    if (huozhuidequal.Equals("<"))
+                    {
+                        if (huozhuidand.Equals("and"))
+                            where = where.And(base_huozhushouquan => base_huozhushouquan.HuozhuID < int.Parse(huozhuid));
+                        else
+                            where = where.Or(base_huozhushouquan => base_huozhushouquan.HuozhuID < int.Parse(huozhuid));
+                    }
                 }
-                if (huozhuidequal.Equals(">"))
-                {
-                    if (huozhuidand.Equals("and"))
-                        where = where.And(base_huozhushouquan => base_huozhushouquan.HuozhuID > int.Parse(huozhuid));
-                    else
-                        where = where.Or(base_huozhushouquan => base_huozhushouquan.HuozhuID > int.Parse(huozhuid));
-                }
-                if (huozhuidequal.Equals("<"))
-                {
-                    if (huozhuidand.Equals("and"))
-                        where = where.And(base_huozhushouquan => base_huozhushouquan.HuozhuID < int.Parse(huozhuid));
-                    else
-                        where = where.Or(base_huozhushouquan => base_huozhushouquan.HuozhuID < int.Parse(huozhuid));
-                }
-            }
+                if (!string.IsNullOrEmpty(huozhuid))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", huozhuid, huozhuidequal, huozhuidand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", "", huozhuidequal, huozhuidand);
 
+                searchconditionService.GetInstance().AddEntity(sc);
+            }
+            else
+            {
+                sc.ConditionInfo = "";
+                //huozhuid
+                if (!string.IsNullOrEmpty(huozhuid))
+                {
+                    if (huozhuidequal.Equals("="))
+                    {
+                        if (huozhuidand.Equals("and"))
+                            where = where.And(base_shouhuodanwei => base_shouhuodanwei.HuozhuID == int.Parse(huozhuid));
+                        else
+                            where = where.Or(base_shouhuodanwei => base_shouhuodanwei.HuozhuID == int.Parse(huozhuid));
+                    }
+                    if (huozhuidequal.Equals(">"))
+                    {
+                        if (huozhuidand.Equals("and"))
+                            where = where.And(base_shouhuodanwei => base_shouhuodanwei.HuozhuID > int.Parse(huozhuid));
+                        else
+                            where = where.Or(base_shouhuodanwei => base_shouhuodanwei.HuozhuID > int.Parse(huozhuid));
+                    }
+                    if (huozhuidequal.Equals("<"))
+                    {
+                        if (huozhuidand.Equals("and"))
+                            where = where.And(base_shouhuodanwei => base_shouhuodanwei.HuozhuID < int.Parse(huozhuid));
+                        else
+                            where = where.Or(base_shouhuodanwei => base_shouhuodanwei.HuozhuID < int.Parse(huozhuid));
+                    }
+                }
+                if (!string.IsNullOrEmpty(huozhuid))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", huozhuid, huozhuidequal, huozhuidand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", "", huozhuidequal, huozhuidand);
+
+                searchconditionService.GetInstance().UpdateEntity(sc);
+            }
+            ViewBag.SearchCondition = sc.ConditionInfo;
             where = where.And(base_huozhushouquan => base_huozhushouquan.IsDelete == false);
 
             var tempData = ob_base_huozhushouquanservice.LoadSortEntities(where.Compile(), false, base_huozhushouquan => base_huozhushouquan.ID).ToPagedList<base_huozhushouquan>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.base_huozhushouquan = tempData;
             return View(tempData);
+            
         }
 
         public ActionResult Add()
@@ -62,15 +174,15 @@ namespace CKWMS.Controllers
 
         public ActionResult Save()
         {
-            string id = Request["ob_base_huozhushouquan_id"] ?? "";
-            string huozhuid = Request["ob_base_huozhushouquan_huozhuid"] ?? "";
-            string leibie = Request["ob_base_huozhushouquan_leibie"] ?? "";
-            string shouquanid = Request["ob_base_huozhushouquan_shouquanid"] ?? "";
-            string shouquanmingcheng = Request["ob_base_huozhushouquan_shouquanmingcheng"] ?? "";
-            string shouquanshuyxq = Request["ob_base_huozhushouquan_shouquanshuyxq"] ?? "";
-            string shouquanshutp = Request["ob_base_huozhushouquan_shouquanshutp"] ?? "";
-            string makedate = Request["ob_base_huozhushouquan_makedate"] ?? "";
-            string makeman = Request["ob_base_huozhushouquan_makeman"] ?? "";
+            string id = Request["id"] ?? "";
+            string huozhuid = Request["huozhuid"] ?? "";
+            string leibie = Request["leibie"] ?? "";
+            string shouquanid = Request["shouquanid"] ?? "";
+            string shouquanmingcheng = Request["shouquanmingcheng"] ?? "";
+            string shouquanshuyxq = Request["shouquanshuyxq"] ?? "";
+            string shouquanshutp = Request["shouquanshutp"] ?? "";
+            string makedate = Request["makedate"] ?? "";
+            string makeman = Request["makeman"] ?? "";
             try
             {
                 base_huozhushouquan ob_base_huozhushouquan = new base_huozhushouquan();
@@ -101,15 +213,15 @@ namespace CKWMS.Controllers
 
         public ActionResult Update()
         {
-            string id = Request["ob_base_huozhushouquan_id"] ?? "";
-            string huozhuid = Request["ob_base_huozhushouquan_huozhuid"] ?? "";
-            string leibie = Request["ob_base_huozhushouquan_leibie"] ?? "";
-            string shouquanid = Request["ob_base_huozhushouquan_shouquanid"] ?? "";
-            string shouquanmingcheng = Request["ob_base_huozhushouquan_shouquanmingcheng"] ?? "";
-            string shouquanshuyxq = Request["ob_base_huozhushouquan_shouquanshuyxq"] ?? "";
-            string shouquanshutp = Request["ob_base_huozhushouquan_shouquanshutp"] ?? "";
-            string makedate = Request["ob_base_huozhushouquan_makedate"] ?? "";
-            string makeman = Request["ob_base_huozhushouquan_makeman"] ?? "";
+            string id = Request["id"] ?? "";
+            string huozhuid = Request["huozhuid"] ?? "";
+            string leibie = Request["leibie"] ?? "";
+            string shouquanid = Request["shouquanid"] ?? "";
+            string shouquanmingcheng = Request["shouquanmingcheng"] ?? "";
+            string shouquanshuyxq = Request["shouquanshuyxq"] ?? "";
+            string shouquanshutp = Request["shouquanshutp"] ?? "";
+            string makedate = Request["omakedate"] ?? "";
+            string makeman = Request["makeman"] ?? "";
             int uid = int.Parse(id);
             try
             {
