@@ -120,7 +120,7 @@ namespace CKWMS.Controllers
                 if (!string.IsNullOrEmpty(huozhuid))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", huozhuid, huozhuidequal, huozhuidand);
                 else
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", "", huozhuidequal, huozhuidand);
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", huozhuid, huozhuidequal, huozhuidand);
 
                 searchconditionService.GetInstance().AddEntity(sc);
             }
@@ -155,7 +155,7 @@ namespace CKWMS.Controllers
                 if (!string.IsNullOrEmpty(huozhuid))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", huozhuid, huozhuidequal, huozhuidand);
                 else
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", "", huozhuidequal, huozhuidand);
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", huozhuid, huozhuidequal, huozhuidand);
 
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
@@ -165,7 +165,7 @@ namespace CKWMS.Controllers
             var tempData = ob_base_shouhuodanweiservice.LoadSortEntities(where.Compile(), false, base_shouhuodanwei => base_shouhuodanwei.ID).ToPagedList<base_shouhuodanwei>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.base_shouhuodanwei = tempData;
             return View(tempData);
-            
+
         }
 
         public ActionResult Add()

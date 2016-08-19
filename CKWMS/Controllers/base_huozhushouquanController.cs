@@ -132,23 +132,23 @@ namespace CKWMS.Controllers
                     if (huozhuidequal.Equals("="))
                     {
                         if (huozhuidand.Equals("and"))
-                            where = where.And(base_shouhuodanwei => base_shouhuodanwei.HuozhuID == int.Parse(huozhuid));
+                            where = where.And(base_huozhushouquan => base_huozhushouquan.HuozhuID == int.Parse(huozhuid));
                         else
-                            where = where.Or(base_shouhuodanwei => base_shouhuodanwei.HuozhuID == int.Parse(huozhuid));
+                            where = where.Or(base_huozhushouquan => base_huozhushouquan.HuozhuID == int.Parse(huozhuid));
                     }
                     if (huozhuidequal.Equals(">"))
                     {
                         if (huozhuidand.Equals("and"))
-                            where = where.And(base_shouhuodanwei => base_shouhuodanwei.HuozhuID > int.Parse(huozhuid));
+                            where = where.And(base_huozhushouquan => base_huozhushouquan.HuozhuID > int.Parse(huozhuid));
                         else
-                            where = where.Or(base_shouhuodanwei => base_shouhuodanwei.HuozhuID > int.Parse(huozhuid));
+                            where = where.Or(base_huozhushouquan => base_huozhushouquan.HuozhuID > int.Parse(huozhuid));
                     }
                     if (huozhuidequal.Equals("<"))
                     {
                         if (huozhuidand.Equals("and"))
-                            where = where.And(base_shouhuodanwei => base_shouhuodanwei.HuozhuID < int.Parse(huozhuid));
+                            where = where.And(base_huozhushouquan => base_huozhushouquan.HuozhuID < int.Parse(huozhuid));
                         else
-                            where = where.Or(base_shouhuodanwei => base_shouhuodanwei.HuozhuID < int.Parse(huozhuid));
+                            where = where.Or(base_huozhushouquan => base_huozhushouquan.HuozhuID < int.Parse(huozhuid));
                     }
                 }
                 if (!string.IsNullOrEmpty(huozhuid))

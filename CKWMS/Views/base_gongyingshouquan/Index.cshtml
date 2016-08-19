@@ -44,7 +44,7 @@
         SearchConditionModel scm = new SearchConditionModel();
         scm.ItemCode = "GongyingshangID";
         scm.ItemShowName = "gongyingsshangid";
-        scm.ItemTitle = "供应商序号";
+        scm.ItemTitle = "供应商";
         scm.ItemType = "供应商.";
         scms.Add(scm);
     }
@@ -56,11 +56,15 @@
             SearchConditionModel scm = new SearchConditionModel();
             scm.ItemCode = "GongyingshangID";
             scm.ItemShowName = "gongyingsshangid";
-            scm.ItemTitle = "供应商序号";
+            scm.ItemTitle = "供应商";
             scm.ItemType = "供应商.";
             if (scs.Length > 1)
             {
                 scm.ItemValue = scs[0].Split(',')[1];
+                if (scm.ItemValue.Length == 0)
+                {
+                    scm.ItemValue = "0";
+                }
                 scm.ItemOpValue = scs[0].Split(',')[2];
                 scm.ItemJion = scs[0].Split(',')[3];
             }
