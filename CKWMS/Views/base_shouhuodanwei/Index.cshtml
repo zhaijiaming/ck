@@ -103,17 +103,27 @@
             <thead>
                 <tr>
                     <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>营业执照</td>
+                    <td></td>
+                    <td></td>
+                    <td>经营许可</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
                     <td>货主</td>
                     <td>单位名称</td>
-                    <td>营业执照编号</td>
-                    <td>营业执照有效期</td>
-                    <td>营业执照照片</td>
-                    <td>经营许可编号</td>
-                    <td>经营许可有效期</td>
-                    <td>经营许可照片</td>
+                    <td>编号</td>
+                    <td>有效期</td>
+                    <td>照片</td>
+                    <td>编号</td>
+                    <td>有效期</td>
+                    <td>照片</td>
                     <td>首营状态</td>
-                    <td>录入日期</td>
-                    <td>输入人</td>
                 </tr>
             </thead>
             <tbody>
@@ -134,8 +144,6 @@
                         <td>@item.JingyingxukeYXQ</td>
                         <td>@item.JingyingxukeTP</td>
                         <td>@Html.GetCommonValue_ID("首营状态", (int)item.Shouying)</td>
-                        <td>@item.MakeDate</td>
-                        <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
                     </tr>
                 }
             </tbody>

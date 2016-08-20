@@ -241,43 +241,15 @@ namespace CKWMS.App_Code
             switch (itemName)
             {
                 case "首营状态":
-                    //foreach (var i in MvcApplication.ShouYingZhuangTai)
-                    //{
-                    //    if (i.Key == selectedValue && selectedValue != 0)
-                    //        sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.Key, i.Value);
-                    //    else
-                    //        sb.AppendFormat("<option value=\"{0}\">{1}</option>", i.Key, i.Value);
-                    //}
                     sb.Append(GetCommonSelect(selectedValue, MvcApplication.ShouYingZhuangTai));
                     break;
                 case "教育程度":
-                    //foreach (var i in MvcApplication.Education)
-                    //{
-                    //    if (i.Key == selectedValue && selectedValue != 0)
-                    //        sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.Key, i.Value);
-                    //    else
-                    //        sb.AppendFormat("<option value=\"{0}\">{1}</option>", i.Key, i.Value);
-                    //}
                     sb.Append(GetCommonSelect(selectedValue, MvcApplication.Education));
                     break;
                 case "性别":
-                    //foreach (var i in MvcApplication.Sex)
-                    //{
-                    //    if (i.Key == selectedValue && selectedValue != 0)
-                    //        sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.Key, i.Value);
-                    //    else
-                    //        sb.AppendFormat("<option value=\"{0}\">{1}</option>", i.Key, i.Value);
-                    //}
                     sb.Append(GetCommonSelect(selectedValue, MvcApplication.Sex));
                     break;
                 case "是否":
-                    //foreach (var i in MvcApplication.YesOrNo)
-                    //{
-                    //    if (i.Key == selectedValue && selectedValue != 0)
-                    //        sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.Key, i.Value);
-                    //    else
-                    //        sb.AppendFormat("<option value=\"{0}\">{1}</option>", i.Key, i.Value);
-                    //}
                     sb.Append(GetCommonSelect(selectedValue, MvcApplication.YesOrNo));
                     break;
                 case "医疗器械管理类别":
@@ -289,6 +261,48 @@ namespace CKWMS.App_Code
                 case "储运要求":
                     sb.Append(GetCommonSelect(selectedValue, MvcApplication.TranCondition));
                     break;
+                case "入库类型":
+                    sb.Append(GetCommonSelect(selectedValue, MvcApplication.EntryType));
+                    break;
+                case "出库类型":
+                    sb.Append(GetCommonSelect(selectedValue, MvcApplication.OutgoingType));
+                    break;
+                case "入库计划状态":
+                    sb.Append(GetCommonSelect(selectedValue, MvcApplication.EntryPlanState));
+                    break;
+                case "出库计划状态":
+                    sb.Append(GetCommonSelect(selectedValue, MvcApplication.OutPlanState));
+                    break;
+                case "入库状态":
+                    sb.Append(GetCommonSelect(selectedValue, MvcApplication.EntryState));
+                    break;
+                case "出库状态":
+                    sb.Append(GetCommonSelect(selectedValue, MvcApplication.OutState));
+                    break;
+                case "验收状态":
+                    sb.Append(GetCommonSelect(selectedValue, MvcApplication.CheckState));
+                    break;
+                case "验收结果":
+                    sb.Append(GetCommonSelect(selectedValue, MvcApplication.CheckResult));
+                    break;
+                case "验收不符合项说明":
+                    sb.Append(GetCommonSelect(selectedValue, MvcApplication.CheckMemo));
+                    break;
+                case "验收标准":
+                    sb.Append(GetCommonSelect(selectedValue, MvcApplication.CheckStandard));
+                    break;
+                case "存货状态":
+                    sb.Append(GetCommonSelect(selectedValue, MvcApplication.CargoState));
+                    break;
+                //case "":
+                //    sb.Append(GetCommonSelect(selectedValue, MvcApplication));
+                //    break;
+                //case "":
+                //    sb.Append(GetCommonSelect(selectedValue, MvcApplication));
+                //    break;
+                //case "":
+                //    sb.Append(GetCommonSelect(selectedValue, MvcApplication));
+                //    break;
                 default:
                     break;
             }

@@ -167,7 +167,7 @@ namespace CKWMS.Controllers
         {
             int userid = (int)Session["user_id"];
 
-            var tempData = ob_wms_rukudanservice.LoadSortEntities(p=>p.IsDelete==false, false, s=>s.MakeDate);
+            var tempData = ob_wms_rukudanservice.LoadSortEntities(p => p.IsDelete == false, false, s => s.MakeDate);
             ViewBag.wms_rukudan = tempData;
             return View();
         }
@@ -210,6 +210,12 @@ namespace CKWMS.Controllers
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
             string rukudanbh = Request["rukudanbh"] ?? "";
+            if (baoshuisf.IndexOf("true") >= 0)
+                baoshuisf = "true";
+            if (jianguansf.IndexOf("true") >= 0)
+                jianguansf = "true";
+            if (yanshousf.IndexOf("true") >= 0)
+                yanshousf = "true";
             try
             {
                 wms_rukudan ob_wms_rukudan = new wms_rukudan();

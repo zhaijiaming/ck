@@ -28,9 +28,9 @@ namespace CKWMS.reports
                     switch (name)
                     {
                         case "personrights":
-                            ReportViewer1.Reset();
-                            ReportViewer1.LocalReport.ReportPath = "reports/rptQuanxian.rdlc";
-                            ReportViewer1.LocalReport.DataSources.Clear();
+                            rptView.Reset();
+                            rptView.LocalReport.ReportPath = "reports/rptQuanxian.rdlc";
+                            rptView.LocalReport.DataSources.Clear();
                             DataTable dtqx = _rds.Tables["Quanxian"];
                             var personrights = ServiceFactory.auth_quanxianservice.GetPersonRightsFirst(_userid);
                             int i = 0;
@@ -48,7 +48,7 @@ namespace CKWMS.reports
                                 drqx["function"] = _pr.function;
                                 dtqx.Rows.Add(drqx);
                             }
-                            ReportViewer1.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["Quanxian"]));
+                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["Quanxian"]));
 
                             break;
                         default:
