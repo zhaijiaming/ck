@@ -9,6 +9,44 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        var _zczid = $("#zczbh").val();
+        $("#pl_guige").hide();
+        $(".guige").click(function () {
+            _zczid=$(this).parent().parent().find("input[type=checkbox]").val();
+            getGuiGe(_zczid);
+            $("#pl_guige").show();
+        });
+        $("#pl_close").click(function () {
+            $("#pl_guige").hide();
+        });
+        $("#bt_guige_delete").click(function () {
+            var _ggdel = "";
+            $("#ggdatatable tr input[type=checkbox]").each(function () {
+                if (this.checked) {
+                    _ggdel = _ggdel + $(this).val() + ",";
+                }
+            });
+            if (_ggdel.length > 0) {
+                var _delok = confirm("确定要删除这些规格吗？");
+                if (_delok) {
+                    $.post(
+                        "/base_zhucezhenggg/deletenow",
+                        {
+                            del: _ggdel
+                        },
+                        function (data) {
+                            if (data == 1)
+                                getGuiGe(_zczid);
+                            else
+                                alert("删除失败，请重试！");
+                        }
+                    );
+                }
+            }
+        });
+        $("#bt_guige_refresh").click(function () {
+            getGuiGe(_zczid);
+        });
         $("tr").bind("dblclick", function () {
             var u_id = $(this).find('td').eq(0).find('input').val();
             if (u_id != null) {
@@ -37,8 +75,33 @@
         var url_go = "/base_shangpinzcz/Delete/?del=" + sDel;
         location.href = url_go;
     }
+    function getGuiGe(zczid) {
+        //var _zczid = $("#zczbh").val();
+        var _zczid = zczid;
+        var filltable = "";
+        $.post(
+            "/base_zhucezhenggg/getdetail",
+            {
+                zczbh: _zczid
+            },
+            function (data) {
+                for (var i in data) {
+                    filltable = filltable + '<tr><td><div class="checkbox"><label><input type="checkbox" value="';
+                    filltable = filltable + data[i].ID;
+                    filltable = filltable + '"></label></div></td><td>';
+                    filltable = filltable + data[i].Guige;
+                    filltable = filltable + '</td><td>';
+                    filltable = filltable + data[i].Memo;
+                    filltable = filltable + '</td><td>';
+                    filltable = filltable + data[i].Makedate;
+                    filltable = filltable + '</td><td>';
+                    filltable = filltable + data[i].Makeman;
+                    filltable = filltable + '</td></tr>';
+                }
+                $("#pl_guige tbody").html(filltable);
+            });
+    }
 
-    
 </script>
 @{
     List<SearchConditionModel> scms = new List<SearchConditionModel>();
@@ -153,7 +216,7 @@
                             <td>@item.Bianhao</td>
                             <td>@item.Mingcheng</td>
                             @*规格*@
-                            <td><input class="btn btn-default" type="button" value="Input"></td>
+                            <td><button class="btn guige">浏览</button></td>
                             <td>@item.Bianzhun</td>
                             <td>@item.ZhucezhengYXQ.ToString("yyyy-MM-dd")</td>
                             <td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
@@ -177,6 +240,30 @@
                 @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
             </div>
 
+        </div>
+    </div>
+</div>
+<div id="pl_guige" class="panel panel-primary" style="position:absolute;top:100px;left:200px;width:600px;height:400px;z-index:999;">
+    <div class="panel-heading">
+        <h3 class="panel-title">规格管理<button id="pl_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="center">
+            <button type="button" class="btn btn-default " id="bt_guige_delete"><i class="icon-remove"></i>删除</button>
+            <button type="button" class="btn btn-default " id="bt_guige_refresh"><i class="icon-refresh"></i>刷新</button>
+            <table class="table" id="ggdatatable">
+                <caption></caption>
+                <thead>
+                    <tr>
+                        <td></td>
+                        <td>规格</td>
+                        <td>说明</td>
+                        <td>制单日期</td>
+                        <td>制单人</td>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
         </div>
     </div>
 </div>
