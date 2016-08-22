@@ -80,10 +80,14 @@ namespace CKWMS.Controllers
             int userid = (int)Session["user_id"];
             string pagetag = "base_shouhuodanwei_index";
             string page = "1";
-
+            //货主
             string huozhuid = Request["huozhuid"] ?? "";
             string huozhuidequal = Request["huozhuidequal"] ?? "";
             string huozhuidand = Request["huozhuidand"] ?? "";
+            //单位名称
+            string mingcheng = Request["mingcheng"] ?? "";
+            string mingchengequal = Request["mingchengequal"] ?? "";
+            string mingchengand = Request["mingchengand"] ?? "";
 
             Expression<Func<base_shouhuodanwei, bool>> where = PredicateExtensionses.True<base_shouhuodanwei>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
@@ -120,7 +124,29 @@ namespace CKWMS.Controllers
                 if (!string.IsNullOrEmpty(huozhuid))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", huozhuid, huozhuidequal, huozhuidand);
                 else
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", huozhuid, huozhuidequal, huozhuidand);
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", "", huozhuidequal, huozhuidand);
+                //mingcheng
+                if (!string.IsNullOrEmpty(mingcheng))
+                {
+                    if (mingchengequal.Equals("="))
+                    {
+                        if (mingchengand.Equals("and"))
+                            where = where.And(base_shouhuodanwei => base_shouhuodanwei.Mingcheng == mingcheng);
+                        else
+                            where = where.Or(base_shouhuodanwei => base_shouhuodanwei.Mingcheng == mingcheng);
+                    }
+                    if (mingchengequal.Equals("like"))
+                    {
+                        if (mingchengand.Equals("and"))
+                            where = where.And(base_shouhuodanwei => base_shouhuodanwei.Mingcheng.Contains(mingcheng));
+                        else
+                            where = where.Or(base_shouhuodanwei => base_shouhuodanwei.Mingcheng.Contains(mingcheng));
+                    }
+                }
+                if (!string.IsNullOrEmpty(mingcheng))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", mingcheng, mingchengequal, mingchengand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", "", mingchengequal, mingchengand);
 
                 searchconditionService.GetInstance().AddEntity(sc);
             }
@@ -157,6 +183,29 @@ namespace CKWMS.Controllers
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", huozhuid, huozhuidequal, huozhuidand);
 
+                //mingcheng
+                if (!string.IsNullOrEmpty(mingcheng))
+                {
+                    if (mingchengequal.Equals("="))
+                    {
+                        if (mingchengand.Equals("and"))
+                            where = where.And(base_shouhuodanwei => base_shouhuodanwei.Mingcheng == mingcheng);
+                        else
+                            where = where.Or(base_shouhuodanwei => base_shouhuodanwei.Mingcheng == mingcheng);
+                    }
+                    if (mingchengequal.Equals("like"))
+                    {
+                        if (mingchengand.Equals("and"))
+                            where = where.And(base_shouhuodanwei => base_shouhuodanwei.Mingcheng.Contains(mingcheng));
+                        else
+                            where = where.Or(base_shouhuodanwei => base_shouhuodanwei.Mingcheng.Contains(mingcheng));
+                    }
+                }
+                if (!string.IsNullOrEmpty(mingcheng))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", mingcheng, mingchengequal, mingchengand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", "", mingchengequal, mingchengand);
+
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;
@@ -170,6 +219,7 @@ namespace CKWMS.Controllers
 
         public ActionResult Add()
         {
+            ViewBag.userid = (int)Session["user_id"];
             return View();
         }
 

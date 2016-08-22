@@ -9,8 +9,10 @@ namespace CKWMS.Models
         [Display(Name = "序号")]
         public int ID { get; set; }
         [Display(Name = "货主序号")]
+        [Required(ErrorMessage ="货主不能为空")]
         public int HuozhuID { get; set; }
         [Display(Name = "单位名称")]
+        [Required(ErrorMessage ="单位名称不能为空")]
         public string Mingcheng { get; set; }
         [Display(Name = "营业执照编号")]
         public string YingyezhizhaoBH { get; set; }
