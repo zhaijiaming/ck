@@ -331,6 +331,12 @@ namespace CKWMS.Controllers
             string makeman = Request["makeman"] ?? "";
             string rukudanbh = Request["rukudanbh"] ?? "";
             int uid = int.Parse(id);
+            if (baoshuisf.IndexOf("true") >= 0)
+                baoshuisf = "true";
+            if (jianguansf.IndexOf("true") >= 0)
+                jianguansf = "true";
+            if (yanshousf.IndexOf("true") >= 0)
+                yanshousf = "true";
             try
             {
                 wms_rukudan p = ob_wms_rukudanservice.GetEntityById(wms_rukudan => wms_rukudan.ID == uid);

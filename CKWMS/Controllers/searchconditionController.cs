@@ -16,7 +16,7 @@ namespace CKWMS.Controllers
     public class searchconditionController : Controller
     {
         //private IsearchconditionService ob_searchconditionservice = ServiceFactory.searchconditionservice;
-        private IsearchconditionService ob_searchconditionservice =searchconditionService.GetInstance();
+        private IsearchconditionService ob_searchconditionservice = searchconditionService.GetInstance();
         //private List<SearchConditionModel> _searchconditions;
         [OutputCache(Duration = 30)]
         public ActionResult Index(string page)
@@ -258,8 +258,8 @@ namespace CKWMS.Controllers
                 {
                     id = int.Parse(sD);
                     ob_searchcondition = ob_searchconditionservice.GetEntityById(searchcondition => searchcondition.ID == id && searchcondition.IsDelete == false);
-                    ob_searchcondition.IsDelete = true;
-                    ob_searchconditionservice.UpdateEntity(ob_searchcondition);
+                    if (ob_searchcondition != null)
+                        ob_searchconditionservice.DeleteEntity(ob_searchcondition);
                 }
             }
             return RedirectToAction("Index");

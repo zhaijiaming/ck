@@ -109,6 +109,16 @@ namespace CKWMS.App_Code
                         }
                     }
                     break;
+                case "收货单位":
+                    var tmpshdw = ServiceFactory.base_shouhuodanweiservice.LoadSortEntities(p=>p.IsDelete==false && p.HezuoSF==true,true,s=>s.Mingcheng);
+                    foreach(var i in tmpshdw)
+                    {
+                        if (i.ID == selectedvalue && selectedvalue != 0)
+                            sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.ID, i.Mingcheng);
+                        else
+                            sb.AppendFormat("<option value=\"{0}\">{1}</option>", i.ID, i.Mingcheng);
+                    }
+                    break;
                 case "供应商": //"base_gongyingshang":
                     Ibase_gongyingshangService gys = ServiceFactory.base_gongyingshangservice;
                     var tmpgys = gys.LoadSortEntities(base_gongyingshang => base_gongyingshang.IsDelete == false, true, base_gongyingshang => base_gongyingshang.Daima);

@@ -3,7 +3,7 @@
 @using X.PagedList
 @using X.PagedList.Mvc
 @{
-    ViewBag.Title = "入库操作清单";
+    ViewBag.Title = "入库操作";
     string _searchcondition = ViewBag.SearchCondition;
 }
 <script type="text/javascript">
@@ -121,10 +121,10 @@
                         </td>
                         <td>@item.RukudanBH</td>
                         <td>@Html.GetDataValue_ID("货主","简称",(int)item.HuozhuID)</td>
-                        <td>@item.YewuLX</td>
+                        <td>@Html.GetCommonValue_ID("入库类型",(int)item.YewuLX)</td>
                         <td>@string.Format("{0:d}", item.RukuRQ)</td>
                         <td>@Html.GetCommonValue_ID("入库状态",(int)item.RukuZT)</td>
-                        <td>@item.Shouhuoren</td>
+                        <td>@Html.GetDataValue_ID("userinfo","全名",(int)item.Shouhuoren)</td>
                         <td>@item.Beizhu</td>
                         <td><a href="/wms_rukumx/index" target="_blank"><i class="icon-pencil"></i></a></td>
                         <td><a href="/wms_shouhuomx/index" target="_blank"><i class="icon-hand-up"></i></a></td>
