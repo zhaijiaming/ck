@@ -150,7 +150,22 @@ namespace CKWMS.Controllers
             ViewBag.base_qixiemulu = tempData;
             return View(tempData);
         }
-
+        public JsonResult GetQixiemulu()
+        {
+            var _qxtemp = ob_base_qixiemuluservice.LoadSortEntities(p => p.IsDelete == false, true, s => s.Mingcheng);
+            List<QiXieMuLu> _qxlist=new List<QiXieMuLu>();
+            QiXieMuLu _qx;
+            foreach(var qx in _qxtemp)
+            {
+                _qx = new QiXieMuLu();
+                _qx.ID = qx.ID;
+                _qx.Bianhao = qx.Bianhao;
+                _qx.Mingcheng = qx.Mingcheng;
+                _qx.Miaoshu = qx.Miaoshu;
+                _qxlist.Add(_qx);
+            }
+            return Json(_qxlist);
+        }
         public ActionResult Add()
         {
             ViewBag.userid = (int)Session["user_id"];
