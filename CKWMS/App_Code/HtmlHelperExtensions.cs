@@ -843,7 +843,7 @@ namespace CKWMS.App_Code
                     }
                     break;
                 case "收货单位":
-                    base_shouhuodanwei _shdw=ServiceFactory.base_shouhuodanweiservice.GetEntityById(p=>p.ID==dataValue && p.IsDelete==true));
+                    base_shouhuodanwei _shdw=ServiceFactory.base_shouhuodanweiservice.GetEntityById(p=>p.ID==dataValue && p.IsDelete==true);
                     if (_shdw == null)
                         returnvalue = "";
                     else
