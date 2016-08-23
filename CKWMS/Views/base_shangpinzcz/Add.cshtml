@@ -75,13 +75,7 @@
                     @Html.ValidationMessageFor(m => m.ZhucezhengYXQ)
                 </div>
             </div>
-            @*录入日期*@
-            <div class="form-group">
-                @Html.LabelFor(m => m.MakeDate, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10 ">
-                    <input type="date" class="form-control" readonly value="@DateTime.Now.ToString("yyyy-MM-dd")" name="MakeDate">
-                </div>
-            </div>
+            
             @*中文编号*@
             <div class="form-group">
                 <div class="control-label col-sm-2">
@@ -171,7 +165,13 @@
                     @Html.SelectList_Auto("MakeMan", "userinfo", "fullname", (long)ViewBag.userid)
                 </div>
             </div>
-            
+            @*录入日期*@
+            <div class="form-group">
+                @Html.LabelFor(m => m.MakeDate, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10 ">
+                    <input type="date" class="form-control" readonly value="@DateTime.Now.ToString("yyyy-MM-dd")" name="MakeDate">
+                </div>
+            </div>
             @*是否失效
             <div class="form-group">
                 <div class="control-label col-sm-2">

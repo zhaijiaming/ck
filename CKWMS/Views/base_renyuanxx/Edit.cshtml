@@ -33,22 +33,30 @@
             </p>
         </div>
         <div class="container">
+            @*用户id*@
             <div class="form-group">
+                <label for="name" class="col-sm-2">用户账号</label>
+                <div class="col-sm-10">
+                     @Html.SelectList_Auto("userid", "userinfo", "account", (long)ViewData.Model.UserID)
+                </div>
+            </div>
+            @*<div class="form-group">
                 @Html.LabelFor(m => m.Bianhao, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.Bianhao, new { @class = "form-control" })
                 </div>
-            </div>
+            </div>*@
             <div class="form-group">
                 @Html.LabelFor(m => m.Mingcheng, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.Mingcheng, new { @class = "form-control" })
                 </div>
             </div>
+            @*性别*@
             <div class="form-group">
                 @Html.LabelFor(m => m.Xingbie, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Xingbie, new { @class = "form-control" })
+                    @Html.SelectList_Common("xingbie", "性别",(long)ViewData.Model.Xingbie)
                 </div>
             </div>
             <div class="form-group">

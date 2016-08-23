@@ -40,6 +40,8 @@ namespace CKWMS.Models
         public int? MakeMan { get; set; }
         [Display(Name = "已删除")]
         public bool IsDelete { get; set; }
+        [Display(Name ="用户序号")]
+        public int? UserID { get; set; }
     }
 }
 

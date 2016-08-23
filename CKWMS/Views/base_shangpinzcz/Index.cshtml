@@ -178,7 +178,7 @@
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
         </p>
     </div>
-    <div style="width:1390px;height:500px; overflow:scroll;">
+    <div style="overflow:auto;">
         <div class="table-responsive">
             <table class="table" style="overflow: hidden;text-overflow:ellipsis;white-space: nowrap;" id="mydatatable">
                 <caption></caption>
@@ -190,7 +190,7 @@
                         <td>规格</td>
                         <td>产品标准</td>
                         <td>注册证有效期</td>
-                        <td>录入日期</td>
+                        @*<td>录入日期</td>*@
                         <td>中文编号</td>
                         <td>产地</td>
                         <td>生产企业</td>
@@ -219,7 +219,7 @@
                             <td><button class="btn guige">浏览</button></td>
                             <td>@item.Bianzhun</td>
                             <td>@item.ZhucezhengYXQ.ToString("yyyy-MM-dd")</td>
-                            <td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
+                            @*<td>@item.MakeDate.ToString("yyyy-MM-dd")</td>*@
                             <td>@item.BianhaoZW</td>
                             <td>@item.Chandi</td>
                             <td>@Html.GetDataValue_ID("","名称",(int)item.ShengchanqiyeID)</td>

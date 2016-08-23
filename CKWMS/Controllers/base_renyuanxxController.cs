@@ -253,6 +253,7 @@ namespace CKWMS.Controllers
         public ActionResult Save()
         {
             string id = Request["id"] ?? "";
+            string userid = Request["userid"] ?? "";
             string bianhao = Request["bianhao"] ?? "";
             string mingcheng = Request["mingcheng"] ?? "";
             string xingbie = Request["xingbie"] ?? "";
@@ -268,6 +269,7 @@ namespace CKWMS.Controllers
             {
                 base_renyuanxx ob_base_renyuanxx = new base_renyuanxx();
                 ob_base_renyuanxx.Bianhao = bianhao.Trim();
+                ob_base_renyuanxx.UserID = userid == "" ? 0 : int.Parse(userid);
                 ob_base_renyuanxx.Mingcheng = mingcheng.Trim();
                 ob_base_renyuanxx.Xingbie = xingbie == "" ? 0 : int.Parse(xingbie);
                 ob_base_renyuanxx.Dianhua = dianhua.Trim();
@@ -299,6 +301,7 @@ namespace CKWMS.Controllers
             {
                 base_renyuanxxViewModel base_renyuanxxviewmodel = new base_renyuanxxViewModel();
                 base_renyuanxxviewmodel.ID = tempData.ID;
+                base_renyuanxxviewmodel.UserID = tempData.UserID;
                 base_renyuanxxviewmodel.Bianhao = tempData.Bianhao;
                 base_renyuanxxviewmodel.Mingcheng = tempData.Mingcheng;
                 base_renyuanxxviewmodel.Xingbie = tempData.Xingbie;
@@ -319,6 +322,7 @@ namespace CKWMS.Controllers
         public ActionResult Update()
         {
             string id = Request["id"] ?? "";
+            string userid = Request["userid"] ?? "";
             string bianhao = Request["bianhao"] ?? "";
             string mingcheng = Request["mingcheng"] ?? "";
             string xingbie = Request["xingbie"] ?? "";
@@ -335,6 +339,7 @@ namespace CKWMS.Controllers
             {
                 base_renyuanxx p = ob_base_renyuanxxservice.GetEntityById(base_renyuanxx => base_renyuanxx.ID == uid);
                 p.Bianhao = bianhao.Trim();
+                p.UserID =  userid == "" ? 0 : int.Parse(userid);
                 p.Mingcheng = mingcheng.Trim();
                 p.Xingbie = xingbie == "" ? 0 : int.Parse(xingbie);
                 p.Dianhua = dianhua.Trim();
