@@ -42,37 +42,22 @@
         });
 
         $("#bt_fanwei_add").click(function () {
-
             var _jyfw = "";
             var _jyfwjm = "";
-
             var t = document.getElementsByClassName('checkbox');
-
-
-
-            //_jyfw = $(".bh").eq(4).html();
-            
-
             $("#qxdatatable tr input[type=checkbox]").each(function () {
-                if (this.checked) {
-                    alert($(this).val());
-                    alert($(this).parent().parent().find("span .bh").val());
-                    _jyfw = _jyfw + $(this).parent().parent().find(".bh").text() + "," + $(this).parent().parent().find(".mc").text() + ";";
-                    _jyfwjm = _jyfwjm + $(this).parent().parent().find(".bh").text() + ";";
+                if (this.checked) {                   
+                    _jyfw = _jyfw + $(this).parent().parent().parent().siblings().find(".bh").html() + "," + $(this).parent().parent().parent().siblings().find(".mc").html() + ";";
+                    _jyfwjm = _jyfwjm + $(this).parent().parent().parent().siblings().find(".bh").html() + ";";
                 }
             });
-            
             var _addok = confirm("确定要添加这些规格吗？");
             if (_addok) {
-
                 $("#jingyingfanwei").val(_jyfw);
                 $("#jingyingfanweijianma").val(_jyfwjm);
-         
             }
             $("#pl_Fanwei").hide();
-            
         });
-
     });
 
 
@@ -230,32 +215,32 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="name" class="col-sm-2" >经营范围</label>
+                <label for="name" class="col-sm-2">经营范围</label>
                 @*<div class="col-sm-10">
                         <input type="text" class="form-control" name="ob_base_gongyingshang_jingyingfanwei">
                     </div>*@
                 <div class="col-sm-2">
-                    <button type="button" class="form-control " id="bt_Fanweiadd">增加</button>
+                    <button type="button" class="form-control icon-apple icon-2x" id="bt_Fanweiadd">增加</button>
                 </div>
                 <div class="col-sm-8 ">
-                    <textarea type="text" class="form-control" id="jingyingfanwei" name="ob_base_gongyingshang_jingyingfanwei"></textarea>
+                    <textarea type="text" class="form-control" readonly id="jingyingfanwei" name="ob_base_gongyingshang_jingyingfanwei"></textarea>
                 </div>
-                
-                
+
+
             </div>
             <div class="form-group">
-                <label for="name" class="col-sm-2" >经营范围简码</label>
+                <label for="name" class="col-sm-2">经营范围简码</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="jingyingfanweijianma" name="ob_base_gongyingshang_jingyingfanweidm">
+                    <input type="text" class="form-control" readonly id="jingyingfanweijianma" name="ob_base_gongyingshang_jingyingfanweidm">
                 </div>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label for="name" class="col-sm-2">首营状态</label>
                 <div class="col-sm-10">
-                    @*<input type="text" class="form-control" name="ob_base_gongyingshang_shouying">*@
+                    <input type="text" class="form-control" name="ob_base_gongyingshang_shouying">
                     @Html.SelectList_Common("ob_base_gongyingshang_shouying", "首营状态", 1)
                 </div>
-            </div>
+            </div>*@
             <div class="form-group">
                 <label for="name" class="col-sm-2">录入日期</label>
                 <div class="col-sm-10">
@@ -280,7 +265,7 @@
     <div class="panel-body">
         <div class="center">
             <button type="button" class="btn btn-default " id="bt_fanwei_add"><i class="icon-add"></i>添加</button>
-            <button type="button" class="btn btn-default " id="bt_fanwei_delete"><i class="icon-remove"></i>删除</button>
+            @*<button type="button" class="btn btn-default " id="bt_fanwei_delete"><i class="icon-remove"></i>删除</button>*@
 
             <table class="table" id="qxdatatable">
                 <caption></caption>
@@ -306,3 +291,14 @@
 
 
 
+
+@*<tr>
+    <td>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" value="1 ">
+            </label>
+        </div>
+    </td>
+    <td>2</td>
+    <td>*@

@@ -68,6 +68,39 @@
     //    }
     //    alert(strWrite);
     //}
+
+    $(document).ready(function () {
+        $("#pl_Fanwei").hide();
+        $("#bt_Fanweiadd").click(function () {
+            GetFanwei()
+            $("#pl_Fanwei").show();
+        });
+
+        $("#pl_close").click(function () {
+            $("#pl_Fanwei").hide();
+        });
+
+        $("#bt_fanwei_add").click(function () {
+            var _jyfw = "";
+            var _jyfwjm = "";
+            var t = document.getElementsByClassName('checkbox');
+            $("#qxdatatable tr input[type=checkbox]").each(function () {
+                if (this.checked) {
+                    _jyfw = _jyfw + $(this).parent().parent().parent().siblings().find(".bh").html() + "," + $(this).parent().parent().parent().siblings().find(".mc").html() + ";";
+                    _jyfwjm = _jyfwjm + $(this).parent().parent().parent().siblings().find(".bh").html() + ";";
+                }
+            });
+            var _addok = confirm("确定要添加这些规格吗？");
+            if (_addok) {
+                $("#jingyingfanwei").val(_jyfw);
+                $("#jingyingfanweijianma").val(_jyfwjm);
+            }
+            $("#pl_Fanwei").hide();
+        });
+
+    });
+
+
     function bt1() {
         $("#btnSelect").val("picsel1");
     }
@@ -82,6 +115,35 @@
         function (response) {
             $("#daima").val(response);
         });
+    }
+
+
+    function GetFanwei() {
+        //var _qxmlid = $("#qxml").val();
+        var filltable = "";
+
+        $.post(
+                "/base_qixiemulu/GetQixiemulu",
+                {
+                    //qxml: _qxmlid
+                },
+                function (data) {
+                    for (var i in data) {
+                        filltable = filltable + '<tr><td><div class="checkbox"><label><input type="checkbox" value="';
+                        filltable = filltable + data[i].ID;
+                        filltable = filltable + '"></label></div></td><td><span class="bh">';
+                        filltable = filltable + data[i].Bianhao;
+                        filltable = filltable + '</span></td><td><span class="mc">';
+                        filltable = filltable + data[i].Mingcheng;
+                        filltable = filltable + '</span></td><td>';
+                        filltable = filltable + data[i].Miaoshu;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].GuanliFL;
+                        filltable = filltable + '</td></tr>';
+                    }
+                    $("#pl_Fanwei tbody").html(filltable);
+                });
+
     }
 </script>
 <div class="modal fade" id="myModalUpload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -214,23 +276,26 @@
             </div>
             <div class="form-group">
                 <label for="name" class="col-sm-2">经营范围</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="ob_base_gongyingshang_jingyingfanwei" value="@item.Jingyingfanwei">
+                <div class="col-sm-2">
+                    <button type="button" class="form-control icon-apple" id="bt_Fanweiadd">增加</button>
+                </div>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" readonly id="jingyingfanwei" name="ob_base_gongyingshang_jingyingfanwei" value="@item.Jingyingfanwei">
                 </div>
             </div>
             <div class="form-group">
                 <label for="name" class="col-sm-2">经营范围简码</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="ob_base_gongyingshang_jingyingfanweidm" value="@item.JingyingfanweiDM">
+                    <input type="text" class="form-control" readonly id="jingyingfanweijianma" name="ob_base_gongyingshang_jingyingfanweidm" value="@item.JingyingfanweiDM">
                 </div>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label for="name" class="col-sm-2">首营状态</label>
                 <div class="col-sm-10">
-                    @*<input type="text" class="form-control" name="ob_base_gongyingshang_shouying" value="@item.Shouying">*@
+                    <input type="text" class="form-control" name="ob_base_gongyingshang_shouying" value="@item.Shouying">
                     @Html.SelectList_Common("ob_base_gongyingshang_shouying", "首营状态", (int)item.Shouying)
                 </div>
-            </div>
+            </div>*@
             <div class="form-group">
                 <label for="name" class="col-sm-2">录入日期</label>
                 <div class="col-sm-10">
@@ -245,4 +310,31 @@
             </div>
         </div>
     </form>
+</div>
+
+
+<div id="pl_Fanwei" class="panel panel-primary " style="position:absolute;top:0px;left:300px;width:1100px;height:600px;z-index:999;overflow:scroll">
+    <div class="panel-heading">
+        <h3 class="panel-title">经营范围管理<button id="pl_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="center">
+            <button type="button" class="btn btn-default " id="bt_fanwei_add"><i class="icon-add"></i>添加</button>
+            @*<button type="button" class="btn btn-default " id="bt_fanwei_delete"><i class="icon-remove"></i>删除</button>*@
+
+            <table class="table" id="qxdatatable">
+                <caption></caption>
+                <thead>
+                    <tr>
+                        <td></td>
+                        <td>编号</td>
+                        <td>名称</td>
+                        <td>描述</td>
+                        <td>管理分类</td>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
 </div>
