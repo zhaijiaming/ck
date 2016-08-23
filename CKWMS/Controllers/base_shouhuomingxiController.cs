@@ -166,7 +166,13 @@ namespace CKWMS.Controllers
             ViewBag.base_shouhuomingxi = tempData;
             return View(tempData);
         }
-
+        public ActionResult GetDetail()
+        {
+            int shouhuodanwei =int.Parse(Request["shouhuodanwei"]);
+            var tempData = ob_base_shouhuomingxiservice.LoadSortEntities(base_shouhuomingxi => base_shouhuomingxi.ShouhuofangID == shouhuodanwei, false, base_shouhuomingxi => base_shouhuomingxi.ID);
+            ViewBag.base_shouhuomingxi = tempData;
+            return View();
+        }
         public ActionResult Add()
         {
             ViewBag.userid = (int)Session["user_id"];

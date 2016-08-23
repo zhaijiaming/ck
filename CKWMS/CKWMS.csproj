@@ -698,6 +698,7 @@
     <Content Include="Views\wms_cunhuo\Index.cshtml" />
     <Content Include="Views\wms_rukudan\OperateList.cshtml" />
     <Content Include="Views\auth_quanxian\PersonRightList.cshtml" />
+    <Content Include="Views\base_shouhuomingxi\GetDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
