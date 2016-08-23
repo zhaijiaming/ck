@@ -11,6 +11,21 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+
+        $("#pl_Fanwei").hide();
+        $("#pl_fanwei_add").hide();
+
+        var _qxmlid = $("#qxml").val();
+
+        $("#bt_Fanweiadd").click(function () {
+            GetFanwei()
+            $("#pl_Fanwei").show();
+        });
+
+        $("#pl_close").click(function () {
+            $("#pl_Fanwei").hide();
+        });
+
         $("form").validate({
 
             rules: {
@@ -27,6 +42,8 @@
         });
     });
 
+    
+
     function GetSpell() {
         $.post("/Service/GetSpellCode",
             {
@@ -37,6 +54,36 @@
         });
     }
 
+    
+
+
+    function GetFanwei() {
+        var _qxmlid = $("#qxml").val();
+        var filltable = "";
+
+        $.post(
+                "/base_qixiemulu/getdetail",
+                {
+                    qxml: _qxmlid
+                },
+                function (data) {
+                    for (var i in data) {
+                        filltable = filltable + '<tr><td><div class="checkbox"><label><input type="checkbox" value="';
+                        filltable = filltable + data[i].ID;
+                        filltable = filltable + '"></label></div></td><td>';
+                        filltable = filltable + data[i].Bianhao;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].Mingcheng;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].Miaoshu;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].GuanliFL;
+                        filltable = filltable + '</td></tr>';
+                    }
+                    $("#pl_fanwei_add tbody").html(filltable);
+                });
+
+    }
 
 
 </script>
@@ -64,6 +111,9 @@
     <form role="form" action="/base_gongyingshang/Save" method="post">
         <input type="hidden" name="ob_base_gongyingshang_id" />
         <input type="hidden" id="btnSelect" value="" />
+
+        @*<input id="qxml" type="hidden" name="id" value="@ViewData.Model.ID" />*@
+
         <div class="page-header">
             <p>
                 <button type="submit" class="btn btn-default"><i class="icon-save"></i>保存</button>
@@ -88,7 +138,9 @@
                     @Html.ValidationMessageFor(m => m.Mingcheng)*@
                 </div>
 
-                <button type="button" class="btn btn-default " onclick="GetSpell()">生成代码</button>
+                <div class="col-sm-2">
+                    <button type="button" class="form-control " onclick="GetSpell()">生成代码</button>
+                </div>
 
             </div>
             <div class="form-group">
@@ -146,8 +198,17 @@
             </div>
             <div class="form-group">
                 <label for="name" class="col-sm-2">经营范围</label>
-                <div class="col-sm-10">
+                @*<div class="col-sm-10">
                     <input type="text" class="form-control" name="ob_base_gongyingshang_jingyingfanwei">
+                </div>*@
+                <div class="col-sm-6 ">
+                    <textarea type="text" class="form-control" name="ob_base_gongyingshang_jingyingfanwei"></textarea>
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" class="form-control " id="bt_Fanweiadd">增加</button>
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" class="form-control " id="bt_Fanwei">浏览</button>
                 </div>
             </div>
             <div class="form-group">
@@ -178,3 +239,32 @@
         </div>
     </form>
 </div>
+
+
+<div id="pl_Fanwei" class="panel panel-primary" style="position:absolute;top:100px;left:200px;width:600px;height:400px;z-index:999;">
+        <div class="panel-heading">
+            <h3 class="panel-title">经营范围管理<button id="pl_close" class="pull-right">X</button></h3>
+        </div>
+        <div class="panel-body">
+            <div class="center">
+                <button type="button" class="btn btn-default " id="bt_fanwei_add"><i class="icon-add"></i>添加</button>
+                <button type="button" class="btn btn-default " id="bt_fanwei_delete"><i class="icon-remove"></i>删除</button>
+                
+                <table class="table" id="ggdatatable">
+                    <caption></caption>
+                    <thead>
+                        <tr>
+                            <td></td>
+                            <td>编号</td>
+                            <td>名称</td>
+                            <td>描述</td>
+                            <td>管理分类</td>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+

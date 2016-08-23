@@ -2,13 +2,10 @@
 @using CKWMS.Models
 @using X.PagedList
 @using X.PagedList.Mvc
-
-@{
-    ViewBag.Title = "生产企业清单";
+@{ ViewBag.Title = "生产企业清单";
     string _searchcondition = ViewBag.SearchCondition;
 }
 @Html.GetFileUpload("item.YingyezhizhaoTP", "yyzz", "z", "cus", 2, 0, new Dictionary<string, string>() { { "yyzz", "item.YingyezhizhaoTP" }, { "xktp", "item.Shengchanxuketp" } })
-
 <script type="text/javascript">
     $(document).ready(function () {
         $("tr").bind("dblclick", function () {
@@ -18,6 +15,30 @@
                 location.href = url_go;
             }
         });
+
+        var t = document.getElementsByClassName('yyzztp');
+
+        for (var i = 0; i < t.length; i++) {
+            if (t[i].href.length < 42) {
+                $(".yyzztp").eq(i).removeAttr("href")
+                $(".yyzztp").eq(i).html("暂无")
+            }
+            else {
+                $(".yyzztp").eq(i).html("浏览")
+            }
+        }
+
+        var t = document.getElementsByClassName('scxktp');
+
+        for (var i = 0; i < t.length; i++) {
+            if (t[i].href.length < 42) {
+                $(".scxktp").eq(i).removeAttr("href")
+                $(".scxktp").eq(i).html("暂无")
+            }
+            else {
+                $(".scxktp").eq(i).html("浏览")
+            }
+        }
     });
     function AddInfo() {
         location.href = "/base_shengchanqiye/Add";
@@ -77,12 +98,24 @@
             scm.ItemCode = "Daima";
             scm.ItemTitle = "代码";
             scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[0].Split(',')[1];
+                scm.ItemOpValue = scs[0].Split(',')[2];
+                scm.ItemJion = scs[0].Split(',')[3];
+            }
             scms.Add(scm);
 
             scm = new SearchConditionModel();
             scm.ItemCode = "Qiyemingcheng";
             scm.ItemTitle = "名称";
             scm.ItemType = "System.String";
+            //if (scs.Length > 1)
+            //{
+            //    scm.ItemValue = scs[1].Split(',')[1];
+            //    scm.ItemOpValue = scs[1].Split(',')[2];
+            //    scm.ItemJion = scs[1].Split(',')[3];
+            //}
             scms.Add(scm);
 
             scm = new SearchConditionModel();
@@ -91,18 +124,11 @@
             scm.ItemType = "System.String";
             scms.Add(scm);
 
-            if (scs.Length > 1)
-            {
-                scm.ItemValue = scs[0].Split(',')[1];
-                scm.ItemOpValue = scs[0].Split(',')[2];
-                scm.ItemJion = scs[0].Split(',')[3];
-            }
-
             //if (scs.Length > 1)
             //{
-            //    scm.ItemValue = scs[1].Split(',')[1];
-            //    scm.ItemOpValue = scs[1].Split(',')[2];
-            //    scm.ItemJion = scs[1].Split(',')[3];
+            //    scm.ItemValue = scs[2].Split(',')[1];
+            //    scm.ItemOpValue = scs[2].Split(',')[2];
+            //    scm.ItemJion = scs[2].Split(',')[3];
             //}
 
         }
@@ -171,10 +197,10 @@
                         <td>@item.Qiyemingcheng</td>
                         <td>@item.YingyezhizhaoBH</td>
                         <td>@item.YingyezhizhaoYXQ.ToString("yyyy-MM-dd")</td>
-                        <td><a href="/files/zhengzhao/@item.YingyezhizhaoTP" target="_blank">浏览</a></td>
+                        <td><a href="/files/zhengzhao/@item.YingyezhizhaoTP" target="_blank" class="yyzztp">浏览</a></td>
                         <td>@item.ShengchanxukeBH</td>
                         <td>@item.ShengchanxukeYXQ.ToString("yyyy-MM-dd")</td>
-                        <td><a href="/files/zhengzhao/@item.ShengchanxukeTP" target="_blank">浏览</a></td>
+                        <td><a href="/files/zhengzhao/@item.ShengchanxukeTP" target="_blank" class="scxktp">浏览</a></td>
                         @*<td>@item.Shouying</td>*@
                         <td>@Html.GetCommonValue_ID("首营状态", (int)item.Shouying)</td>
                         <td>@item.MakeDate.ToString("yyyy-MM-dd")</td>

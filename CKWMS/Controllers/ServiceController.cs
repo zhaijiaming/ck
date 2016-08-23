@@ -182,7 +182,7 @@ namespace CKWMS.Controllers
             {
                 return "Z";
             }
-            else return ("?");
+            else return ("");
         }
 
         #endregion

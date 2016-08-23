@@ -17,6 +17,8 @@ namespace CKWMS.Controllers
     public class base_gongyingshangController : Controller
     {
         private Ibase_gongyingshangService ob_base_gongyingshangservice = ServiceFactory.base_gongyingshangservice;
+        private Ibase_qixiemuluService ob_base_qixiemuluservice = ServiceFactory.base_qixiemuluservice;
+
 
 
 
@@ -27,7 +29,7 @@ namespace CKWMS.Controllers
         //    }
 
         //    public DbSet<base_gongyingshang> Gongyingshangs { get; set; }
-            
+
 
         //    protected override void OnModelCreating(DbModelBuilder modelBuilder)
         //    {
@@ -36,24 +38,29 @@ namespace CKWMS.Controllers
         //}
 
         //private GongyingshangContext db = new GongyingshangContext();
-
-        public ActionResult Index(string sortOrder,string page)
+        [OutputCache(Duration = 30)]
+        public ActionResult Index(/*string sortOrder,*/string page)
         {
             if (string.IsNullOrEmpty(page))
                 page = "1";
-            
-            string daima = Request["daima"] ?? "";
-            string daimaequal = Request["daimaequal"] ?? "";
-            string daimaand = Request["daimaand"] ?? "";
-            //string mingcheng = Request["mingcheng"] ?? "";
-            //string mingchengequal = Request["mingchengequal"] ?? "";
-            //string mingchengand = Request["mingchengand"] ?? "";
-            //string shouying = Request["shouying"] ?? "";
-            //string shouyingequal = Request["shouyingequal"] ?? "";
-            //string shouyingand = Request["shouyingand"] ?? "";
-
+            //Expression<Func<base_gongyingshang, bool>> where = PredicateExtensionses.True<base_gongyingshang>();
+            int userid = (int)Session["user_id"];
+            string pagetag = "base_gongyingshang_index";
             Expression<Func<base_gongyingshang, bool>> where = PredicateExtensionses.True<base_gongyingshang>();
-            if (!string.IsNullOrEmpty(daima))
+            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            if (sc != null)
+            {
+                string[] sclist = sc.ConditionInfo.Split(';');
+                foreach (string scl in sclist)
+                {
+                    string[] scld = scl.Split(',');
+                    switch (scld[0])
+                    {
+                        case "daima":
+                            string daima = scld[1];
+                            string daimaequal = scld[2];
+                            string daimaand = scld[3];
+                            if (!string.IsNullOrEmpty(daima))
             {
                 if (daimaequal.Equals("="))
                 {
@@ -70,11 +77,21 @@ namespace CKWMS.Controllers
                         where = where.Or(base_gongyingshang => base_gongyingshang.Daima.Contains(daima));
                 }
             }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                ViewBag.SearchCondition = sc.ConditionInfo;
+            }
 
             where = where.And(base_gongyingshang => base_gongyingshang.IsDelete == false);
 
             var tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), false, base_gongyingshang => base_gongyingshang.ID).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.base_gongyingshang = tempData;
+
+
+
             return View(tempData);
 
 
@@ -99,14 +116,189 @@ namespace CKWMS.Controllers
             //}
             //return View(gongyingshangs.ToList());
             
-
-
-
-
         }
 
-        public ActionResult Add()
+
+
+
+
+        [HttpPost]
+        [OutputCache(Duration = 30)]
+        public ActionResult Index()
         {
+            int userid = (int)Session["user_id"];
+            string pagetag = "base_gongyingshang_index";
+            string page = "1";
+            string daima = Request["daima"] ?? "";
+            string daimaequal = Request["daimaequal"] ?? "";
+            string daimaand = Request["daimaand"] ?? "";
+            string mingcheng = Request["mingcheng"] ?? "";
+            string mingchengequal = Request["mingchengequal"] ?? "";
+            string mingchengand = Request["mingchengand"] ?? "";
+            string shouying = Request["shouying"] ?? "";
+            string shouyingequal = Request["shouyingequal"] ?? "";
+            string shouyingand = Request["shouyingand"] ?? "";
+            Expression<Func<base_gongyingshang, bool>> where = PredicateExtensionses.True<base_gongyingshang>();
+            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            if (sc == null)
+            {
+                sc = new searchcondition();
+                sc.UserID = userid;
+                sc.PageBrief = pagetag;
+                if (!string.IsNullOrEmpty(daima))
+                {
+                    if (daimaequal.Equals("="))
+                    {
+                        if (daimaand.Equals("and"))
+                            where = where.And(base_gongyingshang => base_gongyingshang.Daima == daima);
+                        else
+                            where = where.Or(base_gongyingshang => base_gongyingshang.Daima == daima);
+                    }
+                    if (daimaequal.Equals("like"))
+                    {
+                        if (daimaand.Equals("and"))
+                            where = where.And(base_gongyingshang => base_gongyingshang.Daima.Contains(daima));
+                        else
+                            where = where.Or(base_gongyingshang => base_gongyingshang.Daima.Contains(daima));
+                    }
+                }
+                if (!string.IsNullOrEmpty(daima))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "daima", daima, daimaequal, daimaand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "daima", "", daimaequal, daimaand);
+
+                //name
+                if (!string.IsNullOrEmpty(mingcheng))
+                {
+                    if (mingchengequal.Equals("="))
+                    {
+                        if (mingchengand.Equals("and"))
+                            where = where.And(base_gongyingshang => base_gongyingshang.Mingcheng == mingcheng);
+                        else
+                            where = where.Or(base_gongyingshang => base_gongyingshang.Mingcheng == mingcheng);
+                    }
+                    if (mingchengequal.Equals("like"))
+                    {
+                        if (mingchengand.Equals("and"))
+                            where = where.And(base_gongyingshang => base_gongyingshang.Mingcheng.Contains(mingcheng));
+                        else
+                            where = where.Or(base_gongyingshang => base_gongyingshang.Mingcheng.Contains(mingcheng));
+                    }
+                }
+                if (!string.IsNullOrEmpty(mingcheng))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", mingcheng, mingchengequal, mingchengand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", "", mingchengequal, mingchengand);
+
+                if (!string.IsNullOrEmpty(shouying))
+                {
+                    if (shouyingequal.Equals("="))
+                    {
+                        if (shouyingand.Equals("and"))
+                            where = where.And(base_gongyingshang => MvcApplication.ShouYingZhuangTai[(int)base_gongyingshang.Shouying] == shouying);
+                        else
+                            where = where.Or(base_gongyingshang => MvcApplication.ShouYingZhuangTai[(int)base_gongyingshang.Shouying] == shouying);
+                    }
+                    if (shouyingequal.Equals("like"))
+                    {
+                        if (shouyingand.Equals("and"))
+                            where = where.And(base_gongyingshang => MvcApplication.ShouYingZhuangTai[(int)base_gongyingshang.Shouying].Contains(shouying));
+                        else
+                            where = where.Or(base_gongyingshang => MvcApplication.ShouYingZhuangTai[(int)base_gongyingshang.Shouying].Contains(shouying));
+                    }
+                }
+                if (!string.IsNullOrEmpty(shouying))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouying", shouying, shouyingequal, shouyingand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouying", "", shouyingequal, shouyingand);
+
+                searchconditionService.GetInstance().AddEntity(sc);
+            }
+            else
+            {
+                sc.ConditionInfo = "";
+                if (!string.IsNullOrEmpty(daima))
+                {
+                    if (daimaequal.Equals("="))
+                    {
+                        if (daimaand.Equals("and"))
+                            where = where.And(base_gongyingshang => base_gongyingshang.Daima == daima);
+                        else
+                            where = where.Or(base_gongyingshang => base_gongyingshang.Daima == daima);
+                    }
+                    if (daimaequal.Equals("like"))
+                    {
+                        if (daimaand.Equals("and"))
+                            where = where.And(base_gongyingshang => base_gongyingshang.Daima.Contains(daima));
+                        else
+                            where = where.Or(base_gongyingshang => base_gongyingshang.Daima.Contains(daima));
+                    }
+                }
+                if (!string.IsNullOrEmpty(daima))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "daima", daima, daimaequal, daimaand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "daima", "", daimaequal, daimaand);
+
+                //name
+                if (!string.IsNullOrEmpty(mingcheng))
+                {
+                    if (mingchengequal.Equals("="))
+                    {
+                        if (mingchengand.Equals("and"))
+                            where = where.And(base_gongyingshang => base_gongyingshang.Mingcheng == mingcheng);
+                        else
+                            where = where.Or(base_gongyingshang => base_gongyingshang.Mingcheng == mingcheng);
+                    }
+                    if (mingchengequal.Equals("like"))
+                    {
+                        if (mingchengand.Equals("and"))
+                            where = where.And(base_gongyingshang => base_gongyingshang.Mingcheng.Contains(mingcheng));
+                        else
+                            where = where.Or(base_gongyingshang => base_gongyingshang.Mingcheng.Contains(mingcheng));
+                    }
+                }
+                if (!string.IsNullOrEmpty(mingcheng))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", mingcheng, mingchengequal, mingchengand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", "", mingchengequal, mingchengand);
+
+                if (!string.IsNullOrEmpty(shouying))
+                {
+                    if (shouyingequal.Equals("="))
+                    {
+                        if (shouyingand.Equals("and"))
+                            where = where.And(base_gongyingshang => MvcApplication.ShouYingZhuangTai[(int)base_gongyingshang.Shouying] == shouying);
+                        else
+                            where = where.Or(base_gongyingshang => MvcApplication.ShouYingZhuangTai[(int)base_gongyingshang.Shouying] == shouying);
+                    }
+                    if (shouyingequal.Equals("like"))
+                    {
+                        if (shouyingand.Equals("and"))
+                            where = where.And(base_gongyingshang => MvcApplication.ShouYingZhuangTai[(int)base_gongyingshang.Shouying].Contains(shouying));
+                        else
+                            where = where.Or(base_gongyingshang => MvcApplication.ShouYingZhuangTai[(int)base_gongyingshang.Shouying].Contains(shouying));
+                    }
+                }
+                if (!string.IsNullOrEmpty(shouying))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouying", shouying, shouyingequal, shouyingand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouying", "", shouyingequal, shouyingand);
+
+                searchconditionService.GetInstance().UpdateEntity(sc);
+            }
+            ViewBag.SearchCondition = sc.ConditionInfo;
+            where = where.And(base_gongyingshang => base_gongyingshang.IsDelete == false);
+
+            var tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), false, base_gongyingshang => base_gongyingshang.ID).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            ViewBag.base_gongyingshang = tempData;
+
+            
+            return View(tempData);
+        }
+
+        public ActionResult Add(string page)
+        {
+           
             ViewBag.userid = (int)Session["user_id"];
             return View();
         }

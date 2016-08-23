@@ -13,6 +13,14 @@ using CKWMS.Filters;
 
 namespace CKWMS.Controllers
 {
+    public class QiXieMuLu
+    {
+        public int ID { get; set; } 
+        public string Bianhao { get; set; }      
+        public string Mingcheng { get; set; }     
+        public string Miaoshu { get; set; }                    
+        public int? GuanliFL { get; set; }
+    }
     public class base_qixiemuluController : Controller
     {
         private Ibase_qixiemuluService ob_base_qixiemuluservice = ServiceFactory.base_qixiemuluservice;
@@ -262,6 +270,39 @@ namespace CKWMS.Controllers
                 }
             }
             return RedirectToAction("Index");
+        }
+
+
+        public JsonResult GetDetail()
+        {
+            int _userid = (int)Session["user_id"];
+            string _username = (string)Session["user_name"];
+            string _qxmlid = Request["qxml"] ?? "";
+            IList<QiXieMuLu> _jingyingfanweis;
+            if (_qxmlid == "")
+                return Json("");
+            else
+            {
+                _jingyingfanweis = new List<QiXieMuLu>();
+                var tempdata = ob_base_qixiemuluservice.LoadSortEntities(p => p.IsDelete == false && p.Bianhao == _qxmlid, false, p => p.Mingcheng);
+                //_guiges = tempdata.ToList<ob_base_qixiemulu>();
+                foreach (base_qixiemulu _qxmlfw in tempdata)
+                {
+                    if (_qxmlfw.ID > 0)
+                    {
+                        QiXieMuLu _jingyingfanwei = new QiXieMuLu();
+                        _jingyingfanwei.ID = _qxmlfw.ID;
+                        _jingyingfanwei.Bianhao = _qxmlfw.Bianhao;
+                        _jingyingfanwei.Mingcheng = _qxmlfw.Mingcheng;
+                        _jingyingfanwei.Miaoshu = _qxmlfw.Miaoshu;
+                        _jingyingfanwei.GuanliFL = _qxmlfw.GuanliFL;
+                        //userinfo _user = ServiceFactory.userinfoservice.GetEntityById(p => p.ID == _zczgg.MakeMan);
+                        //_guige.Makeman = _user.FullName;
+                        _jingyingfanweis.Add(_jingyingfanwei);
+                    }
+                }
+            }
+            return Json(_jingyingfanweis);
         }
     }
 }

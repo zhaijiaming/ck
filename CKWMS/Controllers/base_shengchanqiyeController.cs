@@ -10,7 +10,7 @@ using CKWMS.BSL;
 using CKWMS.Common;
 using CKWMS.Models;
 using CKWMS.Filters;
-using CKWMS;
+
 
 
 namespace CKWMS.Controllers
@@ -132,6 +132,9 @@ namespace CKWMS.Controllers
                 }
                 if (!string.IsNullOrEmpty(daima))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "daima", daima, daimaequal, daimaand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "daima", "", daimaequal, daimaand);
+
                 //name
                 if (!string.IsNullOrEmpty(qiyemingcheng))
                 {
@@ -152,6 +155,9 @@ namespace CKWMS.Controllers
                 }
                 if (!string.IsNullOrEmpty(qiyemingcheng))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "qiyemingcheng", qiyemingcheng, qiyemingchengequal, qiyemingchengand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "qiyemingcheng", "", qiyemingchengequal, qiyemingchengand);
+
                 if (!string.IsNullOrEmpty(shouying))
                 {
                     if (shouyingequal.Equals("="))
@@ -171,6 +177,8 @@ namespace CKWMS.Controllers
                 }
                 if (!string.IsNullOrEmpty(shouying))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouying", shouying, shouyingequal, shouyingand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouying", "", shouyingequal, shouyingand);
 
                 searchconditionService.GetInstance().AddEntity(sc);
             }
@@ -196,6 +204,9 @@ namespace CKWMS.Controllers
                 }
                 if (!string.IsNullOrEmpty(daima))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "daima", daima, daimaequal, daimaand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "daima", "", daimaequal, daimaand);
+
                 //name
                 if (!string.IsNullOrEmpty(qiyemingcheng))
                 {
@@ -216,6 +227,8 @@ namespace CKWMS.Controllers
                 }
                 if (!string.IsNullOrEmpty(qiyemingcheng))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "qiyemingcheng", qiyemingcheng, qiyemingchengequal, qiyemingchengand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "qiyemingcheng", "", qiyemingchengequal, qiyemingchengand);
 
                 if (!string.IsNullOrEmpty(shouying))
                 {
@@ -236,6 +249,8 @@ namespace CKWMS.Controllers
                 }
                 if (!string.IsNullOrEmpty(shouying))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouying", shouying, shouyingequal, shouyingand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouying", "", shouyingequal, shouyingand);
 
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }

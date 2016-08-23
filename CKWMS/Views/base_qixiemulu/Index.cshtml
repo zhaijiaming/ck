@@ -91,7 +91,7 @@
         </p>
     </div>
     <div class="row">
-        <table class="table" id="mydatatable">
+        <table class="table" style="width:1390px;height:500px;overflow:scroll" id="mydatatable">
             <caption></caption>
             <thead>
                 <tr>
@@ -115,10 +115,12 @@
                         </td>
                         <td>@item.Bianhao</td>
                         <td>@item.Mingcheng</td>
-                        <td>@item.Miaoshu</td>
-                        <td>@item.MakeDate</td>
-                        <td>@item.MakeMan</td>
-                        <td>@item.GuanliFL</td>
+                        <td>@item.Miaoshu</td>                        
+                        <td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
+                        @*<td>@item.MakeMan</td>*@
+                        <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
+                        @*<td>@item.GuanliFL</td>*@
+                        <td>@Html.GetCommonValue_ID("医疗器械管理类别",(int)item.GuanliFL)</td>
                     </tr>
                 }
             </tbody>

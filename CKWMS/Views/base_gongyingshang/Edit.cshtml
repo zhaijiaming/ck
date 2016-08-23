@@ -7,64 +7,67 @@
     ViewBag.Title = "供应商修改";
     base_gongyingshang item = ViewBag.base_gongyingshang;
 }
+
+@Html.GetFileUpload("ob_base_gongyingshang_yingyezhizhaotp", "zztp", "z", "gys", 2, 0, new Dictionary<string, string>() { { "zztp", "ob_base_gongyingshang_yingyezhizhaotp" }, { "yxtp", "ob_base_gongyingshang_jingyingxuketp" } })
+
 <script type="text/javascript">
-    function doUpload() {
-        var formData = new FormData($("#uploadForm")[0]);
-        var strBack = "";
-        var strWrite = "";
-        var strSel = $("#btnSelect").val();
-        $.ajax({
-            url: 'http://localhost:6446/upload/UploadOK',
-            type: 'POST',
-            data: formData,
-            async: false,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function (returndata) {
-                strBack = returndata;
-            },
-            error: function (returndata) {
-                strBack = "fail";
-            }
-        });
-        switch (strBack) {
-            case "0":
-                strWrite = "无传送值，上传失败！";
-                break;
-            case "1":
-                strWrite = "空文件，上传失败！";
-                break;
-            case "2":
-                strWrite = "错误，上传失败！";
-                break;
-            case "3":
-                strWrite = "文件尺寸超过4M，上传失败！";
-                break;
-            case "fail":
-                strWrite = "文件太大，上传失败！";
-                break;
-            default:
-                strWrite = "文件上传成功！";
-                break;
-        }
-        switch (strSel) {
-            case "picsel1":
-                $("#ob_base_gongyingshang_yingyezhizhaotp").val(strBack);
-                $("#zztp").html("<a href='/files/zhengzhao/" + strBack + "'  target='_blank'>浏览</a>");
-                break;
-            case "picsel2":
-                $("#ob_base_gongyingshang_jingyingxuketp").val(strBack);
-                $("#yxtp").html("<a href='/files/zhengzhao/" + strBack + "'  target='_blank'>浏览</a>");
-                break;
-            case "":
-            default:
-                $("#ob_base_gongyingshang_yingyezhizhaotp").val(strBack);
-                $("#zztp").html("<a href='/files/zhengzhao/" + strBack + "'  target='_blank'>浏览</a>");
-                break;
-        }
-        alert(strWrite);
-    }
+    //function doUpload() {
+    //    var formData = new FormData($("#uploadForm")[0]);
+    //    var strBack = "";
+    //    var strWrite = "";
+    //    var strSel = $("#btnSelect").val();
+    //    $.ajax({
+    //        url: 'http://localhost:6446/upload/UploadOK',
+    //        type: 'POST',
+    //        data: formData,
+    //        async: false,
+    //        cache: false,
+    //        contentType: false,
+    //        processData: false,
+    //        success: function (returndata) {
+    //            strBack = returndata;
+    //        },
+    //        error: function (returndata) {
+    //            strBack = "fail";
+    //        }
+    //    });
+    //    switch (strBack) {
+    //        case "0":
+    //            strWrite = "无传送值，上传失败！";
+    //            break;
+    //        case "1":
+    //            strWrite = "空文件，上传失败！";
+    //            break;
+    //        case "2":
+    //            strWrite = "错误，上传失败！";
+    //            break;
+    //        case "3":
+    //            strWrite = "文件尺寸超过4M，上传失败！";
+    //            break;
+    //        case "fail":
+    //            strWrite = "文件太大，上传失败！";
+    //            break;
+    //        default:
+    //            strWrite = "文件上传成功！";
+    //            break;
+    //    }
+    //    switch (strSel) {
+    //        case "picsel1":
+    //            $("#ob_base_gongyingshang_yingyezhizhaotp").val(strBack);
+    //            $("#zztp").html("<a href='/files/zhengzhao/" + strBack + "'  target='_blank'>浏览</a>");
+    //            break;
+    //        case "picsel2":
+    //            $("#ob_base_gongyingshang_jingyingxuketp").val(strBack);
+    //            $("#yxtp").html("<a href='/files/zhengzhao/" + strBack + "'  target='_blank'>浏览</a>");
+    //            break;
+    //        case "":
+    //        default:
+    //            $("#ob_base_gongyingshang_yingyezhizhaotp").val(strBack);
+    //            $("#zztp").html("<a href='/files/zhengzhao/" + strBack + "'  target='_blank'>浏览</a>");
+    //            break;
+    //    }
+    //    alert(strWrite);
+    //}
     function bt1() {
         $("#btnSelect").val("picsel1");
     }
