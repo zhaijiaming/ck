@@ -163,7 +163,25 @@ namespace CKWMS.Controllers
             ViewBag.wms_rukumx = tempData;
             return View(tempData);
         }
-
+        public JsonResult GetCargoDetail()
+        {
+            string _rkuid = Request["rkd"] ?? "";
+            if (_rkuid.Length == 0)
+                return Json("");
+            else
+            {
+                var _mxtmp = ob_wms_rukumxservice.LoadSortEntities(p => p.RukuID == int.Parse(_rkuid), true, s => s.ShangpinMC);
+                List<wms_rukumx> _mxlist = new List<wms_rukumx>();
+                wms_rukumx _mx;
+                foreach (var rkmx in _mxlist)
+                {
+                    _mx = new wms_rukumx();
+                    _mx = rkmx;
+                    _mxlist.Add(_mx);
+                }
+                return Json(_mxlist);
+            }
+        }
         public ActionResult Add()
         {
             ViewBag.userid = (int)Session["user_id"];

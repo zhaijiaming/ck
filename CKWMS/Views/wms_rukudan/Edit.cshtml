@@ -11,6 +11,13 @@
         var _showcargo = false;
         $(document).ready(function () {
             _showcargo = false;
+            $("#pl_cargo_add").hide();
+            $("#bt_cargoAdd").click(function () {
+                $("#pl_cargo_add").show();
+            });
+            $("#pl_add_close").click(function () {
+                $("#pl_cargo_add").hide();
+            });
             $("#incargos").hide();
             $("#bt_cargoshow").click(function () {
                 if (_showcargo) {
@@ -24,9 +31,78 @@
                     _showcargo = true;
                     $("#bt_cargoshow").text("关闭列表");
                     $("#rukudan").css("height", "150px");
+                    var rkd = $("#rkdid").val();
+                    if (rkd.length > 0)
+                        getCargos(rkd);
                 }
             });
         });
+        function getCargos(rkd) {
+            var rkdetail = "";
+            $.post(
+                "/wms_rukumx/getcargodetail",
+                { rkd: rkd },
+                function (data) {
+                    if (data.length > 0) {
+                        for (var i in data) {
+                            rkdetail = rkdetail + '<tr><td><div class="checkbox"><label><input type="checkbox" value="';
+                            rkdetail = rkdetail + data[i].ID;
+                            rkdetail = rkdetail + '" data-rkd="';
+                            rkdetail = rkdetail + data[i].RukuID;
+                            rkdetail = rkdetail + '" data-sp="';
+                            rkdetail = rkdetail + data[i].ShangpinID;
+                            rkdetail = rkdetail + '"></label></div></td>';
+                            rkdetail = rkdetail + '<td>';
+                            rkdetail = rkdetail + data[i].ShangpinMC;
+                            rkdetail = rkdetail + '</td><td>';
+                            rkdetail = rkdetail + data[i].Zhucezheng;
+                            rkdetail = rkdetail + '</td><td>';
+                            rkdetail = rkdetail + data[i].Guige;
+                            rkdetail = rkdetail + '</td><td>';
+                            rkdetail = rkdetail + data[i].Pihao;
+                            rkdetail = rkdetail + '</td><td>';
+                            rkdetail = rkdetail + data[i].Pihao1;
+                            rkdetail = rkdetail + '</td><td>';
+                            rkdetail = rkdetail + data[i].Xuliema;
+                            rkdetail = rkdetail + '</td><td>';
+                            rkdetail = rkdetail + data[i].ShengchanRQ;
+                            rkdetail = rkdetail + '</td><td>';
+                            rkdetail = rkdetail + data[i].ShixiaoRQ;
+                            rkdetail = rkdetail + '</td><td>';
+                            rkdetail = rkdetail + data[i].DaohuoSL;
+                            rkdetail = rkdetail + '</td><td>';
+                            rkdetail = rkdetail + data[i].YishouSL;
+                            rkdetail = rkdetail + '</td><td>';
+                            rkdetail = rkdetail + data[i].JibenDW;
+                            rkdetail = rkdetail + '</td><td>';
+                            rkdetail = rkdetail + data[i].BaozhuangDW;
+                            rkdetail = rkdetail + '</td><td>';
+                            rkdetail = rkdetail + data[i].Huansuanlv;
+                            rkdetail = rkdetail + '</td><td>';
+                            rkdetail = rkdetail + data[i].Changjia;
+                            rkdetail = rkdetail + '</td><td>';
+                            rkdetail = rkdetail + data[i].Chandi;
+                            rkdetail = rkdetail + '</td><td>';
+                            rkdetail = rkdetail + data[i].ShangpinTM;
+                            rkdetail = rkdetail + '</td><td>';
+                            rkdetail = rkdetail + data[i].Zhongliang;
+                            rkdetail = rkdetail + '</td><td>';
+                            rkdetail = rkdetail + data[i].Jingzhong;
+                            rkdetail = rkdetail + '</td><td>';
+                            rkdetail = rkdetail + data[i].Tiji;
+                            rkdetail = rkdetail + '</td><td>';
+                            rkdetail = rkdetail + data[i].Jifeidun;
+                            rkdetail = rkdetail + '</td><td>';
+                            rkdetail = rkdetail + data[i].Beizhu;
+                            rkdetail = rkdetail + '</td></tr>';
+                        }
+                        $("#incargos tbody").html(rkdetail);
+                    }
+                    else
+                        alert(data);
+                }
+                );
+        }
     </script>
     <ul class="breadcrumb">
         <li>
@@ -43,177 +119,177 @@
 <div class="page-content">
     @using (Html.BeginForm("Update", "wms_rukudan", FormMethod.Post, new { @role = "form" }))
     {
-    @Html.AntiForgeryToken()
-    <input type="hidden" name="id" value="@ViewData.Model.ID" />
-    <div class="page-header">
-        <p>
-            <button type="submit" class="btn btn-default"><i class="icon-save"></i>更新</button>
-            <button type="button" class="btn btn-default" onclick="javascript: history.back(-1); "><i class="icon-hand-left"></i>返回</button>
-            <span class="pull-right">
-                <button type="button" id="bt_cargoshow" class="btn btn-default"><i class="icon-share"></i>显示货品</button>
-                <button type="button" id="bt_cargoAdd" class="btn btn-default"><i class="icon-adn"></i>货品添加</button>
-                <button type="button" id="bt_cargoDel" class="btn btn-default"><i class="icon-remove"></i>货品删除</button>
-            </span>
-        </p>
-    </div>
-    <div id="rukudan" class="container" style="overflow:auto;">
-        <div class="container">
-            <div class="form-group">
-                @Html.LabelFor(m => m.RukudanBH, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.RukudanBH, new { @class = "form-control" })
+        @Html.AntiForgeryToken()
+        <input type="hidden" id="rkdid" name="id" value="@ViewData.Model.ID" />
+        <div class="page-header">
+            <p>
+                <button type="submit" class="btn btn-default"><i class="icon-save"></i>更新</button>
+                <button type="button" class="btn btn-default" onclick="javascript: history.back(-1); "><i class="icon-hand-left"></i>返回</button>
+                <span class="pull-right">
+                    <button type="button" id="bt_cargoshow" class="btn btn-default"><i class="icon-share"></i>显示货品</button>
+                    <button type="button" id="bt_cargoAdd" class="btn btn-default"><i class="icon-adn"></i>货品添加</button>
+                    <button type="button" id="bt_cargoDel" class="btn btn-default"><i class="icon-remove"></i>货品删除</button>
+                </span>
+            </p>
+        </div>
+        <div id="rukudan" class="container" style="overflow:auto;">
+            <div class="container">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.RukudanBH, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.RukudanBH, new { @class = "form-control" })
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.HuozhuID, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @*@Html.TextBoxFor(m => m.HuozhuID, new { @class = "form-control" })*@
-                    @Html.SelectList_Auto("HuozhuID", "货主", "都有", (long)Model.HuozhuID)
+                <div class="form-group">
+                    @Html.LabelFor(m => m.HuozhuID, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @*@Html.TextBoxFor(m => m.HuozhuID, new { @class = "form-control" })*@
+                        @Html.SelectList_Auto("HuozhuID", "货主", "都有", (long)Model.HuozhuID)
+                    </div>
                 </div>
-            </div>
-            @*<div class="form-group">
-                @Html.LabelFor(m => m.JihuaID, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.JihuaID, new { @class = "form-control" })
+                @*<div class="form-group">
+                        @Html.LabelFor(m => m.JihuaID, new { @class = "control-label col-sm-2" })
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(m => m.JihuaID, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.XinxiLY, new { @class = "control-label col-sm-2" })
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(m => m.XinxiLY, new { @class = "form-control" })
+                        </div>
+                    </div>*@
+                <div class="form-group">
+                    @Html.LabelFor(m => m.GongyingshangID, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @*@Html.TextBoxFor(m => m.GongyingshangID, new { @class = "form-control" })*@
+                        @Html.SelectList_Auto("GongyingshangID", "供应商", "名称", (long)ViewData.Model.GongyingshangID)
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.XinxiLY, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.XinxiLY, new { @class = "form-control" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Fahuodizhi, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.Fahuodizhi, new { @class = "form-control" })
+                    </div>
                 </div>
-            </div>*@
-            <div class="form-group">
-                @Html.LabelFor(m => m.GongyingshangID, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @*@Html.TextBoxFor(m => m.GongyingshangID, new { @class = "form-control" })*@
-                    @Html.SelectList_Auto("GongyingshangID", "供应商", "名称", (long)ViewData.Model.GongyingshangID)
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Yunsongdizhi, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.Yunsongdizhi, new { @class = "form-control" })
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Fahuodizhi, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Fahuodizhi, new { @class = "form-control" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.RukuRQ, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        <input type="date" class="form-control" name="RukuRQ" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.RukuRQ)">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Yunsongdizhi, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Yunsongdizhi, new { @class = "form-control" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.YewuLX, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @*@Html.TextBoxFor(m => m.YewuLX, new { @class = "form-control" })*@
+                        @Html.SelectList_Common("YewuLX", "入库类型", (long)ViewData.Model.YewuLX)
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.RukuRQ, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    <input type="date" class="form-control" name="RukuRQ" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.RukuRQ)">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.BaoshuiSF, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @*@Html.TextBoxFor(m => m.BaoshuiSF, new { @class = "form-control" })*@
+                        @*@Html.SelectList_Common("BaoshuiSF","是否",(long)(ViewData.Model.BaoshuiSF==true?1:2))*@
+                        @Html.CheckBoxFor(m => m.BaoshuiSF, new { @class = "form-control" })
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.YewuLX, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @*@Html.TextBoxFor(m => m.YewuLX, new { @class = "form-control" })*@
-                    @Html.SelectList_Common("YewuLX", "入库类型", (long)ViewData.Model.YewuLX)
+                <div class="form-group">
+                    @Html.LabelFor(m => m.JianguanSF, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.CheckBoxFor(m => m.JianguanSF, new { @class = "form-control" })
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.BaoshuiSF, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @*@Html.TextBoxFor(m => m.BaoshuiSF, new { @class = "form-control" })*@
-                    @*@Html.SelectList_Common("BaoshuiSF","是否",(long)(ViewData.Model.BaoshuiSF==true?1:2))*@
-                    @Html.CheckBoxFor(m => m.BaoshuiSF,new {@class="form-control"} )
+                <div class="form-group">
+                    @Html.LabelFor(m => m.YanshouSF, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.CheckBoxFor(m => m.YanshouSF, new { @class = "form-control" })
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.JianguanSF, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.CheckBoxFor(m => m.JianguanSF, new { @class = "form-control" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ChunyunYQ, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.ChunyunYQ, new { @class = "form-control" })
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.YanshouSF, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.CheckBoxFor(m => m.YanshouSF, new { @class = "form-control" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.KehuDH, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.KehuDH, new { @class = "form-control" })
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.ChunyunYQ, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.ChunyunYQ, new { @class = "form-control" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.KefuID, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @*@Html.TextBoxFor(m => m.KefuID, new { @class = "form-control" })*@
+                        @Html.SelectList_Auto("KefuID", "userinfo", "全名", (long)ViewData.Model.KefuID)
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.KehuDH, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.KehuDH, new { @class = "form-control" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Lianxiren, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.Lianxiren, new { @class = "form-control" })
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.KefuID, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @*@Html.TextBoxFor(m => m.KefuID, new { @class = "form-control" })*@
-                    @Html.SelectList_Auto("KefuID","userinfo","全名",(long)ViewData.Model.KefuID )
+                <div class="form-group">
+                    @Html.LabelFor(m => m.LianxiDH, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.LianxiDH, new { @class = "form-control" })
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Lianxiren, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Lianxiren, new { @class = "form-control" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.RukuTM, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.RukuTM, new { @class = "form-control" })
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.LianxiDH, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.LianxiDH, new { @class = "form-control" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.RukuZT, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @*@Html.TextBoxFor(m => m.RukuZT, new { @class = "form-control" })*@
+                        @Html.SelectList_Common("RukuZT", "入库状态", (long)Model.RukuZT)
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.RukuTM, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.RukuTM, new { @class = "form-control" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.DuifangQY, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.DuifangQY, new { @class = "form-control" })
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.RukuZT, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @*@Html.TextBoxFor(m => m.RukuZT, new { @class = "form-control" })*@
-                    @Html.SelectList_Common("RukuZT","入库状态",(long)Model.RukuZT )
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Shouhuoren, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @*@Html.TextBoxFor(m => m.Shouhuoren, new { @class = "form-control" })*@
+                        @Html.SelectList_Auto("Shouhuoren", "userinfo", "全名", (long)Model.Shouhuoren)
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.DuifangQY, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.DuifangQY, new { @class = "form-control" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Beizhu, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.Beizhu, new { @class = "form-control" })
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Shouhuoren, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @*@Html.TextBoxFor(m => m.Shouhuoren, new { @class = "form-control" })*@
-                    @Html.SelectList_Auto("Shouhuoren","userinfo","全名",(long)Model.Shouhuoren)
+                <div class="form-group">
+                    @Html.LabelFor(m => m.MakeDate, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        <input type="date" class="form-control" name="MakeDate" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.MakeDate)">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Beizhu, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Beizhu, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.MakeDate, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    <input type="date" class="form-control" name="MakeDate" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.MakeDate)">
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.MakeMan, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.SelectList_Auto("MakeMan", "userinfo", "fullname", (long)ViewData.Model.MakeMan)
+                <div class="form-group">
+                    @Html.LabelFor(m => m.MakeMan, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.SelectList_Auto("MakeMan", "userinfo", "fullname", (long)ViewData.Model.MakeMan)
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     }
-    <div id="incargos" class="container" style="height:360px;overflow:auto;">
+    <div id="incargos" class="container" style="height:360px;overflow:auto;display:none;">
         <table class="table" id="mydatatable">
             <caption></caption>
             <thead>
@@ -245,37 +321,193 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>
-                        <div class="checkbox">
-                            <label><input type="checkbox" value="id" data-rkd="RukuID" data-spy="ShangpinID"></label>
-                        </div>
-                    </td>
-                    <td>"ShangpinMC"</td>
-                    <td>"Zhucezheng"</td>
-                    <td>"Guige"</td>
-                    <td>"Pihao"</td>
-                    <td>"Pihao1"</td>
-                    <td>"Xuliema"</td>
-                    <td>"ShengchanRQ"</td>
-                    <td>"ShixiaoRQ"</td>
-                    <td>"DaohuoSL"</td>
-                    <td>"YishouSL"</td>
-                    <td>"JibenDW"</td>
-                    <td>"BaozhuangDW"</td>
-                    <td>"Huansuanlv"</td>
-                    <td>"Changjia"</td>
-                    <td>"Chandi"</td>
-                    <td>"ShangpinTM"</td>
-                    <td>"Zhongliang"</td>
-                    <td>"Jingzhong"</td>
-                    <td>"Tiji"</td>
-                    <td>"Jifeidun"</td>
-                    <td>"Beizhu"</td>
-                    <td>"MakeDate"</td>
-                    <td>"MakeMan"</td>
-                </tr>
+                @*<tr>
+                        <td>
+                            <div class="checkbox">
+                                <label><input type="checkbox" value="id" data-rkd="RukuID" data-spy="ShangpinID"></label>
+                            </div>
+                        </td>
+                        <td>"ShangpinMC"</td>
+                        <td>"Zhucezheng"</td>
+                        <td>"Guige"</td>
+                        <td>"Pihao"</td>
+                        <td>"Pihao1"</td>
+                        <td>"Xuliema"</td>
+                        <td>"ShengchanRQ"</td>
+                        <td>"ShixiaoRQ"</td>
+                        <td>"DaohuoSL"</td>
+                        <td>"YishouSL"</td>
+                        <td>"JibenDW"</td>
+                        <td>"BaozhuangDW"</td>
+                        <td>"Huansuanlv"</td>
+                        <td>"Changjia"</td>
+                        <td>"Chandi"</td>
+                        <td>"ShangpinTM"</td>
+                        <td>"Zhongliang"</td>
+                        <td>"Jingzhong"</td>
+                        <td>"Tiji"</td>
+                        <td>"Jifeidun"</td>
+                        <td>"Beizhu"</td>
+                        <td>"MakeDate"</td>
+                        <td>"MakeMan"</td>
+                    </tr>*@
             </tbody>
         </table>
+    </div>
+</div>
+<div id="pl_cargo_add" class="panel panel-primary" style="display:none;position:absolute;top:100px;left:200px;width:800px;height:500px;z-index:999;overflow:hidden">
+    <div class="panel-heading">
+        <h3 class="panel-title">货品添加<button id="pl_add_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+            <div class="col-sm-6">
+                <p id="bt_add_saveclose" class="btn btn-default">保存并关闭</p>
+            </div>
+            <div class="col-sm-6">
+                <p id="bt_add_savego" class="btn btn-default">保存后继续</p>
+            </div>
+        </div>
+        <div class="container" style="width:780px;height:400px;overflow:auto">
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="ShangpinMC">商品名称</label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="ShangpinMC" name="ShangpinMC" type="text" value="" />
+                    @*@Html.SelectList_Auto("ShangpinMC","","")*@
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="Zhucezheng">注册证</label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="Zhucezheng" name="Zhucezheng" type="text" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="Guige">规格型号</label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="Guige" name="Guige" type="text" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="Pihao">批号</label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="Pihao" name="Pihao" type="text" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="Pihao1">次批号</label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="Pihao1" name="Pihao1" type="text" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="Xuliema">序列码</label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="Xuliema" name="Xuliema" type="text" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="ShengchanRQ">生产日期</label>
+                <div class="col-sm-10">
+                    <input type="date" class="form-control" value="2016-08-23" name="ShengchanRQ">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="ShixiaoRQ">失效日期</label>
+                <div class="col-sm-10">
+                    <input type="date" class="form-control" value="2016-08-23" name="ShixiaoRQ">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="DaohuoSL">到货数量</label>
+                <div class="col-sm-10">
+                    <input class="form-control" data-val="true" data-val-number="字段 到货数量 必须是一个数字。" id="DaohuoSL" name="DaohuoSL" type="text" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="YishouSL">已收数量</label>
+                <div class="col-sm-10">
+                    <input class="form-control" data-val="true" data-val-number="字段 已收数量 必须是一个数字。" id="YishouSL" name="YishouSL" type="text" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="JibenDW">基本单位</label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="JibenDW" name="JibenDW" type="text" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="BaozhuangDW">包装单位</label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="BaozhuangDW" name="BaozhuangDW" type="text" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="Huansuanlv">换算率</label>
+                <div class="col-sm-10">
+                    <input class="form-control" data-val="true" data-val-number="字段 换算率 必须是一个数字。" id="Huansuanlv" name="Huansuanlv" type="text" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="Changjia">厂家</label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="Changjia" name="Changjia" type="text" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="Chandi">产地</label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="Chandi" name="Chandi" type="text" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="ShangpinTM">商品条码</label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="ShangpinTM" name="ShangpinTM" type="text" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="Zhongliang">重量</label>
+                <div class="col-sm-10">
+                    <input class="form-control" data-val="true" data-val-number="字段 重量 必须是一个数字。" id="Zhongliang" name="Zhongliang" type="text" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="Jingzhong">净重</label>
+                <div class="col-sm-10">
+                    <input class="form-control" data-val="true" data-val-number="字段 净重 必须是一个数字。" id="Jingzhong" name="Jingzhong" type="text" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="Tiji">体积</label>
+                <div class="col-sm-10">
+                    <input class="form-control" data-val="true" data-val-number="字段 体积 必须是一个数字。" id="Tiji" name="Tiji" type="text" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="Jifeidun">计费吨</label>
+                <div class="col-sm-10">
+                    <input class="form-control" data-val="true" data-val-number="字段 计费吨 必须是一个数字。" id="Jifeidun" name="Jifeidun" type="text" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="Beizhu">备注</label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="Beizhu" name="Beizhu" type="text" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="MakeDate">制单日期</label>
+                <div class="col-sm-10">
+                    <input type="date" class="form-control" value="2016-08-23" name="MakeDate">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="MakeMan">制单人</label>
+                <div class="col-sm-10">
+                    @Html.SelectList_Auto("MakeMan", "userinfo", "fullname", (long)ViewData.Model.MakeMan)
+                </div>
+            </div>
+        </div>
     </div>
 </div>
