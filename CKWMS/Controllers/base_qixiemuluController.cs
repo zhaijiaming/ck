@@ -162,6 +162,7 @@ namespace CKWMS.Controllers
                 _qx.Bianhao = qx.Bianhao;
                 _qx.Mingcheng = qx.Mingcheng;
                 _qx.Miaoshu = qx.Miaoshu;
+                _qx.GuanliFL = qx.GuanliFL;
                 _qxlist.Add(_qx);
             }
             return Json(_qxlist);

@@ -31,18 +31,51 @@
             rules: {
                 ob_base_gongyingshang_daima: { required: true },
                 ob_base_gongyingshang_mingcheng: { required: true },
-                
+
             },
 
             messages: {
                 ob_base_gongyingshang_daima: { required: "请输入daima" },
                 ob_base_gongyingshang_mingcheng: { required: "请输入mingcheng" },
-                
+
             }
         });
+
+        $("#bt_fanwei_add").click(function () {
+
+            var _jyfw = "";
+            var _jyfwjm = "";
+
+            var t = document.getElementsByClassName('checkbox');
+
+
+
+            //_jyfw = $(".bh").eq(4).html();
+            
+
+            $("#qxdatatable tr input[type=checkbox]").each(function () {
+                if (this.checked) {
+                    alert($(this).val());
+                    alert($(this).parent().parent().find("span .bh").val());
+                    _jyfw = _jyfw + $(this).parent().parent().find(".bh").text() + "," + $(this).parent().parent().find(".mc").text() + ";";
+                    _jyfwjm = _jyfwjm + $(this).parent().parent().find(".bh").text() + ";";
+                }
+            });
+            
+            var _addok = confirm("确定要添加这些规格吗？");
+            if (_addok) {
+
+                $("#jingyingfanwei").val(_jyfw);
+                $("#jingyingfanweijianma").val(_jyfwjm);
+         
+            }
+            $("#pl_Fanwei").hide();
+            
+        });
+
     });
 
-    
+
 
     function GetSpell() {
         $.post("/Service/GetSpellCode",
@@ -54,33 +87,33 @@
         });
     }
 
-    
+
 
 
     function GetFanwei() {
-        var _qxmlid = $("#qxml").val();
+        //var _qxmlid = $("#qxml").val();
         var filltable = "";
 
         $.post(
-                "/base_qixiemulu/getdetail",
+                "/base_qixiemulu/GetQixiemulu",
                 {
-                    qxml: _qxmlid
+                    //qxml: _qxmlid
                 },
                 function (data) {
                     for (var i in data) {
                         filltable = filltable + '<tr><td><div class="checkbox"><label><input type="checkbox" value="';
                         filltable = filltable + data[i].ID;
-                        filltable = filltable + '"></label></div></td><td>';
+                        filltable = filltable + '"></label></div></td><td><span class="bh">';
                         filltable = filltable + data[i].Bianhao;
-                        filltable = filltable + '</td><td>';
+                        filltable = filltable + '</span></td><td><span class="mc">';
                         filltable = filltable + data[i].Mingcheng;
-                        filltable = filltable + '</td><td>';
+                        filltable = filltable + '</span></td><td>';
                         filltable = filltable + data[i].Miaoshu;
                         filltable = filltable + '</td><td>';
                         filltable = filltable + data[i].GuanliFL;
                         filltable = filltable + '</td></tr>';
                     }
-                    $("#pl_fanwei_add tbody").html(filltable);
+                    $("#pl_Fanwei tbody").html(filltable);
                 });
 
     }
@@ -124,7 +157,7 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>代码</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" onblur="validate()" data-val="true" data-val-required="UserName 字段是必需的。" id = "daima" name="ob_base_gongyingshang_daima"  >
+                    <input type="text" class="form-control" onblur="validate()" data-val="true" data-val-required="UserName 字段是必需的。" id="daima" name="ob_base_gongyingshang_daima">
                     @*@Html.TextBoxFor(m => m.Daima, new { @class = "form-control", id = "daima" })*@
                     @*@Html.ValidationMessageFor(m => m.Daima)*@
 
@@ -133,9 +166,9 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>名称</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" onblur="validate()" data-val="true" data-val-required="UserName 字段是必需的。" id = "shengcheng" name="ob_base_gongyingshang_mingcheng">
+                    <input type="text" class="form-control" onblur="validate()" data-val="true" data-val-required="UserName 字段是必需的。" id="shengcheng" name="ob_base_gongyingshang_mingcheng">
                     @*@Html.TextBoxFor(m => m.Mingcheng, new { @class = "form-control", id = "shengcheng" })
-                    @Html.ValidationMessageFor(m => m.Mingcheng)*@
+                        @Html.ValidationMessageFor(m => m.Mingcheng)*@
                 </div>
 
                 <div class="col-sm-2">
@@ -197,24 +230,23 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="name" class="col-sm-2">经营范围</label>
+                <label for="name" class="col-sm-2" >经营范围</label>
                 @*<div class="col-sm-10">
-                    <input type="text" class="form-control" name="ob_base_gongyingshang_jingyingfanwei">
-                </div>*@
-                <div class="col-sm-6 ">
-                    <textarea type="text" class="form-control" name="ob_base_gongyingshang_jingyingfanwei"></textarea>
-                </div>
+                        <input type="text" class="form-control" name="ob_base_gongyingshang_jingyingfanwei">
+                    </div>*@
                 <div class="col-sm-2">
                     <button type="button" class="form-control " id="bt_Fanweiadd">增加</button>
                 </div>
-                <div class="col-sm-2">
-                    <button type="button" class="form-control " id="bt_Fanwei">浏览</button>
+                <div class="col-sm-8 ">
+                    <textarea type="text" class="form-control" id="jingyingfanwei" name="ob_base_gongyingshang_jingyingfanwei"></textarea>
                 </div>
+                
+                
             </div>
             <div class="form-group">
-                <label for="name" class="col-sm-2">经营范围简码</label>
+                <label for="name" class="col-sm-2" >经营范围简码</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="ob_base_gongyingshang_jingyingfanweidm">
+                    <input type="text" class="form-control" id="jingyingfanweijianma" name="ob_base_gongyingshang_jingyingfanweidm">
                 </div>
             </div>
             <div class="form-group">
@@ -241,30 +273,36 @@
 </div>
 
 
-<div id="pl_Fanwei" class="panel panel-primary" style="position:absolute;top:100px;left:200px;width:600px;height:400px;z-index:999;">
-        <div class="panel-heading">
-            <h3 class="panel-title">经营范围管理<button id="pl_close" class="pull-right">X</button></h3>
-        </div>
-        <div class="panel-body">
-            <div class="center">
-                <button type="button" class="btn btn-default " id="bt_fanwei_add"><i class="icon-add"></i>添加</button>
-                <button type="button" class="btn btn-default " id="bt_fanwei_delete"><i class="icon-remove"></i>删除</button>
-                
-                <table class="table" id="ggdatatable">
-                    <caption></caption>
-                    <thead>
-                        <tr>
-                            <td></td>
-                            <td>编号</td>
-                            <td>名称</td>
-                            <td>描述</td>
-                            <td>管理分类</td>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
+<div id="pl_Fanwei" class="panel panel-primary " style="position:absolute;top:0px;left:300px;width:1100px;height:600px;z-index:999;overflow:scroll">
+    <div class="panel-heading">
+        <h3 class="panel-title">经营范围管理<button id="pl_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="center">
+            <button type="button" class="btn btn-default " id="bt_fanwei_add"><i class="icon-add"></i>添加</button>
+            <button type="button" class="btn btn-default " id="bt_fanwei_delete"><i class="icon-remove"></i>删除</button>
+
+            <table class="table" id="qxdatatable">
+                <caption></caption>
+                <thead>
+                    <tr>
+                        <td></td>
+                        <td>编号</td>
+                        <td>名称</td>
+                        <td>描述</td>
+                        <td>管理分类</td>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
         </div>
     </div>
+</div>
+
+
+
+
+
+
 
 
