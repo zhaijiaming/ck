@@ -826,7 +826,7 @@ namespace CKWMS.App_Code
                             returnvalue = wt.Jiancheng;
                     }
                     break;
-                case "":
+                case "生产企业":
                     Ibase_shengchanqiyeService _scqyservice = ServiceFactory.base_shengchanqiyeservice;
                     base_shengchanqiye _scqy = _scqyservice.GetEntityById(p => p.ID == dataValue && p.IsDelete == false);
                     if (_scqy == null)
@@ -841,6 +841,13 @@ namespace CKWMS.App_Code
                             returnvalue = _scqy.Qiyedizhi;
 
                     }
+                    break;
+                case "收货单位":
+                    base_shouhuodanwei _shdw=ServiceFactory.base_shouhuodanweiservice.GetEntityById(p=>p.ID==dataValue && p.IsDelete==true));
+                    if (_shdw == null)
+                        returnvalue = "";
+                    else
+                        returnvalue = _shdw.Mingcheng;
                     break;
                 default:
                     break;

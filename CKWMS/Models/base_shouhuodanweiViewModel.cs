@@ -7,29 +7,27 @@ namespace CKWMS.Models
     public partial class base_shouhuodanweiViewModel
     {
         [Display(Name = "序号")]
-        public int ID { get; set; }
+        public int? ID { get; set; }
         [Display(Name = "货主序号")]
-        [Required(ErrorMessage ="货主不能为空")]
-        public int HuozhuID { get; set; }
+        public int? HuozhuID { get; set; }
         [Display(Name = "单位名称")]
-        [Required(ErrorMessage ="单位名称不能为空")]
         public string Mingcheng { get; set; }
         [Display(Name = "营业执照编号")]
         public string YingyezhizhaoBH { get; set; }
         [Display(Name = "营业执照有效期")]
         [DataType(DataType.Date)]
-        public DateTime YingyezhizhaoYXQ { get; set; }
+        public DateTime? YingyezhizhaoYXQ { get; set; }
         [Display(Name = "营业执照照片")]
         public string YingyezhizhaoTP { get; set; }
         [Display(Name = "经营许可编号")]
         public string JingyingxukeBH { get; set; }
         [Display(Name = "经营许可有效期")]
         [DataType(DataType.Date)]
-        public DateTime JingyingxukeYXQ { get; set; }
+        public DateTime? JingyingxukeYXQ { get; set; }
         [Display(Name = "经营许可照片")]
         public string JingyingxukeTP { get; set; }
         [Display(Name = "首营状态")]
-        public int Shouying { get; set; }
+        public int? Shouying { get; set; }
         [Display(Name = "机动1")]
         public string Col1 { get; set; }
         [Display(Name = "机动2")]
@@ -44,11 +42,15 @@ namespace CKWMS.Models
         public string Col6 { get; set; }
         [Display(Name = "录入日期")]
         [DataType(DataType.Date)]
-        public DateTime MakeDate { get; set; }
+        public DateTime? MakeDate { get; set; }
         [Display(Name = "输入人")]
         public int? MakeMan { get; set; }
         [Display(Name = "已删除")]
         public bool IsDelete { get; set; }
+        [Display(Name = "是否审查")]
+        public bool ShenchaSF { get; set; }
+        [Display(Name = "是否合作")]
+        public bool HezuoSF { get; set; }
     }
 }
 
