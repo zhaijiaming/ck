@@ -41,8 +41,11 @@
         }
 
 
+    
     });
 
+
+   
 
 
     function AddInfo() {
@@ -145,6 +148,7 @@
         <li class="active">供应商</li>
     </ul>
 </div>
+
 <div class="page-content">
     @Html.Search_Condition((int)Session["user_id"], "供应商_条件组合查询", "/base_gongyingshang/index", "base_gongyingshangindex", scms)
     <div class="page-header">
@@ -188,8 +192,8 @@
                     {
                         <tr>
                             <td>
-                                <div class="checkbox">
-                                    <label><input type="checkbox" value="@item.ID"></label>
+                                <div class="checkbox" >
+                                    <label><input type="checkbox"  value="@item.ID"></label>
                                 </div>
                             </td>
                             <td>@item.Daima</td>
