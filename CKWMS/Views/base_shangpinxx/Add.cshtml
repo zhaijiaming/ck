@@ -2,7 +2,38 @@
 @using CKWMS.Models
 @model base_shangpinxxViewModel
 @{ViewBag.Title = "商品信息添加";}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#huozhuid").change(function () {
+            var _huozhuid = $("#huozhuid").val();
+            //alert(_huozhuid);
+            getCpx(_huozhuid);
+            
+        });
+        function getCpx(huozhuid) {
+            var _huozhuid = huozhuid;
+            var filltable = "";
+            $.post(
+                "/base_chanpinxian/getdetail",
+                {
+                    cpxid: _huozhuid
+                },
+                function (data) {
+                    for (var i in data) {
+                        
+                        filltable = filltable + '<option>';
+                        filltable = filltable + data[i].Mingcheng;
+                        filltable = filltable + '</option>';
+                    }
+                    $("#ul_cpx").html(filltable);
+                });
+            
+        };
 
+        //默认首营状态为新建
+        $("#shouying").val("1");
+    });
+</script>
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
@@ -18,7 +49,6 @@
         <li class="active"> 新增</li>
     </ul>
 </div>
-
 <div class="page-content">
     @using (Html.BeginForm("Save", "base_shangpinxx", FormMethod.Post, new { @role = "form" }))
     {
@@ -32,17 +62,18 @@
         </div>
         <div class="container">
             <div class="form-group">
-                @Html.LabelFor(m => m.HuozhuID, new { @class = "control-label col-sm-2" })
+                <label for="name" class="col-sm-2">货主</label>
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.HuozhuID, new { @class = "form-control" })
+                    @Html.SelectList_Auto("huozhuid", "货主", "名称")
                 </div>
             </div>
+            @*货主授权ID
             <div class="form-group">
                 @Html.LabelFor(m => m.HuozhuSQID, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.HuozhuSQID, new { @class = "form-control" })
                 </div>
-            </div>
+            </div>*@
             <div class="form-group">
                 @Html.LabelFor(m => m.Daima, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
@@ -58,15 +89,16 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.ZhucezhengID, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.ZhucezhengID, new { @class = "form-control" })
+                    @Html.SelectList_Auto("zhucezhengid", "注册证", "编号")
                 </div>
             </div>
+            @*注册证编号
             <div class="form-group">
                 @Html.LabelFor(m => m.ZhucezhengBH, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.ZhucezhengBH, new { @class = "form-control" })
                 </div>
-            </div>
+            </div>*@
             <div class="form-group">
                 @Html.LabelFor(m => m.Guige, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
@@ -109,11 +141,10 @@
                     @Html.TextBoxFor(m => m.Volgao, new { @class = "form-control" })
                 </div>
             </div>
+            @*产品线*@
             <div class="form-group">
-                @Html.LabelFor(m => m.Chanpinxian, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Chanpinxian, new { @class = "form-control" })
-                </div>
+                <label for="name" class="col-sm-2">产品线名称</label>
+                <select id="ul_cpx" style="width:926px;margin-left:12px;" class="col-sm-10"></select>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.Muluxuhao, new { @class = "control-label col-sm-2" })
@@ -124,7 +155,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.Guanlifenlei, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Guanlifenlei, new { @class = "form-control" })
+                    @Html.SelectList_Common("guanlifenlei", "医疗器械管理类别")
                 </div>
             </div>
             <div class="form-group">
@@ -139,22 +170,23 @@
                     @Html.TextBoxFor(m => m.Cunchutiaojian, new { @class = "form-control" })
                 </div>
             </div>
+            @*生产企业*@
             <div class="form-group">
-                @Html.LabelFor(m => m.QiyeID, new { @class = "control-label col-sm-2" })
+                <label for="name" class="col-sm-2">生产企业</label>
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.QiyeID, new { @class = "form-control" })
+                    @Html.SelectList_Auto("qiyeid", "厂家", "")
                 </div>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 @Html.LabelFor(m => m.Qiyemingcheng, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.Qiyemingcheng, new { @class = "form-control" })
                 </div>
-            </div>
+            </div>*@
             <div class="form-group">
                 @Html.LabelFor(m => m.GongyingID, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.GongyingID, new { @class = "form-control" })
+                    @Html.SelectList_Auto("gongyingid","供应商","")
                 </div>
             </div>
             <div class="form-group">
@@ -172,7 +204,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.Shouying, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Shouying, new { @class = "form-control" })
+                    @Html.SelectList_Common("shouying", "首营状态")
                 </div>
             </div>
             <div class="form-group">

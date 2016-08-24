@@ -96,12 +96,12 @@
             <thead>
                 <tr>
                     <td></td>
-                    <td>货主序号</td>
-                    <td>货主的授权序号</td>
+                    <td>货主</td>
+                    @*<td>货主的授权序号</td>*@
                     <td>商品代码</td>
                     <td>商品名称</td>
                     <td>注册证序号</td>
-                    <td>注册证编号</td>
+                    @*<td>注册证编号</td>*@
                     <td>规格</td>
                     <td>型号</td>
                     <td>单位</td>
@@ -111,11 +111,11 @@
                     <td>高</td>
                     <td>产品线序号</td>
                     <td>分类序号</td>
-                    <td>管理分类</td>
+                    <td>医疗器械管理分类</td>
                     <td>包装要求</td>
                     <td>存储条件</td>
-                    <td>生产企业序号</td>
-                    <td>生产企业名称</td>
+                    <td>生产企业</td>
+                    @*<td>生产企业名称</td>*@
                     <td>供应商序号</td>
                     <td>供应商的授权序号</td>
                     <td>供应商的销售序号</td>
@@ -127,18 +127,19 @@
             <tbody>
                 @foreach (var item in ViewBag.base_shangpinxx)
                 {
+                    
                     <tr>
                         <td>
                             <div class="checkbox">
                                 <label><input type="checkbox" value="@item.ID"></label>
                             </div>
                         </td>
-                        <td>@item.HuozhuID</td>
-                        <td>@item.HuozhuSQID</td>
+                        <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
+                        @*<td>@item.HuozhuSQID</td>*@
                         <td>@item.Daima</td>
                         <td>@item.Mingcheng</td>
-                        <td>@item.ZhucezhengID</td>
-                        <td>@item.ZhucezhengBH</td>
+                        <td>@Html.GetDataValue_ID("注册证", "编号", (int)item.ZhucezhengID)</td>
+                        @*<td>@item.ZhucezhengBH</td>*@
                         <td>@item.Guige</td>
                         <td>@item.Xinghao</td>
                         <td>@item.Danwei</td>
@@ -148,17 +149,17 @@
                         <td>@item.Volgao</td>
                         <td>@item.Chanpinxian</td>
                         <td>@item.Muluxuhao</td>
-                        <td>@item.Guanlifenlei</td>
+                        <td>@Html.GetCommonValue_ID("医疗器械管理类别", (int)item.Guanlifenlei)</td>
                         <td>@item.Baozhuangyaoqiu</td>
                         <td>@item.Cunchutiaojian</td>
-                        <td>@item.QiyeID</td>
-                        <td>@item.Qiyemingcheng</td>
-                        <td>@item.GongyingID</td>
+                        <td>@Html.GetDataValue_ID("生产企业", "名称", (int)item.QiyeID)</td>
+                        @*<td>@item.Qiyemingcheng</td>*@
+                        <td>@Html.GetDataValue_ID("gongyingid", "供应商", (int)item.GongyingID)</td>
                         <td>@item.GongyingSQID</td>
                         <td>@item.GongyingXSID</td>
-                        <td>@item.Shouying</td>
+                        <td>@Html.GetCommonValue_ID("首营状态", (int)item.Shouying)</td>
                         <td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
-                        <td>@Html.GetDataValue_ID("userinfo","全名",(int)item.MakeMan)</td>
+                        <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
                     </tr>
                 }
             </tbody>

@@ -7,9 +7,21 @@ using CKWMS.EFModels;
 using CKWMS.IBSL;
 using CKWMS.BSL;
 using CKWMS.Common;
+using CKWMS.Models;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace CKWMS.Controllers
 {
+    public class ChanPinXian{
+        public int ID { get; set; }
+        public int Huozhuxuhao { get; set; }
+        public string Mingcheng { get; set; }
+        public string Miaoshu { get; set; }
+        public string MakeDate { get; set; }
+        public string MakeMan { get; set; }
+
+    }
     public class base_chanpinxianController : Controller
     {
         private Ibase_chanpinxianService ob_base_chanpinxianservice = ServiceFactory.base_chanpinxianservice;
@@ -261,6 +273,31 @@ namespace CKWMS.Controllers
             base_chanpinxian tempData = ob_base_chanpinxianservice.GetEntityById(base_chanpinxian => base_chanpinxian.ID == id && base_chanpinxian.IsDelete == false);
             ViewBag.base_chanpinxian = tempData;
             return View();
+        }
+        public JsonResult GetDetail()
+        {
+            int _userid = (int)Session["user_id"];
+            string _username = (string)Session["user_name"];
+            string _cpxid = Request["cpxid"] ?? "";
+            IList<ChanPinXian> _cpxs;
+            if (_cpxid == "")
+                return Json("");
+            else
+            {
+                _cpxs = new List<ChanPinXian>();
+                var tempdata = ob_base_chanpinxianservice.LoadSortEntities(p => p.IsDelete == false && p.Huozhuxuhao == int.Parse(_cpxid), false, p => p.Mingcheng);
+                foreach(base_chanpinxian _cpx in tempdata)
+                {
+                    if (_cpx.ID > 0)
+                    {
+                        ChanPinXian _cpxxx = new ChanPinXian();
+                        _cpxxx.ID = _cpx.ID;
+                        _cpxxx.Mingcheng = _cpx.Mingcheng;
+                        _cpxs.Add(_cpxxx);
+                    }
+                }
+            }
+            return Json(_cpxs);
         }
 
         public ActionResult Update()
