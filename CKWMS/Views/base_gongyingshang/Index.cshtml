@@ -82,11 +82,11 @@
         scm.ItemType = "System.String";
         scms.Add(scm);
 
-        scm = new SearchConditionModel();
-        scm.ItemCode = "Shouying";
-        scm.ItemTitle = "首营状态";
-        scm.ItemType = "System.String";
-        scms.Add(scm);
+        //scm = new SearchConditionModel();
+        //scm.ItemCode = "Shouying";
+        //scm.ItemTitle = "首营状态";
+        //scm.ItemType = "System.String";
+        //scms.Add(scm);
     }
     else
     {
@@ -118,20 +118,20 @@
             }
             scms.Add(scm);
 
-            scm = new SearchConditionModel();
-            scm.ItemCode = "Shouying";
-            scm.ItemTitle = "首营状态";
-            scm.ItemType = "System.String";
-            scms.Add(scm);
+            //scm = new SearchConditionModel();
+            //scm.ItemCode = "Shouying";
+            //scm.ItemTitle = "首营状态";
+            //scm.ItemType = "System.String";
+            //scms.Add(scm);
 
-            if (scs.Length > 1)
-            {
-                scm.ItemValue = scs[2].Split(',')[1];
-                scm.ItemOpValue = scs[2].Split(',')[2];
-                scm.ItemJion = scs[2].Split(',')[3];
-            }
+            //if (scs.Length > 1)
+            //{
+            //    scm.ItemValue = scs[2].Split(',')[1];
+            //    scm.ItemOpValue = scs[2].Split(',')[2];
+            //    scm.ItemJion = scs[2].Split(',')[3];
         }
     }
+}
 }
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
@@ -177,8 +177,8 @@
                     <td>经营许可有效期</td>
                     <td>经营许可照片</td>
                     <td>经营范围</td>
-                    <td>经营范围简码</td>
-                    <td>首营状态</td>
+                    @*<td>经营范围简码</td>*@
+                    @*<td>首营状态</td>*@
                     @*<td>录入日期</td>
                         <td>输入人</td>*@
                 </tr>
@@ -201,9 +201,9 @@
                             <td>@item.JingyingxukeYXQ.ToString("yyyy-MM-dd")</td>
                             <td><a href="/files/zhengzhao/@item.JingyingxukeTP" target="_blank" class="jjxktp">浏览</a></td>
                             <td>@item.Jingyingfanwei</td>
-                            <td>@item.JingyingfanweiDM</td>
+                            @*<td>@item.JingyingfanweiDM</td>*@
                             @*<td>@item.Shouying</td>*@
-            <td>@Html.GetCommonValue_ID("首营状态", (int)item.Shouying)</td>
+            @*<td>@Html.GetCommonValue_ID("首营状态", (int)item.Shouying)</td>*@
             @*<td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
                 <td>@item.MakeMan</td>*@
             </tr>

@@ -55,7 +55,7 @@ namespace CKWMS.Models
         [Display(Name = "是否审查")]
         public bool ShenchaSF { get; set; }
         [Display(Name = "是否合作")]
-        public bool HezuoSF { get; set; }
+        public string HezuoSF { get; set; }
         [Display(Name = "企业地址")]
         public string Qiyedizhi { get; set; }
         [Display(Name = "生产地址")]

@@ -138,6 +138,7 @@
                     <td>货主</td>
                     <td>单位名称</td>
                     <td>编号</td>
+                    <td>明细</td>
                     <td>有效期</td>
                     <td>照片</td>
                     <td>编号</td>
@@ -158,6 +159,7 @@
                         <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
                         <td>@item.Mingcheng</td>
                         <td>@item.YingyezhizhaoBH</td>
+                        <td><a href="/base_shouhuomingxi/GetDetail/?shouhuodanwei=@item.ID" target="_blank">查看</a></td>
                         <td>@item.YingyezhizhaoYXQ.ToString("yyyy-MM-dd")</td>
                         <td><a href="/files/zhengzhao/@item.YingyezhizhaoTP" target="_blank">浏览</a></td>
                         <td>@item.JingyingxukeBH</td>
