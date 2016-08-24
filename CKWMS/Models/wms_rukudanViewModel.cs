@@ -8,13 +8,13 @@ namespace CKWMS.Models
     {
         [Display(Name = "序号")]
         public int? ID { get; set; }
-        [Display(Name = "货主")]
+        [Display(Name = "货主序号")]
         public int? HuozhuID { get; set; }
-        [Display(Name = "入库计划")]
+        [Display(Name = "计划序号")]
         public int? JihuaID { get; set; }
         [Display(Name = "信息来源")]
         public int? XinxiLY { get; set; }
-        [Display(Name = "供应商")]
+        [Display(Name = "供应商序号")]
         public int? GongyingshangID { get; set; }
         [Display(Name = "发货地址")]
         public string Fahuodizhi { get; set; }
@@ -23,7 +23,7 @@ namespace CKWMS.Models
         [Display(Name = "入库日期")]
         [DataType(DataType.Date)]
         public DateTime? RukuRQ { get; set; }
-        [Display(Name = "入库类型")]
+        [Display(Name = "业务类型")]
         public int? YewuLX { get; set; }
         [Display(Name = "是否保税")]
         public bool BaoshuiSF { get; set; }
@@ -66,6 +66,8 @@ namespace CKWMS.Models
         public bool IsDelete { get; set; }
         [Display(Name = "入库单编号")]
         public string RukudanBH { get; set; }
+        [Display(Name = "直接收货")]
+        public bool ZhijieSH { get; set; }
     }
 }
 
