@@ -349,6 +349,7 @@ namespace CKWMS.Controllers
 
         public ActionResult Edit(int id)
         {
+            
             base_gongyingshang tempData = ob_base_gongyingshangservice.GetEntityById(base_gongyingshang => base_gongyingshang.ID == id && base_gongyingshang.IsDelete == false);
             ViewBag.base_gongyingshang = tempData;
             return View();
@@ -356,6 +357,7 @@ namespace CKWMS.Controllers
 
         public ActionResult Update()
         {
+            
             string id = Request["ob_base_gongyingshang_id"] ?? "";
             string daima = Request["ob_base_gongyingshang_daima"] ?? "";
             string mingcheng = Request["ob_base_gongyingshang_mingcheng"] ?? "";
@@ -369,7 +371,8 @@ namespace CKWMS.Controllers
             string jingyingfanweidm = Request["ob_base_gongyingshang_jingyingfanweidm"] ?? "";
             string shouying = Request["ob_base_gongyingshang_shouying"] ?? "";
             string makedate = Request["ob_base_gongyingshang_makedate"] ?? "";
-            string makeman = Request["ob_base_gongyingshang_makeman"] ?? "";
+            //string makeman = Request["ob_base_gongyingshang_makeman"] ?? "";
+            string makeman = Session["user_id"].ToString();
             int uid = int.Parse(id);
             try
             {

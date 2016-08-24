@@ -30,17 +30,13 @@
         });
 
         $("form").validate({
-
             rules: {
                 ob_base_gongyingshang_daima: { required: true },
                 ob_base_gongyingshang_mingcheng: { required: true },
-
             },
-
             messages: {
                 ob_base_gongyingshang_daima: { required: "请输入daima" },
                 ob_base_gongyingshang_mingcheng: { required: "请输入mingcheng" },
-
             }
         });
 
@@ -56,10 +52,16 @@
             });
             var _addok = confirm("确定要修改经营范围吗？");
             if (_addok) {
-                $("#jingyingfanwei").val(_jyfw);
-                $("#jingyingfanweijianma").val(_jyfwjm);
-            }
-            $("#pl_Fanwei").hide();
+
+                if (_jyfw.length >= 512) {
+                    alert("所选数据超过范围，请重新选择。")
+                }
+                else {
+                    $("#jingyingfanwei").val(_jyfw);
+                    $("#jingyingfanweijianma").val(_jyfwjm);
+                    $("#pl_Fanwei").hide();
+                }
+            }            
         });
         $("#bt_fanwei_all").click(function () {
 
@@ -189,13 +191,13 @@
 
             </div>
             <div class="form-group">
-                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>营业执照编号</label>
+                <label for="name" class="col-sm-2">营业执照编号</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control required:true" name="ob_base_gongyingshang_yingyezhizhaobh">
                 </div>
             </div>
             <div class="form-group">
-                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>营业执照有效期</label>
+                <label for="name" class="col-sm-2">营业执照有效期</label>
                 <div class="col-sm-10">
                     <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="ob_base_gongyingshang_yingyezhizhaoyxq" onchange="aaaa" id="sss">
                 </div>
@@ -215,13 +217,13 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>经营许可编号</label>
+                <label for="name" class="col-sm-2">经营许可编号</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" name="ob_base_gongyingshang_jingyingxukebh">
                 </div>
             </div>
             <div class="form-group">
-                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>经营许可有效期</label>
+                <label for="name" class="col-sm-2">经营许可有效期</label>
                 <div class="col-sm-10">
                     <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="ob_base_gongyingshang_jingyingxukeyxq">
 
@@ -247,8 +249,7 @@
                     @*<div class="col-sm-10">
                 <input type="text" class="form-control" name="ob_base_gongyingshang_jingyingfanwei">
             </div>*@
-
-                    <button type="button" class="icon-apple" id="bt_Fanweiadd">修改</button>
+                    <button type="button" class="icon-edit" id="bt_Fanweiadd">修改</button>
                 </div>
                 <div class="col-sm-10">
                     <textarea type="text" class="form-control" readonly id="jingyingfanwei" name="ob_base_gongyingshang_jingyingfanwei"></textarea>
@@ -288,7 +289,7 @@
     <div class="panel-heading">
         <h3 class="panel-title">经营范围管理<button id="pl_close" class="pull-right">X</button></h3>
     </div>
-    <div class="panel-body" style="width:1100px;height:550px;z-index:999;overflow:scroll">
+    <div class="panel-body" style="width:1090px;height:550px;z-index:999;overflow:scroll">
         <div class="center">
             <button type="button" class="btn btn-default " id="bt_fanwei_add"><i class="icon-add"></i>确定</button>
             <button type="button" class="btn btn-default " id="bt_fanwei_all">全选</button>

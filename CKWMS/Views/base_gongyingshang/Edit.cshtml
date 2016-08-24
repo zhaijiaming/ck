@@ -83,9 +83,18 @@
             $("#pl_Fanwei").hide();
         });
 
+        $("form").validate({
+            rules: {
+                ob_base_gongyingshang_daima: { required: true },
+                ob_base_gongyingshang_mingcheng: { required: true },
+            },
+            messages: {
+                ob_base_gongyingshang_daima: { required: "请输入daima" },
+                ob_base_gongyingshang_mingcheng: { required: "请输入mingcheng" },
+            }
+        });
+
         $("#bt_fanwei_add").click(function () {
-
-
 
             var _jyfw = "";
             var _jyfwjm = "";
@@ -98,13 +107,17 @@
             });
             var _addok = confirm("确定要修改经营范围吗？");
             if (_addok) {
+
+                if (_jyfw.length >= 512) {
+                    alert("所选数据超过范围，请重新选择。")
+                }
+                else{
                 $("#jingyingfanwei").val(_jyfw);
                 $("#jingyingfanweijianma").val(_jyfwjm);
-            }
-            $("#pl_Fanwei").hide();
+                $("#pl_Fanwei").hide();
+                }
+            }          
         });
-
-
     });
 
     function bt_fanwei_all() {
@@ -242,7 +255,7 @@
                 <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>代码</label>
 
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="daima" name="ob_base_gongyingshang_daima" value="@item.Daima">
+                    <input type="text" class="form-control" onblur="validate()" data-val="true" data-val-required="UserName 字段是必需的。" id="daima" name="ob_base_gongyingshang_daima" value="@item.Daima">
                     @*@Html.TextBoxFor(m => m.Daima, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.Daima)*@
                 </div>
@@ -250,7 +263,7 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>名称</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="shengcheng" name="ob_base_gongyingshang_mingcheng" value="@item.Mingcheng">
+                    <input type="text" class="form-control" onblur="validate()" data-val="true" data-val-required="UserName 字段是必需的。" id="shengcheng" name="ob_base_gongyingshang_mingcheng" value="@item.Mingcheng">
                     @*@Html.TextBoxFor(m => m.Mingcheng, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.Mingcheng)*@
                 </div>
@@ -259,13 +272,13 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>营业执照编号</label>
+                <label for="name" class="col-sm-2">营业执照编号</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" name="ob_base_gongyingshang_yingyezhizhaobh" value="@item.YingyezhizhaoBH">
                 </div>
             </div>
             <div class="form-group">
-                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>营业执照有效期</label>
+                <label for="name" class="col-sm-2">营业执照有效期</label>
                 <div class="col-sm-10">
                     <input type="date" class="form-control" name="ob_base_gongyingshang_yingyezhizhaoyxq" value="@string.Format("{0:yyyy-MM-dd}",item.YingyezhizhaoYXQ)">
                 </div>
@@ -285,13 +298,13 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>经营许可编号</label>
+                <label for="name" class="col-sm-2">经营许可编号</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" name="ob_base_gongyingshang_jingyingxukebh" value="@item.JingyingxukeBH">
                 </div>
             </div>
             <div class="form-group">
-                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>经营许可有效期</label>
+                <label for="name" class="col-sm-2">经营许可有效期</label>
                 <div class="col-sm-10">
                     <input type="date" class="form-control" name="ob_base_gongyingshang_jingyingxukeyxq" value="@string.Format("{0:yyyy-MM-dd}",item.JingyingxukeYXQ)">
                 </div>
@@ -313,7 +326,7 @@
             <div class="form-group">
                 <div class="col-sm-2 ">
                 <label for="name" >经营范围</label><br />
-                    <button type="button" class="icon-apple" id="bt_Fanweiadd">修改</button>
+                    <button type="button" class="icon-edit" id="bt_Fanweiadd">修改</button>
                 </div>
                 <div class="col-sm-10">
                     <textarea type="text" class="form-control" readonly id="jingyingfanwei" name="ob_base_gongyingshang_jingyingfanwei">@item.Jingyingfanwei</textarea>
@@ -353,7 +366,7 @@
     <div class="panel-heading">
         <h3 class="panel-title">经营范围管理<button id="pl_close" class="pull-right">X</button></h3>
     </div>
-    <div class="panel-body" style="width:1100px;height:550px;z-index:999;overflow:scroll">
+    <div class="panel-body" style="width:1080px;height:550px;z-index:999;overflow:scroll">
         <div class="center">
             <button type="button" class="btn btn-default " id="bt_fanwei_add" ><i class="icon-add"></i>确定</button>
             <button type="button" class="btn btn-default " id="bt_fanwei_all" onclick="bt_fanwei_all()">全选</button>
