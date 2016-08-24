@@ -182,9 +182,48 @@ namespace CKWMS.Controllers
                 return Json(_mxlist);
             }
         }
+        public ActionResult GetCargos(int id)
+        {
+            var _mxtmp = ob_wms_rukumxservice.LoadSortEntities(p => p.RukuID == id && p.IsDelete==false, true, s => s.ShangpinMC);
+            ViewBag.wms_rukumx = _mxtmp;
+            ViewBag.rkid = id;
+            return View("CargoIndex",_mxtmp);
+        }
+        //public ActionResult Index(int id)
+        //{
+        //    var _mxtmp = ob_wms_rukumxservice.LoadSortEntities(p => p.RukuID == id && p.IsDelete == false, true, s => s.ShangpinMC);
+        //    ViewBag.wms_rukumx = _mxtmp;
+        //    return View(_mxtmp);
+        //}
+        //public ActionResult Add()
+        //{
+        //    ViewBag.userid = (int)Session["user_id"];
+        //    return View();
+        //}
         public ActionResult Add()
         {
             ViewBag.userid = (int)Session["user_id"];
+            var srkid = Request["rkid"]??"";
+            int rkid;
+            if (srkid.Length == 0)
+                rkid = 0;
+            else
+                rkid = int.Parse(srkid);
+
+            ViewBag.rkdid = rkid;
+            return View();
+        }
+        public ActionResult AddOn()
+        {
+            ViewBag.userid = (int)Session["user_id"];
+            var srkid = Request["rkid"] ?? "";
+            int rkid;
+            if (srkid.Length == 0)
+                rkid = 0;
+            else
+                rkid = int.Parse(srkid);
+
+            ViewBag.rkdid = rkid;
             return View();
         }
 

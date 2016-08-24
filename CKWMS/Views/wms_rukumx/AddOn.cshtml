@@ -1,7 +1,10 @@
 ﻿@using CKWMS.App_Code
 @using CKWMS.Models
 @model wms_rukumxViewModel
-@{ViewBag.Title = "入库明细添加";}
+@{
+    //ViewBag.Title = "Add";
+    ViewBag.Title = "";
+}
 
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
@@ -13,10 +16,7 @@
             <a href="/Home">首页</a>
         </li>
         <li>
-            <a href="/wms_rukudan/edit/@ViewBag.rkdid ">入库单</a>
-        </li>
-        <li>
-            <a href="/wms_rukumx/getcargos/@ViewBag.rkdid ">入库货品</a>
+            <a href="/wms_rukudan/edit/@Model.RukuID">入库单</a>
         </li>
         <li class="active"> 新增</li>
     </ul>
@@ -27,6 +27,7 @@
     {
         @Html.AntiForgeryToken()
         <input type="hidden" name="id" />
+        <input type="hidden" name="rkid" value="@ViewBag.rkid" />
         <div class="page-header">
             <p>
                 <button type="submit" class="btn btn-default"><i class="icon-save"></i>保存</button>

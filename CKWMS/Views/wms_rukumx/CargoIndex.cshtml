@@ -3,26 +3,25 @@
 @using X.PagedList
 @using X.PagedList.Mvc
 @{
-    ViewBag.Title = "收货明细清单";
-    string _searchcondition = ViewBag.SearchCondition;
+    ViewBag.Title = "入库货品列表";
 }
 <script type="text/javascript">
     $(document).ready(function () {
         $("tr").bind("dblclick", function () {
             var u_id = $(this).find('td').eq(0).find('input').val();
             if (u_id != null) {
-                var url_go = "/wms_shouhuomx/Edit/" + u_id;
+                var url_go = "/wms_rukumx/Edit/" + u_id;
                 location.href = url_go;
             }
         });
     });
     function AddInfo() {
-        location.href = "/wms_shouhuomx/Add";
+        location.href = "/wms_rukumx/Add/?rkid=" + $("#rkid").val();
     }
     function EditInfo() {
         $("#mydatatable tr input[type=checkbox]").each(function () {
             if (this.checked)
-                location.href = "/wms_shouhuomx/Edit/" + $(this).val();
+                location.href = "/wms_rukumx/Edit/" + $(this).val();
         });
     }
     function DelInfo() {
@@ -33,77 +32,43 @@
         });
         if (sDel.length < 2)
             return;
-        var url_go = "/wms_shouhuomx/Delete/?del=" + sDel;
+        var url_go = "/wms_rukumx/Delete/?del=" + sDel;
         location.href = url_go;
     }
 </script>
-@{
-    List<SearchConditionModel> scms = new List<SearchConditionModel>();
-    if (_searchcondition == null || _searchcondition == "")
-    {
-        SearchConditionModel scm = new SearchConditionModel();
-        scm.ItemCode = "RKMXID";
-        scm.ItemTitle = "明细序号";
-        scm.ItemType = "System.Int32";
-        scms.Add(scm);
-    }
-    else
-    {
-        string[] scs = _searchcondition.Split(';');
-        if (scs.Length > 0)
-        {
-            SearchConditionModel scm = new SearchConditionModel();
-            scm.ItemCode = "RKMXID";
-            scm.ItemTitle = "明细序号";
-            scm.ItemType = "System.Int32";
-            if (scs.Length > 1)
-            {
-                scm.ItemValue = scs[0].Split(',')[1];
-                scm.ItemOpValue = scs[0].Split(',')[2];
-                scm.ItemJion = scs[0].Split(',')[3];
-            }
-            scms.Add(scm);
-        }
-    }
-}
 
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
-
-        $(document).ready(function () {
-            $(".icon-anchor").click(function () {
-                alert($(this).parent().find("input[type=checkbox]").val());
-            });
-        });
     </script>
     <ul class="breadcrumb">
         <li>
             <i class="icon-home home-icon"></i>
             <a href="/Home">首页</a>
         </li>
-        <li class="active">收货明细</li>
+        <li>
+            <a href="/wms_rukudan/edit/@ViewBag.rkid">入库单</a>
+        </li>
+        <li class="active">入库货品</li>
     </ul>
 </div>
 <div class="page-content">
-    @Html.Search_Condition((int)Session["user_id"], "收货明细_条件组合查询", "/wms_shouhuomx/index", "wms_shouhuomxindex", scms)
-    @*<div class="page-header">
+    <div class="page-header">
         <p>
-            <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
             <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
             <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
             <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
         </p>
-    </div>*@
+    </div>
     <div class="row">
+        <input type="hidden" id="rkid" value="@ViewBag.rkid" />
         <table class="table" id="mydatatable">
             <caption></caption>
             <thead>
                 <tr>
                     <td></td>
-                    <td>整</td>
-                    <td>分</td>
+                    <td>入库序号</td>
                     <td>商品序号</td>
                     <td>商品名称</td>
                     <td>注册证</td>
@@ -113,7 +78,8 @@
                     <td>序列码</td>
                     <td>生产日期</td>
                     <td>失效日期</td>
-                    <td>数量</td>
+                    <td>到货数量</td>
+                    <td>已收数量</td>
                     <td>基本单位</td>
                     <td>包装单位</td>
                     <td>换算率</td>
@@ -124,22 +90,21 @@
                     <td>净重</td>
                     <td>体积</td>
                     <td>计费吨</td>
+                    <td>备注</td>
                     <td>制单日期</td>
                     <td>制单人</td>
-                    <td>备注</td>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in ViewBag.wms_shouhuomx)
+                @foreach (var item in ViewBag.wms_rukumx)
                 {
                     <tr>
                         <td>
                             <div class="checkbox">
-                                <label><input type="checkbox" value="@item.ID" data-rkmx="@item.RKMXID"></label>
+                                <label><input type="checkbox" value="@item.ID"></label>
                             </div>
                         </td>
-                        <td><i class="icon-anchor"></i></td>
-                        <td><i class="icon-code-fork"></i></td>
+                        <td>@item.RukuID</td>
                         <td>@item.ShangpinID</td>
                         <td>@item.ShangpinMC</td>
                         <td>@item.Zhucezheng</td>
@@ -149,7 +114,8 @@
                         <td>@item.Xuliema</td>
                         <td>@item.ShengchanRQ</td>
                         <td>@item.ShixiaoRQ</td>
-                        <td>@item.Shuliang</td>
+                        <td>@item.DaohuoSL</td>
+                        <td>@item.YishouSL</td>
                         <td>@item.JibenDW</td>
                         <td>@item.BaozhuangDW</td>
                         <td>@item.Huansuanlv</td>
@@ -160,15 +126,12 @@
                         <td>@item.Jingzhong</td>
                         <td>@item.Tiji</td>
                         <td>@item.Jifeidun</td>
+                        <td>@item.Beizhu</td>
                         <td>@item.MakeDate</td>
                         <td>@item.MakeMan</td>
-                        <td>@item.Beizhu</td>
                     </tr>
                 }
             </tbody>
         </table>
-    </div>
-    <div class="pager">
-        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
     </div>
 </div>

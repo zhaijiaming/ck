@@ -551,6 +551,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Shared\_Layout1.cshtml" />
+    <Content Include="Views\wms_rukumx\Add.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -687,7 +688,6 @@
     <Content Include="Views\wms_rukudan\Add.cshtml" />
     <Content Include="Views\wms_rukudan\Edit.cshtml" />
     <Content Include="Views\wms_rukudan\Index.cshtml" />
-    <Content Include="Views\wms_rukumx\Add.cshtml" />
     <Content Include="Views\wms_rukumx\Edit.cshtml" />
     <Content Include="Views\wms_rukumx\Index.cshtml" />
     <Content Include="Views\wms_shouhuomx\Add.cshtml" />
@@ -699,6 +699,8 @@
     <Content Include="Views\wms_rukudan\OperateList.cshtml" />
     <Content Include="Views\auth_quanxian\PersonRightList.cshtml" />
     <Content Include="Views\base_shouhuomingxi\GetDetail.cshtml" />
+    <Content Include="Views\wms_rukumx\CargoIndex.cshtml" />
+    <Content Include="Views\wms_rukumx\AddOn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

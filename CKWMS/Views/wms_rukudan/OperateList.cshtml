@@ -103,6 +103,7 @@
                     <td>入库状态</td>
                     <td>收货人</td>
                     <td>备注</td>
+                    <td>货品</td>
                     <td>登记</td>
                     <td>收货</td>
                     <td>验收</td>
@@ -126,7 +127,8 @@
                         <td>@Html.GetCommonValue_ID("入库状态",(int)item.RukuZT)</td>
                         <td>@Html.GetDataValue_ID("userinfo","全名",(int)item.Shouhuoren)</td>
                         <td>@item.Beizhu</td>
-                        <td><a href="/wms_rukumx/index" target="_blank"><i class="icon-pencil"></i></a></td>
+                        <td><a href="/wms_rukumx/getcargos/@item.ID" target="_blank"><i class="icon-list"></i></a></td>
+                        <td><a href="/wms_rukumx/add/@item.ID" target="_blank"><i class="icon-pencil"></i></a></td>
                         <td><a href="/wms_shouhuomx/index" target="_blank"><i class="icon-hand-up"></i></a></td>
                         <td><a href="/quan_rukuys/index" target="_blank"><i class="icon-check"></i></a></td>
                         <td><a href="/wms_cunhuo/index" target="_blank"><i class="icon-columns"></i></a></td>

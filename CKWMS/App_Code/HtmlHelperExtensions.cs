@@ -116,10 +116,10 @@ namespace CKWMS.App_Code
                         switch (itemname)
                         {
                             case "编号":
-                        if (i.ID == selectedvalue && selectedvalue != 0)
-                            sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.ID, i.Bianhao);
-                        else
-                            sb.AppendFormat("<option value=\"{0}\">{1}</option>", i.ID, i.Bianhao);
+                                if (i.ID == selectedvalue && selectedvalue != 0)
+                                    sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.ID, i.Bianhao);
+                                else
+                                    sb.AppendFormat("<option value=\"{0}\">{1}</option>", i.ID, i.Bianhao);
                                 break;
                             case "名称":
                                 if (i.ID == selectedvalue && selectedvalue != 0)
@@ -129,9 +129,9 @@ namespace CKWMS.App_Code
                                 break;
                             case "都有":
                                 if (i.ID == selectedvalue && selectedvalue != 0)
-                                    sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1_2}</option>", i.ID, i.Bianhao,i.Mingcheng);
+                                    sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1_2}</option>", i.ID, i.Bianhao, i.Mingcheng);
                                 else
-                                    sb.AppendFormat("<option value=\"{0}\">{1_2}</option>", i.ID, i.Bianhao,i.Mingcheng);
+                                    sb.AppendFormat("<option value=\"{0}\">{1_2}</option>", i.ID, i.Bianhao, i.Mingcheng);
                                 break;
                             default:
                                 break;
@@ -139,8 +139,8 @@ namespace CKWMS.App_Code
                     }
                     break;
                 case "收货单位":
-                    var tmpshdw = ServiceFactory.base_shouhuodanweiservice.LoadSortEntities(p=>p.IsDelete==false && p.HezuoSF==true,true,s=>s.Mingcheng);
-                    foreach(var i in tmpshdw)
+                    var tmpshdw = ServiceFactory.base_shouhuodanweiservice.LoadSortEntities(p => p.IsDelete == false && p.HezuoSF == true, true, s => s.Mingcheng);
+                    foreach (var i in tmpshdw)
                     {
                         if (i.ID == selectedvalue && selectedvalue != 0)
                             sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.ID, i.Mingcheng);
@@ -872,7 +872,7 @@ namespace CKWMS.App_Code
                     }
                     break;
                 case "收货单位":
-                    base_shouhuodanwei _shdw=ServiceFactory.base_shouhuodanweiservice.GetEntityById(p=>p.ID==dataValue && p.IsDelete==false);
+                    base_shouhuodanwei _shdw = ServiceFactory.base_shouhuodanweiservice.GetEntityById(p => p.ID == dataValue && p.IsDelete == false);
                     if (_shdw == null)
                         returnvalue = "";
                     else
