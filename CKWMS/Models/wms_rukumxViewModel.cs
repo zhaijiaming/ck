@@ -10,7 +10,7 @@ namespace CKWMS.Models
         public int? ID { get; set; }
         [Display(Name = "入库序号")]
         public int? RukuID { get; set; }
-        [Display(Name = "商品序号")]
+        [Display(Name = "选择商品")]
         public int? ShangpinID { get; set; }
         [Display(Name = "商品名称")]
         public string ShangpinMC { get; set; }
