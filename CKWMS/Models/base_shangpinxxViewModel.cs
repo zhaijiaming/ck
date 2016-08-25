@@ -13,8 +13,10 @@ namespace CKWMS.Models
         [Display(Name = "货主的授权序号")]
         public int? HuozhuSQID { get; set; }
         [Display(Name = "商品代码")]
+        [Required(ErrorMessage ="商品代码不能为空")]
         public string Daima { get; set; }
         [Display(Name = "商品名称")]
+        [Required(ErrorMessage = "商品名称不能为空")]
         public string Mingcheng { get; set; }
         [Display(Name = "注册证序号")]
         public int? ZhucezhengID { get; set; }

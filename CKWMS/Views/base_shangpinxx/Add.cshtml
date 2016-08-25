@@ -7,9 +7,8 @@
         //货主ID--→产品线名称
         $("#huozhuid").change(function () {
             var _huozhuid = $("#huozhuid").val();
-            
-            //alert(_chanpinxian);
             getCpx(_huozhuid);
+
             var _chanpinxian = $("#ul_cpx").val();
             saveCpxData(_chanpinxian);
         });
@@ -33,7 +32,7 @@
                     $("#ul_cpx").html(filltable);
                 });
         };
-
+        //传值存储
         function saveCpxData(chanpinxian) {
             var _chanpinxian = chanpinxian;
             $.post(
@@ -42,13 +41,10 @@
                     chanpinxian: _chanpinxian
                 },
                 function (jdata, stat) {
-                    alert("成功");
+                    
                 });
         };
-        
-        
-        //默认首营状态为新建
-        $("#shouying").val("1");
+        $("#shouying").val("1");//默认首营状态为新建
     });
 </script>
 <script type="text/javascript">
@@ -56,8 +52,10 @@
         //注册证--→规格/型号
         $("#zhucezhengid").change(function () {
             var _zczid = $("#zhucezhengid").val();
-            //alert(_zczid);
             getCpx(_zczid);
+
+            var _guige = $("#ul_gg").val();
+            saveCpxData(_guige);
         });
         function getCpx(zczid) {
             var _zczid = zczid;
@@ -69,14 +67,26 @@
                 },
                 function (data) {
                     for (var i in data) {
-
-                        filltable = filltable + '<option>';
+                        filltable = filltable + '<option value="';
+                        filltable = filltable + data[i].ID;
+                        filltable = filltable + '">';
                         filltable = filltable + data[i].Guige;
                         filltable = filltable + '</option>';
                     }
                     $("#ul_gg").html(filltable);
                 });
+        };
+        //传值存储
+        function saveCpxData(guige) {
+            var _guige = guige;
+            $.post(
+                "/base_chanpinxian/Save",
+                {
+                    guige: _guige
+                },
+                function (data, stat) {
 
+                });
         };
     });
     
@@ -125,12 +135,14 @@
                 @Html.LabelFor(m => m.Daima, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.Daima, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Daima)
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.Mingcheng, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.Mingcheng, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Mingcheng)
                 </div>
             </div>
             @*注册证*@
@@ -150,7 +162,7 @@
             @*规格*@
             <div class="form-group">
                 <label for="name" class="col-sm-2">规格</label>
-                <select id="ul_gg" style="width:926px;margin-left:12px;" class="col-sm-10"></select>
+                <select name="Guige" id="ul_gg" style="width:926px;margin-left:12px;" class="col-sm-10"></select>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.Xinghao, new { @class = "control-label col-sm-2" })
@@ -236,7 +248,7 @@
                     @Html.SelectList_Auto("gongyingid","供应商","")
                 </div>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 @Html.LabelFor(m => m.GongyingSQID, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.GongyingSQID, new { @class = "form-control" })
@@ -247,7 +259,7 @@
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.GongyingXSID, new { @class = "form-control" })
                 </div>
-            </div>
+            </div>*@
             <div class="form-group">
                 @Html.LabelFor(m => m.Shouying, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
