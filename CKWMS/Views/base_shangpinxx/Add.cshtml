@@ -4,11 +4,14 @@
 @{ViewBag.Title = "商品信息添加";}
 <script type="text/javascript">
     $(document).ready(function () {
+        //货主ID--→产品线名称
         $("#huozhuid").change(function () {
             var _huozhuid = $("#huozhuid").val();
-            //alert(_huozhuid);
-            getCpx(_huozhuid);
             
+            //alert(_chanpinxian);
+            getCpx(_huozhuid);
+            var _chanpinxian = $("#ul_cpx").val();
+            saveCpxData(_chanpinxian);
         });
         function getCpx(huozhuid) {
             var _huozhuid = huozhuid;
@@ -21,18 +24,62 @@
                 function (data) {
                     for (var i in data) {
                         
-                        filltable = filltable + '<option>';
+                        filltable = filltable + '<option value="';
+                        filltable = filltable + data[i].ID;
+                        filltable = filltable + '">';
                         filltable = filltable + data[i].Mingcheng;
                         filltable = filltable + '</option>';
                     }
                     $("#ul_cpx").html(filltable);
                 });
-            
         };
 
+        function saveCpxData(chanpinxian) {
+            var _chanpinxian = chanpinxian;
+            $.post(
+                "/base_chanpinxian/Save",
+                {
+                    chanpinxian: _chanpinxian
+                },
+                function (jdata, stat) {
+                    alert("成功");
+                });
+        };
+        
+        
         //默认首营状态为新建
         $("#shouying").val("1");
     });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //注册证--→规格/型号
+        $("#zhucezhengid").change(function () {
+            var _zczid = $("#zhucezhengid").val();
+            //alert(_zczid);
+            getCpx(_zczid);
+        });
+        function getCpx(zczid) {
+            var _zczid = zczid;
+            var filltable = "";
+            $.post(
+                "/base_zhucezhenggg/getdetail",
+                {
+                    zczbh: _zczid
+                },
+                function (data) {
+                    for (var i in data) {
+
+                        filltable = filltable + '<option>';
+                        filltable = filltable + data[i].Guige;
+                        filltable = filltable + '</option>';
+                    }
+                    $("#ul_gg").html(filltable);
+                });
+
+        };
+    });
+    
 </script>
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
@@ -86,6 +133,7 @@
                     @Html.TextBoxFor(m => m.Mingcheng, new { @class = "form-control" })
                 </div>
             </div>
+            @*注册证*@
             <div class="form-group">
                 @Html.LabelFor(m => m.ZhucezhengID, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
@@ -99,11 +147,10 @@
                     @Html.TextBoxFor(m => m.ZhucezhengBH, new { @class = "form-control" })
                 </div>
             </div>*@
+            @*规格*@
             <div class="form-group">
-                @Html.LabelFor(m => m.Guige, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Guige, new { @class = "form-control" })
-                </div>
+                <label for="name" class="col-sm-2">规格</label>
+                <select id="ul_gg" style="width:926px;margin-left:12px;" class="col-sm-10"></select>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.Xinghao, new { @class = "control-label col-sm-2" })
@@ -144,7 +191,7 @@
             @*产品线*@
             <div class="form-group">
                 <label for="name" class="col-sm-2">产品线名称</label>
-                <select id="ul_cpx" style="width:926px;margin-left:12px;" class="col-sm-10"></select>
+                <select name="chanpinxian" id="ul_cpx" style="width:926px;margin-left:12px;" class="col-sm-10" ></select>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.Muluxuhao, new { @class = "control-label col-sm-2" })
