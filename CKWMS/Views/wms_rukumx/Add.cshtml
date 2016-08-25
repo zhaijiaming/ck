@@ -6,6 +6,21 @@
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        $(document).ready(function () {
+            getShangPin();
+        });
+        function getShangPin() {
+            var rkd = $("#rkd").val();
+            $.post(
+                "/base_shangpinxx/GetCustomerCargosByEntryID",
+                { rkd: rkd },
+                function (data) {
+                    if (data.length > 0) {
+
+                    }
+                }
+                );
+        }
     </script>
     <ul class="breadcrumb">
         <li>
@@ -27,6 +42,8 @@
     {
         @Html.AntiForgeryToken()
         <input type="hidden" name="id" />
+        <input type="hidden" name="rkdid" id="rkd" value="@Model.RukuID" />
+        <input type="hidden" name="spid" id="spid" value="@Model.ShangpinID" />
         <div class="page-header">
             <p>
                 <button type="submit" class="btn btn-default"><i class="icon-save"></i>保存</button>
@@ -34,16 +51,17 @@
             </p>
         </div>
         <div class="container">
-            <div class="form-group">
+            @*<div class="form-group">
                 @Html.LabelFor(m => m.RukuID, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.RukuID, new { @class = "form-control" })
                 </div>
-            </div>
+            </div>*@
             <div class="form-group">
                 @Html.LabelFor(m => m.ShangpinID, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.ShangpinID, new { @class = "form-control" })
+                <div id="selsp" class="col-sm-10">
+                    @*@Html.TextBoxFor(m => m.ShangpinID, new { @class = "form-control" })*@
+                    <select><option></option></select>
                 </div>
             </div>
             <div class="form-group">
@@ -204,4 +222,71 @@
             </div>
         </div>
     }
+</div>
+<div id="pl_shangpin"  class="panel panel-primary" style="display:none;position:absolute;top:200px;left:300px;width:600px;height:400px;z-index:999;">
+    <div class="panel-heading">
+        <h3 class="panel-title">商品选择<button id="pl_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="row" style="width:580px;height:480px;overflow:auto;">
+            <table class="table" id="mydatatable">
+                <caption></caption>
+                <thead>
+                    <tr>
+                        <td></td>
+                        <td>商品代码</td>
+                        <td>商品名称</td>
+                        <td>注册证编号</td>
+                        <td>规格</td>
+                        <td>型号</td>
+                        <td>单位</td>
+                        <td>换算率</td>
+                        <td>长</td>
+                        <td>宽</td>
+                        <td>高</td>
+                        <td>产品线序号</td>
+                        <td>分类序号</td>
+                        <td>医疗器械管理分类</td>
+                        <td>包装要求</td>
+                        <td>存储条件</td>
+                        <td>生产企业</td>
+                        <td>供应商序号</td>
+                        <td>首营状态</td>
+                    </tr>
+                </thead>
+                <tbody>
+                        @*<tr>
+                            <td>
+                                <div class="checkbox">
+                                    <label><input type="checkbox" value="ID"></label>
+                                </div>
+                            </td>
+                            <td>@item.Daima</td>
+                            <td>@item.Mingcheng</td>
+                            <td>@item.ZhucezhengBH</td>
+                            <td>@item.Guige</td>
+                            <td>@item.Xinghao</td>
+                            <td>@item.Danwei</td>
+                            <td>@item.Huansuanlv</td>
+                            <td>@item.Volchang</td>
+                            <td>@item.Volkuan</td>
+                            <td>@item.Volgao</td>
+                            <td>@item.Chanpinxian</td>
+                            <td>@item.Muluxuhao</td>
+                            <td>@Html.GetCommonValue_ID("医疗器械管理类别", (int)item.Guanlifenlei)</td>
+                            <td>@item.Baozhuangyaoqiu</td>
+                            <td>@item.Cunchutiaojian</td>
+                            <td>@Html.GetDataValue_ID("生产企业", "名称", (int)item.QiyeID)</td>
+                            <td>@item.Qiyemingcheng</td>
+                            <td>@Html.GetDataValue_ID("gongyingid", "供应商", (int)item.GongyingID)</td>
+                            <td>@item.GongyingSQID</td>
+                            <td>@item.GongyingXSID</td>
+                            <td>@Html.GetCommonValue_ID("首营状态", (int)item.Shouying)</td>
+                            <td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
+                            <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
+                        </tr>*@
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

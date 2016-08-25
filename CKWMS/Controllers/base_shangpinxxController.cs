@@ -166,7 +166,68 @@ namespace CKWMS.Controllers
             ViewBag.base_shangpinxx = tempData;
             return View(tempData);
         }
-
+        public JsonResult GetCustomerCargos()
+        {
+            string _sCust = Request["cust"]??"";
+            if (_sCust.Length == 0)
+                return Json("");
+            else
+            {
+                var _splist = ServiceFactory.base_shangpinxxservice.LoadSortEntities(p => p.HuozhuID == int.Parse(_sCust) && p.IsDelete == false, true, s => s.Mingcheng).ToList<base_shangpinxx>();
+                if (_splist == null)
+                    return Json("");
+                else
+                    return Json(_splist);
+            }
+        }
+        /// <summary>
+        /// 货主经营的商品列表
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetCustomerCargosByEntryID()
+        {
+            string _rkdid = Request["rkd"]??"";
+            if (_rkdid.Length == 0)
+                return Json("");
+            else
+            {
+                wms_rukudan _rkd = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_rkdid) && p.IsDelete==false);
+                if (_rkd == null)
+                    return Json("");
+                else
+                {
+                    var _splist= ServiceFactory.base_shangpinxxservice.LoadSortEntities(g => g.HuozhuID == _rkd.HuozhuID && g.JingyinSF==true && g.IsDelete == false, true, s => s.Mingcheng).ToList<base_shangpinxx>();
+                    if (_splist == null)
+                        return Json("");
+                    else
+                        return Json(_splist);
+                }
+            }
+        }
+        /// <summary>
+        /// 货主全部商品列表
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetCustomerCargosAllByEntryID()
+        {
+            string _rkdid = Request["rkd"] ?? "";
+            if (_rkdid.Length == 0)
+                return Json("");
+            else
+            {
+                wms_rukudan _rkd = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_rkdid) && p.IsDelete == false);
+                if (_rkd == null)
+                    return Json("");
+                else
+                {
+                    var _splist = ServiceFactory.base_shangpinxxservice.LoadSortEntities(g => g.HuozhuID == _rkd.HuozhuID && g.IsDelete == false, true, s => s.Mingcheng).ToList<base_shangpinxx>();
+                    if (_splist == null)
+                        return Json("");
+                    else
+                        return Json(_splist);
+                }
+            }
+        }
         public ActionResult Add()
         {
             ViewBag.userid = (int)Session["user_id"];

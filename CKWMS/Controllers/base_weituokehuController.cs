@@ -427,6 +427,10 @@ namespace CKWMS.Controllers
             string makeman = Request["makeman"] ?? "";
             string shenchasf = Request["shenchasf"] ?? "";
             string hezuosf = Request["hezuosf"] ?? "";
+            if (shenchasf.IndexOf("true") > -1)
+                shenchasf = "true";
+            if (hezuosf.IndexOf("true") > -1)
+                hezuosf = "true";
             int uid = int.Parse(id);
             try
             {
