@@ -117,8 +117,8 @@
                     <td>生产企业</td>
                     @*<td>生产企业名称</td>*@
                     <td>供应商序号</td>
-                    <td>供应商的授权序号</td>
-                    <td>供应商的销售序号</td>
+                    @*<td>供应商的授权序号</td>
+                    <td>供应商的销售序号</td>*@
                     <td>首营状态</td>
                     <td>录入日期</td>
                     <td>输入人</td>
@@ -155,8 +155,8 @@
                         <td>@Html.GetDataValue_ID("生产企业", "名称", (int)item.QiyeID)</td>
                         @*<td>@item.Qiyemingcheng</td>*@
                         <td>@Html.GetDataValue_ID("gongyingid", "供应商", (int)item.GongyingID)</td>
-                        <td>@item.GongyingSQID</td>
-                        <td>@item.GongyingXSID</td>
+                        @*<td>@item.GongyingSQID</td>
+                        <td>@item.GongyingXSID</td>*@
                         <td>@Html.GetCommonValue_ID("首营状态", (int)item.Shouying)</td>
                         <td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
                         <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
