@@ -7,6 +7,9 @@
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        $(document).ready(function(){
+            $("#makedate").datepicker();//时间
+        });
     </script>
 
     <ul class="breadcrumb">
@@ -71,7 +74,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.ZhucezhengYXQ, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    <input id="nowDate" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="ZhucezhengYXQ">
+                    <input id="makedate" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="ZhucezhengYXQ">
                     @Html.ValidationMessageFor(m => m.ZhucezhengYXQ)
                 </div>
             </div>

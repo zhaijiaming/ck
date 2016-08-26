@@ -7,6 +7,7 @@
 @*货主ID--→产品线名称*@
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#makedate").datepicker();//时间
         var _huozhuid = $("#huozhuid").val();
         getCpx(_huozhuid);
         $("#huozhuid").change(function () {
@@ -134,7 +135,9 @@
             @*规格*@
             <div class="form-group">
                 <label for="name" class="col-sm-2">规格</label>
-                <select id="ul_gg" style="width:926px;margin-left:12px;" class="col-sm-10"></select>
+                <div class="col-sm-10">
+                    <select id="ul_gg" style="width:100%" ></select>
+                </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.Xinghao, new { @class = "control-label col-sm-2" })
@@ -175,7 +178,9 @@
             @*产品线*@
             <div class="form-group">
                 <label for="name" class="col-sm-2">产品线名称</label>
-                <select id="ul_cpx" style="width:926px;margin-left:12px;" class="col-sm-10"></select>
+                <div class="col-sm-10">
+                    <select id="ul_cpx" style="width:100%;"></select>
+                </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.Muluxuhao, new { @class = "control-label col-sm-2" })
@@ -241,7 +246,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.MakeDate, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" name="MakeDate" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.MakeDate)">
+                    <input id="makedate" type="date" class="form-control" name="makedate" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.MakeDate)">
                 </div>
             </div>
             <div class="form-group">
