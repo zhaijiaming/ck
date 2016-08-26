@@ -1,22 +1,94 @@
 ﻿@using CKWMS.App_Code
 @using CKWMS.Models
 @model wms_rukumxViewModel
-@{ViewBag.Title = "入库明细添加";}
+@{ViewBag.Title = "入库商品添加";}
 
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
+        var _spload = false;
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
         $(document).ready(function () {
-            getShangPin();
+            $("#bt_selsp").click(function () {
+                if (!_spload)
+                    getShangPin();
+                $("#pl_shangpin").show();
+            });
+            $("#pl_close").click(function () {
+                $("#pl_shangpin").hide();
+            });
+            $("#pl_ok").click(function () {
+                $("#spdatatable tr input[type=checkbox]").each(function () {
+                    if (this.checked) {
+                        alert($(this).val() + "," + $(this).data("cctj"));
+                        $("#ShangpinMC").val($(this).data("mc"));
+                        $("#Zhucezheng").val($(this).data("zcz"));
+                        $("#Guige").val($(this).data("gg"));
+                    }
+                });
+                $("#pl_shangpin").hide();
+            });
+            $("#pl_refresh").click(function () {
+                getShangPin();
+            });
+            $("tr").bind("dblclick",function () {
+                alert($(this).val() + "," + $(this).data("mc"));
+                $("#pl_shangpin").hide();
+            });
         });
         function getShangPin() {
             var rkd = $("#rkd").val();
+            _spload = true;
             $.post(
                 "/base_shangpinxx/GetCustomerCargosByEntryID",
                 { rkd: rkd },
                 function (data) {
                     if (data.length > 0) {
-
+                        var _filldata = '';
+                        for (var i in data) {
+                            _filldata = _filldata + '<tr>';
+                            _filldata = _filldata + '<td><div class="checkbox"><label><input type="checkbox" value="';
+                            _filldata = _filldata + data[i].ID;
+                            _filldata = _filldata + '" data-dm="' + data[i].Daima + '" data-mc="' + data[i].Mingcheng + '" data-zcz="';
+                            _filldata = _filldata + data[i].ZhucezhengBH + '" data-gg="' + data[i].Guige + '" data-xh="' + data[i].Xinghao;
+                            _filldata = _filldata + '" data-dw="' + data[i].Danwei + '" data-bdw="' + data[i].BaozhuangDW;
+                            _filldata = _filldata + '" data-hsl="' + data[i].Huansuanlv + '" data-cpx="' + data[i].Chanpinxian;
+                            _filldata = _filldata + '" data-ml="' + data[i].Muluxuhao + '" data-glfl="' + data[i].Guanlifenlei;
+                            _filldata = _filldata + '" data-cctj="' + data[i].Cunchutiaojian + '" data-qymc="' + data[i].Qiyemingcheng;
+                            _filldata = _filldata + '" data-gys="' + data[i].GongyingID + '" data-tm="' + data[i].ShangpinTM + '"';
+                            _filldata = _filldata + '></label></div></td><td>';
+                            _filldata = _filldata + data[i].Daima;
+                            _filldata = _filldata + '</td><td>';
+                            _filldata = _filldata + data[i].Mingcheng;
+                            _filldata = _filldata + '</td><td>';
+                            _filldata = _filldata + data[i].ZhucezhengBH;
+                            _filldata = _filldata + '</td><td>';
+                            _filldata = _filldata + data[i].Guige;
+                            _filldata = _filldata + '</td><td>';
+                            _filldata = _filldata + data[i].Xinghao;
+                            _filldata = _filldata + '</td><td>';
+                            _filldata = _filldata + data[i].Danwei;
+                            _filldata = _filldata + '</td><td>';
+                            _filldata = _filldata + data[i].BaozhuangDW;
+                            _filldata = _filldata + '</td><td>';
+                            _filldata = _filldata + data[i].Huansuanlv;
+                            _filldata = _filldata + '</td><td>';
+                            _filldata = _filldata + data[i].Chanpinxian;
+                            _filldata = _filldata + '</td><td>';
+                            _filldata = _filldata + data[i].Muluxuhao;
+                            _filldata = _filldata + '</td><td>';
+                            _filldata = _filldata + data[i].Guanlifenlei;
+                            _filldata = _filldata + '</td><td>';
+                            _filldata = _filldata + data[i].Cunchutiaojian;
+                            _filldata = _filldata + '</td><td>';
+                            _filldata = _filldata + data[i].Qiyemingcheng;
+                            _filldata = _filldata + '</td><td>';
+                            _filldata = _filldata + data[i].GongyingID;
+                            _filldata = _filldata + '</td><td>';
+                            _filldata = _filldata + data[i].ShangpinTM;
+                            _filldata = _filldata + '</td>';
+                            _filldata = _filldata + '</tr>';
+                        }
+                        $("#spdatatable tbody").html(_filldata);
                     }
                 }
                 );
@@ -42,8 +114,8 @@
     {
         @Html.AntiForgeryToken()
         <input type="hidden" name="id" />
-        <input type="hidden" name="rkdid" id="rkd" value="@Model.RukuID" />
-        <input type="hidden" name="spid" id="spid" value="@Model.ShangpinID" />
+        <input type="hidden" name="rkdid" id="rkd" value="@ViewBag.rkdid" />
+        <input type="hidden" name="spid" id="spid" value="" />
         <div class="page-header">
             <p>
                 <button type="submit" class="btn btn-default"><i class="icon-save"></i>保存</button>
@@ -51,23 +123,13 @@
             </p>
         </div>
         <div class="container">
-            @*<div class="form-group">
-                @Html.LabelFor(m => m.RukuID, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.RukuID, new { @class = "form-control" })
-                </div>
-            </div>*@
-            <div class="form-group">
-                @Html.LabelFor(m => m.ShangpinID, new { @class = "control-label col-sm-2" })
-                <div id="selsp" class="col-sm-10">
-                    @*@Html.TextBoxFor(m => m.ShangpinID, new { @class = "form-control" })*@
-                    <select><option></option></select>
-                </div>
-            </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.ShangpinMC, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
+                <div class="col-sm-8">
                     @Html.TextBoxFor(m => m.ShangpinMC, new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    <p id="bt_selsp" class="form-control btn center"><i class="icon-leaf red"></i>选择商品</p>
                 </div>
             </div>
             <div class="form-group">
@@ -191,24 +253,6 @@
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.Col1, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Col1, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Col2, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Col2, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Col3, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Col3, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
                 @Html.LabelFor(m => m.MakeDate, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="MakeDate">
@@ -223,14 +267,20 @@
         </div>
     }
 </div>
-<div id="pl_shangpin"  class="panel panel-primary" style="display:none;position:absolute;top:200px;left:300px;width:600px;height:400px;z-index:999;">
+<div id="pl_shangpin" class="panel panel-primary" style="display:none;position:absolute;top:50px;left:100px;width:800px;height:600px;z-index:999;">
     <div class="panel-heading">
         <h3 class="panel-title">商品选择<button id="pl_close" class="pull-right">X</button></h3>
     </div>
     <div class="panel-body">
-        <div class="row" style="width:580px;height:480px;overflow:auto;">
-            <table class="table" id="mydatatable">
-                <caption></caption>
+        <div class="row">
+            <ul class="nav navbar-nav center">
+                <li><p class="btn default" id="pl_ok"><i class="icon-ok"></i>确定</p></li>
+                <li><p class="btn default" id="pl_refresh"><i class="icon-refresh"></i>刷新</p></li>
+            </ul>
+        </div>
+        <div class="row" style="width:580px;height:450px;overflow:auto;">
+            <table class="table" id="spdatatable">
+                <caption>货主商品列表</caption>
                 <thead>
                     <tr>
                         <td></td>
@@ -240,52 +290,19 @@
                         <td>规格</td>
                         <td>型号</td>
                         <td>单位</td>
+                        <td>包装单位</td>
                         <td>换算率</td>
-                        <td>长</td>
-                        <td>宽</td>
-                        <td>高</td>
-                        <td>产品线序号</td>
-                        <td>分类序号</td>
-                        <td>医疗器械管理分类</td>
+                        <td>产品线</td>
+                        <td>分类目录</td>
+                        <td>管理分类</td>
                         <td>包装要求</td>
                         <td>存储条件</td>
                         <td>生产企业</td>
-                        <td>供应商序号</td>
-                        <td>首营状态</td>
+                        <td>供应商</td>
+                        <td>商品条码</td>
                     </tr>
                 </thead>
-                <tbody>
-                        @*<tr>
-                            <td>
-                                <div class="checkbox">
-                                    <label><input type="checkbox" value="ID"></label>
-                                </div>
-                            </td>
-                            <td>@item.Daima</td>
-                            <td>@item.Mingcheng</td>
-                            <td>@item.ZhucezhengBH</td>
-                            <td>@item.Guige</td>
-                            <td>@item.Xinghao</td>
-                            <td>@item.Danwei</td>
-                            <td>@item.Huansuanlv</td>
-                            <td>@item.Volchang</td>
-                            <td>@item.Volkuan</td>
-                            <td>@item.Volgao</td>
-                            <td>@item.Chanpinxian</td>
-                            <td>@item.Muluxuhao</td>
-                            <td>@Html.GetCommonValue_ID("医疗器械管理类别", (int)item.Guanlifenlei)</td>
-                            <td>@item.Baozhuangyaoqiu</td>
-                            <td>@item.Cunchutiaojian</td>
-                            <td>@Html.GetDataValue_ID("生产企业", "名称", (int)item.QiyeID)</td>
-                            <td>@item.Qiyemingcheng</td>
-                            <td>@Html.GetDataValue_ID("gongyingid", "供应商", (int)item.GongyingID)</td>
-                            <td>@item.GongyingSQID</td>
-                            <td>@item.GongyingXSID</td>
-                            <td>@Html.GetCommonValue_ID("首营状态", (int)item.Shouying)</td>
-                            <td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
-                            <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
-                        </tr>*@
-                </tbody>
+                <tbody></tbody>
             </table>
         </div>
     </div>

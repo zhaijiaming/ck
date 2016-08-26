@@ -7,7 +7,7 @@ namespace CKWMS.Models
     public partial class base_shangpinxxViewModel
     {
         [Display(Name = "序号")]
-        public int ID { get; set; }
+        public int? ID { get; set; }
         [Display(Name = "货主序号")]
         public int? HuozhuID { get; set; }
         [Display(Name = "货主的授权序号")]
@@ -70,11 +70,19 @@ namespace CKWMS.Models
         public string Col6 { get; set; }
         [Display(Name = "录入日期")]
         [DataType(DataType.Date)]
-        public DateTime MakeDate { get; set; }
+        public DateTime? MakeDate { get; set; }
         [Display(Name = "输入人")]
         public int? MakeMan { get; set; }
         [Display(Name = "已删除")]
         public bool IsDelete { get; set; }
+        [Display(Name = "是否审查")]
+        public bool ShenchaSF { get; set; }
+        [Display(Name = "是否经营")]
+        public bool JingyinSF { get; set; }
+        [Display(Name = "包装单位")]
+        public string BaozhuangDW { get; set; }
+        [Display(Name = "商品条码")]
+        public string ShangpinTM { get; set; }
     }
 }
 
