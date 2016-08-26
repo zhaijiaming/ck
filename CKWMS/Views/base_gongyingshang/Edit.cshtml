@@ -70,11 +70,6 @@
     //}
 
     $(document).ready(function () {
-
-        $("#ob_base_gongyingshang_makedate").datepicker();
-        $("#ob_base_gongyingshang_yingyezhizhaoyxq").datepicker();
-        $("#ob_base_gongyingshang_jingyingxukeyxq").datepicker();
-
         $("#pl_Fanwei").hide();
         $("#bt_Fanweiadd").click(function () {
             GetFanwei();
@@ -260,7 +255,7 @@
                 <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>代码</label>
 
                 <div class="col-sm-10">
-                    <input type="text" class="form-control"  data-val="true" data-val-required="Daima 字段是必需的。" id="daima" name="ob_base_gongyingshang_daima" value="@item.Daima">
+                    <input type="text" class="form-control" onblur="validate()" data-val="true" data-val-required="UserName 字段是必需的。" id="daima" name="ob_base_gongyingshang_daima" value="@item.Daima">
                     @*@Html.TextBoxFor(m => m.Daima, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.Daima)*@
                 </div>
@@ -268,7 +263,7 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>名称</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" data-val="true" data-val-required="Mingcheng 字段是必需的。" id="shengcheng" name="ob_base_gongyingshang_mingcheng" value="@item.Mingcheng">
+                    <input type="text" class="form-control" onblur="validate()" data-val="true" data-val-required="UserName 字段是必需的。" id="shengcheng" name="ob_base_gongyingshang_mingcheng" value="@item.Mingcheng">
                     @*@Html.TextBoxFor(m => m.Mingcheng, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.Mingcheng)*@
                 </div>
@@ -285,7 +280,7 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2">营业执照有效期</label>
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" name="ob_base_gongyingshang_yingyezhizhaoyxq" value="@string.Format("{0:yyyy-MM-dd}",item.YingyezhizhaoYXQ)" id="ob_base_gongyingshang_yingyezhizhaoyxq">
+                    <input type="date" class="form-control" name="ob_base_gongyingshang_yingyezhizhaoyxq" value="@string.Format("{0:yyyy-MM-dd}",item.YingyezhizhaoYXQ)">
                 </div>
             </div>
             <div class="form-group">
@@ -311,7 +306,7 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2">经营许可有效期</label>
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" name="ob_base_gongyingshang_jingyingxukeyxq" value="@string.Format("{0:yyyy-MM-dd}",item.JingyingxukeYXQ)" id="ob_base_gongyingshang_jingyingxukeyxq">
+                    <input type="date" class="form-control" name="ob_base_gongyingshang_jingyingxukeyxq" value="@string.Format("{0:yyyy-MM-dd}",item.JingyingxukeYXQ)">
                 </div>
             </div>
             <div class="form-group">
@@ -353,7 +348,7 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2">录入日期</label>
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" name="ob_base_gongyingshang_makedate" value="@string.Format("{0:yyyy-MM-dd}",item.MakeDate)" id="ob_base_gongyingshang_makedate">
+                    <input type="date" class="form-control" name="ob_base_gongyingshang_makedate" value="@string.Format("{0:yyyy-MM-dd}",item.MakeDate)">
                 </div>
             </div>
             <div class="form-group">
@@ -371,23 +366,23 @@
     <div class="panel-heading">
         <h3 class="panel-title">经营范围管理<button id="pl_close" class="pull-right">X</button></h3>
     </div>
-    <div class="panel-body" @*style="width:1080px;height:550px;z-index:999;overflow:scroll"*@>
+    <div class="panel-body" style="width:1080px;height:550px;z-index:999;overflow:scroll">
         <div class="center">
             <button type="button" class="btn btn-default " id="bt_fanwei_add" ><i class="icon-add"></i>确定</button>
             <button type="button" class="btn btn-default " id="bt_fanwei_all" onclick="bt_fanwei_all()">全选</button>
-            <button type="button" class="btn btn-default " id="bt_fanwei_clear" onclick="bt_fanwei_clear()">全部取消</button>
+            <button type="button" class="btn btn-default " id="bt_fanwei_clear" onclick="bt_fanwei_clear()">取消全选</button>
             <table class="table" id="qxdatatable">
                 <caption></caption>
                 <thead>
-                    <tr style="display:block">
+                    <tr>
                         <td></td>
-                        <td style="width:150px">编号</td>
-                        <td style="width:60px">名称</td>
-                        <td style="width:930px">描述</td>
-                        <td style="width:100px">管理分类</td>
+                        <td>编号</td>
+                        <td>名称</td>
+                        <td>描述</td>
+                        <td>管理分类</td>
                     </tr>
                 </thead>
-                <tbody style="display:block; max-height:460px;overflow:scroll"></tbody>
+                <tbody></tbody>
             </table>
         </div>
     </div>
