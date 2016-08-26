@@ -4,10 +4,6 @@
 @{ViewBag.Title = "商品信息添加";}
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#makedate").datepicker();//时间
-
-        $("#shouying").val("1");//默认首营状态为"新建"
-
         //货主ID--→产品线名称
         $("#huozhuid").change(function () {
             var _huozhuid = $("#huozhuid").val();
@@ -48,6 +44,7 @@
                     
                 });
         };
+        $("#shouying").val("1");//默认首营状态为新建
     });
 </script>
 <script type="text/javascript">
@@ -165,10 +162,7 @@
             @*规格*@
             <div class="form-group">
                 <label for="name" class="col-sm-2">规格</label>
-                <div class="col-sm-10">
-                    <select name="Guige" id="ul_gg" style="width:100%;"></select>
-                </div>
-                
+                <select name="Guige" id="ul_gg" style="width:926px;margin-left:12px;" class="col-sm-10"></select>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.Xinghao, new { @class = "control-label col-sm-2" })
@@ -209,9 +203,7 @@
             @*产品线*@
             <div class="form-group">
                 <label for="name" class="col-sm-2">产品线名称</label>
-                <div class="col-sm-10">
-                    <select name="chanpinxian" id="ul_cpx" style="width:100%;"></select>
-                </div>
+                <select name="chanpinxian" id="ul_cpx" style="width:926px;margin-left:12px;" class="col-sm-10" ></select>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.Muluxuhao, new { @class = "control-label col-sm-2" })
@@ -277,7 +269,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.MakeDate, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    <input id="makedate" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="makedate">
+                    <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="MakeDate">
                 </div>
             </div>
             <div class="form-group">

@@ -9,9 +9,6 @@
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
-        $(document).ready(function () {
-            $("#ob_base_chanpinxian_makedate").datepicker();//时间
-        });
     </script>
     <ul class="breadcrumb">
         <li>
@@ -57,7 +54,7 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2">录入日期</label>
                 <div class="col-sm-10">
-                    <input id="ob_base_chanpinxian_makedate" type="date" class="form-control" name="ob_base_chanpinxian_makedate" value="@string.Format("{0:yyyy-MM-dd}",item.MakeDate)">
+                    <input type="date" class="form-control" name="ob_base_chanpinxian_makedate" value="@string.Format("{0:yyyy-MM-dd}",item.MakeDate)">
                 </div>
             </div>
             <div class="form-group">

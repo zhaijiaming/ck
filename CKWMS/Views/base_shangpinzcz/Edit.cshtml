@@ -7,8 +7,6 @@
 @Html.GetFileUpload("zhucezhengtp", "zcz", "z", "cus", 1, 0, new Dictionary<string, string>() { { "zcz", "zhucezhengtp" } })
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#makedate").datepicker();//时间
-
         var _zczid = $("#zczbh").val();
         $("#pl_guige").hide();
         $("#pl_guige_add").hide();
@@ -185,7 +183,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.ZhucezhengYXQ, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    <input id="makedate" type="date" class="form-control" name="ZhucezhengYXQ" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.ZhucezhengYXQ)">
+                    <input onchange="check()" id="nowDate" type="date" class="form-control" name="ZhucezhengYXQ" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.ZhucezhengYXQ)">
                 </div>
             </div>
             @*中文编号*@
