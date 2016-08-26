@@ -99,8 +99,8 @@
                     <td>编号</td>
                     <td>名称</td>
                     <td>描述</td>
-                    <td>录入日期</td>
-                    <td>输入人</td>
+                    @*<td>录入日期</td>
+                    <td>输入人</td>*@
                     <td>管理分类</td>
                 </tr>
             </thead>
@@ -116,9 +116,9 @@
                         <td>@item.Bianhao</td>
                         <td>@item.Mingcheng</td>
                         <td>@item.Miaoshu</td>                        
-                        <td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
+                        @*<td>@item.MakeDate.ToString("yyyy-MM-dd")</td>*@
                         @*<td>@item.MakeMan</td>*@
-                        <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
+                        @*<td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>*@
                         @*<td>@item.GuanliFL</td>*@
                         <td>@Html.GetCommonValue_ID("医疗器械管理类别",(int)item.GuanliFL)</td>
                     </tr>
