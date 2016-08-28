@@ -343,8 +343,8 @@ namespace CKWMS.Controllers
             {
                 Console.WriteLine(ex.Message);
             }
-            
-            return RedirectToAction("Index"/*, new { status = 2 }*/);
+
+            return RedirectToAction("Index");
         }
 
         public ActionResult Edit(int id)
@@ -416,7 +416,7 @@ namespace CKWMS.Controllers
                 }
             }
             return RedirectToAction("Index");
-        }       
+        }
     }
 }
 
