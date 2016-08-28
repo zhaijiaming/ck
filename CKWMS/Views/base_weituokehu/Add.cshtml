@@ -9,6 +9,12 @@
 
         $(document).ready(function () {
 
+            $("#MakeDate").datepicker();
+            $("#YingyezhizhaoYXQ").datepicker();
+            $("#ZuzhijigouYXQ").datepicker();
+            $("#ShuiwudengjiYXQ").datepicker();
+            $("#JingyingxukeYXQ").datepicker();
+            
             $("#pl_Fanwei").hide();
             $("#pl_fanwei_add").hide();
 
@@ -61,7 +67,12 @@
                 $(".checkbox").prop("checked", false);
 
             })
+
+
+            
         });
+
+
 
         function GetFanwei() {
             //var _qxmlid = $("#qxml").val();
@@ -166,7 +177,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.YingyezhizhaoYXQ, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="YingyezhizhaoYXQ">
+                    <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="YingyezhizhaoYXQ" id="YingyezhizhaoYXQ">
                 </div>
             </div>
             @*YingyezhizhaoTP*@
@@ -193,7 +204,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.ZuzhijigouYXQ, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="ZuzhijigouYXQ">
+                    <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="ZuzhijigouYXQ" id="ZuzhijigouYXQ">
                 </div>
             </div>
 
@@ -221,7 +232,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.ShuiwudengjiYXQ, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="ShuiwudengjiYXQ">
+                    <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="ShuiwudengjiYXQ" id="ShuiwudengjiYXQ">
                 </div>
             </div>
             @*ShuiwudengjiTP*@
@@ -248,7 +259,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.JingyingxukeYXQ, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="JingyingxukeYXQ">
+                    <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="JingyingxukeYXQ" id="JingyingxukeYXQ">
                 </div>
             </div>
             @*JingyingxukeTP*@
@@ -309,7 +320,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.MakeDate, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="MakeDate">
+                    <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="MakeDate" id="MakeDate">
                 </div>
             </div>
             <div class="form-group">
@@ -322,29 +333,31 @@
     }
 </div>
 
-<div id="pl_Fanwei" class="panel panel-primary easyui-window" style="position:absolute;top:200px;left:300px;width:1100px;height:600px;z-index:999;">
+<div id="pl_Fanwei" class="panel panel-primary easyui-window" style="position:absolute;top:200px;left:300px;width:1100px;height:600px;z-index:900;">
     <div class="panel-heading">
         <h3 class="panel-title">经营范围管理<button id="pl_close" class="pull-right">X</button></h3>
     </div>
-    <div class="panel-body" style="width:1090px;height:550px;z-index:999;overflow:scroll">
+    <div class="panel-body" @*style="width:1090px;height:550px;z-index:950;overflow:scroll"*@>
         <div class="center">
             <button type="button" class="btn btn-default " id="bt_fanwei_add"><i class="icon-add"></i>确定</button>
             <button type="button" class="btn btn-default " id="bt_fanwei_all">全选</button>
-            <button type="button" class="btn btn-default " id="bt_fanwei_clear">取消全选</button>
+            <button type="button" class="btn btn-default " id="bt_fanwei_clear">全部取消</button>
 
-            <table class="table" id="qxdatatable">
-                <caption></caption>
-                <thead>
-                    <tr>
-                        <td></td>
-                        <td>编号</td>
-                        <td>名称</td>
-                        <td>描述</td>
-                        <td>管理分类</td>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+            <div @*style="width:1080px;height:500px;z-index:950;overflow:scroll"*@>
+                <table class="table" id="qxdatatable">
+                    <caption></caption>
+                    <thead style="display:block">
+                        <tr>
+                            <td></td>
+                            <td style="width:150px">编号</td>
+                            <td style="width:60px">名称</td>
+                            <td style="width:930px">描述</td>
+                            <td style="width:100px">管理分类</td>
+                        </tr>
+                    </thead>
+                    <tbody style="display:block; max-height:460px;overflow:scroll"></tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
