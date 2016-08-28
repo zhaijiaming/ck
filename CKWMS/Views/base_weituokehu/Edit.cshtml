@@ -11,6 +11,12 @@
 
         $(document).ready(function () {
 
+            $("#MakeDate").datepicker();
+            $("#YingyezhizhaoYXQ").datepicker();
+            $("#ZuzhijigouYXQ").datepicker();
+            $("#ShuiwudengjiYXQ").datepicker();
+            $("#JingyingxukeYXQ").datepicker();
+
             $("#pl_Fanwei").hide();
             $("#pl_fanwei_add").hide();
 
@@ -231,7 +237,7 @@
                                             <div class="form-group">
                                                 @Html.LabelFor(m => m.MakeDate, new { @class = "control-label col-sm-2" })
                                                 <div class="col-sm-10">
-                                                    <input type="date" class="form-control" name="MakeDate" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.MakeDate)">
+                                                    <input type="date" class="form-control" name="MakeDate" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.MakeDate)" id="MakeDate">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -278,7 +284,7 @@
                                             <div class="form-group">
                                                 @Html.LabelFor(m => m.YingyezhizhaoYXQ, new { @class = "control-label col-sm-2" })
                                                 <div class="col-sm-10">
-                                                    <input type="date" class="form-control" name="YingyezhizhaoYXQ" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.YingyezhizhaoYXQ)">
+                                                    <input type="date" class="form-control" name="YingyezhizhaoYXQ" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.YingyezhizhaoYXQ)" id="YingyezhizhaoYXQ">
                                                 </div>
                                             </div>
 
@@ -307,7 +313,7 @@
                                             <div class="form-group">
                                                 @Html.LabelFor(m => m.ZuzhijigouYXQ, new { @class = "control-label col-sm-2" })
                                                 <div class="col-sm-10">
-                                                    <input type="date" class="form-control" name="ZuzhijigouYXQ" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.ZuzhijigouYXQ)">
+                                                    <input type="date" class="form-control" name="ZuzhijigouYXQ" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.ZuzhijigouYXQ)" id="ZuzhijigouYXQ">
                                                 </div>
                                             </div>
 
@@ -336,7 +342,7 @@
                                             <div class="form-group">
                                                 @Html.LabelFor(m => m.ShuiwudengjiYXQ, new { @class = "control-label col-sm-2" })
                                                 <div class="col-sm-10">
-                                                    <input type="date" class="form-control" name="ShuiwudengjiYXQ" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.ShuiwudengjiYXQ)">
+                                                    <input type="date" class="form-control" name="ShuiwudengjiYXQ" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.ShuiwudengjiYXQ)" id="ShuiwudengjiYXQ">
                                                 </div>
                                             </div>
 
@@ -365,7 +371,7 @@
                                             <div class="form-group">
                                                 @Html.LabelFor(m => m.JingyingxukeYXQ, new { @class = "control-label col-sm-2" })
                                                 <div class="col-sm-10">
-                                                    <input type="date" class="form-control" name="JingyingxukeYXQ" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.JingyingxukeYXQ)">
+                                                    <input type="date" class="form-control" name="JingyingxukeYXQ" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.JingyingxukeYXQ)" id="JingyingxukeYXQ">
                                                 </div>
                                             </div>
 
@@ -420,23 +426,23 @@
     <div class="panel-heading">
         <h3 class="panel-title">经营范围管理<button id="pl_close" class="pull-right">X</button></h3>
     </div>
-    <div class="panel-body" style="width:1080px;height:550px;z-index:999;overflow:scroll">
+    <div class="panel-body" @*style="width:1080px;height:550px;z-index:999;overflow:scroll"*@>
         <div class="center">
             <button type="button" class="btn btn-default " id="bt_fanwei_add"><i class="icon-add"></i>确定</button>
             <button type="button" class="btn btn-default " id="bt_fanwei_all" onclick="bt_fanwei_all()">全选</button>
-            <button type="button" class="btn btn-default " id="bt_fanwei_clear" onclick="bt_fanwei_clear()">取消全选</button>
+            <button type="button" class="btn btn-default " id="bt_fanwei_clear" onclick="bt_fanwei_clear()">全部取消</button>
             <table class="table" id="qxdatatable">
                 <caption></caption>
-                <thead>
+                <thead style="display:block">
                     <tr>
                         <td></td>
-                        <td>编号</td>
-                        <td>名称</td>
-                        <td>描述</td>
-                        <td>管理分类</td>
+                        <td style="width:150px">编号</td>
+                        <td style="width:60px">名称</td>
+                        <td style="width:930px">描述</td>
+                        <td style="width:100px">管理分类</td>
                     </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody style="display:block; max-height:460px;overflow:scroll"></tbody>
             </table>
         </div>
     </div>
