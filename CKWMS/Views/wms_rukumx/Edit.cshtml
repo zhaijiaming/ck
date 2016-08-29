@@ -8,6 +8,11 @@
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        $(document).ready(function () {
+            $("#MakeDate").datepicker();
+            $("#ShengchanRQ").datepicker();
+            $("#ShixiaoRQ").datepicker();
+        });
     </script>
     <ul class="breadcrumb">
         <li>
@@ -25,7 +30,9 @@
     @using (Html.BeginForm("Update", "wms_rukumx", FormMethod.Post, new { @role = "form" }))
     {
         @Html.AntiForgeryToken()
+        <input type="hidden" name="rkdid" value="@ViewData.Model.RukuID" />
         <input type="hidden" name="id" value="@ViewData.Model.ID" />
+        <input type="hidden" name="spid" value="@ViewData.Model.ShangpinID" />
         <div class="page-header">
             <p>
                 <button type="submit" class="btn btn-default"><i class="icon-save"></i>更新</button>
@@ -34,21 +41,12 @@
         </div>
         <div class="container">
             <div class="form-group">
-                @Html.LabelFor(m => m.RukuID, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.RukuID, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.ShangpinID, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.ShangpinID, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
                 @Html.LabelFor(m => m.ShangpinMC, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
+                <div class="col-sm-8">
                     @Html.TextBoxFor(m => m.ShangpinMC, new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    <p id="bt_selsp" class="form-control btn center"><i class="icon-leaf red"></i>选择商品</p>
                 </div>
             </div>
             <div class="form-group">
@@ -84,13 +82,13 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.ShengchanRQ, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" name="ShengchanRQ" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.ShengchanRQ)">
+                    <input id="ShengchanRQ" type="date" class="form-control" name="ShengchanRQ" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.ShengchanRQ)">
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.ShixiaoRQ, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" name="ShixiaoRQ" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.ShixiaoRQ)">
+                    <input id="ShixiaoRQ" type="date" class="form-control" name="ShixiaoRQ" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.ShixiaoRQ)">
                 </div>
             </div>
             <div class="form-group">
@@ -172,27 +170,9 @@
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.Col1, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Col1, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Col2, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Col2, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Col3, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Col3, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
                 @Html.LabelFor(m => m.MakeDate, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" name="MakeDate" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.MakeDate)">
+                    <input id="MakeDate" type="date" class="form-control" name="MakeDate" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.MakeDate)">
                 </div>
             </div>
             <div class="form-group">

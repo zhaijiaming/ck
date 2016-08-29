@@ -21,7 +21,7 @@ namespace CKWMS.reports
                 int _userid = (int)Session["user_id"];
                 string name = "";
                 ReportDataSet _rds = new ReportDataSet();
-                DataTable _dt;                
+                //DataTable _dt;                
                 if (Request.QueryString["pid"] != null)
                 {
                     name = Request.QueryString["pid"];

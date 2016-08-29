@@ -109,6 +109,16 @@ namespace CKWMS.App_Code
                         }
                     }
                     break;
+                case "医疗器械目录":
+                    var _tmpqxml = ServiceFactory.base_qixiemuluservice.LoadSortEntities(p => p.IsDelete == false, true, s => s.Mingcheng);
+                    foreach(var i in _tmpqxml)
+                    {
+                        if (i.ID == selectedvalue && selectedvalue != 0)
+                            sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.ID, i.Mingcheng);
+                        else
+                            sb.AppendFormat("<option value=\"{0}\">{1}</option>", i.ID, i.Mingcheng);
+                    }
+                    break;
                 case "注册证":
                     var tmpzcz = ServiceFactory.base_shangpinzczservice.LoadSortEntities(p => p.IsDelete == false && p.ShixiaoSF == false, true, s => s.Bianhao);
                     foreach (var i in tmpzcz)
@@ -273,10 +283,10 @@ namespace CKWMS.App_Code
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat("<select name=\"{0}\" id=\"{1}\" class=\"width-100\" >", showName, showName);
-            if (selectedValue == 0)
-                sb.AppendFormat("<option value=\"\" selected=\"selected\"></option>");
-            else
-                sb.AppendFormat("<option value=\"\"></option>");
+            //if (selectedValue == 0)
+            //    sb.AppendFormat("<option value=\"\" selected=\"selected\"></option>");
+            //else
+            //    sb.AppendFormat("<option value=\"\"></option>");
             switch (itemName)
             {
                 case "首营状态":
@@ -456,6 +466,7 @@ namespace CKWMS.App_Code
                     icon = "icon-magic";
                     break;
                 default:
+                    icon = "icon-anchor";
                     break;
             }
             return icon;
@@ -877,6 +888,13 @@ namespace CKWMS.App_Code
                         returnvalue = "";
                     else
                         returnvalue = _shdw.Mingcheng;
+                    break;
+                case "医疗器械目录":
+                    base_qixiemulu _qxml = ServiceFactory.base_qixiemuluservice.GetEntityById(p => p.ID == dataValue && p.IsDelete == false);
+                    if (_qxml == null)
+                        returnvalue = "";
+                    else
+                        returnvalue = _qxml.Mingcheng;
                     break;
                 default:
                     break;

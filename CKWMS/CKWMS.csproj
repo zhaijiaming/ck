@@ -285,6 +285,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\auth_gongsiController.cs" />
+    <Compile Include="Controllers\base_bumenController.cs" />
+    <Compile Include="Controllers\base_feiyongxmController.cs" />
+    <Compile Include="Controllers\base_huobiController.cs" />
+    <Compile Include="Controllers\base_quyuController.cs" />
+    <Compile Include="Models\auth_gongsiViewModel.cs" />
+    <Compile Include="Models\base_bumenViewModel.cs" />
+    <Compile Include="Models\base_feiyongxmViewModel.cs" />
+    <Compile Include="Models\base_huobiViewModel.cs" />
+    <Compile Include="Models\base_quyuViewModel.cs" />
     <Compile Include="reports\ReportDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -702,6 +712,21 @@
     <Content Include="Views\base_shouhuomingxi\GetDetail.cshtml" />
     <Content Include="Views\wms_rukumx\CargoIndex.cshtml" />
     <Content Include="Views\wms_rukumx\AddOn.cshtml" />
+    <Content Include="Views\auth_gongsi\Add.cshtml" />
+    <Content Include="Views\auth_gongsi\Edit.cshtml" />
+    <Content Include="Views\auth_gongsi\Index.cshtml" />
+    <Content Include="Views\base_bumen\Add.cshtml" />
+    <Content Include="Views\base_bumen\Edit.cshtml" />
+    <Content Include="Views\base_bumen\Index.cshtml" />
+    <Content Include="Views\base_feiyongxm\Add.cshtml" />
+    <Content Include="Views\base_feiyongxm\Edit.cshtml" />
+    <Content Include="Views\base_feiyongxm\Index.cshtml" />
+    <Content Include="Views\base_huobi\Add.cshtml" />
+    <Content Include="Views\base_huobi\Edit.cshtml" />
+    <Content Include="Views\base_huobi\Index.cshtml" />
+    <Content Include="Views\base_quyu\Add.cshtml" />
+    <Content Include="Views\base_quyu\Edit.cshtml" />
+    <Content Include="Views\base_quyu\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

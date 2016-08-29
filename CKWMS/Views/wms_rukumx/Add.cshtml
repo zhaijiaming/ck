@@ -2,12 +2,15 @@
 @using CKWMS.Models
 @model wms_rukumxViewModel
 @{ViewBag.Title = "入库商品添加";}
-
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
         var _spload = false;
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
         $(document).ready(function () {
+            $("#MakeDate").datepicker();
+            $("#ShengchanRQ").datepicker();
+            $("#ShixiaoRQ").datepicker();
+            $("#pl_shangpin").draggable();
             $("#bt_selsp").click(function () {
                 if (!_spload)
                     getShangPin();
@@ -17,12 +20,17 @@
                 $("#pl_shangpin").hide();
             });
             $("#pl_ok").click(function () {
-                $("#spdatatable tr input[type=checkbox]").each(function () {
+                $("#mydatatable tr input[type=checkbox]").each(function () {
                     if (this.checked) {
                         alert($(this).val() + "," + $(this).data("cctj"));
+                        $("#spid").val($(this).val());
                         $("#ShangpinMC").val($(this).data("mc"));
                         $("#Zhucezheng").val($(this).data("zcz"));
                         $("#Guige").val($(this).data("gg"));
+                        $("#JibenDW").val($(this).data("dw"));
+                        $("#BaozhuangDW").val($(this).data("bdw"));
+                        $("#Changjia").val($(this).data("qymc"));
+                        $("#ShangpinTM").val($(this).data("tm"));
                     }
                 });
                 $("#pl_shangpin").hide();
@@ -30,9 +38,21 @@
             $("#pl_refresh").click(function () {
                 getShangPin();
             });
-            $("tr").bind("dblclick",function () {
-                alert($(this).val() + "," + $(this).data("mc"));
-                $("#pl_shangpin").hide();
+            $("#mydatatable tr").bind("dblclick", function () {
+                var u_id = $(this).find("td").eq(0).find("input");
+                alert(u_id.val() + "," + u_id.data("mc"));
+                var u_idd = $(this).find("td").eq(0).find("input").val();
+
+                if (u_idd != null) {
+                    $("#ShangpinMC").val($(this).data("mc"));
+                    $("#Zhucezheng").val($(this).data("zcz"));
+                    $("#Guige").val($(this).data("gg"));
+                    $("#JibenDW").val($(this).data("dw"));
+                    $("#BaozhuangDW").val($(this).data("bdw"));
+                    $("#Changjia").val($(this).data("qymc"));
+                    $("#ShangpinTM").val($(this).data("tm"));
+                    $("#pl_shangpin").hide();
+                }
             });
         });
         function getShangPin() {
@@ -46,6 +66,7 @@
                         var _filldata = '';
                         for (var i in data) {
                             _filldata = _filldata + '<tr>';
+                            //_filldata = _filldata + '<td></td><td>';
                             _filldata = _filldata + '<td><div class="checkbox"><label><input type="checkbox" value="';
                             _filldata = _filldata + data[i].ID;
                             _filldata = _filldata + '" data-dm="' + data[i].Daima + '" data-mc="' + data[i].Mingcheng + '" data-zcz="';
@@ -88,7 +109,8 @@
                             _filldata = _filldata + '</td>';
                             _filldata = _filldata + '</tr>';
                         }
-                        $("#spdatatable tbody").html(_filldata);
+                        //_filldata = _filldata + '<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
+                        $("#mydatatable tbody").html(_filldata);
                     }
                 }
                 );
@@ -108,202 +130,198 @@
         <li class="active"> 新增</li>
     </ul>
 </div>
-
-<div class="page-content">
-    @using (Html.BeginForm("Save", "wms_rukumx", FormMethod.Post, new { @role = "form" }))
-    {
-        @Html.AntiForgeryToken()
-        <input type="hidden" name="id" />
-        <input type="hidden" name="rkdid" id="rkd" value="@ViewBag.rkdid" />
-        <input type="hidden" name="spid" id="spid" value="" />
-        <div class="page-header">
-            <p>
-                <button type="submit" class="btn btn-default"><i class="icon-save"></i>保存</button>
-                <button type="button" class="btn btn-default" onclick="javascript:history.back(-1); "><i class="icon-hand-left"></i>返回</button>
-            </p>
-        </div>
-        <div class="container">
-            <div class="form-group">
-                @Html.LabelFor(m => m.ShangpinMC, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-8">
-                    @Html.TextBoxFor(m => m.ShangpinMC, new { @class = "form-control" })
+    <div class="page-content">
+        @using (Html.BeginForm("Save", "wms_rukumx", FormMethod.Post, new { @role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="id" />
+            <input type="hidden" name="RukuID" id="rkd" value="@ViewBag.rkdid" />
+            <input type="hidden" name="ShangpinID" id="spid" value="" />
+            <div class="page-header">
+                <p>
+                    <button type="submit" class="btn btn-default"><i class="icon-save"></i>保存</button>
+                    <button type="button" class="btn btn-default" onclick="javascript:history.back(-1); "><i class="icon-hand-left"></i>返回</button>
+                </p>
+            </div>
+            <div class="container">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ShangpinMC, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.ShangpinMC, new { @class = "form-control" })
+                    </div>
+                    <div class="col-sm-2">
+                        <p id="bt_selsp" class="form-control btn center"><i class="icon-leaf red"></i>选择商品</p>
+                    </div>
                 </div>
-                <div class="col-sm-2">
-                    <p id="bt_selsp" class="form-control btn center"><i class="icon-leaf red"></i>选择商品</p>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Zhucezheng, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.Zhucezheng, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Guige, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.Guige, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Pihao, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.Pihao, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Pihao1, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.Pihao1, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Xuliema, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.Xuliema, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ShengchanRQ, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        <input id="ShengchanRQ" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="ShengchanRQ">
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ShixiaoRQ, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        <input id="ShixiaoRQ" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="ShixiaoRQ">
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.DaohuoSL, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.DaohuoSL, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.YishouSL, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.YishouSL, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.JibenDW, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.JibenDW, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.BaozhuangDW, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.BaozhuangDW, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Huansuanlv, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.Huansuanlv, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Changjia, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.Changjia, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Chandi, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.Chandi, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ShangpinTM, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.ShangpinTM, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Zhongliang, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.Zhongliang, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Jingzhong, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.Jingzhong, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Tiji, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.Tiji, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Jifeidun, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.Jifeidun, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Beizhu, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.Beizhu, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.MakeDate, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        <input id="MakeDate" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="MakeDate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.MakeMan, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.SelectList_Auto("MakeMan", "userinfo", "fullname")
+                    </div>
                 </div>
             </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Zhucezheng, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Zhucezheng, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Guige, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Guige, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Pihao, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Pihao, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Pihao1, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Pihao1, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Xuliema, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Xuliema, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.ShengchanRQ, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="ShengchanRQ">
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.ShixiaoRQ, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="ShixiaoRQ">
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.DaohuoSL, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.DaohuoSL, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.YishouSL, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.YishouSL, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.JibenDW, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.JibenDW, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.BaozhuangDW, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.BaozhuangDW, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Huansuanlv, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Huansuanlv, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Changjia, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Changjia, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Chandi, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Chandi, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.ShangpinTM, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.ShangpinTM, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Zhongliang, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Zhongliang, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Jingzhong, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Jingzhong, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Tiji, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Tiji, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Jifeidun, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Jifeidun, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Beizhu, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Beizhu, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.MakeDate, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="MakeDate">
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.MakeMan, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.SelectList_Auto("MakeMan", "userinfo", "fullname")
-                </div>
-            </div>
-        </div>
-    }
-</div>
-<div id="pl_shangpin" class="panel panel-primary" style="display:none;position:absolute;top:50px;left:100px;width:800px;height:600px;z-index:999;">
-    <div class="panel-heading">
-        <h3 class="panel-title">商品选择<button id="pl_close" class="pull-right">X</button></h3>
+        }
     </div>
-    <div class="panel-body">
-        <div class="row">
-            <ul class="nav navbar-nav center">
-                <li><p class="btn default" id="pl_ok"><i class="icon-ok"></i>确定</p></li>
-                <li><p class="btn default" id="pl_refresh"><i class="icon-refresh"></i>刷新</p></li>
-            </ul>
+    <div id="pl_shangpin" class="panel panel-primary" style="display:none;position:absolute;top:50px;left:100px;width:800px;height:600px;z-index:999;">
+        <div class="panel-heading">
+            <h3 class="panel-title">商品选择<button id="pl_close" class="pull-right">X</button></h3>
         </div>
-        <div class="row" style="width:580px;height:450px;overflow:auto;">
-            <table class="table" id="spdatatable">
-                <caption>货主商品列表</caption>
-                <thead>
-                    <tr>
-                        <td></td>
-                        <td>商品代码</td>
-                        <td>商品名称</td>
-                        <td>注册证编号</td>
-                        <td>规格</td>
-                        <td>型号</td>
-                        <td>单位</td>
-                        <td>包装单位</td>
-                        <td>换算率</td>
-                        <td>产品线</td>
-                        <td>分类目录</td>
-                        <td>管理分类</td>
-                        <td>包装要求</td>
-                        <td>存储条件</td>
-                        <td>生产企业</td>
-                        <td>供应商</td>
-                        <td>商品条码</td>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+        <div class="panel-body">
+            <div class="center">
+                <p class="btn default" id="pl_ok"><i class="icon-ok"></i>确定</p>
+                <p class="btn default" id="pl_refresh"><i class="icon-refresh"></i>刷新</p>
+            </div>
+            <div class="row" style="width:782px;height:500px;overflow:auto;">
+                <table class="table" id="mydatatable">
+                    <caption></caption>
+                    <thead>
+                        <tr>
+                            <td></td>
+                            <td>商品代码</td>
+                            <td>商品名称</td>
+                            <td>注册证</td>
+                            <td>规格</td>
+                            <td>型号</td>
+                            <td>单位</td>
+                            <td>包装单位</td>
+                            <td>换算率</td>
+                            <td>产品线</td>
+                            <td>分类目录</td>
+                            <td>管理分类</td>
+                            <td>存储条件</td>
+                            <td>生产企业</td>
+                            <td>供应商</td>
+                            <td>商品条码</td>
+                        </tr>
+                    </thead>
+                    <tbody>                               </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
