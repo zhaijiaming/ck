@@ -14,6 +14,16 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CKWMS.Controllers
 {
+    public class ZhuCeZhenXX
+    {
+        public int ID { get; set; }
+        public string Bianhao { get; set; }
+        public string Mingcheng { get; set; }
+        public string Bianzhun { get; set; }
+        public string Chandi { get; set; }
+        public int ShengchanqiyeID { get; set; }
+
+    }
     public class base_shangpinzczController : Controller
     {
         private Ibase_shangpinzczService ob_base_shangpinzczservice = ServiceFactory.base_shangpinzczservice;
@@ -288,6 +298,38 @@ namespace CKWMS.Controllers
                 base_shangpinzczviewmodel.Beizhu = tempData.Beizhu;
                 return View(base_shangpinzczviewmodel);
             }
+        }
+
+        public JsonResult GetDetail()
+        {
+            int _userid = (int)Session["user_id"];
+            string _username = (string)Session["user_name"];
+            string _zczid = Request["zczbh"] ?? "";
+
+            IList<ZhuCeZhenXX> _zczxxs;
+
+            if (_zczid == "")
+                return Json("");
+            else
+            {
+                _zczxxs = new List<ZhuCeZhenXX>();
+                var tempdata = ob_base_shangpinzczservice.LoadSortEntities(p => p.IsDelete == false && p.ID == int.Parse(_zczid), false, p => p.Mingcheng);
+                foreach(base_shangpinzcz _zcz in tempdata)
+                {
+                    if(_zcz.ID > 0)
+                    {
+                        ZhuCeZhenXX _zczxx = new ZhuCeZhenXX();
+                        _zczxx.ID = _zcz.ID;
+                        _zczxx.Mingcheng = _zcz.Mingcheng;
+                        _zczxx.Chandi = _zcz.Chandi;
+                        var Shengchanqiye = _zcz.ShengchanqiyeID.Value;
+                        _zczxx.ShengchanqiyeID = Shengchanqiye;
+                        _zczxxs.Add(_zczxx);
+                    }
+                }
+            }
+
+            return Json(_zczxxs);
         }
 
         [HttpPost]
