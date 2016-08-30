@@ -6,18 +6,12 @@
 }
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#btn_daima").click(function () {
-            var txtDaima = $("#Daima").val();
-            var guige = $("#select_gg").find("option:selected").text();
-            if (txtDaima == "") {
-                $("#Daima").val(guige);
-                $("#btn_daima").val("重置");
-            }
-            else {
-                $("#Daima").val(guige);
-            }
-        });
         $("#makedate").datepicker();//时间
+        //注册证--→代码
+        $("#select_gg").change(function () {
+            var guige = $("#select_gg").find("option:selected").text();
+            $("#Daima").val(guige);
+        });
     });
 </script>
 @*货主ID--→产品线名称*@
@@ -61,6 +55,12 @@
             var _zczid = $("#zhucezhengid").val();
             //alert(_zczid);
             getCpx(_zczid);
+
+            //延时获取规格文本
+            setTimeout(function () {
+                var guige = $("#select_gg").find("option:selected").text();
+                $("#Daima").val(guige);
+            }, 500);
         });
         function getCpx(zczid) {
             var _zczid = zczid;
@@ -72,7 +72,6 @@
                 },
                 function (data) {
                     for (var i in data) {
-
                         filltable = filltable + '<option>';
                         filltable = filltable + data[i].Guige;
                         filltable = filltable + '</option>';
@@ -88,9 +87,6 @@
         $("#zhucezhengid").change(function () {
             var _zczid = $("#zhucezhengid").val();
             getMingcheng(_zczid);
-
-            var _mingcheng = $("#select_zczmc").val();
-            saveMingchengData(_mingcheng);
         });
         function getMingcheng(zczid) {
             var _zczid = zczid;
@@ -111,18 +107,7 @@
                     $("#select_zczmc").html(filltable);
                 });
         };
-        //传值存储
-        function saveMingchengData(mingcheng) {
-            var _mingcheng = mingcheng;
-            $.post(
-                "/base_shangpinxx/Save",
-                {
-                    mingcheng: _mingchenge
-                },
-                function (data, stat) {
-
-                });
-        };
+        
     });
 
 </script>
