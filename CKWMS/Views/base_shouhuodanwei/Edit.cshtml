@@ -70,6 +70,51 @@
         $("#btnSelect").val("picsel2");
     }
 </script>
+@*收货明细*@
+<script type="text/javascript">
+    $(document).ready(function () {
+        var shdw_id = $("#shdw_id").val();
+        if (shdw_id.length > 0) {
+            GetShouhuomingxiData(shdw_id);
+        };
+        function GetShouhuomingxiData(shdw_id) {
+            var shmxdata = "";
+            $.post(
+                "/base_shouhuomingxi/getmingxidetail",
+                    {
+                        shdw_id: shdw_id
+                    },
+                   function (data) {
+                       if (data.length > 0) {
+                           for (var i in data) {
+                               shmxdata = shmxdata + '<tr><td><div class="checkbox"><label><input type="checkbox" value="';
+                               shmxdata = shmxdata + data[i].ID;
+                               shmxdata = shmxdata + '"></label></div></td>';
+                               shmxdata = shmxdata + '<td>';
+                               //shmxdata = shmxdata + data[i].ShouhuofangID;
+                               //shmxdata = shmxdata + '</td><td>';
+                               shmxdata = shmxdata + data[i].Dizhi;
+                               shmxdata = shmxdata + '</td><td>';
+                               shmxdata = shmxdata + data[i].Lianxiren;
+                               shmxdata = shmxdata + '</td><td>';
+                               shmxdata = shmxdata + data[i].Lianxidianhua;
+                               shmxdata = shmxdata + '</td><td>';
+                               shmxdata = shmxdata + data[i].XiaoshouID;
+                               shmxdata = shmxdata + '</td><td>';
+                               shmxdata = shmxdata + data[i].Xiaoshouren;
+                               //shmxdata = shmxdata + '</td><td>';
+                               //shmxdata = shmxdata + data[i].MakeDate;
+                               //shmxdata = shmxdata + '</td><td>';
+                               //shmxdata = shmxdata + data[i].MakeMan;
+                               shmxdata = shmxdata + '</td></tr>';
+                           }
+                           $("#shouhuomingxi_shdw tbody").html(shmxdata);
+                       }
+                   }
+                );
+        }
+    });
+</script>
 <div class="modal fade" id="myModalUpload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -117,7 +162,7 @@
 
 <div class="page-content">
     <form role="form" action="/base_shouhuodanwei/Update" method="post">
-        <input type="hidden" name="ob_base_shouhuodanwei_id" value="@item.ID" />
+        <input type="hidden" id="shdw_id" name="ob_base_shouhuodanwei_id" value="@item.ID" />
         <input type="hidden" id="btnSelect" value="" />
         <div class="page-header">
             <p>
@@ -127,15 +172,15 @@
         </div>
         <div class="container">
             <div class="form-group">
-                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>货主</label>
-                <div class="col-sm-10">
-                    @Html.SelectList_Auto("huozhuid", "货主", "名称", (int)item.HuozhuID)
-                </div>
-            </div>
-            <div class="form-group">
                 <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>单位名称</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" name="ob_base_shouhuodanwei_mingcheng" value="@item.Mingcheng">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>货主</label>
+                <div class="col-sm-10">
+                    @Html.SelectList_Auto("huozhuid", "货主", "名称", (int)item.HuozhuID)
                 </div>
             </div>
             <div class="form-group">
@@ -211,5 +256,27 @@
             </div>
         </div>
     </form>
+    @*收货明细列表*@
+    <div id="shouhuomingxi_shdw" class="container" style="height:360px;overflow:auto;">
+        <table class="table" id="mydatatable">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <td></td>
+                    @*<td>收货单位</td>*@
+                    <td>地址</td>
+                    <td>联系人</td>
+                    <td>联系电话</td>
+                    <td>货主的销售序号</td>
+                    <td>货主的销售姓名</td>
+                    @*<td>录入日期</td>
+                    <td>输入人</td>*@
+                </tr>
+            </thead>
+
+            <tbody></tbody>
+
+        </table>
+    </div>
 </div>
 
