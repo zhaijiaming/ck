@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 namespace CKWMS.Models
 {
     public partial class base_gongyingshangViewModel
-    {
+    {       
         [Display(Name = "序号")]
         public int ID { get; set; }
         [Display(Name = "代码")]

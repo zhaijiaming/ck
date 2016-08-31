@@ -79,6 +79,9 @@ namespace CKWMS.Controllers
             string bianhao = Request["bianhao"] ?? "";
             string bianhaoequal = Request["bianhaoequal"] ?? "";
             string bianhaoand = Request["bianhaoand"] ?? "";
+            string miaoshu = Request["miaoshu"] ?? "";
+            string miaoshuequal = Request["miaoshuequal"] ?? "";
+            string miaoshuand = Request["miaoshuand"] ?? "";
             Expression<Func<base_quyu, bool>> where = PredicateExtensionses.True<base_quyu>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -107,6 +110,29 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bianhao", bianhao, bianhaoequal, bianhaoand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bianhao", "", bianhaoequal, bianhaoand);
+
+                if (!string.IsNullOrEmpty(miaoshu))
+                {
+                    if (miaoshuequal.Equals("="))
+                    {
+                        if (miaoshuand.Equals("and"))
+                            where = where.And(base_quyu => base_quyu.Miaoshu == miaoshu);
+                        else
+                            where = where.Or(base_quyu => base_quyu.Miaoshu == miaoshu);
+                    }
+                    if (miaoshuequal.Equals("like"))
+                    {
+                        if (miaoshuand.Equals("and"))
+                            where = where.And(base_quyu => base_quyu.Miaoshu.Contains(miaoshu));
+                        else
+                            where = where.Or(base_quyu => base_quyu.Miaoshu.Contains(miaoshu));
+                    }
+                }
+                if (!string.IsNullOrEmpty(miaoshu))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "miaoshu", miaoshu, miaoshuequal, miaoshuand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "miaoshu", "", miaoshuequal, miaoshuand);
+
                 searchconditionService.GetInstance().AddEntity(sc);
             }
             else
@@ -133,6 +159,29 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bianhao", bianhao, bianhaoequal, bianhaoand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bianhao", "", bianhaoequal, bianhaoand);
+
+                if (!string.IsNullOrEmpty(miaoshu))
+                {
+                    if (miaoshuequal.Equals("="))
+                    {
+                        if (miaoshuand.Equals("and"))
+                            where = where.And(base_quyu => base_quyu.Miaoshu == miaoshu);
+                        else
+                            where = where.Or(base_quyu => base_quyu.Miaoshu == miaoshu);
+                    }
+                    if (miaoshuequal.Equals("like"))
+                    {
+                        if (miaoshuand.Equals("and"))
+                            where = where.And(base_quyu => base_quyu.Miaoshu.Contains(miaoshu));
+                        else
+                            where = where.Or(base_quyu => base_quyu.Miaoshu.Contains(miaoshu));
+                    }
+                }
+                if (!string.IsNullOrEmpty(miaoshu))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "miaoshu", miaoshu, miaoshuequal, miaoshuand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "miaoshu", "", miaoshuequal, miaoshuand);
+
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;

@@ -9,10 +9,13 @@ namespace CKWMS.Models
         [Display(Name = "序号")]
         public int? ID { get; set; }
         [Display(Name = "代码")]
+        [Required(ErrorMessage = "代码不能为空")]
         public string Daima { get; set; }
         [Display(Name = "简称")]
+        [Required(ErrorMessage = "简称不能为空")]
         public string Jiancheng { get; set; }
         [Display(Name = "名称")]
+        [Required(ErrorMessage = "名称不能为空")]
         public string Mingcheng { get; set; }
         [Display(Name = "标识")]
         public string Biaozhi { get; set; }
