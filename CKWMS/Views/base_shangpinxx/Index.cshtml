@@ -113,10 +113,8 @@
                         <td>存储条件</td>
                         <td>生产企业</td>
                         <td>供应商</td>
-                        <td>首营状态</td>
-                        <td>是否审查</td>
-                        <td>是否经营</td>
                         <td>商品条码</td>
+                        <td>首营状态</td>
                         <td>录入日期</td>
                         <td>输入人</td>
                     </tr>
@@ -147,8 +145,6 @@
                             <td>@item.Cunchutiaojian</td>
                             <td>@item.Qiyemingcheng</td>
                             <td>@Html.GetDataValue_ID("供应商", "", (int)item.GongyingID)</td>
-                            <td>@item.ShenchaSF</td>
-                            <td>@item.JingyinSF</td>
                             <td>@item.ShangpinTM</td>
                             <td>@Html.GetCommonValue_ID("首营状态", (int)item.Shouying)</td>
                             <td>@item.MakeDate.ToString("yyyy-MM-dd")</td>

@@ -907,12 +907,26 @@ namespace CKWMS.App_Code
                     else
                         returnvalue = _gs.Mingcheng;
                     break;
-                case "医疗器械目录":
-                    base_qixiemulu _qxml = ServiceFactory.base_qixiemuluservice.GetEntityById(p => p.ID == dataValue && p.IsDelete == false);
+                case "供应商":
+                    base_gongyingshang _gys = ServiceFactory.base_gongyingshangservice.GetEntityById(p => p.ID == dataValue);
+                    if (_gys == null)
+                        returnvalue = "";
+                    else
+                        returnvalue = _gys.Mingcheng;
+                    break;
+                case "分类目录":
+                    base_qixiemulu _qxml = ServiceFactory.base_qixiemuluservice.GetEntityById(p => p.ID == dataValue);
                     if (_qxml == null)
                         returnvalue = "";
                     else
-                        returnvalue = _qxml.Mingcheng;
+                        returnvalue =_qxml.Bianhao+_qxml.Mingcheng;
+                    break;
+                case "产品线":
+                    base_chanpinxian _cpx = ServiceFactory.base_chanpinxianservice.GetEntityById(p => p.ID == dataValue);
+                    if (_cpx == null)
+                        returnvalue = "";
+                    else
+                        returnvalue = _cpx.Mingcheng;
                     break;
                 default:
                     break;
