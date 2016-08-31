@@ -332,10 +332,13 @@ namespace CKWMS.Controllers
             switch (valtype)
             {
                 case 1:
+                    base_shangpinxx _spxx = ServiceFactory.base_shangpinxxservice.GetEntityById(p => p.ID == valid);
+                    if (_spxx != null)
+                        _sqcontent = string.Format("商品首营申请：名称，{0}；注册证编号：{1}；厂家：{2}；",_spxx.Mingcheng,_spxx.ZhucezhengBH,_spxx.Qiyemingcheng);
                     break;
                 case 2:
                     Ibase_weituokehuService _wtservice = ServiceFactory.base_weituokehuservice;
-                    base_weituokehu _wtkh = _wtservice.GetEntityById(p => p.ID == valid && p.IsDelete == false);
+                    base_weituokehu _wtkh = _wtservice.GetEntityById(p => p.ID == valid);
                     if (_wtkh != null)
                         _sqcontent = string.Format("客户首营申请：名称，{0}；营业执照：{1}；经营许可：{2}；", _wtkh.Kehumingcheng, _wtkh.YingyezhizhaoBH, _wtkh.JingyingxukeBH);
                     break;
