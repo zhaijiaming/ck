@@ -6,6 +6,12 @@
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+
+        $(document).ready(function () {
+            $("#MakeDate").datepicker();
+            $("#YXQ").datepicker();
+            document.getElementById("Daima").focus();
+        })
     </script>
     <ul class="breadcrumb">
         <li>
@@ -32,23 +38,32 @@
         </div>
         <div class="container">
             <div class="form-group">
-                @Html.LabelFor(m => m.Daima, new { @class = "control-label col-sm-2" })
+                <div class="control-label col-sm-2">
+                    <i class="icon-leaf red"></i>@Html.LabelFor(m => m.Daima)
+                </div>
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Daima, new { @class = "form-control" })
+                    @Html.TextBoxFor(m => m.Daima, new { @class = "form-control", id = "Daima" })
+                    @*@Html.ValidationMessageFor(m => m.Daima)*@
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.Jiancheng, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Jiancheng, new { @class = "form-control" })
+                <div class="control-label col-sm-2">
+                    <i class="icon-leaf red"></i>@Html.LabelFor(m => m.Jiancheng)
                 </div>
-            </div>
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.Jiancheng, new { @class = "form-control" })
+                        @*@Html.ValidationMessageFor(m => m.Jiancheng)*@
+                    </div>
+                </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.Mingcheng, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Mingcheng, new { @class = "form-control" })
+                <div class="control-label col-sm-2">
+                    <i class="icon-leaf red"></i>@Html.LabelFor(m => m.Mingcheng)
                 </div>
-            </div>
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.Mingcheng, new { @class = "form-control" })
+                        @*@Html.ValidationMessageFor(m => m.Mingcheng)*@
+                    </div>
+                </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.Biaozhi, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
@@ -91,7 +106,7 @@
                     @Html.TextBoxFor(m => m.Beizhu, new { @class = "form-control" })
                 </div>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 @Html.LabelFor(m => m.Col1, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.Col1, new { @class = "form-control" })
@@ -108,7 +123,7 @@
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.Col3, new { @class = "form-control" })
                 </div>
-            </div>
+            </div>*@
             <div class="form-group">
                 @Html.LabelFor(m => m.MakeDate, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
@@ -118,7 +133,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.MakeMan, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.SelectList_Auto("MakeMan", "userinfo", "fullname")
+                    @Html.SelectList_Auto("MakeMan", "userinfo", "fullname", (long)@ViewBag.userid)
                 </div>
             </div>
         </div>

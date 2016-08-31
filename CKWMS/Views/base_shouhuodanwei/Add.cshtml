@@ -30,6 +30,14 @@
             </p>
         </div>
         <div class="container">
+            @*单位名称*@
+            <div class="form-group">
+                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>单位名称</label>
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.Mingcheng, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Mingcheng)
+                </div>
+            </div>
             @*货主*@
             <div class="form-group">
                 <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>货主</label>
@@ -37,14 +45,6 @@
                     @*<input type="text" class="form-control" name="ob_base_shouhuodanwei_huozhuid">*@
                     @Html.SelectList_Auto("huozhuid", "货主", "都有")
                     @Html.ValidationMessageFor(m => m.HuozhuID)
-                </div>
-            </div>
-            @*单位名称*@
-            <div class="form-group">
-                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>单位名称</label>
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Mingcheng, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Mingcheng)
                 </div>
             </div>
             <div class="form-group">

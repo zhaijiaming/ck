@@ -180,6 +180,17 @@ namespace CKWMS.App_Code
                             sb.AppendFormat("<option value=\"{0}\">{1}_{2}</option>", i.ID, i.Daima, i.Qiyemingcheng);
                     }
                     break;
+                case "公司": //"auth_gongsi":
+                    Iauth_gongsiService gs = ServiceFactory.auth_gongsiservice;
+                    var tmpgs = gs.LoadSortEntities(auth_gongsi => auth_gongsi.IsDelete == false, true, auth_gongsi => auth_gongsi.Daima);
+                    foreach (var i in tmpgs)
+                    {
+                        if (i.ID == selectedvalue && selectedvalue != 0)
+                            sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.ID, i.Mingcheng);
+                        else
+                            sb.AppendFormat("<option value=\"{0}\">{1}</option>", i.ID, i.Mingcheng);
+                    }
+                    break;
                 case "角色"://auth_juese
                     Iauth_jueseService jueseservice = ServiceFactory.auth_jueseservice;
                     var tmpjs = jueseservice.LoadSortEntities(auth_juese => auth_juese.IsDelete == false, true, auth_juese => auth_juese.RoleName);
@@ -868,7 +879,7 @@ namespace CKWMS.App_Code
                     break;
                 case "生产企业":
                     Ibase_shengchanqiyeService _scqyservice = ServiceFactory.base_shengchanqiyeservice;
-                    base_shengchanqiye _scqy = _scqyservice.GetEntityById(p => p.ID == dataValue);
+                    base_shengchanqiye _scqy = _scqyservice.GetEntityById(p => p.ID == dataValue && p.IsDelete == false);
                     if (_scqy == null)
                         returnvalue = "";
                     else
@@ -883,32 +894,25 @@ namespace CKWMS.App_Code
                     }
                     break;
                 case "收货单位":
-                    base_shouhuodanwei _shdw = ServiceFactory.base_shouhuodanweiservice.GetEntityById(p => p.ID == dataValue);
+                    base_shouhuodanwei _shdw = ServiceFactory.base_shouhuodanweiservice.GetEntityById(p => p.ID == dataValue && p.IsDelete == false);
                     if (_shdw == null)
                         returnvalue = "";
                     else
                         returnvalue = _shdw.Mingcheng;
                     break;
-                case "供应商":
-                    base_gongyingshang _gys = ServiceFactory.base_gongyingshangservice.GetEntityById(p => p.ID == dataValue);
-                    if (_gys == null)
+                case "公司":
+                    auth_gongsi _gs = ServiceFactory.auth_gongsiservice.GetEntityById(p => p.ID == dataValue && p.IsDelete == false);
+                    if (_gs == null)
                         returnvalue = "";
                     else
-                        returnvalue = _gys.Mingcheng;
+                        returnvalue = _gs.Mingcheng;
                     break;
-                case "分类目录":
-                    base_qixiemulu _qxml = ServiceFactory.base_qixiemuluservice.GetEntityById(p => p.ID == dataValue);
+                case "医疗器械目录":
+                    base_qixiemulu _qxml = ServiceFactory.base_qixiemuluservice.GetEntityById(p => p.ID == dataValue && p.IsDelete == false);
                     if (_qxml == null)
                         returnvalue = "";
                     else
                         returnvalue = _qxml.Mingcheng;
-                    break;
-                case "产品线":
-                    base_chanpinxian _cpx = ServiceFactory.base_chanpinxianservice.GetEntityById(p => p.ID == dataValue);
-                    if (_cpx == null)
-                        returnvalue = "";
-                    else
-                        returnvalue = _cpx.Mingcheng;
                     break;
                 default:
                     break;

@@ -5,9 +5,9 @@
 @{ ViewBag.Title = "供应商清单";
     string _searchcondition = ViewBag.SearchCondition;
 }
+
 <script type="text/javascript">
     $(document).ready(function () {
-
 
         $("tr").bind("dblclick", function () {
             var u_id = $(this).find('td').eq(0).find('input').val();
@@ -43,11 +43,11 @@
         }
 
 
-    
+
     });
 
 
-   
+
 
 
     function AddInfo() {
@@ -221,12 +221,6 @@
             </tbody>
         </table>
     </div>
-
-
-
-
-
-
     <div class="pager">
         @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
     </div>
