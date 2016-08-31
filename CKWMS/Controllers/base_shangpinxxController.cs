@@ -84,9 +84,19 @@ namespace CKWMS.Controllers
             int userid = (int)Session["user_id"];
             string pagetag = "base_shangpinxx_index";
             string page = "1";
+            //货主
             string huozhuid = Request["huozhuid"] ?? "";
             string huozhuidequal = Request["huozhuidequal"] ?? "";
             string huozhuidand = Request["huozhuidand"] ?? "";
+            //商品代码
+            string daima = Request["daima"] ?? "";
+            string daimaequal = Request["daimaequal"] ?? "";
+            string daimaand = Request["daimaand"] ?? "";
+            //商品名称
+            string mingcheng = Request["mingcheng"] ?? "";
+            string mingchengequal = Request["mingchengequal"] ?? "";
+            string mingchengand = Request["mingchengand"] ?? "";
+
             Expression<Func<base_shangpinxx, bool>> where = PredicateExtensionses.True<base_shangpinxx>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -94,6 +104,7 @@ namespace CKWMS.Controllers
                 sc = new searchcondition();
                 sc.UserID = userid;
                 sc.PageBrief = pagetag;
+                //货主
                 if (!string.IsNullOrEmpty(huozhuid))
                 {
                     if (huozhuidequal.Equals("="))
@@ -122,12 +133,57 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", huozhuid, huozhuidequal, huozhuidand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", "", huozhuidequal, huozhuidand);
+                //商品代码
+                if (!string.IsNullOrEmpty(daima))
+                {
+                    if (daimaequal.Equals("="))
+                    {
+                        if (daimaand.Equals("and"))
+                            where = where.And(base_shangpinxx => base_shangpinxx.Daima == daima);
+                        else
+                            where = where.Or(base_shangpinxx => base_shangpinxx.Daima == daima);
+                    }
+                    if (daimaequal.Equals("like"))
+                    {
+                        if (daimaand.Equals("and"))
+                            where = where.And(base_shangpinxx => base_shangpinxx.Daima.Contains(daima));
+                        else
+                            where = where.Or(base_shangpinxx => base_shangpinxx.Daima.Contains(daima));
+                    }
+                }
+                if (!string.IsNullOrEmpty(daima))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "daima", daima, daimaequal, daimaand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "daima", "", daimaequal, daimaand);
+                //商品名称
+                if (!string.IsNullOrEmpty(mingcheng))
+                {
+                    if (mingchengequal.Equals("="))
+                    {
+                        if (mingchengand.Equals("and"))
+                            where = where.And(base_shangpinxx => base_shangpinxx.Mingcheng == mingcheng);
+                        else
+                            where = where.Or(base_shangpinxx => base_shangpinxx.Mingcheng == mingcheng);
+                    }
+                    if (mingchengequal.Equals("like"))
+                    {
+                        if (mingchengand.Equals("and"))
+                            where = where.And(base_shangpinxx => base_shangpinxx.Mingcheng.Contains(mingcheng));
+                        else
+                            where = where.Or(base_shangpinxx => base_shangpinxx.Mingcheng.Contains(mingcheng));
+                    }
+                }
+                if (!string.IsNullOrEmpty(mingcheng))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", mingcheng, mingchengequal, mingchengand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", "", mingchengequal, mingchengand);
 
                 searchconditionService.GetInstance().AddEntity(sc);
             }
             else
             {
                 sc.ConditionInfo = "";
+                //货主
                 if (!string.IsNullOrEmpty(huozhuid))
                 {
                     if (huozhuidequal.Equals("="))
@@ -156,6 +212,50 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", huozhuid, huozhuidequal, huozhuidand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", "", huozhuidequal, huozhuidand);
+                //商品代码
+                if (!string.IsNullOrEmpty(daima))
+                {
+                    if (daimaequal.Equals("="))
+                    {
+                        if (daimaand.Equals("and"))
+                            where = where.And(base_shangpinxx => base_shangpinxx.Daima == daima);
+                        else
+                            where = where.Or(base_shangpinxx => base_shangpinxx.Daima == daima);
+                    }
+                    if (daimaequal.Equals("like"))
+                    {
+                        if (daimaand.Equals("and"))
+                            where = where.And(base_shangpinxx => base_shangpinxx.Daima.Contains(daima));
+                        else
+                            where = where.Or(base_shangpinxx => base_shangpinxx.Daima.Contains(daima));
+                    }
+                }
+                if (!string.IsNullOrEmpty(daima))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "daima", daima, daimaequal, daimaand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "daima", "", daimaequal, daimaand);
+                //商品名称
+                if (!string.IsNullOrEmpty(mingcheng))
+                {
+                    if (mingchengequal.Equals("="))
+                    {
+                        if (mingchengand.Equals("and"))
+                            where = where.And(base_shangpinxx => base_shangpinxx.Mingcheng == mingcheng);
+                        else
+                            where = where.Or(base_shangpinxx => base_shangpinxx.Mingcheng == mingcheng);
+                    }
+                    if (mingchengequal.Equals("like"))
+                    {
+                        if (mingchengand.Equals("and"))
+                            where = where.And(base_shangpinxx => base_shangpinxx.Mingcheng.Contains(mingcheng));
+                        else
+                            where = where.Or(base_shangpinxx => base_shangpinxx.Mingcheng.Contains(mingcheng));
+                    }
+                }
+                if (!string.IsNullOrEmpty(mingcheng))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", mingcheng, mingchengequal, mingchengand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", "", mingchengequal, mingchengand);
 
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }

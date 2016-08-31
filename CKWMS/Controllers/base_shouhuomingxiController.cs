@@ -13,19 +13,6 @@ using CKWMS.Filters;
 
 namespace CKWMS.Controllers
 {
-    public class ShouHuoMingXi
-    {
-        public int ID { get; set; }
-        public int ShouhuofangID { get; set; }
-        public string Mingcheng { get; set; }
-        public string Dizhi { get; set; }
-        public string Lianxiren { get; set; }
-        public string Lianxidianhua { get; set; }
-        public int? XiaoshouID { get; set; }
-        public string Xiaoshouren { get; set; }
-        public DateTime MakeDate { get; set; }
-        public int? MakeMan { get; set; }
-    }
     public class base_shouhuomingxiController : Controller
     {
         private Ibase_shouhuomingxiService ob_base_shouhuomingxiservice = ServiceFactory.base_shouhuomingxiservice;
@@ -193,29 +180,22 @@ namespace CKWMS.Controllers
             string _username = (string)Session["user_name"];
             string shdw_id = Request["shdw_id"] ?? "";
 
-            IList<ShouHuoMingXi> _shmxs;
+            
             if (shdw_id == "")
                 return Json("");
             else
             {
-                _shmxs = new List<ShouHuoMingXi>();
                 var tempdata = ob_base_shouhuomingxiservice.LoadSortEntities(p => p.IsDelete == false && p.ShouhuofangID == int.Parse(shdw_id), false, s => s.Mingcheng);
-                
-                foreach(base_shouhuomingxi _shmxdata in tempdata)
+                List<base_shouhuomingxi> _mxlist = new List<base_shouhuomingxi>();
+                base_shouhuomingxi _mx;
+                foreach (var shmx in tempdata)
                 {
-                    ShouHuoMingXi _shmx = new ShouHuoMingXi();
-                    _shmx.ID = _shmxdata.ID;
-                    _shmx.ShouhuofangID = _shmxdata.ShouhuofangID;
-                    _shmx.Dizhi = _shmxdata.Dizhi;
-                    _shmx.Lianxiren = _shmxdata.Lianxiren;
-                    _shmx.Lianxidianhua = _shmxdata.Lianxidianhua;
-                    _shmx.XiaoshouID = _shmxdata.XiaoshouID;
-                    _shmx.Xiaoshouren = _shmxdata.Xiaoshouren;
-                    _shmx.MakeDate = _shmxdata.MakeDate;
-                    _shmx.MakeMan = _shmxdata.MakeMan;
-                    _shmxs.Add(_shmx);
+                    _mx = new base_shouhuomingxi();
+                    _mx = shmx;
+                    _mxlist.Add(_mx);
+
                 }
-                return Json(_shmxs);
+                return Json(_mxlist);
             }
         }
         public ActionResult Add()
