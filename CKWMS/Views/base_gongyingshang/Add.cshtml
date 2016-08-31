@@ -6,6 +6,8 @@
 @{ViewBag.Title = "供应商添加";}
 @Html.GetFileUpload("ob_base_gongyingshang_yingyezhizhaotp", "yyzz", "z", "gys", 2, 0, new Dictionary<string, string>() { { "yyzz", "ob_base_gongyingshang_yingyezhizhaotp" }, { "xkz", "ob_base_gongyingshang_jingyingxuketp" } })
 
+
+
 <script src="/Scripts/jquery.validate.js" type="text/javascript"></script>
 <script src="/Scripts/jquery.validate.unobtrusive.js" type="text/javascript"></script>
 <script type="text/javascript">
@@ -23,9 +25,12 @@
         //}
         //                            );
 
+        
+        
         $("#ob_base_gongyingshang_makedate").datepicker();
         $("#ob_base_gongyingshang_yingyezhizhaoyxq").datepicker();
         $("#ob_base_gongyingshang_jingyingxukeyxq").datepicker();
+        document.getElementById("daima").focus();
         
         $("#pl_Fanwei").hide();
         $("#pl_fanwei_add").hide();
@@ -44,16 +49,16 @@
             $("#pl_Fanwei").hide();
         });
 
-        $("form").validate({
-            rules: {
-                ob_base_gongyingshang_daima: { required: true },
-                ob_base_gongyingshang_mingcheng: { required: true },
-            },
-            messages: {
-                ob_base_gongyingshang_daima: { required: "请输入daima" },
-                ob_base_gongyingshang_mingcheng: { required: "请输入mingcheng" },
-            }
-        });
+        //$("form").validate({
+        //    rules: {
+        //        ob_base_gongyingshang_daima: { required: true },
+        //        ob_base_gongyingshang_mingcheng: { required: true },
+        //    },
+        //    messages: {
+        //        ob_base_gongyingshang_daima: { required: "请输入daima" },
+        //        ob_base_gongyingshang_mingcheng: { required: "请输入mingcheng" },
+        //    }
+        //});
 
         $("#bt_fanwei_add").click(function () {
             var _jyfw = "";
@@ -186,7 +191,7 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>代码</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" data-val="true" data-val-required="Daima 字段是必需的。" id="daima" name="ob_base_gongyingshang_daima">
+                    <input type="text" class="form-control"  data-val="true" data-val-required="Daima 字段是必需的。" id="daima" name="ob_base_gongyingshang_daima">
                     @*@Html.TextBoxFor(m => m.Daima, new { @class = "form-control", id = "daima" })*@
                     @*@Html.ValidationMessageFor(m => m.Daima)*@
 
@@ -201,7 +206,7 @@
                 </div>
 
                 <div class="col-sm-2">
-                    <button type="button" class="form-control " onclick="GetSpell()">生成代码</button>
+                    <button type="button" class="form-control" data-val-required onclick="GetSpell()">生成代码</button>
                 </div>
 
             </div>
@@ -315,13 +320,13 @@
                 <thead style="display:block">
                     <tr>
                         <td></td>
-                        <td style="width:150px">编号</td>
-                        <td style="width:60px">名称</td>
+                        <td style="width:120px">编号</td>
+                        <td style="width:80px">名称</td>
                         <td style="width:930px">描述</td>
                         <td style="width:100px">管理分类</td>
                     </tr>
                 </thead>
-                <tbody style="display:block; max-height:460px;overflow:scroll"></tbody>
+                <tbody style="display:block; max-height:470px;width:1070px;overflow:scroll"></tbody>
             </table>
         </div>
     </div>

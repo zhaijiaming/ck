@@ -46,6 +46,12 @@
         scm.ItemTitle = "代码";
         scm.ItemType = "System.String";
         scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "Mingcheng";
+        scm.ItemTitle = "名称";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
     }
     else
     {
@@ -61,6 +67,19 @@
                 scm.ItemValue = scs[0].Split(',')[1];
                 scm.ItemOpValue = scs[0].Split(',')[2];
                 scm.ItemJion = scs[0].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "Mingcheng";
+            scm.ItemTitle = "名称";
+            scm.ItemType = "System.String";
+
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[1].Split(',')[1];
+                scm.ItemOpValue = scs[1].Split(',')[2];
+                scm.ItemJion = scs[1].Split(',')[3];
             }
             scms.Add(scm);
         }
@@ -106,8 +125,8 @@
                     <td>联系人</td>
                     <td>联系电话</td>
                     <td>备注</td>
-                    <td>制单日期</td>
-                    <td>制单人</td>
+                    @*<td>制单日期</td>
+                    <td>制单人</td>*@
                 </tr>
             </thead>
             <tbody>
@@ -124,13 +143,13 @@
                         <td>@item.Mingcheng</td>
                         <td>@item.Biaozhi</td>
                         <td>@item.HetongBH</td>
-                        <td>@item.YXQ</td>
+                        <td>@item.YXQ.ToString("yyyy-MM-dd")</td>
                         <td>@item.Leixing</td>
                         <td>@item.Lianxiren</td>
                         <td>@item.LianxiDH</td>
                         <td>@item.Beizhu</td>
-                        <td>@item.MakeDate</td>
-                        <td>@item.MakeMan</td>
+                        @*<td>@item.MakeDate</td>
+                        <td>@item.MakeMan</td>*@
                     </tr>
                 }
             </tbody>

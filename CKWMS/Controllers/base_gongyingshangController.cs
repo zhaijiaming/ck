@@ -337,14 +337,17 @@ namespace CKWMS.Controllers
                 ob_base_gongyingshang.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
                 ob_base_gongyingshang = ob_base_gongyingshangservice.AddEntity(ob_base_gongyingshang);
                 ViewBag.base_gongyingshang = ob_base_gongyingshang;
-                
+                ViewBag.flag = "1";
+
+
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                ViewBag.flag = "2";
             }
             
-            return RedirectToAction("Index"/*, new { status = 2 }*/);
+            return RedirectToAction("Index");
         }
 
         public ActionResult Edit(int id)

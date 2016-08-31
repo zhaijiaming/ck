@@ -8,8 +8,10 @@ namespace CKWMS.Models
     {
         [Display(Name = "序号")]
         public int? ID { get; set; }
+        [Required(ErrorMessage = "编号不能为空")]
         [Display(Name = "编号")]
         public string Bianhao { get; set; }
+        [Required(ErrorMessage = "名称不能为空")]
         [Display(Name = "名称")]
         public string Mingcheng { get; set; }
         [Display(Name = "描述")]
