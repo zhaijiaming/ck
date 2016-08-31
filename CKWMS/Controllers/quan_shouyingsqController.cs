@@ -188,10 +188,9 @@ namespace CKWMS.Controllers
                 {
                     if (_cv.Length > 0)
                     {
-                        quan_shouyingsq _sq = ob_quan_shouyingsqservice.GetEntityById(p => p.ShenqingID == int.Parse(_cv) && p.IsDelete == false);
+                        quan_shouyingsq _sq = ob_quan_shouyingsqservice.GetEntityById(p =>p.Leibie==int.Parse(_checktype) && p.ShenqingID == int.Parse(_cv) && p.IsDelete == false);
                         if (_sq == null)
                         {
-
                             _sq = new quan_shouyingsq();
                             _sq.MakeMan = _userid;
                             _sq.MakeDate = DateTime.Now;

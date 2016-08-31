@@ -8,6 +8,7 @@
     $(document).ready(function () {
         var _ispack = false;
         getCpx(@Model.HuozhuID);
+        getZczgg(@Model.ZhucezhengID );
         GetJldw();
         GetFanwei()
         $("#bt_mulu").click(function () {
@@ -46,6 +47,7 @@
         });
         $("#zhucezhengid").change(function () {
             var _zczid = $("#zhucezhengid").val();
+            $("#Daima").val("");
             getZCZ(_zczid);
         });
         //计量单位
@@ -77,10 +79,6 @@
         });
         $("#pl_jldw").draggable();
         $("#pl_Fanwei").draggable();
-        //$("#select_cpx option[value='']").attr("selected", "selected");
-        //$('#select_cpx option:eq()').prop('selected', true);
-        //$("#select_cpx").val();
-        $("#select_cpx").attr("value",@Model.Chanpinxian);
     });
     function GetFanwei() {
         var filltable = "";
@@ -113,10 +111,14 @@
                 cpxid: _huozhuid
             },
             function (data) {
+                var selval=$("#ocpx").val();
                 for (var i in data) {
                     filltable = filltable + '<option value="';
                     filltable = filltable + data[i].ID;
-                    filltable = filltable + '">';
+                    if(data[i].ID==selval)
+                        filltable = filltable + '" selected="selected">';
+                    else
+                        filltable = filltable + '">';
                     filltable = filltable + data[i].Mingcheng;
                     filltable = filltable + '</option>';
                 }
@@ -134,7 +136,19 @@
             },
             function (data) {
                 if (data != null) {
+                    $("#Mingcheng").val(data.Mingcheng);
+                    $("#Chandi").val(data.Chandi);
+                    $("#Qiyemingcheng").val(data.Shengchanqiye);
+                    $("#qiyeid").val(data.QiyemingchengID);
                     $("#zhucezhengbh").val(data.Bianhao)
+                    for (var i in data.Guige) {
+                        filltable = filltable + '<option value="';
+                        filltable = filltable + data.Guige[i].Guige;
+                        filltable = filltable + '">';
+                        filltable = filltable + data.Guige[i].Guige;
+                        filltable = filltable + '</option>';
+                    }
+                    $("#select_gg").html(filltable);
                 }
             });
     }
@@ -142,16 +156,21 @@
         var _zczid = zczid;
         var filltable = "";
         var fillmc = "";
+        alert("ok");
         $.post(
             "/base_zhucezhenggg/getdetail",
             {
                 zczbh: _zczid
             },
             function (data) {
+                var selval=$("#ogg").val();
                 for (var i in data) {
                     filltable = filltable + '<option value="';
                     filltable = filltable + data[i].Guige;
-                    filltable = filltable + '">';
+                    if(data[i].Guige==selval)
+                        filltable = filltable + '" selected="selected">';
+                    else
+                        filltable = filltable + '">';
                     filltable = filltable + data[i].Guige;
                     filltable = filltable + '</option>';
                 }
@@ -204,7 +223,9 @@
         <input type="hidden" name="qiyeid" id="qiyeid" value="@Model.QiyeID" />
         <input type="hidden" name="Muluxuhao" id="muluxuhao" value="@Model.Muluxuhao" />
         <input type="hidden" name="zhucezhengbh" id="zhucezhengbh" value="@Model.ZhucezhengBH" />
-        <input type="hidden" name="huozhuid" value="@Model.HuozhuID" />
+        <input type="hidden" id="ohzid" value="@Model.HuozhuID" />
+        <input type="hidden" id="ocpx" value="@Model.Chanpinxian" />
+        <input type="hidden" id="ogg" value="@Model.Guige" />
         <div class="page-header">
             <p>
                 <button type="submit" class="btn btn-default"><i class="icon-save"></i>更新</button>
@@ -214,8 +235,10 @@
         <div class="container">
             <div class="form-group">
                 <label for="name" class="col-sm-2">货主</label>
-                    @*@Html.SelectList_Auto("huozhuid", "", "", (long))*@
-                    <label class="col-sm-10 blue">@Html.GetDataValue_ID("货主", "名称", (int)@Model.HuozhuID)</label>
+                <div class="col-sm-10">
+                    @Html.SelectList_Auto("huozhuid", "货主", "名称",(long)Model.HuozhuID)
+                </div>
+                @*<label class="col-sm-10 blue">@Html.GetDataValue_ID("货主", "名称", (int)@Model.HuozhuID)</label>*@
             </div>
             @*代码*@
             <div class="form-group">
@@ -243,7 +266,8 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2">规格</label>
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Guige, new { @class = "form-control" })
+                    @*@Html.TextBoxFor(m => m.Guige, new { @class = "form-control" })*@
+                    <select name="guige" id="select_gg" style="width:100%;"></select>
                 </div>
             </div>
             @*生产企业*@
@@ -316,8 +340,7 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2">产品线</label>
                 <div class="col-sm-10">
-                    <select id="select_cpx" style="width:100%;">
-                    </select>
+                    <select id="select_cpx" style="width:100%;"></select>
                 </div>
             </div>
             @*分类目录*@

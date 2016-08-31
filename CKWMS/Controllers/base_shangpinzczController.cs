@@ -313,20 +313,6 @@ namespace CKWMS.Controllers
                 return Json("");
             else
             {
-                //_zczxxs = new List<ZhuCeZhenXX>();
-                //var tempdata = ob_base_shangpinzczservice.LoadSortEntities(p => p.IsDelete == false && p.ID == int.Parse(_zczid), false, p => p.Mingcheng);
-                //foreach(base_shangpinzcz _zcz in tempdata)
-                //{
-                //    if(_zcz.ID > 0)
-                //    {
-                //        ZhuCeZhenXX _zczxx = new ZhuCeZhenXX();
-                //        _zczxx.ID = _zcz.ID;
-                //        _zczxx.Mingcheng = _zcz.Mingcheng;
-                //        _zczxx.Chandi = _zcz.Chandi;
-                //        _zczxx.ShengchanqiyeID = (int)_zcz.ShengchanqiyeID;
-                //        _zczxxs.Add(_zczxx);
-                //    }
-                //}
                 base_shangpinzcz _zcz = ob_base_shangpinzczservice.GetEntityById(p => p.ID == int.Parse(_zczid));
                 if(_zcz!=null)
                 {
@@ -345,7 +331,7 @@ namespace CKWMS.Controllers
                     _zczxxs.Guige = ServiceFactory.base_zhucezhengggservice.LoadSortEntities(p => p.ZCZID == _zczxxs.ID, true, s => s.Guige).ToList<base_zhucezhenggg>() ;
                 }
             }
-            return Json(_zczxxs,JsonRequestBehavior.AllowGet);
+            return Json(_zczxxs);
         }
 
         [HttpPost]
