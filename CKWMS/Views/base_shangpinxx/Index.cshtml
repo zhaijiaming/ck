@@ -90,82 +90,95 @@
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
         </p>
     </div>
-    <div class="row">
-        <table class="table" id="mydatatable">
-            <caption></caption>
-            <thead>
-                <tr>
-                    <td></td>
-                    <td>货主</td>
-                    @*<td>货主的授权序号</td>*@
-                    <td>商品代码</td>
-                    <td>商品名称</td>
-                    <td>注册证</td>
-                    @*<td>注册证编号</td>*@
-                    <td>规格</td>
-                    <td>型号</td>
-                    <td>单位</td>
-                    <td>换算率</td>
-                    <td>长</td>
-                    <td>宽</td>
-                    <td>高</td>
-                    <td>产品线序号</td>
-                    <td>分类目录</td>
-                    <td>医疗器械管理分类</td>
-                    <td>包装要求</td>
-                    <td>存储条件</td>
-                    <td>生产企业</td>
-                    @*<td>生产企业名称</td>*@
-                    <td>供应商序号</td>
-                    @*<td>供应商的授权序号</td>
-                    <td>供应商的销售序号</td>*@
-                    <td>首营状态</td>
-                    <td>录入日期</td>
-                    <td>输入人</td>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in ViewBag.base_shangpinxx)
-                {
-                    
+    <div style="overflow:auto;">
+        <div class="table-responsive">
+            <table class="table" style="overflow: hidden;text-overflow:ellipsis;white-space: nowrap;" id="mydatatable">
+                <caption></caption>
+                <thead>
                     <tr>
-                        <td>
-                            <div class="checkbox">
-                                <label><input type="checkbox" value="@item.ID"></label>
-                            </div>
-                        </td>
-                        <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
-                        @*<td>@item.HuozhuSQID</td>*@
-                        <td>@item.Daima</td>
-                        <td>@item.Mingcheng</td>
-                        <td>@Html.GetDataValue_ID("注册证", "都有", (int)item.ZhucezhengID)</td>
-                        @*<td>@item.ZhucezhengBH</td>*@
-                        <td>@item.Guige</td>
-                        <td>@item.Xinghao</td>
-                        <td>@item.Danwei</td>
-                        <td>@item.Huansuanlv</td>
-                        <td>@item.Volchang</td>
-                        <td>@item.Volkuan</td>
-                        <td>@item.Volgao</td>
-                        <td>@item.Chanpinxian</td>
-                        <td>@item.Muluxuhao</td>
-                        <td>@Html.GetCommonValue_ID("医疗器械管理类别", (int)item.Guanlifenlei)</td>
-                        <td>@item.Baozhuangyaoqiu</td>
-                        <td>@item.Cunchutiaojian</td>
-                        <td>@Html.GetDataValue_ID("生产企业", "名称", (int)item.QiyeID)</td>
-                        @*<td>@item.Qiyemingcheng</td>*@
-                        <td>@Html.GetDataValue_ID("gongyingid", "供应商", (int)item.GongyingID)</td>
-                        @*<td>@item.GongyingSQID</td>
-                        <td>@item.GongyingXSID</td>*@
-                        <td>@Html.GetCommonValue_ID("首营状态", (int)item.Shouying)</td>
-                        <td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
-                        <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
+                        <td></td>
+                        <td>货主</td>
+                        @*<td>货主的授权序号</td>*@
+                        <td>商品代码</td>
+                        <td>注册证</td>
+                        <td>商品名称</td>
+                        @*<td>注册证编号</td>*@
+                        <td>规格</td>
+                        <td>型号</td>
+                        <td>单位</td>
+                        <td>换算率</td>
+                        <td>长</td>
+                        <td>宽</td>
+                        <td>高</td>
+                        <td>产品线序号</td>
+                        <td>分类目录</td>
+                        <td>医疗器械管理分类</td>
+                        <td>包装要求</td>
+                        <td>存储条件</td>
+                        <td>生产企业</td>
+                        @*<td>生产企业名称</td>*@
+                        <td>供应商序号</td>
+                        @*<td>供应商的授权序号</td>
+                            <td>供应商的销售序号</td>*@
+                        <td>首营状态</td>
+                        <td>录入日期</td>
+                        <td>输入人</td>
+                        @*新增*@
+                        <td>是否审查</td>
+                        <td>是否经营</td>
+                        <td>包装单位</td>
+                        <td>商品条码</td>
                     </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-    <div class="pager">
-        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+                </thead>
+                <tbody>
+                    @foreach (var item in ViewBag.base_shangpinxx)
+                    {
+
+                        <tr>
+                            <td>
+                                <div class="checkbox">
+                                    <label><input type="checkbox" value="@item.ID"></label>
+                                </div>
+                            </td>
+                            <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
+                            @*<td>@item.HuozhuSQID</td>*@
+                            <td>@item.Daima</td>
+                            <td>@Html.GetDataValue_ID("注册证", "编号", (int)item.ZhucezhengID)</td>
+                            <td>@item.Mingcheng</td>
+                            @*<td>@item.ZhucezhengBH</td>*@
+                            <td style="width:500px;">@item.Guige</td>
+                            <td>@item.Xinghao</td>
+                            <td>@item.Danwei</td>
+                            <td>@item.Huansuanlv</td>
+                            <td>@item.Volchang</td>
+                            <td>@item.Volkuan</td>
+                            <td>@item.Volgao</td>
+                            <td>@item.Chanpinxian</td>
+                            <td>@item.Muluxuhao</td>
+                            <td>@Html.GetCommonValue_ID("医疗器械管理类别", (int)item.Guanlifenlei)</td>
+                            <td>@item.Baozhuangyaoqiu</td>
+                            <td>@item.Cunchutiaojian</td>
+                            <td>@item.Qiyemingcheng</td>
+                            @*<td>@item.Qiyemingcheng</td>*@
+                            <td>@Html.GetDataValue_ID("供应商", "", (int)item.GongyingID)</td>
+                            @*<td>@item.GongyingSQID</td>
+                                <td>@item.GongyingXSID</td>*@
+                            <td>@Html.GetCommonValue_ID("首营状态", (int)item.Shouying)</td>
+                            <td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
+                            <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
+                            @*新增*@
+                            <td>@item.ShenchaSF</td>
+                            <td>@item.JingyinSF</td>
+                            <td>@item.BaozhuangDW</td>
+                            <td>@item.ShangpinTM</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="pager">
+            @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+        </div>
     </div>
 </div>
+

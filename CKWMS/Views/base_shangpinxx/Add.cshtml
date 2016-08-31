@@ -2,21 +2,26 @@
 @using CKWMS.Models
 @model base_shangpinxxViewModel
 @{ViewBag.Title = "商品信息添加";}
+
+@*默认*@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#makedate").datepicker();//时间
         $("#shouying").val("1");//默认首营状态为"新建"
-        //注册证--→代码
+    });
+</script>
+@*注册证规格--→代码*@
+<script type="text/javascript">
+    $(document).ready(function () {
         $("#select_gg").change(function () {
             var guige = $("#select_gg").find("option:selected").text();
             $("#Daima").val(guige);
         });
-        
     });
 </script>
+@*货主ID--→产品线名称*@
 <script type="text/javascript">
     $(document).ready(function () {
-        //货主ID--→产品线名称
         $("#huozhuid").change(function () {
             var _huozhuid = $("#huozhuid").val();
             getCpx(_huozhuid);
@@ -31,9 +36,9 @@
                 },
                 function (data) {
                     for (var i in data) {
-                        
+
                         filltable = filltable + '<option value="';
-                        filltable = filltable + data[i].ID;
+                        filltable = filltable + data[i].Mingcheng;
                         filltable = filltable + '">';
                         filltable = filltable + data[i].Mingcheng;
                         filltable = filltable + '</option>';
@@ -43,9 +48,9 @@
         };
     });
 </script>
+@*注册证--→规格/型号*@
 <script type="text/javascript">
     $(document).ready(function () {
-        //注册证--→规格/型号
         $("#zhucezhengid").change(function () {
             var _zczid = $("#zhucezhengid").val();
             getCpx(_zczid);
@@ -66,22 +71,21 @@
                 function (data) {
                     for (var i in data) {
                         filltable = filltable + '<option value="';
-                        filltable = filltable + data[i].ID;
+                        filltable = filltable + data[i].Guige;
                         filltable = filltable + '">';
                         filltable = filltable + data[i].Guige;
                         filltable = filltable + '</option>';
                     }
                     $("#select_gg").html(filltable);
                 });
-            
-            
+
+
         };
     });
-    
 </script>
+@*注册证--→商品名称*@
 <script type="text/javascript">
     $(document).ready(function () {
-        //注册证--→商品名称
         $("#zhucezhengid").change(function () {
             var _zczid = $("#zhucezhengid").val();
             getMingcheng(_zczid);
@@ -97,7 +101,7 @@
                 function (data) {
                     for (var i in data) {
                         filltable = filltable + '<option value="';
-                        filltable = filltable + data[i].ID;
+                        filltable = filltable + data[i].Mingcheng;
                         filltable = filltable + '">';
                         filltable = filltable + data[i].Mingcheng;
                         filltable = filltable + '</option>';
@@ -107,9 +111,9 @@
         };
     });
 </script>
-@*<script type="text/javascript">
+@*注册证--→企业名称*@
+<script type="text/javascript">
     $(document).ready(function () {
-        //注册证--→企业名称
         $("#zhucezhengid").change(function () {
             var _zczid = $("#zhucezhengid").val();
             getQiyemingcheng(_zczid);
@@ -125,28 +129,102 @@
                 function (data) {
                     for (var i in data) {
                         filltable = filltable + '<option value="';
-                        filltable = filltable + data[i].ID;
+                        filltable = filltable + data[i].ShengchanqiyeID;
                         filltable = filltable + '">';
-                        filltable = filltable + string[data[i].ShengchanqiyeID];
+                        filltable = filltable + data[i].ShengchanqiyeID;
                         filltable = filltable + '</option>';
                     }
                     $("#select_qymc").html(filltable);
                 });
         };
-        //传值存储
-        function saveMingchengData(mingcheng) {
-            var _mingcheng = mingcheng;
-            $.post(
-                "/base_shangpinxx/Save",
-                {
-                    mingcheng: _mingchenge
-                },
-                function (data, stat) {
-
-                });
-        };
     });
-</script>*@
+</script>
+@*计量单位*@
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#pl_jldw").hide();
+
+        $("#btn_jldw").click(function () {
+            GetJldw();
+            $("#pl_jldw").show();
+
+            setTimeout(function () {
+                GetChecked();
+            }, 500)
+        });
+
+        $("#pl_close").click(function () {
+            $("#pl_jldw").hide();
+        });
+
+        $("#bt_jldw_add").click(function () {
+            var _jldw = "";
+            $("#jldwdatatable tr input[type=checkbox]").each(function () {
+                if (this.checked) {
+                    _jldw = _jldw + $(this).parent().parent().parent().siblings().find(".mc").html() + ";";
+                }
+            });
+
+            var _addOk = confirm("确定要添加这些单位吗？");
+            if (_addOk) {
+                $("#Danwei").val(_jldw);
+                $("#pl_jldw").hide();
+            }
+        });
+
+        $("#bt_jldw_all").click(function () {
+
+            $(".checkbox").prop("checked", true);
+
+        });
+
+        $("#bt_jldw_clear").click(function () {
+
+            $(".checkbox").prop("checked", false);
+
+        });
+
+        function GetJldw() {
+            var filltable = "";
+            $.post(
+                "/base_jiliangdw/GetJldw",
+                {
+
+                },
+                    function (data) {
+                        for (var i in data) {
+                            filltable = filltable + '<tr><td><div class="checkbox"><label><input type="checkbox" class ="checkbox" value="';
+                            filltable = filltable + data[i].ID;
+                            filltable = filltable + '"></label></div></td><td><span class="bh">';
+                            filltable = filltable + data[i].Bianhao;
+                            filltable = filltable + '</span></td><td><span class="mc">';
+                            filltable = filltable + data[i].Mingcheng;
+                            filltable = filltable + '</span></td><td>';
+                            filltable = filltable + data[i].Miaoshu;
+                            filltable = filltable + '</td></tr>';
+                        }
+                        $("#pl_jldw tbody").html(filltable);
+                    });
+        }
+        function GetChecked() {
+            var mc = $(".mc").text();
+            //alert(mc);
+            var i = $("#Danwei").val();
+            var t = i.split(";");
+            //alert(t);
+
+            for (var k = 0; k < t.length; k++) {
+                for (var l = 0; l < mc.length; l++) {
+                    if (t[k] == $(".mc").eq(l).text())
+                        $("input:checkbox").eq(l).attr("checked", true);
+                }
+            }
+        };
+
+    });
+    
+</script>
+
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
@@ -181,12 +259,12 @@
                 </div>
             </div>
             @*货主授权ID
-            <div class="form-group">
-                @Html.LabelFor(m => m.HuozhuSQID, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.HuozhuSQID, new { @class = "form-control" })
-                </div>
-            </div>*@
+                <div class="form-group">
+                    @Html.LabelFor(m => m.HuozhuSQID, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.HuozhuSQID, new { @class = "form-control" })
+                    </div>
+                </div>*@
             @*代码*@
             <div class="form-group">
                 @Html.LabelFor(m => m.Daima, new { @class = "control-label col-sm-2" })
@@ -196,19 +274,12 @@
                 </div>
             </div>
             @*<div class="form-group">
-                @Html.LabelFor(m => m.Mingcheng, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Mingcheng, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Mingcheng)
-                </div>
-            </div>*@
-            @*名称*@
-            <div class="form-group">
-                @Html.LabelFor(m => m.Mingcheng, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    <select name="mingcheng" id="select_zczmc" style="width:100%;"></select>
-                </div>
-            </div>
+                    @Html.LabelFor(m => m.Mingcheng, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.Mingcheng, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Mingcheng)
+                    </div>
+                </div>*@
             @*注册证*@
             <div class="form-group">
                 <label for="name" class="col-sm-2">注册证名称</label>
@@ -216,34 +287,41 @@
                     @Html.SelectList_Auto("zhucezhengid", "注册证", "编号")
                 </div>
             </div>
-            @*注册证编号
+            @*名称*@
             <div class="form-group">
-                @Html.LabelFor(m => m.ZhucezhengBH, new { @class = "control-label col-sm-2" })
+                @Html.LabelFor(m => m.Mingcheng, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.ZhucezhengBH, new { @class = "form-control" })
+                    <select name="mingcheng" id="select_zczmc" style="width:100%;"></select>
                 </div>
-            </div>*@
+            </div>
+            @*注册证编号
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ZhucezhengBH, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.ZhucezhengBH, new { @class = "form-control" })
+                    </div>
+                </div>*@
             @*规格*@
             <div class="form-group">
                 <label for="name" class="col-sm-2">规格</label>
                 <div class="col-sm-10">
-                    <select name="Guige" id="select_gg" style="width:100%;"></select>
+                    <select name="guige" id="select_gg" style="width:100%;"></select>
                 </div>
             </div>
-            @*生产企业
+            @*生产企业*@
             <div class="form-group">
                 <label for="name" class="col-sm-2">生产企业</label>
                 <div class="col-sm-10">
                     <select name="qiyemingcheng" id="select_qymc" style="width:100%;"></select>
                 </div>
-            </div>*@
-            @*生产企业*@
-            <div class="form-group">
-                <label for="name" class="col-sm-2">生产企业</label>
-                <div class="col-sm-10">
-                    @Html.SelectList_Auto("qiyeid", "厂家", "")
-                </div>
             </div>
+            @*生产企业
+                <div class="form-group">
+                    <label for="name" class="col-sm-2">生产企业</label>
+                    <div class="col-sm-10">
+                        @Html.SelectList_Auto("qiyeid", "厂家", "")
+                    </div>
+                </div>*@
             <div class="form-group">
                 @Html.LabelFor(m => m.Xinghao, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
@@ -252,10 +330,12 @@
             </div>
             @*计量单位*@
             <div class="form-group">
-                <label for="name" class="col-sm-2">计量单位</label>
-                <div class="col-sm-10">
-                    @*@Html.TextBoxFor(m => m.Danwei, new { @class = "form-control" })*@
-                    <select name="danwei" id="jiliangDW" style="width:100%"></select>
+                <label for="name" class="col-sm-2">单位</label>
+                <div class="col-sm-1">
+                    <input id="btn_jldw" type="button" value="添加单位" style="height:34px;"/> 
+                </div>
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(m => m.Danwei, new { @class = "form-control" })
                 </div>
             </div>
             <div class="form-group">
@@ -315,29 +395,30 @@
                 </div>
             </div>
             @*<div class="form-group">
-                @Html.LabelFor(m => m.Qiyemingcheng, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Qiyemingcheng, new { @class = "form-control" })
-                </div>
-            </div>*@
+                    @Html.LabelFor(m => m.Qiyemingcheng, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.Qiyemingcheng, new { @class = "form-control" })
+                    </div>
+                </div>*@
             <div class="form-group">
                 @Html.LabelFor(m => m.GongyingID, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.SelectList_Auto("gongyingid","供应商","")
+                    @Html.SelectList_Auto("gongyingid", "供应商", "")
                 </div>
             </div>
             @*<div class="form-group">
-                @Html.LabelFor(m => m.GongyingSQID, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.GongyingSQID, new { @class = "form-control" })
+                    @Html.LabelFor(m => m.GongyingSQID, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.GongyingSQID, new { @class = "form-control" })
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.GongyingXSID, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.GongyingXSID, new { @class = "form-control" })
-                </div>
-            </div>*@
+                <div class="form-group">
+                    @Html.LabelFor(m => m.GongyingXSID, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.GongyingXSID, new { @class = "form-control" })
+                    </div>
+                </div>*@
+            @*首营*@
             <div class="form-group">
                 @Html.LabelFor(m => m.Shouying, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
@@ -356,6 +437,65 @@
                     @Html.SelectList_Auto("MakeMan", "userinfo", "fullname", (long)ViewBag.userid)
                 </div>
             </div>
+            @*是否审查*@
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    @Html.LabelFor(m => m.ShenchaSF)
+                </div>
+                <div>
+                    <label class="radio-inline"><input type="radio" name="shixiaosf" value="true" checked>是</label>
+                    <label class="radio-inline"><input type="radio" name="shixiaosf" value="false">否</label>
+                </div>
+            </div>
+            @*是否经营*@
+            <div class="form-group">
+                <div class="control-label col-sm-2">
+                    @Html.LabelFor(m => m.JingyinSF)
+                </div>
+                <div>
+                    <label class="radio-inline"><input type="radio" name="JingyinSF" value="true" checked>是</label>
+                    <label class="radio-inline"><input type="radio" name="JingyinSF" value="false">否</label>
+                </div>
+            </div>
+            @*包装单位*@
+            <div class="form-group">
+                <label for="name" class="col-sm-2">包装单位</label>
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.BaozhuangDW, new { @class = "form-control" })
+                </div>
+            </div>
+            @*商品条码*@
+            <div class="form-group">
+                <label for="name" class="col-sm-2">商品条码</label>
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.ShangpinTM, new { @class = "form-control" })
+                </div>
+            </div>
         </div>
     }
+</div>
+<div id="pl_jldw" class="panel panel-primary " style="position:fixed;top:190px;left:207px;z-index:99999;">
+    <div class="panel-heading">
+        <h3 class="panel-title">计量单位<button id="pl_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body" @*style="width:1090px;height:550px;z-index:999;overflow:scroll"*@>
+        <div class="center">
+            <button type="button" class="btn btn-default " id="bt_jldw_add"><i class="icon-add"></i>确定</button>
+            <button type="button" class="btn btn-default " id="bt_jldw_all">全选</button>
+            <button type="button" class="btn btn-default " id="bt_jldw_clear">全部取消</button>
+
+            <table class="table" id="jldwdatatable">
+                <caption></caption>
+                <thead style="display:block">
+                    <tr>
+                        <td></td>
+                        <td>编号</td>
+                        <td>名称</td>
+                        <td>说明</td>
+                    </tr>
+                </thead>
+                <tbody style="display:block; max-height:460px;min-height:200px; overflow:auto"></tbody>
+            </table>
+        </div>
+    </div>
 </div>

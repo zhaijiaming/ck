@@ -13,6 +13,13 @@ using CKWMS.Filters;
 
 namespace CKWMS.Controllers
 {
+    public class Danwei
+    {
+        public int ID { get; set; }
+        public string Bianhao { get; set; }
+        public string Mingcheng { get; set; }
+        public string Miaoshu { get; set; }
+    }
     public class base_jiliangdwController : Controller
     {
         private Ibase_jiliangdwService ob_base_jiliangdwservice = ServiceFactory.base_jiliangdwservice;
@@ -230,6 +237,25 @@ namespace CKWMS.Controllers
                 Console.WriteLine(ex.Message);
             }
             return RedirectToAction("Index");
+        }
+        public JsonResult GetJldw()
+        {
+            int _userid = (int)Session["user_id"];
+            string _username = (string)Session["user_name"];
+
+            var tempdata = ob_base_jiliangdwservice.LoadSortEntities(p => p.IsDelete == false, false, p => p.Mingcheng);
+            IList<Danwei> _danweis = new List<Danwei>();
+            Danwei _danwei;
+            foreach(base_jiliangdw _jldw in tempdata )
+            {
+                _danwei = new Danwei();
+                _danwei.ID = _jldw.ID;
+                _danwei.Bianhao = _jldw.Bianhao;
+                _danwei.Mingcheng = _jldw.Mingcheng;
+                _danwei.Miaoshu = _jldw.Miaoshu;
+                _danweis.Add(_danwei);
+            }
+            return Json(_danweis);
         }
 
         [OutputCache(Duration = 10)]

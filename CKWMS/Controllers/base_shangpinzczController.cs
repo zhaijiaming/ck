@@ -322,8 +322,7 @@ namespace CKWMS.Controllers
                         _zczxx.ID = _zcz.ID;
                         _zczxx.Mingcheng = _zcz.Mingcheng;
                         _zczxx.Chandi = _zcz.Chandi;
-                        var Shengchanqiye = _zcz.ShengchanqiyeID.Value;
-                        _zczxx.ShengchanqiyeID = Shengchanqiye;
+                        _zczxx.ShengchanqiyeID = (int)_zcz.ShengchanqiyeID;
                         _zczxxs.Add(_zczxx);
                     }
                 }
