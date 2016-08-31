@@ -3,8 +3,7 @@
 @using X.PagedList
 @using X.PagedList.Mvc
 @{
-    ViewBag.Title = "收货明细清单";
-    string _searchcondition = ViewBag.SearchCondition;
+    ViewBag.Title = "收货清单";
 }
 <script type="text/javascript">
     $(document).ready(function () {
@@ -37,35 +36,6 @@
         location.href = url_go;
     }
 </script>
-@{
-    List<SearchConditionModel> scms = new List<SearchConditionModel>();
-    if (_searchcondition == null || _searchcondition == "")
-    {
-        SearchConditionModel scm = new SearchConditionModel();
-        scm.ItemCode = "RKMXID";
-        scm.ItemTitle = "明细序号";
-        scm.ItemType = "System.Int32";
-        scms.Add(scm);
-    }
-    else
-    {
-        string[] scs = _searchcondition.Split(';');
-        if (scs.Length > 0)
-        {
-            SearchConditionModel scm = new SearchConditionModel();
-            scm.ItemCode = "RKMXID";
-            scm.ItemTitle = "明细序号";
-            scm.ItemType = "System.Int32";
-            if (scs.Length > 1)
-            {
-                scm.ItemValue = scs[0].Split(',')[1];
-                scm.ItemOpValue = scs[0].Split(',')[2];
-                scm.ItemJion = scs[0].Split(',')[3];
-            }
-            scms.Add(scm);
-        }
-    }
-}
 
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
@@ -82,26 +52,29 @@
             <i class="icon-home home-icon"></i>
             <a href="/Home">首页</a>
         </li>
-        <li class="active">收货明细</li>
+        <li class="active">收货</li>
     </ul>
 </div>
 <div class="page-content">
-    @Html.Search_Condition((int)Session["user_id"], "收货明细_条件组合查询", "/wms_shouhuomx/index", "wms_shouhuomxindex", scms)
     <div class="page-header">
-        <p>
-            <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
-            <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
-            <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
-            <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
-            <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
-        </p>
-    </div>
+        <input type="hidden" id="rkd" value="@ViewBag.rkdid"/>
+        <input type="hidden" id="zjsh" value="@ViewBag.zjsh" />
+            <p>
+                <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
+                <button type="button" class="btn btn-default " id="bt_updateInfo" ><i class="icon-edit"></i>编辑</button>
+                <button type="button" class="btn btn-default " id="bt_deleteInfo" ><i class="icon-remove"></i>删除</button>
+                <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
+            </p>
+        </div>
     <div class="row">
         <table class="table" id="mydatatable">
             <caption></caption>
             <thead>
                 <tr>
                     <td></td>
+                    <td>整</td>
+                    <td>分</td>
+                    <td>商品条码</td>
                     <td>商品名称</td>
                     <td>注册证</td>
                     <td>规格型号</td>
@@ -110,31 +83,28 @@
                     <td>序列码</td>
                     <td>生产日期</td>
                     <td>失效日期</td>
-                    <td>数量</td>
+                    <td>到货数量</td>
+                    <td>已收数量</td>
                     <td>基本单位</td>
                     <td>包装单位</td>
                     <td>换算率</td>
                     <td>厂家</td>
                     <td>产地</td>
-                    <td>商品条码</td>
-                    <td>重量</td>
-                    <td>净重</td>
-                    <td>体积</td>
-                    <td>计费吨</td>
-                    <td>制单日期</td>
-                    <td>制单人</td>
                     <td>备注</td>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in ViewBag.wms_shouhuomx)
+                @foreach (var item in ViewBag.wms_rukumx)
                 {
                     <tr>
                         <td>
                             <div class="checkbox">
-                                <label><input type="checkbox" value="@item.ID" data-spy="@item.ShangpinID" data-rkmx="@item.RKMXID"></label>
+                                <label><input type="checkbox" value="@item.ID" data-sp="@item.ShangpinID"></label>
                             </div>
                         </td>
+                        <td><p class="blue" title="完整收货"><i class="icon-anchor"></i></p></td>
+                        <td><p class="green" title="分批收货"><i class="icon-code-fork"></i></p></td>
+                        <td>@item.ShangpinTM</td>
                         <td>@item.ShangpinMC</td>
                         <td>@item.Zhucezheng</td>
                         <td>@item.Guige</td>
@@ -143,19 +113,13 @@
                         <td>@item.Xuliema</td>
                         <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ)</td>
                         <td>@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ)</td>
-                        <td>@item.Shuliang</td>
+                        <td>@item.DaohuoSL</td>
+                        <td>@item.YishouSL</td>
                         <td>@item.JibenDW</td>
                         <td>@item.BaozhuangDW</td>
                         <td>@item.Huansuanlv</td>
                         <td>@item.Changjia</td>
                         <td>@item.Chandi</td>
-                        <td>@item.ShangpinTM</td>
-                        <td>@item.Zhongliang</td>
-                        <td>@item.Jingzhong</td>
-                        <td>@item.Tiji</td>
-                        <td>@item.Jifeidun</td>
-                        <td>@string.Format("{0:yyyy-MM-dd}", item.MakeDate)</td>
-                        <td>@Html.GetDataValue_ID("userinfo","名称",(int) item.MakeMan)</td>
                         <td>@item.Beizhu</td>
                     </tr>
                 }
@@ -163,6 +127,6 @@
         </table>
     </div>
     <div class="pager">
-        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Recieving", new { page,rkd=ViewBag.rkdid }))
     </div>
 </div>

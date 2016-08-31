@@ -163,6 +163,19 @@ namespace CKWMS.Controllers
             ViewBag.wms_shouhuomx = tempData;
             return View(tempData);
         }
+        [OutputCache(Duration = 30)]
+        public ActionResult Recieving(string page)
+        {
+            if (string.IsNullOrEmpty(page))
+                page = "1";
+            int userid = (int)Session["user_id"];
+            string rkdid = Request["rkd"]??"";
+            if (rkdid.Length == 0)
+                rkdid = "0";
+            var tempData = ServiceFactory.wms_rukumxservice.LoadSortEntities(p => p.RukuID == int.Parse(rkdid) && p.IsDelete==false && (p.DaohuoSL-p.YishouSL>0), true, s => s.ShangpinMC).ToPagedList<wms_rukumx>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            ViewBag.wms_rukumx = tempData;
+            return View(tempData);
+        }
 
         public ActionResult Add()
         {

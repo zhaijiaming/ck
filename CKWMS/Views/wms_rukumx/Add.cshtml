@@ -109,7 +109,6 @@
                             _filldata = _filldata + '</td>';
                             _filldata = _filldata + '</tr>';
                         }
-                        //_filldata = _filldata + '<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
                         $("#mydatatable tbody").html(_filldata);
                     }
                 }
@@ -282,7 +281,7 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.MakeMan, new { @class = "control-label col-sm-2" })
                     <div class="col-sm-10">
-                        @Html.SelectList_Auto("MakeMan", "userinfo", "fullname")
+                        @Html.SelectList_Auto("MakeMan", "userinfo", "fullname",(int)ViewBag.userid)
                     </div>
                 </div>
             </div>

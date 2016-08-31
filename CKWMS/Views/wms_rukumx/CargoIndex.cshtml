@@ -109,8 +109,8 @@
                         <td>@item.Pihao</td>
                         <td>@item.Pihao1</td>
                         <td>@item.Xuliema</td>
-                        <td>@item.ShengchanRQ</td>
-                        <td>@item.ShixiaoRQ</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}",item.ShengchanRQ)</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}",item.ShixiaoRQ)</td>
                         <td>@item.DaohuoSL</td>
                         <td>@item.YishouSL</td>
                         <td>@item.JibenDW</td>
@@ -123,8 +123,8 @@
                         <td>@item.Tiji</td>
                         <td>@item.Jifeidun</td>
                         <td>@item.Beizhu</td>
-                        <td>@item.MakeDate</td>
-                        <td>@item.MakeMan</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.MakeDate)</td>
+                        <td>@Html.GetDataValue_ID("userinfo","名称",(int)item.MakeMan)</td>
                     </tr>
                 }
             </tbody>

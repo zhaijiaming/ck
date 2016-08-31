@@ -17,12 +17,13 @@ namespace CKWMS.Controllers
     public class ZhuCeZhenXX
     {
         public int ID { get; set; }
-        public string Bianhao { get; set; }
-        public string Mingcheng { get; set; }
-        public string Bianzhun { get; set; }
-        public string Chandi { get; set; }
-        public int ShengchanqiyeID { get; set; }
-
+        public string Bianhao { get; set; }//注册证编号
+        public string Mingcheng { get; set; }//商品名称
+        public string Bianzhun { get; set; }//产品标准
+        public string Chandi { get; set; }//产地
+        public int ShengchanqiyeID { get; set; }//生产企业序号
+        public string Shengchanqiye { get; set; }//生产企业
+        public List<base_zhucezhenggg> Guige { get; set; }//规格列表
     }
     public class base_shangpinzczController : Controller
     {
@@ -306,29 +307,45 @@ namespace CKWMS.Controllers
             string _username = (string)Session["user_name"];
             string _zczid = Request["zczbh"] ?? "";
 
-            IList<ZhuCeZhenXX> _zczxxs;
-
+            //IList<ZhuCeZhenXX> _zczxxs;
+            ZhuCeZhenXX _zczxxs=null;
             if (_zczid == "")
                 return Json("");
             else
             {
-                _zczxxs = new List<ZhuCeZhenXX>();
-                var tempdata = ob_base_shangpinzczservice.LoadSortEntities(p => p.IsDelete == false && p.ID == int.Parse(_zczid), false, p => p.Mingcheng);
-                foreach(base_shangpinzcz _zcz in tempdata)
+                //_zczxxs = new List<ZhuCeZhenXX>();
+                //var tempdata = ob_base_shangpinzczservice.LoadSortEntities(p => p.IsDelete == false && p.ID == int.Parse(_zczid), false, p => p.Mingcheng);
+                //foreach(base_shangpinzcz _zcz in tempdata)
+                //{
+                //    if(_zcz.ID > 0)
+                //    {
+                //        ZhuCeZhenXX _zczxx = new ZhuCeZhenXX();
+                //        _zczxx.ID = _zcz.ID;
+                //        _zczxx.Mingcheng = _zcz.Mingcheng;
+                //        _zczxx.Chandi = _zcz.Chandi;
+                //        _zczxx.ShengchanqiyeID = (int)_zcz.ShengchanqiyeID;
+                //        _zczxxs.Add(_zczxx);
+                //    }
+                //}
+                base_shangpinzcz _zcz = ob_base_shangpinzczservice.GetEntityById(p => p.ID == int.Parse(_zczid));
+                if(_zcz!=null)
                 {
-                    if(_zcz.ID > 0)
-                    {
-                        ZhuCeZhenXX _zczxx = new ZhuCeZhenXX();
-                        _zczxx.ID = _zcz.ID;
-                        _zczxx.Mingcheng = _zcz.Mingcheng;
-                        _zczxx.Chandi = _zcz.Chandi;
-                        _zczxx.ShengchanqiyeID = (int)_zcz.ShengchanqiyeID;
-                        _zczxxs.Add(_zczxx);
-                    }
+                    _zczxxs = new ZhuCeZhenXX();
+                    _zczxxs.ID = _zcz.ID;
+                    _zczxxs.Bianhao = _zcz.Bianhao;
+                    _zczxxs.Bianzhun = _zcz.Bianzhun;
+                    _zczxxs.Mingcheng = _zcz.Mingcheng;
+                    _zczxxs.Chandi = _zcz.Chandi;
+                    _zczxxs.ShengchanqiyeID =(int)_zcz.ShengchanqiyeID;
+                    base_shengchanqiye _scqy = ServiceFactory.base_shengchanqiyeservice.GetEntityById(s => s.ID == _zczxxs.ShengchanqiyeID);
+                    if (_scqy != null)
+                        _zczxxs.Shengchanqiye = _scqy.Qiyemingcheng;
+                    else
+                        _zczxxs.Shengchanqiye = "";
+                    _zczxxs.Guige = ServiceFactory.base_zhucezhengggservice.LoadSortEntities(p => p.ZCZID == _zczxxs.ID, true, s => s.Guige).ToList<base_zhucezhenggg>() ;
                 }
             }
-
-            return Json(_zczxxs);
+            return Json(_zczxxs,JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

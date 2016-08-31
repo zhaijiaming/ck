@@ -184,10 +184,10 @@ namespace CKWMS.Controllers
         }
         public ActionResult GetCargos(int id)
         {
-            var _mxtmp = ob_wms_rukumxservice.LoadSortEntities(p => p.RukuID == id && p.IsDelete==false, true, s => s.ShangpinMC);
+            var _mxtmp = ob_wms_rukumxservice.LoadSortEntities(p => p.RukuID == id && p.IsDelete == false, true, s => s.ShangpinMC);
             ViewBag.wms_rukumx = _mxtmp;
             ViewBag.rkid = id;
-            return View("CargoIndex",_mxtmp);
+            return View("CargoIndex", _mxtmp);
         }
         //public ActionResult Index(int id)
         //{
@@ -203,7 +203,7 @@ namespace CKWMS.Controllers
         public ActionResult Add()
         {
             ViewBag.userid = (int)Session["user_id"];
-            var srkid = Request["rkid"]??"";
+            var srkid = Request["rkid"] ?? "";
             int rkid;
             if (srkid.Length == 0)
                 rkid = 0;
@@ -298,7 +298,7 @@ namespace CKWMS.Controllers
             {
                 Console.WriteLine(ex.Message);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("GetCargos", new { id = rukuid });
         }
 
         [OutputCache(Duration = 10)]
