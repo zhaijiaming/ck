@@ -200,6 +200,11 @@ namespace CKWMS.Controllers
         }
         public ActionResult Add()
         {
+            string id = Request["getId"];
+
+            var _id = long.Parse(id);
+            ViewBag.id = _id;
+
             ViewBag.userid = (int)Session["user_id"];
             return View();
         }
@@ -301,6 +306,24 @@ namespace CKWMS.Controllers
             }
             return RedirectToAction("Index", new { id = uid });
         }
+        public int DeleteNow()
+        {
+            string sdel = Request["del"] ?? "";
+            int id;
+            base_shouhuomingxi ob_base_shouhuomingxi;
+            foreach (string sD in sdel.Split(','))
+            {
+                if (sD.Length > 0)
+                {
+                    id = int.Parse(sD);
+                    ob_base_shouhuomingxi = ob_base_shouhuomingxiservice.GetEntityById(base_shouhuomingxi => base_shouhuomingxi.ID == id && base_shouhuomingxi.IsDelete == false);
+                    ob_base_shouhuomingxi.IsDelete = true;
+                    ob_base_shouhuomingxiservice.UpdateEntity(ob_base_shouhuomingxi);
+                }
+            }
+            return 1;
+        }
+
         public ActionResult Delete()
         {
             string sdel = Request["del"] ?? "";
