@@ -54,6 +54,7 @@
         scm.ItemType = "System.String";
         scms.Add(scm);
 
+        scm = new SearchConditionModel();
         scm.ItemCode = "Miaoshu";
         scm.ItemTitle = "描述";
         scm.ItemType = "System.String";
@@ -80,12 +81,12 @@
             scm.ItemCode = "Miaoshu";
             scm.ItemTitle = "描述";
             scm.ItemType = "System.String";
-            //if (scs.Length > 1)
-            //{
-            //    scm.ItemValue = scs[0].Split(',')[1];
-            //    scm.ItemOpValue = scs[0].Split(',')[2];
-            //    scm.ItemJion = scs[0].Split(',')[3];
-            //}
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[1].Split(',')[1];
+                scm.ItemOpValue = scs[1].Split(',')[2];
+                scm.ItemJion = scs[1].Split(',')[3];
+            }
             scms.Add(scm);
         }
     }

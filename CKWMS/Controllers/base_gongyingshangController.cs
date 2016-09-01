@@ -290,6 +290,10 @@ namespace CKWMS.Controllers
             where = where.And(base_gongyingshang => base_gongyingshang.IsDelete == false);
 
             var tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), false, base_gongyingshang => base_gongyingshang.ID).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            //var tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), false, base_gongyingshang => base_gongyingshang.ID);
+
+            //tempData = tempData.OrderBy(s => s.Daima);
+
             ViewBag.base_gongyingshang = tempData;
 
             
@@ -319,6 +323,7 @@ namespace CKWMS.Controllers
             string shouying = Request["ob_base_gongyingshang_shouying"] ?? "";
             string makedate = Request["ob_base_gongyingshang_makedate"] ?? "";
             string makeman = Request["ob_base_gongyingshang_makeman"] ?? "";
+            var ff = "";
             try
             {
                 base_gongyingshang ob_base_gongyingshang = new base_gongyingshang();
@@ -338,6 +343,7 @@ namespace CKWMS.Controllers
                 ob_base_gongyingshang = ob_base_gongyingshangservice.AddEntity(ob_base_gongyingshang);
                 ViewBag.base_gongyingshang = ob_base_gongyingshang;
                 ViewBag.flag = "1";
+                ff = "success";
 
 
             }
@@ -345,9 +351,10 @@ namespace CKWMS.Controllers
             {
                 Console.WriteLine(ex.Message);
                 ViewBag.flag = "2";
+                ff = "fail";
             }
-            
             return RedirectToAction("Index");
+            //return Content("<script>alert('" + ff + "');location.href='Index'</script>");
         }
 
         public ActionResult Edit(int id)

@@ -9,8 +9,10 @@ namespace CKWMS.Models
         [Display(Name = "序号")]
         public int? ID { get; set; }
         [Display(Name = "编号")]
+        [Required]
         public string Bianhao { get; set; }
         [Display(Name = "名称")]
+        [Required]
         public string Mingcheng { get; set; }
         [Display(Name = "描述")]
         public string Miaoshu { get; set; }
