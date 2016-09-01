@@ -70,7 +70,7 @@ namespace CKWMS.Controllers
                 ViewBag.SearchCondition = sc.ConditionInfo;
             }
 
-            where = where.And(quan_shouyingsq => quan_shouyingsq.IsDelete == false);
+            where = where.And(quan_shouyingsq => quan_shouyingsq.IsDelete == false && quan_shouyingsq.Zhuangtai > 0 && quan_shouyingsq.Zhuangtai < 5);
 
             var tempData = ob_quan_shouyingsqservice.LoadSortEntities(where.Compile(), false, quan_shouyingsq => quan_shouyingsq.ID).ToPagedList<quan_shouyingsq>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.quan_shouyingsq = tempData;
@@ -160,13 +160,158 @@ namespace CKWMS.Controllers
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;
-            where = where.And(quan_shouyingsq => quan_shouyingsq.IsDelete == false);
+            where = where.And(quan_shouyingsq => quan_shouyingsq.IsDelete == false && quan_shouyingsq.Zhuangtai>0 && quan_shouyingsq.Zhuangtai<5);
 
             var tempData = ob_quan_shouyingsqservice.LoadSortEntities(where.Compile(), false, quan_shouyingsq => quan_shouyingsq.ID).ToPagedList<quan_shouyingsq>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.quan_shouyingsq = tempData;
             return View(tempData);
         }
+        [OutputCache(Duration = 30)]
+        public ActionResult RecIndex(string page)
+        {
+            if (string.IsNullOrEmpty(page))
+                page = "1";
+            int userid = (int)Session["user_id"];
+            string pagetag = "quan_shouyingsq_recindex";
+            Expression<Func<quan_shouyingsq, bool>> where = PredicateExtensionses.True<quan_shouyingsq>();
+            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            if (sc != null && sc.ConditionInfo != null)
+            {
+                string[] sclist = sc.ConditionInfo.Split(';');
+                foreach (string scl in sclist)
+                {
+                    string[] scld = scl.Split(',');
+                    switch (scld[0])
+                    {
+                        case "leibie":
+                            string leibie = scld[1];
+                            string leibieequal = scld[2];
+                            string leibieand = scld[3];
+                            if (!string.IsNullOrEmpty(leibie))
+                            {
+                                if (leibieequal.Equals("="))
+                                {
+                                    if (leibieand.Equals("and"))
+                                        where = where.And(quan_shouyingsq => quan_shouyingsq.Leibie == int.Parse(leibie));
+                                    else
+                                        where = where.Or(quan_shouyingsq => quan_shouyingsq.Leibie == int.Parse(leibie));
+                                }
+                                if (leibieequal.Equals(">"))
+                                {
+                                    if (leibieand.Equals("and"))
+                                        where = where.And(quan_shouyingsq => quan_shouyingsq.Leibie > int.Parse(leibie));
+                                    else
+                                        where = where.Or(quan_shouyingsq => quan_shouyingsq.Leibie > int.Parse(leibie));
+                                }
+                                if (leibieequal.Equals("<"))
+                                {
+                                    if (leibieand.Equals("and"))
+                                        where = where.And(quan_shouyingsq => quan_shouyingsq.Leibie < int.Parse(leibie));
+                                    else
+                                        where = where.Or(quan_shouyingsq => quan_shouyingsq.Leibie < int.Parse(leibie));
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                ViewBag.SearchCondition = sc.ConditionInfo;
+            }
+            where = where.And(quan_shouyingsq => quan_shouyingsq.IsDelete == false);
+            var tempData = ob_quan_shouyingsqservice.LoadSortEntities(where.Compile(), false, quan_shouyingsq => quan_shouyingsq.ID).ToPagedList<quan_shouyingsq>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            ViewBag.quan_shouyingsq = tempData;
+            return View(tempData);
+        }
 
+        [HttpPost]
+        [OutputCache(Duration = 30)]
+        public ActionResult RecIndex()
+        {
+            int userid = (int)Session["user_id"];
+            string pagetag = "quan_shouyingsq_recindex";
+            string page = "1";
+            string leibie = Request["leibie"] ?? "";
+            string leibieequal = Request["leibieequal"] ?? "";
+            string leibieand = Request["leibieand"] ?? "";
+            Expression<Func<quan_shouyingsq, bool>> where = PredicateExtensionses.True<quan_shouyingsq>();
+            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            if (sc == null)
+            {
+                sc = new searchcondition();
+                sc.UserID = userid;
+                sc.PageBrief = pagetag;
+                if (!string.IsNullOrEmpty(leibie))
+                {
+                    if (leibieequal.Equals("="))
+                    {
+                        if (leibieand.Equals("and"))
+                            where = where.And(quan_shouyingsq => quan_shouyingsq.Leibie == int.Parse(leibie));
+                        else
+                            where = where.Or(quan_shouyingsq => quan_shouyingsq.Leibie == int.Parse(leibie));
+                    }
+                    if (leibieequal.Equals(">"))
+                    {
+                        if (leibieand.Equals("and"))
+                            where = where.And(quan_shouyingsq => quan_shouyingsq.Leibie > int.Parse(leibie));
+                        else
+                            where = where.Or(quan_shouyingsq => quan_shouyingsq.Leibie > int.Parse(leibie));
+                    }
+                    if (leibieequal.Equals("<"))
+                    {
+                        if (leibieand.Equals("and"))
+                            where = where.And(quan_shouyingsq => quan_shouyingsq.Leibie < int.Parse(leibie));
+                        else
+                            where = where.Or(quan_shouyingsq => quan_shouyingsq.Leibie < int.Parse(leibie));
+                    }
+                }
+                if (!string.IsNullOrEmpty(leibie))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "leibie", leibie, leibieequal, leibieand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "leibie", "", leibieequal, leibieand);
+
+                searchconditionService.GetInstance().AddEntity(sc);
+            }
+            else
+            {
+                sc.ConditionInfo = "";
+                if (!string.IsNullOrEmpty(leibie))
+                {
+                    if (leibieequal.Equals("="))
+                    {
+                        if (leibieand.Equals("and"))
+                            where = where.And(quan_shouyingsq => quan_shouyingsq.Leibie == int.Parse(leibie));
+                        else
+                            where = where.Or(quan_shouyingsq => quan_shouyingsq.Leibie == int.Parse(leibie));
+                    }
+                    if (leibieequal.Equals(">"))
+                    {
+                        if (leibieand.Equals("and"))
+                            where = where.And(quan_shouyingsq => quan_shouyingsq.Leibie > int.Parse(leibie));
+                        else
+                            where = where.Or(quan_shouyingsq => quan_shouyingsq.Leibie > int.Parse(leibie));
+                    }
+                    if (leibieequal.Equals("<"))
+                    {
+                        if (leibieand.Equals("and"))
+                            where = where.And(quan_shouyingsq => quan_shouyingsq.Leibie < int.Parse(leibie));
+                        else
+                            where = where.Or(quan_shouyingsq => quan_shouyingsq.Leibie < int.Parse(leibie));
+                    }
+                }
+                if (!string.IsNullOrEmpty(leibie))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "leibie", leibie, leibieequal, leibieand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "leibie", "", leibieequal, leibieand);
+
+                searchconditionService.GetInstance().UpdateEntity(sc);
+            }
+            ViewBag.SearchCondition = sc.ConditionInfo;
+            where = where.And(quan_shouyingsq => quan_shouyingsq.IsDelete == false);
+            var tempData = ob_quan_shouyingsqservice.LoadSortEntities(where.Compile(), false, quan_shouyingsq => quan_shouyingsq.ID).ToPagedList<quan_shouyingsq>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            ViewBag.quan_shouyingsq = tempData;
+            return View(tempData);
+        }
         public ActionResult Add()
         {
             ViewBag.userid = (int)Session["user_id"];
@@ -188,7 +333,7 @@ namespace CKWMS.Controllers
                 {
                     if (_cv.Length > 0)
                     {
-                        quan_shouyingsq _sq = ob_quan_shouyingsqservice.GetEntityById(p =>p.Leibie==int.Parse(_checktype) && p.ShenqingID == int.Parse(_cv) && p.IsDelete == false);
+                        quan_shouyingsq _sq = ob_quan_shouyingsqservice.GetEntityById(p =>p.Leibie==int.Parse(_checktype) && p.ShenqingID == int.Parse(_cv) && p.Zhuangtai!=-1 && p.IsDelete == false);
                         if (_sq == null)
                         {
                             _sq = new quan_shouyingsq();

@@ -1,0 +1,119 @@
+﻿@using CKWMS.App_Code
+@using CKWMS.Models
+@using X.PagedList
+@using X.PagedList.Mvc
+@{
+    ViewBag.Title = "首营申请记录";
+    string _searchcondition = ViewBag.SearchCondition;
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("tr").bind("dblclick", function () {
+            var url_go="";
+            var u_id = $(this).find('td').eq(0).find('input').val();
+            var pp = $(this).find('td').eq(0).find('input');
+            if (u_id != null) {
+                if (pp.data("sqt") == 1)
+                    url_go = "/base_shangpinxx/edit/" + pp.data("sq");
+                if (pp.data("sqt") == 2)
+                    url_go = "/base_weituokehu/edit/" + pp.data("sq");
+                location.href = url_go;
+            }
+        });
+    });
+</script>
+@{
+    List<SearchConditionModel> scms = new List<SearchConditionModel>();
+    if (_searchcondition == null || _searchcondition == "")
+    {
+        SearchConditionModel scm = new SearchConditionModel();
+        scm.ItemCode = "Leibie";
+        scm.ItemTitle = "类别";
+        scm.ItemType = "System.Int32";
+        scms.Add(scm);
+    }
+    else
+    {
+        string[] scs = _searchcondition.Split(';');
+        if (scs.Length > 0)
+        {
+            SearchConditionModel scm = new SearchConditionModel();
+            scm.ItemCode = "Leibie";
+            scm.ItemTitle = "类别";
+            scm.ItemType = "System.Int32";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[0].Split(',')[1];
+                scm.ItemOpValue = scs[0].Split(',')[2];
+                scm.ItemJion = scs[0].Split(',')[3];
+            }
+            scms.Add(scm);
+        }
+    }
+}
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    </script>
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="/Home">首页</a>
+        </li>
+        <li class="active">申请记录</li>
+    </ul>
+</div>
+<div class="page-content">
+    @Html.Search_Condition((int)Session["user_id"], "首营申请_条件组合查询", "/quan_shouyingsq/index", "quan_shouyingsqindex", scms)
+    <div class="page-header">
+        <p>
+            <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
+            <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
+        </p>
+    </div>
+    <div class="row">
+        <table class="table" id="mydatatable">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>类别</td>
+                    <td>内容</td>
+                    <td>申请时间</td>
+                    <td>申请人</td>
+                    <td>状态</td>
+                    <td>审核人</td>
+                    <td>审核说明</td>
+                    <td>负责人</td>
+                    <td>负责人说明</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.quan_shouyingsq)
+                {
+                    <tr>
+                        <td>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="@item.ID" data-sq="@item.ShenqingID" data-sqt="@item.Leibie" data-sqs="@item.Zhuangtai">
+                                </label>
+                            </div>
+                        </td>
+                        <td>@Html.GetCommonValue_ID("首营类型", (int)item.Leibie)</td>
+                        <td>@item.Neirong</td>
+                        <td>@string.Format("{0:yyyy-MM-dd HH:mm}", item.SQshijian)</td>
+                        <td>@item.SQren</td>
+                        <td>@Html.GetCommonValue_ID("首营状态", (int)item.Zhuangtai)</td>
+                        <td>@item.Shenheren</td>
+                        <td>@item.Shenheshuoming</td>
+                        <td>@item.Fuzeren</td>
+                        <td>@item.FuzerenSM</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="pager">
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+    </div>
+</div>
