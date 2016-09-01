@@ -1,6 +1,5 @@
 ﻿using Microsoft.Owin;
 using Owin;
-
 [assembly: OwinStartupAttribute(typeof(CKWMS.Startup))]
 [assembly: log4net.Config.XmlConfigurator(ConfigFile = "Web.config", Watch = true)]
 namespace CKWMS
@@ -10,6 +9,7 @@ namespace CKWMS
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+            CKWMS.BSL.ServiceFactory.hotload();
         }
     }
 }

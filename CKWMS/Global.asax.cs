@@ -131,7 +131,7 @@ namespace CKWMS
             ShouYingZhuangTai = new Dictionary<int, string>();
             ShouYingZhuangTai.Add(0, "");
             ShouYingZhuangTai.Add(1, "新建");
-            ShouYingZhuangTai.Add(2, "待审核");
+            ShouYingZhuangTai.Add(2, "审核中");
             ShouYingZhuangTai.Add(3, "质量部通过");
             ShouYingZhuangTai.Add(4, "负责人通过");
             ShouYingZhuangTai.Add(5, "已通过");
