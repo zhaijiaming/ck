@@ -13,9 +13,14 @@
         $("#authorpanel").hide();
         $("#toppanel").hide();
         $("tr").bind("dblclick", function () {
+            var url_go = "";
             var u_id = $(this).find('td').eq(0).find('input').val();
+            var pp = $(this).find('td').eq(0).find('input');
             if (u_id != null) {
-                var url_go = "/quan_shouyingsq/Edit/" + u_id;
+                if (pp.data("sqt") == 1)
+                    url_go = "/base_shangpinxx/edit/" + pp.data("sq");
+                if (pp.data("sqt") == 2)
+                    url_go = "/base_weituokehu/edit/" + pp.data("sq");
                 location.href = url_go;
             }
         });
@@ -265,9 +270,9 @@
     <div class="page-header">
         <p>
             <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
-            <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
+            @*<button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
             <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
-            <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
+            <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>*@
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
             <button type="button" class="btn btn-default " id="bt_quancheck"><i class="icon-remove"></i>质量部审核</button>
             <button type="button" class="btn btn-default " id="bt_topcheck"><i class="icon-refresh"></i>质量负责人审核</button>

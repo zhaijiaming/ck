@@ -728,6 +728,7 @@
     <Content Include="Views\base_quyu\Edit.cshtml" />
     <Content Include="Views\base_quyu\Index.cshtml" />
     <Content Include="Views\wms_shouhuomx\Recieving.cshtml" />
+    <Content Include="Views\quan_shouyingsq\RecIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
