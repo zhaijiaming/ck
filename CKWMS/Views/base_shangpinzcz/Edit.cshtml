@@ -104,13 +104,13 @@
                 for (var i in data) {
                     filltable = filltable + '<tr><td><div class="checkbox"><label><input type="checkbox" value="';
                     filltable = filltable + data[i].ID;
-                    filltable = filltable + '"></label></div></td><td>';
+                    filltable = filltable + '"></label></div></td><td style="width:150px">';
                     filltable = filltable + data[i].Guige;
-                    filltable = filltable + '</td><td>';
+                    filltable = filltable + '</td><td style="width:150px">';
                     filltable = filltable + data[i].Memo;
-                    filltable = filltable + '</td><td>';
+                    filltable = filltable + '</td><td style="width:150px">';
                     filltable = filltable + data[i].Makedate;
-                    filltable = filltable + '</td><td>';
+                    filltable = filltable + '</td><td style="width:150px">';
                     filltable = filltable + data[i].Makeman;
                     filltable = filltable + '</td></tr>';
                 }
@@ -321,16 +321,16 @@
             <button type="button" class="btn btn-default " id="bt_guige_refresh"><i class="icon-refresh"></i>刷新</button>
             <table class="table" id="ggdatatable">
                 <caption></caption>
-                <thead>
+                <thead style="display:block">
                     <tr>
-                        <td></td>
-                        <td>规格</td>
-                        <td>说明</td>
-                        <td>制单日期</td>
-                        <td>制单人</td>
+                        <td style="width:40px"></td>
+                        <td style="width:160px">规格</td>
+                        <td style="width:155px">说明</td>
+                        <td style="width:140px">制单日期</td>
+                        <td style="width:190px">制单人</td>
                     </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody style="display:block;max-height:268px;width:572px;overflow:scroll;"></tbody>
             </table>
         </div>
     </div>

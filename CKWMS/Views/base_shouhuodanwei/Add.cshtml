@@ -30,14 +30,6 @@
             </p>
         </div>
         <div class="container">
-            @*单位名称*@
-            <div class="form-group">
-                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>单位名称</label>
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Mingcheng, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Mingcheng)
-                </div>
-            </div>
             @*货主*@
             <div class="form-group">
                 <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>货主</label>
@@ -47,16 +39,24 @@
                     @Html.ValidationMessageFor(m => m.HuozhuID)
                 </div>
             </div>
+            @*单位名称*@
+            <div class="form-group">
+                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>单位名称</label>
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.Mingcheng, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Mingcheng)
+                </div>
+            </div>
             <div class="form-group">
                 <label for="name" class="col-sm-2">营业执照编号</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="ob_base_shouhuodanwei_yingyezhizhaobh">
+                    <input type="text" class="form-control" name="yingyezhizhaobh">
                 </div>
             </div>
             <div class="form-group">
                 <label for="name" class="col-sm-2">营业执照有效期</label>
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="ob_base_shouhuodanwei_yingyezhizhaoyxq">
+                    <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="yingyezhizhaoyxq">
                 </div>
             </div>
             @*营业执照照片*@
@@ -80,13 +80,13 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2">经营许可编号</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="ob_base_shouhuodanwei_jingyingxukebh">
+                    <input type="text" class="form-control" name="jingyingxukebh">
                 </div>
             </div>
             <div class="form-group">
                 <label for="name" class="col-sm-2">经营许可有效期</label>
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="ob_base_shouhuodanwei_jingyingxukeyxq">
+                    <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="jingyingxukeyxq">
                 </div>
             </div>
             @*经营许可照片*@
@@ -104,23 +104,23 @@
                     </span>
                 </div>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label for="name" class="col-sm-2">首营状态</label>
                 <div class="col-sm-10">
-                    @*<input type="text" class="form-control" name="ob_base_shouhuodanwei_shouying">*@
+                    @*<input type="text" class="form-control" name="ob_base_shouhuodanwei_shouying">
                     @Html.SelectList_Common("ob_base_shouhuodanwei_shouying", "首营状态")
                 </div>
-            </div>
+            </div>*@
             <div class="form-group">
                 <label for="name" class="col-sm-2">录入日期</label>
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="ob_base_shouhuodanwei_makedate">
+                    <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="makedate">
                 </div>
             </div>
             <div class="form-group">
                 <label for="name" class="col-sm-2">输入人</label>
                 <div class="col-sm-10">
-                    @Html.SelectList_Auto("ob_base_shouhuodanwei_makeman", "userinfo", "fullname",(long)ViewBag.userid)
+                    @Html.SelectList_Auto("makeman", "userinfo", "fullname",(long)ViewBag.userid)
                 </div>
             </div>
         </div>

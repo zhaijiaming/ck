@@ -102,7 +102,7 @@
                     <td>联系人</td>
                     <td>联系电话</td>
                     @*<td>货主的销售序号</td>*@
-                    <td>货主销售人</td>
+                    <td>货主销售</td>
                     <td>录入日期</td>
                     <td>输入人</td>
                 </tr>
@@ -116,7 +116,7 @@
                                 <label><input type="checkbox" value="@item.ID"></label>
                             </div>
                         </td>
-                        <td>@Html.GetDataValue_ID("收货单位","",(int)item.ShouhuofangID)</td>
+                        <td>@Html.GetDataValue_ID("收货单位", "", (int)item.ShouhuofangID)</td>
                         @*<td>@item.Mingcheng</td>*@
                         <td>@item.Dizhi</td>
                         <td>@item.Lianxiren</td>
@@ -124,13 +124,13 @@
                         @*<td>@item.XiaoshouID</td>*@
                         <td>@item.Xiaoshouren</td>
                         <td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
-                        <td>@Html.GetDataValue_ID("userinfo","全名",(int)item.MakeMan)</td>
+                        <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
-    <div class="pager">
+    @*<div class="pager">
         @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
-    </div>
+    </div>*@
 </div>

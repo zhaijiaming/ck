@@ -86,15 +86,15 @@
             },
             function (data) {
                 for (var i in data) {
-                    filltable = filltable + '<tr><td><div class="checkbox"><label><input type="checkbox" value="';
+                    filltable = filltable + '<tr><td style="width:40px"><div class="checkbox"><label><input  type="checkbox" value="';
                     filltable = filltable + data[i].ID;
-                    filltable = filltable + '"></label></div></td><td>';
+                    filltable = filltable + '"></label></div></td><td style="width:150px">';
                     filltable = filltable + data[i].Guige;
-                    filltable = filltable + '</td><td>';
+                    filltable = filltable + '</td><td style="width:150px">';
                     filltable = filltable + data[i].Memo;
-                    filltable = filltable + '</td><td>';
+                    filltable = filltable + '</td><td style="width:150px">';
                     filltable = filltable + data[i].Makedate;
-                    filltable = filltable + '</td><td>';
+                    filltable = filltable + '</td><td style="width:150px">';
                     filltable = filltable + data[i].Makeman;
                     filltable = filltable + '</td></tr>';
                 }
@@ -243,7 +243,7 @@
         </div>
     </div>
 </div>
-<div id="pl_guige" class="panel panel-primary" style="position:absolute;top:100px;left:200px;width:600px;height:400px;z-index:999;">
+<div id="pl_guige" class="panel panel-primary" style="position:fixed;top:100px;left:200px;width:600px;height:400px;z-index:999;">
     <div class="panel-heading">
         <h3 class="panel-title">规格管理<button id="pl_close" class="pull-right">X</button></h3>
     </div>
@@ -253,16 +253,16 @@
             <button type="button" class="btn btn-default " id="bt_guige_refresh"><i class="icon-refresh"></i>刷新</button>
             <table class="table" id="ggdatatable">
                 <caption></caption>
-                <thead>
+                <thead style="display:inline-block">
                     <tr>
-                        <td></td>
-                        <td>规格</td>
-                        <td>说明</td>
-                        <td>制单日期</td>
-                        <td>制单人</td>
+                        <td style="width:40px"></td>
+                        <td style="width:160px">规格</td>
+                        <td style="width:155px">说明</td>
+                        <td style="width:140px">制单日期</td>
+                        <td style="width:190px">制单人</td>
                     </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody style="display:block;max-height:268px;width:572px;overflow:scroll;"></tbody>
             </table>
         </div>
     </div>

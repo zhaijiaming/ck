@@ -228,7 +228,7 @@ namespace CKWMS.Controllers
             string id = Request["id"] ?? "";
             string huozhuid = Request["huozhuid"] ?? "";
             string mingcheng = Request["mingcheng"] ?? "";
-            string yingyezhizhaobh = Request["oyingyezhizhaobh"] ?? "";
+            string yingyezhizhaobh = Request["yingyezhizhaobh"] ?? "";
             string yingyezhizhaoyxq = Request["yingyezhizhaoyxq"] ?? "";
             string yingyezhizhaotp = Request["yingyezhizhaotp"] ?? "";
             string jingyingxukebh = Request["jingyingxukebh"] ?? "";
@@ -305,7 +305,7 @@ namespace CKWMS.Controllers
                 Console.WriteLine(ex.Message);
                 ViewBag.saveok = ViewAddTag.ModifyNo;
             }
-            return RedirectToAction("Edit", new { id = uid });
+            return RedirectToAction("Index", new { id = uid });
         }
         public ActionResult Delete()
         {

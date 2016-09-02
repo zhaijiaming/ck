@@ -169,7 +169,7 @@ namespace CKWMS.Controllers
         public ActionResult GetDetail()
         {
             int shouhuodanwei =int.Parse(Request["shouhuodanwei"]);
-            var tempData = ob_base_shouhuomingxiservice.LoadSortEntities(base_shouhuomingxi => base_shouhuomingxi.ShouhuofangID == shouhuodanwei, false, base_shouhuomingxi => base_shouhuomingxi.ID);
+            var tempData = ob_base_shouhuomingxiservice.LoadSortEntities(p => p.ShouhuofangID == shouhuodanwei && p.IsDelete == false, false, base_shouhuomingxi => base_shouhuomingxi.ID);
             ViewBag.base_shouhuomingxi = tempData;
             return View();
         }
@@ -223,6 +223,7 @@ namespace CKWMS.Controllers
             string xiaoshouren = Request["xiaoshouren"] ?? "";
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
+            int _shdw = int.Parse(shouhuofangid); 
             try
             {
                 base_shouhuomingxi ob_base_shouhuomingxi = new base_shouhuomingxi();
@@ -242,7 +243,24 @@ namespace CKWMS.Controllers
             {
                 Console.WriteLine(ex.Message);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("ShdwIndex", new {id = _shdw });
+        }
+
+        public ActionResult ShdwIndex(int? id)
+        {
+            if (id == null)
+            {
+                var tempData = ob_base_shouhuomingxiservice.LoadSortEntities(p=>p.IsDelete == false, false, s => s.Dizhi);
+                ViewBag.base_shouhuomingxi = tempData;
+                return View();
+            }
+            else
+            {
+                var tempData = ob_base_shouhuomingxiservice.LoadSortEntities(p => p.ShouhuofangID == id && p.IsDelete == false, false, s => s.Dizhi);
+                ViewBag.base_shouhuomingxi = tempData;
+                return View();
+            }
+            
         }
 
         [OutputCache(Duration = 10)]
