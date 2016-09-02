@@ -120,6 +120,12 @@ namespace CKWMS.Models
         public int? WeituoQX { get; set; }
         [Display(Name = "贴中文标签")]
         public bool TieZWBQ { get; set; }
+        [Display(Name = "合同文件")]
+        public string HetongTP { get; set; }
+        [Display(Name = "法人")]
+        public string Faren { get; set; }
+        [Display(Name = "负责人")]
+        public string Fuzeren { get; set; }
     }
 }
 
