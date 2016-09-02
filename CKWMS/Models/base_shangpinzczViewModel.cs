@@ -54,6 +54,9 @@ namespace CKWMS.Models
         public string ShouhuoJG { get; set; }
         [Display(Name = "备注")]
         public string Beizhu { get; set; }
+        [Display(Name = "批准日期")]
+        [DataType(DataType.Date)]
+        public DateTime? PizhunRQ { get; set; }
     }
 }
 

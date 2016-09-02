@@ -51,6 +51,29 @@ namespace CKWMS.Models
         public bool ShenchaSF { get; set; }
         [Display(Name = "是否合作")]
         public bool HezuoSF { get; set; }
+        [Display(Name = "经营范围")]
+        public string Jingyinfanwei { get; set; }
+        [Display(Name = "经营范围代码")]
+        public string JingyinfanweiDM { get; set; }
+        [Display(Name = "区域")]
+        public string Quyu { get; set; }
+        [Display(Name = "备案编号")]
+        public string BeianBH { get; set; }
+        [Display(Name = "备案有效期")]
+        [DataType(DataType.Date)]
+        public DateTime? BeianYXQ { get; set; }
+        [Display(Name = "备案批准日期")]
+        [DataType(DataType.Date)]
+        public DateTime? BeianPZRQ { get; set; }
+        [Display(Name = "备案发证机关")]
+        public string BeianFZJG { get; set; }
+        [Display(Name = "备案文件")]
+        public string BeianTP { get; set; }
+        [Display(Name = "许可批准日期")]
+        [DataType(DataType.Date)]
+        public DateTime? XukePZRQ { get; set; }
+        [Display(Name = "许可发证机关")]
+        public string XukeFZJG { get; set; }
     }
 }
 
