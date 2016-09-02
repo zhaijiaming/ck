@@ -223,7 +223,7 @@ namespace CKWMS.Controllers
             string xiaoshouren = Request["xiaoshouren"] ?? "";
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
-            int _shdw = int.Parse(shouhuofangid); 
+            int _id = int.Parse(shouhuofangid); 
             try
             {
                 base_shouhuomingxi ob_base_shouhuomingxi = new base_shouhuomingxi();
@@ -243,7 +243,7 @@ namespace CKWMS.Controllers
             {
                 Console.WriteLine(ex.Message);
             }
-            return RedirectToAction("ShdwIndex", new {id = _shdw });
+            return RedirectToAction("ShdwIndex", new {id = _id });
         }
 
         public ActionResult ShdwIndex(int? id)
