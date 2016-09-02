@@ -294,6 +294,7 @@
     <Compile Include="Models\base_bumenViewModel.cs" />
     <Compile Include="Models\base_feiyongxmViewModel.cs" />
     <Compile Include="Models\base_huobiViewModel.cs" />
+    <Compile Include="Models\base_kaipiaoxxViewModel.cs" />
     <Compile Include="Models\base_quyuViewModel.cs" />
     <Compile Include="reports\ReportDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
