@@ -152,10 +152,27 @@ namespace CKWMS.Controllers
         }
         public JsonResult GetQixiemulu()
         {
-            var _qxtemp = ob_base_qixiemuluservice.LoadSortEntities(p => p.IsDelete == false, true, s => s.Mingcheng);
+            var _qxtemp = ob_base_qixiemuluservice.LoadSortEntities(p => p.IsDelete == false, true, s => s.Bianhao);
             List<QiXieMuLu> _qxlist=new List<QiXieMuLu>();
             QiXieMuLu _qx;
             foreach(var qx in _qxtemp)
+            {
+                _qx = new QiXieMuLu();
+                _qx.ID = qx.ID;
+                _qx.Bianhao = qx.Bianhao;
+                _qx.Mingcheng = qx.Mingcheng;
+                _qx.Miaoshu = qx.Miaoshu;
+                _qx.GuanliFL = qx.GuanliFL;
+                _qxlist.Add(_qx);
+            }
+            return Json(_qxlist);
+        }
+        public JsonResult GetQixiemulu1()
+        {
+            var _qxtemp = ob_base_qixiemuluservice.LoadSortEntities(p =>p.GuanliFL==0 && p.IsDelete == false, true, s => s.Bianhao);
+            List<QiXieMuLu> _qxlist = new List<QiXieMuLu>();
+            QiXieMuLu _qx;
+            foreach (var qx in _qxtemp)
             {
                 _qx = new QiXieMuLu();
                 _qx.ID = qx.ID;

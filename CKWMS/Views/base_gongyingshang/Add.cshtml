@@ -23,13 +23,15 @@
         //            break;
         //    }
         //}
-        //                            );
-
-        
+        //                            );       
         
         $("#ob_base_gongyingshang_makedate").datepicker();
         $("#ob_base_gongyingshang_yingyezhizhaoyxq").datepicker();
         $("#ob_base_gongyingshang_jingyingxukeyxq").datepicker();
+        $("#ob_base_gongyingshang_beianyxq").datepicker();
+        $("#ob_base_gongyingshang_beianpzrq").datepicker();
+        $("#ob_base_gongyingshang_xukepzrq").datepicker();
+
         document.getElementById("daima").focus();
         
         $("#pl_Fanwei").hide();
@@ -37,12 +39,81 @@
 
         var _qxmlid = $("#qxml").val();
 
+
+        //修改经营范围
         $("#bt_Fanweiadd").click(function () {
+            
             GetFanwei()
             $("#pl_Fanwei").show();
             setTimeout(function () {
                 GetData()
-            }, 500)
+            }, 500);
+
+            //隐藏小类
+            setTimeout(function () {
+                var fl = document.getElementsByClassName('glfl');
+
+                for (var i = 0; i < fl.length; i++) {
+                    if ($(".glfl").eq(i).text() != "0") {
+                        $(".bg").eq(i).hide();
+                    }
+                }
+            }, 50);
+            
+        });
+
+        $("#bt_fanwei_showall").click(function () {
+
+            $(".bg").show();
+            //var tamp_jyfwjm="";
+            //var t = document.getElementsByClassName('checkbox');
+            //$("#qxdatatable tr input[type=checkbox]").each(function () {
+            //    if (this.checked) {                   
+            //        tamp_jyfwjm = tamp_jyfwjm + $(this).parent().parent().parent().siblings().find(".bh").html() + ";";
+            //    }
+            //});                     
+            //GetFanwei();
+
+            //setTimeout(function () {                
+            //    var fw = document.getElementsByClassName('bh');
+            //    var i = tamp_jyfwjm;
+            //    var t = i.split(";");
+            //    for (var k = 0; k < t.length; k++) {
+            //        for (var l = 0; l < fw.length; l++) {
+            //            if (t[k] == $(".bh").eq(l).text())
+            //                $("input:checkbox").eq(l).attr("checked", true);
+            //        }
+            //    }
+            //}, 200);                   
+        });
+
+        $("#bt_fanwei_showdalei").click(function () {
+
+            var fl = document.getElementsByClassName('glfl');
+            for (var i = 0; i < fl.length; i++) {
+                if ($(".glfl").eq(i).text() != "0") {
+                    $(".bg").eq(i).hide();
+                }
+            }
+            //var tamp_jyfwjm = "";
+            //var t = document.getElementsByClassName('checkbox');
+            //$("#qxdatatable tr input[type=checkbox]").each(function () {
+            //    if (this.checked) {
+            //        tamp_jyfwjm = tamp_jyfwjm + $(this).parent().parent().parent().siblings().find(".bh").html() + ";";
+            //    }
+            //});
+            //GetFanwei1();
+            //setTimeout(function () {
+            //    var fw = document.getElementsByClassName('bh');
+            //    var i = tamp_jyfwjm;
+            //    var t = i.split(";");
+            //    for (var k = 0; k < t.length; k++) {
+            //        for (var l = 0; l < fw.length; l++) {
+            //            if (t[k] == $(".bh").eq(l).text())
+            //                $("input:checkbox").eq(l).attr("checked", true);
+            //        }
+            //    }
+            //}, 200);       
         });
 
         $("#pl_close").click(function () {
@@ -84,19 +155,12 @@
             }            
         });
         $("#bt_fanwei_all").click(function () {
-
             $(".checkbox").prop("checked", true);
-
         })
-
         $("#bt_fanwei_clear").click(function () {
-
             $(".checkbox").prop("checked", false);
-
         })
     });
-
-
 
     function GetSpell() {
         $.post("/Service/GetSpellCode",
@@ -109,7 +173,32 @@
     }
 
 
+    function GetFanwei1() {
+        //var _qxmlid = $("#qxml").val();
+        var filltable = "";
 
+        $.post(
+                "/base_qixiemulu/GetQixiemulu1",
+                {
+                    //qxml: _qxmlid
+                },
+                function (data) {
+                    for (var i in data) {
+                        filltable = filltable + '<tr class="bg"><td><div class="checkbox"><label><input type="checkbox" class ="checkbox" value="';
+                        filltable = filltable + data[i].ID;
+                        filltable = filltable + '"></label></div></td><td style="width:80px"><span class="bh">';
+                        filltable = filltable + data[i].Bianhao;
+                        filltable = filltable + '</span></td><td style="width:150px"><span class="mc">';
+                        filltable = filltable + data[i].Mingcheng;
+                        filltable = filltable + '</span></td><td style="width:800px">';
+                        filltable = filltable + data[i].Miaoshu;
+                        filltable = filltable + '</td><td style="width:100px"><span class="glfl">';
+                        filltable = filltable + data[i].GuanliFL;
+                        filltable = filltable + '</span></td></tr>';
+                    }
+                    $("#pl_Fanwei tbody").html(filltable);
+                });
+    }
 
     function GetFanwei() {
         //var _qxmlid = $("#qxml").val();
@@ -122,21 +211,20 @@
                 },
                 function (data) {
                     for (var i in data) {
-                        filltable = filltable + '<tr><td><div class="checkbox"><label><input type="checkbox" class ="checkbox" value="';
+                        filltable = filltable + '<tr class="bg"><td><div class="checkbox"><label><input type="checkbox" class ="checkbox" value="';
                         filltable = filltable + data[i].ID;
-                        filltable = filltable + '"></label></div></td><td><span class="bh">';
+                        filltable = filltable + '"></label></div></td><td style="width:80px"><span class="bh">';
                         filltable = filltable + data[i].Bianhao;
-                        filltable = filltable + '</span></td><td><span class="mc">';
+                        filltable = filltable + '</span></td><td style="width:150px"><span class="mc">';
                         filltable = filltable + data[i].Mingcheng;
-                        filltable = filltable + '</span></td><td>';
+                        filltable = filltable + '</span></td><td style="width:800px">';
                         filltable = filltable + data[i].Miaoshu;
-                        filltable = filltable + '</td><td>';
+                        filltable = filltable + '</td><td style="width:100px"><span class="glfl">';
                         filltable = filltable + data[i].GuanliFL;
-                        filltable = filltable + '</td></tr>';
+                        filltable = filltable + '</span></td></tr>';
                     }
                     $("#pl_Fanwei tbody").html(filltable);
                 });
-
     }
     function GetData() {
 
@@ -152,12 +240,7 @@
         }
     }
 
-
 </script>
-
-
-
-
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
@@ -288,6 +371,77 @@
                     @Html.SelectList_Common("ob_base_gongyingshang_shouying", "首营状态", 1)
                 </div>
             </div>*@
+            @*增加*@
+
+            <div class="form-group">
+                <label for="name" class="col-sm-2">是否审查</label>
+                <div>
+                    <label class="radio-inline">
+                        <input type="radio" name="shenchasf" value="true" checked>
+                        是
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="shenchasf" value="false">
+                        否
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-2">是否合作</label>
+                <div>
+                    <label class="radio-inline">
+                        <input type="radio" name="hezuosf" value="true" checked>
+                        是
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="hezuosf" value="false">
+                        否
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-2">备案编号</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="ob_base_gongyingshang_beianbh">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-2">备案有效期</label>
+                <div class="col-sm-10">
+                    <input type="date" class="form-control" name="ob_base_gongyingshang_beianyxq" id="ob_base_gongyingshang_beianyxq">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-2">备案批准日期</label>
+                <div class="col-sm-10">
+                    <input type="date" class="form-control" name="ob_base_gongyingshang_beianpzrq" id="ob_base_gongyingshang_beianpzrq">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-2">备案发证机关</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control"  name="ob_base_gongyingshang_beianfzjg">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-2">备案文件</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control"  name="ob_base_gongyingshang_beiantp">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-2">许可批准日期</label>
+                <div class="col-sm-10">
+                    <input type="date" class="form-control" name="ob_base_gongyingshang_xukepzrq" id="ob_base_gongyingshang_xukepzrq">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-2">许可发证机关</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="ob_base_gongyingshang_xukefzjg">
+                </div>
+            </div>
+
             <div class="form-group">
                 <label for="name" class="col-sm-2">录入日期</label>
                 <div class="col-sm-10">
@@ -305,7 +459,7 @@
 </div>
 
 
-<div id="pl_Fanwei" class="panel panel-primary " style="position:absolute;top:0px;left:300px;width:1100px;height:600px;z-index:999;">
+<div id="pl_Fanwei" class="panel panel-primary " style="display:none;position:absolute;top:0px;left:300px;width:1100px;height:600px;z-index:999;">
     <div class="panel-heading">
         <h3 class="panel-title">经营范围管理<button id="pl_close" class="pull-right">X</button></h3>
     </div>
@@ -314,7 +468,8 @@
             <button type="button" class="btn btn-default " id="bt_fanwei_add"><i class="icon-add"></i>确定</button>
             <button type="button" class="btn btn-default " id="bt_fanwei_all">全选</button>
             <button type="button" class="btn btn-default " id="bt_fanwei_clear">全部取消</button>
-
+            <button type="button" class="btn btn-default " id="bt_fanwei_showdalei">显示大类</button>
+            <button type="button" class="btn btn-default " id="bt_fanwei_showall">显示全部</button>
             <table class="table" id="qxdatatable">
                 <caption></caption>
                 <thead style="display:block">
@@ -326,7 +481,7 @@
                         <td style="width:100px">管理分类</td>
                     </tr>
                 </thead>
-                <tbody style="display:block; max-height:470px;width:1070px;overflow:scroll"></tbody>
+                <tbody style="display:block; max-height:460px;width:1070px;overflow:scroll"></tbody>
             </table>
         </div>
     </div>
@@ -334,7 +489,37 @@
 
 
 
-
+@*<tr>
+    <td>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" class="checkbox" value="data[i].ID">
+            </label>
+        </div>
+    </td>
+    <td>
+        <span class="bh">
+            ;
+            data[i].Bianhao;
+        </span>
+    </td>
+    <td>
+        <span class="mc">
+            ;
+            data[i].Mingcheng;
+        </span>
+    </td>
+    <td>
+        ;
+        data[i].Miaoshu;
+    </td>
+    <td>
+        <span class="glfl">
+            ;
+            data[i].GuanliFL;
+        </span>
+    </td>
+</tr>;*@
 
 
 

@@ -17,25 +17,6 @@ namespace CKWMS.Controllers
     public class base_gongyingshangController : Controller
     {
         private Ibase_gongyingshangService ob_base_gongyingshangservice = ServiceFactory.base_gongyingshangservice;
-        private Ibase_qixiemuluService ob_base_qixiemuluservice = ServiceFactory.base_qixiemuluservice;
-
-
-
-
-        //public class GongyingshangContext : DbContext
-        //{
-        //    public GongyingshangContext() : base("GongyingshangContext")
-        //    {
-        //    }
-
-        //    public DbSet<base_gongyingshang> Gongyingshangs { get; set; }
-
-
-        //    protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        //    {
-        //        modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-        //    }
-        //}
 
         //private GongyingshangContext db = new GongyingshangContext();
         [OutputCache(Duration = 30)]
@@ -89,8 +70,7 @@ namespace CKWMS.Controllers
 
             var tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), false, base_gongyingshang => base_gongyingshang.ID).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.base_gongyingshang = tempData;
-
-
+            //IOrderedEnumerable<CKWMS.EFModels.base_gongyingshang> tempData11 = tempData.OrderByDescending(base_gongyingshang => base_gongyingshang.ID);
 
             return View(tempData);
 
@@ -290,9 +270,7 @@ namespace CKWMS.Controllers
             where = where.And(base_gongyingshang => base_gongyingshang.IsDelete == false);
 
             var tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), false, base_gongyingshang => base_gongyingshang.ID).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
-            //var tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), false, base_gongyingshang => base_gongyingshang.ID);
-
-            //tempData = tempData.OrderBy(s => s.Daima);
+            
 
             ViewBag.base_gongyingshang = tempData;
 
@@ -319,11 +297,23 @@ namespace CKWMS.Controllers
             string jingyingxukeyxq = Request["ob_base_gongyingshang_jingyingxukeyxq"] ?? "";
             string jingyingxuketp = Request["ob_base_gongyingshang_jingyingxuketp"] ?? "";
             string jingyingfanwei = Request["ob_base_gongyingshang_jingyingfanwei"] ?? "";
-            string jingyingfanweidm = Request["ob_base_gongyingshang_jingyingfanweidm"] ?? "";
+            string jingyingfanweidm = Request["ob_base_gongyingshang_jingyingfanweidm"] ?? "";           
             string shouying = Request["ob_base_gongyingshang_shouying"] ?? "";
             string makedate = Request["ob_base_gongyingshang_makedate"] ?? "";
             string makeman = Request["ob_base_gongyingshang_makeman"] ?? "";
-            var ff = "";
+            //增加
+            string shenchasf = Request["ob_base_gongyingshang_shenchasf"] ?? "";
+            string hezuosf = Request["ob_base_gongyingshang_hezuosf"] ?? "";
+            string beianbh = Request["ob_base_gongyingshang_beianbh"] ?? "";
+            string beianyxq = Request["ob_base_gongyingshang_beianyxq"] ?? "";
+            string beianpzrq = Request["ob_base_gongyingshang_beianpzrq"] ?? "";
+            string beianfzjg = Request["ob_base_gongyingshang_beianfzjg"] ?? "";
+            string beiantp = Request["ob_base_gongyingshang_beiantp"] ?? "";
+            string xukepzrq = Request["ob_base_gongyingshang_xukepzrq"] ?? "";
+            string xukefzjg = Request["ob_base_gongyingshang_xukefzjg"] ?? "";
+           
+
+
             try
             {
                 base_gongyingshang ob_base_gongyingshang = new base_gongyingshang();
@@ -340,10 +330,21 @@ namespace CKWMS.Controllers
                 ob_base_gongyingshang.Shouying = shouying == "" ? 0 : int.Parse(shouying);
                 ob_base_gongyingshang.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 ob_base_gongyingshang.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
+                //增加
+                ob_base_gongyingshang.ShenchaSF = shenchasf == "true" ? true : false;
+                ob_base_gongyingshang.HezuoSF = hezuosf == "true" ? true : false;
+                ob_base_gongyingshang.BeianBH = beianbh.Trim();
+                ob_base_gongyingshang.BeianYXQ = beianyxq == "" ? DateTime.Now : DateTime.Parse(beianyxq);
+                ob_base_gongyingshang.BeianPZRQ = beianpzrq == "" ? DateTime.Now : DateTime.Parse(beianpzrq);
+                ob_base_gongyingshang.BeianFZJG = beianfzjg.Trim();
+                ob_base_gongyingshang.BeianTP = beiantp.Trim();
+                ob_base_gongyingshang.XukePZRQ = xukepzrq == "" ? DateTime.Now : DateTime.Parse(xukepzrq);
+                ob_base_gongyingshang.XukeFZJG = xukefzjg.Trim();
+
                 ob_base_gongyingshang = ob_base_gongyingshangservice.AddEntity(ob_base_gongyingshang);
                 ViewBag.base_gongyingshang = ob_base_gongyingshang;
                 ViewBag.flag = "1";
-                ff = "success";
+                
 
 
             }
@@ -351,7 +352,7 @@ namespace CKWMS.Controllers
             {
                 Console.WriteLine(ex.Message);
                 ViewBag.flag = "2";
-                ff = "fail";
+                
             }
             return RedirectToAction("Index");
             //return Content("<script>alert('" + ff + "');location.href='Index'</script>");

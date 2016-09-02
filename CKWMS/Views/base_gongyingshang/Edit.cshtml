@@ -82,7 +82,72 @@
             setTimeout(function () {
                 GetData()
             }, 500)
+
+            //隐藏小类
+            setTimeout(function () {
+                var fl = document.getElementsByClassName('glfl');
+
+                for (var i = 0; i < fl.length; i++) {
+                    if ($(".glfl").eq(i).text() != "0") {
+                        $(".bg").eq(i).hide();
+                    }
+                }
+            }, 50);
         });
+
+        $("#bt_fanwei_showall").click(function () {
+            $(".bg").show();
+            //var tamp_jyfwjm = "";
+            //var tamp_jyfwjm = "" + $("#jingyingfanweijianma").val();
+            //var t = document.getElementsByClassName('checkbox');
+            //$("#qxdatatable tr input[type=checkbox]").each(function () {
+            //    if (this.checked) {
+            //        tamp_jyfwjm = tamp_jyfwjm + $(this).parent().parent().parent().siblings().find(".bh").html() + ";";
+            //    }
+            //});
+            //GetFanwei()
+            //setTimeout(function () {
+            //    var fw = document.getElementsByClassName('bh');
+            //    var i = tamp_jyfwjm;
+            //    var t = i.split(";");
+            //    for (var k = 0; k < t.length; k++) {
+            //        for (var l = 0; l < fw.length; l++) {
+            //            if (t[k] == $(".bh").eq(l).text())
+            //                $("input:checkbox").eq(l).attr("checked", true);
+            //        }
+            //    }
+            //}, 200);           
+        });
+
+        $("#bt_fanwei_showdalei").click(function () {
+            var fl = document.getElementsByClassName('glfl');
+            for (var i = 0; i < fl.length; i++) {
+                if ($(".glfl").eq(i).text() != "0") {
+                    $(".bg").eq(i).hide();
+                }
+            }
+            //var tamp_jyfwjm = "";
+            //var tamp_jyfwjm = "" + $("#jingyingfanweijianma").val();
+            //var t = document.getElementsByClassName('checkbox');
+            //$("#qxdatatable tr input[type=checkbox]").each(function () {
+            //    if (this.checked) {
+            //        tamp_jyfwjm = tamp_jyfwjm + $(this).parent().parent().parent().siblings().find(".bh").html() + ";";
+            //    }
+            //});
+            //GetFanwei1()
+            //setTimeout(function () {
+            //    var fw = document.getElementsByClassName('bh');
+            //    var i = tamp_jyfwjm;
+            //    var t = i.split(";");
+            //    for (var k = 0; k < t.length; k++) {
+            //        for (var l = 0; l < fw.length; l++) {
+            //            if (t[k] == $(".bh").eq(l).text())
+            //                $("input:checkbox").eq(l).attr("checked", true);
+            //        }
+            //    }
+            //}, 200);          
+        });
+
 
         $("#pl_close").click(function () {
             $("#pl_Fanwei").hide();
@@ -150,6 +215,34 @@
     }
 
 
+    function GetFanwei1() {
+        //var _qxmlid = $("#qxml").val();
+        var filltable = "";
+
+        $.post(
+                "/base_qixiemulu/GetQixiemulu1",
+                {
+                    //qxml: _qxmlid
+                },
+                function (data) {
+                    for (var i in data) {
+                        filltable = filltable + '<tr class="bg"><td><div class="checkbox"><label><input type="checkbox" class ="checkbox" value="';
+                        filltable = filltable + data[i].ID;
+                        filltable = filltable + '"></label></div></td><td style="width:80px"><span class="bh">';
+                        filltable = filltable + data[i].Bianhao;
+                        filltable = filltable + '</span></td><td style="width:150px"><span class="mc">';
+                        filltable = filltable + data[i].Mingcheng;
+                        filltable = filltable + '</span></td><td style="width:800px">';
+                        filltable = filltable + data[i].Miaoshu;
+                        filltable = filltable + '</td><td style="width:100px"><span class="glfl">';
+                        filltable = filltable + data[i].GuanliFL;
+                        filltable = filltable + '</span></td></tr>';
+                    }
+                    $("#pl_Fanwei tbody").html(filltable);
+                });
+        //GetData();
+    }
+
     function GetFanwei() {
         //var _qxmlid = $("#qxml").val();
         var filltable = "";
@@ -161,23 +254,21 @@
                 },
                 function (data) {
                     for (var i in data) {
-                        filltable = filltable + '<tr><td><div class="checkbox" ><label><input type="checkbox" class ="checkbox" value="';
+                        filltable = filltable + '<tr class="bg"><td><div class="checkbox"><label><input type="checkbox" class ="checkbox" value="';
                         filltable = filltable + data[i].ID;
-                        filltable = filltable + '"></label></div></td><td><span class="bh">';
+                        filltable = filltable + '"></label></div></td><td style="width:80px"><span class="bh">';
                         filltable = filltable + data[i].Bianhao;
-                        filltable = filltable + '</span></td><td><span class="mc">';
+                        filltable = filltable + '</span></td><td style="width:150px"><span class="mc">';
                         filltable = filltable + data[i].Mingcheng;
-                        filltable = filltable + '</span></td><td>';
+                        filltable = filltable + '</span></td><td style="width:800px">';
                         filltable = filltable + data[i].Miaoshu;
-                        filltable = filltable + '</td><td>';
+                        filltable = filltable + '</td><td style="width:100px"><span class="glfl">';
                         filltable = filltable + data[i].GuanliFL;
-                        filltable = filltable + '</td></tr>';
+                        filltable = filltable + '</span></td></tr>';
                     }
                     $("#pl_Fanwei tbody").html(filltable);
                 });
-
-        //GetData();
- }
+    }
 
     function GetData() {
 
@@ -376,6 +467,8 @@
             <button type="button" class="btn btn-default " id="bt_fanwei_add" ><i class="icon-add"></i>确定</button>
             <button type="button" class="btn btn-default " id="bt_fanwei_all" onclick="bt_fanwei_all()">全选</button>
             <button type="button" class="btn btn-default " id="bt_fanwei_clear" onclick="bt_fanwei_clear()">全部取消</button>
+            <button type="button" class="btn btn-default " id="bt_fanwei_showdalei">显示大类</button>
+            <button type="button" class="btn btn-default " id="bt_fanwei_showall">显示全部</button>
             <table class="table" id="qxdatatable">
                 <caption></caption>
                 <thead>
