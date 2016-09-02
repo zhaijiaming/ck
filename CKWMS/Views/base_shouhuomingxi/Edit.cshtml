@@ -34,8 +34,8 @@
         <div class="container">
             <div class="form-group">
                 <label for="name" class="col-sm-2">收货单位</label>
-                <div class="col-sm-10">
-                    @Html.SelectList_Auto("shouhuofangid", "收货单位", "", (long)ViewData.Model.ShouhuofangID)
+                <div class="col-sm-10" style="height:34px;">
+                    @Html.GetDataValue_ID("收货单位", "", ViewData.Model.ShouhuofangID)
                 </div>
             </div>
             @*<div class="form-group">
