@@ -75,13 +75,30 @@
 @*收货明细*@
 <script type="text/javascript">
     $(document).ready(function () {
+        //获取收货信息
         var shdw_id = $("#shdw_id").val();
         if (shdw_id.length > 0) {
             GetShouhuomingxiData(shdw_id);
         };
 
         $("#btn_shdwAdd").click(function () {
-            window.open("/base_shouhuomingxi/Add?getId=" + shdw_id);
+            window.open("/base_shouhuomingxi/Add?getId=" + shdw_id,"_self").close();
+        });
+
+        $("#btn_shdwEdit").click(function () {
+            $("#shouhuomingxi_shdw tr input[type=checkbox]").each(function () {
+                if (this.checked) {
+                    window.open("/base_shouhuomingxi/Edit/" + $(this).val(),"_self").close();
+                }
+            });
+        });
+
+        //双击跳转
+        $("#shouhuomingxi_shdw tr").dblclick(function () {
+            var u_id = $(this).find("td").eq(0).find("input").val();
+            alert(u_id);
+                window.open("/base_shouhuomingxi/Edit/" + u_id, "_self").close();
+            
         });
 
         $("#btn_shdwDel").click(function () {
@@ -105,7 +122,7 @@
                             GetShouhuomingxiData(shdw_id);
                         }
                         else
-                            alert("删除成功，请重试！");
+                            alert("删除失败，请重试！");
                     }
                 );
                 }
@@ -113,7 +130,6 @@
         });
 
     });
-
 
     function GetShouhuomingxiData(shdw_id) {
         var shmxdata = "";
@@ -147,6 +163,8 @@
                            shmxdata = shmxdata + '</td></tr>';
                        }
                        $("#shouhuomingxi_shdw tbody").html(shmxdata);
+                   } else {
+                       $("#shouhuomingxi_shdw tbody").empty();
                    }
                }
             );
@@ -198,7 +216,7 @@
 
 <div class="page-content">
     <form role="form" action="/base_shouhuodanwei/Update" method="post">
-        <input type="hidden" id="shdw_id" name="ob_base_shouhuodanwei_id" value="@item.ID" />
+        <input type="hidden" id="shdw_id" name="id" value="@item.ID" />
         <input type="hidden" id="btnSelect" value="" />
         <div class="page-header">
             <p>
@@ -207,7 +225,9 @@
                 <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
                 <span class="pull-right">
                     <button type="button" id="btn_shdwAdd" class="btn btn-default"><i class="icon-adn"></i>收货地址添加</button>
-                    <button type="button" id="btn_shdwDel" class="btn btn-default"><i class="icon-remove"></i>收货地址删除</button>
+                    <button type="button" id="btn_shdwEdit" class="btn btn-default"><i class="icon-edit"></i>收货地址编辑</button>
+                    <button type="button" id="btn_shdwDel" onclick="EditInfo()" class="btn btn-default"><i class="icon-remove"></i>收货地址删除</button>
+                    
                 </span>
             </p>
         </div>

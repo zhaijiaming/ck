@@ -229,7 +229,6 @@ namespace CKWMS.Controllers
             string zhucezhengtp = Request["zhucezhengtp"] ?? "";
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
-            //新增
             string shixiaosf = Request["shixiaosf"];
             string bianhaozw = Request["bianhaozw"] ?? "";
             string chandi = Request["chandi"] ?? "";
@@ -238,6 +237,7 @@ namespace CKWMS.Controllers
             string zhucedl = Request["zhucedl"] ?? "";
             string shouhuojg = Request["shouhuojg"] ?? "";
             string beizhu = Request["beizhu"] ?? "";
+            string pizhunrq = Request["pizhunrq"] ?? "";
             try
             {
                 base_shangpinzcz ob_base_shangpinzcz = new base_shangpinzcz();
@@ -249,7 +249,6 @@ namespace CKWMS.Controllers
                 ob_base_shangpinzcz.ZhucezhengTP = zhucezhengtp.Trim();
                 ob_base_shangpinzcz.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 ob_base_shangpinzcz.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
-                //新增
                 ob_base_shangpinzcz.ShixiaoSF = shixiaosf == "true" ? true:false;
                 ob_base_shangpinzcz.BianhaoZW = bianhaozw.Trim();
                 ob_base_shangpinzcz.Chandi = chandi.Trim();
@@ -258,6 +257,7 @@ namespace CKWMS.Controllers
                 ob_base_shangpinzcz.ZhuceDL = zhucedl.Trim();
                 ob_base_shangpinzcz.ShouhuoJG = shouhuojg.Trim();
                 ob_base_shangpinzcz.Beizhu = beizhu.Trim();
+                ob_base_shangpinzcz.PizhunRQ = pizhunrq == "" ? DateTime.Now : DateTime.Parse(pizhunrq);
 
                 ob_base_shangpinzcz = ob_base_shangpinzczservice.AddEntity(ob_base_shangpinzcz);
                 ViewBag.base_shangpinzcz = ob_base_shangpinzcz;
@@ -288,7 +288,6 @@ namespace CKWMS.Controllers
                 base_shangpinzczviewmodel.ZhucezhengTP = tempData.ZhucezhengTP;
                 base_shangpinzczviewmodel.MakeDate = tempData.MakeDate;
                 base_shangpinzczviewmodel.MakeMan = tempData.MakeMan;
-                //新增
                 base_shangpinzczviewmodel.ShixiaoSF = tempData.ShixiaoSF;
                 base_shangpinzczviewmodel.BianhaoZW = tempData.BianhaoZW;
                 base_shangpinzczviewmodel.Chandi = tempData.Chandi;
@@ -297,6 +296,7 @@ namespace CKWMS.Controllers
                 base_shangpinzczviewmodel.ZhuceDL = tempData.ZhuceDL;
                 base_shangpinzczviewmodel.ShouhuoJG = tempData.ShouhuoJG;
                 base_shangpinzczviewmodel.Beizhu = tempData.Beizhu;
+                base_shangpinzczviewmodel.PizhunRQ = tempData.PizhunRQ;
                 return View(base_shangpinzczviewmodel);
             }
         }
@@ -347,7 +347,6 @@ namespace CKWMS.Controllers
             string zhucezhengtp = Request["zhucezhengtp"] ?? "";
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
-            //新增
             string shixiaosf = Request["shixiaosf"];
             string bianhaozw = Request["bianhaozw"] ?? "";
             string chandi = Request["chandi"] ?? "";
@@ -356,6 +355,7 @@ namespace CKWMS.Controllers
             string zhucedl = Request["zhucedl"] ?? "";
             string shouhuojg = Request["shouhuojg"] ?? "";
             string beizhu = Request["beizhu"] ?? "";
+            string pizhunrq = Request["pizhunrq"] ?? "";
             int uid = int.Parse(id);
             try
             {
@@ -368,7 +368,6 @@ namespace CKWMS.Controllers
                 p.ZhucezhengTP = zhucezhengtp.Trim();
                 p.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 p.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
-                //新增
                 p.ShixiaoSF = shixiaosf == "true" ? true : false;
                 p.BianhaoZW = bianhaozw.Trim();
                 p.Chandi = chandi.Trim();
@@ -377,6 +376,7 @@ namespace CKWMS.Controllers
                 p.ZhuceDL = zhucedl.Trim();
                 p.ShouhuoJG = shouhuojg.Trim();
                 p.Beizhu = beizhu.Trim();
+                p.PizhunRQ = pizhunrq == "" ? DateTime.Now : DateTime.Parse(pizhunrq);
                 ob_base_shangpinzczservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;
             }

@@ -8,7 +8,8 @@
     <script type="text/javascript">
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
         $(document).ready(function(){
-            $("#makedate").datepicker();//时间
+            $("#makedate").datepicker();//录入日期
+            $("#pizhunrq").datepicker();//批准日期
         });
     </script>
 
@@ -78,7 +79,13 @@
                     @Html.ValidationMessageFor(m => m.ZhucezhengYXQ)
                 </div>
             </div>
-            
+            @*批准日期*@
+            <div class="form-group">
+                @Html.LabelFor(m => m.PizhunRQ, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10 ">
+                    <input id="pizhunrq" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="pizhunrq">
+                </div>
+            </div>
             @*中文编号*@
             <div class="form-group">
                 <div class="control-label col-sm-2">
@@ -191,6 +198,7 @@
                     </label>
                 </div>
             </div>*@
+            
         </div>
     }
 </div>

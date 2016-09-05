@@ -190,6 +190,7 @@
                         <td>规格</td>
                         <td>产品标准</td>
                         <td>注册证有效期</td>
+                        <td>批准日期</td>
                         @*<td>录入日期</td>*@
                         <td>中文编号</td>
                         <td>产地</td>
@@ -219,6 +220,7 @@
                             <td><button class="btn guige">浏览</button></td>
                             <td>@item.Bianzhun</td>
                             <td>@item.ZhucezhengYXQ.ToString("yyyy-MM-dd")</td>
+                            <td>@item.PizhunRQ.ToString("yyyy-MM-dd")</td>
                             @*<td>@item.MakeDate.ToString("yyyy-MM-dd")</td>*@
                             <td>@item.BianhaoZW</td>
                             <td>@item.Chandi</td>
@@ -230,6 +232,7 @@
                             @*<td id="changeText">@item.ShixiaoSF</td>
                             <td>@item.ShiyongFW</td>
                             <td>@item.ZhuceDL</td>*@
+                            
                         </tr>
                 }
                 </tbody>

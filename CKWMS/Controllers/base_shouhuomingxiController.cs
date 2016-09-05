@@ -243,7 +243,7 @@ namespace CKWMS.Controllers
             {
                 Console.WriteLine(ex.Message);
             }
-            return RedirectToAction("ShdwIndex", new {id = _id });
+            return RedirectToAction("Edit","base_shouhuodanwei",new {id = _id });
         }
 
         public ActionResult ShdwIndex(int? id)
@@ -302,6 +302,7 @@ namespace CKWMS.Controllers
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
             int uid = int.Parse(id);
+            int swdwid = int.Parse(shouhuofangid);
             try
             {
                 base_shouhuomingxi p = ob_base_shouhuomingxiservice.GetEntityById(base_shouhuomingxi => base_shouhuomingxi.ID == uid);
@@ -322,7 +323,7 @@ namespace CKWMS.Controllers
                 Console.WriteLine(ex.Message);
                 ViewBag.saveok = ViewAddTag.ModifyNo;
             }
-            return RedirectToAction("Index", new { id = uid });
+            return RedirectToAction("Edit", "base_shouhuodanwei", new { id = swdwid });
         }
         public int DeleteNow()
         {
@@ -345,6 +346,8 @@ namespace CKWMS.Controllers
         public ActionResult Delete()
         {
             string sdel = Request["del"] ?? "";
+            string _swdwid = Request["shdwid"] ?? "";
+            int swdwid = int.Parse(_swdwid);
             int id;
             base_shouhuomingxi ob_base_shouhuomingxi;
             foreach (string sD in sdel.Split(','))
@@ -357,7 +360,7 @@ namespace CKWMS.Controllers
                     ob_base_shouhuomingxiservice.UpdateEntity(ob_base_shouhuomingxi);
                 }
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Edit", "base_shouhuodanwei", new { id = swdwid });
         }
     }
 }
