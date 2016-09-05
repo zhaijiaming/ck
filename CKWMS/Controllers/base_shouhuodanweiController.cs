@@ -237,6 +237,17 @@ namespace CKWMS.Controllers
             string shouying = Request["shouying"] ?? "";
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
+            //新增
+            string jingyinfanwei = Request["jingyinfanwei"] ?? "";
+            string jingyinfanweidm = Request["jingyinfanweidm"] ?? "";
+            string quyu = Request["quyu"] ?? "";
+            string beianbh = Request["beianbh"] ?? "";
+            string beianyxq = Request["beianyxq"] ?? "";
+            string beianpzrq = Request["beianpzrq"] ?? "";
+            string beianfzjg = Request["beianfzjg"] ?? "";
+            string beiantp = Request["beiantp"] ?? "";
+            string xukepzrq = Request["xukepzrq"] ?? "";
+            string xukefzjg = Request["xukefzjg"] ?? "";
             try
             {
                 base_shouhuodanwei ob_base_shouhuodanwei = new base_shouhuodanwei();
@@ -251,6 +262,18 @@ namespace CKWMS.Controllers
                 ob_base_shouhuodanwei.Shouying = shouying == "" ? 0 : int.Parse(shouying);
                 ob_base_shouhuodanwei.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 ob_base_shouhuodanwei.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
+                //新增
+                ob_base_shouhuodanwei.Jingyinfanwei = jingyinfanwei.Trim();
+                ob_base_shouhuodanwei.JingyinfanweiDM = jingyinfanweidm.Trim();
+                ob_base_shouhuodanwei.Quyu = quyu.Trim();
+                ob_base_shouhuodanwei.BeianBH = beianbh.Trim();
+                ob_base_shouhuodanwei.BeianYXQ = beianyxq == "" ? DateTime.Now : DateTime.Parse(beianyxq);
+                ob_base_shouhuodanwei.BeianPZRQ = beianpzrq == "" ? DateTime.Now : DateTime.Parse(beianpzrq);
+                ob_base_shouhuodanwei.BeianFZJG = beianfzjg.Trim();
+                ob_base_shouhuodanwei.BeianTP = beiantp.Trim();
+                ob_base_shouhuodanwei.XukePZRQ = xukepzrq == "" ? DateTime.Now : DateTime.Parse(xukepzrq);
+                ob_base_shouhuodanwei.XukeFZJG = xukefzjg.Trim();
+
                 ob_base_shouhuodanwei = ob_base_shouhuodanweiservice.AddEntity(ob_base_shouhuodanwei);
                 ViewBag.base_shouhuodanwei = ob_base_shouhuodanwei;
             }
@@ -282,6 +305,17 @@ namespace CKWMS.Controllers
             string shouying = Request["shouying"] ?? "";
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
+            //新增
+            string jingyinfanwei = Request["jingyinfanwei"] ?? "";
+            string jingyinfanweidm = Request["jingyinfanweidm"] ?? "";
+            string quyu = Request["quyu"] ?? "";
+            string beianbh = Request["beianbh"] ?? "";
+            string beianyxq = Request["beianyxq"] ?? "";
+            string beianpzrq = Request["beianpzrq"] ?? "";
+            string beianfzjg = Request["beianfzjg"] ?? "";
+            string beiantp = Request["beiantp"] ?? "";
+            string xukepzrq = Request["xukepzrq"] ?? "";
+            string xukefzjg = Request["xukefzjg"] ?? "";
             int uid = int.Parse(id);
             try
             {
@@ -297,6 +331,18 @@ namespace CKWMS.Controllers
                 p.Shouying = shouying == "" ? 0 : int.Parse(shouying);
                 p.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 p.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
+                //新增
+                p.Jingyinfanwei = jingyinfanwei.Trim();
+                p.JingyinfanweiDM = jingyinfanweidm.Trim();
+                p.Quyu = quyu.Trim();
+                p.BeianBH = beianbh.Trim();
+                p.BeianYXQ = beianyxq == "" ? DateTime.Now : DateTime.Parse(beianyxq);
+                p.BeianPZRQ = beianpzrq == "" ? DateTime.Now : DateTime.Parse(beianpzrq);
+                p.BeianFZJG = beianfzjg.Trim();
+                p.BeianTP = beiantp.Trim();
+                p.XukePZRQ = xukepzrq == "" ? DateTime.Now : DateTime.Parse(xukepzrq);
+                p.XukeFZJG = xukefzjg.Trim();
+
                 ob_base_shouhuodanweiservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;
             }

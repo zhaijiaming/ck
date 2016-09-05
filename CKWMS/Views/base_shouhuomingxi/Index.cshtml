@@ -3,7 +3,7 @@
 @using X.PagedList
 @using X.PagedList.Mvc
 @{
-    ViewBag.Title = "收货明细清单";
+    ViewBag.Title = "收货地址清单";
     string _searchcondition = ViewBag.SearchCondition;
 }
 <script type="text/javascript">
@@ -76,11 +76,11 @@
             <i class="icon-home home-icon"></i>
             <a href="/Home">首页</a>
         </li>
-        <li class="active">收货明细</li>
+        <li class="active">收货地址</li>
     </ul>
 </div>
 <div class="page-content">
-    @Html.Search_Condition((int)Session["user_id"], "收货明细_条件组合查询", "/base_shouhuomingxi/index", "base_shouhuomingxiindex", scms)
+    @Html.Search_Condition((int)Session["user_id"], "收货地址_条件组合查询", "/base_shouhuomingxi/index", "base_shouhuomingxiindex", scms)
     <div class="page-header">
         <p>
             <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
