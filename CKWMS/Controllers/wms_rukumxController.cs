@@ -170,17 +170,27 @@ namespace CKWMS.Controllers
                 return Json("");
             else
             {
-                var _mxtmp = ob_wms_rukumxservice.LoadSortEntities(p => p.RukuID == int.Parse(_rkuid), true, s => s.ShangpinMC);
-                List<wms_rukumx> _mxlist = new List<wms_rukumx>();
-                wms_rukumx _mx;
-                foreach (var rkmx in _mxlist)
-                {
-                    _mx = new wms_rukumx();
-                    _mx = rkmx;
-                    _mxlist.Add(_mx);
-                }
-                return Json(_mxlist);
+                var _mxtmp = ob_wms_rukumxservice.LoadSortEntities(p => p.RukuID == int.Parse(_rkuid) && p.IsDelete==false, true, s => s.ShangpinMC).ToList<wms_rukumx>();
+                return Json(_mxtmp);
             }
+        }
+        public JsonResult DelCargo()
+        {
+            string _mxid = Request["rkmx"] ?? "";
+            if (_mxid.Length < 1)
+                return Json(0);
+            int id;
+            foreach (string sD in _mxid.Split(','))
+            {
+                if (sD.Length > 0)
+                {
+                    id = int.Parse(sD);
+                    var ob_wms_rukumx = ob_wms_rukumxservice.GetEntityById(wms_rukumx => wms_rukumx.ID == id && wms_rukumx.IsDelete == false);
+                    ob_wms_rukumx.IsDelete = true;
+                    ob_wms_rukumxservice.UpdateEntity(ob_wms_rukumx);
+                }
+            }
+            return Json(1);
         }
         public ActionResult GetCargos(int id)
         {

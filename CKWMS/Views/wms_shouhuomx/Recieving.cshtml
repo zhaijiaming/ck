@@ -6,15 +6,229 @@
     ViewBag.Title = "收货清单";
 }
 <script type="text/javascript">
+    try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
     $(document).ready(function () {
-        $("tr").bind("dblclick", function () {
-            var u_id = $(this).find('td').eq(0).find('input').val();
-            if (u_id != null) {
-                var url_go = "/wms_shouhuomx/Edit/" + u_id;
-                location.href = url_go;
+        var _selall = false;
+        $("#ShengchanRQ").datepicker();
+        $("#ShixiaoRQ").datepicker();
+        $(".icon-briefcase").click(function () {
+            var _rk = $(this).parent().parent().parent().find("input");
+            var _onum = $(this).parent().parent().parent().find('td').eq(11).html();
+            var _oys = $(this).parent().parent().parent().find('td').eq(12).html();
+            $("#plmod").val(1);
+            $("#selrk").val(_rk.val());
+            $("#selnum").val(eval(_onum) - eval(_oys));
+            $("#Pihao").val(_rk.data("ph"));
+            $("#Pihao1").val(_rk.data("ph1"));
+            $("#Xuliema").val(_rk.data("xlm"));
+            $("#ShengchanRQ").val(_rk.data("scrq"));
+            $("#ShixiaoRQ").val(_rk.data("sxrq"));
+            $("#YishouSL").val($("#selnum").val());
+            $("#Zhongliang").val(_rk.data("zl"));
+            $("#Jingzhong").val(_rk.data("jz"));
+            $("#Tiji").val(_rk.data("tj"));
+            $("#Jifeidun").val(_rk.data("jfd"));
+            $("#Beizhu").val(_rk.data("bz"));
+            if (eval(_onum) - eval(_oys) <= 0)
+                alert("收货已经完成，不能再次再次收货！")
+            else
+                $("#pl_Shouhuo").show();
+        });
+        $("#pl_close").click(function () {
+            $("#pl_Shouhuo").hide();
+        });
+        $("#selall").click(function () {
+            if (!_selall)
+                $("#dt_rk tr input[type=checkbox]").each(function () {
+                    $(this).prop("checked", true);
+                    _selall = true;
+                });
+            else
+                $("#dt_rk tr input[type=checkbox]").each(function () {
+                    $(this).prop("checked", false);
+                    _selall = false;
+                });
+        });
+        $("#shsave").click(function () {
+            var _shok = 0;
+            if (eval($("#YishouSL").val()) > eval($("#selnum").val())) {
+                if (!confirm("收货数量大于预收数量，确定需要保存吗？"))
+                    return;
+            }
+            if (eval($("#YishouSL").val()) <= 0) {
+                alert("收货数量错误，请重新输入！");
+                return;
+            }
+            $.post(
+                "/wms_shouhuomx/addbyrukumx",
+                {
+                    rk: $("#selrk").val(),
+                    ph: $("#Pihao").val(),
+                    ph1: $("#Pihao1").val(),
+                    xlm: $("#Xuliema").val(),
+                    scrq: $("#ShengchanRQ").val(),
+                    sxrq: $("#ShixiaoRQ").val(),
+                    sl: $("#YishouSL").val(),
+                    zl: $("#Zhongliang").val(),
+                    jz: $("#Jingzhong").val(),
+                    tj: $("#Tiji").val(),
+                    jfd: $("#Jifeidun").val(),
+                    bz: $("#Beizhu").val()
+                },
+                function (data) {
+                    if (data == -1)
+                        alert("收货信息保存失败！");
+                    else {
+                        $("#dt_rk tr input[type=checkbox]").each(function () {
+                            if ($(this).val() == $("#selrk").val()) {
+                                var _seltr = $(this).parent().parent().parent().parent();
+                                var _num = $("#YishouSL").val();
+                                var _ornum = _seltr.find('td').eq(11).html();
+                                var _orys = _seltr.find('td').eq(12).html();
+                                _seltr.find('td').eq(12).html(eval(_num) + eval(_orys));
+                                if (eval(_ornum) == eval(_num))
+                                {
+                                    if (eval(_orys) > 0)
+                                        _seltr.removeClass("red");
+                                    _seltr.addClass("green");
+                                }
+                                if (eval(_ornum) > eval(_num) && eval(_num) > 0) {
+                                    _seltr.addClass("red");
+                                }
+                            }
+                        });
+                        ShouhuoList($("#rkd").val());
+                    }
+                });
+            $("#pl_Shouhuo").hide();
+        });
+        $("#shcancel").click(function () {
+            $("#pl_Shouhuo").hide();
+        });
+        $("#dt_rk").on("dblclick", "tr", function () {
+            alert($(this).find("input[type=checkbox]").val());
+        });
+        $("#pl_Shouhuo").draggable();
+        ShouhuoList($("#rkd").val());
+        $("#dt_rk tbody tr").each(function () {
+            var _orn = $(this).find('td').eq(11).html();
+            var _oys = $(this).find('td').eq(12).html();
+            if (eval(_orn) == eval(_oys))
+                $(this).addClass("green");;
+            if (eval(_orn) > eval(_oys) && eval(_oys) > 0)
+                $(this).addClass("red");;
+        });
+        $("#dt_sh").on("dblclick", "tr", function () {
+            if (confirm("确实要删除此条收货记录吗？")) {
+                $.post("/wms_shouhuomx/delbyid",
+                     {
+                         del: $(this).find("input[type=checkbox]").val(),
+                     },
+                    function (data) {
+                        if (data == -1)
+                            alert("删除记录出错！");
+                        else {
+                            var _delmx = $(this).find("input[type=checkbox]").data("mx");
+                            var _delnum = $(this).find("input[type=checkbox]").data("sl");
+                            $("#dt_rk tr input[type=checkbox]").each(function () {
+                                if (eval($(this).val()) == eval(_delmx)) {
+                                    var _seltr = $(this).parent().parent().parent().parent();
+                                    var _ornum = _seltr.find('td').eq(11).html();
+                                    var _orys = _seltr.find('td').eq(12).html();
+                                    _seltr.find('td').eq(12).html(eval(_orys) - eval(_delnum));
+                                    if (eval(_ornum) == eval(_num))
+                                    {
+                                        if (eval(_orys) > 0)
+                                            _seltr.removeClass("red");
+                                        _seltr.addClass("green");
+                                    }
+                                    if (eval(_ornum) > eval(_num) && eval(_num) > 0)
+                                        _seltr.addClass("red");
+                                }
+                            });
+                            location.reload();
+                        }
+                    });
             }
         });
     });
+    Date.prototype.Format = function (fmt) {
+        var o = {
+            "M+": this.getMonth() + 1,
+            "d+": this.getDate(),
+            "h+": this.getHours(),
+            "m+": this.getMinutes(),
+            "s+": this.getSeconds(),
+            "q+": Math.floor((this.getMonth() + 3) / 3),
+            "S": this.getMilliseconds()
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    }
+    String.prototype.toDate = function () {
+        var dateMilliseconds;
+        if (isNaN(this)) {
+            dateMilliseconds = this.replace(/\D/igm, "");
+        } else {
+            dateMilliseconds = this;
+        }
+        return new Date(parseInt(dateMilliseconds));
+    }
+    function ShouhuoList(_rkd) {
+        var filltable = "";
+        if (_rkd != null && _rkd > 0)
+            $.post(
+                "/wms_shouhuomx/getshouhuolist",
+                {
+                    rkd: _rkd
+                },
+                function (data) {
+                    for (var i in data) {
+                        filltable = filltable + '<tr><td><div class="checkbox"><label><input type="checkbox" class ="checkbox" value="';
+                        filltable = filltable + data[i].ID;
+                        filltable = filltable + '" data-mx="';
+                        filltable = filltable + data[i].RKMXID;
+                        filltable = filltable + '" data-sl="';
+                        filltable = filltable + data[i].Shuliang;
+                        filltable = filltable + '"></label></div></td><td>';
+                        filltable = filltable + data[i].ShangpinTM;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].ShangpinMC;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].Zhucezheng;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].Guige;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].Pihao;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].Pihao1;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].Xuliema;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].ShengchanRQ.toDate().Format("yyyy-MM-dd");
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].ShixiaoRQ.toDate().Format("yyyy-MM-dd");
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].Shuliang;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].JibenDW;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].BaozhuangDW;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].Huansuanlv;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].Changjia;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].Chandi;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].Beizhu;
+                        filltable = filltable + '</td></tr>';
+                    }
+                    $("#dt_sh tbody").html(filltable);
+                });
+    }
     function AddInfo() {
         location.href = "/wms_shouhuomx/Add";
     }
@@ -38,15 +252,6 @@
 </script>
 
 <div class="breadcrumbs" id="breadcrumbs">
-    <script type="text/javascript">
-        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
-
-        $(document).ready(function () {
-            $(".icon-anchor").click(function () {
-                alert($(this).parent().find("input[type=checkbox]").val());
-            });
-        });
-    </script>
     <ul class="breadcrumb">
         <li>
             <i class="icon-home home-icon"></i>
@@ -56,24 +261,25 @@
     </ul>
 </div>
 <div class="page-content">
-    <div class="page-header">
-        <input type="hidden" id="rkd" value="@ViewBag.rkdid"/>
-        <input type="hidden" id="zjsh" value="@ViewBag.zjsh" />
+    <input type="hidden" id="rkd" value="@ViewBag.rkdid" />
+    <input type="hidden" id="selrk" />
+    <input type="hidden" id="selnum" />
+    <input type="hidden" id="plmod" />
+    @*<div class="page-header">
             <p>
                 <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
                 <button type="button" class="btn btn-default " id="bt_updateInfo" ><i class="icon-edit"></i>编辑</button>
                 <button type="button" class="btn btn-default " id="bt_deleteInfo" ><i class="icon-remove"></i>删除</button>
                 <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
             </p>
-        </div>
-    <div class="row">
-        <table class="table" id="mydatatable">
+        </div>*@
+    <div id="rklist" class="row" style="height:360px;overflow:auto;">
+        <table class="table" id="dt_rk">
             <caption></caption>
             <thead>
                 <tr>
-                    <td></td>
-                    <td>整</td>
-                    <td>分</td>
+                    <td><span id="selall">全选</span></td>
+                    <td>收货</td>
                     <td>商品条码</td>
                     <td>商品名称</td>
                     <td>注册证</td>
@@ -99,11 +305,34 @@
                     <tr>
                         <td>
                             <div class="checkbox">
-                                <label><input type="checkbox" value="@item.ID" data-sp="@item.ShangpinID"></label>
+                                <label>
+                                    <input type="checkbox" title="@item.ID" value="@item.ID"
+                                           data-sp="@item.ShangpinID"
+                                           data-spmc="@item.ShangpinMC"
+                                           data-zcz="@item.Zhucezheng"
+                                           data-gg="@item.Guige"
+                                           data-ph="@item.Pihao"
+                                           data-ph1="@item.Pihao1"
+                                           data-xlm="@item.Xuliema"
+                                           data-scrq=@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ)
+                                           data-sxrq=@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ)
+                                           data-sl="@item.DaohuoSL"
+                                           data-ys="@item.YishouSL"
+                                           data-jbdw="@item.JibenDW"
+                                           data-bzdw="@item.BaozhuangDW"
+                                           data-hsl="@item.Huansuanlv"
+                                           data-zl="@item.Zhongliang"
+                                           data-jz="@item.Jingzhong"
+                                           data-jfd="@item.Jifeidun"
+                                           data-tj="@item.Tiji"
+                                           data-cj="@item.Changjia"
+                                           data-cd="@item.Chandi"
+                                           data-bz="@item.Beizhu"
+                                           data-sptm="@item.ShangpinTM">
+                                </label>
                             </div>
                         </td>
-                        <td><p class="blue" title="完整收货"><i class="icon-anchor"></i></p></td>
-                        <td><p class="green" title="分批收货"><i class="icon-code-fork"></i></p></td>
+                        <td><p class="blue" title="完整收货"><i class="icon-briefcase"></i></p></td>
                         <td>@item.ShangpinTM</td>
                         <td>@item.ShangpinMC</td>
                         <td>@item.Zhucezheng</td>
@@ -126,7 +355,118 @@
             </tbody>
         </table>
     </div>
-    <div class="pager">
-        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Recieving", new { page,rkd=ViewBag.rkdid }))
+    <div id="shlist" class="row" style="height:500px;overflow:auto;">
+        <table class="table" id="dt_sh">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>商品条码</td>
+                    <td>商品名称</td>
+                    <td>注册证</td>
+                    <td>规格型号</td>
+                    <td>批号</td>
+                    <td>次批号</td>
+                    <td>序列码</td>
+                    <td>生产日期</td>
+                    <td>失效日期</td>
+                    <td>已收数量</td>
+                    <td>基本单位</td>
+                    <td>包装单位</td>
+                    <td>换算率</td>
+                    <td>厂家</td>
+                    <td>产地</td>
+                    <td>备注</td>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+<div id="pl_Shouhuo" class="panel panel-info" style="display:none;position:absolute;top:100px;left:200px;width:700px;height:500px;z-index:999;">
+    <div class="panel-heading">
+        <h3 class="panel-title">收货登记<button id="pl_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Pihao">批号</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="Pihao" name="Pihao" type="text" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Pihao1">次批号</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="Pihao1" name="Pihao1" type="text" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Xuliema">序列码</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="Xuliema" name="Xuliema" type="text" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="ShengchanRQ">生产日期</label>
+            <div class="col-sm-10">
+                <input id="ShengchanRQ" type="date" class="form-control" value="@string.Format("{0:yyyy-MM-dd}",DateTime.Now)" name="ShengchanRQ">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="ShixiaoRQ">失效日期</label>
+            <div class="col-sm-10">
+                <input id="ShixiaoRQ" type="date" class="form-control" value="@string.Format("{0:yyyy-MM-dd}",DateTime.Now)" name="ShixiaoRQ">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="YishouSL">收货数量</label>
+            <div class="col-sm-10">
+                <input class="form-control" data-val="true" data-val-number="字段 已收数量 必须是一个数字。" id="YishouSL" name="YishouSL" type="text" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Zhongliang">重量</label>
+            <div class="col-sm-6">
+                <input class="form-control" data-val="true" data-val-number="字段 重量 必须是一个数字。" id="Zhongliang" name="Zhongliang" type="text" value="" />
+            </div>
+            <div class="col-sm-4">
+                <label class="form-control">千克(KG)</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Jingzhong">净重</label>
+            <div class="col-sm-6">
+                <input class="form-control" data-val="true" data-val-number="字段 净重 必须是一个数字。" id="Jingzhong" name="Jingzhong" type="text" value="" />
+            </div>
+            <div class="col-sm-4">
+                <label class="form-control">千克(KG)</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Tiji">体积</label>
+            <div class="col-sm-6">
+                <input class="form-control" data-val="true" data-val-number="字段 体积 必须是一个数字。" id="Tiji" name="Tiji" type="text" value="" />
+            </div>
+            <div class="col-sm-4">
+                <label class="form-control">立方米(M^3)</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Jifeidun">计费吨</label>
+            <div class="col-sm-10">
+                <input class="form-control" data-val="true" data-val-number="字段 计费吨 必须是一个数字。" id="Jifeidun" name="Jifeidun" type="text" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Beizhu">备注</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="Beizhu" name="Beizhu" type="text" value="" />
+            </div>
+        </div>
+        <div class="form-group"></div>
+        <div class="form-group">
+            <div class="col-sm-6 center"><p id="shsave" class="btn btn-default"><i class="icon-save"></i>保存</p></div>
+            <div class="col-sm-6 center"><p id="shcancel" class="btn btn-default"><i class="glyphicon-backward"></i>取消</p></div>
+        </div>
     </div>
 </div>

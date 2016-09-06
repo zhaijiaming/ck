@@ -12,8 +12,9 @@
             $("#ShixiaoRQ").datepicker();
             $("#pl_shangpin").draggable();
             $("#bt_selsp").click(function () {
-                if (!_spload)
+                if (!_spload) {
                     getShangPin();
+                }
                 $("#pl_shangpin").show();
             });
             $("#pl_close").click(function () {
@@ -22,7 +23,6 @@
             $("#pl_ok").click(function () {
                 $("#mydatatable tr input[type=checkbox]").each(function () {
                     if (this.checked) {
-                        alert($(this).val() + "," + $(this).data("cctj"));
                         $("#spid").val($(this).val());
                         $("#ShangpinMC").val($(this).data("mc"));
                         $("#Zhucezheng").val($(this).data("zcz"));
@@ -31,6 +31,7 @@
                         $("#BaozhuangDW").val($(this).data("bdw"));
                         $("#Changjia").val($(this).data("qymc"));
                         $("#ShangpinTM").val($(this).data("tm"));
+                        $("#Huansuanlv").val($(this).data("hsl"));
                     }
                 });
                 $("#pl_shangpin").hide();
@@ -38,21 +39,20 @@
             $("#pl_refresh").click(function () {
                 getShangPin();
             });
-            $("#mydatatable tr").bind("dblclick", function () {
-                var u_id = $(this).find("td").eq(0).find("input");
-                alert(u_id.val() + "," + u_id.data("mc"));
-                var u_idd = $(this).find("td").eq(0).find("input").val();
-
-                if (u_idd != null) {
-                    $("#ShangpinMC").val($(this).data("mc"));
-                    $("#Zhucezheng").val($(this).data("zcz"));
-                    $("#Guige").val($(this).data("gg"));
-                    $("#JibenDW").val($(this).data("dw"));
-                    $("#BaozhuangDW").val($(this).data("bdw"));
-                    $("#Changjia").val($(this).data("qymc"));
-                    $("#ShangpinTM").val($(this).data("tm"));
-                    $("#pl_shangpin").hide();
-                }
+            $("#mydatatable").on('dblclick', 'tr', function () {
+                    var u_id = $(this).find("td").eq(0).find("input");
+                    var u_idd = u_id.val();
+                    if (u_idd != null) {
+                        $("#ShangpinMC").val(u_id.data("mc"));
+                        $("#Zhucezheng").val(u_id.data("zcz"));
+                        $("#Guige").val(u_id.data("gg"));
+                        $("#JibenDW").val(u_id.data("dw"));
+                        $("#BaozhuangDW").val(u_id.data("bdw"));
+                        $("#Changjia").val(u_id.data("qymc"));
+                        $("#ShangpinTM").val(u_id.data("tm"));
+                        $("#Huansuanlv").val(u_id.data("hsl"));
+                        $("#pl_shangpin").hide();
+                    }
             });
         });
         function getShangPin() {
@@ -65,21 +65,20 @@
                     if (data.length > 0) {
                         var _filldata = '';
                         for (var i in data) {
-                            _filldata = _filldata + '<tr>';
-                            //_filldata = _filldata + '<td></td><td>';
+                            _filldata = _filldata + '<tr class="sonline">';
                             _filldata = _filldata + '<td><div class="checkbox"><label><input type="checkbox" value="';
-                            _filldata = _filldata + data[i].ID;
-                            _filldata = _filldata + '" data-dm="' + data[i].Daima + '" data-mc="' + data[i].Mingcheng + '" data-zcz="';
+                            _filldata = _filldata + data[i].id;
+                            _filldata = _filldata + '" data-dm="' + data[i].daima + '" data-mc="' + data[i].mingcheng + '" data-zcz="';
                             _filldata = _filldata + data[i].ZhucezhengBH + '" data-gg="' + data[i].Guige + '" data-xh="' + data[i].Xinghao;
-                            _filldata = _filldata + '" data-dw="' + data[i].Danwei + '" data-bdw="' + data[i].BaozhuangDW;
-                            _filldata = _filldata + '" data-hsl="' + data[i].Huansuanlv + '" data-cpx="' + data[i].Chanpinxian;
-                            _filldata = _filldata + '" data-ml="' + data[i].Muluxuhao + '" data-glfl="' + data[i].Guanlifenlei;
-                            _filldata = _filldata + '" data-cctj="' + data[i].Cunchutiaojian + '" data-qymc="' + data[i].Qiyemingcheng;
-                            _filldata = _filldata + '" data-gys="' + data[i].GongyingID + '" data-tm="' + data[i].ShangpinTM + '"';
+                            _filldata = _filldata + '" data-dw="' + data[i].danwei + '" data-bdw="' + data[i].BaozhuangDW;
+                            _filldata = _filldata + '" data-hsl="' + data[i].huansuanlv + '" data-cpx="' + data[i].chanpinxian + '" data-cpxmc="' + data[i].cpxmingcheng;
+                            _filldata = _filldata + '" data-ml="' + data[i].muluxuhao + '" data-mlmc="' + data[i].mulubh + '" data-glfl="' + data[i].guanlifenlei;
+                            _filldata = _filldata + '" data-cctj="' + data[i].Cunchutiaojian + '" data-qyid="' + data[i].qiyeid + '" data-qymc="' + data[i].Qiyemingcheng;
+                            _filldata = _filldata + '" data-gys="' + data[i].GongyingID + '" data-gysmc="' + data[i].gysmingcheng + '" data-tm="' + data[i].ShangpinTM + '"';
                             _filldata = _filldata + '></label></div></td><td>';
-                            _filldata = _filldata + data[i].Daima;
+                            _filldata = _filldata + data[i].daima;
                             _filldata = _filldata + '</td><td>';
-                            _filldata = _filldata + data[i].Mingcheng;
+                            _filldata = _filldata + data[i].mingcheng;
                             _filldata = _filldata + '</td><td>';
                             _filldata = _filldata + data[i].ZhucezhengBH;
                             _filldata = _filldata + '</td><td>';
@@ -87,25 +86,25 @@
                             _filldata = _filldata + '</td><td>';
                             _filldata = _filldata + data[i].Xinghao;
                             _filldata = _filldata + '</td><td>';
-                            _filldata = _filldata + data[i].Danwei;
+                            _filldata = _filldata + data[i].danwei;
                             _filldata = _filldata + '</td><td>';
                             _filldata = _filldata + data[i].BaozhuangDW;
                             _filldata = _filldata + '</td><td>';
-                            _filldata = _filldata + data[i].Huansuanlv;
+                            _filldata = _filldata + data[i].huansuanlv;
                             _filldata = _filldata + '</td><td>';
-                            _filldata = _filldata + data[i].Chanpinxian;
+                            _filldata = _filldata + data[i].cpxmingcheng;
                             _filldata = _filldata + '</td><td>';
-                            _filldata = _filldata + data[i].Muluxuhao;
+                            _filldata = _filldata + data[i].mulubh;
                             _filldata = _filldata + '</td><td>';
-                            _filldata = _filldata + data[i].Guanlifenlei;
+                            _filldata = _filldata + data[i].guanlifenlei;
                             _filldata = _filldata + '</td><td>';
                             _filldata = _filldata + data[i].Cunchutiaojian;
                             _filldata = _filldata + '</td><td>';
                             _filldata = _filldata + data[i].Qiyemingcheng;
                             _filldata = _filldata + '</td><td>';
-                            _filldata = _filldata + data[i].GongyingID;
+                            _filldata = _filldata + data[i].gysmingcheng;
                             _filldata = _filldata + '</td><td>';
-                            _filldata = _filldata + data[i].ShangpinTM;
+                            _filldata = _filldata + data[i].shangpintm;
                             _filldata = _filldata + '</td>';
                             _filldata = _filldata + '</tr>';
                         }
@@ -244,20 +243,29 @@
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.Zhongliang, new { @class = "control-label col-sm-2" })
-                    <div class="col-sm-10">
+                    <div class="col-sm-8">
                         @Html.TextBoxFor(m => m.Zhongliang, new { @class = "form-control" })
+                    </div>
+                    <div class="col-sm-2">
+                        <label class="form-control">千克(KG)</label>
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.Jingzhong, new { @class = "control-label col-sm-2" })
-                    <div class="col-sm-10">
+                    <div class="col-sm-8">
                         @Html.TextBoxFor(m => m.Jingzhong, new { @class = "form-control" })
+                    </div>
+                    <div class="col-sm-2">
+                        <label class="form-control">千克(KG)</label>
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.Tiji, new { @class = "control-label col-sm-2" })
-                    <div class="col-sm-10">
+                    <div class="col-sm-8">
                         @Html.TextBoxFor(m => m.Tiji, new { @class = "form-control" })
+                    </div>
+                    <div class="col-sm-2">
+                        <label class="form-control">立方米(M^3)</label>
                     </div>
                 </div>
                 <div class="form-group">
@@ -319,7 +327,8 @@
                             <td>商品条码</td>
                         </tr>
                     </thead>
-                    <tbody>                               </tbody>
+                    <tbody>
+                    </tbody>
                 </table>
             </div>
         </div>

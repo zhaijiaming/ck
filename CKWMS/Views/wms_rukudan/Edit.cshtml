@@ -8,13 +8,59 @@
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        Date.prototype.Format = function (fmt) {
+            var o = {
+                "M+": this.getMonth() + 1, 
+                "d+": this.getDate(),  
+                "h+": this.getHours(), 
+                "m+": this.getMinutes(),  
+                "s+": this.getSeconds(), 
+                "q+": Math.floor((this.getMonth() + 3) / 3),  
+                "S": this.getMilliseconds() 
+            };
+            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        };
+        String.prototype.toDate = function () {
+            var dateMilliseconds;
+            if (isNaN(this)) {
+                dateMilliseconds = this.replace(/\D/igm, "");
+            } else {
+                dateMilliseconds = this;
+            }
+            return new Date(parseInt(dateMilliseconds));
+        };
         var _showcargo = false;
         $(document).ready(function () {
             _showcargo = false;
             $("#pl_cargo_add").hide();
             $("#bt_cargoAdd").click(function () {
-                //$("#pl_cargo_add").show();
-                window.open("/wms_rukumx/add");
+                window.open("/wms_rukumx/add/?rkid="+$("#rkdid").val());
+            });
+            $("#bt_cargoDel").click(function () {
+                var _dels = "";
+                $("#mydatatable tr input[type=checkbox]").each(function () {
+                    if(this.checked)
+                        _dels = _dels + $(this).val() + ",";
+                });
+                if (_dels.length > 0) {
+                    if(confirm("确实要删除这些入库商品吗？"))
+                    {
+                        $.post(
+                            "/wms_rukumx/DelCargo",
+                            {
+                                rkmx: _dels
+                            },
+                            function (data) {
+                                if (data != 1)
+                                    alert("删除失败，请重试！");
+                            }
+                            );
+                        getCargos($("#rkdid").val());
+                    }
+                }
             });
             $("#pl_add_close").click(function () {
                 $("#pl_cargo_add").hide();
@@ -54,6 +100,8 @@
                             rkdetail = rkdetail + data[i].ShangpinID;
                             rkdetail = rkdetail + '"></label></div></td>';
                             rkdetail = rkdetail + '<td>';
+                            rkdetail = rkdetail + data[i].ShangpinTM;
+                            rkdetail = rkdetail + '</td><td>';
                             rkdetail = rkdetail + data[i].ShangpinMC;
                             rkdetail = rkdetail + '</td><td>';
                             rkdetail = rkdetail + data[i].Zhucezheng;
@@ -66,9 +114,9 @@
                             rkdetail = rkdetail + '</td><td>';
                             rkdetail = rkdetail + data[i].Xuliema;
                             rkdetail = rkdetail + '</td><td>';
-                            rkdetail = rkdetail + data[i].ShengchanRQ;
+                            rkdetail = rkdetail + data[i].ShengchanRQ.toDate().Format("yyyy-MM-dd");
                             rkdetail = rkdetail + '</td><td>';
-                            rkdetail = rkdetail + data[i].ShixiaoRQ;
+                            rkdetail = rkdetail + data[i].ShixiaoRQ.toDate().Format("yyyy-MM-dd");
                             rkdetail = rkdetail + '</td><td>';
                             rkdetail = rkdetail + data[i].DaohuoSL;
                             rkdetail = rkdetail + '</td><td>';
@@ -84,8 +132,6 @@
                             rkdetail = rkdetail + '</td><td>';
                             rkdetail = rkdetail + data[i].Chandi;
                             rkdetail = rkdetail + '</td><td>';
-                            rkdetail = rkdetail + data[i].ShangpinTM;
-                            rkdetail = rkdetail + '</td><td>';
                             rkdetail = rkdetail + data[i].Zhongliang;
                             rkdetail = rkdetail + '</td><td>';
                             rkdetail = rkdetail + data[i].Jingzhong;
@@ -99,8 +145,6 @@
                         }
                         $("#incargos tbody").html(rkdetail);
                     }
-                    //else
-                    //    alert(data);
                 }
                 );
         }
@@ -299,6 +343,7 @@
             <thead>
                 <tr>
                     <td></td>
+                    <td>商品条码</td>
                     <td>商品名称</td>
                     <td>注册证</td>
                     <td>规格型号</td>
@@ -314,7 +359,6 @@
                     <td>换算率</td>
                     <td>厂家</td>
                     <td>产地</td>
-                    <td>商品条码</td>
                     <td>重量</td>
                     <td>净重</td>
                     <td>体积</td>
@@ -325,36 +369,6 @@
                 </tr>
             </thead>
             <tbody>
-                @*<tr>
-                        <td>
-                            <div class="checkbox">
-                                <label><input type="checkbox" value="id" data-rkd="RukuID" data-spy="ShangpinID"></label>
-                            </div>
-                        </td>
-                        <td>"ShangpinMC"</td>
-                        <td>"Zhucezheng"</td>
-                        <td>"Guige"</td>
-                        <td>"Pihao"</td>
-                        <td>"Pihao1"</td>
-                        <td>"Xuliema"</td>
-                        <td>"ShengchanRQ"</td>
-                        <td>"ShixiaoRQ"</td>
-                        <td>"DaohuoSL"</td>
-                        <td>"YishouSL"</td>
-                        <td>"JibenDW"</td>
-                        <td>"BaozhuangDW"</td>
-                        <td>"Huansuanlv"</td>
-                        <td>"Changjia"</td>
-                        <td>"Chandi"</td>
-                        <td>"ShangpinTM"</td>
-                        <td>"Zhongliang"</td>
-                        <td>"Jingzhong"</td>
-                        <td>"Tiji"</td>
-                        <td>"Jifeidun"</td>
-                        <td>"Beizhu"</td>
-                        <td>"MakeDate"</td>
-                        <td>"MakeMan"</td>
-                    </tr>*@
             </tbody>
         </table>
     </div>

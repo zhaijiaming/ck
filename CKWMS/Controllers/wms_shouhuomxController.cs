@@ -169,11 +169,13 @@ namespace CKWMS.Controllers
             if (string.IsNullOrEmpty(page))
                 page = "1";
             int userid = (int)Session["user_id"];
-            string rkdid = Request["rkd"]??"";
+            string rkdid = Request["rkd"] ?? "";
             if (rkdid.Length == 0)
                 rkdid = "0";
-            var tempData = ServiceFactory.wms_rukumxservice.LoadSortEntities(p => p.RukuID == int.Parse(rkdid) && p.IsDelete==false && (p.DaohuoSL-p.YishouSL>0), true, s => s.ShangpinMC).ToPagedList<wms_rukumx>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            //var tempData = ServiceFactory.wms_rukumxservice.LoadSortEntities(p => p.RukuID == int.Parse(rkdid) && p.IsDelete==false && (p.DaohuoSL-p.YishouSL>0), true, s => s.ShangpinMC).ToPagedList<wms_rukumx>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            var tempData = ServiceFactory.wms_rukumxservice.LoadSortEntities(p => p.RukuID == int.Parse(rkdid) && p.IsDelete == false && (p.DaohuoSL - p.YishouSL > 0), true, s => s.ShangpinMC);
             ViewBag.wms_rukumx = tempData;
+            ViewBag.rkdid = rkdid;
             return View(tempData);
         }
 
@@ -254,7 +256,82 @@ namespace CKWMS.Controllers
             }
             return RedirectToAction("Index");
         }
+        public JsonResult GetShouhuoList()
+        {
+            var _rkdid = Request["rkd"] ?? "";
+            if (_rkdid.Length < 1)
+                return Json("");
+            var _shouhuo = ServiceFactory.wms_shouhuomxservice.LoadSortEntities(p => p.IsDelete == false && p.RukuID == int.Parse(_rkdid), false, s => s.MakeDate);
+            if (_shouhuo == null)
+                return Json("");
+            return Json(_shouhuo.ToList<wms_shouhuomx>());
+        }
+        public JsonResult AddByRukuMX()
+        {
+            var _rkmxid = Request["rk"] ?? "";
+            var _user = (int)Session["user_id"];
+            var _ph1 = Request["ph1"] ?? "";
+            var _ph = Request["ph"] ?? "";
+            var _xlm = Request["xlm"] ?? "";
+            var _scrq = Request["scrq"] ?? "";
+            var _sxrq = Request["sxrq"] ?? "";
+            var _sl = Request["sl"] ?? "";
+            var _zl = Request["zl"] ?? "";
+            var _jz = Request["jz"] ?? "";
+            var _tj = Request["tj"] ?? "";
+            var _jfd = Request["jfd"] ?? "";
+            var _bz = Request["bz"] ?? "";
+            if (_sl.Length == 0)
+                _sl = "0";
+            if (_zl.Length == 0)
+                _zl = "0";
+            if (_jz.Length == 0)
+                _jz = "0";
+            if (_tj.Length == 0)
+                _tj = "0";
+            if (_jfd.Length == 0)
+                _jfd = "0";
+            try
+            {
+                wms_rukumx _rkmx = ServiceFactory.wms_rukumxservice.GetEntityById(p => p.ID == int.Parse(_rkmxid));
+                if (_rkmx != null)
+                {
+                    wms_shouhuomx _shmx = new wms_shouhuomx();
+                    _shmx.RKMXID = _rkmx.ID;
+                    _shmx.RukuID = _rkmx.RukuID;
+                    _shmx.ShangpinID = _rkmx.ShangpinID;
+                    _shmx.ShangpinMC = _rkmx.ShangpinMC;
+                    _shmx.ShangpinTM = _rkmx.ShangpinTM;
+                    _shmx.Zhucezheng = _rkmx.Zhucezheng;
+                    _shmx.JibenDW = _rkmx.JibenDW;
+                    _shmx.BaozhuangDW = _rkmx.BaozhuangDW;
+                    _shmx.Chandi = _rkmx.Chandi;
+                    _shmx.Changjia = _rkmx.Changjia;
+                    _shmx.Guige = _rkmx.Guige;
+                    _shmx.Huansuanlv = _rkmx.Huansuanlv;
 
+                    _shmx.Pihao = _ph;
+                    _shmx.Pihao1 = _ph1;
+                    _shmx.Xuliema = _xlm;
+                    _shmx.ShengchanRQ = DateTime.Parse(_scrq);
+                    _shmx.ShixiaoRQ = DateTime.Parse(_sxrq);
+                    _shmx.Shuliang = float.Parse(_sl);
+                    _shmx.Zhongliang = float.Parse(_zl);
+                    _shmx.Jingzhong = float.Parse(_jz);
+                    _shmx.Tiji = float.Parse(_tj);
+                    _shmx.Jifeidun = float.Parse(_jfd);
+                    _shmx.Beizhu = _bz;
+
+                    _shmx.MakeMan = _user;
+                    _shmx = ServiceFactory.wms_shouhuomxservice.AddEntity(_shmx);
+                }
+            }
+            catch
+            {
+                return Json(-1);
+            }
+            return Json(0);
+        }
         [OutputCache(Duration = 10)]
         public ActionResult Edit(int id)
         {
@@ -386,6 +463,30 @@ namespace CKWMS.Controllers
                 }
             }
             return RedirectToAction("Index");
+        }
+        public JsonResult DelByID()
+        {
+            string sdel = Request["del"] ?? "";
+            int id;
+            try
+            {
+                wms_shouhuomx ob_wms_shouhuomx;
+                foreach (string sD in sdel.Split(','))
+                {
+                    if (sD.Length > 0)
+                    {
+                        id = int.Parse(sD);
+                        ob_wms_shouhuomx = ob_wms_shouhuomxservice.GetEntityById(wms_shouhuomx => wms_shouhuomx.ID == id && wms_shouhuomx.IsDelete == false);
+                        ob_wms_shouhuomx.IsDelete = true;
+                        ob_wms_shouhuomxservice.UpdateEntity(ob_wms_shouhuomx);
+                    }
+                }
+            }
+            catch
+            {
+                return Json(-1);
+            }
+            return Json(1);
         }
     }
 }
