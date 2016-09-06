@@ -288,6 +288,21 @@ namespace CKWMS.Controllers
             string qiyedizhi = Request["qiyedizhi"] ?? "";
             string shengchandizhi = Request["shengchandizhi"] ?? "";
             string hezuosf = Request["hezuosf"] ?? "";
+            string shenchasf = Request["shenchasf"] ?? "";
+            string beianbh = Request["beianbh"] ?? "";
+            string beianyxq = Request["beianyxq"] ?? "";
+            string beianpzrq = Request["beianpzrq"] ?? "";
+            string beianfzjg = Request["beianfzjg"] ?? "";
+            string beiantp = Request["beiantp"] ?? "";
+            string xukepzrq = Request["xukepzrq"] ?? "";
+            string xukefzjg = Request["xukefzjg"] ?? "";
+            string xukefanwei = Request["xukefanwei"] ?? "";
+            string xukefanweidm = Request["xukefanweidm"] ?? "";
+            if (shenchasf.IndexOf("true") > -1)
+                shenchasf = "true";
+            if (hezuosf.IndexOf("true") > -1)
+                hezuosf = "true";
+
             try
             {
                 base_shengchanqiye ob_base_shengchanqiye = new base_shengchanqiye();
@@ -305,7 +320,17 @@ namespace CKWMS.Controllers
                 //新增
                 ob_base_shengchanqiye.Qiyedizhi = qiyedizhi.Trim();
                 ob_base_shengchanqiye.Shengchandizhi = shengchandizhi.Trim();
-                ob_base_shengchanqiye.HezuoSF = hezuosf == "true" ? true : false;
+                ob_base_shengchanqiye.HezuoSF = hezuosf == "" ? false : Boolean.Parse(hezuosf);
+                ob_base_shengchanqiye.ShenchaSF = shenchasf == "" ? false : Boolean.Parse(shenchasf);
+                ob_base_shengchanqiye.BeianBH = beianbh.Trim();
+                ob_base_shengchanqiye.BeianYXQ = beianyxq == "" ? DateTime.Now : DateTime.Parse(beianyxq);
+                ob_base_shengchanqiye.BeianPZRQ = beianpzrq == "" ? DateTime.Now : DateTime.Parse(beianpzrq);
+                ob_base_shengchanqiye.BeianFZJG = beianfzjg.Trim();
+                ob_base_shengchanqiye.BeianTP = beiantp.Trim();
+                ob_base_shengchanqiye.XukePZRQ = xukepzrq == "" ? DateTime.Now : DateTime.Parse(xukepzrq);
+                ob_base_shengchanqiye.XukeFZJG = xukefzjg.Trim();
+                ob_base_shengchanqiye.Xukefanwei = xukefanwei.Trim();
+                ob_base_shengchanqiye.XukefanweiDM = xukefanweidm.Trim();           
 
                 ob_base_shengchanqiye = ob_base_shengchanqiyeservice.AddEntity(ob_base_shengchanqiye);
                 ViewBag.base_shengchanqiye = ob_base_shengchanqiye;
@@ -342,8 +367,19 @@ namespace CKWMS.Controllers
                 //新增
                 base_shengchanqiyeviewmodel.Qiyedizhi = tempData.Qiyedizhi;
                 base_shengchanqiyeviewmodel.Shengchandizhi = tempData.Shengchandizhi;
+                base_shengchanqiyeviewmodel.HezuoSF = tempData.HezuoSF;
                 base_shengchanqiyeviewmodel.ShenchaSF = tempData.ShenchaSF;
+                base_shengchanqiyeviewmodel.BeianBH = tempData.BeianBH;
+                base_shengchanqiyeviewmodel.BeianYXQ = tempData.BeianYXQ;
+                base_shengchanqiyeviewmodel.BeianPZRQ = tempData.BeianPZRQ;
+                base_shengchanqiyeviewmodel.BeianFZJG = tempData.BeianFZJG;
+                base_shengchanqiyeviewmodel.BeianTP = tempData.BeianTP;
+                base_shengchanqiyeviewmodel.XukePZRQ = tempData.XukePZRQ; 
+                base_shengchanqiyeviewmodel.XukeFZJG = tempData.XukeFZJG;
+                base_shengchanqiyeviewmodel.Xukefanwei = tempData.Xukefanwei;
+                base_shengchanqiyeviewmodel.XukefanweiDM = tempData.XukefanweiDM;
                 return View(base_shengchanqiyeviewmodel);
+              
             }
         }
 
@@ -368,7 +404,22 @@ namespace CKWMS.Controllers
             string qiyedizhi = Request["qiyedizhi"] ?? "";
             string shengchandizhi = Request["shengchandizhi"] ?? "";
             string hezuosf = Request["hezuosf"] ?? "";
+            string shenchasf = Request["shenchasf"] ?? "";
+            string beianbh = Request["beianbh"] ?? "";
+            string beianyxq = Request["beianyxq"] ?? "";
+            string beianpzrq = Request["beianpzrq"] ?? "";
+            string beianfzjg = Request["beianfzjg"] ?? "";
+            string beiantp = Request["beiantp"] ?? "";
+            string xukepzrq = Request["xukepzrq"] ?? "";
+            string xukefzjg = Request["xukefzjg"] ?? "";
+            string xukefanwei = Request["xukefanwei"] ?? "";
+            string xukefanweidm = Request["xukefanweidm"] ?? "";
+            if (shenchasf.IndexOf("true") > -1)
+                shenchasf = "true";
+            if (hezuosf.IndexOf("true") > -1)
+                hezuosf = "true";
             int uid = int.Parse(id);
+
             try
             {
                 base_shengchanqiye p = ob_base_shengchanqiyeservice.GetEntityById(base_shengchanqiye => base_shengchanqiye.ID == uid);
@@ -386,7 +437,17 @@ namespace CKWMS.Controllers
                 //新增
                 p.Qiyedizhi = qiyedizhi.Trim();
                 p.Shengchandizhi = shengchandizhi.Trim();
-                p.HezuoSF = hezuosf == "true" ? true : false;
+                p.HezuoSF = hezuosf == "" ? false : Boolean.Parse(hezuosf);
+                p.ShenchaSF = shenchasf == "" ? false : Boolean.Parse(shenchasf);
+                p.BeianBH = beianbh.Trim();
+                p.BeianYXQ = beianyxq == "" ? DateTime.Now : DateTime.Parse(beianyxq);
+                p.BeianPZRQ = beianpzrq == "" ? DateTime.Now : DateTime.Parse(beianpzrq);
+                p.BeianFZJG = beianfzjg.Trim();
+                p.BeianTP = beiantp.Trim();
+                p.XukePZRQ = xukepzrq == "" ? DateTime.Now : DateTime.Parse(xukepzrq);
+                p.XukeFZJG = xukefzjg.Trim();
+                p.Xukefanwei = xukefanwei.Trim();
+                p.XukefanweiDM = xukefanweidm.Trim();
 
                 ob_base_shengchanqiyeservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;

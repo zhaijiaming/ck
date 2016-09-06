@@ -4,7 +4,7 @@
 @using CKWMS.Models
 @model base_gongyingshangViewModel
 @{ViewBag.Title = "供应商添加";}
-@Html.GetFileUpload("ob_base_gongyingshang_yingyezhizhaotp", "yyzz", "z", "gys", 2, 0, new Dictionary<string, string>() { { "yyzz", "ob_base_gongyingshang_yingyezhizhaotp" }, { "xkz", "ob_base_gongyingshang_jingyingxuketp" } })
+@Html.GetFileUpload("ob_base_gongyingshang_yingyezhizhaotp", "yyzz", "z", "gys", 3, 0, new Dictionary<string, string>() { { "yyzz", "ob_base_gongyingshang_yingyezhizhaotp" }, { "xkz", "ob_base_gongyingshang_jingyingxuketp" }, { "BATP", "ob_base_gongyingshang_beiantp" } })
 
 
 
@@ -13,170 +13,151 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-
-        //$.get("/base_gongyingshangController/Save",
-        //function (data) {
-        //    switch (data.status) {
-        //        case 2:alert('333')
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //}
-        //                            );       
-        
         $("#ob_base_gongyingshang_makedate").datepicker();
         $("#ob_base_gongyingshang_yingyezhizhaoyxq").datepicker();
         $("#ob_base_gongyingshang_jingyingxukeyxq").datepicker();
         $("#ob_base_gongyingshang_beianyxq").datepicker();
         $("#ob_base_gongyingshang_beianpzrq").datepicker();
         $("#ob_base_gongyingshang_xukepzrq").datepicker();
-
         document.getElementById("daima").focus();
-        
         $("#pl_Fanwei").hide();
-        $("#pl_fanwei_add").hide();
-
+        $("#pl_Fanwei").draggable();
         var _qxmlid = $("#qxml").val();
 
-
-        //修改经营范围
-        $("#bt_Fanweiadd").click(function () {
-            
-            GetFanwei()
-            $("#pl_Fanwei").show();
-            setTimeout(function () {
-                GetData()
-            }, 500);
-
-            //隐藏小类
-            setTimeout(function () {
-                var fl = document.getElementsByClassName('glfl');
-
-                for (var i = 0; i < fl.length; i++) {
-                    if ($(".glfl").eq(i).text() != "0") {
-                        $(".bg").eq(i).hide();
-                    }
-                }
-            }, 50);
-            
-        });
-
+        GetFanwei1();
         $("#bt_fanwei_showall").click(function () {
-
-            $(".bg").show();
-            //var tamp_jyfwjm="";
-            //var t = document.getElementsByClassName('checkbox');
-            //$("#qxdatatable tr input[type=checkbox]").each(function () {
-            //    if (this.checked) {                   
-            //        tamp_jyfwjm = tamp_jyfwjm + $(this).parent().parent().parent().siblings().find(".bh").html() + ";";
-            //    }
-            //});                     
-            //GetFanwei();
-
-            //setTimeout(function () {                
-            //    var fw = document.getElementsByClassName('bh');
-            //    var i = tamp_jyfwjm;
-            //    var t = i.split(";");
-            //    for (var k = 0; k < t.length; k++) {
-            //        for (var l = 0; l < fw.length; l++) {
-            //            if (t[k] == $(".bh").eq(l).text())
-            //                $("input:checkbox").eq(l).attr("checked", true);
-            //        }
-            //    }
-            //}, 200);                   
-        });
-
-        $("#bt_fanwei_showdalei").click(function () {
-
-            var fl = document.getElementsByClassName('glfl');
-            for (var i = 0; i < fl.length; i++) {
-                if ($(".glfl").eq(i).text() != "0") {
-                    $(".bg").eq(i).hide();
-                }
-            }
-            //var tamp_jyfwjm = "";
-            //var t = document.getElementsByClassName('checkbox');
-            //$("#qxdatatable tr input[type=checkbox]").each(function () {
-            //    if (this.checked) {
-            //        tamp_jyfwjm = tamp_jyfwjm + $(this).parent().parent().parent().siblings().find(".bh").html() + ";";
-            //    }
-            //});
-            //GetFanwei1();
-            //setTimeout(function () {
-            //    var fw = document.getElementsByClassName('bh');
-            //    var i = tamp_jyfwjm;
-            //    var t = i.split(";");
-            //    for (var k = 0; k < t.length; k++) {
-            //        for (var l = 0; l < fw.length; l++) {
-            //            if (t[k] == $(".bh").eq(l).text())
-            //                $("input:checkbox").eq(l).attr("checked", true);
-            //        }
-            //    }
-            //}, 200);       
-        });
-
-        $("#pl_close").click(function () {
-            $("#pl_Fanwei").hide();
-        });
-
-        //$("form").validate({
-        //    rules: {
-        //        ob_base_gongyingshang_daima: { required: true },
-        //        ob_base_gongyingshang_mingcheng: { required: true },
-        //    },
-        //    messages: {
-        //        ob_base_gongyingshang_daima: { required: "请输入daima" },
-        //        ob_base_gongyingshang_mingcheng: { required: "请输入mingcheng" },
-        //    }
-        //});
-
-        $("#bt_fanwei_add").click(function () {
-            var _jyfw = "";
-            var _jyfwjm = "";
-            var t = document.getElementsByClassName('checkbox');
+            var tempid = "";
             $("#qxdatatable tr input[type=checkbox]").each(function () {
-                if (this.checked) {                   
-                    _jyfw = _jyfw + $(this).parent().parent().parent().siblings().find(".bh").html() + "," + $(this).parent().parent().parent().siblings().find(".mc").html() + ";";
-                    _jyfwjm = _jyfwjm + $(this).parent().parent().parent().siblings().find(".bh").html() + ";";
+                if (this.checked) {
+                    tempid = tempid + $(this).parent().find(".xulieid").val() + ";";
                 }
             });
-            var _addok = confirm("确定要修改经营范围吗？");
-            if (_addok) {
-
-                if (_jyfw.length >= 512) {
-                    alert("所选数据超过范围，请重新选择。")
+            var fw = document.getElementsByClassName('xulieid');
+            var i = $("#jingyingfanweijianma").val();
+            var ti = i.split(";");
+            //ti.splice(ti.length - 1);
+            var xiaolei = new Array();
+            var x = 0;
+            for (var k = 0; k < ti.length; k++, x = 0) {
+                for (var l = 0; l < fw.length; l++) {
+                    if (ti[k] == $(".xulieid").eq(l).val()) {
+                        x = 1;
+                    }
                 }
-                else {
-                    $("#jingyingfanwei").val(_jyfw);
-                    $("#jingyingfanweijianma").val(_jyfwjm);
-                    $("#pl_Fanwei").hide();
+                if (x != 1) {
+                    xiaolei.push(ti[k]);
                 }
-            }            
+            }
+            for (k = 0; k < xiaolei.length; k++) {
+                tempid = tempid + xiaolei[k] + ";";
+            }
+            tempid = tempid.substring(0, tempid.length - 1);
+            GetFanwei();
+            setTimeout(function () {
+                var fw = document.getElementsByClassName('xulieid');
+                var i = tempid;
+                var t = i.split(";");
+                for (var k = 0; k < t.length; k++) {
+                    for (var l = 0; l < fw.length; l++) {
+                        if (t[k] == $(".xulieid").eq(l).val())
+                            $("#qxdatatable tr input[type=checkbox]").eq(l).attr("checked", true);
+                    }
+                }
+            }, 500)
         });
-        $("#bt_fanwei_all").click(function () {
-            $(".checkbox").prop("checked", true);
-        })
-        $("#bt_fanwei_clear").click(function () {
-            $(".checkbox").prop("checked", false);
-        })
-    });
 
-    function GetSpell() {
-        $.post("/Service/GetSpellCode",
-            {
-                yourwords: $("#shengcheng").val()
-            },
-        function (response) {
-            $("#daima").val(response);
+            $("#bt_fanwei_showdalei").click(function () {
+                GetFanwei1();
+                setTimeout(function () {
+                    GetData();
+                }, 500)
+            });
+
+            $("#pl_close").click(function () {
+                $("#pl_Fanwei").hide();
+            });
+
+            //$("form").validate({
+            //    rules: {
+            //        ob_base_gongyingshang_daima: { required: true },
+            //        ob_base_gongyingshang_mingcheng: { required: true },
+            //    },
+            //    messages: {
+            //        ob_base_gongyingshang_daima: { required: "请输入daima" },
+            //        ob_base_gongyingshang_mingcheng: { required: "请输入mingcheng" },
+            //    }
+            //});
+
+            $("#bt_fanwei_add").click(function () {
+                //获取小类字符串
+                var fw = document.getElementsByClassName('xulieid');
+                var i = $("#jingyingfanweijianma").val();
+                var ti = i.split(";");
+                //ti.splice(ti.length - 1);
+                var j = $("#jingyingfanwei").val();
+                var tj = j.split(";");
+                //tj.splice(ti.length - 1);
+                var xiaolei = new Array();
+                var miaoshu = new Array();
+                var x = 0;
+                for (var k = 0; k < ti.length; k++, x = 0) {
+                    for (var l = 0; l < fw.length; l++) {
+                        if (ti[k] == $(".xulieid").eq(l).val()) {
+                            x = 1;
+                        }
+                    }
+                    if (x != 1) {
+                        xiaolei.push(ti[k]);
+                        miaoshu.push(tj[k]);
+                    }
+                }
+
+                var _jyfw = "";
+                var _jyfwjm = "";
+                var t = document.getElementsByClassName('xulieid');
+                $("#qxdatatable tr input[type=checkbox]").each(function () {
+                    if (this.checked) {
+                        _jyfw = _jyfw + $(this).parent().parent().parent().siblings().find(".bh").html() + "," + $(this).parent().parent().parent().siblings().find(".mc").html() + ";";
+                        _jyfwjm = _jyfwjm + $(this).parent().find(".xulieid").val() + ";";
+                    }
+                });
+                for (k = 0; k < xiaolei.length; k++) {
+                    _jyfwjm = _jyfwjm + xiaolei[k] + ";";
+                }
+                _jyfwjm = _jyfwjm.substring(0, _jyfwjm.length - 1);
+                for (k = 0; k < miaoshu.length; k++) {
+                    _jyfw = _jyfw + miaoshu[k] + ";";
+                }
+                _jyfw = _jyfw.substring(0, _jyfw.length - 1);
+                var _addok = confirm("确定要修改经营范围吗？");
+                if (_addok) {
+                    if (_jyfw.length >= 512) {
+                        alert("所选数据超过范围，请重新选择。")
+                    }
+                    else {
+                        $("#jingyingfanwei").val(_jyfw);
+                        $("#jingyingfanweijianma").val(_jyfwjm);
+                        $("#pl_Fanwei").hide();
+                    }
+                }
+                GetFanwei1();
+            });
+            $("#bt_fanwei_all").click(function () {
+                $(".xulieid").prop("checked", true);
+            })
+            $("#bt_fanwei_clear").click(function () {
+                $(".xulieid").prop("checked", false);
+            })
         });
+
+    //经营范围
+    function Bt_Fanweiadd() {
+        GetData();
+        $("#pl_Fanwei").show();
     }
-
-
     function GetFanwei1() {
         //var _qxmlid = $("#qxml").val();
         var filltable = "";
-
         $.post(
                 "/base_qixiemulu/GetQixiemulu1",
                 {
@@ -184,7 +165,7 @@
                 },
                 function (data) {
                     for (var i in data) {
-                        filltable = filltable + '<tr class="bg"><td><div class="checkbox"><label><input type="checkbox" class ="checkbox" value="';
+                        filltable = filltable + '<tr class="bg"><td><div class="checkbox"><label><input type="checkbox" class="xulieid"  value="';
                         filltable = filltable + data[i].ID;
                         filltable = filltable + '"></label></div></td><td style="width:80px"><span class="bh">';
                         filltable = filltable + data[i].Bianhao;
@@ -203,7 +184,6 @@
     function GetFanwei() {
         //var _qxmlid = $("#qxml").val();
         var filltable = "";
-
         $.post(
                 "/base_qixiemulu/GetQixiemulu",
                 {
@@ -211,7 +191,7 @@
                 },
                 function (data) {
                     for (var i in data) {
-                        filltable = filltable + '<tr class="bg"><td><div class="checkbox"><label><input type="checkbox" class ="checkbox" value="';
+                        filltable = filltable + '<tr class="bg"><td><div class="checkbox"><label><input type="checkbox" class ="xulieid" value="';
                         filltable = filltable + data[i].ID;
                         filltable = filltable + '"></label></div></td><td style="width:80px"><span class="bh">';
                         filltable = filltable + data[i].Bianhao;
@@ -227,19 +207,29 @@
                 });
     }
     function GetData() {
-
-        var fw = document.getElementsByClassName('bh');
+        var fw = document.getElementsByClassName('xulieid');
         var i = $("#jingyingfanweijianma").val();
-        var t = i.split(";"); 
-
+        var t = i.split(";");
         for (var k = 0; k < t.length; k++) {
             for (var l = 0; l < fw.length; l++) {
-                if (t[k] == $(".bh").eq(l).text())
-                    $("input:checkbox").eq(l).attr("checked", true);
+                if (t[k] == $(".xulieid").eq(l).val())
+                    $("#qxdatatable tr input[type=checkbox]").eq(l).attr("checked", true);
             }
         }
     }
 
+
+
+       //获取字符串代码
+        function GetSpell() {
+            $.post("/Service/GetSpellCode",
+                {
+                    yourwords: $("#shengcheng").val()
+                },
+            function (response) {
+                $("#daima").val(response);
+            });
+        }
 </script>
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
@@ -274,7 +264,7 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>代码</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control"  data-val="true" data-val-required="Daima 字段是必需的。" id="daima" name="ob_base_gongyingshang_daima">
+                    <input type="text" class="form-control" data-val="true" data-val-required="Daima 字段是必需的。" id="daima" name="ob_base_gongyingshang_daima">
                     @*@Html.TextBoxFor(m => m.Daima, new { @class = "form-control", id = "daima" })*@
                     @*@Html.ValidationMessageFor(m => m.Daima)*@
 
@@ -348,57 +338,31 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-2">
-                    <label for="name" >经营范围</label><br />
+                    <label for="name">经营范围</label><br />
                     @*<div class="col-sm-10">
-                <input type="text" class="form-control" name="ob_base_gongyingshang_jingyingfanwei">
-            </div>*@
-                    <button type="button" class="icon-edit" id="bt_Fanweiadd">修改</button>
+                            <input type="text" class="form-control" name="ob_base_gongyingshang_jingyingfanwei">
+                        </div>*@
+                    <button type="button" class="icon-add" id="bt_Fanweiadd" onclick="Bt_Fanweiadd()">增加</button>
                 </div>
                 <div class="col-sm-10">
                     <textarea type="text" class="form-control" readonly id="jingyingfanwei" name="ob_base_gongyingshang_jingyingfanwei"></textarea>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="display:none">
                 <label for="name" class="col-sm-2">经营范围简码</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" readonly id="jingyingfanweijianma" name="ob_base_gongyingshang_jingyingfanweidm">
                 </div>
             </div>
             @*<div class="form-group">
-                <label for="name" class="col-sm-2">首营状态</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="ob_base_gongyingshang_shouying">
-                    @Html.SelectList_Common("ob_base_gongyingshang_shouying", "首营状态", 1)
-                </div>
-            </div>*@
-            @*增加*@
+                    <label for="name" class="col-sm-2">首营状态</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="ob_base_gongyingshang_shouying">
+                        @Html.SelectList_Common("ob_base_gongyingshang_shouying", "首营状态", 1)
+                    </div>
+                </div>*@
 
-            <div class="form-group">
-                <label for="name" class="col-sm-2">是否审查</label>
-                <div>
-                    <label class="radio-inline">
-                        <input type="radio" name="shenchasf" value="true" checked>
-                        是
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" name="shenchasf" value="false">
-                        否
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="name" class="col-sm-2">是否合作</label>
-                <div>
-                    <label class="radio-inline">
-                        <input type="radio" name="hezuosf" value="true" checked>
-                        是
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" name="hezuosf" value="false">
-                        否
-                    </label>
-                </div>
-            </div>
+            @*增加*@
             <div class="form-group">
                 <label for="name" class="col-sm-2">备案编号</label>
                 <div class="col-sm-10">
@@ -420,13 +384,21 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2">备案发证机关</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control"  name="ob_base_gongyingshang_beianfzjg">
+                    <input type="text" class="form-control" name="ob_base_gongyingshang_beianfzjg">
                 </div>
             </div>
             <div class="form-group">
                 <label for="name" class="col-sm-2">备案文件</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control"  name="ob_base_gongyingshang_beiantp">
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" readonly name="ob_base_gongyingshang_beiantp" id="ob_base_gongyingshang_beiantp">
+                </div>
+                <div class="col-sm-2">
+                    <button class="form-control" data-toggle="modal" data-target="#myModalUpload" onclick="btn3()">上传</button>
+                </div>
+                <div class="col-sm-2">
+                    <span class="form-control" id="BATP">
+                        <a>浏览</a>
+                    </span>
                 </div>
             </div>
             <div class="form-group">
@@ -441,7 +413,32 @@
                     <input type="text" class="form-control" name="ob_base_gongyingshang_xukefzjg">
                 </div>
             </div>
-
+            <div class="form-group">
+                @*<label for="name" class="col-sm-2">是否合作</label>*@
+                @Html.LabelFor(m => m.HezuoSF, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @*<input type="CheckBox" class="form-control" name="ob_base_gongyingshang_hezuosf">*@
+                    @Html.CheckBoxFor(m => m.HezuoSF, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @*<label for="name" class="col-sm-2">是否审查</label>*@
+                @Html.LabelFor(m => m.ShenchaSF, new { @class = "control-label col-sm-2" })
+                @*<div>
+                        <label class="radio-inline">
+                            <input type="radio" name="shenchasf" value="true" checked>
+                            是
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="shenchasf" value="false">
+                            否
+                        </label>
+                    </div>*@
+                <div class="col-sm-10">
+                    @*<input type="CheckBox" class="form-control" name="ob_base_gongyingshang_shenchasf">*@
+                    @Html.CheckBoxFor(m => m.ShenchaSF, new { @class = "form-control" })
+                </div>
+            </div>
             <div class="form-group">
                 <label for="name" class="col-sm-2">录入日期</label>
                 <div class="col-sm-10">
@@ -459,7 +456,7 @@
 </div>
 
 
-<div id="pl_Fanwei" class="panel panel-primary " style="display:none;position:absolute;top:0px;left:300px;width:1100px;height:600px;z-index:999;">
+<div id="pl_Fanwei" class="panel panel-primary " style="display:none;position:fixed;top:100px;left:200px;width:1100px;height:600px;z-index:999;">
     <div class="panel-heading">
         <h3 class="panel-title">经营范围管理<button id="pl_close" class="pull-right">X</button></h3>
     </div>
@@ -490,36 +487,36 @@
 
 
 @*<tr>
-    <td>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" class="checkbox" value="data[i].ID">
-            </label>
-        </div>
-    </td>
-    <td>
-        <span class="bh">
+        <td>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" class="checkbox" value="data[i].ID">
+                </label>
+            </div>
+        </td>
+        <td>
+            <span class="bh">
+                ;
+                data[i].Bianhao;
+            </span>
+        </td>
+        <td>
+            <span class="mc">
+                ;
+                data[i].Mingcheng;
+            </span>
+        </td>
+        <td>
             ;
-            data[i].Bianhao;
-        </span>
-    </td>
-    <td>
-        <span class="mc">
-            ;
-            data[i].Mingcheng;
-        </span>
-    </td>
-    <td>
-        ;
-        data[i].Miaoshu;
-    </td>
-    <td>
-        <span class="glfl">
-            ;
-            data[i].GuanliFL;
-        </span>
-    </td>
-</tr>;*@
+            data[i].Miaoshu;
+        </td>
+        <td>
+            <span class="glfl">
+                ;
+                data[i].GuanliFL;
+            </span>
+        </td>
+    </tr>;*@
 
 
 
