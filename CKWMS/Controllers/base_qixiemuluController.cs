@@ -72,7 +72,7 @@ namespace CKWMS.Controllers
 
             where = where.And(base_qixiemulu => base_qixiemulu.IsDelete == false);
 
-            var tempData = ob_base_qixiemuluservice.LoadSortEntities(where.Compile(), false, base_qixiemulu => base_qixiemulu.ID).ToPagedList<base_qixiemulu>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            var tempData = ob_base_qixiemuluservice.LoadSortEntities(where.Compile(), true, base_qixiemulu => base_qixiemulu.Bianhao).ToPagedList<base_qixiemulu>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.base_qixiemulu = tempData;
             return View(tempData);
         }

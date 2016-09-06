@@ -302,8 +302,8 @@ namespace CKWMS.Controllers
             string makedate = Request["ob_base_gongyingshang_makedate"] ?? "";
             string makeman = Request["ob_base_gongyingshang_makeman"] ?? "";
             //增加
-            string shenchasf = Request["ob_base_gongyingshang_shenchasf"] ?? "";
-            string hezuosf = Request["ob_base_gongyingshang_hezuosf"] ?? "";
+            string shenchasf = Request["shenchasf"] ?? "";
+            string hezuosf = Request["hezuosf"] ?? "";
             string beianbh = Request["ob_base_gongyingshang_beianbh"] ?? "";
             string beianyxq = Request["ob_base_gongyingshang_beianyxq"] ?? "";
             string beianpzrq = Request["ob_base_gongyingshang_beianpzrq"] ?? "";
@@ -311,8 +311,10 @@ namespace CKWMS.Controllers
             string beiantp = Request["ob_base_gongyingshang_beiantp"] ?? "";
             string xukepzrq = Request["ob_base_gongyingshang_xukepzrq"] ?? "";
             string xukefzjg = Request["ob_base_gongyingshang_xukefzjg"] ?? "";
-           
-
+            if (shenchasf.IndexOf("true") > -1)
+                shenchasf = "true";
+            if (hezuosf.IndexOf("true") > -1)
+                hezuosf = "true";
 
             try
             {
@@ -331,8 +333,8 @@ namespace CKWMS.Controllers
                 ob_base_gongyingshang.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 ob_base_gongyingshang.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
                 //增加
-                ob_base_gongyingshang.ShenchaSF = shenchasf == "true" ? true : false;
-                ob_base_gongyingshang.HezuoSF = hezuosf == "true" ? true : false;
+                ob_base_gongyingshang.ShenchaSF = shenchasf == "" ? false : Boolean.Parse(shenchasf);
+                ob_base_gongyingshang.HezuoSF = hezuosf == "" ? false : Boolean.Parse(hezuosf);
                 ob_base_gongyingshang.BeianBH = beianbh.Trim();
                 ob_base_gongyingshang.BeianYXQ = beianyxq == "" ? DateTime.Now : DateTime.Parse(beianyxq);
                 ob_base_gongyingshang.BeianPZRQ = beianpzrq == "" ? DateTime.Now : DateTime.Parse(beianpzrq);
@@ -357,13 +359,42 @@ namespace CKWMS.Controllers
             return RedirectToAction("Index");
             //return Content("<script>alert('" + ff + "');location.href='Index'</script>");
         }
-
         public ActionResult Edit(int id)
         {
             
             base_gongyingshang tempData = ob_base_gongyingshangservice.GetEntityById(base_gongyingshang => base_gongyingshang.ID == id && base_gongyingshang.IsDelete == false);
             ViewBag.base_gongyingshang = tempData;
             return View();
+            //if (tempData == null)
+            //    return View();
+            //else {
+            //    base_gongyingshangViewModel base_gongyingshangviewmodel = new base_gongyingshangViewModel();
+            //    base_gongyingshangviewmodel.ID = tempData.ID;
+            //    base_gongyingshangviewmodel.Daima = tempData.Daima;
+            //    base_gongyingshangviewmodel.Mingcheng = tempData.Mingcheng;
+            //    base_gongyingshangviewmodel.YingyezhizhaoBH = tempData.YingyezhizhaoBH;
+            //    base_gongyingshangviewmodel.YingyezhizhaoYXQ = (DateTime)tempData.YingyezhizhaoYXQ;
+            //    base_gongyingshangviewmodel.YingyezhizhaoTP = tempData.YingyezhizhaoTP;
+            //    base_gongyingshangviewmodel.JingyingxukeBH = tempData.JingyingxukeBH;
+            //    base_gongyingshangviewmodel.JingyingxukeYXQ = (DateTime)tempData.JingyingxukeYXQ;
+            //    base_gongyingshangviewmodel.JingyingxukeTP = tempData.JingyingxukeTP;
+            //    base_gongyingshangviewmodel.Jingyingfanwei = tempData.Jingyingfanwei;
+            //    base_gongyingshangviewmodel.JingyingfanweiDM = tempData.JingyingfanweiDM;
+            //    base_gongyingshangviewmodel.Shouying = (int)tempData.Shouying;
+            //    base_gongyingshangviewmodel.MakeDate = tempData.MakeDate;
+            //    base_gongyingshangviewmodel.MakeMan = tempData.MakeMan;
+            //    //新增
+            //    base_gongyingshangviewmodel.HezuoSF = tempData.HezuoSF;
+            //    base_gongyingshangviewmodel.ShenchaSF = tempData.ShenchaSF;
+            //    base_gongyingshangviewmodel.BeianBH = tempData.BeianBH;
+            //    base_gongyingshangviewmodel.BeianYXQ = tempData.BeianYXQ;
+            //    base_gongyingshangviewmodel.BeianPZRQ = tempData.BeianPZRQ;
+            //    base_gongyingshangviewmodel.BeianFZJG = tempData.BeianFZJG;
+            //    base_gongyingshangviewmodel.BeianTP = tempData.BeianTP;
+            //    base_gongyingshangviewmodel.XukePZRQ = tempData.XukePZRQ; 
+            //    base_gongyingshangviewmodel.XukeFZJG = tempData.XukeFZJG;
+            //    return View(base_gongyingshangviewmodel);
+            //}
         }
 
         public ActionResult Update()
@@ -382,8 +413,22 @@ namespace CKWMS.Controllers
             string jingyingfanweidm = Request["ob_base_gongyingshang_jingyingfanweidm"] ?? "";
             string shouying = Request["ob_base_gongyingshang_shouying"] ?? "";
             string makedate = Request["ob_base_gongyingshang_makedate"] ?? "";
+            //增加
+            string shenchasf = Request["shenchasf"] ?? "";
+            string hezuosf = Request["hezuosf"] ?? "";
+            string beianbh = Request["ob_base_gongyingshang_beianbh"] ?? "";
+            string beianyxq = Request["ob_base_gongyingshang_beianyxq"] ?? "";
+            string beianpzrq = Request["ob_base_gongyingshang_beianpzrq"] ?? "";
+            string beianfzjg = Request["ob_base_gongyingshang_beianfzjg"] ?? "";
+            string beiantp = Request["ob_base_gongyingshang_beiantp"] ?? "";
+            string xukepzrq = Request["ob_base_gongyingshang_xukepzrq"] ?? "";
+            string xukefzjg = Request["ob_base_gongyingshang_xukefzjg"] ?? "";
             //string makeman = Request["ob_base_gongyingshang_makeman"] ?? "";
             string makeman = Session["user_id"].ToString();
+            if (shenchasf.IndexOf("true") > -1)
+                shenchasf = "true";
+            if (hezuosf.IndexOf("true") > -1)
+                hezuosf = "true";
             int uid = int.Parse(id);
             try
             {
@@ -401,6 +446,16 @@ namespace CKWMS.Controllers
                 p.Shouying = shouying == "" ? 0 : int.Parse(shouying);
                 p.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 p.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
+                //增加
+                p.ShenchaSF = shenchasf == "" ? false : Boolean.Parse(shenchasf);
+                p.HezuoSF = hezuosf == "" ? false : Boolean.Parse(hezuosf);
+                p.BeianBH = beianbh.Trim();
+                p.BeianYXQ = beianyxq == "" ? DateTime.Now : DateTime.Parse(beianyxq);
+                p.BeianPZRQ = beianpzrq == "" ? DateTime.Now : DateTime.Parse(beianpzrq);
+                p.BeianFZJG = beianfzjg.Trim();
+                p.BeianTP = beiantp.Trim();
+                p.XukePZRQ = xukepzrq == "" ? DateTime.Now : DateTime.Parse(xukepzrq);
+                p.XukeFZJG = xukefzjg.Trim();
                 ob_base_gongyingshangservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;
             }

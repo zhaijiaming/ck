@@ -41,6 +41,17 @@
                 $(".jjxktp").eq(i).html("浏览")
             }
         }
+
+        var t = document.getElementsByClassName('shencha');
+
+        for (var i = 0; i < t.length; i++) {
+            if ($(".shencha").eq(i).html() == "True") {
+                $(".shencha").eq(i).html("是")
+            }
+            else {
+                $(".shencha").eq(i).html("否")
+            }
+        }
     });
 
     function AddInfo() {

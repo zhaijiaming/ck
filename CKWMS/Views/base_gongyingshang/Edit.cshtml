@@ -8,7 +8,7 @@
     base_gongyingshang item = ViewBag.base_gongyingshang;
 }
 
-@Html.GetFileUpload("ob_base_gongyingshang_yingyezhizhaotp", "zztp", "z", "gys", 2, 0, new Dictionary<string, string>() { { "zztp", "ob_base_gongyingshang_yingyezhizhaotp" }, { "yxtp", "ob_base_gongyingshang_jingyingxuketp" } })
+@Html.GetFileUpload("ob_base_gongyingshang_yingyezhizhaotp", "zztp", "z", "gys", 3, 0, new Dictionary<string, string>() { { "zztp", "ob_base_gongyingshang_yingyezhizhaotp" }, { "yxtp", "ob_base_gongyingshang_jingyingxuketp" }, { "BATP", "ob_base_gongyingshang_beiantp" } })
 
 <script type="text/javascript">
     //function doUpload() {
@@ -70,82 +70,77 @@
     //}
 
     $(document).ready(function () {
-
         $("#ob_base_gongyingshang_makedate").datepicker();
         $("#ob_base_gongyingshang_yingyezhizhaoyxq").datepicker();
         $("#ob_base_gongyingshang_jingyingxukeyxq").datepicker();
+        $("#ob_base_gongyingshang_beianyxq").datepicker();
+        $("#ob_base_gongyingshang_beianpzrq").datepicker();
+        $("#ob_base_gongyingshang_xukepzrq").datepicker();
 
         $("#pl_Fanwei").hide();
-        $("#bt_Fanweiadd").click(function () {
-            GetFanwei();
-            $("#pl_Fanwei").show();
-            setTimeout(function () {
-                GetData()
-            }, 500)
+        $("#pl_Fanwei").draggable();
 
-            //隐藏小类
-            setTimeout(function () {
-                var fl = document.getElementsByClassName('glfl');
+        if ($(".sc").html() == "True") {
+            $(".shencha").attr("checked", true);
+        }
+        else {
+            $(".shencha").attr("checked", false);
+        }
+        if ($(".hz").html() == "True") {
+            $(".hezuo").attr("checked", true);
+        }
+        else {
+            $(".hezuo").attr("checked", false);
+        }
 
-                for (var i = 0; i < fl.length; i++) {
-                    if ($(".glfl").eq(i).text() != "0") {
-                        $(".bg").eq(i).hide();
-                    }
-                }
-            }, 50);
-        });
+        GetFanwei1();
 
         $("#bt_fanwei_showall").click(function () {
-            $(".bg").show();
-            //var tamp_jyfwjm = "";
-            //var tamp_jyfwjm = "" + $("#jingyingfanweijianma").val();
-            //var t = document.getElementsByClassName('checkbox');
-            //$("#qxdatatable tr input[type=checkbox]").each(function () {
-            //    if (this.checked) {
-            //        tamp_jyfwjm = tamp_jyfwjm + $(this).parent().parent().parent().siblings().find(".bh").html() + ";";
-            //    }
-            //});
-            //GetFanwei()
-            //setTimeout(function () {
-            //    var fw = document.getElementsByClassName('bh');
-            //    var i = tamp_jyfwjm;
-            //    var t = i.split(";");
-            //    for (var k = 0; k < t.length; k++) {
-            //        for (var l = 0; l < fw.length; l++) {
-            //            if (t[k] == $(".bh").eq(l).text())
-            //                $("input:checkbox").eq(l).attr("checked", true);
-            //        }
-            //    }
-            //}, 200);           
+            var tempid = "";
+            $("#qxdatatable tr input[type=checkbox]").each(function () {
+                if (this.checked) {
+                    tempid = tempid + $(this).parent().find(".xulieid").val() + ";";
+                }
+            });
+            var fw = document.getElementsByClassName('xulieid');
+            var i = $("#jingyingfanweijianma").val();
+            var ti = i.split(";");
+            //ti.splice(ti.length - 1);
+            var xiaolei = new Array();
+            var x = 0;
+            for (var k = 0; k < ti.length; k++, x = 0) {
+                for (var l = 0; l < fw.length; l++) {
+                    if (ti[k] == $(".xulieid").eq(l).val()) {
+                        x = 1;
+                    }
+                }
+                if (x != 1) {
+                    xiaolei.push(ti[k]);
+                }
+            }
+            for (k = 0; k < xiaolei.length; k++) {
+                tempid = tempid + xiaolei[k] + ";";
+            }
+            tempid = tempid.substring(0, tempid.length - 1);
+            GetFanwei();
+            setTimeout(function () {
+                var fw = document.getElementsByClassName('xulieid');
+                var i = tempid;
+                var t = i.split(";");
+                for (var k = 0; k < t.length; k++) {
+                    for (var l = 0; l < fw.length; l++) {
+                        if (t[k] == $(".xulieid").eq(l).val())
+                            $("#qxdatatable tr input[type=checkbox]").eq(l).attr("checked", true);
+                    }
+                }
+            }, 500)
         });
 
         $("#bt_fanwei_showdalei").click(function () {
-            var fl = document.getElementsByClassName('glfl');
-            for (var i = 0; i < fl.length; i++) {
-                if ($(".glfl").eq(i).text() != "0") {
-                    $(".bg").eq(i).hide();
-                }
-            }
-            //var tamp_jyfwjm = "";
-            //var tamp_jyfwjm = "" + $("#jingyingfanweijianma").val();
-            //var t = document.getElementsByClassName('checkbox');
-            //$("#qxdatatable tr input[type=checkbox]").each(function () {
-            //    if (this.checked) {
-            //        tamp_jyfwjm = tamp_jyfwjm + $(this).parent().parent().parent().siblings().find(".bh").html() + ";";
-            //    }
-            //});
-            //GetFanwei1()
-            //setTimeout(function () {
-            //    var fw = document.getElementsByClassName('bh');
-            //    var i = tamp_jyfwjm;
-            //    var t = i.split(";");
-            //    for (var k = 0; k < t.length; k++) {
-            //        for (var l = 0; l < fw.length; l++) {
-            //            if (t[k] == $(".bh").eq(l).text())
-            //                $("input:checkbox").eq(l).attr("checked", true);
-            //        }
-            //    }
-            //}, 200);          
+            GetFanwei1();
+            setTimeout(function () {
+                GetData();
+            }, 500)
         });
 
 
@@ -165,60 +160,79 @@
         });
 
         $("#bt_fanwei_add").click(function () {
+            //获取小类字符串
+            var fw = document.getElementsByClassName('xulieid');
+            var i = $("#jingyingfanweijianma").val();
+            var ti = i.split(";");
+            //ti.splice(ti.length - 1);
+            var j = $("#jingyingfanwei").val();
+            var tj = j.split(";");
+            //tj.splice(ti.length - 1);
+            var xiaolei = new Array();
+            var miaoshu = new Array();
+            var x = 0;
+            for (var k = 0; k < ti.length; k++, x = 0) {
+                for (var l = 0; l < fw.length; l++) {
+                    if (ti[k] == $(".xulieid").eq(l).val()) {
+                        x = 1;
+                    }
+                }
+                if (x != 1) {
+                    xiaolei.push(ti[k]);
+                    miaoshu.push(tj[k]);
+                }
+            }
 
             var _jyfw = "";
             var _jyfwjm = "";
-            var t = document.getElementsByClassName('checkbox');
+            var t = document.getElementsByClassName('xulieid');
             $("#qxdatatable tr input[type=checkbox]").each(function () {
                 if (this.checked) {
                     _jyfw = _jyfw + $(this).parent().parent().parent().siblings().find(".bh").html() + "," + $(this).parent().parent().parent().siblings().find(".mc").html() + ";";
-                    _jyfwjm = _jyfwjm + $(this).parent().parent().parent().siblings().find(".bh").html() + ";";
+                    _jyfwjm = _jyfwjm + $(this).parent().find(".xulieid").val() + ";";
                 }
             });
+            for (k = 0; k < xiaolei.length; k++) {
+                _jyfwjm = _jyfwjm + xiaolei[k] + ";";
+            }
+            _jyfwjm = _jyfwjm.substring(0, _jyfwjm.length - 1);
+            for (k = 0; k < miaoshu.length; k++) {
+                _jyfw = _jyfw + miaoshu[k] + ";";
+            }
+            _jyfw = _jyfw.substring(0, _jyfw.length - 1);
             var _addok = confirm("确定要修改经营范围吗？");
             if (_addok) {
-
                 if (_jyfw.length >= 512) {
                     alert("所选数据超过范围，请重新选择。")
                 }
-                else{
-                $("#jingyingfanwei").val(_jyfw);
-                $("#jingyingfanweijianma").val(_jyfwjm);
-                $("#pl_Fanwei").hide();
+                else {
+                    $("#jingyingfanwei").val(_jyfw);
+                    $("#jingyingfanweijianma").val(_jyfwjm);
+                    $("#pl_Fanwei").hide();
                 }
-            }          
+            }
+            GetFanwei1();
         });
     });
 
+    //经营范围
+    function Bt_Fanweiadd() {
+        GetData();
+        $("#pl_Fanwei").show();
+    }
     function bt_fanwei_all() {
-        $(".checkbox").prop("checked", true);
+        $(".xulieid").prop("checked", true);
     }
 
     function bt_fanwei_clear() {
-        $(".checkbox").prop("checked", false);
+        $(".xulieid").prop("checked", false);
     }
 
-    function bt1() {
-        $("#btnSelect").val("picsel1");
-    }
-    function bt2() {
-        $("#btnSelect").val("picsel2");
-    }
-    function GetSpell() {
-        $.post("/Service/GetSpellCode",
-            {
-                yourwords: $("#shengcheng").val()
-            },
-        function (response) {
-            $("#daima").val(response);
-        });
-    }
-
+    
 
     function GetFanwei1() {
         //var _qxmlid = $("#qxml").val();
         var filltable = "";
-
         $.post(
                 "/base_qixiemulu/GetQixiemulu1",
                 {
@@ -226,7 +240,7 @@
                 },
                 function (data) {
                     for (var i in data) {
-                        filltable = filltable + '<tr class="bg"><td><div class="checkbox"><label><input type="checkbox" class ="checkbox" value="';
+                        filltable = filltable + '<tr class="bg"><td><div class="checkbox"><label><input type="checkbox" class ="xulieid" value="';
                         filltable = filltable + data[i].ID;
                         filltable = filltable + '"></label></div></td><td style="width:80px"><span class="bh">';
                         filltable = filltable + data[i].Bianhao;
@@ -246,7 +260,6 @@
     function GetFanwei() {
         //var _qxmlid = $("#qxml").val();
         var filltable = "";
-
         $.post(
                 "/base_qixiemulu/GetQixiemulu",
                 {
@@ -254,7 +267,7 @@
                 },
                 function (data) {
                     for (var i in data) {
-                        filltable = filltable + '<tr class="bg"><td><div class="checkbox"><label><input type="checkbox" class ="checkbox" value="';
+                        filltable = filltable + '<tr class="bg"><td><div class="checkbox"><label><input type="checkbox" class ="xulieid" value="';
                         filltable = filltable + data[i].ID;
                         filltable = filltable + '"></label></div></td><td style="width:80px"><span class="bh">';
                         filltable = filltable + data[i].Bianhao;
@@ -271,8 +284,7 @@
     }
 
     function GetData() {
-
-        var fw = document.getElementsByClassName('bh');
+        var fw = document.getElementsByClassName('xulieid');
         var i = $("#jingyingfanweijianma").val();
         var t = i.split(";");
 
@@ -280,15 +292,57 @@
         //$("input:checkbox").eq(2).attr("checked", true);
         //alert($(".bh").eq(0).text());
         //document.getElementById('checkbox').checked = true
-        //$('.checkbox1').attr("checked",true);      
+        //$('.checkbox1').attr("checked",true);
 
         for (var k = 0; k < t.length; k++) {
             for (var l = 0; l < fw.length; l++) {
-                if (t[k] == $(".bh").eq(l).text())
-                    $("input:checkbox").eq(l).attr("checked", true);
+                if (t[k] == $(".xulieid").eq(l).val())
+                    $("#qxdatatable tr input[type=checkbox]").eq(l).attr("checked", true);
             }
         }
     }
+
+    function FenLei() {
+        var fw = document.getElementsByClassName('xulieid');
+        var i = $("#jingyingfanweijianma").val();
+        var ti = i.split(";");
+        ti.splice(ti.length - 1);
+        var j = $("#jingyingfanwei").val();
+        var tj = j.split(";");
+        tj.splice(ti.length - 1);
+        var xiaolei = new Array();
+        var miaoshu = new Array();
+        var hh = "";
+        var x = 0;
+        for (var k = 0; k < ti.length; k++, x = 0) {
+            for (var l = 0; l < fw.length; l++) {
+                if (ti[k] == $(".xulieid").eq(l).val()) {
+                    x = 1;
+                }
+            }
+            if (x != 1) {
+                xiaolei.push(ti[k]);
+                miaoshu.push(tj[k]);
+            }
+        }
+    }
+
+    function bt1() {
+        $("#btnSelect").val("picsel1");
+    }
+    function bt2() {
+        $("#btnSelect").val("picsel2");
+    }
+    function GetSpell() {
+        $.post("/Service/GetSpellCode",
+            {
+                yourwords: $("#shengcheng").val()
+            },
+        function (response) {
+            $("#daima").val(response);
+        });
+    }
+    
 
 </script>
 <div class="modal fade" id="myModalUpload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -338,6 +392,7 @@
 
 <div class="page-content">
     <form role="form" action="/base_gongyingshang/Update" method="post">
+
         <input type="hidden" name="ob_base_gongyingshang_id" value="@item.ID" />
         <input type="hidden" id="btnSelect" value="" />
         <div class="page-header">
@@ -351,7 +406,7 @@
                 <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>代码</label>
 
                 <div class="col-sm-10">
-                    <input type="text" class="form-control"  data-val="true" data-val-required="Daima 字段是必需的。" id="daima" name="ob_base_gongyingshang_daima" value="@item.Daima">
+                    <input type="text" class="form-control" data-val="true" data-val-required="Daima 字段是必需的。" id="daima" name="ob_base_gongyingshang_daima" value="@item.Daima">
                     @*@Html.TextBoxFor(m => m.Daima, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.Daima)*@
                 </div>
@@ -376,7 +431,7 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2">营业执照有效期</label>
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" name="ob_base_gongyingshang_yingyezhizhaoyxq" value="@string.Format("{0:yyyy-MM-dd}",item.YingyezhizhaoYXQ)" id="ob_base_gongyingshang_yingyezhizhaoyxq">
+                    <input type="date" class="form-control" name="ob_base_gongyingshang_yingyezhizhaoyxq" value="@string.Format("{0:yyyy-MM-dd}", item.YingyezhizhaoYXQ)" id="ob_base_gongyingshang_yingyezhizhaoyxq">
                 </div>
             </div>
             <div class="form-group">
@@ -402,7 +457,7 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2">经营许可有效期</label>
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" name="ob_base_gongyingshang_jingyingxukeyxq" value="@string.Format("{0:yyyy-MM-dd}",item.JingyingxukeYXQ)" id="ob_base_gongyingshang_jingyingxukeyxq">
+                    <input type="date" class="form-control" name="ob_base_gongyingshang_jingyingxukeyxq" value="@string.Format("{0:yyyy-MM-dd}", item.JingyingxukeYXQ)" id="ob_base_gongyingshang_jingyingxukeyxq">
                 </div>
             </div>
             <div class="form-group">
@@ -421,14 +476,14 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-2 ">
-                <label for="name" >经营范围</label><br />
-                    <button type="button" class="icon-edit" id="bt_Fanweiadd">修改</button>
+                    <label for="name">经营范围</label><br />
+                    <button type="button" class="icon-edit" id="bt_Fanweiadd" onclick="Bt_Fanweiadd()">修改</button>
                 </div>
                 <div class="col-sm-10">
                     <textarea type="text" class="form-control" readonly id="jingyingfanwei" name="ob_base_gongyingshang_jingyingfanwei">@item.Jingyingfanwei</textarea>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="display:none">
                 <label for="name" class="col-sm-2">经营范围简码</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" readonly id="jingyingfanweijianma" name="ob_base_gongyingshang_jingyingfanweidm" value="@item.JingyingfanweiDM">
@@ -441,10 +496,78 @@
                         @Html.SelectList_Common("ob_base_gongyingshang_shouying", "首营状态", (int)item.Shouying)
                     </div>
                 </div>*@
+
+            @*增加*@
+            <div class="form-group">
+                <label for="name" class="col-sm-2">备案编号</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="ob_base_gongyingshang_beianbh" value="@item.BeianBH">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-2">备案有效期</label>
+                <div class="col-sm-10">
+                    <input type="date" class="form-control" name="ob_base_gongyingshang_beianyxq" id="ob_base_gongyingshang_beianyxq" value="@string.Format("{0:yyyy-MM-dd}", item.BeianYXQ)">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-2">备案批准日期</label>
+                <div class="col-sm-10">
+                    <input type="date" class="form-control" name="ob_base_gongyingshang_beianpzrq" id="ob_base_gongyingshang_beianpzrq" value="@string.Format("{0:yyyy-MM-dd}", item.BeianPZRQ)">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-2">备案发证机关</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="ob_base_gongyingshang_beianfzjg" value="@item.BeianFZJG">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-2">备案文件</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" readonly name="ob_base_gongyingshang_beiantp" id="ob_base_gongyingshang_beiantp" value="@item.BeianTP">
+                </div>
+                <div class="col-sm-2">
+                    <button class="form-control" data-toggle="modal" data-target="#myModalUpload" onclick="btn3()">上传</button>
+                </div>
+                <div class="col-sm-2">
+                    <span class="form-control" id="BATP">
+                        <a href="/files/zhengzhao/@item.BeianTP" target="_blank">浏览</a>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-2">许可批准日期</label>
+                <div class="col-sm-10">
+                    <input type="date" class="form-control" name="ob_base_gongyingshang_xukepzrq" id="ob_base_gongyingshang_xukepzrq" value="@string.Format("{0:yyyy-MM-dd}", item.XukePZRQ)">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-2">许可发证机关</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="ob_base_gongyingshang_xukefzjg" value="@item.XukeFZJG">
+                </div>
+            </div>
+            <div class="form-group">
+                @*<label for="name" class="col-sm-2">是否合作</label>*@
+                @Html.LabelFor(m => m.HezuoSF, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @*<input type="CheckBox" class="hezuo form-control" name="ob_base_gongyingshang_hezuosf" >*@
+                    @Html.CheckBoxFor(m => m.HezuoSF, new { @class = "hezuo form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @*<label for="name" class="col-sm-2">是否审查</label>*@
+                @Html.LabelFor(m => m.ShenchaSF, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @*<input type="CheckBox" class="shencha form-control" name="ob_base_gongyingshang_shenchasf">*@
+                    @Html.CheckBoxFor(m => m.ShenchaSF, new { @class = "shencha form-control" })
+                </div>
+            </div>
             <div class="form-group">
                 <label for="name" class="col-sm-2">录入日期</label>
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" name="ob_base_gongyingshang_makedate" value="@string.Format("{0:yyyy-MM-dd}",item.MakeDate)" id="ob_base_gongyingshang_makedate">
+                    <input type="date" class="form-control" name="ob_base_gongyingshang_makedate" value="@string.Format("{0:yyyy-MM-dd}", item.MakeDate)" id="ob_base_gongyingshang_makedate">
                 </div>
             </div>
             <div class="form-group">
@@ -455,16 +578,17 @@
             </div>
         </div>
     </form>
+
 </div>
 
 
-<div id="pl_Fanwei" class="panel panel-primary " style="position:absolute;top:0px;left:300px;width:1100px;height:600px;z-index:999">
+<div id="pl_Fanwei" class="panel panel-primary " style="position:fixed;top:100px;left:200px;width:1100px;height:600px;z-index:999">
     <div class="panel-heading">
         <h3 class="panel-title">经营范围管理<button id="pl_close" class="pull-right">X</button></h3>
     </div>
     <div class="panel-body" @*style="width:1080px;height:550px;z-index:999;overflow:scroll"*@>
         <div class="center">
-            <button type="button" class="btn btn-default " id="bt_fanwei_add" ><i class="icon-add"></i>确定</button>
+            <button type="button" class="btn btn-default " id="bt_fanwei_add"><i class="icon-add"></i>确定</button>
             <button type="button" class="btn btn-default " id="bt_fanwei_all" onclick="bt_fanwei_all()">全选</button>
             <button type="button" class="btn btn-default " id="bt_fanwei_clear" onclick="bt_fanwei_clear()">全部取消</button>
             <button type="button" class="btn btn-default " id="bt_fanwei_showdalei">显示大类</button>
@@ -486,3 +610,5 @@
     </div>
 </div>
 
+<td><span class="sc" style="display:none">@item.ShenchaSF</span></td>
+<td><span class="hz" style="display:none">@item.HezuoSF</span></td>
