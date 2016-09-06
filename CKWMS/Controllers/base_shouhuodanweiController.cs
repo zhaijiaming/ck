@@ -238,8 +238,8 @@ namespace CKWMS.Controllers
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
             //新增
-            string jingyinfanwei = Request["jingyinfanwei"] ?? "";
-            string jingyinfanweidm = Request["jingyinfanweidm"] ?? "";
+            string jingyingfanwei = Request["jingyingfanwei"] ?? "";
+            string jingyingfanweidm = Request["jingyingfanweidm"] ?? "";
             string quyu = Request["quyu"] ?? "";
             string beianbh = Request["beianbh"] ?? "";
             string beianyxq = Request["beianyxq"] ?? "";
@@ -263,8 +263,8 @@ namespace CKWMS.Controllers
                 ob_base_shouhuodanwei.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 ob_base_shouhuodanwei.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
                 //新增
-                ob_base_shouhuodanwei.Jingyinfanwei = jingyinfanwei.Trim();
-                ob_base_shouhuodanwei.JingyinfanweiDM = jingyinfanweidm.Trim();
+                ob_base_shouhuodanwei.Jingyinfanwei = jingyingfanwei.Trim();
+                ob_base_shouhuodanwei.JingyinfanweiDM = jingyingfanweidm.Trim();
                 ob_base_shouhuodanwei.Quyu = quyu.Trim();
                 ob_base_shouhuodanwei.BeianBH = beianbh.Trim();
                 ob_base_shouhuodanwei.BeianYXQ = beianyxq == "" ? DateTime.Now : DateTime.Parse(beianyxq);
@@ -306,8 +306,8 @@ namespace CKWMS.Controllers
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
             //新增
-            string jingyinfanwei = Request["jingyinfanwei"] ?? "";
-            string jingyinfanweidm = Request["jingyinfanweidm"] ?? "";
+            string jingyingfanwei = Request["jingyingfanwei"] ?? "";
+            string jingyingfanweidm = Request["jingyingfanweidm"] ?? "";
             string quyu = Request["quyu"] ?? "";
             string beianbh = Request["beianbh"] ?? "";
             string beianyxq = Request["beianyxq"] ?? "";
@@ -332,8 +332,8 @@ namespace CKWMS.Controllers
                 p.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 p.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
                 //新增
-                p.Jingyinfanwei = jingyinfanwei.Trim();
-                p.JingyinfanweiDM = jingyinfanweidm.Trim();
+                p.Jingyinfanwei = jingyingfanwei.Trim();
+                p.JingyinfanweiDM = jingyingfanweidm.Trim();
                 p.Quyu = quyu.Trim();
                 p.BeianBH = beianbh.Trim();
                 p.BeianYXQ = beianyxq == "" ? DateTime.Now : DateTime.Parse(beianyxq);

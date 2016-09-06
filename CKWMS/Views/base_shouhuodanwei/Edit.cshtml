@@ -75,6 +75,15 @@
 @*收货明细*@
 <script type="text/javascript">
     $(document).ready(function () {
+        $(document).ready(function () {
+            //时间
+            $("#date_yingyezhizhaoyxq").datepicker();
+            $("#date_jingyingxukeyxq").datepicker();
+            $("#date_beianyxq").datepicker();
+            $("#date_beianpzrq").datepicker();
+            $("#date_xukepzrq").datepicker();
+            $("#date_makedate").datepicker();
+        });
         //获取收货信息
         var shdw_id = $("#shdw_id").val();
         if (shdw_id.length > 0) {
@@ -129,8 +138,105 @@
             }
         });
 
-    });
+        //经营范围
+        $("#pl_Fanwei").hide();
+        ("#pl_Fanwei").draggable();
 
+        $("#bt_Fanweiadd").click(function () {
+            GetQixiemulu1();//获取医疗器械目录大类
+            $("#pl_Fanwei").show();
+            //记录已经选中的数据
+            //setTimeout(function () {
+            //    GetExistingData();
+            //}, 500);
+        });
+
+        $("#pl_close").click(function () {
+            $("#pl_Fanwei").hide();
+        });
+
+        //添加数据
+        $("#bt_fanwei_add").click(function () {
+            //记录数据
+            var fw = document.getElementsByClassName('xulieid');
+            var i = $("#jingyingfanweidm").val();
+            var ti = i.split(";");
+            var j = $("#jingyingfanwei").val();
+            var tj = j.split(";");
+            var xiaolei = new Array();
+            var miaoshu = new Array();
+            var x = 0;
+            for (var k = 0; k < ti.length; k++, x = 0) {
+                for (var l = 0; l < fw.length; l++) {
+                    if (ti[k] == $(".xulieid").eq(l).val()) {
+                        x = 1;
+                    }
+                }
+                if (x != 1) {
+                    xiaolei.push(ti[k]);
+                    miaoshu.push(tj[k]);
+                }
+            }
+
+            var _jyfw = "";
+            var _jyfwjm = "";
+            var t = document.getElementsByClassName('xulieid');
+            $("#qxdatatable tr input[type=checkbox]").each(function () {
+                if (this.checked) {
+                    _jyfw = _jyfw + $(this).parent().parent().parent().siblings().find(".bh").html() + "," + $(this).parent().parent().parent().siblings().find(".mc").html() + ";";
+                    _jyfwjm = _jyfwjm + $(this).parent().find(".xulieid").val() + ";";
+                }
+
+            });
+
+            for (k = 0; k < xiaolei.length; k++) {
+                _jyfwjm = _jyfwjm + xiaolei[k] + ";";
+            }
+            _jyfwjm = _jyfwjm.substring(0, _jyfwjm.length - 1);
+
+            for (k = 0; k < miaoshu.length; k++) {
+                _jyfw = _jyfw + miaoshu[k] + ";";
+            }
+            _jyfw = _jyfw.substring(0, _jyfw.length - 1);
+
+            var _addok = confirm("确定要修改经营范围吗？");
+            if (_addok) {
+
+                if (_jyfw.length >= 512) {
+                    alert("所选数据超过范围，请重新选择。")
+                }
+                else {
+                    $("#jingyingfanwei").val(_jyfw);
+                    $("#jingyingfanweidm").val(_jyfwjm);
+                    $("#pl_Fanwei").hide();
+
+                }
+            }
+        });
+
+        //全选
+        $("#bt_fanwei_all").click(function () {
+            $(".checkbox").prop("checked", true);
+        });
+
+        //取消全选
+        $("#bt_fanwei_clear").click(function () {
+            $(".checkbox").prop("checked", false);
+        });
+
+        //显示大类
+        $("#bt_fanwei_showdalei").click(function () {
+            GetQixiemulu1();
+        });
+
+        //显示全部
+        $("#bt_fanwei_showall").click(function () {
+            GetQixiemulu();
+        });
+
+
+    });
+    //收货明细
     function GetShouhuomingxiData(shdw_id) {
         var shmxdata = "";
         $.post(
@@ -169,6 +275,77 @@
                }
             );
     }
+    //经营范围
+    function GetQixiemulu() {
+        var filltable = "";
+
+        $.post(
+                "/base_qixiemulu/GetQixiemulu",
+                {},
+                function (data) {
+                    for (var i in data) {
+                        filltable = filltable + '<tr class="bg"><td><div class="checkbox"><label><input type="checkbox" class ="xulieid" value="';
+                        filltable = filltable + data[i].ID;
+                        filltable = filltable + '"></label></div></td><td style="width:80px"><span class="bh">';
+                        filltable = filltable + data[i].Bianhao;
+                        filltable = filltable + '</span></td><td style="width:150px"><span class="mc">';
+                        filltable = filltable + data[i].Mingcheng;
+                        filltable = filltable + '</span></td><td style="width:800px">';
+                        filltable = filltable + data[i].Miaoshu;
+                        filltable = filltable + '</td><td style="width:100px"><span class="glfl">';
+                        filltable = filltable + data[i].GuanliFL;
+                        filltable = filltable + '</span></td></tr>';
+                    }
+                    $("#pl_Fanwei tbody").html(filltable);
+                    GetExistingData();
+                });
+    };
+
+    function GetQixiemulu1() {
+        var filltable = "";
+
+        $.post(
+                "/base_qixiemulu/GetQixiemulu1",
+                {},
+                function (data) {
+                    for (var i in data) {
+                        filltable = filltable + '<tr class="bg"><td><div class="checkbox"><label><input type="checkbox" class ="xulieid" value="';
+                        filltable = filltable + data[i].ID;
+                        filltable = filltable + '"></label></div></td><td style="width:80px"><span class="bh">';
+                        filltable = filltable + data[i].Bianhao;
+                        filltable = filltable + '</span></td><td style="width:150px"><span class="mc">';
+                        filltable = filltable + data[i].Mingcheng;
+                        filltable = filltable + '</span></td><td style="width:800px">';
+                        filltable = filltable + data[i].Miaoshu;
+                        filltable = filltable + '</td><td style="width:100px"><span class="glfl">';
+                        filltable = filltable + data[i].GuanliFL;
+                        filltable = filltable + '</span></td></tr>';
+                    }
+                    $("#pl_Fanwei tbody").html(filltable);
+                    GetExistingData();
+                });
+    };
+
+    function GetExistingData() {
+        //var fw = $("input[type=checkbox]").val();
+
+        text = $("input:checkbox").map(function (index, elem) {
+            return $(elem).val();
+        }).get().join(',');
+        //alert("选中的checkbox的值为："+text);
+        var d = text.split(",");
+        //alert(d[0]);
+
+        var i = $("#jingyingfanweidm").val();
+        var t = i.split(";");
+
+        for (var k = 0; k < t.length; k++) {
+            for (var l = 0; l < d.length; l++) {
+                if (t[k] == d[l])
+                    $("input:checkbox").eq(l).attr("checked", true);
+            }
+        }
+    };
 </script>
 @*<div class="modal fade" id="myModalUpload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -257,7 +434,7 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2">营业执照有效期</label>
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" name="yingyezhizhaoyxq" value="@string.Format("{0:yyyy-MM-dd}",item.YingyezhizhaoYXQ)">
+                    <input type="date" id="date_yingyezhizhaoyxq" class="form-control" name="yingyezhizhaoyxq" value="@string.Format("{0:yyyy-MM-dd}",item.YingyezhizhaoYXQ)">
                 </div>
             </div>
             @*营业执照照片*@
@@ -286,7 +463,7 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2">经营许可有效期</label>
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" name="jingyingxukeyxq" value="@string.Format("{0:yyyy-MM-dd}",item.JingyingxukeYXQ)">
+                    <input type="date" id="date_jingyingxukeyxq" class="form-control" name="jingyingxukeyxq" value="@string.Format("{0:yyyy-MM-dd}",item.JingyingxukeYXQ)">
                 </div>
             </div>
             @*经营许可照片*@
@@ -307,16 +484,19 @@
             @*新增*@
             @*经营范围*@
             <div class="form-group">
-                <label for="name" class="col-sm-2">经营范围</label>
+                <div class="col-sm-2">
+                    <label for="name">经营范围</label><br />
+                    <button type="button" class="icon-edit" id="bt_Fanweiadd">修改</button>
+                </div>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="jingyinfanwei" value="@item.Jingyinfanwei">
+                    <textarea type="text" class="form-control" readonly id="jingyingfanwei" name="jingyingfanwei" >@item.Jingyinfanwei</textarea>
                 </div>
             </div>
             @*经营范围代码*@
             <div class="form-group">
                 <label for="name" class="col-sm-2">经营范围代码</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="jingyinfanweidm" value="@item.JingyinfanweiDM">
+                    <input type="text" class="form-control" name="jingyingfanweidm" value="@item.JingyinfanweiDM">
                 </div>
             </div>
             @*区域*@
@@ -337,14 +517,14 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2">备案有效期</label>
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" value="@string.Format("{0:yyyy-MM-dd}",item.BeianYXQ)" name="beianyxq">
+                    <input type="date" id="date_beianyxq" class="form-control" value="@string.Format("{0:yyyy-MM-dd}",item.BeianYXQ)" name="beianyxq">
                 </div>
             </div>
             @*备案批准日期*@
             <div class="form-group">
                 <label for="name" class="col-sm-2">备案批准日期</label>
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" value="@string.Format("{0:yyyy-MM-dd}",item.BeianPZRQ)" name="beianpzrq">
+                    <input type="date" id="date_beianpzrq" class="form-control" value="@string.Format("{0:yyyy-MM-dd}",item.BeianPZRQ)" name="beianpzrq">
                 </div>
             </div>
             @*备案发证机关*@
@@ -373,7 +553,7 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2">许可批准日期</label>
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" value="@string.Format("{0:yyyy-MM-dd}",item.XukePZRQ)" name="xukepzrq">
+                    <input type="date" id="date_xukepzrq" class="form-control" value="@string.Format("{0:yyyy-MM-dd}",item.XukePZRQ)" name="xukepzrq">
                 </div>
             </div>
             @*许可发证机关*@
@@ -392,7 +572,7 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2">录入日期</label>
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" name="makedate" value="@string.Format("{0:yyyy-MM-dd}",item.MakeDate)">
+                    <input type="date" id="date_makedate" class="form-control" name="makedate" value="@string.Format("{0:yyyy-MM-dd}",item.MakeDate)">
                 </div>
             </div>
             @*输入人*@
@@ -427,4 +607,30 @@
         </table>
     </div>
 </div>
-
+<div id="pl_Fanwei" class="panel panel-primary " style="display:none;position:absolute;top:0px;left:300px;width:1100px;height:600px;z-index:999;">
+    <div class="panel-heading">
+        <h3 class="panel-title">经营范围管理<button id="pl_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body" @*style="width:1090px;height:550px;z-index:999;overflow:scroll"*@>
+        <div class="center">
+            <button type="button" class="btn btn-default " id="bt_fanwei_add"><i class="icon-add"></i>确定</button>
+            <button type="button" class="btn btn-default " id="bt_fanwei_all">全选</button>
+            <button type="button" class="btn btn-default " id="bt_fanwei_clear">全部取消</button>
+            <button type="button" class="btn btn-default " id="bt_fanwei_showdalei">显示大类</button>
+            <button type="button" class="btn btn-default " id="bt_fanwei_showall">显示全部</button>
+            <table class="table" id="qxdatatable">
+                <caption></caption>
+                <thead style="display:block">
+                    <tr>
+                        <td></td>
+                        <td style="width:120px">编号</td>
+                        <td style="width:80px">名称</td>
+                        <td style="width:930px">描述</td>
+                        <td style="width:100px">管理分类</td>
+                    </tr>
+                </thead>
+                <tbody style="display:block; max-height:460px;width:1070px;overflow:scroll"></tbody>
+            </table>
+        </div>
+    </div>
+</div>

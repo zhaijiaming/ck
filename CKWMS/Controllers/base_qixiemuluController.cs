@@ -169,7 +169,7 @@ namespace CKWMS.Controllers
         }
         public JsonResult GetQixiemulu1()
         {
-            var _qxtemp = ob_base_qixiemuluservice.LoadSortEntities(p =>p.GuanliFL==0 && p.IsDelete == false, true, s => s.Bianhao);
+            var _qxtemp = ob_base_qixiemuluservice.LoadSortEntities(p =>p.Bianhao.Length < 5  && p.IsDelete == false, true, s => s.Bianhao);
             List<QiXieMuLu> _qxlist = new List<QiXieMuLu>();
             QiXieMuLu _qx;
             foreach (var qx in _qxtemp)
