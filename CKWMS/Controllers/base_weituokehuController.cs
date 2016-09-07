@@ -294,10 +294,30 @@ namespace CKWMS.Controllers
             string makeman = Request["makeman"] ?? "";
             string shenchasf = Request["shenchasf"] ?? "";
             string hezuosf = Request["hezuosf"] ?? "";
+            string beianbh = Request["beianbh"] ?? "";
+            string beianyxq = Request["beianyxq"] ?? "";
+            string beianpzrq = Request["beianpzrq"] ?? "";
+            string beianfzjg = Request["beianfzjg"] ?? "";
+            string beiantp = Request["beiantp"] ?? "";
+            string xukepzrq = Request["xukepzrq"] ?? "";
+            string xukefzjg = Request["xukefzjg"] ?? "";
+            string zhucedz = Request["zhucedz"] ?? "";
+            string jingyindz = Request["jingyindz"] ?? "";
+            string kufangdz = Request["kufangdz"] ?? "";
+            string weituonr = Request["weituonr"] ?? "";
+            string weituoksrq = Request["weituoksrq"] ?? "";
+            string weituojsrq = Request["weituojsrq"] ?? "";
+            string weituoqx = Request["weituoqx"] ?? "";
+            string tiezwbq = Request["tiezwbq"] ?? "";
+            string hetongtp = Request["hetongtp"] ?? "";
+            string faren = Request["faren"] ?? "";
+            string fuzeren = Request["fuzeren"] ?? "";
             if (shenchasf.IndexOf("true") > -1)
                 shenchasf = "true";
             if (hezuosf.IndexOf("true") > -1)
                 hezuosf = "true";
+            if (tiezwbq.IndexOf("true") > -1)
+                tiezwbq = "true";
             try
             {
                 base_weituokehu ob_base_weituokehu = new base_weituokehu();
@@ -333,7 +353,24 @@ namespace CKWMS.Controllers
                 ob_base_weituokehu.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
                 ob_base_weituokehu.ShenchaSF = shenchasf == "" ? false : Boolean.Parse(shenchasf);
                 ob_base_weituokehu.HezuoSF = hezuosf == "" ? false : Boolean.Parse(hezuosf);
-                ob_base_weituokehu = ob_base_weituokehuservice.AddEntity(ob_base_weituokehu);
+                ob_base_weituokehu.BeianBH = beianbh.Trim();
+                ob_base_weituokehu.BeianYXQ = beianyxq == "" ? DateTime.Now : DateTime.Parse(beianyxq);
+                ob_base_weituokehu.BeianPZRQ = beianpzrq == "" ? DateTime.Now : DateTime.Parse(beianpzrq);
+                ob_base_weituokehu.BeianFZJG = beianfzjg.Trim();
+                ob_base_weituokehu.BeianTP = beiantp.Trim();
+                ob_base_weituokehu.XukePZRQ = xukepzrq == "" ? DateTime.Now : DateTime.Parse(xukepzrq);
+                ob_base_weituokehu.XukeFZJG = xukefzjg.Trim();
+                ob_base_weituokehu.ZhuceDZ = zhucedz.Trim();
+                ob_base_weituokehu.JingyinDZ = jingyindz.Trim();
+                ob_base_weituokehu.KufangDZ = kufangdz.Trim();
+                ob_base_weituokehu.WeituoNR = weituonr.Trim();
+                ob_base_weituokehu.WeituoKSRQ = weituoksrq == "" ? DateTime.Now : DateTime.Parse(weituoksrq);
+                ob_base_weituokehu.WeituoJSRQ = weituojsrq == "" ? DateTime.Now : DateTime.Parse(weituojsrq);
+                ob_base_weituokehu.WeituoQX = weituoqx == "" ? 0 : int.Parse(weituoqx);
+                ob_base_weituokehu.TieZWBQ = tiezwbq == "" ? false : Boolean.Parse(tiezwbq);
+                ob_base_weituokehu.HetongTP = hetongtp.Trim();
+                ob_base_weituokehu.Faren = faren.Trim();
+                ob_base_weituokehu.Fuzeren = fuzeren.Trim(); ob_base_weituokehu = ob_base_weituokehuservice.AddEntity(ob_base_weituokehu);
                 ViewBag.base_weituokehu = ob_base_weituokehu;
             }
             catch (Exception ex)
@@ -386,6 +423,24 @@ namespace CKWMS.Controllers
                 base_weituokehuviewmodel.MakeMan = tempData.MakeMan;
                 base_weituokehuviewmodel.ShenchaSF = tempData.ShenchaSF;
                 base_weituokehuviewmodel.HezuoSF = tempData.HezuoSF;
+                base_weituokehuviewmodel.BeianBH = tempData.BeianBH;
+                base_weituokehuviewmodel.BeianYXQ = tempData.BeianYXQ;
+                base_weituokehuviewmodel.BeianPZRQ = tempData.BeianPZRQ;
+                base_weituokehuviewmodel.BeianFZJG = tempData.BeianFZJG;
+                base_weituokehuviewmodel.BeianTP = tempData.BeianTP;
+                base_weituokehuviewmodel.XukePZRQ = tempData.XukePZRQ;
+                base_weituokehuviewmodel.XukeFZJG = tempData.XukeFZJG;
+                base_weituokehuviewmodel.ZhuceDZ = tempData.ZhuceDZ;
+                base_weituokehuviewmodel.JingyinDZ = tempData.JingyinDZ;
+                base_weituokehuviewmodel.KufangDZ = tempData.KufangDZ;
+                base_weituokehuviewmodel.WeituoNR = tempData.WeituoNR;
+                base_weituokehuviewmodel.WeituoKSRQ = tempData.WeituoKSRQ;
+                base_weituokehuviewmodel.WeituoJSRQ = tempData.WeituoJSRQ;
+                base_weituokehuviewmodel.WeituoQX = tempData.WeituoQX;
+                base_weituokehuviewmodel.TieZWBQ = tempData.TieZWBQ;
+                base_weituokehuviewmodel.HetongTP = tempData.HetongTP;
+                base_weituokehuviewmodel.Faren = tempData.Faren;
+                base_weituokehuviewmodel.Fuzeren = tempData.Fuzeren;
                 return View(base_weituokehuviewmodel);
             }
         }
@@ -427,6 +482,26 @@ namespace CKWMS.Controllers
             string makeman = Request["makeman"] ?? "";
             string shenchasf = Request["shenchasf"] ?? "";
             string hezuosf = Request["hezuosf"] ?? "";
+            string beianbh = Request["beianbh"] ?? "";
+            string beianyxq = Request["beianyxq"] ?? "";
+            string beianpzrq = Request["beianpzrq"] ?? "";
+            string beianfzjg = Request["beianfzjg"] ?? "";
+            string beiantp = Request["beiantp"] ?? "";
+            string xukepzrq = Request["xukepzrq"] ?? "";
+            string xukefzjg = Request["xukefzjg"] ?? "";
+            string zhucedz = Request["zhucedz"] ?? "";
+            string jingyindz = Request["jingyindz"] ?? "";
+            string kufangdz = Request["kufangdz"] ?? "";
+            string weituonr = Request["weituonr"] ?? "";
+            string weituoksrq = Request["weituoksrq"] ?? "";
+            string weituojsrq = Request["weituojsrq"] ?? "";
+            string weituoqx = Request["weituoqx"] ?? "";
+            string tiezwbq = Request["tiezwbq"] ?? "";
+            string hetongtp = Request["hetongtp"] ?? "";
+            string faren = Request["faren"] ?? "";
+            string fuzeren = Request["fuzeren"] ?? "";
+            if (tiezwbq.IndexOf("true") > -1)
+                tiezwbq = "true";
             if (shenchasf.IndexOf("true") > -1)
                 shenchasf = "true";
             if (hezuosf.IndexOf("true") > -1)
@@ -467,6 +542,24 @@ namespace CKWMS.Controllers
                 p.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
                 p.ShenchaSF = shenchasf == "" ? false : Boolean.Parse(shenchasf);
                 p.HezuoSF = hezuosf == "" ? false : Boolean.Parse(hezuosf);
+                p.BeianBH = beianbh.Trim();
+                p.BeianYXQ = beianyxq == "" ? DateTime.Now : DateTime.Parse(beianyxq);
+                p.BeianPZRQ = beianpzrq == "" ? DateTime.Now : DateTime.Parse(beianpzrq);
+                p.BeianFZJG = beianfzjg.Trim();
+                p.BeianTP = beiantp.Trim();
+                p.XukePZRQ = xukepzrq == "" ? DateTime.Now : DateTime.Parse(xukepzrq);
+                p.XukeFZJG = xukefzjg.Trim();
+                p.ZhuceDZ = zhucedz.Trim();
+                p.JingyinDZ = jingyindz.Trim();
+                p.KufangDZ = kufangdz.Trim();
+                p.WeituoNR = weituonr.Trim();
+                p.WeituoKSRQ = weituoksrq == "" ? DateTime.Now : DateTime.Parse(weituoksrq);
+                p.WeituoJSRQ = weituojsrq == "" ? DateTime.Now : DateTime.Parse(weituojsrq);
+                p.WeituoQX = weituoqx == "" ? 0 : int.Parse(weituoqx);
+                p.TieZWBQ = tiezwbq == "" ? false : Boolean.Parse(tiezwbq);
+                p.HetongTP = hetongtp.Trim();
+                p.Faren = faren.Trim();
+                p.Fuzeren = fuzeren.Trim();
                 ob_base_weituokehuservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;
             }
