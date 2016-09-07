@@ -5,73 +5,7 @@
     ViewBag.Title = "收货单位修改";
     base_shouhuodanwei item = ViewBag.base_shouhuodanwei;
 }
-@Html.GetFileUpload("yingyezhizhaotp", "yyzz", "z", "cus", 2, 0, new Dictionary<string, string>() { { "yyzz", "yingyezhizhaotp" }, { "xktp", "jingyingxuketp" } })
-
-@*<script type="text/javascript">
-    function doUpload() {
-        var formData = new FormData($("#uploadForm")[0]);
-        var strBack = "";
-        var strWrite = "";
-        var strSel = $("#btnSelect").val();
-        $.ajax({
-            url: 'http://localhost:6446/upload/UploadOK',
-            type: 'POST',
-            data: formData,
-            async: false,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function (returndata) {
-                strBack = returndata;
-            },
-            error: function (returndata) {
-                strBack = "fail";
-            }
-        });
-        switch (strBack) {
-            case "0":
-                strWrite = "无传送值，上传失败！";
-                break;
-            case "1":
-                strWrite = "空文件，上传失败！";
-                break;
-            case "2":
-                strWrite = "错误，上传失败！";
-                break;
-            case "3":
-                strWrite = "文件尺寸超过4M，上传失败！";
-                break;
-            case "fail":
-                strWrite = "文件太大，上传失败！";
-                break;
-            default:
-                strWrite = "文件上传成功！";
-                break;
-        }
-        switch (strSel) {
-            case "picsel1":
-                $("#ob_base_shouhuodanwei_yingyezhizhaotp").val(strBack);
-                $("#zztp").html("<a href='/files/zhengzhao/" + strBack + "'  target='_blank'>浏览</a>");
-                break;
-            case "picsel2":
-                $("#ob_base_shouhuodanwei_jingyingxuketp").val(strBack);
-                $("#yxtp").html("<a href='/files/zhengzhao/" + strBack + "'  target='_blank'>浏览</a>");
-                break;
-            case "":
-            default:
-                $("#ob_base_shouhuodanwei_yingyezhizhaotp").val(strBack);
-                $("#zztp").html("<a href='/files/zhengzhao/" + strBack + "'  target='_blank'>浏览</a>");
-                break;
-        }
-        alert(strWrite);
-    }
-    function bt1() {
-        $("#btnSelect").val("picsel1");
-    }
-    function bt2() {
-        $("#btnSelect").val("picsel2");
-    }
-</script>*@
+@Html.GetFileUpload("yingyezhizhaotp", "yyzz", "z", "cus", 3, 0, new Dictionary<string, string>() { { "yyzz", "yingyezhizhaotp" }, { "xktp", "jingyingxuketp" }, { "batp", "beiantp" } })
 @*收货明细*@
 <script type="text/javascript">
     $(document).ready(function () {
@@ -91,23 +25,15 @@
         };
 
         $("#btn_shdwAdd").click(function () {
-            window.open("/base_shouhuomingxi/Add?getId=" + shdw_id,"_self").close();
+            window.open("/base_shouhuomingxi/Add?getId=" + shdw_id,"_self");
         });
 
         $("#btn_shdwEdit").click(function () {
             $("#shouhuomingxi_shdw tr input[type=checkbox]").each(function () {
                 if (this.checked) {
-                    window.open("/base_shouhuomingxi/Edit/" + $(this).val(),"_self").close();
+                    window.open("/base_shouhuomingxi/Edit/" + $(this).val(),"_self");
                 }
             });
-        });
-
-        //双击跳转
-        $("#shouhuomingxi_shdw tr").dblclick(function () {
-            var u_id = $(this).find("td").eq(0).find("input").val();
-            alert(u_id);
-                window.open("/base_shouhuomingxi/Edit/" + u_id, "_self").close();
-            
         });
 
         $("#btn_shdwDel").click(function () {
@@ -140,7 +66,7 @@
 
         //经营范围
         $("#pl_Fanwei").hide();
-        ("#pl_Fanwei").draggable();
+        $("#pl_Fanwei").draggable();
 
         $("#bt_Fanweiadd").click(function () {
             GetQixiemulu1();//获取医疗器械目录大类
@@ -337,8 +263,10 @@
         //alert(d[0]);
 
         var i = $("#jingyingfanweidm").val();
-        var t = i.split(";");
-
+        if (i != null) {
+            var t = i.split(";");
+        };
+        
         for (var k = 0; k < t.length; k++) {
             for (var l = 0; l < d.length; l++) {
                 if (t[k] == d[l])
@@ -347,34 +275,6 @@
         }
     };
 </script>
-@*<div class="modal fade" id="myModalUpload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                    &times;
-                </button>
-                <h3 class="modal-title center" id="myModalLabel">
-                    <i class="icon-file blue"></i><span class="large">
-                        文件上传
-                    </span>
-                </h3>
-            </div>
-            <div class="modal-body center">
-                <form id="uploadForm">
-                    <input type="hidden" name="uploadtype" id="uploadtype" value="z" />
-                    <input type="hidden" name="uploaditemName" id="uploaditemName" value="gys_@item.ID" />
-                    <div class="form-group">
-                        <input type="file" name="file" />
-                    </div>
-                    <div class="form-group">
-                        <input type="button" class="btn btn-default" value="确 定" onclick="doUpload()" />
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>*@
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
@@ -403,7 +303,7 @@
                 <span class="pull-right">
                     <button type="button" id="btn_shdwAdd" class="btn btn-default"><i class="icon-adn"></i>收货地址添加</button>
                     <button type="button" id="btn_shdwEdit" class="btn btn-default"><i class="icon-edit"></i>收货地址编辑</button>
-                    <button type="button" id="btn_shdwDel" onclick="EditInfo()" class="btn btn-default"><i class="icon-remove"></i>收货地址删除</button>
+                    <button type="button" id="btn_shdwDel" class="btn btn-default"><i class="icon-remove"></i>收货地址删除</button>
                     
                 </span>
             </p>
@@ -496,7 +396,7 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2">经营范围代码</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="jingyingfanweidm" value="@item.JingyinfanweiDM">
+                    <input type="text" readonly class="form-control" id="jingyingfanweidm" name="jingyingfanweidm" value="@item.JingyinfanweiDM">
                 </div>
             </div>
             @*区域*@
@@ -569,6 +469,7 @@
                     @Html.SelectList_Common("ob_base_shouhuodanwei_shouying", "首营状态", (int)item.Shouying)
                 </div>
             </div>*@
+            @*录入日期*@
             <div class="form-group">
                 <label for="name" class="col-sm-2">录入日期</label>
                 <div class="col-sm-10">
