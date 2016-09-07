@@ -290,6 +290,7 @@
     <Compile Include="Controllers\base_feiyongxmController.cs" />
     <Compile Include="Controllers\base_huobiController.cs" />
     <Compile Include="Controllers\base_quyuController.cs" />
+    <Compile Include="Controllers\cfda_zizhiController.cs" />
     <Compile Include="Models\auth_gongsiViewModel.cs" />
     <Compile Include="Models\base_bumenViewModel.cs" />
     <Compile Include="Models\base_feiyongxmViewModel.cs" />
@@ -731,6 +732,9 @@
     <Content Include="Views\wms_shouhuomx\Recieving.cshtml" />
     <Content Include="Views\quan_shouyingsq\RecIndex.cshtml" />
     <Content Include="Views\base_shouhuomingxi\ShdwIndex.cshtml" />
+    <Content Include="Views\cfda_zizhi\CustomerCheckList.cshtml" />
+    <Content Include="Views\cfda_zizhi\CargoCheckList.cshtml" />
+    <Content Include="Views\cfda_zizhi\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

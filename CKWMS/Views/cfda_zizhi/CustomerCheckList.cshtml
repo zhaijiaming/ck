@@ -1,0 +1,118 @@
+﻿@using CKWMS.App_Code
+@using CKWMS.Models
+@using X.PagedList
+@using X.PagedList.Mvc
+@{
+    ViewBag.Title = "委托方信息";
+    string _searchcondition = ViewBag.SearchCondition;
+}
+
+<h2>CustomerCheckList</h2>
+@{
+    List<SearchConditionModel> scms = new List<SearchConditionModel>();
+    if (_searchcondition == null || _searchcondition == "")
+    {
+        SearchConditionModel scm = new SearchConditionModel();
+        scm.ItemCode = "Mingcheng";
+        scm.ItemTitle = "企业名称";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+    }
+    else
+    {
+        string[] scs = _searchcondition.Split(';');
+        if (scs.Length > 0)
+        {
+            SearchConditionModel scm = new SearchConditionModel();
+            scm.ItemCode = "Mingcheng";
+            scm.ItemTitle = "企业名称";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[0].Split(',')[1];
+                scm.ItemOpValue = scs[0].Split(',')[2];
+                scm.ItemJion = scs[0].Split(',')[3];
+            }
+            scms.Add(scm);
+        }
+    }
+}
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    </script>
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="/Home">首页</a>
+        </li>
+        <li class="active">委托方信息</li>
+    </ul>
+</div>
+<div class="page-content">
+    @Html.Search_Condition((int)Session["user_id"], "委托方_条件组合查询", "/cfda_zizhi/customerchecklist", "cfda_zizhi_customer", scms)
+    <div class="page-header">
+        <p>
+            <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
+            <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
+        </p>
+    </div>
+    <div class="row">
+        <table class="table" id="mydatatable">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <td>序号</td>
+                    <td>委托方企业名称</td>
+                    <td>营业执照编号</td>
+                    <td>住所</td>
+                    <td>法定代表人</td>
+                    <td>企业负责人</td>
+                    <td>经营场所</td>
+                    <td>库房地址</td>
+                    <td>经营范围</td>
+                    <td>经营许可证号/备案凭证号</td>
+                    <td>许可证(备案凭证)效期</td>
+                    <td>发证机关</td>
+                    <td>开始委托时间</td>
+                    <td>停止委托时间</td>
+                    <td>委托期限</td>
+                    <td>是否委托加贴中文标签</td>
+                    <td>委托业务范围</td>
+                </tr>
+            </thead>
+            @{ 
+                int i = 0;
+            <tbody style="overflow:auto;">
+                @foreach (var item in ViewBag.base_weituokehu)
+                {
+                    <tr>
+                        <td>
+                        </td>
+                        <td>@item.Kehumingcheng</td>
+                        <td>@item.YingyezhizhaoBH</td>
+                        <td>@item.ZhuceDZ</td>
+                        <td>@item.Faren</td>
+                        <td>@item.Fuzeren</td>
+                        <td>@item.JingyinDZ</td>
+                        <td>@item.KufangDZ</td>
+                        <td>@item.Jingyingfanwei</td>
+                        <td>@item.JingyingxukeBH/@item.BeianBH</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.JingyingxukeYXQ == null ? "" : item.JingyingxukeYXQ)/@string.Format("{0:yyyy-MM-dd}", item.BeianYXQ == null ? "" : item.BeianYXQ)</td>
+                        <td>@item.XukeFZJG/@item.BeianFZJG</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.WeituoKSRQ == null ? "" : item.WeituoKSRQ)</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.WeituoJSRQ == null ? "" : item.WeituoJSRQ)</td>
+                        <td>@item.WeituoQX</td>
+                        <td>@item.TieZWBQ</td>
+                        <td>@item.WeituoNR</td>
+                    </tr>
+                }
+            </tbody>
+            }
+                </table>
+    </div>
+    <div class="pager">
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+    </div>
+</div>
+

@@ -18,7 +18,7 @@
             var _mlfind = false;
             $("#qxdatatable tr input[type=checkbox]").each(function () {
                 if (this.checked) {
-                    _mulu = $(this).parent().parent().parent().siblings().find(".bh").html() + "," + $(this).parent().parent().parent().siblings().find(".mc").html();
+                    _mulu = $(this).parent().parent().parent().siblings().find(".bh").html() + " " + $(this).parent().parent().parent().siblings().find(".mc").html();
                     _muluxh = $(this).val();
                     _mlfind = true;
                 }
@@ -30,6 +30,11 @@
             $("#pl_Fanwei").hide();
         });
         $("#plfw_close").click(function () {
+            $("#pl_Fanwei").hide();
+        });
+        $("#qxdatatable").on("dblclick", "tr", function () {
+            $("#Mulu").val($(this).find(".bh").html()+" "+$(this).find(".mc").html());
+            $("#muluxuhao").val($(this).find("input[type=checkbox]").val());
             $("#pl_Fanwei").hide();
         });
         $("#makedate").datepicker();//时间
@@ -134,7 +139,7 @@
                     $("#Mingcheng").val(data.Mingcheng);
                     $("#Chandi").val(data.Chandi);
                     $("#Qiyemingcheng").val(data.Shengchanqiye);
-                    $("#qiyeid").val(data.QiyemingchengID);
+                    $("#qiyeid").val(data.ShengchanqiyeID);
                     $("#zhucezhengbh").val(data.Bianhao)
                     for (var i in data.Guige) {
                         filltable = filltable + '<option value="';
