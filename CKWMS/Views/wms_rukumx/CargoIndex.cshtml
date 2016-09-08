@@ -14,6 +14,14 @@
                 location.href = url_go;
             }
         });
+        $("#mydatatable tbody tr").each(function () {
+            var _orn = $(this).find('td').eq(10).html();
+            var _oys = $(this).find('td').eq(11).html();
+            if (eval(_orn) == eval(_oys))
+                $(this).addClass("green");;
+            if (eval(_orn) > eval(_oys) && eval(_oys) > 0)
+                $(this).addClass("red");;
+        });
     });
     function AddInfo() {
         location.href = "/wms_rukumx/Add/?rkid=" + $("#rkid").val();
@@ -63,7 +71,7 @@
     </div>
     <div class="row">
         <input type="hidden" id="rkid" value="@ViewBag.rkid" />
-        <table class="table" id="mydatatable">
+        <table class="table table-condensed table-hover" id="mydatatable">
             <caption></caption>
             <thead>
                 <tr>
