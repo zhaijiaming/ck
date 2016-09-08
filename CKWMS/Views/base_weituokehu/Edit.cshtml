@@ -163,7 +163,7 @@
                         _jyfwjm = _jyfwjm + $(this).parent().find(".xulieid").val() + ";";
                     }
                 });
-                _jyfw = "三类:" + _jyfw3 + "二类:" + _jyfw2 + "一类:" + _jyfw1;
+                _jyfw = "三类:" + _jyfw3 + "\n" + "二类:" + _jyfw2 + "\n" + "一类:" + _jyfw1;
                 if (_jyfw3 == "")
                     _jyfw = _jyfw.replace("三类:", "");
                 if (_jyfw2 == "")
@@ -756,8 +756,8 @@
     <div class="panel-body" @*style="width:1080px;height:550px;z-index:999;overflow:scroll"*@>
         <div class="center">
             <button type="button" class="btn btn-default " id="bt_fanwei_add"><i class="icon-add"></i>确定</button>
-            <button type="button" class="btn btn-default " id="bt_fanwei_all" onclick="bt_fanwei_all()">全选</button>
-            <button type="button" class="btn btn-default " id="bt_fanwei_clear" onclick="bt_fanwei_clear()">全部取消</button>
+            <button type="button" class="btn btn-default " id="bt_fanwei_all">全选</button>
+            <button type="button" class="btn btn-default " id="bt_fanwei_clear">全部取消</button>
             <button type="button" class="btn btn-default " id="bt_fanwei_showdalei">显示大类</button>
             <button type="button" class="btn btn-default " id="bt_fanwei_showall">显示全部</button>
             <table class="table" id="qxdatatable">
