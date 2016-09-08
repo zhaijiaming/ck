@@ -210,10 +210,10 @@ namespace CKWMS
             ShouYingType = new Dictionary<int, string>();
             ShouYingType.Add(0, "");
             ShouYingType.Add(1, "商品");
-            ShouYingType.Add(2, "客户");
+            ShouYingType.Add(2, "委托方");
             ShouYingType.Add(3, "供应商");
-            ShouYingType.Add(4, "收货方");
-            ShouYingType.Add(5, "工厂");
+            ShouYingType.Add(4, "收货单位");
+            ShouYingType.Add(5, "生产企业");
             ShouYingType.Add(6, "销售");
             ShouYingType.Add(7, "发货方");
             ShouYingType.Add(8, "运输单位");
