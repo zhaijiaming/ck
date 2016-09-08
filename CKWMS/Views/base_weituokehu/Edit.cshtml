@@ -4,13 +4,13 @@
 @{
     ViewBag.Title = "委托客户修改";
 }
-@Html.GetFileUpload("YingyezhizhaoTP", "yyzz", "z", "cus", 5, 0, new Dictionary<string, string>() { { "yyzz", "YingyezhizhaoTP" }, { "zzjg", "ZuzhijigouTP" }, { "swdj", "ShuiwudengjiTP" }, { "jyxk", "JingyingxukeTP" }, { "batp", "beiantp" } })
+@Html.GetFileUpload("YingyezhizhaoTP", "yyzz", "z", "cus", 6, 0, new Dictionary<string, string>() { { "yyzz", "YingyezhizhaoTP" }, { "zzjg", "ZuzhijigouTP" }, { "swdj", "ShuiwudengjiTP" }, { "jyxk", "JingyingxukeTP" }, { "batp", "beiantp" }, { "hetp", "hetongtp" } })
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
 
         $(document).ready(function () {
-
+            //时间
             $("#MakeDate").datepicker();
             $("#YingyezhizhaoYXQ").datepicker();
             $("#ZuzhijigouYXQ").datepicker();
@@ -21,6 +21,43 @@
             $("#XukePZRQ").datepicker();
             $("#WeituoKSRQ").datepicker();
             $("#WeituoJSRQ").datepicker();
+
+            //计算俩日期的月份
+            var a = $("#WeituoKSRQ").val();
+            var b = $("#WeituoJSRQ").val();
+            calculateMon(a, b);
+
+            $("#WeituoKSRQ").change(function () {
+                var a = $("#WeituoKSRQ").val();
+                var b = $("#WeituoJSRQ").val();
+                calculateMon(a, b);
+            });
+
+            $("#WeituoJSRQ").change(function () {
+                var a = $("#WeituoKSRQ").val();
+                var b = $("#WeituoJSRQ").val();
+                calculateMon(a, b);
+            });
+
+
+            ////'true'->'是','false'->'否'
+            //var a = $("#En_tiezwbq").val();
+            //if (a == "false") {
+            //    $("#Zn_tiezwbq").val("否");
+            //} else {
+            //    $("#Zn_tiezwbq").val("是");
+            //}
+
+            //$("#Zn_tiezwbq").change(function () {
+            //    var b = $("#Zn_tiezwbq").val();
+            //    if (b == "否") {
+            //        $("#En_tiezwbq").val("false");
+            //    } else {
+            //        $("#En_tiezwbq").val("true");
+            //    }
+            //});
+
+
 
             $("#pl_Fanwei").hide();
             $("#pl_Fanwei").draggable();
@@ -219,6 +256,33 @@
             $("#pl_Fanwei").show();
         }
 
+        //获取相对应的汉语拼音首字母串
+        function GetSpell() {
+            $.post("/Service/GetSpellCode",
+                {
+                    yourwords: $("#Kehumingcheng").val()
+                },
+            function (response) {
+                $("#Daima").val(response);
+            });
+        }
+
+        //计算日期月份差
+        function calculateMon(time1, time2) {
+            var a = time1.split("-");
+            var b = time2.split("-");
+
+            var ksMon = parseInt(a[0] * 12) + parseInt(a[1]);
+            var jsMon = parseInt(b[0] * 12) + parseInt(b[1]);
+            var sunMon = jsMon - ksMon;
+            if (sunMon < 0) {
+                alert("您选择的委托开始日期小于委托结束日期,请重新选择！");
+            } else {
+                $("#WeituoQX").val(sunMon);
+            }
+        }
+
+
     </script>
     <ul class="breadcrumb">
         <li>
@@ -293,14 +357,11 @@
                                             </div>
                                             <div class="form-group">
                                                 @Html.LabelFor(m => m.Kehumingcheng, new { @class = "control-label col-sm-2" })
-                                                <div class="col-sm-10">
+                                                <div class="col-sm-8">
                                                     @Html.TextBoxFor(m => m.Kehumingcheng, new { @class = "form-control" })
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                @Html.LabelFor(m => m.Hetongbianhao, new { @class = "control-label col-sm-2" })
-                                                <div class="col-sm-10">
-                                                    @Html.TextBoxFor(m => m.Hetongbianhao, new { @class = "form-control" })
+                                                <div class="col-sm-2">
+                                                    <button type="button" class="form-control" onclick="GetSpell()">生成代码</button>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -586,6 +647,28 @@
                                 <div id="info3" class="tab-pane">
                                     <div class="slimScrollDiv">
                                         <div class="slim-scroll">
+                                            @*合同编号*@
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.Hetongbianhao, new { @class = "control-label col-sm-2" })
+                                                <div class="col-sm-10">
+                                                    @Html.TextBoxFor(m => m.Hetongbianhao, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            @*合同文件*@
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.HetongTP, new { @class = "control-label col-sm-2" })
+                                                <div class="col-sm-6">
+                                                    <input type="text" readonly class="form-control" name="hetongtp" id="hetongtp" value="@ViewData.Model.HetongTP">
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <button class="form-control" data-toggle="modal" data-target="#myModalUpload" onclick="btn6()">上传</button>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <span class="form-control" id="hetp">
+                                                        <a href="/files/zhengzhao/@ViewData.Model.HetongTP" target="_blank">浏览</a>
+                                                    </span>
+                                                </div>
+                                            </div>
                                             <div class="form-group">
                                                 @Html.LabelFor(m => m.WeituoNR, new { @class = "control-label col-sm-2" })
                                                 <div class="col-sm-10">
@@ -606,20 +689,19 @@
                                             </div>
                                             <div class="form-group">
                                                 @Html.LabelFor(m => m.WeituoQX, new { @class = "control-label col-sm-2" })
-                                                <div class="col-sm-10">
-                                                    @Html.TextBoxFor(m => m.WeituoQX, new { @class = "form-control" })
+                                                <div class="col-sm-8">
+                                                    @*@Html.TextBoxFor(m => m.WeituoQX, new { @class = "form-control" })*@
+                                                    <input type="text" readonly class="form-control" name="weituoqx" id="WeituoQX" value="@ViewData.Model.WeituoQX">
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <input type="text" class="form-control" style="text-align:center" value="月">
                                                 </div>
                                             </div>
+                                            @*贴中文标签*@
                                             <div class="form-group">
                                                 @Html.LabelFor(m => m.TieZWBQ, new { @class = "control-label col-sm-2" })
                                                 <div class="col-sm-10">
-                                                    @Html.TextBoxFor(m => m.TieZWBQ, new { @class = "form-control" })
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                @Html.LabelFor(m => m.HetongTP, new { @class = "control-label col-sm-2" })
-                                                <div class="col-sm-10">
-                                                    @Html.TextBoxFor(m => m.HetongTP, new { @class = "form-control" })
+                                                    @Html.CheckBoxFor(m => m.TieZWBQ, new { @class = "form-control" })
                                                 </div>
                                             </div>
                                         </div>

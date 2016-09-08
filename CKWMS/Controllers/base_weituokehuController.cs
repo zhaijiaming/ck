@@ -318,6 +318,8 @@ namespace CKWMS.Controllers
                 hezuosf = "true";
             if (tiezwbq.IndexOf("true") > -1)
                 tiezwbq = "true";
+            else
+                tiezwbq = "false";
             try
             {
                 base_weituokehu ob_base_weituokehu = new base_weituokehu();
@@ -502,6 +504,8 @@ namespace CKWMS.Controllers
             string fuzeren = Request["fuzeren"] ?? "";
             if (tiezwbq.IndexOf("true") > -1)
                 tiezwbq = "true";
+            else
+                tiezwbq = "false";
             if (shenchasf.IndexOf("true") > -1)
                 shenchasf = "true";
             if (hezuosf.IndexOf("true") > -1)

@@ -282,6 +282,21 @@
                 </div>
             </div>
             @*新增*@
+            @*经营许可发证机关*@
+            <div class="form-group">
+                <label for="name" class="col-sm-2">经营许可发证机关</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="xukefzjg">
+                </div>
+            </div>
+            @*经营许可批准日期*@
+            <div class="form-group">
+                <label for="name" class="col-sm-2">经营许可批准日期</label>
+                <div class="col-sm-10">
+                    <input type="date" id="date_xukepzrq" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="xukepzrq">
+                </div>
+            </div>
+            
             @*经营范围*@
             <div class="form-group">
                 <div class="col-sm-2">
@@ -289,7 +304,7 @@
                     <button type="button" class="icon-edit" id="bt_Fanweiadd">修改</button>
                 </div>
                 <div class="col-sm-10">
-                    <textarea type="text" class="form-control" readonly id="jingyingfanwei" name="jingyingfanwei"></textarea>
+                    <textarea type="text" class="form-control" readonly id="jingyingfanwei" name="jingyingfanwei" rows="3"></textarea>
                 </div>
             </div>
             @*经营范围代码*@
@@ -349,20 +364,7 @@
                     </span>
                 </div>
             </div>
-            @*许可批准日期*@
-            <div class="form-group">
-                <label for="name" class="col-sm-2">许可批准日期</label>
-                <div class="col-sm-10">
-                    <input type="date" id="date_xukepzrq" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="xukepzrq">
-                </div>
-            </div>
-            @*许可发证机关*@
-            <div class="form-group">
-                <label for="name" class="col-sm-2">许可发证机关</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="xukefzjg">
-                </div>
-            </div>
+            
             @*<div class="form-group">
                 <label for="name" class="col-sm-2">首营状态</label>
                 <div class="col-sm-10">
