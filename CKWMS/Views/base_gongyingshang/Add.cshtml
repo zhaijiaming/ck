@@ -21,7 +21,10 @@
         $("#ob_base_gongyingshang_xukepzrq").datepicker();
         document.getElementById("daima").focus();
         $("#pl_Fanwei").hide();
-        $("#pl_Fanwei").draggable();
+        $("#pl_Fanwei").draggable({ handle: '.tuodong' });
+
+
+
         var _qxmlid = $("#qxml").val();
 
         GetFanwei1();
@@ -460,7 +463,7 @@
 
 
 <div id="pl_Fanwei" class="panel panel-primary " style="display:none;position:fixed;top:100px;left:200px;width:1100px;height:600px;z-index:999;">
-    <div class="panel-heading">
+    <div class="tuodong panel-heading">
         <h3 class="panel-title">经营范围管理<button id="pl_close" class="pull-right">X</button></h3>
     </div>
     <div class="panel-body" @*style="width:1090px;height:550px;z-index:999;overflow:scroll"*@>
@@ -472,7 +475,7 @@
             <button type="button" class="btn btn-default " id="bt_fanwei_showall">显示全部</button>
             <table class="table" id="qxdatatable">
                 <caption></caption>
-                <thead style="display:block">
+                <thead style="display:block" class="tuodong">
                     <tr>
                         <td></td>
                         <td style="width:120px">编号</td>

@@ -75,7 +75,7 @@
         $("#XukePZRQ").datepicker();
 
         $("#pl_Fanwei").hide();
-        $("#pl_Fanwei").draggable();
+        $("#pl_Fanwei").draggable({ handle: '.tuodong' });
 
         GetFanwei1();
 
@@ -586,7 +586,7 @@
 </div>
 
 <div id="pl_Fanwei" class="panel panel-primary " style="position:fixed;top:100px;left:200px;width:1100px;height:600px;z-index:999">
-    <div class="panel-heading">
+    <div class="tuodong panel-heading">
         <h3 class="panel-title">经营范围管理<button id="pl_close" class="pull-right">X</button></h3>
     </div>
     <div class="panel-body" @*style="width:1080px;height:550px;z-index:999;overflow:scroll"*@>
@@ -599,7 +599,7 @@
             <table class="table" id="qxdatatable">
                 <caption></caption>
                 <thead>
-                    <tr style="display:block">
+                    <tr style="display:block" class="tuodong">
                         <td></td>
                         <td style="width:120px">编号</td>
                         <td style="width:80px">名称</td>
