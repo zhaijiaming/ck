@@ -67,7 +67,7 @@ namespace CKWMS.App_Code
         public static string SelectItem_Auto(string showname, string classname, string itemname, long selectedvalue)
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendFormat("<select name=\"{0}\" id=\"{1}\" class=\"width-100\" >", showname, showname);
+            sb.AppendFormat("<select name=\"{0}\" id=\"{1}\" class=\"width-100 form-control\" >", showname, showname);
             if (selectedvalue == 0)
                 sb.AppendFormat("<option value=\"\" selected=\"selected\"></option>");
             else
@@ -634,7 +634,7 @@ namespace CKWMS.App_Code
                     switch (sc.ItemType)
                     {
                         case "System.String":
-                            svs = string.Format("<input style=\"vertical-align:middle\" type =\"text\" class=\"form-control\" name=\"{0}\" id=\"{1}\" placeholder=\"请输入{2}\" value=\"{3}\">", sc.ItemCode, sc.ItemCode, sc.ItemTitle, sc.ItemValue);
+                            svs = string.Format("<input type =\"text\" class=\"form-control\" name=\"{0}\" id=\"{1}\" placeholder=\"请输入{2}\" value=\"{3}\">", sc.ItemCode, sc.ItemCode, sc.ItemTitle, sc.ItemValue);
                             break;
                         case "System.Double":
                             svs = string.Format("<input type =\"text\" class=\"form-control\" name=\"{0}\" id=\"{1}\" placeholder=\"请输入{2}\" value=\"{3}\">", sc.ItemCode, sc.ItemCode, sc.ItemTitle, sc.ItemValue);
@@ -650,13 +650,13 @@ namespace CKWMS.App_Code
                             break;
                         case "System.Boolean":
                             if (sc.ItemValue == null)
-                                svs = string.Format("<select class=\"width-100\" name=\"{0}\"><option value=\"\" selected=\"selected\"></option><option value=\"yes\">是</option><option value=\"no\">否</option></select>", sc.ItemCode);
+                                svs = string.Format("<select class=\"width-100 form-control\" name=\"{0}\"><option value=\"\" selected=\"selected\"></option><option value=\"yes\">是</option><option value=\"no\">否</option></select>", sc.ItemCode);
                             else
                             {
                                 if (sc.ItemValue.Equals("True"))
-                                    svs = string.Format("<select class=\"width-100\" name=\"{0}\"><option value=\"\"></option><option value=\"yes\" selected=\"selected\">是</option><option value=\"no\">否</option></select>", sc.ItemCode);
+                                    svs = string.Format("<select class=\"width-100 form-control\" name=\"{0}\"><option value=\"\"></option><option value=\"yes\" selected=\"selected\">是</option><option value=\"no\">否</option></select>", sc.ItemCode);
                                 else
-                                    svs = string.Format("<select class=\"width-100\" name=\"{0}\"><option value=\"\"></option><option value=\"yes\">是</option><option value=\"no\" selected=\"selected\">否</option></select>", sc.ItemCode);
+                                    svs = string.Format("<select class=\"width-100 form-control\" name=\"{0}\"><option value=\"\"></option><option value=\"yes\">是</option><option value=\"no\" selected=\"selected\">否</option></select>", sc.ItemCode);
                             }
                             break;
                         default:
@@ -723,9 +723,9 @@ namespace CKWMS.App_Code
                     sb.AppendLine("<li>");
                     sb.AppendLine("<ul class=\"list-inline\">");
                     sb.AppendFormat("<li class=\"width-20\"><label for=\"{0}\">{1}</label></li>", scm.ItemCode, scm.ItemTitle);
-                    sb.AppendFormat("<li class=\"width-20\"><select style=\"vertical-align:middle\" name=\"{0}Equal\" class=\"width-100\">{1}</select></li>", scm.ItemCode, OperatorString(scm.ItemType));
+                    sb.AppendFormat("<li class=\"width-20\"><select name=\"{0}Equal\" class=\"width-100 form-control\">{1}</select></li>", scm.ItemCode, OperatorString(scm.ItemType));
                     sb.AppendFormat("<li class=\"width-40\">{0}</li>", SearchValueString(scm));
-                    sb.AppendFormat("<li class=\"width-10\"><select name=\"{0}And\" class=\"width-100\"><option value=\"and\" selected=\"selected\">与</option><option value=\"or\">或</option></select></li>", scm.ItemCode);
+                    sb.AppendFormat("<li class=\"width-10\"><select name=\"{0}And\" class=\"width-100 form-control\"><option value=\"and\" selected=\"selected\">与</option><option value=\"or\">或</option></select></li>", scm.ItemCode);
                     sb.AppendLine("</ul>");
                     sb.AppendLine("</li>");
                 }
@@ -734,12 +734,12 @@ namespace CKWMS.App_Code
                     sb.AppendLine("<li>");
                     sb.AppendLine("<ul class=\"list-inline\">");
                     sb.AppendFormat("<li class=\"width-20\"><label for=\"{0}\">{1}</label></li>", scm.ItemCode, scm.ItemTitle);
-                    sb.AppendFormat("<li class=\"width-20\"><select style=\"vertical-align:middle\" name=\"{0}Equal\" class=\"width-100\">{1}</select></li>", scm.ItemCode, OperatorString(scm.ItemType, scm.ItemOpValue));
+                    sb.AppendFormat("<li class=\"width-20\"><select name=\"{0}Equal\" class=\"width-100 form-control\">{1}</select></li>", scm.ItemCode, OperatorString(scm.ItemType, scm.ItemOpValue));
                     sb.AppendFormat("<li class=\"width-40\">{0}</li>", SearchValueString(scm));
                     if (scm.ItemJion.Equals("and"))
-                        sb.AppendFormat("<li class=\"width-10\"><select name=\"{0}And\" class=\"width-100\"><option value=\"and\" selected=\"selected\">与</option><option value=\"or\">或</option></select></li>", scm.ItemCode);
+                        sb.AppendFormat("<li class=\"width-10\"><select name=\"{0}And\" class=\"width-100 form-control\"><option value=\"and\" selected=\"selected\">与</option><option value=\"or\">或</option></select></li>", scm.ItemCode);
                     else
-                        sb.AppendFormat("<li class=\"width-10\"><select name=\"{0}And\" class=\"width-100\"><option value=\"and\">与</option><option value=\"or\" selected=\"selected\">或</option></select></li>", scm.ItemCode);
+                        sb.AppendFormat("<li class=\"width-10\"><select name=\"{0}And\" class=\"width-100 form-control\"><option value=\"and\">与</option><option value=\"or\" selected=\"selected\">或</option></select></li>", scm.ItemCode);
                     sb.AppendLine("</ul>");
                     sb.AppendLine("</li>");
                 }
