@@ -337,6 +337,18 @@
                 </div>
             </div>
             <div class="form-group">
+                <label for="name" class="col-sm-2">许可批准日期</label>
+                <div class="col-sm-10">
+                    <input type="date" class="form-control" name="ob_base_gongyingshang_xukepzrq" value="@DateTime.Now.ToString("yyyy-MM-dd")" id="ob_base_gongyingshang_xukepzrq">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-2">许可发证机关</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="ob_base_gongyingshang_xukefzjg">
+                </div>
+            </div>
+            <div class="form-group">
                 <div class="col-sm-2">
                     <label for="name">经营范围</label><br />
                     @*<div class="col-sm-10">
@@ -345,15 +357,17 @@
                     <button type="button" class="icon-add" id="bt_Fanweiadd" onclick="Bt_Fanweiadd()">增加</button>
                 </div>
                 <div class="col-sm-10">
-                    <textarea type="text" class="form-control" readonly id="jingyingfanwei" name="ob_base_gongyingshang_jingyingfanwei"></textarea>
+                    <textarea type="text" rows="3" class="form-control" readonly id="jingyingfanwei" name="ob_base_gongyingshang_jingyingfanwei"></textarea>
                 </div>
             </div>
+            @*<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />*@
             <div class="form-group" style="display:none">
                 <label for="name" class="col-sm-2">经营范围简码</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" readonly id="jingyingfanweijianma" name="ob_base_gongyingshang_jingyingfanweidm">
                 </div>
             </div>
+
             @*<div class="form-group">
                     <label for="name" class="col-sm-2">首营状态</label>
                     <div class="col-sm-10">
@@ -372,13 +386,13 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2">备案有效期</label>
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" name="ob_base_gongyingshang_beianyxq" id="ob_base_gongyingshang_beianyxq">
+                    <input type="date" class="form-control" name="ob_base_gongyingshang_beianyxq" value="@DateTime.Now.ToString("yyyy-MM-dd")" id="ob_base_gongyingshang_beianyxq">
                 </div>
             </div>
             <div class="form-group">
                 <label for="name" class="col-sm-2">备案批准日期</label>
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" name="ob_base_gongyingshang_beianpzrq" id="ob_base_gongyingshang_beianpzrq">
+                    <input type="date" class="form-control" name="ob_base_gongyingshang_beianpzrq" value="@DateTime.Now.ToString("yyyy-MM-dd")" id="ob_base_gongyingshang_beianpzrq">
                 </div>
             </div>
             <div class="form-group">
@@ -401,18 +415,7 @@
                     </span>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="name" class="col-sm-2">许可批准日期</label>
-                <div class="col-sm-10">
-                    <input type="date" class="form-control" name="ob_base_gongyingshang_xukepzrq" id="ob_base_gongyingshang_xukepzrq">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="name" class="col-sm-2">许可发证机关</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="ob_base_gongyingshang_xukefzjg">
-                </div>
-            </div>
+            
             <div class="form-group">
                 @*<label for="name" class="col-sm-2">是否合作</label>*@
                 @Html.LabelFor(m => m.HezuoSF, new { @class = "control-label col-sm-2" })

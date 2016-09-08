@@ -475,12 +475,24 @@
                 </div>
             </div>
             <div class="form-group">
+                <label for="name" class="col-sm-2">许可批准日期</label>
+                <div class="col-sm-10">
+                    <input type="date" class="form-control" name="ob_base_gongyingshang_xukepzrq" id="ob_base_gongyingshang_xukepzrq" value="@string.Format("{0:yyyy-MM-dd}", item.XukePZRQ)">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-2">许可发证机关</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="ob_base_gongyingshang_xukefzjg" value="@item.XukeFZJG">
+                </div>
+            </div>
+            <div class="form-group">
                 <div class="col-sm-2 ">
                     <label for="name">经营范围</label><br />
                     <button type="button" class="icon-edit" id="bt_Fanweiadd" onclick="Bt_Fanweiadd()">修改</button>
                 </div>
                 <div class="col-sm-10">
-                    <textarea type="text" class="form-control" readonly id="jingyingfanwei" name="ob_base_gongyingshang_jingyingfanwei">@item.Jingyingfanwei</textarea>
+                    <textarea type="text" rows="3" class="form-control" readonly id="jingyingfanwei" name="ob_base_gongyingshang_jingyingfanwei">@item.Jingyingfanwei</textarea>
                 </div>
             </div>
             <div class="form-group" style="display:none">
@@ -536,18 +548,7 @@
                     </span>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="name" class="col-sm-2">许可批准日期</label>
-                <div class="col-sm-10">
-                    <input type="date" class="form-control" name="ob_base_gongyingshang_xukepzrq" id="ob_base_gongyingshang_xukepzrq" value="@string.Format("{0:yyyy-MM-dd}", item.XukePZRQ)">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="name" class="col-sm-2">许可发证机关</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="ob_base_gongyingshang_xukefzjg" value="@item.XukeFZJG">
-                </div>
-            </div>
+            
             <div class="form-group">
                 @*<label for="name" class="col-sm-2">是否合作</label>*@
                 @Html.LabelFor(m => m.HezuoSF, new { @class = "control-label col-sm-2" })
