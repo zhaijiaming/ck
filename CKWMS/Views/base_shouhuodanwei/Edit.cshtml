@@ -65,11 +65,12 @@
         });
 
         //经营范围
-        $("#pl_Fanwei").hide();
-        $("#pl_Fanwei").draggable();
+        //$("#pl_Fanwei").hide();
+        $("#pl_Fanwei").draggable({ handle: '.tuodong' });
 
         $("#bt_Fanweiadd").click(function () {
             GetQixiemulu1();//获取医疗器械目录大类
+            document.getElementById("pl_Fanwei").removeAttribute("hidden");
             $("#pl_Fanwei").show();
             //记录已经选中的数据
             //setTimeout(function () {
@@ -105,15 +106,32 @@
             }
 
             var _jyfw = "";
+            var _jyfw1 = "";
+            var _jyfw2 = "";
+            var _jyfw3 = "";
             var _jyfwjm = "";
             var t = document.getElementsByClassName('xulieid');
             $("#qxdatatable tr input[type=checkbox]").each(function () {
                 if (this.checked) {
-                    _jyfw = _jyfw + $(this).parent().parent().parent().siblings().find(".bh").html() + "," + $(this).parent().parent().parent().siblings().find(".mc").html() + ";";
+                    switch ($(this).parent().parent().parent().siblings().find(".glfl").html()) {
+                        case "1": _jyfw1 = _jyfw1 + $(this).parent().parent().parent().siblings().find(".bh").html() + "," + $(this).parent().parent().parent().siblings().find(".mc").html() + ";";
+                            break;
+                        case "2": _jyfw2 = _jyfw2 + $(this).parent().parent().parent().siblings().find(".bh").html() + "," + $(this).parent().parent().parent().siblings().find(".mc").html() + ";";
+                            break;
+                        case "3": _jyfw3 = _jyfw3 + $(this).parent().parent().parent().siblings().find(".bh").html() + "," + $(this).parent().parent().parent().siblings().find(".mc").html() + ";";
+                            break;
+                    }
+                    //_jyfw = _jyfw + $(this).parent().parent().parent().siblings().find(".glfl").html() + "," + $(this).parent().parent().parent().siblings().find(".bh").html() + "," + $(this).parent().parent().parent().siblings().find(".mc").html() + ";";
                     _jyfwjm = _jyfwjm + $(this).parent().find(".xulieid").val() + ";";
                 }
-
             });
+            _jyfw = "三类:" + _jyfw3 + "二类:" + _jyfw2 + "一类:" + _jyfw1;
+            if (_jyfw3 == "")
+                _jyfw = _jyfw.replace("三类:", "");
+            if (_jyfw2 == "")
+                _jyfw = _jyfw.replace("二类:", "");
+            if (_jyfw1 == "")
+                _jyfw = _jyfw.replace("一类:", "");
 
             for (k = 0; k < xiaolei.length; k++) {
                 _jyfwjm = _jyfwjm + xiaolei[k] + ";";
@@ -142,12 +160,12 @@
 
         //全选
         $("#bt_fanwei_all").click(function () {
-            $(".checkbox").prop("checked", true);
+            $(".xulieid").prop("checked", true);
         });
 
         //取消全选
         $("#bt_fanwei_clear").click(function () {
-            $(".checkbox").prop("checked", false);
+            $(".xulieid").prop("checked", false);
         });
 
         //显示大类
@@ -407,10 +425,10 @@
                 </div>
             </div>
             @*经营范围代码*@
-            <div class="form-group">
+            <div class="form-group" style="display:none">
                 <label for="name" class="col-sm-2">经营范围代码</label>
                 <div class="col-sm-10">
-                    <input type="text" readonly class="form-control" id="jingyingfanweidm" name="jingyingfanweidm" value="@item.JingyinfanweiDM">
+                    <input type="text"  class="form-control" readonly id="jingyingfanweidm" name="jingyingfanweidm" value="@item.JingyinfanweiDM">
                 </div>
             </div>
             @*区域*@
@@ -509,8 +527,8 @@
         </table>
     </div>
 </div>
-<div id="pl_Fanwei" class="panel panel-primary " style="display:none;position:absolute;top:0px;left:300px;width:1100px;height:600px;z-index:999;">
-    <div class="panel-heading">
+<div id="pl_Fanwei" class="panel panel-primary" hidden style="display:none;position:fixed;top:100px;left:200px;width:1100px;height:600px;z-index:999;">
+    <div class="tuodong panel-heading">
         <h3 class="panel-title">经营范围管理<button id="pl_close" class="pull-right">X</button></h3>
     </div>
     <div class="panel-body" @*style="width:1090px;height:550px;z-index:999;overflow:scroll"*@>
@@ -522,7 +540,7 @@
             <button type="button" class="btn btn-default " id="bt_fanwei_showall">显示全部</button>
             <table class="table" id="qxdatatable">
                 <caption></caption>
-                <thead style="display:block">
+                <thead style="display:block" class="tuodong">
                     <tr>
                         <td></td>
                         <td style="width:120px">编号</td>
