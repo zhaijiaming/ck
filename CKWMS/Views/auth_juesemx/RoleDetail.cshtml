@@ -41,7 +41,7 @@
                 var funid = $(this).find(".tree-item-name").text();
                 var fid = funid.substr(funid.indexOf("(") + 1, funid.indexOf(")") - funid.indexOf("(") - 1);
                 if ($("#funs").val().indexOf(funid) > 0)
-                            $(this).addClass("tree-selected");
+                    $(this).addClass("tree-selected");
             });
 
         });
@@ -56,7 +56,7 @@
             for (var x = 0; x < $(sels).length; x++) {
                 exval = false;
                 selval = $(sels[x]).find(".tree-item-name").text();
-                fid=selval.substr(selval.indexOf("(") + 1, selval.indexOf(")") - selval.indexOf("(") - 1);
+                fid = selval.substr(selval.indexOf("(") + 1, selval.indexOf(")") - selval.indexOf("(") - 1);
                 $("#funs li input[type=checkbox]").each(function () {
                     if (fid == $(this).val())
                         exval = true;
@@ -118,6 +118,7 @@
                 <button type="button" class="btn btn-default " id="bt_addInfo"><i class="icon-adn"></i>添加</button>
                 <button type="button" class="btn btn-default " id="bt_save"><i class="icon-save"></i>保存</button>
                 <button type="button" class="btn btn-default " id="bt_deleteInfo"><i class="icon-remove"></i>删除</button>
+                <button type="button" class="btn btn-default" onclick="javascript:history.back(-1); "><i class="icon-hand-left"></i>返回</button>
             </p>
         </div>
         <div class="row">
@@ -151,8 +152,8 @@
                                         <span class="lbl">@rd.name</span>
                                     </label>
                                     <div class="pull-right">
-                                            <span class="lbl">@rd.module</span>
-                                        </div>
+                                        <span class="lbl">@rd.module</span>
+                                    </div>
                                 </li>
                             }
                         </ul>
