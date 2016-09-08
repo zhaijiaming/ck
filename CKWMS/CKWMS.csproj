@@ -291,12 +291,27 @@
     <Compile Include="Controllers\base_huobiController.cs" />
     <Compile Include="Controllers\base_quyuController.cs" />
     <Compile Include="Controllers\cfda_zizhiController.cs" />
+    <Compile Include="Controllers\wms_cangguanszController.cs" />
+    <Compile Include="Controllers\wms_cangkuController.cs" />
+    <Compile Include="Controllers\wms_cangkuqyController.cs" />
+    <Compile Include="Controllers\wms_chukudanController.cs" />
+    <Compile Include="Controllers\wms_chukumxController.cs" />
+    <Compile Include="Controllers\wms_jianhuoController.cs" />
+    <Compile Include="Controllers\wms_kehukwController.cs" />
+    <Compile Include="Controllers\wms_kuweiController.cs" />
     <Compile Include="Models\auth_gongsiViewModel.cs" />
     <Compile Include="Models\base_bumenViewModel.cs" />
     <Compile Include="Models\base_feiyongxmViewModel.cs" />
     <Compile Include="Models\base_huobiViewModel.cs" />
     <Compile Include="Models\base_kaipiaoxxViewModel.cs" />
     <Compile Include="Models\base_quyuViewModel.cs" />
+    <Compile Include="Models\wms_cangguanszViewModel.cs" />
+    <Compile Include="Models\wms_cangkuqyViewModel.cs" />
+    <Compile Include="Models\wms_cangkuViewModel.cs" />
+    <Compile Include="Models\wms_chukumxViewModel.cs" />
+    <Compile Include="Models\wms_jianhuoViewModel.cs" />
+    <Compile Include="Models\wms_kehukwViewModel.cs" />
+    <Compile Include="Models\wms_kuweiViewModel.cs" />
     <Compile Include="reports\ReportDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -735,6 +750,30 @@
     <Content Include="Views\cfda_zizhi\CustomerCheckList.cshtml" />
     <Content Include="Views\cfda_zizhi\CargoCheckList.cshtml" />
     <Content Include="Views\cfda_zizhi\Index.cshtml" />
+    <Content Include="Views\wms_cangguansz\Add.cshtml" />
+    <Content Include="Views\wms_cangguansz\Edit.cshtml" />
+    <Content Include="Views\wms_cangguansz\Index.cshtml" />
+    <Content Include="Views\wms_cangku\Add.cshtml" />
+    <Content Include="Views\wms_cangku\Edit.cshtml" />
+    <Content Include="Views\wms_cangku\Index.cshtml" />
+    <Content Include="Views\wms_chukudan\Add.cshtml" />
+    <Content Include="Views\wms_chukudan\Edit.cshtml" />
+    <Content Include="Views\wms_chukudan\Index.cshtml" />
+    <Content Include="Views\wms_chukumx\Add.cshtml" />
+    <Content Include="Views\wms_chukumx\Edit.cshtml" />
+    <Content Include="Views\wms_chukumx\Index.cshtml" />
+    <Content Include="Views\wms_jianhuo\Add.cshtml" />
+    <Content Include="Views\wms_jianhuo\Edit.cshtml" />
+    <Content Include="Views\wms_jianhuo\Index.cshtml" />
+    <Content Include="Views\wms_kehukw\Add.cshtml" />
+    <Content Include="Views\wms_kehukw\Edit.cshtml" />
+    <Content Include="Views\wms_kehukw\Index.cshtml" />
+    <Content Include="Views\wms_kuwei\Add.cshtml" />
+    <Content Include="Views\wms_kuwei\Edit.cshtml" />
+    <Content Include="Views\wms_kuwei\Index.cshtml" />
+    <Content Include="Views\wms_cangkuqy\Add.cshtml" />
+    <Content Include="Views\wms_cangkuqy\Edit.cshtml" />
+    <Content Include="Views\wms_cangkuqy\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
