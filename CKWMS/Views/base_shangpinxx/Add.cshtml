@@ -231,6 +231,7 @@
         <input type="hidden" name="qiyeid" id="qiyeid" />
         <input type="hidden" name="Muluxuhao" id="muluxuhao" />
         <input type="hidden" name="zhucezhengbh" id="zhucezhengbh" />
+        <input type="hidden" id="Shouying" name="Shouying" value="1" />
         <div class="page-header">
             <p>
                 <button type="submit" class="btn btn-default"><i class="icon-save"></i>保存</button>
@@ -414,11 +415,12 @@
                     @Html.TextBoxFor(m => m.ShangpinTM, new { @class = "form-control" })
                 </div>
             </div>
-            @*首营*@
+            @*首营状态*@
             <div class="form-group">
                 @Html.LabelFor(m => m.Shouying, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.SelectList_Common("shouying", "首营状态")
+                    @*@Html.SelectList_Common("shouying", "首营状态")*@
+                    <input type="text" class="form-control" readonly value="@Html.GetCommonValue_ID("首营状态", 1)">
                 </div>
             </div>
             <div class="form-group">

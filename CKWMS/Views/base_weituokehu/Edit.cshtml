@@ -163,7 +163,7 @@
                         _jyfwjm = _jyfwjm + $(this).parent().find(".xulieid").val() + ";";
                     }
                 });
-                _jyfw = "三类:" + _jyfw3 + "\n" + "二类:" + _jyfw2 + "\n" + "一类:" + _jyfw1;
+                _jyfw = "三类:" + _jyfw3 + "二类:" + _jyfw2 + "一类:" + _jyfw1;
                 if (_jyfw3 == "")
                     _jyfw = _jyfw.replace("三类:", "");
                 if (_jyfw2 == "")
@@ -405,11 +405,12 @@
                                                     @Html.TextBoxFor(m => m.Beizhu, new { @class = "form-control" })
                                                 </div>
                                             </div>
+                                            @*首营状态*@
                                             <div class="form-group">
                                                 @Html.LabelFor(m => m.Shouying, new { @class = "control-label col-sm-2" })
                                                 <div class="col-sm-10">
-                              @*                      @Html.SelectList_Common("shouying", "首营状态",(long)ViewData.Model.Shouying)*@
-                                                    @Html.GetCommonValue_ID("首营状态", (int)ViewData.Model.Shouying)
+                                                    @*@Html.SelectList_Common("shouying", "首营状态",(long)ViewData.Model.Shouying)*@
+                                                    <input type="text" class="form-control" readonly value="@Html.GetCommonValue_ID("首营状态", (int)ViewData.Model.Shouying)">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -426,18 +427,18 @@
                                                     @Html.CheckBoxFor(m => m.HezuoSF, new { @class = "form-control" })
                                                 </div>
                                             </div>
+                                            @*录入时间*@
                                             <div class="form-group">
                                                 @Html.LabelFor(m => m.MakeDate, new { @class = "control-label col-sm-2" })
                                                 <div class="col-sm-10">
-                                                    @*<input type="date" class="form-control" name="MakeDate" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.MakeDate)" id="MakeDate">*@
-                                                @string.Format("{0:yyyy-MM-dd}", ViewData.Model.MakeDate)
+                                                    <input type="text" readonly class="form-control" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.MakeDate)" />
                                                 </div>
                                             </div>
+                                            @*录入人*@
                                             <div class="form-group">
                                                 @Html.LabelFor(m => m.MakeMan, new { @class = "control-label col-sm-2" })
                                                 <div class="col-sm-10">
-                                                    @*@Html.SelectList_Auto("MakeMan", "userinfo", "fullname", (long)ViewData.Model.MakeMan)*@
-                                                    @Html.GetDataValue_ID("userinfo", "全名", (int)ViewData.Model.MakeMan)
+                                                    <input type="text" class="form-control" readonly value="@Html.GetDataValue_ID("userinfo", "全名", (int)ViewData.Model.MakeMan)" />
                                                 </div>
                                             </div>
                                         </div>

@@ -125,7 +125,7 @@
                     _jyfwjm = _jyfwjm + $(this).parent().find(".xulieid").val() + ";";
                 }
             });
-            _jyfw = "三类:" + _jyfw3 + "\n" + "二类:" + _jyfw2 + "\n" + "一类:" + _jyfw1;
+            _jyfw = "三类:" + _jyfw3 + "二类:" + _jyfw2 + "一类:" + _jyfw1;
             if (_jyfw3 == "")
                 _jyfw = _jyfw.replace("三类:", "");
             if (_jyfw2 == "")
@@ -313,6 +313,8 @@
     <form role="form" action="/base_shouhuodanwei/Update" method="post">
         <input type="hidden" id="shdw_id" name="id" value="@item.ID" />
         <input type="hidden" id="btnSelect" value="" />
+        <input type="hidden" id="MakeMan" name="MakeMan" value=@Session["user_id"] />
+        <input type="hidden" name="MakeDate" value=@string.Format("{0:yyyy-MM-dd}",DateTime.Now) />
         <div class="page-header">
             <p>
                 <button type="submit" class="btn btn-default"><i class="icon-save"></i>更新</button>
@@ -481,25 +483,26 @@
                     </span>
                 </div>
             </div>
-           
-            @*<div class="form-group">
+           @*首营状态*@
+            <div class="form-group" style="display:none">
                 <label for="name" class="col-sm-2">首营状态</label>
                 <div class="col-sm-10">
                     @Html.SelectList_Common("ob_base_shouhuodanwei_shouying", "首营状态", (int)item.Shouying)
                 </div>
-            </div>*@
+            </div>
             @*录入日期*@
             <div class="form-group">
                 <label for="name" class="col-sm-2">录入日期</label>
                 <div class="col-sm-10">
-                    <input type="date" id="date_makedate" class="form-control" name="makedate" value="@string.Format("{0:yyyy-MM-dd}",item.MakeDate)">
+                    <input type="text" readonly class="form-control" value="@string.Format("{0:yyyy-MM-dd}",item.MakeDate)" />
                 </div>
             </div>
             @*输入人*@
             <div class="form-group">
                 <label for="name" class="col-sm-2">输入人</label>
                 <div class="col-sm-10">
-                    @Html.SelectList_Auto("makeman", "userinfo", "fullname", (long)item.MakeMan)
+                    @*@Html.SelectList_Auto("makeman", "userinfo", "fullname", (long)item.MakeMan)*@
+                    <input type="text" class="form-control" readonly value="@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)" />
                 </div>
             </div>
         </div>
