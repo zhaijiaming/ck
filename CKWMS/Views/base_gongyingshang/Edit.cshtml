@@ -167,20 +167,20 @@
             var j = $("#jingyingfanwei").val();
             var tj = j.split(";");
             //tj.splice(ti.length - 1);
-            var xiaolei = new Array();
-            var miaoshu = new Array();
-            var x = 0;
-            for (var k = 0; k < ti.length; k++, x = 0) {
-                for (var l = 0; l < fw.length; l++) {
-                    if (ti[k] == $(".xulieid").eq(l).val()) {
-                        x = 1;
-                    }
-                }
-                if (x != 1) {
-                    xiaolei.push(ti[k]);
-                    miaoshu.push(tj[k]);
-                }
-            }
+            //var xiaolei = new Array();
+            //var miaoshu = new Array();
+            //var x = 0;
+            //for (var k = 0; k < ti.length; k++, x = 0) {
+            //    for (var l = 0; l < fw.length; l++) {
+            //        if (ti[k] == $(".xulieid").eq(l).val()) {
+            //            x = 1;
+            //        }
+            //    }
+            //    if (x != 1) {
+            //        xiaolei.push(ti[k]);
+            //        miaoshu.push(tj[k]);
+            //    }
+            //}
             var _jyfw = "";
             var _jyfw1 = "";
             var _jyfw2 = "";
@@ -201,22 +201,22 @@
                     _jyfwjm = _jyfwjm + $(this).parent().find(".xulieid").val() + ";";
                 }
             });
-            _jyfw = "三类:" + _jyfw3  + "二类:" + _jyfw2  + "一类:" + _jyfw1;
+            _jyfw = "三类:" + _jyfw3 + "\n" + "二类:" + _jyfw2 + "\n" + "一类:" + _jyfw1;
             if (_jyfw3 == "")
-                _jyfw = _jyfw.replace("三类:", "");
+                _jyfw = _jyfw.replace("三类:\n", "");
             if (_jyfw2 == "")
-                _jyfw = _jyfw.replace("二类:", "");
+                _jyfw = _jyfw.replace("二类:\n", "");
             if (_jyfw1 == "")
                 _jyfw = _jyfw.replace("一类:", "");
 
-            for (k = 0; k < xiaolei.length; k++) {
-                _jyfwjm = _jyfwjm + xiaolei[k] + ";";
-            }
-            _jyfwjm = _jyfwjm.substring(0, _jyfwjm.length - 1);
-            for (k = 0; k < miaoshu.length; k++) {
-                _jyfw = _jyfw + miaoshu[k] + ";";
-            }
-            _jyfw = _jyfw.substring(0, _jyfw.length - 1);
+            //for (k = 0; k < xiaolei.length; k++) {
+            //    _jyfwjm = _jyfwjm + xiaolei[k] + ";";
+            //}
+            //_jyfwjm = _jyfwjm.substring(0, _jyfwjm.length - 1);
+            //for (k = 0; k < miaoshu.length; k++) {
+            //    _jyfw = _jyfw + miaoshu[k] + ";";
+            //}
+            //_jyfw = _jyfw.substring(0, _jyfw.length - 1);
             var _addok = confirm("确定要修改经营范围吗？");
             if (_addok) {
                 if (_jyfw.length >= 512) {
@@ -551,7 +551,7 @@
             <div class="form-group" style="display:none">
                 <label for="name" class="col-sm-2">经营范围简码</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" readonly id="jingyingfanweijianma" name="ob_base_gongyingshang_jingyingfanweidm" value="@item.JingyingfanweiDM">
+                    <input type="text" class="form-control" id="jingyingfanweijianma" name="ob_base_gongyingshang_jingyingfanweidm" value="@item.JingyingfanweiDM">
                 </div>
             </div>
             @*<div class="form-group">
@@ -647,8 +647,8 @@
             <button type="button" class="btn btn-default " id="bt_fanwei_add"><i class="icon-add"></i>确定</button>
             <button type="button" class="btn btn-default " id="bt_fanwei_all" onclick="bt_fanwei_all()">全选</button>
             <button type="button" class="btn btn-default " id="bt_fanwei_clear" onclick="bt_fanwei_clear()">全部取消</button>
-            <button type="button" class="btn btn-default " id="bt_fanwei_showdalei">显示大类</button>
-            <button type="button" class="btn btn-default " id="bt_fanwei_showall">显示全部</button>
+            <button type="button" class="btn btn-default " id="bt_fanwei_showdalei" >显示大类</button>
+            <button type="button" class="btn btn-default " id="bt_fanwei_showall" >显示全部</button>
             <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;管理类别</label>
             <select name="guanlifenlei" id="guanlifenlei">
                 <option value="全部">全部</option>

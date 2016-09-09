@@ -80,20 +80,20 @@
                 var j = $("#xukefanwei").val();
                 var tj = j.split(";");
                 //tj.splice(ti.length - 1);
-                var xiaolei = new Array();
-                var miaoshu = new Array();
-                var x = 0;
-                for (var k = 0; k < ti.length; k++, x = 0) {
-                    for (var l = 0; l < fw.length; l++) {
-                        if (ti[k] == $(".xulieid").eq(l).val()) {
-                            x = 1;
-                        }
-                    }
-                    if (x != 1) {
-                        xiaolei.push(ti[k]);
-                        miaoshu.push(tj[k]);
-                    }
-                }
+                //var xiaolei = new Array();
+                //var miaoshu = new Array();
+                //var x = 0;
+                //for (var k = 0; k < ti.length; k++, x = 0) {
+                //    for (var l = 0; l < fw.length; l++) {
+                //        if (ti[k] == $(".xulieid").eq(l).val()) {
+                //            x = 1;
+                //        }
+                //    }
+                //    if (x != 1) {
+                //        xiaolei.push(ti[k]);
+                //        miaoshu.push(tj[k]);
+                //    }
+                //}
                 var _jyfw = "";
                 var _jyfw1 = "";
                 var _jyfw2 = "";
@@ -122,14 +122,14 @@
                 if (_jyfw1 == "")
                     _jyfw = _jyfw.replace("一类:", "");
 
-                for (k = 0; k < xiaolei.length; k++) {
-                    _jyfwjm = _jyfwjm + xiaolei[k] + ";";
-                }
-                _jyfwjm = _jyfwjm.substring(0, _jyfwjm.length - 1);
-                for (k = 0; k < miaoshu.length; k++) {
-                    _jyfw = _jyfw + miaoshu[k] + ";";
-                }
-                _jyfw = _jyfw.substring(0, _jyfw.length - 1);
+                //for (k = 0; k < xiaolei.length; k++) {
+                //    _jyfwjm = _jyfwjm + xiaolei[k] + ";";
+                //}
+                //_jyfwjm = _jyfwjm.substring(0, _jyfwjm.length - 1);
+                //for (k = 0; k < miaoshu.length; k++) {
+                //    _jyfw = _jyfw + miaoshu[k] + ";";
+                //}
+                //_jyfw = _jyfw.substring(0, _jyfw.length - 1);
                 var _addok = confirm("确定要修改经营范围吗？");
                 if (_addok) {
                     if (_jyfw.length >= 512) {
