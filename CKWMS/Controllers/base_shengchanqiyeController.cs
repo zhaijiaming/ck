@@ -398,8 +398,8 @@ namespace CKWMS.Controllers
             string shengchanxuketp = Request["shengchanxuketp"] ?? "";
             string shouying = Request["shouying"] ?? "";
             string makedate = Request["makedate"] ?? "";
-            //string makeman = Request["makeman"] ?? "";
-            string makeman = Session["user_id"].ToString();
+            string makeman = Request["makeman"] ?? "";
+            //string makeman = Session["user_id"].ToString();
             //ÐÂÔö
             string qiyedizhi = Request["qiyedizhi"] ?? "";
             string shengchandizhi = Request["shengchandizhi"] ?? "";

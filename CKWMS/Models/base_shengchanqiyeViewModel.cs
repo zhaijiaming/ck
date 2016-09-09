@@ -72,14 +72,14 @@ namespace CKWMS.Models
         public string BeianFZJG { get; set; }
         [Display(Name = "备案文件")]
         public string BeianTP { get; set; }
-        [Display(Name = "许可批准日期")]
+        [Display(Name = "生产许可批准日期")]
         [DataType(DataType.Date)]
         public DateTime? XukePZRQ { get; set; }
-        [Display(Name = "许可发证机关")]
+        [Display(Name = "生产许可发证机关")]
         public string XukeFZJG { get; set; }
-        [Display(Name = "许可范围")]
+        [Display(Name = "生产许可范围")]
         public string Xukefanwei { get; set; }
-        [Display(Name = "许可范围代码")]
+        [Display(Name = "生产许可范围代码")]
         public string XukefanweiDM { get; set; }
     }
 }
