@@ -197,9 +197,9 @@
                     <td>生产许可编号</td>
                     <td>生产许可有效期</td>
                     <td>生产许可照片</td>
-                    @*<td>首营状态</td>
-                    <td>录入日期</td>
-                    <td>输入人</td>*@
+                    <td>首营状态</td>
+                    @*<td>录入日期</td>
+                      <td>输入人</td>*@
                     @*新增*@
                     @*<td>企业地址</td>
                     <td>生产地址</td>*@
@@ -226,9 +226,9 @@
                         <td>@item.ShengchanxukeBH</td>
                         <td>@item.ShengchanxukeYXQ.ToString("yyyy-MM-dd")</td>
                         <td><a href="/files/zhengzhao/@item.ShengchanxukeTP" target="_blank" class="scxktp">浏览</a></td>
-                        @*<td>@item.Shouying</td>
+                        @*<td>@item.Shouying</td>*@
                         <td>@Html.GetCommonValue_ID("首营状态", (int)item.Shouying)</td>
-                        <td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
+                        @*<td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
                         <td>@item.MakeMan</td>
                         <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>*@
                         

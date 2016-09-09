@@ -172,11 +172,11 @@
                     _jyfwjm = _jyfwjm + $(this).parent().find(".xulieid").val() + ";";
                 }
             });
-            _jyfw = "三类:" + _jyfw3 + "二类:" + _jyfw2 + "一类:" + _jyfw1;
+            _jyfw = "三类:" + _jyfw3 + "\n" + "二类:" + _jyfw2 + "\n" + "一类:" + _jyfw1;
             if (_jyfw3 == "")
-                _jyfw = _jyfw.replace("三类:", "");
+                _jyfw = _jyfw.replace("三类:\n", "");
             if (_jyfw2 == "")
-                _jyfw = _jyfw.replace("二类:", "");
+                _jyfw = _jyfw.replace("二类:\n", "");
             if (_jyfw1 == "")
                 _jyfw = _jyfw.replace("一类:", "");
 
@@ -199,7 +199,40 @@
                     $("#pl_Fanwei").hide();
                 }
             }
+            $("#guanlifenlei").val("全部");
             GetFanwei1();
+        });
+        //选择管理分类
+        $("#guanlifenlei").change(function () {
+            var fl = document.getElementsByClassName('glfl');
+            var lb = $("#guanlifenlei").find("option:selected").text();
+            if (lb == "一类") {
+                for (var i = 0; i < fl.length; i++) {
+                    if ($(".glfl").eq(i).text() == "1") {
+                        $(".bg").eq(i).show();
+                    }
+                    else { $(".bg").eq(i).hide(); }
+                }
+            }
+            if (lb == "二类") {
+                for (var i = 0; i < fl.length; i++) {
+                    if ($(".glfl").eq(i).text() == "2") {
+                        $(".bg").eq(i).show();
+                    }
+                    else { $(".bg").eq(i).hide(); }
+                }
+            }
+            if (lb == "三类") {
+                for (var i = 0; i < fl.length; i++) {
+                    if ($(".glfl").eq(i).text() == "3") {
+                        $(".bg").eq(i).show();
+                    }
+                    else { $(".bg").eq(i).hide(); }
+                }
+            }
+            if (lb == "全部") {
+                $(".bg").show();
+            }
         });
     });
 
@@ -380,6 +413,9 @@
         @Html.AntiForgeryToken()
         <input type="hidden" name="id" value="@ViewData.Model.ID" />
         <input type="hidden" id="btnSelect" value="" />
+        <input type="hidden" id="MakeMan" name="MakeMan" value=@Session["user_id"] />
+        <input type="hidden" name="MakeDate" value=@string.Format("{0:yyyy-MM-dd}",DateTime.Now) />
+        <input type="hidden" id="Shouying" name="Shouying" value="@ViewData.Model.Shouying" />
         <div class="page-header">
             <p>
                 <button type="submit" class="btn btn-default"><i class="icon-save"></i>更新</button>
@@ -555,9 +591,10 @@
         </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.Shouying, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10" readonly>
+                <div class="col-sm-10">
                     @*@Html.TextBoxFor(m => m.Shouying, new { @class = "form-control" })*@
-                    @Html.SelectList_Common("shouying", "首营状态", (int)ViewData.Model.Shouying)
+                    @*@Html.SelectList_Common("shouying", "首营状态", (int)ViewData.Model.Shouying)*@
+                    <input type="text" readonly class="form-control" value="@Html.GetCommonValue_ID("首营状态", (int)ViewData.Model.Shouying)" />
                 </div>
             </div>
             <div class="form-group">
@@ -589,13 +626,14 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.MakeDate, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" name="MakeDate" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.MakeDate)" id="MakeDate">
+                    <input type="text" readonly class="form-control" value="@string.Format("{0:yyyy-MM-dd}", ViewData.Model.MakeDate)" />
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.MakeMan, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.SelectList_Auto("MakeMan", "userinfo", "fullname", (long)ViewData.Model.MakeMan)
+                    @*@Html.SelectList_Auto("MakeMan", "userinfo", "fullname", (long)ViewData.Model.MakeMan)*@
+                    <input type="text" readonly class="form-control" value="@Html.GetDataValue_ID("userinfo", "全名", (int)ViewData.Model.MakeMan)" />
                 </div>
             </div>
         </div>
@@ -613,6 +651,13 @@
             <button type="button" class="btn btn-default " id="bt_fanwei_clear" onclick="bt_fanwei_clear()">全部取消</button>
             <button type="button" class="btn btn-default " id="bt_fanwei_showdalei">显示大类</button>
             <button type="button" class="btn btn-default " id="bt_fanwei_showall">显示全部</button>
+            <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;管理类别</label>
+            <select name="guanlifenlei" id="guanlifenlei">
+                <option value="全部">全部</option>
+                <option value="一类">一类</option>
+                <option value="二类">二类</option>
+                <option value="三类">三类</option>
+            </select>
             <table class="table" id="qxdatatable">
                 <caption></caption>
                 <thead>

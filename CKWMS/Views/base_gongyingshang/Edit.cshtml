@@ -78,7 +78,8 @@
         $("#ob_base_gongyingshang_beianyxq").datepicker();
         $("#ob_base_gongyingshang_beianpzrq").datepicker();
         $("#ob_base_gongyingshang_xukepzrq").datepicker();
-    
+        //$('.bkbj').attr("disabled", true);
+
         if ($(".sc").html() == "True") {
             $(".shencha").attr("checked", true);
         }
@@ -93,7 +94,6 @@
         }
 
         GetFanwei1();
-
         $("#bt_fanwei_showall").click(function () {
             var tempid = "";
             $("#qxdatatable tr input[type=checkbox]").each(function () {
@@ -201,7 +201,7 @@
                     _jyfwjm = _jyfwjm + $(this).parent().find(".xulieid").val() + ";";
                 }
             });
-            _jyfw = "三类:" + _jyfw3 + "二类:" + _jyfw2 + "一类:" + _jyfw1;
+            _jyfw = "三类:" + _jyfw3  + "二类:" + _jyfw2  + "一类:" + _jyfw1;
             if (_jyfw3 == "")
                 _jyfw = _jyfw.replace("三类:", "");
             if (_jyfw2 == "")
@@ -228,14 +228,47 @@
                     $("#pl_Fanwei").hide();
                 }
             }
+            $("#guanlifenlei").val("全部");
             GetFanwei1();
+        });
+        //选择管理分类
+        $("#guanlifenlei").change(function () {
+            var fl = document.getElementsByClassName('glfl');
+            var lb = $("#guanlifenlei").find("option:selected").text();
+            if (lb == "一类") {
+                for (var i = 0; i < fl.length; i++) {
+                    if ($(".glfl").eq(i).text() == "1") {
+                        $(".bg").eq(i).show();
+                    }
+                    else { $(".bg").eq(i).hide(); }
+                }
+            }
+            if (lb == "二类") {
+                for (var i = 0; i < fl.length; i++) {
+                    if ($(".glfl").eq(i).text() == "2") {
+                        $(".bg").eq(i).show();
+                    }
+                    else { $(".bg").eq(i).hide(); }
+                }
+            }
+            if (lb == "三类") {
+                for (var i = 0; i < fl.length; i++) {
+                    if ($(".glfl").eq(i).text() == "3") {
+                        $(".bg").eq(i).show();
+                    }
+                    else { $(".bg").eq(i).hide(); }
+                }
+            }
+            if (lb == "全部") {
+                $(".bg").show();
+            }
         });
     });
 
     //经营范围
     function Bt_Fanweiadd() {
         GetData();
-        document.getElementById("pl_Fanwei").removeAttribute("hidden");     
+        document.getElementById("pl_Fanwei").removeAttribute("hidden");
         $("#pl_Fanwei").show();
     }
     function bt_fanwei_all() {
@@ -246,7 +279,7 @@
         $(".xulieid").prop("checked", false);
     }
 
-    
+
 
     function GetFanwei1() {
         //var _qxmlid = $("#qxml").val();
@@ -360,7 +393,7 @@
             $("#daima").val(response);
         });
     }
-    
+
 
 </script>
 <div class="modal fade" id="myModalUpload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -413,6 +446,8 @@
 
         <input type="hidden" name="ob_base_gongyingshang_id" value="@item.ID" />
         <input type="hidden" id="btnSelect" value="" />
+        <input type="hidden" id="ob_base_gongyingshang_makeman" name="ob_base_gongyingshang_makeman" value=@Session["user_id"] />
+        <input type="hidden" id="ob_base_gongyingshang_makedate" name="ob_base_gongyingshang_makedate" value=@string.Format("{0:yyyy-MM-dd}",DateTime.Now) />
         <div class="page-header">
             <p>
                 <button type="submit" class="btn btn-default"><i class="icon-save"></i>更新</button>
@@ -493,13 +528,13 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="name" class="col-sm-2">许可批准日期</label>
+                <label for="name" class="col-sm-2">经营许可批准日期</label>
                 <div class="col-sm-10">
                     <input type="date" class="form-control" name="ob_base_gongyingshang_xukepzrq" id="ob_base_gongyingshang_xukepzrq" value="@string.Format("{0:yyyy-MM-dd}", item.XukePZRQ)">
                 </div>
             </div>
             <div class="form-group">
-                <label for="name" class="col-sm-2">许可发证机关</label>
+                <label for="name" class="col-sm-2">经营许可发证机关</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" name="ob_base_gongyingshang_xukefzjg" value="@item.XukeFZJG">
                 </div>
@@ -566,7 +601,7 @@
                     </span>
                 </div>
             </div>
-            
+
             <div class="form-group">
                 @*<label for="name" class="col-sm-2">是否合作</label>*@
                 @Html.LabelFor(m => m.HezuoSF, new { @class = "control-label col-sm-2" })
@@ -586,13 +621,15 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2">录入日期</label>
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" name="ob_base_gongyingshang_makedate" value="@string.Format("{0:yyyy-MM-dd}", item.MakeDate)" id="ob_base_gongyingshang_makedate">
+                    @*<input type="date" readonly class="form-control" name="ob_base_gongyingshang_makedate" value="@string.Format("{0:yyyy-MM-dd}", item.MakeDate)" id="ob_base_gongyingshang_makedate">*@
+                    <input type="text" readonly class="form-control" value="@string.Format("{0:yyyy-MM-dd}", item.MakeDate)" />
                 </div>
             </div>
             <div class="form-group">
                 <label for="name" class="col-sm-2">输入人</label>
                 <div class="col-sm-10">
-                    @Html.SelectList_Auto("ob_base_gongyingshang_makeman", "userinfo", "fullname", (long)item.MakeMan)
+                    @*@Html.SelectList_Auto("ob_base_gongyingshang_makeman", "userinfo", "fullname", (long)item.MakeMan)*@
+                    <input type="text" readonly class="form-control" value="@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)" />
                 </div>
             </div>
         </div>
@@ -612,6 +649,13 @@
             <button type="button" class="btn btn-default " id="bt_fanwei_clear" onclick="bt_fanwei_clear()">全部取消</button>
             <button type="button" class="btn btn-default " id="bt_fanwei_showdalei">显示大类</button>
             <button type="button" class="btn btn-default " id="bt_fanwei_showall">显示全部</button>
+            <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;管理类别</label>
+            <select name="guanlifenlei" id="guanlifenlei">
+                <option value="全部">全部</option>
+                <option value="一类">一类</option>
+                <option value="二类">二类</option>
+                <option value="三类">三类</option>
+            </select>
             <table class="table" id="qxdatatable">
                 <caption></caption>
                 <thead>
