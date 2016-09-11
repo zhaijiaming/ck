@@ -74,6 +74,10 @@ namespace CKWMS.Models
         public DateTime? XukePZRQ { get; set; }
         [Display(Name = "许可发证机关")]
         public string XukeFZJG { get; set; }
+        [Display(Name = "企业地址")]
+        public string QiyeDZ { get; set; }
+        [Display(Name = "送货地址")]
+        public string SonghuoDZ { get; set; }
     }
 }
 

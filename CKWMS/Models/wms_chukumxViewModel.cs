@@ -65,6 +65,12 @@ namespace CKWMS.Models
         public int? MakeMan { get; set; }
         [Display(Name = "已删除")]
         public bool IsDelete { get; set; }
+        [Display(Name = "商品代码")]
+        public string ShangpinDM { get; set; }
+        [Display(Name = "货品状态")]
+        public int? HuopinZT { get; set; }
+        [Display(Name = "拣货")]
+        public bool Jianhuo { get; set; }
     }
 }
 

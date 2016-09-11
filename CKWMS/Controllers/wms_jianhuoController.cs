@@ -191,6 +191,7 @@ namespace CKWMS.Controllers
             string col3 = Request["col3"] ?? "";
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
+            string fuhe = Request["fuhe"] ?? "";
             try
             {
                 wms_jianhuo ob_wms_jianhuo = new wms_jianhuo();
@@ -210,6 +211,7 @@ namespace CKWMS.Controllers
                 ob_wms_jianhuo.Col3 = col3.Trim();
                 ob_wms_jianhuo.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 ob_wms_jianhuo.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
+                ob_wms_jianhuo.Fuhe = fuhe == "" ? false : Boolean.Parse(fuhe);
                 ob_wms_jianhuo = ob_wms_jianhuoservice.AddEntity(ob_wms_jianhuo);
                 ViewBag.wms_jianhuo = ob_wms_jianhuo;
             }
@@ -247,6 +249,7 @@ namespace CKWMS.Controllers
                 wms_jianhuoviewmodel.Col3 = tempData.Col3;
                 wms_jianhuoviewmodel.MakeDate = tempData.MakeDate;
                 wms_jianhuoviewmodel.MakeMan = tempData.MakeMan;
+                wms_jianhuoviewmodel.Fuhe = tempData.Fuhe;
                 return View(wms_jianhuoviewmodel);
             }
         }
@@ -272,6 +275,7 @@ namespace CKWMS.Controllers
             string col3 = Request["col3"] ?? "";
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
+            string fuhe = Request["fuhe"] ?? "";
             int uid = int.Parse(id);
             try
             {
@@ -292,6 +296,7 @@ namespace CKWMS.Controllers
                 p.Col3 = col3.Trim();
                 p.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 p.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
+                p.Fuhe = fuhe == "" ? false : Boolean.Parse(fuhe);
                 ob_wms_jianhuoservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;
             }

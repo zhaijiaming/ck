@@ -217,6 +217,10 @@ namespace CKWMS.Controllers
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
             string beizhu = Request["beizhu"] ?? "";
+            string rukuid = Request["rukuid"] ?? "";
+            string yanshou = Request["yanshou"] ?? "";
+            string huopinzt = Request["huopinzt"] ?? "";
+            string shangpindm = Request["shangpindm"] ?? "";
             try
             {
                 wms_shouhuomx ob_wms_shouhuomx = new wms_shouhuomx();
@@ -247,6 +251,10 @@ namespace CKWMS.Controllers
                 ob_wms_shouhuomx.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 ob_wms_shouhuomx.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
                 ob_wms_shouhuomx.Beizhu = beizhu.Trim();
+                ob_wms_shouhuomx.RukuID = rukuid == "" ? 0 : int.Parse(rukuid);
+                ob_wms_shouhuomx.Yanshou = yanshou == "" ? false : Boolean.Parse(yanshou);
+                ob_wms_shouhuomx.HuopinZT = huopinzt == "" ? 0 : int.Parse(huopinzt);
+                ob_wms_shouhuomx.ShangpinDM = shangpindm.Trim();
                 ob_wms_shouhuomx = ob_wms_shouhuomxservice.AddEntity(ob_wms_shouhuomx);
                 ViewBag.wms_shouhuomx = ob_wms_shouhuomx;
             }
@@ -300,6 +308,7 @@ namespace CKWMS.Controllers
                     _shmx.RKMXID = _rkmx.ID;
                     _shmx.RukuID = _rkmx.RukuID;
                     _shmx.ShangpinID = _rkmx.ShangpinID;
+                    _shmx.ShangpinDM = _rkmx.ShangpinDM;
                     _shmx.ShangpinMC = _rkmx.ShangpinMC;
                     _shmx.ShangpinTM = _rkmx.ShangpinTM;
                     _shmx.Zhucezheng = _rkmx.Zhucezheng;
@@ -370,6 +379,10 @@ namespace CKWMS.Controllers
                 wms_shouhuomxviewmodel.MakeDate = tempData.MakeDate;
                 wms_shouhuomxviewmodel.MakeMan = tempData.MakeMan;
                 wms_shouhuomxviewmodel.Beizhu = tempData.Beizhu;
+                wms_shouhuomxviewmodel.RukuID = tempData.RukuID;
+                wms_shouhuomxviewmodel.Yanshou = tempData.Yanshou;
+                wms_shouhuomxviewmodel.HuopinZT = tempData.HuopinZT;
+                wms_shouhuomxviewmodel.ShangpinDM = tempData.ShangpinDM;
                 return View(wms_shouhuomxviewmodel);
             }
         }
@@ -406,6 +419,10 @@ namespace CKWMS.Controllers
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
             string beizhu = Request["beizhu"] ?? "";
+            string rukuid = Request["rukuid"] ?? "";
+            string yanshou = Request["yanshou"] ?? "";
+            string huopinzt = Request["huopinzt"] ?? "";
+            string shangpindm = Request["shangpindm"] ?? "";
             int uid = int.Parse(id);
             try
             {
@@ -436,6 +453,10 @@ namespace CKWMS.Controllers
                 p.Col3 = col3.Trim();
                 p.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 p.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
+                p.RukuID = rukuid == "" ? 0 : int.Parse(rukuid);
+                p.Yanshou = yanshou == "" ? false : Boolean.Parse(yanshou);
+                p.HuopinZT = huopinzt == "" ? 0 : int.Parse(huopinzt);
+                p.ShangpinDM = shangpindm.Trim();
                 p.Beizhu = beizhu.Trim();
                 ob_wms_shouhuomxservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;

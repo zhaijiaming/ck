@@ -201,6 +201,9 @@ namespace CKWMS.Controllers
             string col3 = Request["col3"] ?? "";
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
+            string shangpindm = Request["shangpindm"] ?? "";
+            string huopinzt = Request["huopinzt"] ?? "";
+            string jianhuo = Request["jianhuo"] ?? "";
             try
             {
                 wms_chukumx ob_wms_chukumx = new wms_chukumx();
@@ -230,6 +233,9 @@ namespace CKWMS.Controllers
                 ob_wms_chukumx.Col3 = col3.Trim();
                 ob_wms_chukumx.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 ob_wms_chukumx.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
+                ob_wms_chukumx.ShangpinDM = shangpindm.Trim();
+                ob_wms_chukumx.HuopinZT = huopinzt == "" ? 0 : int.Parse(huopinzt);
+                ob_wms_chukumx.Jianhuo = jianhuo == "" ? false : Boolean.Parse(jianhuo);
                 ob_wms_chukumx = ob_wms_chukumxservice.AddEntity(ob_wms_chukumx);
                 ViewBag.wms_chukumx = ob_wms_chukumx;
             }
@@ -277,6 +283,9 @@ namespace CKWMS.Controllers
                 wms_chukumxviewmodel.Col3 = tempData.Col3;
                 wms_chukumxviewmodel.MakeDate = tempData.MakeDate;
                 wms_chukumxviewmodel.MakeMan = tempData.MakeMan;
+                wms_chukumxviewmodel.ShangpinDM = tempData.ShangpinDM;
+                wms_chukumxviewmodel.HuopinZT = tempData.HuopinZT;
+                wms_chukumxviewmodel.Jianhuo = tempData.Jianhuo;
                 return View(wms_chukumxviewmodel);
             }
         }
@@ -312,6 +321,9 @@ namespace CKWMS.Controllers
             string col3 = Request["col3"] ?? "";
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
+            string shangpindm = Request["shangpindm"] ?? "";
+            string huopinzt = Request["huopinzt"] ?? "";
+            string jianhuo = Request["jianhuo"] ?? "";
             int uid = int.Parse(id);
             try
             {
@@ -342,6 +354,9 @@ namespace CKWMS.Controllers
                 p.Col3 = col3.Trim();
                 p.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 p.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
+                p.ShangpinDM = shangpindm.Trim();
+                p.HuopinZT = huopinzt == "" ? 0 : int.Parse(huopinzt);
+                p.Jianhuo = jianhuo == "" ? false : Boolean.Parse(jianhuo);
                 ob_wms_chukumxservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;
             }

@@ -163,7 +163,128 @@ namespace CKWMS.Controllers
             ViewBag.quan_rukuys = tempData;
             return View(tempData);
         }
+        [OutputCache(Duration =30)]
+        public ActionResult EntryCheckList(int id)
+        {
+            var _username = Session["user_name"];
+            var _userid = Session["user_id"];
+            var tempData = ob_quan_rukuysservice.GetEntrycheckByRK(id);
+            ViewBag.userid = _userid;
+            ViewBag.username = _username;
+            ViewBag.quan_entrycheck = tempData;
+            return View();
+        }
+        public JsonResult AddCheckPart()
+        {
+            int _userid = (int)Session["user_id"];
+            string _shmxid = Request["shmx"] ?? "";
+            string _ysslok = Request["oknum"] ?? "";
+            string _ysslng = Request["ngnum"] ?? "";
+            string _ysresult = Request["ys"] ?? "";
+            string _ysren = Request["ysr"] ?? "";
+            string _yssm = Request["yssm"] ?? "";
+            try
+            {
+                if (int.Parse(_shmxid) == 0 || _shmxid.Length == 0)
+                    return Json(-1);
+                wms_shouhuomx _orishmx = ServiceFactory.wms_shouhuomxservice.GetEntityById(p => p.ID ==int.Parse(_shmxid));
+                if (_orishmx == null)
+                    return Json(-1);
+                wms_shouhuomx _newshmx = new wms_shouhuomx();
+                _newshmx.BaozhuangDW = _orishmx.BaozhuangDW;
+                _newshmx.Beizhu = _orishmx.Beizhu;
+                _newshmx.Chandi = _orishmx.Chandi;
+                _newshmx.Changjia = _orishmx.Changjia;
+                _newshmx.Guige = _orishmx.Guige;
+                _newshmx.Huansuanlv = _orishmx.Huansuanlv;
+                _newshmx.HuopinZT = _orishmx.HuopinZT;
+                _newshmx.JibenDW = _orishmx.JibenDW;
+                _newshmx.Jifeidun = _orishmx.Jifeidun;
+                _newshmx.Jingzhong = _orishmx.Jingzhong;
+                _newshmx.MakeDate = _orishmx.MakeDate;
+                _newshmx.MakeMan = _orishmx.MakeMan;
+                _newshmx.Pihao= _orishmx.Pihao;
+                _newshmx.Pihao1 = _orishmx.Pihao1;
+                _newshmx.RKMXID = _orishmx.RKMXID;
+                _newshmx.RukuID = _orishmx.RukuID;
+                _newshmx.ShangpinDM = _orishmx.ShangpinDM;
+                _newshmx.ShangpinID = _orishmx.ShangpinID;
+                _newshmx.ShangpinMC = _orishmx.ShangpinMC;
+                _newshmx.ShangpinTM = _orishmx.ShangpinTM;
+                _newshmx.ShengchanRQ = _orishmx.ShengchanRQ;
+                _newshmx.ShixiaoRQ = _orishmx.ShixiaoRQ;
+                _newshmx.Shuliang = _orishmx.Shuliang;
+                _newshmx.Tiji = _orishmx.Tiji;
+                _newshmx.Xuliema = _orishmx.Xuliema;
+                _newshmx.Yanshou= _orishmx.Yanshou;
+                _newshmx.Zhongliang = _orishmx.Zhongliang;
+                _newshmx.Zhucezheng = _orishmx.Zhucezheng;
+                _newshmx.IsDelete = _orishmx.IsDelete;
+                _newshmx=ServiceFactory.wms_shouhuomxservice.AddEntity(_newshmx);
 
+                quan_rukuys ob_quan_rukuys = new quan_rukuys();
+                ob_quan_rukuys.MingxiID = _orishmx.ID;
+                ob_quan_rukuys.YanshouSL = _ysslok == "" ? 0 : float.Parse(_ysslok);
+                ob_quan_rukuys.Yanshou = 1;
+                ob_quan_rukuys.Yanshouren = _ysren.Trim();
+                ob_quan_rukuys.YanshouSM = _yssm.Trim();
+                ob_quan_rukuys.YanshouZT = 3;
+                ob_quan_rukuys.MakeDate = DateTime.Now;
+                ob_quan_rukuys.MakeMan = _userid;
+                ob_quan_rukuys = ob_quan_rukuysservice.AddEntity(ob_quan_rukuys);
+
+                _orishmx.Shuliang= _ysslok == "" ? 0 : float.Parse(_ysslok);
+                ServiceFactory.wms_shouhuomxservice.UpdateEntity(_orishmx);
+
+                quan_rukuys ob_quan_rukuys1 = new quan_rukuys();
+                ob_quan_rukuys1.MingxiID = _newshmx.ID;
+                ob_quan_rukuys1.YanshouSL = _ysslng == "" ? 0 : float.Parse(_ysslng);
+                ob_quan_rukuys1.Yanshou = 3;
+                ob_quan_rukuys1.Yanshouren = _ysren.Trim();
+                ob_quan_rukuys1.YanshouSM = _yssm.Trim();
+                ob_quan_rukuys1.YanshouZT = 3;
+                ob_quan_rukuys1.MakeDate = DateTime.Now;
+                ob_quan_rukuys1.MakeMan = _userid;
+                ob_quan_rukuys1 = ob_quan_rukuysservice.AddEntity(ob_quan_rukuys1);
+
+                _newshmx.Shuliang= _ysslng == "" ? 0 : float.Parse(_ysslng);
+                ServiceFactory.wms_shouhuomxservice.UpdateEntity(_newshmx);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return Json(-1);
+            }
+            return Json(1);
+        }
+        public JsonResult AddCheck()
+        {
+            int _userid = (int)Session["user_id"];
+            string _shmxid = Request["shmx"] ?? "";
+            string _yssl = Request["sl"] ?? "";
+            string _ysresult = Request["ys"] ?? "";
+            string _ysren = Request["ysr"] ?? "";
+            string _yssm = Request["yssm"] ?? "";
+            try
+            {
+                quan_rukuys ob_quan_rukuys = new quan_rukuys();
+                ob_quan_rukuys.MingxiID = _shmxid == "" ? 0 : int.Parse(_shmxid);
+                ob_quan_rukuys.YanshouSL = _yssl == "" ? 0 : float.Parse(_yssl);
+                ob_quan_rukuys.Yanshou = _ysresult == "" ? 0 : int.Parse(_ysresult);
+                ob_quan_rukuys.Yanshouren = _ysren.Trim();
+                ob_quan_rukuys.YanshouSM = _yssm.Trim();
+                ob_quan_rukuys.YanshouZT = 3;
+                ob_quan_rukuys.MakeDate = DateTime.Now;
+                ob_quan_rukuys.MakeMan =_userid;
+                ob_quan_rukuys = ob_quan_rukuysservice.AddEntity(ob_quan_rukuys);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return Json(-1);
+            }
+            return Json(1);
+        }
         public ActionResult Add()
         {
             ViewBag.userid = (int)Session["user_id"];

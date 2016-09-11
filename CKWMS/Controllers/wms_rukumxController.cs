@@ -270,6 +270,7 @@ namespace CKWMS.Controllers
             string col3 = Request["col3"] ?? "";
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
+            string shangpindm = Request["shangpindm"] ?? "";
             try
             {
                 wms_rukumx ob_wms_rukumx = new wms_rukumx();
@@ -301,6 +302,7 @@ namespace CKWMS.Controllers
                 ob_wms_rukumx.Col3 = col3.Trim();
                 ob_wms_rukumx.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 ob_wms_rukumx.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
+                ob_wms_rukumx.ShangpinDM = shangpindm.Trim();
                 ob_wms_rukumx = ob_wms_rukumxservice.AddEntity(ob_wms_rukumx);
                 ViewBag.wms_rukumx = ob_wms_rukumx;
             }
@@ -350,6 +352,7 @@ namespace CKWMS.Controllers
                 wms_rukumxviewmodel.Col3 = tempData.Col3;
                 wms_rukumxviewmodel.MakeDate = tempData.MakeDate;
                 wms_rukumxviewmodel.MakeMan = tempData.MakeMan;
+                wms_rukumxviewmodel.ShangpinDM = tempData.ShangpinDM;
                 return View(wms_rukumxviewmodel);
             }
         }
@@ -387,6 +390,7 @@ namespace CKWMS.Controllers
             string col3 = Request["col3"] ?? "";
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
+            string shangpindm = Request["shangpindm"] ?? "";
             int uid = int.Parse(id);
             try
             {
@@ -419,6 +423,7 @@ namespace CKWMS.Controllers
                 p.Col3 = col3.Trim();
                 p.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 p.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
+                p.ShangpinDM = shangpindm.Trim();
                 ob_wms_rukumxservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;
             }

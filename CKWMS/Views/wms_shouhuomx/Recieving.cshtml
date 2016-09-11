@@ -86,9 +86,8 @@
                                 var _ornum = _seltr.find('td').eq(11).html();
                                 var _orys = _seltr.find('td').eq(12).html();
                                 _seltr.find('td').eq(12).html(eval(_num) + eval(_orys));
-                                if (eval(_ornum) == eval(_num))
-                                {
-                                    if (eval(_orys) > 0)
+                                if (eval(_ornum) == eval(_num)) {
+                                    if (_seltr.hasClass("red"))
                                         _seltr.removeClass("red");
                                     _seltr.addClass("green");
                                 }
@@ -136,8 +135,7 @@
                                     var _ornum = _seltr.find('td').eq(11).html();
                                     var _orys = _seltr.find('td').eq(12).html();
                                     _seltr.find('td').eq(12).html(eval(_orys) - eval(_delnum));
-                                    if (eval(_ornum) == eval(_num))
-                                    {
+                                    if (eval(_ornum) == eval(_num)) {
                                         if (eval(_orys) > 0)
                                             _seltr.removeClass("red");
                                         _seltr.addClass("green");
@@ -190,10 +188,12 @@
                         filltable = filltable + data[i].ID;
                         filltable = filltable + '" data-mx="';
                         filltable = filltable + data[i].RKMXID;
+                        filltable = filltable + '" data-ys="';
+                        filltable = filltable + data[i].Yanshou;
                         filltable = filltable + '" data-sl="';
                         filltable = filltable + data[i].Shuliang;
                         filltable = filltable + '"></label></div></td><td>';
-                        filltable = filltable + data[i].ShangpinTM;
+                        filltable = filltable + data[i].ShangpinDM;
                         filltable = filltable + '</td><td>';
                         filltable = filltable + data[i].ShangpinMC;
                         filltable = filltable + '</td><td>';
@@ -227,6 +227,10 @@
                         filltable = filltable + '</td></tr>';
                     }
                     $("#dt_sh tbody").html(filltable);
+                    $("#dt_sh tbody tr").each(function () {
+                        if (eval($(this).find("input").data("ys")))
+                            $(this).addClass("blue");
+                    });
                 });
     }
     function AddInfo() {
@@ -280,7 +284,7 @@
                 <tr>
                     <td><span id="selall">全选</span></td>
                     <td>收货</td>
-                    <td>商品条码</td>
+                    <td>商品代码</td>
                     <td>商品名称</td>
                     <td>注册证</td>
                     <td>规格型号</td>
@@ -328,12 +332,12 @@
                                            data-cj="@item.Changjia"
                                            data-cd="@item.Chandi"
                                            data-bz="@item.Beizhu"
-                                           data-sptm="@item.ShangpinTM">
+                                           data-sptm="@item.ShangpinDM">
                                 </label>
                             </div>
                         </td>
                         <td><p class="blue" title="完整收货"><i class="icon-briefcase"></i></p></td>
-                        <td>@item.ShangpinTM</td>
+                        <td>@item.ShangpinDM</td>
                         <td>@item.ShangpinMC</td>
                         <td>@item.Zhucezheng</td>
                         <td>@item.Guige</td>
@@ -356,12 +360,12 @@
         </table>
     </div>
     <div id="shlist" class="row" style="height:500px;overflow:auto;">
-        <table class="table" id="dt_sh">
+        <table class="table table-condensed" id="dt_sh">
             <caption></caption>
             <thead>
                 <tr>
                     <td></td>
-                    <td>商品条码</td>
+                    <td>商品代码</td>
                     <td>商品名称</td>
                     <td>注册证</td>
                     <td>规格型号</td>

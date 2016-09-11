@@ -10,7 +10,7 @@
             $("#MakeDate").datepicker();
             $("#ShengchanRQ").datepicker();
             $("#ShixiaoRQ").datepicker();
-            $("#pl_shangpin").draggable();
+            $("#pl_shangpin").draggable({ handle: ".panel-heading" });
             $("#bt_selsp").click(function () {
                 if (!_spload) {
                     getShangPin();
@@ -25,6 +25,7 @@
                     if (this.checked) {
                         $("#spid").val($(this).val());
                         $("#ShangpinMC").val($(this).data("mc"));
+                        $("#ShangpinDM").val($(this).data("dm"));
                         $("#Zhucezheng").val($(this).data("zcz"));
                         $("#Guige").val($(this).data("gg"));
                         $("#JibenDW").val($(this).data("dw"));
@@ -44,6 +45,7 @@
                     var u_idd = u_id.val();
                     if (u_idd != null) {
                         $("#ShangpinMC").val(u_id.data("mc"));
+                        $("#ShangpinDM").val(u_id.data("dm"));
                         $("#Zhucezheng").val(u_id.data("zcz"));
                         $("#Guige").val(u_id.data("gg"));
                         $("#JibenDW").val(u_id.data("dw"));
@@ -149,6 +151,12 @@
                     </div>
                     <div class="col-sm-2">
                         <p id="bt_selsp" class="form-control btn center"><i class="icon-leaf red"></i>选择商品</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ShangpinDM, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.ShangpinDM, new { @class = "form-control" })
                     </div>
                 </div>
                 <div class="form-group">
@@ -305,7 +313,7 @@
                 <p class="btn default" id="pl_refresh"><i class="icon-refresh"></i>刷新</p>
             </div>
             <div class="row" style="width:782px;height:500px;overflow:auto;">
-                <table class="table" id="mydatatable">
+                <table class="table table-condensed" id="mydatatable">
                     <caption></caption>
                     <thead>
                         <tr>

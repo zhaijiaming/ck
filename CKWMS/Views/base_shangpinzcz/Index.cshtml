@@ -207,7 +207,7 @@
                 </thead>
                 <tbody>
                     @foreach (var item in ViewBag.base_shangpinzcz)
-                {
+                    {
                         <tr>
                             <td>
                                 <div class="checkbox">
@@ -220,7 +220,7 @@
                             <td><button class="btn guige">浏览</button></td>
                             <td>@item.Bianzhun</td>
                             <td>@item.ZhucezhengYXQ.ToString("yyyy-MM-dd")</td>
-                            <td>@item.PizhunRQ.ToString("yyyy-MM-dd")</td>
+                            <td>@string.Format("{0:yyyy-MM-dd}", item.PizhunRQ==null?"":item.PizhunRQ)</td>
                             @*<td>@item.MakeDate.ToString("yyyy-MM-dd")</td>*@
                             <td>@item.BianhaoZW</td>
                             <td>@item.Chandi</td>

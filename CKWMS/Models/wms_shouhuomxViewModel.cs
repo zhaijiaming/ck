@@ -69,6 +69,12 @@ namespace CKWMS.Models
         public bool IsDelete { get; set; }
         [Display(Name = "入库序号")]
         public int? RukuID { get; set; }
+        [Display(Name = "验收")]
+        public bool Yanshou { get; set; }
+        [Display(Name = "货品状态")]
+        public int? HuopinZT { get; set; }
+        [Display(Name = "商品代码")]
+        public string ShangpinDM { get; set; }
     }
 }
 
