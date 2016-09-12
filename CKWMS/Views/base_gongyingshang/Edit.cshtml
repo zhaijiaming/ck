@@ -71,14 +71,13 @@
 
     $(document).ready(function () {
         //$("#pl_Fanwei").hide();
-        $("#pl_Fanwei").draggable({ handle: '.tuodong' });
+        $("#pl_Fanwei").draggable({ handle: '.tuodong' }, { containment: [-1000,50,1300,600] });
         $("#ob_base_gongyingshang_makedate").datepicker();
         $("#ob_base_gongyingshang_yingyezhizhaoyxq").datepicker();
         $("#ob_base_gongyingshang_jingyingxukeyxq").datepicker();
         $("#ob_base_gongyingshang_beianyxq").datepicker();
         $("#ob_base_gongyingshang_beianpzrq").datepicker();
         $("#ob_base_gongyingshang_xukepzrq").datepicker();
-        //$('.bkbj').attr("disabled", true);
 
         if ($(".sc").html() == "True") {
             $(".shencha").attr("checked", true);
@@ -93,8 +92,11 @@
             $(".hezuo").attr("checked", false);
         }
 
-        GetFanwei1();
+        var bj = 0;
+        GetFanwei1(bj);
+
         $("#bt_fanwei_showall").click(function () {
+            var bj = 1;
             var tempid = "";
             $("#qxdatatable tr input[type=checkbox]").each(function () {
                 if (this.checked) {
@@ -121,66 +123,28 @@
                 tempid = tempid + xiaolei[k] + ";";
             }
             tempid = tempid.substring(0, tempid.length - 1);
-            GetFanwei();
-            setTimeout(function () {
-                var fw = document.getElementsByClassName('xulieid');
-                var i = tempid;
-                var t = i.split(";");
-                for (var k = 0; k < t.length; k++) {
-                    for (var l = 0; l < fw.length; l++) {
-                        if (t[k] == $(".xulieid").eq(l).val())
-                            $("#qxdatatable tr input[type=checkbox]").eq(l).attr("checked", true);
-                    }
-                }
-            }, 500)
+            GetFanwei(bj, tempid);
         });
 
         $("#bt_fanwei_showdalei").click(function () {
-            GetFanwei1();
-            setTimeout(function () {
-                GetData();
-            }, 500)
+            var bj = 1;
+            var tempid = "";
+            $("#qxdatatable tr input[type=checkbox]").each(function () {
+                if (this.checked) {
+                    tempid = tempid + $(this).parent().find(".xulieid").val() + ";";
+                }
+            });
+            GetFanwei1(bj, tempid);
         });
 
 
         $("#pl_close").click(function () {
             $("#pl_Fanwei").hide();
-        });
+            var bj = 0;
+            GetFanwei1(bj);
+        });       
 
-        $("form").validate({
-            rules: {
-                ob_base_gongyingshang_daima: { required: true },
-                ob_base_gongyingshang_mingcheng: { required: true },
-            },
-            messages: {
-                ob_base_gongyingshang_daima: { required: "请输入daima" },
-                ob_base_gongyingshang_mingcheng: { required: "请输入mingcheng" },
-            }
-        });
-
-        $("#bt_fanwei_add").click(function () {
-            //获取小类字符串
-            var fw = document.getElementsByClassName('xulieid');
-            var i = $("#jingyingfanweijianma").val();
-            var ti = i.split(";");
-            //ti.splice(ti.length - 1);
-            var j = $("#jingyingfanwei").val();
-            var tj = j.split(";");
-            //tj.splice(ti.length - 1);
-            //var xiaolei = new Array();
-            //var miaoshu = new Array();
-            //var x = 0;
-            //for (var k = 0; k < ti.length; k++, x = 0) {
-            //    for (var l = 0; l < fw.length; l++) {
-            //        if (ti[k] == $(".xulieid").eq(l).val()) {
-            //            x = 1;
-            //        }
-            //    }
-            //    if (x != 1) {
-            //        xiaolei.push(ti[k]);
-            //        miaoshu.push(tj[k]);
-            //    }
-            //}
+        $("#bt_fanwei_add").click(function () {           
             var _jyfw = "";
             var _jyfw1 = "";
             var _jyfw2 = "";
@@ -209,14 +173,6 @@
             if (_jyfw1 == "")
                 _jyfw = _jyfw.replace("一类:", "");
 
-            //for (k = 0; k < xiaolei.length; k++) {
-            //    _jyfwjm = _jyfwjm + xiaolei[k] + ";";
-            //}
-            //_jyfwjm = _jyfwjm.substring(0, _jyfwjm.length - 1);
-            //for (k = 0; k < miaoshu.length; k++) {
-            //    _jyfw = _jyfw + miaoshu[k] + ";";
-            //}
-            //_jyfw = _jyfw.substring(0, _jyfw.length - 1);
             var _addok = confirm("确定要修改经营范围吗？");
             if (_addok) {
                 if (_jyfw.length >= 512) {
@@ -226,10 +182,11 @@
                     $("#jingyingfanwei").val(_jyfw);
                     $("#jingyingfanweijianma").val(_jyfwjm);
                     $("#pl_Fanwei").hide();
+                    var bj = "0";
                 }
             }
             $("#guanlifenlei").val("全部");
-            GetFanwei1();
+            GetFanwei1(bj);
         });
         //选择管理分类
         $("#guanlifenlei").change(function () {
@@ -263,11 +220,20 @@
                 $(".bg").show();
             }
         });
+        $("form").validate({
+            rules: {
+                ob_base_gongyingshang_daima: { required: true },
+                ob_base_gongyingshang_mingcheng: { required: true },
+            },
+            messages: {
+                ob_base_gongyingshang_daima: { required: "请输入daima" },
+                ob_base_gongyingshang_mingcheng: { required: "请输入mingcheng" },
+            }
+        });
     });
 
     //经营范围
     function Bt_Fanweiadd() {
-        GetData();
         document.getElementById("pl_Fanwei").removeAttribute("hidden");
         $("#pl_Fanwei").show();
     }
@@ -279,9 +245,9 @@
         $(".xulieid").prop("checked", false);
     }
 
-
-
-    function GetFanwei1() {
+    function GetFanwei1(a,b) {
+        var bj = a;
+        var tempid = b;
         //var _qxmlid = $("#qxml").val();
         var filltable = "";
         $.post(
@@ -304,11 +270,14 @@
                         filltable = filltable + '</span></td></tr>';
                     }
                     $("#pl_Fanwei tbody").html(filltable);
+                    GetData(bj, tempid)
                 });
         //GetData();
     }
 
-    function GetFanwei() {
+    function GetFanwei(a,b) {
+        var bj = a;
+        var tempid = b;
         //var _qxmlid = $("#qxml").val();
         var filltable = "";
         $.post(
@@ -331,12 +300,17 @@
                         filltable = filltable + '</span></td></tr>';
                     }
                     $("#pl_Fanwei tbody").html(filltable);
+                    GetData(bj, tempid)
                 });
     }
 
-    function GetData() {
+    function GetData(a, tempid) {
         var fw = document.getElementsByClassName('xulieid');
-        var i = $("#jingyingfanweijianma").val();
+        var bj = a;
+        var i = tempid;
+        if (bj == 0) {
+            var i = $("#jingyingfanweijianma").val();
+        }
         var t = i.split(";");
 
         //$(".bh").siblings().children().find(".checkbox").attr("checked", true);
@@ -349,31 +323,6 @@
             for (var l = 0; l < fw.length; l++) {
                 if (t[k] == $(".xulieid").eq(l).val())
                     $("#qxdatatable tr input[type=checkbox]").eq(l).attr("checked", true);
-            }
-        }
-    }
-
-    function FenLei() {
-        var fw = document.getElementsByClassName('xulieid');
-        var i = $("#jingyingfanweijianma").val();
-        var ti = i.split(";");
-        ti.splice(ti.length - 1);
-        var j = $("#jingyingfanwei").val();
-        var tj = j.split(";");
-        tj.splice(ti.length - 1);
-        var xiaolei = new Array();
-        var miaoshu = new Array();
-        var hh = "";
-        var x = 0;
-        for (var k = 0; k < ti.length; k++, x = 0) {
-            for (var l = 0; l < fw.length; l++) {
-                if (ti[k] == $(".xulieid").eq(l).val()) {
-                    x = 1;
-                }
-            }
-            if (x != 1) {
-                xiaolei.push(ti[k]);
-                miaoshu.push(tj[k]);
             }
         }
     }
@@ -393,7 +342,6 @@
             $("#daima").val(response);
         });
     }
-
 
 </script>
 <div class="modal fade" id="myModalUpload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -647,8 +595,8 @@
             <button type="button" class="btn btn-default " id="bt_fanwei_add"><i class="icon-add"></i>确定</button>
             <button type="button" class="btn btn-default " id="bt_fanwei_all" onclick="bt_fanwei_all()">全选</button>
             <button type="button" class="btn btn-default " id="bt_fanwei_clear" onclick="bt_fanwei_clear()">全部取消</button>
-            <button type="button" class="btn btn-default " id="bt_fanwei_showdalei" >显示大类</button>
-            <button type="button" class="btn btn-default " id="bt_fanwei_showall" >显示全部</button>
+            <button type="button" class="btn btn-default " id="bt_fanwei_showdalei">显示大类</button>
+            <button type="button" class="btn btn-default " id="bt_fanwei_showall">显示全部</button>
             <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;管理类别</label>
             <select name="guanlifenlei" id="guanlifenlei">
                 <option value="全部">全部</option>
@@ -675,3 +623,5 @@
 
 <td><span class="sc" style="display:none">@item.ShenchaSF</span></td>
 <td><span class="hz" style="display:none">@item.HezuoSF</span></td>
+
+

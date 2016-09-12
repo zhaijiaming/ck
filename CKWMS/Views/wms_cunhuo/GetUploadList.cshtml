@@ -1,0 +1,256 @@
+﻿@using CKWMS.App_Code
+@using CKWMS.Models
+@using X.PagedList
+@using X.PagedList.Mvc
+@{
+    ViewBag.Title = "入库上架";
+    string _searchcondition = ViewBag.SearchCondition;
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("tr").bind("dblclick", function () {
+            var _sl = $(this).find('td').eq(13).html();
+            if (eval(_sl) <= 0)
+                return;
+            var u_id = $(this).find('input');
+            if (confirm("确实要删除此上架记录吗？") == true) {
+                var _sjid = u_id.data("sid");
+                $.post("/wms_cunhuo/delete", { del: _sjid }, function (data) { location.reload(); });
+            }
+        });
+        $(".icon-columns").click(function () {
+            var _selrow = $(this).parent().parent();
+            var _sdata = _selrow.find("input");
+            var _onum = _selrow.find('td').eq(10).html();
+            if (_selrow.hasClass("green"))
+                return;
+            _selrow.addClass("blue");
+            $("#orinum").val(_onum);
+            $("#shmx").val(_sdata.val());
+            $("#maxupload").val(eval(_onum) - eval(_sdata.data("sj")));
+            $("#cargostate").val(_sdata.data("hg"));
+            $("#sjSL").val($("#maxupload").val());
+            $("#sjren").val($("#username").val());
+            $("#sjzl").val(_sdata.data("zl"));
+            $("#sjjz").val(_sdata.data("jz"));
+            $("#sjtj").val(_sdata.data("tj"));
+            $("#pl_yanshou").show();
+        });
+        $("#pl_close").click(function () {
+            $("#pl_yanshou").hide();
+        });
+        $("#pl_yanshou").draggable();
+        $("#sjcancel").click(function () {
+            $("#pl_yanshou").hide();
+        });
+        $("#kuwei").blur(function () {
+        });
+        $("#sjsave").click(function () {
+            var _ysnum = $("#sjSL").val();
+            if (eval(_ysnum) <= 0) {
+                alert("上架数量不对，请重新输入！");
+                return;
+            }
+            if (eval(_ysnum) > $("#maxupload")) {
+                alert("超出了可上架数量，请重新录入！");
+                return;
+            }
+            var hege = true;
+            if (eval($("#cargostate").val()) == 3)
+                hege = false;
+            $.post("/wms_cunhuo/addupload", {
+                shmx: $("#shmx").val(),
+                hg: hege,
+                sl: $("#sjSL").val(),
+                kw: $("#kuwei").val(),
+                kid: $("#kid").val(),
+                sjr: $("#sjren").val(),
+                zl: $("#sjzl").val(),
+                jz: $("#sjjz").val(),
+                tj: $("#sjtj").val(),
+                sm: $("#sjSM").val()
+            }, function (data) {
+                if (data == -1)
+                    alert("货品上架失败，请重新操作！");
+                else
+                    location.reload();
+            });
+        });
+        $("#sjSL").blur(function () {
+            var _ssl = $("#sjSL").val();
+            var _orn = $("#orinum").val();
+            var _ml = $("#maxupload").val();
+            if (eval(_ssl) > eval(_ml)) {
+                alert("上架数量不对，请更正！");
+                return;
+            }
+            var _rt = eval(_ssl) / eval(_orn);
+            $("#mydatatable tbody tr").each(function () {
+                var _selv = $(this).find("input");
+                if (_selv.val() == $("#shmx").val()) {
+                    $("#sjzl").val(_rt * eval(_selv.data("zl")));
+                    $("#sjjz").val(_rt * eval(_selv.data("jz")));
+                    $("#sjtj").val(_rt * eval(_selv.data("tj")));
+                    return;
+                }
+            });
+        });
+        $("#mydatatable tbody tr").each(function () {
+            var _sl = $(this).find('td').eq(10).html();
+            var _sj = $(this).find("input").data("sj");
+            try {
+                if (eval(_sl) == eval(_sj)) {
+                    $(this).addClass("green");
+                }
+                else {
+                    if (eval(_sj) > 0)
+                        $(this).addClass("blue");
+                }
+            }
+            catch (err) {
+            }
+        });
+    });
+</script>
+
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    </script>
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="/Home">首页</a>
+        </li>
+        <li class="active">货品上架</li>
+    </ul>
+</div>
+<div class="page-content">
+    <input type="hidden" id="shmx" />
+    <input type="hidden" id="username" value="@ViewBag.username" />
+    <input type="hidden" id="userid" value="@ViewBag.userid" />
+    <input type="hidden" id="maxupload" />
+    <input type="hidden" id="orinum" />
+    <input type="hidden" id="cargostate" />
+    <input type="hidden" id="kid" value="0" />
+    <div class="row">
+        <table class="table table-condensed" id="mydatatable">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>上架</td>
+                    <td>商品名称</td>
+                    <td>注册证</td>
+                    <td>规格</td>
+                    <td>批号</td>
+                    <td>次批号</td>
+                    <td>序列码</td>
+                    <td>生产日期</td>
+                    <td>失效日期</td>
+                    <td>数量</td>
+                    <td>厂家</td>
+                    <td>产地</td>
+                    <td>上架数量</td>
+                    <td>库位</td>
+                    <td>上架人</td>
+                    <td>货品说明</td>
+                    <td>上架日期</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.wms_upload)
+                {
+                    <tr>
+                        <td>
+                            <label>
+                                <input type="checkbox" value="@item.ID"
+                                       data-hg="@item.HuopinZT"
+                                       data-sid="@item.sid"
+                                       data-kw="@item.KuweiID"
+                                       data-tj="@item.Tiji"
+                                       data-zl="@item.Zhongliang"
+                                       data-jz="@item.Jingzhong"
+                                       data-jf="@item.Jifeidun"
+                                       data-sj="@item.ShangjiaSL">
+                            </label>
+                        </td>
+                        <td><i class="icon-columns"></i></td>
+                        <td>@item.ShangpinMC</td>
+                        <td>@item.Zhucezheng</td>
+                        <td>@item.Guige</td>
+                        <td>@item.Pihao</td>
+                        <td>@item.Pihao1</td>
+                        <td>@item.Xuliema</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ)</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ)</td>
+                        <td>@item.Shuliang</td>
+                        <td>@item.Changjia</td>
+                        <td>@item.Chandi</td>
+                        <td>@item.sshuliang</td>
+                        <td>@item.Kuwei</td>
+                        <td>@Html.GetDataValue_ID("userinfo", "fullname", (int)(item.MakeMan == null ? 0 : item.MakeMan))</td>
+                        <td>@item.CunhuoSM</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.MakeDate == null ? "" : item.MakeDate)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    @*<div class="pager">
+            @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+        </div>*@
+</div>
+<div id="pl_yanshou" class="panel panel-info" style="display:none;position:absolute;top:100px;left:200px;width:600px;height:420px;z-index:999;">
+    <div class="panel-heading">
+        <h3 class="panel-title">货品上架<button id="pl_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="sjren">上架人</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="sjren" name="sjren" type="text" value="@ViewBag.username" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="sjSL">上架数量</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="sjSL" name="sjSL" type="text" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="kuwei">库位</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="kuwei" name="kuwei" type="text" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="sjzl">重量</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="sjzl" name="sjzl" type="text" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="sjjz">净重</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="sjjz" name="sjjz" type="text" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="sjtj">体积</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="sjtj" name="sjtj" type="text" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="sjSM">上架说明</label>
+        </div>
+        <div class="form-group">
+            <textarea class="form-control" id="sjSM" name="sjSM"></textarea>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-6 center"><p id="sjsave" class="btn btn-default"><i class="icon-save"></i>完成</p></div>
+            <div class="col-sm-6 center"><p id="sjcancel" class="btn btn-default"><i class="glyphicon-backward"></i>取消</p></div>
+        </div>
+    </div>
+</div>

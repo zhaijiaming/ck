@@ -5,9 +5,14 @@
     ViewBag.Title = "销售人员修改";
 }
 
+@Html.GetFileUpload("shenfenzheng0tp", "sfz0", "z", "xs", 3, 0, new Dictionary<string, string>() { { "sfz0", "shenfenzheng0tp" }, { "sfz1", "shenfenzheng1tp" }, { "sqs", "shouquanshutp" } })
+
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        $(document).ready(function () {
+            $("#ShouquanshuYXQ").datepicker();
+        });
     </script>
     <ul class="breadcrumb">
         <li>
@@ -26,6 +31,10 @@
     {
         @Html.AntiForgeryToken()
         <input type="hidden" name="id" value="@ViewData.Model.ID" />
+        <input type="hidden" id="btnSelect" value="" />
+        <input type="hidden" id="MakeMan" name="MakeMan" value=@Session["user_id"] />
+        <input type="hidden" name="MakeDate" value=@string.Format("{0:yyyy-MM-dd}",DateTime.Now) />
+        <input type="hidden" id="Shouying" name="Shouying" value="@ViewData.Model.Shouying" />
         <div class="page-header">
             <p>
                 <button type="submit" class="btn btn-default"><i class="icon-save"></i>更新</button>
@@ -33,7 +42,7 @@
             </p>
         </div>
         <div class="container">
-            <div class="form-group">
+            <div class="form-group" style="display:none">
                 @Html.LabelFor(m => m.Leibie, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.Leibie, new { @class = "form-control" })
@@ -42,13 +51,14 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.ShouquanID, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.ShouquanID, new { @class = "form-control" })
+                    @*@Html.TextBoxFor(m => m.ShouquanID, new { @class = "form-control" })*@
+                    @Html.SelectList_Auto("shouquanid", "货主", "都有", (long)ViewData.Model.ShouquanID)
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="display:none">
                 @Html.LabelFor(m => m.Shouquanmingcheng, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Shouquanmingcheng, new { @class = "form-control" })
+                    @*@Html.TextBoxFor(m => m.Shouquanmingcheng, new { @class = "form-control" })*@
                 </div>
             </div>
             <div class="form-group">
@@ -66,49 +76,89 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.ShenfenzhengBH, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.ShenfenzhengBH, new { @class = "form-control" })
+                    @Html.TextBoxFor(m => m.ShenfenzhengBH, new { @class = "form-control",
+                   data_val = "true",
+                   maxlength = 18,
+                   minlength = 18,
+                   data_val_required = "身份证号码格式错误"
+               })
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.Shenfenzheng0TP, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Shenfenzheng0TP, new { @class = "form-control" })
+                @*<div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.Shenfenzheng0TP, new { @class = "form-control", id = "sfz0" })
+                </div>*@
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" readonly id="shenfenzheng0tp" name="shenfenzheng0tp" value="@ViewData.Model.Shenfenzheng0TP">
+                </div>
+                <div class="col-sm-2">
+                    <button class="form-control" data-toggle="modal" data-target="#myModalUpload" onclick="btn1()">上传</button>
+                </div>
+                <div class="col-sm-2">
+                    <span class="form-control" id="sfz0">
+                        <a href="/files/zhengzhao/@ViewData.Model.Shenfenzheng0TP" target="_blank">浏览</a>
+                    </span>
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.Shenfenzheng1TP, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Shenfenzheng1TP, new { @class = "form-control" })
+                @*<div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.Shenfenzheng1TP, new { @class = "form-control", id = "sfz1" })
+                </div>*@
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" readonly id="shenfenzheng1tp" name="shenfenzheng1tp" value="@ViewData.Model.Shenfenzheng1TP">
+                </div>
+                <div class="col-sm-2">
+                    <button class="form-control" data-toggle="modal" data-target="#myModalUpload" onclick="btn2()">上传</button>
+                </div>
+                <div class="col-sm-2">
+                    <span class="form-control" id="sfz1">
+                        <a href="/files/zhengzhao/@ViewData.Model.Shenfenzheng1TP" target="_blank">浏览</a>
+                    </span>
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.ShouquanshuYXQ, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" name="ShouquanshuYXQ" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.ShouquanshuYXQ)">
+                    <input type="date" class="form-control" name="shouquanshuyxq" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.ShouquanshuYXQ)" id="ShouquanshuYXQ" >
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.ShouquanshuTP, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.ShouquanshuTP, new { @class = "form-control" })
+                @*<div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.ShouquanshuTP, new { @class = "form-control", id = "sqs" })
+                </div>*@
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" readonly id="shouquanshutp" name="shouquanshutp" value="@ViewData.Model.ShouquanshuTP">
+                </div>
+                <div class="col-sm-2">
+                    <button class="form-control" data-toggle="modal" data-target="#myModalUpload" onclick="btn3()">上传</button>
+                </div>
+                <div class="col-sm-2">
+                    <span class="form-control" id="sqs">
+                        <a href="/files/zhengzhao/@ViewData.Model.ShouquanshuTP" target="_blank">浏览</a>
+                    </span>
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.Shouying, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Shouying, new { @class = "form-control" })
+                    @*@Html.TextBoxFor(m => m.Shouying, new { @class = "form-control" })*@
+                    <input type="text" readonly class="form-control" value="@Html.GetCommonValue_ID("首营状态", (int)ViewData.Model.Shouying)" />
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.MakeDate, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" name="MakeDate" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.MakeDate)">
+                    <input type="date" readonly class="form-control" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.MakeDate)">
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.MakeMan, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.SelectList_Auto("MakeMan", "userinfo", "fullname", (long)ViewData.Model.MakeMan)
+                    @*@Html.SelectList_Auto("MakeMan", "userinfo", "fullname", (long)ViewData.Model.MakeMan)*@
+                    <input type="text" readonly class="form-control" value="@Html.GetDataValue_ID("userinfo", "全名", (int)ViewData.Model.MakeMan)" />
                 </div>
             </div>
         </div>

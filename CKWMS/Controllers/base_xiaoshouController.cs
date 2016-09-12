@@ -87,6 +87,9 @@ namespace CKWMS.Controllers
             string leibie = Request["leibie"] ?? "";
             string leibieequal = Request["leibieequal"] ?? "";
             string leibieand = Request["leibieand"] ?? "";
+            string xingming = Request["xingming"] ?? "";
+            string xingmingequal = Request["xingmingequal"] ?? "";
+            string xingmingand = Request["xingmingand"] ?? "";
             Expression<Func<base_xiaoshou, bool>> where = PredicateExtensionses.True<base_xiaoshou>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -123,6 +126,28 @@ namespace CKWMS.Controllers
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "leibie", "", leibieequal, leibieand);
 
+                if (!string.IsNullOrEmpty(xingming))
+                {
+                    if (xingmingequal.Equals("="))
+                    {
+                        if (xingmingand.Equals("and"))
+                            where = where.And(base_xiaoshou => base_xiaoshou.Xingming == xingming);
+                        else
+                            where = where.Or(base_xiaoshou => base_xiaoshou.Xingming == xingming);
+                    }
+                    if (xingmingequal.Equals("like"))
+                    {
+                        if (xingmingand.Equals("and"))
+                            where = where.And(base_xiaoshou => base_xiaoshou.Xingming.Contains(xingming));
+                        else
+                            where = where.Or(base_xiaoshou => base_xiaoshou.Xingming.Contains(xingming));
+                    }
+                }
+                if (!string.IsNullOrEmpty(xingming))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "xingming", xingming, xingmingequal, xingmingand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "xingming", "", xingmingequal, xingmingand);
+
                 searchconditionService.GetInstance().AddEntity(sc);
             }
             else
@@ -156,6 +181,28 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "leibie", leibie, leibieequal, leibieand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "leibie", "", leibieequal, leibieand);
+
+                if (!string.IsNullOrEmpty(xingming))
+                {
+                    if (xingmingequal.Equals("="))
+                    {
+                        if (xingmingand.Equals("and"))
+                            where = where.And(base_xiaoshou => base_xiaoshou.Xingming == xingming);
+                        else
+                            where = where.Or(base_xiaoshou => base_xiaoshou.Xingming == xingming);
+                    }
+                    if (xingmingequal.Equals("like"))
+                    {
+                        if (xingmingand.Equals("and"))
+                            where = where.And(base_xiaoshou => base_xiaoshou.Xingming.Contains(xingming));
+                        else
+                            where = where.Or(base_xiaoshou => base_xiaoshou.Xingming.Contains(xingming));
+                    }
+                }
+                if (!string.IsNullOrEmpty(xingming))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "xingming", xingming, xingmingequal, xingmingand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "xingming", "", xingmingequal, xingmingand);
 
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
