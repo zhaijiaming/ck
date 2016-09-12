@@ -10,7 +10,8 @@ namespace CKWMS.Models
         public int ID { get; set; }
         [Display(Name = "类别")]
         public int Leibie { get; set; }
-        [Display(Name = "授权单位序号")]
+        [Display(Name = "授权单位")]
+        [Required]
         public int? ShouquanID { get; set; }
         [Display(Name = "授权单位名称")]
         public string Shouquanmingcheng { get; set; }

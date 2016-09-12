@@ -93,6 +93,7 @@
             $(".hezuo").attr("checked", false);
         }
 
+        var biaoji = "0";
         GetFanwei1();
         $("#bt_fanwei_showall").click(function () {
             var tempid = "";
@@ -121,30 +122,47 @@
                 tempid = tempid + xiaolei[k] + ";";
             }
             tempid = tempid.substring(0, tempid.length - 1);
+            var i = tempid;
             GetFanwei();
-            setTimeout(function () {
-                var fw = document.getElementsByClassName('xulieid');
-                var i = tempid;
-                var t = i.split(";");
-                for (var k = 0; k < t.length; k++) {
-                    for (var l = 0; l < fw.length; l++) {
-                        if (t[k] == $(".xulieid").eq(l).val())
-                            $("#qxdatatable tr input[type=checkbox]").eq(l).attr("checked", true);
-                    }
-                }
-            }, 500)
+            //setTimeout(function () {
+            //    var fw = document.getElementsByClassName('xulieid');
+            //    var i = tempid;
+            //    var t = i.split(";");
+            //    for (var k = 0; k < t.length; k++) {
+            //        for (var l = 0; l < fw.length; l++) {
+            //            if (t[k] == $(".xulieid").eq(l).val())
+            //                $("#qxdatatable tr input[type=checkbox]").eq(l).attr("checked", true);
+            //        }
+            //    }
+            //}, 500)
         });
 
         $("#bt_fanwei_showdalei").click(function () {
+            var tempid = "";
+            $("#qxdatatable tr input[type=checkbox]").each(function () {
+                if (this.checked) {
+                    tempid = tempid + $(this).parent().find(".xulieid").val() + ";";
+                }
+            });
+            var i = tempid;
             GetFanwei1();
-            setTimeout(function () {
-                GetData();
-            }, 500)
+            //setTimeout(function () {
+            //    var fw = document.getElementsByClassName('xulieid');
+            //    var i = tempid;
+            //    var t = tempid.split(";");
+            //    for (var k = 0; k < t.length; k++) {
+            //        for (var l = 0; l < fw.length; l++) {
+            //            if (t[k] == $(".xulieid").eq(l).val())
+            //                $("#qxdatatable tr input[type=checkbox]").eq(l).attr("checked", true);
+            //        }
+            //    }
+            //}, 500)
         });
 
 
         $("#pl_close").click(function () {
             $("#pl_Fanwei").hide();
+            var  biaoji = "0";
         });
 
         $("form").validate({
@@ -226,6 +244,7 @@
                     $("#jingyingfanwei").val(_jyfw);
                     $("#jingyingfanweijianma").val(_jyfwjm);
                     $("#pl_Fanwei").hide();
+                    var biaoji = "0";
                 }
             }
             $("#guanlifenlei").val("全部");
@@ -267,7 +286,7 @@
 
     //经营范围
     function Bt_Fanweiadd() {
-        GetData();
+        var biaoji = "1";
         document.getElementById("pl_Fanwei").removeAttribute("hidden");
         $("#pl_Fanwei").show();
     }
@@ -304,6 +323,7 @@
                         filltable = filltable + '</span></td></tr>';
                     }
                     $("#pl_Fanwei tbody").html(filltable);
+                    GetData()
                 });
         //GetData();
     }
@@ -331,12 +351,15 @@
                         filltable = filltable + '</span></td></tr>';
                     }
                     $("#pl_Fanwei tbody").html(filltable);
+                    GetData()
                 });
     }
 
     function GetData() {
         var fw = document.getElementsByClassName('xulieid');
-        var i = $("#jingyingfanweijianma").val();
+        if (biaoji == "0") {
+            var i = $("#jingyingfanweijianma").val();
+        }
         var t = i.split(";");
 
         //$(".bh").siblings().children().find(".checkbox").attr("checked", true);
@@ -647,8 +670,8 @@
             <button type="button" class="btn btn-default " id="bt_fanwei_add"><i class="icon-add"></i>确定</button>
             <button type="button" class="btn btn-default " id="bt_fanwei_all" onclick="bt_fanwei_all()">全选</button>
             <button type="button" class="btn btn-default " id="bt_fanwei_clear" onclick="bt_fanwei_clear()">全部取消</button>
-            <button type="button" class="btn btn-default " id="bt_fanwei_showdalei" >显示大类</button>
-            <button type="button" class="btn btn-default " id="bt_fanwei_showall" >显示全部</button>
+            <button type="button" class="btn btn-default " id="bt_fanwei_showdalei">显示大类</button>
+            <button type="button" class="btn btn-default " id="bt_fanwei_showall">显示全部</button>
             <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;管理类别</label>
             <select name="guanlifenlei" id="guanlifenlei">
                 <option value="全部">全部</option>
@@ -675,3 +698,5 @@
 
 <td><span class="sc" style="display:none">@item.ShenchaSF</span></td>
 <td><span class="hz" style="display:none">@item.HezuoSF</span></td>
+
+
