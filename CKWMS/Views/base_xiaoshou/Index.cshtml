@@ -15,6 +15,39 @@
                 location.href = url_go;
             }
         });
+        var t = document.getElementsByClassName('sfz0');
+
+        for (var i = 0; i < t.length; i++) {
+            if (t[i].href.length < 42) {
+                $(".sfz0").eq(i).removeAttr("href")
+                $(".sfz0").eq(i).html("暂无")
+            }
+            else {
+                $(".sfz0").eq(i).html("浏览")
+            }
+        }
+        var t = document.getElementsByClassName('sfz1');
+
+        for (var i = 0; i < t.length; i++) {
+            if (t[i].href.length < 42) {
+                $(".sfz1").eq(i).removeAttr("href")
+                $(".sfz1").eq(i).html("暂无")
+            }
+            else {
+                $(".sfz1").eq(i).html("浏览")
+            }
+        }
+        var t = document.getElementsByClassName('sqs');
+
+        for (var i = 0; i < t.length; i++) {
+            if (t[i].href.length < 42) {
+                $(".sqs").eq(i).removeAttr("href")
+                $(".sqs").eq(i).html("暂无")
+            }
+            else {
+                $(".sqs").eq(i).html("浏览")
+            }
+        }
     });
     function AddInfo() {
         location.href = "/base_xiaoshou/Add";
@@ -46,6 +79,12 @@
         scm.ItemTitle = "类别";
         scm.ItemType = "System.Int32";
         scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "Xingming";
+        scm.ItemTitle = "姓名";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
     }
     else
     {
@@ -61,6 +100,18 @@
                 scm.ItemValue = scs[0].Split(',')[1];
                 scm.ItemOpValue = scs[0].Split(',')[2];
                 scm.ItemJion = scs[0].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "Xingming";
+            scm.ItemTitle = "姓名";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[1].Split(',')[1];
+                scm.ItemOpValue = scs[1].Split(',')[2];
+                scm.ItemJion = scs[1].Split(',')[3];
             }
             scms.Add(scm);
         }
@@ -96,9 +147,9 @@
             <thead>
                 <tr>
                     <td></td>
-                    <td>类别</td>
-                    <td>授权单位序号</td>
-                    <td>授权单位名称</td>
+                    @*<td>类别</td>*@
+                    <td>授权单位</td>
+                    @*<td>授权单位名称</td>*@
                     <td>姓名</td>
                     <td>电话</td>
                     <td>身份证编号</td>
@@ -107,8 +158,8 @@
                     <td>授权书有效期</td>
                     <td>授权书照片</td>
                     <td>首营状态</td>
-                    <td>录入日期</td>
-                    <td>录入人</td>
+                    @*<td>录入日期</td>
+                    <td>录入人</td>*@
                 </tr>
             </thead>
             <tbody>
@@ -120,19 +171,24 @@
                                 <label><input type="checkbox" value="@item.ID"></label>
                             </div>
                         </td>
-                        <td>@item.Leibie</td>
-                        <td>@item.ShouquanID</td>
-                        <td>@item.Shouquanmingcheng</td>
+                        @*<td>@item.Leibie</td>*@
+                        @*<td>@item.ShouquanID</td>*@
+                        <td>@Html.GetDataValue_ID("货主", "名称", (int)item.ShouquanID)</td>
+                        @*<td>@item.Shouquanmingcheng</td>*@
                         <td>@item.Xingming</td>
                         <td>@item.Dianhua</td>
                         <td>@item.ShenfenzhengBH</td>
-                        <td>@item.Shenfenzheng0TP</td>
-                        <td>@item.Shenfenzheng1TP</td>
+                        @*<td>@item.Shenfenzheng0TP</td>*@
+                        <td><a href="/files/zhengzhao/@item.Shenfenzheng0TP" target="_blank" class="sfz0">浏览</a></td>
+                        @*<td>@item.Shenfenzheng1TP</td>*@
+                        <td><a href="/files/zhengzhao/@item.Shenfenzheng1TP" target="_blank" class="sfz1">浏览</a></td>
                         <td>@item.ShouquanshuYXQ.ToString("yyyy-MM-dd")</td>
-                        <td>@item.ShouquanshuTP</td>
-                        <td>@item.Shouying</td>
-                        <td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
-                        <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
+                        @*<td>@item.ShouquanshuTP</td>*@
+                        <td><a href="/files/zhengzhao/@item.ShouquanshuTP" target="_blank" class="sqs">浏览</a></td>
+                        @*<td>@item.Shouying</td>*@
+                        <td>@Html.GetCommonValue_ID("首营状态", (int)item.Shouying)</td>
+                        @*<td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
+                        <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>*@
                     </tr>
                 }
             </tbody>
