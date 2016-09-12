@@ -163,7 +163,65 @@ namespace CKWMS.Controllers
             ViewBag.wms_cunhuo = tempData;
             return View(tempData);
         }
+        [OutputCache(Duration = 30)]
+        public ActionResult GetUploadList(int id)
+        {
+            int _userid = (int)Session["user_id"];
+            var _username = Session["user_name"];
 
+            var tempData = ob_wms_cunhuoservice.GetUploadList(id);
+            ViewBag.username = _username;
+            ViewBag.userid = _userid;
+            ViewBag.wms_upload = tempData;
+            return View();
+        }
+        public JsonResult AddUpload()
+        {
+            int _userid = (int)Session["user_id"];
+            string _shmx = Request["shmx"] ?? "0";
+            string _sl = Request["sl"] ?? "0";
+            string _kw = Request["kw"] ?? "";
+            string _kwid = Request["kid"] ?? "0";
+            string _sjr = Request["sjr"] ?? "";
+            string _zl = Request["zl"] ?? "0";
+            string _tj = Request["tj"] ?? "0";
+            string _jz = Request["jz"] ?? "0";
+            string _jf = Request["jf"] ?? "0";
+            string _sm = Request["sm"] ?? "";
+            string _hg = Request["hg"] ?? "true";
+
+            if (int.Parse(_shmx) == 0)
+                return Json(-1);
+            try
+            {
+                wms_cunhuo _cunhuo = new wms_cunhuo();
+                _cunhuo.RKMXID = int.Parse(_shmx);
+                _cunhuo.Shuliang = float.Parse(_sl);
+                _cunhuo.Tiji = float.Parse(_tj);
+                _cunhuo.Zhongliang = float.Parse(_zl);
+                _cunhuo.Jingzhong = float.Parse(_jz);
+                _cunhuo.Jifeidun = float.Parse(_jf);
+                _cunhuo.CunhuoSM = _sm;
+                _cunhuo.Kuwei = _kw;
+                _cunhuo.RenSJ = _sjr;
+                _cunhuo.KuweiID = int.Parse(_kwid);
+                _cunhuo.MakeMan = _userid;
+                _cunhuo.MakeDate = DateTime.Now;
+                _cunhuo.HegeSF = bool.Parse(_hg);
+                _cunhuo.SuodingSF = false;
+                _cunhuo.CunhuoZT = 1;
+                _cunhuo.JiahuoSF = true;
+                _cunhuo = ob_wms_cunhuoservice.AddEntity(_cunhuo);
+                if (_cunhuo == null)
+                    return Json(-1);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return Json(-1);
+            }
+            return Json(1);
+        }
         public ActionResult Add()
         {
             ViewBag.userid = (int)Session["user_id"];

@@ -85,6 +85,8 @@ namespace CKWMS.Models
         public string ShangpinTM { get; set; }
         [Display(Name ="产地")]
         public string Chandi { get; set; }
+        [Display(Name = "商品描述")]
+        public string ShangpinMS { get; set; }
     }
 }
 

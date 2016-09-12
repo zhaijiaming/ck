@@ -5,7 +5,7 @@
     ViewBag.Title = "生产企业修改";
 }
 
-@Html.GetFileUpload("yingyezhizhaotp", "yyzz", "z", "cus", 3, 0, new Dictionary<string, string>() { { "yyzz", "yingyezhizhaotp" }, { "xktp", "shengchanxuketp" }, { "BATP", "beiantp" } })
+@Html.GetFileUpload("yingyezhizhaotp", "yyzz", "z", "scqy", 3, 0, new Dictionary<string, string>() { { "yyzz", "yingyezhizhaotp" }, { "xktp", "shengchanxuketp" }, { "BATP", "beiantp" } })
 
 <script type="text/javascript">
     //function doUpload() {
@@ -71,7 +71,6 @@
         $("#pl_Fanwei").draggable({ handle: '.tuodong' });
         $("#YingyezhizhaoYXQ").datepicker();
         $("#ShengchanxukeYXQ").datepicker();
-        $("#MakeDate").datepicker();
         $("#BeianYXQ").datepicker();
         $("#BeianPZRQ").datepicker();
         $("#XukePZRQ").datepicker();
@@ -118,10 +117,23 @@
             }, 500)
         });
 
-        $("#bt_fanwei_showdalei").click(function () {
+        $("#bt_fanwei_showdalei").click(function () {           
+            var tempid = "";
+            $("#qxdatatable tr input[type=checkbox]").each(function () {
+                if (this.checked) {
+                    tempid = tempid + $(this).parent().find(".xulieid").val() + ";";
+                }
+            });
+            var t = tempid.split(";");           
             GetFanwei1();
             setTimeout(function () {
-                GetData();
+                var fw = document.getElementsByClassName('xulieid');
+                for (var k = 0; k < t.length; k++) {
+                    for (var l = 0; l < fw.length; l++) {
+                        if (t[k] == $(".xulieid").eq(l).val())
+                            $("#qxdatatable tr input[type=checkbox]").eq(l).attr("checked", true);
+                    }
+                }
             }, 500)
         });
 

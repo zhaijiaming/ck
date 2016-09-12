@@ -490,22 +490,6 @@
                     @Html.SelectList_Common("ob_base_shouhuodanwei_shouying", "首营状态", (int)item.Shouying)
                 </div>
             </div>
-            @*企业地址*@
-            <div class="form-group">
-                <label class="col-sm-2">企业地址</label>
-                <div class="col-sm-10">
-                    @*@Html.TextBoxFor(m => m.QiyeDZ, new { @class = "form-control" })*@
-                    <input type="text" class="form-control" name="qiyedz" value="@item.QiyeDZ">
-                </div>
-            </div>
-            @*送货地址*@
-            <div class="form-group">
-                <label class="col-sm-2">送货地址</label>
-                <div class="col-sm-10">
-                    @*@Html.TextBoxFor(m => m.SonghuoDZ, new { @class = "form-control" })*@
-                    <input type="text" class="form-control" name="songhuodz" value="@item.SonghuoDZ">
-                </div>
-            </div>
             @*录入日期*@
             <div class="form-group">
                 <label for="name" class="col-sm-2">录入日期</label>

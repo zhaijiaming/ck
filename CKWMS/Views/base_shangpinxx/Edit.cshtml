@@ -83,36 +83,6 @@
         });
         $("#pl_jldw").draggable();
         $("#pl_Fanwei").draggable();
-        $("#btn_cctj").draggable();
-
-        //存储条件
-        $("#ccdatatable tbody tr:first").hide();//第一行为空-->隐藏
-
-        $("#btn_cctj").click(function () {
-            $("#pl_Cunchu").removeAttr("hidden");
-            $("#pl_Cunchu").show();
-            $("#pl_Cunchu .checkbox").prop("checked", false);
-        });
-
-        $("#bt_cunchu_add").click(function () {
-            var _cctj = "";
-            $("#ccdatatable tr input[type=checkbox]").each(function () {
-                if (this.checked) {
-                    _cctj = $(this).parent().parent().parent().parent().find(".cctj_val").html();
-                }
-                $("#Cunchutiaojian").val(_cctj);
-            });
-            $("#pl_Cunchu").hide();
-        });
-
-        $("#plcc_close").click(function () {
-            $("#pl_Cunchu").hide();
-        });
-
-        //复选框只能选一次
-        $("#ccdatatable tr input[type=checkbox]").bind("click", function () {
-            $("#ccdatatable tr input[type=checkbox]").not(this).attr("checked", false);
-        });
     });
     function GetFanwei() {
         var filltable = "";
@@ -260,8 +230,6 @@
         <input type="hidden" id="ocpx" value="@Model.Chanpinxian" />
         <input type="hidden" id="ogg" value="@Model.Guige" />
         <input type="hidden" name="Shouying" id="Shouying" value="@ViewData.Model.Shouying" />
-        <input type="hidden" id="MakeMan" name="MakeMan" value=@Session["user_id"] />
-        <input type="hidden" name="MakeDate" value=@string.Format("{0:yyyy-MM-dd}",DateTime.Now) />
         <div class="page-header">
             <p>
                 <button type="submit" class="btn btn-default"><i class="icon-save"></i>更新</button>
@@ -269,7 +237,6 @@
             </p>
         </div>
         <div class="container">
-            @*货主*@
             <div class="form-group">
                 <label for="name" class="col-sm-2">货主</label>
                 <div class="col-sm-10">
@@ -285,9 +252,9 @@
                     @Html.ValidationMessageFor(m => m.Daima)
                 </div>
             </div>
-            @*注册证*@
+            @*注册证名称*@
             <div class="form-group">
-                <label for="name" class="col-sm-2">注册证</label>
+                <label for="name" class="col-sm-2">注册证名称</label>
                 <div class="col-sm-10">
                     @Html.SelectList_Auto("zhucezhengid", "注册证", "编号", (long)ViewData.Model.ZhucezhengID)
                 </div>
@@ -314,15 +281,6 @@
                     @Html.TextBoxFor(m => m.Qiyemingcheng, new { @class = "form-control" })
                 </div>
             </div>
-            @*产地*@
-            <div class="form-group">
-                <label for="name" class="col-sm-2">产地</label>
-                <div class="col-sm-10">
-                    @*<select name="qiyemingcheng" id="select_qymc" style="width:100%;"></select>*@
-                    @Html.TextBoxFor(m => m.Chandi, new { @class = "form-control" })
-                </div>
-            </div>
-            @*型号*@
             <div class="form-group">
                 @Html.LabelFor(m => m.Xinghao, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
@@ -382,9 +340,9 @@
                     <label class="form-control">米(M)</label>
                 </div>
             </div>
-            @*产品线名称*@
+            @*产品线*@
             <div class="form-group">
-                <label for="name" class="col-sm-2">产品线名称</label>
+                <label for="name" class="col-sm-2">产品线</label>
                 <div class="col-sm-10">
                     <select id="select_cpx" name="chanpinxian" style="width:100%;"></select>
                 </div>
@@ -400,14 +358,6 @@
                     <input id="bt_mulu" type="button" value="选择分类目录" class="form-control" />
                 </div>
             </div>
-            @*管理类别*@
-            <div class="form-group">
-                @Html.LabelFor(m => m.Guanlifenlei, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.SelectList_Common("guanlifenlei", "医疗器械管理类别", (long)ViewData.Model.Guanlifenlei)
-                </div>
-            </div>
-            @*包装要求*@
             <div class="form-group">
                 @Html.LabelFor(m => m.Baozhuangyaoqiu, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
@@ -417,15 +367,16 @@
             @*存储条件*@
             <div class="form-group">
                 @Html.LabelFor(m => m.Cunchutiaojian, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-8">
-                    @*@Html.TextBoxFor(m => m.Cunchutiaojian, new { @class = "form-control" })*@
-                    <input type="text" id="Cunchutiaojian" name="cunchutiaojian" class="form-control" readonly value="@ViewData.Model.Cunchutiaojian"/>
-                </div>
-                <div class="col-sm-2">
-                    <input id="btn_cctj" type="button" value="存储条件" class="form-control" />
+                <div class="col-sm-10">
+                    @Html.SelectList_Common("cunchutiaojian", "储运要求")
                 </div>
             </div>
-            @*供应商序号*@
+            <div class="form-group">
+                @Html.LabelFor(m => m.Guanlifenlei, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.SelectList_Common("guanlifenlei", "医疗器械管理类别", (long)ViewData.Model.Guanlifenlei)
+                </div>
+            </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.GongyingID, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
@@ -434,16 +385,22 @@
             </div>
             @*是否审查*@
             <div class="form-group">
-                @Html.LabelFor(m => m.ShenchaSF, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.CheckBoxFor(m => m.ShenchaSF, new { @class = "form-control" })
+                <div class="control-label col-sm-2">
+                    @Html.LabelFor(m => m.ShenchaSF)
+                </div>
+                <div>
+                    <label class="radio-inline"><input type="radio" name="ShenchaSF" value="true" checked>是</label>
+                    <label class="radio-inline"><input type="radio" name="ShenchaSF" value="false">否</label>
                 </div>
             </div>
             @*是否经营*@
             <div class="form-group">
-                @Html.LabelFor(m => m.JingyinSF, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.CheckBoxFor(m => m.JingyinSF, new { @class = "form-control" })
+                <div class="control-label col-sm-2">
+                    @Html.LabelFor(m => m.JingyinSF)
+                </div>
+                <div>
+                    <label class="radio-inline"><input type="radio" name="JingyinSF" value="true" checked>是</label>
+                    <label class="radio-inline"><input type="radio" name="JingyinSF" value="false">否</label>
                 </div>
             </div>
             @*商品条码*@
@@ -453,7 +410,6 @@
                     @Html.TextBoxFor(m => m.ShangpinTM, new { @class = "form-control" })
                 </div>
             </div>
-            @*首营状态*@
             <div class="form-group">
                 @Html.LabelFor(m => m.Shouying, new { @class = "control-label col-sm-2" })
                 @*<label class="col-sm-10">@Html.GetCommonValue_ID("首营状态", (int)ViewData.Model.Shouying)</label>*@
@@ -465,13 +421,13 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.MakeDate, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    <input type="text" readonly class="form-control" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.MakeDate)" />
+                    <input id="makedate" type="date" class="form-control" name="makedate" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.MakeDate)">
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.MakeMan, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" readonly value="@Html.GetDataValue_ID("userinfo", "全名", (int)ViewData.Model.MakeMan)" />
+                    @Html.SelectList_Auto("MakeMan", "userinfo", "fullname", (long)ViewData.Model.MakeMan)
                 </div>
             </div>
         </div>
@@ -518,41 +474,6 @@
                     </tr>
                 </thead>
                 <tbody style="display:block; max-height:460px;overflow:scroll"></tbody>
-            </table>
-        </div>
-    </div>
-</div>
-@*存储条件*@
-<div id="pl_Cunchu" class="panel panel-primary" hidden style="position:fixed;top:10px;left:240px;width:240px;height:auto;z-index:999;">
-    <div class="panel-heading">
-        <h3 class="panel-title">存储条件<button id="plcc_close" class="pull-right">X</button></h3>
-    </div>
-    <div class="panel-body">
-        <div class="center">
-            <button type="button" class="btn btn-default " id="bt_cunchu_add"><i class="icon-add"></i>确定</button>
-            <table class="table" id="ccdatatable">
-                <caption></caption>
-                <thead style="display:block">
-                    <tr>
-                        <td width="40px"></td>
-                        <td width="95px">编号</td>
-                        <td width="100px">名称</td>
-                    </tr>
-                </thead>
-                <tbody style="display:block; max-height:460px;overflow:auto;">
-                    @foreach (var dd in MvcApplication.TranCondition)
-                    {
-                        <tr>
-                            <td>
-                                <div class="checkbox">
-                                    <label><input type="checkbox" value="" /></label>
-                                </div>
-                            </td>
-                            <td width="90px">@dd.Key</td>
-                            <td width="100px" class="cctj_val">@dd.Value</td>
-                        </tr>
-                    }
-                </tbody>
             </table>
         </div>
     </div>

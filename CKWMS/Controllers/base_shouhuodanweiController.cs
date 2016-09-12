@@ -237,6 +237,7 @@ namespace CKWMS.Controllers
             string shouying = Request["shouying"] ?? "";
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
+            //新增
             string jingyingfanwei = Request["jingyingfanwei"] ?? "";
             string jingyingfanweidm = Request["jingyingfanweidm"] ?? "";
             string quyu = Request["quyu"] ?? "";
@@ -247,8 +248,6 @@ namespace CKWMS.Controllers
             string beiantp = Request["beiantp"] ?? "";
             string xukepzrq = Request["xukepzrq"] ?? "";
             string xukefzjg = Request["xukefzjg"] ?? "";
-            string qiyedz = Request["qiyedz"] ?? "";
-            string songhuodz = Request["songhuodz"] ?? "";
             try
             {
                 base_shouhuodanwei ob_base_shouhuodanwei = new base_shouhuodanwei();
@@ -263,6 +262,7 @@ namespace CKWMS.Controllers
                 ob_base_shouhuodanwei.Shouying = shouying == "" ? 0 : int.Parse(shouying);
                 ob_base_shouhuodanwei.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 ob_base_shouhuodanwei.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
+                //新增
                 ob_base_shouhuodanwei.Jingyinfanwei = jingyingfanwei.Trim();
                 ob_base_shouhuodanwei.JingyinfanweiDM = jingyingfanweidm.Trim();
                 ob_base_shouhuodanwei.Quyu = quyu.Trim();
@@ -273,8 +273,6 @@ namespace CKWMS.Controllers
                 ob_base_shouhuodanwei.BeianTP = beiantp.Trim();
                 ob_base_shouhuodanwei.XukePZRQ = xukepzrq == "" ? DateTime.Now : DateTime.Parse(xukepzrq);
                 ob_base_shouhuodanwei.XukeFZJG = xukefzjg.Trim();
-                ob_base_shouhuodanwei.QiyeDZ = qiyedz.Trim();
-                ob_base_shouhuodanwei.SonghuoDZ = songhuodz.Trim();
 
                 ob_base_shouhuodanwei = ob_base_shouhuodanweiservice.AddEntity(ob_base_shouhuodanwei);
                 ViewBag.base_shouhuodanwei = ob_base_shouhuodanwei;
@@ -307,6 +305,7 @@ namespace CKWMS.Controllers
             string shouying = Request["shouying"] ?? "";
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
+            //新增
             string jingyingfanwei = Request["jingyingfanwei"] ?? "";
             string jingyingfanweidm = Request["jingyingfanweidm"] ?? "";
             string quyu = Request["quyu"] ?? "";
@@ -317,9 +316,6 @@ namespace CKWMS.Controllers
             string beiantp = Request["beiantp"] ?? "";
             string xukepzrq = Request["xukepzrq"] ?? "";
             string xukefzjg = Request["xukefzjg"] ?? "";
-            string qiyedz = Request["qiyedz"] ?? "";
-            string songhuodz = Request["songhuodz"] ?? "";
-
             int uid = int.Parse(id);
             try
             {
@@ -335,6 +331,7 @@ namespace CKWMS.Controllers
                 p.Shouying = shouying == "" ? 0 : int.Parse(shouying);
                 p.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 p.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
+                //新增
                 p.Jingyinfanwei = jingyingfanwei.Trim();
                 p.JingyinfanweiDM = jingyingfanweidm.Trim();
                 p.Quyu = quyu.Trim();
@@ -345,8 +342,6 @@ namespace CKWMS.Controllers
                 p.BeianTP = beiantp.Trim();
                 p.XukePZRQ = xukepzrq == "" ? DateTime.Now : DateTime.Parse(xukepzrq);
                 p.XukeFZJG = xukefzjg.Trim();
-                p.QiyeDZ = qiyedz.Trim();
-                p.SonghuoDZ = songhuodz.Trim();
 
                 ob_base_shouhuodanweiservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;

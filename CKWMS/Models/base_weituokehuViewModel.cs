@@ -126,6 +126,8 @@ namespace CKWMS.Models
         public string Faren { get; set; }
         [Display(Name = "负责人")]
         public string Fuzeren { get; set; }
+        [Display(Name = "三证合一")]
+        public bool HeyiSF { get; set; }
     }
 }
 

@@ -775,6 +775,7 @@
     <Content Include="Views\wms_cangkuqy\Edit.cshtml" />
     <Content Include="Views\wms_cangkuqy\Index.cshtml" />
     <Content Include="Views\quan_rukuys\EntryCheckList.cshtml" />
+    <Content Include="Views\wms_cunhuo\GetUploadList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
