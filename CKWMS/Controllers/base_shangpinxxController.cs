@@ -306,7 +306,7 @@ namespace CKWMS.Controllers
                     if (_splist == null)
                         return Json("");
                     else
-            return Json(_splist);
+                        return Json(_splist);
 
                 }
             }
@@ -373,11 +373,11 @@ namespace CKWMS.Controllers
             string shouying = Request["shouying"] ?? "";
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
-            //新增
             string shenchasf = Request["shenchasf"] ?? "";
             string jingyinsf = Request["jingyinsf"] ?? "";
             string baozhuangdw = Request["baozhuangdw"] ?? "";
             string shangpintm = Request["shangpintm"] ?? "";
+            string chandi = Request["chandi"] ?? "";
             try
             {
                 base_shangpinxx ob_base_shangpinxx = new base_shangpinxx();
@@ -407,11 +407,11 @@ namespace CKWMS.Controllers
                 ob_base_shangpinxx.Shouying = shouying == "" ? 0 : int.Parse(shouying);
                 ob_base_shangpinxx.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 ob_base_shangpinxx.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
-                //新增
                 ob_base_shangpinxx.ShenchaSF = shenchasf == "true" ? true : false;
                 ob_base_shangpinxx.JingyinSF = jingyinsf == "true" ? true : false;
                 ob_base_shangpinxx.BaozhuangDW = baozhuangdw.Trim();
                 ob_base_shangpinxx.ShangpinTM = shangpintm.Trim();
+                ob_base_shangpinxx.Chandi = chandi.Trim();
 
                 ob_base_shangpinxx = ob_base_shangpinxxservice.AddEntity(ob_base_shangpinxx);
                 ViewBag.base_shangpinxx = ob_base_shangpinxx;
@@ -464,6 +464,7 @@ namespace CKWMS.Controllers
                 base_shangpinxxviewmodel.JingyinSF = tempData.JingyinSF;
                 base_shangpinxxviewmodel.BaozhuangDW = tempData.BaozhuangDW;
                 base_shangpinxxviewmodel.ShangpinTM = tempData.ShangpinTM;
+                base_shangpinxxviewmodel.Chandi = tempData.Chandi;
                 return View(base_shangpinxxviewmodel);
             }
         }
@@ -499,11 +500,17 @@ namespace CKWMS.Controllers
             string shouying = Request["shouying"] ?? "";
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
-            //新增
             string shenchasf = Request["shenchasf"] ?? "";
             string jingyinsf = Request["jingyinsf"] ?? "";
             string baozhuangdw = Request["baozhuangdw"] ?? "";
             string shangpintm = Request["shangpintm"] ?? "";
+            string chandi = Request["chandi"] ?? "";
+
+            if (shenchasf.IndexOf("true") > -1)
+                shenchasf = "true";
+            if (jingyinsf.IndexOf("true") > -1)
+                jingyinsf = "true";
+
             int uid = int.Parse(id);
             try
             {
@@ -534,11 +541,11 @@ namespace CKWMS.Controllers
                 p.Shouying = shouying == "" ? 0 : int.Parse(shouying);
                 p.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 p.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
-                //新增
-                p.ShenchaSF = shenchasf == "true" ? true : false;
-                p.JingyinSF = jingyinsf == "true" ? true : false;
+                p.ShenchaSF = shenchasf == "" ? false : Boolean.Parse(shenchasf);
+                p.JingyinSF = jingyinsf == "" ? false : Boolean.Parse(jingyinsf);
                 p.BaozhuangDW = baozhuangdw.Trim();
                 p.ShangpinTM = shangpintm.Trim();
+                p.Chandi = chandi.Trim();
 
                 ob_base_shangpinxxservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;
