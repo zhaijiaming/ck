@@ -213,6 +213,16 @@ namespace CKWMS.App_Code
                             sb.AppendFormat("<option value=\"{0}\">{1}_{2}</option>", i.ID, i.Name, i.Module);
                     }
                     break;
+                case "销售":
+                    var tmpsales = ServiceFactory.base_xiaoshouservice.LoadSortEntities(p => p.IsDelete == false && p.ZaizhiSF == true, true, s => s.Xingming);
+                    foreach(var i in tmpsales)
+                    {
+                        if (i.ID == selectedvalue && selectedvalue != 0)
+                            sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.ID, i.Xingming);
+                        else
+                            sb.AppendFormat("<option value=\"{0}\">{1}</option>", i.ID,i.Xingming);
+                    }
+                    break;
                 case "userinfo"://用户
                     IuserinfoService uis = ServiceFactory.userinfoservice;
                     var tmpus = uis.LoadSortEntities(userinfo => userinfo.IsDelete == false, true, userinfo => userinfo.Account);
@@ -844,6 +854,13 @@ namespace CKWMS.App_Code
                         if (itemName == "描述")
                             returnvalue = juese.RoleName;
                     }
+                    break;
+                case "销售":
+                    base_xiaoshou _xs = ServiceFactory.base_xiaoshouservice.GetEntityById(p => p.ID == dataValue);
+                    if (_xs == null)
+                        returnvalue = "";
+                    else
+                        returnvalue = _xs.Xingming;
                     break;
                 case "userinfo":
                     IuserinfoService us = ServiceFactory.userinfoservice;

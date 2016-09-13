@@ -249,7 +249,16 @@ namespace CKWMS.Controllers
             ViewBag.userid = (int)Session["user_id"];
             return View();
         }
-
+        public JsonResult GetSalesman()
+        {
+            string _hzid = Request["huozhu"] ?? "0";
+            if (_hzid == "0")
+                return Json(-1);
+            var tempdata = ob_base_xiaoshouservice.LoadSortEntities(p => p.IsDelete == false && p.ShouquanID == int.Parse(_hzid) && p.ZaizhiSF == true, true, s => s.Xingming);
+            if (tempdata == null)
+                return Json(-1);
+            return Json(tempdata.ToList<base_xiaoshou>());
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Save()
