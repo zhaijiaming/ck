@@ -312,10 +312,13 @@ namespace CKWMS.Controllers
             string hetongtp = Request["hetongtp"] ?? "";
             string faren = Request["faren"] ?? "";
             string fuzeren = Request["fuzeren"] ?? "";
+            string heyisf = Request["heyisf"] ?? "";
             if (shenchasf.IndexOf("true") > -1)
                 shenchasf = "true";
             if (hezuosf.IndexOf("true") > -1)
                 hezuosf = "true";
+            if (heyisf.IndexOf("true") > -1)
+                heyisf = "true";
             if (tiezwbq.IndexOf("true") > -1)
                 tiezwbq = "true";
             else
@@ -372,7 +375,9 @@ namespace CKWMS.Controllers
                 ob_base_weituokehu.TieZWBQ = tiezwbq == "" ? false : Boolean.Parse(tiezwbq);
                 ob_base_weituokehu.HetongTP = hetongtp.Trim();
                 ob_base_weituokehu.Faren = faren.Trim();
-                ob_base_weituokehu.Fuzeren = fuzeren.Trim(); ob_base_weituokehu = ob_base_weituokehuservice.AddEntity(ob_base_weituokehu);
+                ob_base_weituokehu.Fuzeren = fuzeren.Trim();
+                ob_base_weituokehu.HeyiSF = heyisf == "" ? false : Boolean.Parse(heyisf);
+                ob_base_weituokehu = ob_base_weituokehuservice.AddEntity(ob_base_weituokehu);
                 ViewBag.base_weituokehu = ob_base_weituokehu;
             }
             catch (Exception ex)
@@ -443,6 +448,7 @@ namespace CKWMS.Controllers
                 base_weituokehuviewmodel.HetongTP = tempData.HetongTP;
                 base_weituokehuviewmodel.Faren = tempData.Faren;
                 base_weituokehuviewmodel.Fuzeren = tempData.Fuzeren;
+                base_weituokehuviewmodel.HeyiSF = tempData.HeyiSF;
                 return View(base_weituokehuviewmodel);
             }
         }
@@ -502,6 +508,7 @@ namespace CKWMS.Controllers
             string hetongtp = Request["hetongtp"] ?? "";
             string faren = Request["faren"] ?? "";
             string fuzeren = Request["fuzeren"] ?? "";
+            string heyisf = Request["heyisf"] ?? "";
             if (tiezwbq.IndexOf("true") > -1)
                 tiezwbq = "true";
             else
@@ -510,6 +517,8 @@ namespace CKWMS.Controllers
                 shenchasf = "true";
             if (hezuosf.IndexOf("true") > -1)
                 hezuosf = "true";
+            if (heyisf.IndexOf("true") > -1)
+                heyisf = "true";
             int uid = int.Parse(id);
             try
             {
@@ -564,6 +573,7 @@ namespace CKWMS.Controllers
                 p.HetongTP = hetongtp.Trim();
                 p.Faren = faren.Trim();
                 p.Fuzeren = fuzeren.Trim();
+                p.HeyiSF = heyisf == "" ? false : Boolean.Parse(heyisf);
                 ob_base_weituokehuservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;
             }

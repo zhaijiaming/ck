@@ -84,9 +84,9 @@ namespace CKWMS.Controllers
             int userid = (int)Session["user_id"];
             string pagetag = "base_xiaoshou_index";
             string page = "1";
-            string leibie = Request["leibie"] ?? "";
-            string leibieequal = Request["leibieequal"] ?? "";
-            string leibieand = Request["leibieand"] ?? "";
+            string shouquanid = Request["shouquanid"] ?? "";
+            string shouquanidequal = Request["shouquanidequal"] ?? "";
+            string shouquanidand = Request["shouquanidand"] ?? "";
             string xingming = Request["xingming"] ?? "";
             string xingmingequal = Request["xingmingequal"] ?? "";
             string xingmingand = Request["xingmingand"] ?? "";
@@ -97,34 +97,63 @@ namespace CKWMS.Controllers
                 sc = new searchcondition();
                 sc.UserID = userid;
                 sc.PageBrief = pagetag;
-                if (!string.IsNullOrEmpty(leibie))
+                //if (!string.IsNullOrEmpty(leibie))
+                //{
+                //    if (leibieequal.Equals("="))
+                //    {
+                //        if (leibieand.Equals("and"))
+                //            where = where.And(base_xiaoshou => base_xiaoshou.Leibie == int.Parse(leibie));
+                //        else
+                //            where = where.Or(base_xiaoshou => base_xiaoshou.Leibie == int.Parse(leibie));
+                //    }
+                //    if (leibieequal.Equals(">"))
+                //    {
+                //        if (leibieand.Equals("and"))
+                //            where = where.And(base_xiaoshou => base_xiaoshou.Leibie > int.Parse(leibie));
+                //        else
+                //            where = where.Or(base_xiaoshou => base_xiaoshou.Leibie > int.Parse(leibie));
+                //    }
+                //    if (leibieequal.Equals("<"))
+                //    {
+                //        if (leibieand.Equals("and"))
+                //            where = where.And(base_xiaoshou => base_xiaoshou.Leibie < int.Parse(leibie));
+                //        else
+                //            where = where.Or(base_xiaoshou => base_xiaoshou.Leibie < int.Parse(leibie));
+                //    }
+                //}
+                //if (!string.IsNullOrEmpty(leibie))
+                //    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "leibie", leibie, leibieequal, leibieand);
+                //else
+                //    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "leibie", "", leibieequal, leibieand);
+                if (!string.IsNullOrEmpty(shouquanid))
                 {
-                    if (leibieequal.Equals("="))
+                    if (shouquanidequal.Equals("="))
                     {
-                        if (leibieand.Equals("and"))
-                            where = where.And(base_xiaoshou => base_xiaoshou.Leibie == int.Parse(leibie));
+                        if (shouquanidand.Equals("and"))
+                            where = where.And(base_xiaoshou => base_xiaoshou.ShouquanID == int.Parse(shouquanid));
                         else
-                            where = where.Or(base_xiaoshou => base_xiaoshou.Leibie == int.Parse(leibie));
+                            where = where.Or(base_xiaoshou => base_xiaoshou.ShouquanID == int.Parse(shouquanid));
                     }
-                    if (leibieequal.Equals(">"))
+                    if (shouquanidequal.Equals(">"))
                     {
-                        if (leibieand.Equals("and"))
-                            where = where.And(base_xiaoshou => base_xiaoshou.Leibie > int.Parse(leibie));
+                        if (shouquanidand.Equals("and"))
+                            where = where.And(base_xiaoshou => base_xiaoshou.ShouquanID > int.Parse(shouquanid));
                         else
-                            where = where.Or(base_xiaoshou => base_xiaoshou.Leibie > int.Parse(leibie));
+                            where = where.Or(base_xiaoshou => base_xiaoshou.ShouquanID > int.Parse(shouquanid));
                     }
-                    if (leibieequal.Equals("<"))
+                    if (shouquanidequal.Equals("<"))
                     {
-                        if (leibieand.Equals("and"))
-                            where = where.And(base_xiaoshou => base_xiaoshou.Leibie < int.Parse(leibie));
+                        if (shouquanidand.Equals("and"))
+                            where = where.And(base_xiaoshou => base_xiaoshou.ShouquanID < int.Parse(shouquanid));
                         else
-                            where = where.Or(base_xiaoshou => base_xiaoshou.Leibie < int.Parse(leibie));
+                            where = where.Or(base_xiaoshou => base_xiaoshou.ShouquanID < int.Parse(shouquanid));
                     }
                 }
-                if (!string.IsNullOrEmpty(leibie))
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "leibie", leibie, leibieequal, leibieand);
+                if (!string.IsNullOrEmpty(shouquanid))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouquanid", shouquanid, shouquanidequal, shouquanidand);
                 else
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "leibie", "", leibieequal, leibieand);
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouquanid", "", shouquanidequal, shouquanidand);
+
 
                 if (!string.IsNullOrEmpty(xingming))
                 {
@@ -153,34 +182,35 @@ namespace CKWMS.Controllers
             else
             {
                 sc.ConditionInfo = "";
-                if (!string.IsNullOrEmpty(leibie))
+                if (!string.IsNullOrEmpty(shouquanid))
                 {
-                    if (leibieequal.Equals("="))
+                    if (shouquanidequal.Equals("="))
                     {
-                        if (leibieand.Equals("and"))
-                            where = where.And(base_xiaoshou => base_xiaoshou.Leibie == int.Parse(leibie));
+                        if (shouquanidand.Equals("and"))
+                            where = where.And(base_xiaoshou => base_xiaoshou.ShouquanID == int.Parse(shouquanid));
                         else
-                            where = where.Or(base_xiaoshou => base_xiaoshou.Leibie == int.Parse(leibie));
+                            where = where.Or(base_xiaoshou => base_xiaoshou.ShouquanID == int.Parse(shouquanid));
                     }
-                    if (leibieequal.Equals(">"))
+                    if (shouquanidequal.Equals(">"))
                     {
-                        if (leibieand.Equals("and"))
-                            where = where.And(base_xiaoshou => base_xiaoshou.Leibie > int.Parse(leibie));
+                        if (shouquanidand.Equals("and"))
+                            where = where.And(base_xiaoshou => base_xiaoshou.ShouquanID > int.Parse(shouquanid));
                         else
-                            where = where.Or(base_xiaoshou => base_xiaoshou.Leibie > int.Parse(leibie));
+                            where = where.Or(base_xiaoshou => base_xiaoshou.ShouquanID > int.Parse(shouquanid));
                     }
-                    if (leibieequal.Equals("<"))
+                    if (shouquanidequal.Equals("<"))
                     {
-                        if (leibieand.Equals("and"))
-                            where = where.And(base_xiaoshou => base_xiaoshou.Leibie < int.Parse(leibie));
+                        if (shouquanidand.Equals("and"))
+                            where = where.And(base_xiaoshou => base_xiaoshou.ShouquanID < int.Parse(shouquanid));
                         else
-                            where = where.Or(base_xiaoshou => base_xiaoshou.Leibie < int.Parse(leibie));
+                            where = where.Or(base_xiaoshou => base_xiaoshou.ShouquanID < int.Parse(shouquanid));
                     }
                 }
-                if (!string.IsNullOrEmpty(leibie))
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "leibie", leibie, leibieequal, leibieand);
+                if (!string.IsNullOrEmpty(shouquanid))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouquanid", shouquanid, shouquanidequal, shouquanidand);
                 else
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "leibie", "", leibieequal, leibieand);
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouquanid", shouquanid, shouquanidequal, shouquanidand);
+
 
                 if (!string.IsNullOrEmpty(xingming))
                 {

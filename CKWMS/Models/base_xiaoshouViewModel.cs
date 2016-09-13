@@ -10,16 +10,19 @@ namespace CKWMS.Models
         public int ID { get; set; }
         [Display(Name = "类别")]
         public int Leibie { get; set; }
-        [Display(Name = "授权单位")]
+        [Display(Name = "货主")]
         [Required]
         public int? ShouquanID { get; set; }
         [Display(Name = "授权单位名称")]
         public string Shouquanmingcheng { get; set; }
         [Display(Name = "姓名")]
+        [Required]
         public string Xingming { get; set; }
         [Display(Name = "电话")]
         public string Dianhua { get; set; }
         [Display(Name = "身份证编号")]
+        [Required(ErrorMessage = "身份证编号不能为空")]
+        [StringLength(18, MinimumLength = 18,ErrorMessage = "身份证编号格式不对")]
         public string ShenfenzhengBH { get; set; }
         [Display(Name = "身份证正面照片")]
         public string Shenfenzheng0TP { get; set; }
