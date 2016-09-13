@@ -12,6 +12,8 @@
             var _sl = $(this).find('td').eq(13).html();
             if (eval(_sl) <= 0)
                 return;
+            if ($(this).find("input").data("sid") == "")
+                return;
             var u_id = $(this).find('input');
             if (confirm("确实要删除此上架记录吗？") == true) {
                 var _sjid = u_id.data("sid");

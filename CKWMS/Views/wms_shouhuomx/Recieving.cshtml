@@ -118,6 +118,17 @@
                 $(this).addClass("red");;
         });
         $("#dt_sh").on("dblclick", "tr", function () {
+            var _sh = $(this).find("input");
+            if(eval(_sh.data("ys")))
+            {
+                alert("货品已验收，不能删除！");
+                return;
+            }
+            if (eval(_sh.data("sj")) > 0)
+            {
+                alert("货品已上架，不能删除！");
+                return;
+            }
             if (confirm("确实要删除此条收货记录吗？")) {
                 $.post("/wms_shouhuomx/delbyid",
                      {
@@ -190,6 +201,8 @@
                         filltable = filltable + data[i].RKMXID;
                         filltable = filltable + '" data-ys="';
                         filltable = filltable + data[i].Yanshou;
+                        filltable = filltable + '" data-sj="';
+                        filltable = filltable + data[i].ShangjiaSL;
                         filltable = filltable + '" data-sl="';
                         filltable = filltable + data[i].Shuliang;
                         filltable = filltable + '"></label></div></td><td>';

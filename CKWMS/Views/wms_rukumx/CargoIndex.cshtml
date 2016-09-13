@@ -9,6 +9,9 @@
     $(document).ready(function () {
         $("tr").bind("dblclick", function () {
             var u_id = $(this).find('td').eq(0).find('input').val();
+            var _shsl = $(this).find("td").eq(11).html();
+            if (eval(_shsl) > 0)
+                return;
             if (u_id != null) {
                 var url_go = "/wms_rukumx/Edit/" + u_id;
                 location.href = url_go;
@@ -28,15 +31,28 @@
     }
     function EditInfo() {
         $("#mydatatable tr input[type=checkbox]").each(function () {
-            if (this.checked)
+            if (this.checked) {
+                var _shsl = $(this).parent().parent().parent().parent().find("td").eq(11).html();
+                if (eval(_shsl) > 0) {
+                    alert("已经收货了，不能再修改货品信息！如果必须修改，请先删除收货记录！");
+                    return;
+                }
                 location.href = "/wms_rukumx/Edit/" + $(this).val();
+            }
         });
     }
     function DelInfo() {
         var sDel = "";
         $("#mydatatable tr input[type=checkbox]").each(function () {
             if (this.checked)
+            {
+                var _shsl = $(this).parent().parent().parent().parent().find("td").eq(11).html();
+                if (eval(_shsl) > 0) {
+                    alert("商品已经收货，不能删除！");
+                    return;
+                }
                 sDel = sDel + ", " + $(this).val()
+            }
         });
         if (sDel.length < 2)
             return;

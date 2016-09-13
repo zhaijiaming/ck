@@ -11,6 +11,12 @@
         $("tr").bind("dblclick", function () {
             var u_id = $(this).find('td').eq(0).find('input').val();
         });
+        $("#mydatatable tbody tr").each(function () {
+            if ($(this).find("td").eq(14).html() == "不合格")
+                $(this).addClass("red");
+            if ($(this).find("td").eq(15).html() != "正常")
+                $(this).add("blue");
+        });
     });
 </script>
 @{
@@ -92,9 +98,7 @@
                 {
                     <tr>
                         <td>
-                            <div class="checkbox">
                                 <label><input type="checkbox" value="@item.sid"></label>
-                            </div>
                         </td>
                         <td>@item.RukudanBH</td>
                         <td>@item.Kuwei</td>
