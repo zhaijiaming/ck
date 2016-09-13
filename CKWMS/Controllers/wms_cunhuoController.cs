@@ -227,7 +227,149 @@ namespace CKWMS.Controllers
             ViewBag.userid = (int)Session["user_id"];
             return View();
         }
+        [HttpPost]
+        [OutputCache(Duration =30)]
+        public ActionResult CurrentStorage()
+        {
+            int userid = (int)Session["user_id"];
+            string pagetag = "wms_cunhuo_currentstorage";
+            string page = "1";
+            string rkmxid = Request["rkmxid"] ?? "";
+            string rkmxidequal = Request["rkmxidequal"] ?? "";
+            string rkmxidand = Request["rkmxidand"] ?? "";
+            Expression<Func<wms_storage_v, bool>> where = PredicateExtensionses.True<wms_storage_v>();
+            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            if (sc == null)
+            {
+                sc = new searchcondition();
+                sc.UserID = userid;
+                sc.PageBrief = pagetag;
+                if (!string.IsNullOrEmpty(rkmxid))
+                {
+                    if (rkmxidequal.Equals("="))
+                    {
+                        if (rkmxidand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.RKMXID == int.Parse(rkmxid));
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.RKMXID == int.Parse(rkmxid));
+                    }
+                    if (rkmxidequal.Equals(">"))
+                    {
+                        if (rkmxidand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.RKMXID > int.Parse(rkmxid));
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.RKMXID > int.Parse(rkmxid));
+                    }
+                    if (rkmxidequal.Equals("<"))
+                    {
+                        if (rkmxidand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.RKMXID < int.Parse(rkmxid));
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.RKMXID < int.Parse(rkmxid));
+                    }
+                }
+                if (!string.IsNullOrEmpty(rkmxid))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rkmxid", rkmxid, rkmxidequal, rkmxidand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rkmxid", "", rkmxidequal, rkmxidand);
+                searchconditionService.GetInstance().AddEntity(sc);
+            }
+            else
+            {
+                sc.ConditionInfo = "";
+                if (!string.IsNullOrEmpty(rkmxid))
+                {
+                    if (rkmxidequal.Equals("="))
+                    {
+                        if (rkmxidand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.RKMXID == int.Parse(rkmxid));
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.RKMXID == int.Parse(rkmxid));
+                    }
+                    if (rkmxidequal.Equals(">"))
+                    {
+                        if (rkmxidand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.RKMXID > int.Parse(rkmxid));
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.RKMXID > int.Parse(rkmxid));
+                    }
+                    if (rkmxidequal.Equals("<"))
+                    {
+                        if (rkmxidand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.RKMXID < int.Parse(rkmxid));
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.RKMXID < int.Parse(rkmxid));
+                    }
+                }
+                if (!string.IsNullOrEmpty(rkmxid))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rkmxid", rkmxid, rkmxidequal, rkmxidand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rkmxid", "", rkmxidequal, rkmxidand);
+                searchconditionService.GetInstance().UpdateEntity(sc);
+            }
+            ViewBag.SearchCondition = sc.ConditionInfo;
 
+            var tempData = ob_wms_cunhuoservice.GetStorageList(where.Compile()).ToPagedList<wms_storage_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            ViewBag.wms_storage_v = tempData;
+            return View(tempData);
+        }
+        [OutputCache(Duration = 30)]
+        public ActionResult CurrentStorage(string page)
+        {
+            if (string.IsNullOrEmpty(page))
+                page = "1";
+            int userid = (int)Session["user_id"];
+            string pagetag = "wms_cunhuo_currentstorage";
+            Expression<Func<wms_storage_v, bool>> where = PredicateExtensionses.True<wms_storage_v>();
+            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            if (sc != null && sc.ConditionInfo != null)
+            {
+                string[] sclist = sc.ConditionInfo.Split(';');
+                foreach (string scl in sclist)
+                {
+                    string[] scld = scl.Split(',');
+                    switch (scld[0])
+                    {
+                        case "rkmxid":
+                            string rkmxid = scld[1];
+                            string rkmxidequal = scld[2];
+                            string rkmxidand = scld[3];
+                            if (!string.IsNullOrEmpty(rkmxid))
+                            {
+                                if (rkmxidequal.Equals("="))
+                                {
+                                    if (rkmxidand.Equals("and"))
+                                        where = where.And(wms_storage_v => wms_storage_v.RKMXID == int.Parse(rkmxid));
+                                    else
+                                        where = where.Or(wms_storage_v => wms_storage_v.RKMXID == int.Parse(rkmxid));
+                                }
+                                if (rkmxidequal.Equals(">"))
+                                {
+                                    if (rkmxidand.Equals("and"))
+                                        where = where.And(wms_storage_v => wms_storage_v.RKMXID > int.Parse(rkmxid));
+                                    else
+                                        where = where.Or(wms_storage_v => wms_storage_v.RKMXID > int.Parse(rkmxid));
+                                }
+                                if (rkmxidequal.Equals("<"))
+                                {
+                                    if (rkmxidand.Equals("and"))
+                                        where = where.And(wms_storage_v => wms_storage_v.RKMXID < int.Parse(rkmxid));
+                                    else
+                                        where = where.Or(wms_storage_v => wms_storage_v.RKMXID < int.Parse(rkmxid));
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                ViewBag.SearchCondition = sc.ConditionInfo;
+            }        
+
+            var tempData = ob_wms_cunhuoservice.GetStorageList(where.Compile()).ToPagedList<wms_storage_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            ViewBag.wms_storage_v = tempData;
+            return View(tempData);
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Save()

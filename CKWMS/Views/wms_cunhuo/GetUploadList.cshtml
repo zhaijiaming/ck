@@ -55,6 +55,10 @@
                 alert("超出了可上架数量，请重新录入！");
                 return;
             }
+            if ($("#kuwei").val().length < 2) {
+                alert("请输入正确的库位代码！");
+                return;
+            }
             var hege = true;
             if (eval($("#cargostate").val()) == 3)
                 hege = false;
@@ -80,14 +84,14 @@
             var _ssl = $("#sjSL").val();
             var _orn = $("#orinum").val();
             var _ml = $("#maxupload").val();
-            if (eval(_ssl) > eval(_ml)) {
+            if (eval(_ssl) > eval(_ml) || eval(_ssl)<=0) {
                 alert("上架数量不对，请更正！");
                 return;
             }
             var _rt = eval(_ssl) / eval(_orn);
             $("#mydatatable tbody tr").each(function () {
                 var _selv = $(this).find("input");
-                if (_selv.val() == $("#shmx").val()) {
+                if (eval(_selv.val()) == eval($("#shmx").val())) {
                     $("#sjzl").val(_rt * eval(_selv.data("zl")));
                     $("#sjjz").val(_rt * eval(_selv.data("jz")));
                     $("#sjtj").val(_rt * eval(_selv.data("tj")));
@@ -189,7 +193,7 @@
                         <td>@item.Chandi</td>
                         <td>@item.sshuliang</td>
                         <td>@item.Kuwei</td>
-                        <td>@Html.GetDataValue_ID("userinfo", "fullname", (int)(item.MakeMan == null ? 0 : item.MakeMan))</td>
+                        <td>@item.RenSJ</td>
                         <td>@item.CunhuoSM</td>
                         <td>@string.Format("{0:yyyy-MM-dd}", item.MakeDate == null ? "" : item.MakeDate)</td>
                     </tr>
