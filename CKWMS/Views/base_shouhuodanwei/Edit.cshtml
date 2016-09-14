@@ -9,15 +9,13 @@
 @*收货明细*@
 <script type="text/javascript">
     $(document).ready(function () {
-        $(document).ready(function () {
-            //时间
-            $("#date_yingyezhizhaoyxq").datepicker();
-            $("#date_jingyingxukeyxq").datepicker();
-            $("#date_beianyxq").datepicker();
-            $("#date_beianpzrq").datepicker();
-            $("#date_xukepzrq").datepicker();
-            $("#date_makedate").datepicker();
-        });
+        //时间
+        $("#date_yingyezhizhaoyxq").datepicker();
+        $("#date_jingyingxukeyxq").datepicker();
+        $("#date_beianyxq").datepicker();
+        $("#date_beianpzrq").datepicker();
+        $("#date_xukepzrq").datepicker();
+        $("#date_makedate").datepicker();
         //获取收货信息
         var shdw_id = $("#shdw_id").val();
         var huozhuid = $("#huozhuid").val();
@@ -83,7 +81,6 @@
         });
 
         //经营范围
-        //$("#pl_Fanwei").hide();
         $("#pl_Fanwei").draggable({ handle: '.tuodong' });
 
         $("#bt_Fanweiadd").click(function () {
@@ -198,17 +195,20 @@
 
         //默认地址
         $("#btn_Default").click(function () {
-            $("#shouhuomingxi_shdw tr input[type = checkbox]").each(function () {
-                if (this.checked) {
-                    var mxdizhi = $(this).parent().parent().parent().siblings().find(".dizhi").text();
-                    if (mxdizhi.length > 0) {
+            var num = $("input[type=checkbox]:checked").length;
+            if (num > 1) {
+                alert("您只能选取一个地址做为默认地址！");
+            } else if (num == "") {
+                alert("您没有选择的默认地址！");
+            } else {
+                $("#shouhuomingxi_shdw tr input[type = checkbox]").each(function () {
+                    if (this.checked) {
+                        var mxdizhi = $(this).parent().parent().parent().siblings().find(".dizhi").text();
                         $("#songhuodz").val(mxdizhi);
-                    } else {
-                        alert("您选择的地址为空，请重新选择！");
-                    }
-                };
-                
-            });
+                    };
+                });
+            }
+            
         });
 
 
@@ -350,16 +350,17 @@
         <input type="hidden" id="btnSelect" value="" />
         <input type="hidden" id="MakeMan" name="MakeMan" value=@Session["user_id"] />
         <input type="hidden" name="MakeDate" value=@string.Format("{0:yyyy-MM-dd}",DateTime.Now) />
+        <input type="hidden" name="huozhuid" id="huozhuid" value="@item.HuozhuID" />
         <div class="page-header">
             <p>
                 <button type="submit" class="btn btn-default"><i class="icon-save"></i>更新</button>
                 <button type="button" class="btn btn-default" onclick="javascript: history.back(-1); "><i class="icon-hand-left"></i>返回</button>
                 <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
                 <span class="pull-right">
-                    <button type="button" id="btn_shdwAdd" class="btn btn-default"><i class="icon-adn"></i>收货地址添加</button>
-                    <button type="button" id="btn_shdwEdit" class="btn btn-default"><i class="icon-edit"></i>收货地址编辑</button>
-                    <button type="button" id="btn_shdwDel" class="btn btn-default"><i class="icon-remove"></i>收货地址删除</button>
-                    <button type="button" id="btn_Default" class="btn btn-default"><i class="icon-adn"></i>设为默认地址</button>
+                    <button type="button" id="btn_shdwAdd" class="btn btn-default"><i class="icon-adn"></i>地址添加</button>
+                    <button type="button" id="btn_shdwEdit" class="btn btn-default"><i class="icon-edit"></i>地址编辑</button>
+                    <button type="button" id="btn_shdwDel" class="btn btn-default"><i class="icon-remove"></i>地址删除</button>
+                    <button type="button" id="btn_Default" class="btn btn-default"><i class="icon-location-arrow"></i>默认地址</button>
                 </span>
             </p>
         </div>
@@ -368,7 +369,8 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>货主</label>
                 <div class="col-sm-10">
-                    @Html.SelectList_Auto("huozhuid", "货主", "名称", (int)item.HuozhuID)
+                    @*@Html.SelectList_Auto("huozhuid", "货主", "名称", (int)item.HuozhuID)*@
+                    <input type="text" readonly class="form-control" value="@Html.GetDataValue_ID( "货主", "名称",(int)item.HuozhuID)"/>
                 </div>
             </div>
             @*单位名称*@
@@ -558,28 +560,29 @@
             </div>
         </div>
     </form>
-    @*收货明细列表*@
-    <div id="shouhuomingxi_shdw" class="container" style="height:360px;overflow:auto;margin-top:10px;">
-        <table class="table" id="mydatatable">
-            <caption></caption>
-            <thead>
-                <tr>
-                    <td></td>
-                    @*<td>收货单位</td>*@
-                    <td>地址</td>
-                    <td>联系人</td>
-                    <td>联系电话</td>
-                    @*<td>货主的销售序号</td>*@
-                    <td>销售人</td>
-                    @*<td>录入日期</td>
-                        <td>输入人</td>*@
-                </tr>
-            </thead>
+    
+</div>
+@*收货明细列表*@
+<div id="shouhuomingxi_shdw" class="container" style="height:360px;overflow:auto;">
+    <table class="table" id="mydatatable">
+        <caption></caption>
+        <thead>
+            <tr>
+                <td></td>
+                @*<td>收货单位</td>*@
+                <td>地址</td>
+                <td>联系人</td>
+                <td>联系电话</td>
+                @*<td>货主的销售序号</td>*@
+                <td>销售人</td>
+                @*<td>录入日期</td>
+                    <td>输入人</td>*@
+            </tr>
+        </thead>
 
-            <tbody></tbody>
+        <tbody></tbody>
 
-        </table>
-    </div>
+    </table>
 </div>
 <div id="pl_Fanwei" class="panel panel-primary" hidden style="display:none;position:fixed;top:100px;left:200px;width:1100px;height:600px;z-index:999;">
     <div class="tuodong panel-heading">

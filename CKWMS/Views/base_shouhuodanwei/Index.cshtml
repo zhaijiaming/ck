@@ -121,32 +121,19 @@
         <table class="table" id="mydatatable">
             <caption></caption>
             <thead>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>营业执照</td>
-                    <td></td>
-                    <td></td>
-                    <td>经营许可</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                
                 <tr>
                     <td></td>
                     <td>货主</td>
                     <td>单位名称</td>
                     <td>地址</td>
-                    <td>编号</td>
+                    <td>营业执照编号</td>
                     <td>有效期</td>
                     <td>照片</td>
-                    <td>编号</td>
+                    <td>经营许可编号</td>
                     <td>有效期</td>
                     <td>照片</td>
                     @*<td>首营状态</td>*@
-                    <td></td>
                 </tr>
             </thead>
             <tbody>
@@ -154,13 +141,11 @@
                 {
                     <tr>
                         <td>
-                            <div class="checkbox">
-                                <label><input type="checkbox" value="@item.ID"></label>
-                            </div>
+                            <label><input class="checkbox" type="checkbox" value="@item.ID"></label>
                         </td>
                         <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
                         <td>@item.Mingcheng</td>
-                        <td><a href="/base_shouhuomingxi/ShdwIndex/@item.ID" target="_blank">查看</a></td>
+                        <td>@item.SonghuoDZ</td>
                         <td>@item.YingyezhizhaoBH</td>
                         <td>@item.YingyezhizhaoYXQ.ToString("yyyy-MM-dd")</td>
                         <td><a href="/files/zhengzhao/@item.YingyezhizhaoTP" target="_blank">浏览</a></td>
