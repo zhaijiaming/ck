@@ -13,8 +13,7 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        //$("#pl_Fanwei").hide();
-        $("#pl_Fanwei").draggable({ handle: '.tuodong' });
+        $("#pl_Fanwei").draggable({ handle: '.tuodong' }, { containment: [-1000, 50, 1300, 600] });
         $("#ob_base_gongyingshang_makedate").datepicker();
         $("#ob_base_gongyingshang_yingyezhizhaoyxq").datepicker();
         $("#ob_base_gongyingshang_jingyingxukeyxq").datepicker();
@@ -23,8 +22,12 @@
         $("#ob_base_gongyingshang_xukepzrq").datepicker();
         document.getElementById("daima").focus();
 
+        var bj = 0;
         GetFanwei1();
+
+        //显示全部
         $("#bt_fanwei_showall").click(function () {
+            var bj = 1;
             var tempid = "";
             $("#qxdatatable tr input[type=checkbox]").each(function () {
                 if (this.checked) {
@@ -51,185 +54,133 @@
                 tempid = tempid + xiaolei[k] + ";";
             }
             tempid = tempid.substring(0, tempid.length - 1);
-            GetFanwei();
-            setTimeout(function () {
-                var fw = document.getElementsByClassName('xulieid');
-                var i = tempid;
-                var t = i.split(";");
-                for (var k = 0; k < t.length; k++) {
-                    for (var l = 0; l < fw.length; l++) {
-                        if (t[k] == $(".xulieid").eq(l).val())
-                            $("#qxdatatable tr input[type=checkbox]").eq(l).attr("checked", true);
-                    }
-                }
-            }, 500)
+            GetFanwei(bj, tempid);
         });
 
-            $("#bt_fanwei_showdalei").click(function () {
-                var tempid = "";
-                $("#qxdatatable tr input[type=checkbox]").each(function () {
-                    if (this.checked) {
-                        tempid = tempid + $(this).parent().find(".xulieid").val() + ";";
-                    }
-                });
-                var t = tempid.split(";");
-                GetFanwei1();
-                setTimeout(function () {
-                    var fw = document.getElementsByClassName('xulieid');
-                    for (var k = 0; k < t.length; k++) {
-                        for (var l = 0; l < fw.length; l++) {
-                            if (t[k] == $(".xulieid").eq(l).val())
-                                $("#qxdatatable tr input[type=checkbox]").eq(l).attr("checked", true);
-                        }
-                    }
-                }, 500)
-            });
-
-            $("#pl_close").click(function () {
-                $("#pl_Fanwei").hide();
-            });
-
-            //$("form").validate({
-            //    rules: {
-            //        ob_base_gongyingshang_daima: { required: true },
-            //        ob_base_gongyingshang_mingcheng: { required: true },
-            //    },
-            //    messages: {
-            //        ob_base_gongyingshang_daima: { required: "请输入daima" },
-            //        ob_base_gongyingshang_mingcheng: { required: "请输入mingcheng" },
-            //    }
-            //});
-
-            //添加范围
-            $("#bt_fanwei_add").click(function () {
-                //获取小类字符串
-                var fw = document.getElementsByClassName('xulieid');
-                var i = $("#jingyingfanweijianma").val();
-                var ti = i.split(";");
-                var j = $("#jingyingfanwei").val();
-                var tj = j.split(";");
-                //var xiaolei = new Array();
-                //var miaoshu = new Array();
-                //var x = 0;
-                //for (var k = 0; k < ti.length; k++, x = 0) {
-                //    for (var l = 0; l < fw.length; l++) {
-                //        if (ti[k] == $(".xulieid").eq(l).val()) {
-                //            x = 1;
-                //        }
-                //    }
-                //    if (x != 1) {
-                //        xiaolei.push(ti[k]);
-                //        miaoshu.push(tj[k]);
-                //    }
-                //}
-                var _jyfw = "";
-                var _jyfw1 = "";
-                var _jyfw2 = "";
-                var _jyfw3 = "";
-                var _jyfwjm = "";
-                var t = document.getElementsByClassName('xulieid');
-                $("#qxdatatable tr input[type=checkbox]").each(function () {
-                    if (this.checked) {
-                        switch ($(this).parent().parent().parent().siblings().find(".glfl").html()) {
-                            case "1": _jyfw1 = _jyfw1 + $(this).parent().parent().parent().siblings().find(".bh").html() + "," + $(this).parent().parent().parent().siblings().find(".mc").html() + ";";
-                                break;
-                            case "2": _jyfw2 = _jyfw2 + $(this).parent().parent().parent().siblings().find(".bh").html() + "," + $(this).parent().parent().parent().siblings().find(".mc").html() + ";";
-                                break;
-                            case "3": _jyfw3 = _jyfw3 + $(this).parent().parent().parent().siblings().find(".bh").html() + "," + $(this).parent().parent().parent().siblings().find(".mc").html() + ";";
-                                break;
-                        }
-                        //_jyfw = _jyfw + $(this).parent().parent().parent().siblings().find(".glfl").html() + "," + $(this).parent().parent().parent().siblings().find(".bh").html() + "," + $(this).parent().parent().parent().siblings().find(".mc").html() + ";";
-                        _jyfwjm = _jyfwjm + $(this).parent().find(".xulieid").val() + ";";
-                    }
-                });
-                _jyfw = "三类:" + _jyfw3 + "\n" + "二类:" + _jyfw2 + "\n" + "一类:" + _jyfw1;
-                if (_jyfw3 == "")
-                    _jyfw = _jyfw.replace("三类:\n", "");
-                if (_jyfw2 == "")
-                    _jyfw = _jyfw.replace("二类:\n", "");
-                if (_jyfw1 == "")
-                    _jyfw = _jyfw.replace("一类:", "");
-
-                //for (k = 0; k < xiaolei.length; k++) {
-                //    _jyfwjm = _jyfwjm + xiaolei[k] + ";";
-                //}
-                //_jyfwjm = _jyfwjm.substring(0, _jyfwjm.length - 1);
-                //for (k = 0; k < miaoshu.length; k++) {
-                //    _jyfw = _jyfw + miaoshu[k] + ";";
-                //}
-                //_jyfw = _jyfw.substring(0, _jyfw.length - 1);
-                var _addok = confirm("确定要修改经营范围吗？");
-                if (_addok) {
-                    if (_jyfw.length >= 512) {
-                        alert("所选数据超过范围，请重新选择。")
-                    }
-                    else {
-                        $("#jingyingfanwei").val(_jyfw);
-                        $("#jingyingfanweijianma").val(_jyfwjm);
-                        $("#pl_Fanwei").hide();
-                    }
-                }
-                $("#guanlifenlei").val("全部");
-                GetFanwei1();
-            });
-            $("#bt_fanwei_all").click(function () {
-                $(".xulieid").prop("checked", true);
-            })
-            $("#bt_fanwei_clear").click(function () {
-                $(".xulieid").prop("checked", false);
-            })
-            //选择管理分类
-            $("#guanlifenlei").change(function () {
-                var fl = document.getElementsByClassName('glfl');
-                var lb = $("#guanlifenlei").find("option:selected").text();
-                if (lb == "一类")
-                {
-                    for (var i = 0; i < fl.length; i++) {
-                        if ($(".glfl").eq(i).text() == "1") {
-                            $(".bg").eq(i).show();
-                        }
-                        else { $(".bg").eq(i).hide(); }
-                    }
-                }
-                if (lb == "二类") {
-                    for (var i = 0; i < fl.length; i++) {
-                        if ($(".glfl").eq(i).text() == "2") {
-                            $(".bg").eq(i).show();
-                        }
-                        else { $(".bg").eq(i).hide(); }
-                    }
-                }
-                if (lb == "三类") {
-                    for (var i = 0; i < fl.length; i++) {
-                        if ($(".glfl").eq(i).text() == "3") {
-                            $(".bg").eq(i).show();
-                        }
-                        else { $(".bg").eq(i).hide(); }
-                    }
-                }
-                if (lb == "全部") {
-                    $(".bg").show();
+        //显示大类
+        $("#bt_fanwei_showdalei").click(function () {
+            var bj = 1;
+            var tempid = "";
+            $("#qxdatatable tr input[type=checkbox]").each(function () {
+                if (this.checked) {
+                    tempid = tempid + $(this).parent().find(".xulieid").val() + ";";
                 }
             });
+            GetFanwei1(bj, tempid);
+        });
+
+        //关闭窗口
+        $("#pl_close").click(function () {
+            $("#pl_Fanwei").hide();
+            var bj = 0;
+            $("#guanlifenlei").val("全部");
+            GetFanwei1(bj);
+        });
+
+        //添加范围
+        $("#bt_fanwei_add").click(function () {
+            var _jyfw = "";
+            var _jyfw1 = "";
+            var _jyfw2 = "";
+            var _jyfw3 = "";
+            var _jyfwjm = "";
+            var t = document.getElementsByClassName('xulieid');
+            $("#qxdatatable tr input[type=checkbox]").each(function () {
+                if (this.checked) {
+                    switch ($(this).parent().parent().parent().siblings().find(".glfl").html()) {
+                        case "1": _jyfw1 = _jyfw1 + $(this).parent().parent().parent().siblings().find(".bh").html() + "," + $(this).parent().parent().parent().siblings().find(".mc").html() + ";";
+                            break;
+                        case "2": _jyfw2 = _jyfw2 + $(this).parent().parent().parent().siblings().find(".bh").html() + "," + $(this).parent().parent().parent().siblings().find(".mc").html() + ";";
+                            break;
+                        case "3": _jyfw3 = _jyfw3 + $(this).parent().parent().parent().siblings().find(".bh").html() + "," + $(this).parent().parent().parent().siblings().find(".mc").html() + ";";
+                            break;
+                    }
+                    //_jyfw = _jyfw + $(this).parent().parent().parent().siblings().find(".glfl").html() + "," + $(this).parent().parent().parent().siblings().find(".bh").html() + "," + $(this).parent().parent().parent().siblings().find(".mc").html() + ";";
+                    _jyfwjm = _jyfwjm + $(this).parent().find(".xulieid").val() + ";";
+                }
+            });
+            _jyfw = "三类:" + _jyfw3 + "\n" + "二类:" + _jyfw2 + "\n" + "一类:" + _jyfw1;
+            if (_jyfw3 == "")
+                _jyfw = _jyfw.replace("三类:\n", "");
+            if (_jyfw2 == "")
+                _jyfw = _jyfw.replace("二类:\n", "");
+            if (_jyfw1 == "")
+                _jyfw = _jyfw.replace("一类:", "");
+
+            var _addok = confirm("确定要修改经营范围吗？");
+            if (_addok) {
+                if (_jyfw.length >= 512) {
+                    alert("所选数据超过范围，请重新选择。")
+                }
+                else {
+                    $("#jingyingfanwei").val(_jyfw);
+                    $("#jingyingfanweijianma").val(_jyfwjm);
+                    $("#pl_Fanwei").hide();
+                    var bj = "0";
+                }
+            }
+            $("#guanlifenlei").val("全部");
+            GetFanwei1(bj);
+        });
+        //全选
+        $("#bt_fanwei_all").click(function () {
+            $(".xulieid").prop("checked", true);
+        })
+        //全部取消
+        $("#bt_fanwei_clear").click(function () {
+            $(".xulieid").prop("checked", false);
+        })
+        //选择管理分类
+        $("#guanlifenlei").change(function () {
+            var fl = document.getElementsByClassName('glfl');
+            var lb = $("#guanlifenlei").find("option:selected").text();
+            if (lb == "一类") {
+                for (var i = 0; i < fl.length; i++) {
+                    if ($(".glfl").eq(i).text() == "1") {
+                        $(".bg").eq(i).show();
+                    }
+                    else { $(".bg").eq(i).hide(); }
+                }
+            }
+            if (lb == "二类") {
+                for (var i = 0; i < fl.length; i++) {
+                    if ($(".glfl").eq(i).text() == "2") {
+                        $(".bg").eq(i).show();
+                    }
+                    else { $(".bg").eq(i).hide(); }
+                }
+            }
+            if (lb == "三类") {
+                for (var i = 0; i < fl.length; i++) {
+                    if ($(".glfl").eq(i).text() == "3") {
+                        $(".bg").eq(i).show();
+                    }
+                    else { $(".bg").eq(i).hide(); }
+                }
+            }
+            if (lb == "全部") {
+                $(".bg").show();
+            }
+        });
     });
 
-    //经营范围
+    //点击修改or增加
     function Bt_Fanweiadd() {
-        GetData();
         document.getElementById("pl_Fanwei").removeAttribute("hidden");
         $("#pl_Fanwei").show();
     }
-    function GetFanwei1() {
-        //var _qxmlid = $("#qxml").val();
+    function GetFanwei1(a, b) {
+        var bj = a;
+        var tempid = b;
         var filltable = "";
         $.post(
                 "/base_qixiemulu/GetQixiemulu1",
                 {
-                    //qxml: _qxmlid
+                    
                 },
                 function (data) {
                     for (var i in data) {
-                        filltable = filltable + '<tr class="bg"><td><div class="checkbox"><label><input type="checkbox" class="xulieid"  value="';
+                        filltable = filltable + '<tr class="bg"><td><div class="checkbox"><label><input type="checkbox" class ="xulieid" value="';
                         filltable = filltable + data[i].ID;
                         filltable = filltable + '"></label></div></td><td style="width:80px"><span class="bh">';
                         filltable = filltable + data[i].Bianhao;
@@ -242,11 +193,12 @@
                         filltable = filltable + '</span></td></tr>';
                     }
                     $("#pl_Fanwei tbody").html(filltable);
+                    GetData(bj, tempid)
                 });
     }
-
-    function GetFanwei() {
-        //var _qxmlid = $("#qxml").val();
+    function GetFanwei(a, b) {
+        var bj = a;
+        var tempid = b;
         var filltable = "";
         $.post(
                 "/base_qixiemulu/GetQixiemulu",
@@ -268,12 +220,20 @@
                         filltable = filltable + '</span></td></tr>';
                     }
                     $("#pl_Fanwei tbody").html(filltable);
+                    GetData(bj, tempid)
                 });
     }
-    function GetData() {
+    //打勾
+    function GetData(a, tempid) {
         var fw = document.getElementsByClassName('xulieid');
-        var i = $("#jingyingfanweijianma").val();
-        var t = i.split(";");
+        var bj = a;
+        var i = tempid;
+        if (bj == 0) {
+            var i = $("#jingyingfanweijianma").val();
+        }
+        if (i != null) {
+            var t = i.split(";");
+        } else { t = "" }
         for (var k = 0; k < t.length; k++) {
             for (var l = 0; l < fw.length; l++) {
                 if (t[k] == $(".xulieid").eq(l).val())
@@ -284,16 +244,16 @@
 
 
 
-       //获取字符串代码
-        function GetSpell() {
-            $.post("/Service/GetSpellCode",
-                {
-                    yourwords: $("#shengcheng").val()
-                },
-            function (response) {
-                $("#daima").val(response);
-            });
-        }
+    //获取字符串代码
+    function GetSpell() {
+        $.post("/Service/GetSpellCode",
+            {
+                yourwords: $("#shengcheng").val()
+            },
+        function (response) {
+            $("#daima").val(response);
+        });
+    }
 </script>
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">

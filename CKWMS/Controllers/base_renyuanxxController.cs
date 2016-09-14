@@ -13,6 +13,16 @@ using CKWMS.Filters;
 
 namespace CKWMS.Controllers
 {
+    public class RenYuan
+    {
+        public int ID { get; set; }
+        public string Mingcheng { get; set; }
+        public int? Xingbie { get; set; }
+        public string Bumen { get; set; }
+        public string Zhiwei { get; set; }
+        public string Zhize { get; set; }
+        public string Beizhu { get; set; }
+    }
     public class base_renyuanxxController : Controller
     {
         private Ibase_renyuanxxService ob_base_renyuanxxservice = ServiceFactory.base_renyuanxxservice;
@@ -376,6 +386,25 @@ namespace CKWMS.Controllers
                 }
             }
             return RedirectToAction("Index");
+        }
+        public JsonResult GetRenyuan()
+        {
+            var _rytemp = ob_base_renyuanxxservice.LoadSortEntities(p => p.IsDelete == false, true, s => s.Bumen);
+            List<RenYuan> _rylist = new List<RenYuan>();
+            RenYuan _ry;
+            foreach (var ry in _rytemp)
+            {
+                _ry = new RenYuan();
+                _ry.ID = ry.ID;
+                _ry.Mingcheng = ry.Mingcheng;
+                _ry.Xingbie = ry.Xingbie;
+                _ry.Bumen = ry.Bumen;
+                _ry.Zhiwei = ry.Zhiwei;
+                _ry.Zhize = ry.Zhize;
+                _ry.Beizhu = ry.Beizhu;
+                _rylist.Add(_ry);
+            }
+            return Json(_rylist);
         }
     }
 }

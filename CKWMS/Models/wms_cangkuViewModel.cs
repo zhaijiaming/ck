@@ -38,7 +38,7 @@ namespace CKWMS.Models
         public string Col2 { get; set; }
         [Display(Name = "机动3")]
         public string Col3 { get; set; }
-        [Display(Name = "z制单日期")]
+        [Display(Name = "制单日期")]
         [DataType(DataType.Date)]
         public DateTime? MakeDate { get; set; }
         [Display(Name = "制单人")]

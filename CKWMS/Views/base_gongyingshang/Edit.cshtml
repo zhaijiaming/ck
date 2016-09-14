@@ -70,7 +70,6 @@
     //}
 
     $(document).ready(function () {
-        //$("#pl_Fanwei").hide();
         $("#pl_Fanwei").draggable({ handle: '.tuodong' }, { containment: [-1000,50,1300,600] });
         $("#ob_base_gongyingshang_makedate").datepicker();
         $("#ob_base_gongyingshang_yingyezhizhaoyxq").datepicker();
@@ -141,6 +140,7 @@
         $("#pl_close").click(function () {
             $("#pl_Fanwei").hide();
             var bj = 0;
+            $("#guanlifenlei").val("全部");
             GetFanwei1(bj);
         });       
 
@@ -311,8 +311,9 @@
         if (bj == 0) {
             var i = $("#jingyingfanweijianma").val();
         }
-        var t = i.split(";");
-
+        if (i != null) {
+            var t = i.split(";");
+        } else { t = "" }
         //$(".bh").siblings().children().find(".checkbox").attr("checked", true);
         //$("input:checkbox").eq(2).attr("checked", true);
         //alert($(".bh").eq(0).text());

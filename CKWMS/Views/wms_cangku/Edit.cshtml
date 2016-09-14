@@ -4,10 +4,78 @@
 @{
     ViewBag.Title = "仓库修改";
 }
+@Html.GetFileUpload("yyzztp", "yytp", "z", "scqy", 2, 0, new Dictionary<string, string>() { { "yytp", "yyzztp" }, { "xktp", "jyxktp" } })
 
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        $(document).ready(function () {
+
+            $("#pl_Renyuan").draggable({ handle: '.tuodong' })
+            GetRenyuan()
+
+            $("#pl_close").click(function () {
+                $("#pl_Renyuan").hide();
+                Getry();
+            });
+
+            $("#bt_renyuan_add").click(function () {
+
+                var valry = $('input:radio[name="radiobox"]:checked').parent().parent().parent().siblings().find(".mingzi").html();
+                if (valry == null) {
+                    alert("请选择一位负责人")
+                }
+                else {
+                    $("#fuzeren").val(valry);
+                    $("#pl_Renyuan").hide();
+                }
+
+            })
+        })
+        function GetRenyuan() {
+            var filltable = "";
+            $.post(
+                    "/base_renyuanxx/GetRenyuan",
+                    {
+
+                    },
+                    function (data) {
+                        for (var i in data) {
+                            filltable = filltable + '<tr><td><div class="radio" ><label><input name="radiobox" type="radio" class="radioid" value="';
+                            filltable = filltable + data[i].ID;
+                            filltable = filltable + '"></label></div></td><td><span class="mingzi">';
+                            filltable = filltable + data[i].Mingcheng;
+                            filltable = filltable + '</td><td>';
+                            filltable = filltable + data[i].Xingbie;
+                            filltable = filltable + '</td><td>';
+                            filltable = filltable + data[i].Bumen;
+                            filltable = filltable + '</td><td>';
+                            filltable = filltable + data[i].Zhiwei;
+                            filltable = filltable + '</td><td>';
+                            filltable = filltable + data[i].Zhize;
+                            filltable = filltable + '</td><td>';
+                            filltable = filltable + data[i].Beizhu;
+                            filltable = filltable + '</td></tr>';
+                        }
+                        $("#pl_Renyuan tbody").html(filltable);
+                        Getry();
+                    });
+        }
+        function Bt_Renyuanadd() {
+            document.getElementById("pl_Renyuan").removeAttribute("hidden");
+            $("#pl_Renyuan").show();
+        }
+
+        function Getry() {
+            var mz = document.getElementsByClassName('mingzi');
+            var tempry = $("#fuzeren").val();
+            for (var i = 0; i < mz.length; i++) {
+                if (tempry == $(".mingzi").eq(i).html())
+                    $("#rydatatable tr input[type=radio]").eq(i).prop("checked", true);               
+            }         
+       }
+
+
     </script>
     <ul class="breadcrumb">
         <li>
@@ -26,6 +94,9 @@
     {
         @Html.AntiForgeryToken()
         <input type="hidden" name="id" value="@ViewData.Model.ID" />
+        <input type="hidden" id="btnSelect" value="" />
+        <input type="hidden" id="MakeMan" name="MakeMan" value=@Session["user_id"] />
+        <input type="hidden" name="MakeDate" value=@string.Format("{0:yyyy-MM-dd}",DateTime.Now) />
         <div class="page-header">
             <p>
                 <button type="submit" class="btn btn-default"><i class="icon-save"></i>更新</button>
@@ -57,16 +128,19 @@
                     @Html.TextBoxFor(m => m.ShouhuoDZ, new { @class = "form-control" })
                 </div>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 @Html.LabelFor(m => m.FuzerenID, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.FuzerenID, new { @class = "form-control" })
                 </div>
-            </div>
+            </div>*@
             <div class="form-group">
                 @Html.LabelFor(m => m.Fuzeren, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Fuzeren, new { @class = "form-control" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(m => m.Fuzeren, new { @class = "form-control", id = "fuzeren", @readonly = true })
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" class="form-control" id="bt_Renyuanadd" onclick="Bt_Renyuanadd()">修改</button>
                 </div>
             </div>
             <div class="form-group">
@@ -95,17 +169,39 @@
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.YYZZTP, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
+                @*<div class="col-sm-10">
                     @Html.TextBoxFor(m => m.YYZZTP, new { @class = "form-control" })
+                </div>*@
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" readonly id="yyzztp" name="yyzztp" value="@ViewData.Model.YYZZTP">
+                </div>
+                <div class="col-sm-2">
+                    <button class="form-control" data-toggle="modal" data-target="#myModalUpload" onclick="btn1()">上传</button>
+                </div>
+                <div class="col-sm-2">
+                    <span class="form-control" id="yytp">
+                        <a href="/files/zhengzhao/@ViewData.Model.YYZZTP" target="_blank">浏览</a>
+                    </span>
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.JYXKTP, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
+                @*<div class="col-sm-10">
                     @Html.TextBoxFor(m => m.JYXKTP, new { @class = "form-control" })
+                </div>*@
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" readonly id="jyxktp" name="jyxktp" value="@ViewData.Model.JYXKTP">
+                </div>
+                <div class="col-sm-2">
+                    <button class="form-control" data-toggle="modal" data-target="#myModalUpload" onclick="btn2()">上传</button>
+                </div>
+                <div class="col-sm-2">
+                    <span class="form-control" id="xktp">
+                        <a href="/files/zhengzhao/@ViewData.Model.JYXKTP" target="_blank">浏览</a>
+                    </span>
                 </div>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 @Html.LabelFor(m => m.Col1, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.Col1, new { @class = "form-control" })
@@ -122,19 +218,47 @@
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.Col3, new { @class = "form-control" })
                 </div>
-            </div>
+            </div>*@
             <div class="form-group">
                 @Html.LabelFor(m => m.MakeDate, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    <input id="MakeDate" type="date" class="form-control" name="MakeDate" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.MakeDate)">
+                    <input id="MakeDate" type="date" readonly class="form-control" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.MakeDate)">
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.MakeMan, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.SelectList_Auto("MakeMan", "userinfo", "fullname", (long)ViewData.Model.MakeMan)
+                    @*@Html.SelectList_Auto("MakeMan", "userinfo", "fullname", (long)ViewData.Model.MakeMan)*@
+                    <input type="text" readonly class="form-control" value="@Html.GetDataValue_ID("userinfo", "全名", (int)ViewData.Model.MakeMan)" />
+
                 </div>
             </div>
         </div>
     }
 </div>
+<div id="pl_Renyuan" class="panel panel-primary" hidden style="display:none;position:fixed;top:100px;left:200px;width:700px;height:400px;z-index:999;">
+    <div class="tuodong panel-heading">
+        <h3 class="panel-title">人员信息<button id="pl_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="center">
+            <button type="button" class="btn btn-default " id="bt_renyuan_add"><i class="icon-add"></i>确定</button>
+            <table class="table" id="rydatatable">
+                <caption></caption>
+                <thead @*style="display:block"*@ class="tuodong">
+                    <tr>
+                        <td></td>
+                        <td>姓名</td>
+                        <td>性别</td>
+                        <td>部门</td>
+                        <td>职位</td>
+                        <td>职责</td>
+                        <td>备注</td>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
