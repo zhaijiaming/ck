@@ -13,6 +13,7 @@ namespace CKWMS.Controllers
     public class base_shouhuodanweiController : Controller
     {
         private Ibase_shouhuodanweiService ob_base_shouhuodanweiservice = ServiceFactory.base_shouhuodanweiservice;
+
         //private List<SearchConditionModel> _searchconditions;
         [OutputCache(Duration = 30)]
         public ActionResult Index(string page)
@@ -358,6 +359,30 @@ namespace CKWMS.Controllers
             }
             return RedirectToAction("Index", new { id = uid });
         }
+
+        public JsonResult UpdateDz()
+        {
+            string id = Request["id"] ?? "";
+            string songhuodz = Request["songhuodz"] ?? "";
+
+            int uid = int.Parse(id);
+            try
+            {
+                base_shouhuodanwei p = ob_base_shouhuodanweiservice.GetEntityById(base_shouhuodanwei => base_shouhuodanwei.ID == uid);
+                
+                p.SonghuoDZ = songhuodz.Trim();
+                ob_base_shouhuodanweiservice.UpdateEntity(p);
+                ViewBag.saveok = ViewAddTag.ModifyOk;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                ViewBag.saveok = ViewAddTag.ModifyNo;
+            }
+
+            return Json(1);
+        }
+
         public ActionResult Delete()
         {
             string sdel = Request["del"] ?? "";

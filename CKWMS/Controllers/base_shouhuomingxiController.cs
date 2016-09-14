@@ -200,10 +200,13 @@ namespace CKWMS.Controllers
         }
         public ActionResult Add()
         {
-            string id = Request["getId"];
-
+            string id = Request["getId"] ?? "";
             var _id = long.Parse(id);
             ViewBag.id = _id;
+
+            string huozhuid = Request["huozhuid"] ?? "";
+            var _huozhuid = long.Parse(huozhuid);
+            ViewBag.huozhuid = _huozhuid;
 
             ViewBag.userid = (int)Session["user_id"];
             return View();
@@ -266,6 +269,13 @@ namespace CKWMS.Controllers
         [OutputCache(Duration = 10)]
         public ActionResult Edit(int id)
         {
+            string biaoshi = Request["biaoshi"] ?? "";
+            if (!string.IsNullOrEmpty(biaoshi))
+            {
+                int _biaoshi = int.Parse(biaoshi);
+                ViewBag.biaoshi = _biaoshi;
+            }
+
             base_shouhuomingxi tempData = ob_base_shouhuomingxiservice.GetEntityById(base_shouhuomingxi => base_shouhuomingxi.ID == id && base_shouhuomingxi.IsDelete == false);
             ViewBag.base_shouhuomingxi = tempData;
             if (tempData == null)

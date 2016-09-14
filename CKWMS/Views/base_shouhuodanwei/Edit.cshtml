@@ -20,18 +20,28 @@
         });
         //获取收货信息
         var shdw_id = $("#shdw_id").val();
+        var huozhuid = $("#huozhuid").val();
         if (shdw_id.length > 0) {
             GetShouhuomingxiData(shdw_id);
         };
 
         $("#btn_shdwAdd").click(function () {
-            window.open("/base_shouhuomingxi/Add?getId=" + shdw_id,"_self");
+            window.open("/base_shouhuomingxi/Add?getId=" + shdw_id + "&" + "huozhuid=" + huozhuid, "_self");
         });
 
         $("#btn_shdwEdit").click(function () {
             $("#shouhuomingxi_shdw tr input[type=checkbox]").each(function () {
+                //对默认地址的操作
                 if (this.checked) {
-                    window.open("/base_shouhuomingxi/Edit/" + $(this).val(),"_self");
+                    var mxdizhi = $(this).parent().parent().parent().siblings().find(".dizhi").text();
+                    var dwdizhi = $("#songhuodz").val();
+                    if (mxdizhi == dwdizhi) {
+                        var biaoshi = 1;
+                        window.open("/base_shouhuomingxi/Edit/" + $(this).val() + "?biaoshi=" + biaoshi, "_self");
+                    } else {
+                        window.open("/base_shouhuomingxi/Edit/" + $(this).val(), "_self");
+                    }
+                    
                 }
             });
         });
@@ -41,7 +51,15 @@
             $("#shouhuomingxi_shdw tr input[type = checkbox]").each(function () {
                 if(this.checked){
                     _shmx = _shmx + $(this).val() + ",";
+
+                    //默认地址删除
+                    var mxdizhi = $(this).parent().parent().parent().siblings().find(".dizhi").text();
+                    var dwdizhi = $("#songhuodz").val();
+                    if (mxdizhi == dwdizhi) {
+                        $("#songhuodz").val("");
+                    }
                 }
+                
             });
             if (_shmx.length > 0) {
                 var _delok = confirm("确定要删除这些信息吗？");
@@ -178,6 +196,23 @@
             GetQixiemulu();
         });
 
+        //默认地址
+        $("#btn_Default").click(function () {
+            $("#shouhuomingxi_shdw tr input[type = checkbox]").each(function () {
+                if (this.checked) {
+                    var mxdizhi = $(this).parent().parent().parent().siblings().find(".dizhi").text();
+                    if (mxdizhi.length > 0) {
+                        $("#songhuodz").val(mxdizhi);
+                    } else {
+                        alert("您选择的地址为空，请重新选择！");
+                    }
+                };
+                
+            });
+        });
+
+
+
 
     });
     //收货明细
@@ -194,11 +229,11 @@
                            shmxdata = shmxdata + '<tr><td><div class="checkbox"><label><input type="checkbox" value="';
                            shmxdata = shmxdata + data[i].ID;
                            shmxdata = shmxdata + '"></label></div></td>';
-                           shmxdata = shmxdata + '<td>';
+                           shmxdata = shmxdata + '<td><span class="dizhi">';
                            //shmxdata = shmxdata + data[i].ShouhuofangID;
                            //shmxdata = shmxdata + '</td><td>';
                            shmxdata = shmxdata + data[i].Dizhi;
-                           shmxdata = shmxdata + '</td><td>';
+                           shmxdata = shmxdata + '</span></td><td>';
                            shmxdata = shmxdata + data[i].Lianxiren;
                            shmxdata = shmxdata + '</td><td>';
                            shmxdata = shmxdata + data[i].Lianxidianhua;
@@ -324,7 +359,7 @@
                     <button type="button" id="btn_shdwAdd" class="btn btn-default"><i class="icon-adn"></i>收货地址添加</button>
                     <button type="button" id="btn_shdwEdit" class="btn btn-default"><i class="icon-edit"></i>收货地址编辑</button>
                     <button type="button" id="btn_shdwDel" class="btn btn-default"><i class="icon-remove"></i>收货地址删除</button>
-
+                    <button type="button" id="btn_Default" class="btn btn-default"><i class="icon-adn"></i>设为默认地址</button>
                 </span>
             </p>
         </div>
@@ -503,7 +538,7 @@
                 <label class="col-sm-2">送货地址</label>
                 <div class="col-sm-10">
                     @*@Html.TextBoxFor(m => m.SonghuoDZ, new { @class = "form-control" })*@
-                    <input type="text" class="form-control" name="songhuodz" value="@item.SonghuoDZ">
+                    <input type="text" readonly class="form-control" id="songhuodz" name="songhuodz" value="@item.SonghuoDZ">
                 </div>
             </div>
             @*录入日期*@
@@ -524,7 +559,7 @@
         </div>
     </form>
     @*收货明细列表*@
-    <div id="shouhuomingxi_shdw" class="container" style="height:360px;overflow:auto;">
+    <div id="shouhuomingxi_shdw" class="container" style="height:360px;overflow:auto;margin-top:10px;">
         <table class="table" id="mydatatable">
             <caption></caption>
             <thead>

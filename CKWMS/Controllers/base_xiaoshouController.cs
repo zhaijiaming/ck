@@ -254,7 +254,7 @@ namespace CKWMS.Controllers
             string _hzid = Request["huozhu"] ?? "0";
             if (_hzid == "0")
                 return Json(-1);
-            var tempdata = ob_base_xiaoshouservice.LoadSortEntities(p => p.IsDelete == false && p.ShouquanID == int.Parse(_hzid) && p.ZaizhiSF == true, true, s => s.Xingming);
+            var tempdata = ob_base_xiaoshouservice.LoadSortEntities(p => p.IsDelete == false && p.ShouquanID == int.Parse(_hzid), true, s => s.Xingming);
             if (tempdata == null)
                 return Json(-1);
             return Json(tempdata.ToList<base_xiaoshou>());

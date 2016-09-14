@@ -8,7 +8,81 @@
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
         $(document).ready(function () {
             $("#date_makedate").datepicker();
+
+            //设置默认地址
+            $("#Default_dizhi").click(function () {
+                var dizhi = $("#Dizhi").val();
+                var _id = $("#shouhuodanwei").val();
+                if (dizhi == "") {
+                    alert("您的地址为空，请重新填写！");
+                    return false;//不让保存
+                } else {
+                    $.post(
+                        "/base_shouhuodanwei/UpdateDz",
+                        {
+                            songhuodz: dizhi,
+                            id: _id
+                        },
+                        function (data) {
+                            if (data == 1) {
+                                alert("成功");
+                            }
+                        });
+                }
+            });
+
+            var biaoshi = $("#biaoshi").val();
+            //alert(biaoshi);
+            if (biaoshi == "1") {
+                $("#submit_dizhi").click(function () {
+                    var dizhi = $("#Dizhi").val();
+                    var _id = $("#shouhuodanwei").val();
+                    if (dizhi == "") {
+                        alert("您的地址为空，请重新填写！");
+                        return false;//不让保存
+                    } else {
+                        $.post(
+                            "/base_shouhuodanwei/UpdateDz",
+                            {
+                                songhuodz: dizhi,
+                                id: _id
+                            },
+                            function (data) {
+                                if (data == 1) {
+                                }
+                            });
+                    }
+                });
+            }
+
+            //销售人下拉
+            var huozhuid = $("#XiaoshouID").val();
+            getXiaoshouren(huozhuid);
+
         });
+        function getXiaoshouren(huozhuid) {
+            var _huozhuid = huozhuid;
+            var filltable = "";
+            $.post(
+                "/base_xiaoshou/GetSalesman",
+                {
+                    huozhu: _huozhuid
+                },
+                function (data) {
+                    var selval = $("#xsr").val();
+                    for (var i in data) {
+                        filltable = filltable + '<option value="';
+                        filltable = filltable + data[i].Xingming;
+                        if (data[i].Xingming == selval)
+                            filltable = filltable + '" selected="selected">';
+                        else
+                            filltable = filltable + '">';
+                        filltable = filltable + data[i].Xingming;
+                        filltable = filltable + '</option>';
+                    }
+                    $("#select_xiaoshouren").html(filltable);
+                });
+        }
 </script>
 <div class="breadcrumbs" id="breadcrumbs">
     
@@ -31,18 +105,29 @@
         <input type="hidden" name="id" value="@ViewData.Model.ID" />
         <input type="hidden" id="MakeMan" name="MakeMan" value=@Session["user_id"] />
         <input type="hidden" name="MakeDate" value=@string.Format("{0:yyyy-MM-dd}",DateTime.Now) />
+        <input type="hidden" id="biaoshi" value="@ViewBag.biaoshi" />
+        <input type="hidden" id="xsr" value="@ViewData.Model.Xiaoshouren" />
         <div class="page-header">
             <p>
-                <button type="submit" class="btn btn-default"><i class="icon-save"></i>更新</button>
+                <button type="submit" id="submit_dizhi" class="btn btn-default"><i class="icon-save"></i>更新</button>
                 <button type="button" class="btn btn-default" onclick="javascript: history.back(-1); "><i class="icon-hand-left"></i>返回</button>
+                <button type="submit" id="Default_dizhi" class="btn btn-default"><i class="icon-add"></i>默认并保存</button>
             </p>
         </div>
         <div class="container">
             <div class="form-group">
                 <label for="name" class="col-sm-2">收货单位</label>
                 <div class="col-sm-10" style="height:34px;">
-                    <input type="hidden" class="form-control" name="shouhuofangid" value="@ViewData.Model.ShouhuofangID">
+                    <input type="hidden" class="form-control" name="shouhuofangid" id="shouhuodanwei" value="@ViewData.Model.ShouhuofangID">
                     @Html.GetDataValue_ID("收货单位", "",ViewData.Model.ShouhuofangID)
+                </div>
+            </div>
+            @*销售人*@
+            <div class="form-group">
+                <label for="name" class="col-sm-2">销售人</label>
+                <div class="col-sm-10">
+                    @*@Html.TextBoxFor(m => m.Xiaoshouren, new { @class = "form-control" })*@
+                    <select name="xiaoshouren" id="select_xiaoshouren" style="width:100%;"></select>
                 </div>
             </div>
             @*<div class="form-group">
@@ -57,6 +142,13 @@
                     @Html.TextBoxFor(m => m.Dizhi, new { @class = "form-control" })
                 </div>
             </div>
+            @*默认地址标识*@
+            <div class="form-group" style="display:none;">
+                @Html.LabelFor(m => m.Col1, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.Col1, new { @class = "form-control" })
+                </div>
+            </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.Lianxiren, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
@@ -69,18 +161,13 @@
                     @Html.TextBoxFor(m => m.Lianxidianhua, new { @class = "form-control" })
                 </div>
             </div>
-            @*<div class="form-group">
+            <div class="form-group" style="display:none;">
                 @Html.LabelFor(m => m.XiaoshouID, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.XiaoshouID, new { @class = "form-control" })
                 </div>
-            </div>*@
-            <div class="form-group">
-                <label for="name" class="col-sm-2">销售人</label>
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Xiaoshouren, new { @class = "form-control" })
-                </div>
             </div>
+            
             @*录入时间*@
             <div class="form-group">
                 @Html.LabelFor(m => m.MakeDate, new { @class = "control-label col-sm-2" })
