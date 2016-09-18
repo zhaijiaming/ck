@@ -109,6 +109,16 @@ namespace CKWMS.App_Code
                         }
                     }
                     break;
+                case "仓库":
+                    var _cangku = ServiceFactory.wms_cangkuservice.LoadSortEntities(p => p.IsDelete == false, true, s => s.Mingcheng);
+                    foreach(var i in _cangku)
+                    {
+                        if (i.ID == selectedvalue && selectedvalue != 0)
+                            sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.ID, i.Mingcheng);
+                        else
+                            sb.AppendFormat("<option value=\"{0}\">{1}</option>", i.ID, i.Mingcheng);
+                    }
+                    break;
                 case "医疗器械目录":
                     var _tmpqxml = ServiceFactory.base_qixiemuluservice.LoadSortEntities(p => p.IsDelete == false, true, s => s.Mingcheng);
                     foreach(var i in _tmpqxml)
