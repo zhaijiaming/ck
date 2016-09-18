@@ -96,8 +96,8 @@
             <thead>
                 <tr>
                     <td></td>
-                    <td>仓库序号</td>
-                    <td>人员序号</td>
+                    <td>仓库</td>
+                    <td>人员</td>
                     <td>制单日期</td>
                     <td>制单人</td>
                 </tr>
@@ -111,10 +111,12 @@
                                 <label><input type="checkbox" value="@item.ID"></label>
                             </div>
                         </td>
-                        <td>@item.CangkuID</td>
-                        <td>@item.RenyuanID</td>
-                        <td>@item.MakeDate</td>
-                        <td>@item.MakeMan</td>
+                        @*<td>@item.CangkuID</td>*@
+                        <td>@Html.GetDataValue_ID("仓库", "", (int)item.CangkuID)</td>
+                        @*<td>@item.RenyuanID</td>*@
+                        <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.RenyuanID)</td>
+                        <td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
+                        <td>@Html.GetDataValue_ID("userinfo","全名",(int)item.MakeMan)</td>
                     </tr>
                 }
             </tbody>

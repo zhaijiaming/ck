@@ -14,6 +14,12 @@ using System.Linq.Expressions;
 using X.PagedList;
 namespace CKWMS.Controllers
 {
+    public class User
+    {
+        public int ID { get; set; }
+        public string FullName { get; set; }
+        public int? EmployeeID { get; set; }
+    }
     public class userinfoController : Controller
     {
         private IuserinfoService ob_userinfoservice = ServiceFactory.userinfoservice;
@@ -440,6 +446,22 @@ namespace CKWMS.Controllers
                 }
             }
             return RedirectToAction("Index");
+        }
+
+        public JsonResult GetUser()
+        {
+            var _usertemp = ob_userinfoservice.LoadSortEntities(p => p.IsDelete == false, true, s => s.FullName);
+            List<User> _ulist = new List<User>();
+            User _u;
+            foreach (var u in _usertemp)
+            {
+                _u = new User();
+                _u.ID = u.ID;
+                _u.FullName = u.FullName;
+                _u.EmployeeID = u.EmployeeID;
+                _ulist.Add(_u);
+            }
+            return Json(_ulist);
         }
     }
 }
