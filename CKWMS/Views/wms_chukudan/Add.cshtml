@@ -6,6 +6,92 @@
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        $(document).ready(function () {
+            $("#pl_cy_close").click(function () {
+                $("#pl_cy").hide();
+            });
+            $("#selyq").click(function () {
+                $("#pl_cy").show();
+            });
+            $("#ChukuRQ").datepicker();
+            $("#pl_dz_close").click(function () {
+                $("#pl_dizhi").hide();
+            });
+            $("#seladdr").click(function () {
+                $("#pl_dizhi").show();
+            });
+            $("#HuozhuID").change(function () {
+                var _selval = $(this).find("option:selected").val();
+                if (eval(_selval) == 0) {
+                    $("#huozhuid").val(0);
+                    return;
+                }
+                $("#huozhuid").val(_selval);
+                GetCust(_selval);
+            });
+            $("#pl_cy").draggable({ handle: ".panel-heading" });
+            $("#dt_cy").on("dblclick", "tr", function () {
+                $("#ChunyunYQ").val($(this).find("td").eq(1).html());
+            });
+            $("#selkh").change(function () {
+                var _selval = $(this).find("option:selected").val();
+                var _seltxt = $(this).find("option:selected").text();
+                if (eval(_selval) == 0) {
+                    $("#KehuID").val(0);
+                    $("#KehuMC").val("");
+                    return;
+                }
+                $("#KehuID").val(_selval);
+                $("#KehuMC").val(_seltxt);
+                GetCustAddr(_selval);
+            });
+            $("#dt_dz tbody").on("dblclick", "tr", function () {
+                $("#Yunsongdizhi").val($(this).find("td").eq(1).html());
+            });
+            $("#pl_dizhi").draggable({ handle: ".panel-heading" });
+        });
+        function GetCustAddr(_sh) {
+            if (_sh != null) {
+                var _dz = "";
+                $.post("/base_shouhuomingxi/GetMingxiDetail",
+                    {
+                        shdw_id: _sh
+                    },
+                    function (data) {
+                        if (data != "") {
+                            for (var i in data) {
+                                _dz = _dz + '<tr><td>';
+                                _dz = _dz + data[i].Mingcheng;
+                                _dz = _dz + '</td><td>';
+                                _dz = _dz + data[i].Dizhi;
+                                _dz = _dz + '</td><td>';
+                                _dz = _dz + data[i].Lianxiren;
+                                _dz = _dz + '</td><td>';
+                                _dz = _dz + data[i].Lianxidianhua;
+                                _dz = _dz + '</td><td>';
+                                _dz = _dz + data[i].Xiaoshouren;
+                                _dz = _dz + '</td></tr>';
+                            }
+                        }
+                        $("#dt_dz tbody").html(_dz);
+                    });
+            }
+        }
+        function GetCust(_hz) {
+            if (_hz != null) {
+                var _opt = '<option value="0"></option>';
+                $.post("/base_shouhuodanwei/getcust",
+                    { hz: _hz },
+                    function (data) {
+                        if (data != -1) {
+                            for (var i in data) {
+                                _opt = _opt + '<option value="' + data[i].ID + '">' + data[i].Mingcheng + '</option>';
+                            }
+                            $("#selkh").html(_opt);
+                        }
+                    });
+            }
+        }
     </script>
     <ul class="breadcrumb">
         <li>
@@ -24,6 +110,9 @@
     {
         @Html.AntiForgeryToken()
         <input type="hidden" name="id" />
+        <input type="hidden" id="huozhuid" />
+        <input type="hidden" name="KehuID" id="kehuid" />
+        <input type="hidden" name="KehuMC" id="khmc" />
         <div class="page-header">
             <p>
                 <button type="submit" class="btn btn-default"><i class="icon-save"></i>保存</button>
@@ -32,45 +121,39 @@
         </div>
         <div class="container">
             <div class="form-group">
+                @Html.LabelFor(m => m.ChukudanBH, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.ChukudanBH, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.YewuLX, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @*@Html.TextBoxFor(m => m.YewuLX, new { @class = "form-control" })*@
+                    @Html.SelectList_Common("YewuLX", "出库类型")
+                </div>
+            </div>
+            <div class="form-group">
                 @Html.LabelFor(m => m.HuozhuID, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.HuozhuID, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.JihuaID, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.JihuaID, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.XinxiLY, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.XinxiLY, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.KehuID, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.KehuID, new { @class = "form-control" })
+                    @*@Html.TextBoxFor(m => m.HuozhuID, new { @class = "form-control" })*@
+                    @Html.SelectList_Auto("HuozhuID", "货主", "名称")
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.KehuMC, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.KehuMC, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Fahuodizhi, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Fahuodizhi, new { @class = "form-control" })
+                    @*@Html.TextBoxFor(m => m.KehuMC, new { @class = "form-control" })*@
+                    <select id="selkh" class="form-control"></select>
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.Yunsongdizhi, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
+                <div class="col-sm-8">
                     @Html.TextBoxFor(m => m.Yunsongdizhi, new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    <p id="seladdr" class="form-control blue">选择</p>
                 </div>
             </div>
             <div class="form-group">
@@ -80,45 +163,43 @@
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.YewuLX, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.YewuLX, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.BaoshuiSF, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.BaoshuiSF, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.FuheSF, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.FuheSF, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.ChunyunYQ, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.ChunyunYQ, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.JianguanSF, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.JianguanSF, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
                 @Html.LabelFor(m => m.KehuDH, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.KehuDH, new { @class = "form-control" })
                 </div>
             </div>
             <div class="form-group">
+                @Html.LabelFor(m => m.ChunyunYQ, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(m => m.ChunyunYQ, new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    <p id="selyq" class="form-control blue">常用</p>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.BaoshuiSF, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.CheckBoxFor(m => m.BaoshuiSF, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.FuheSF, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.CheckBoxFor(m => m.FuheSF, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.JianguanSF, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.CheckBoxFor(m => m.JianguanSF, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
                 @Html.LabelFor(m => m.KefuID, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.KefuID, new { @class = "form-control" })
+                    @*@Html.TextBoxFor(m => m.KefuID, new { @class = "form-control" })*@
+                    @Html.SelectList_Auto("KefuID", "userinfo", "fullname")
                 </div>
             </div>
             <div class="form-group">
@@ -131,12 +212,6 @@
                 @Html.LabelFor(m => m.LianxiDH, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.LianxiDH, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.JihuaZT, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.JihuaZT, new { @class = "form-control" })
                 </div>
             </div>
             <div class="form-group">
@@ -154,31 +229,21 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.Jianhuoren, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Jianhuoren, new { @class = "form-control" })
+                    @*@Html.TextBoxFor(m => m.Jianhuoren, new { @class = "form-control" })*@
+                    @Html.SelectList_Auto("Jianhuoren", "userinfo", "fullname")
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.JihuaZT, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @*@Html.TextBoxFor(m => m.JihuaZT, new { @class = "form-control" })*@
+                    @Html.SelectList_Common("JihuaZT", "出库状态")
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.Beizhu, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.Beizhu, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Col1, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Col1, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Col2, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Col2, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Col3, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Col3, new { @class = "form-control" })
                 </div>
             </div>
             <div class="form-group">
@@ -190,15 +255,58 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.MakeMan, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.SelectList_Auto("MakeMan", "userinfo", "fullname")
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.ChukudanBH, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.ChukudanBH, new { @class = "form-control" })
+                    @Html.SelectList_Auto("MakeMan", "userinfo", "fullname",(long)ViewBag.userid)
                 </div>
             </div>
         </div>
     }
+</div>
+<div id="pl_dizhi" class="panel panel-primary" style="display:none;position:absolute;top:50px;left:100px;width:500px;height:400px;z-index:999;">
+    <div class="panel-heading">
+        <h3 class="panel-title">请选择地址<button id="pl_dz_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <table class="table table-condensed" id="dt_dz">
+                <caption></caption>
+                <thead>
+                    <tr>
+                        <td>名称</td>
+                        <td>地址</td>
+                        <td>联系人</td>
+                        <td>电话</td>
+                        <td>销售</td>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div id="pl_cy" class="panel panel-primary" style="display:none;position:absolute;top:50px;left:100px;width:300px;height:200px;z-index:999;">
+    <div class="panel-heading">
+        <h3 class="panel-title">常用储运条件<button id="pl_cy_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <table class="table table-condensed" id="dt_cy">
+                <caption></caption>
+                <thead>
+                    <tr>
+                        <td>序号</td>
+                        <td>储运条件</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var cy in MvcApplication.TranCondition)
+                    {
+                        <tr>
+                            <td>@cy.Key</td>
+                            <td>@cy.Value</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

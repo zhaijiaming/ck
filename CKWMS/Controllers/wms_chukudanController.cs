@@ -163,7 +163,14 @@ namespace CKWMS.Controllers
             ViewBag.wms_chukudan = tempData;
             return View(tempData);
         }
-
+        public ActionResult OutOperate()
+        {
+            int userid = (int)Session["user_id"];
+            string page =Request["page"]??"1";
+            var tempData = ob_wms_chukudanservice.LoadSortEntities(wms_chukudan => wms_chukudan.IsDelete == false, false, wms_chukudan => wms_chukudan.ID).ToPagedList<wms_chukudan>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            ViewBag.wms_chukudan = tempData;
+            return View(tempData);
+        }
         public ActionResult Add()
         {
             ViewBag.userid = (int)Session["user_id"];

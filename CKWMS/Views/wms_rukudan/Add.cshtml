@@ -7,12 +7,10 @@
     <script type="text/javascript">
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
         $(document).ready(function () {
+            $("#RukuRQ").datepicker();
             $("#bt_save").click(function () {
-                alert($("#rukuRQ").val());
-                @*alert("@DateTime.Now.AddDays(-3).ToShortDateString()");*@
                 var lessday = new Date();
-                //lessday.setDate(lessday.getDate + 1);
-                alert(lessday.getDay());
+
                 $("form").submit();
             });
         });

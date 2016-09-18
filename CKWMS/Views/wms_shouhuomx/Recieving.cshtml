@@ -105,7 +105,7 @@
             $("#pl_Shouhuo").hide();
         });
         $("#dt_rk").on("dblclick", "tr", function () {
-            alert($(this).find("input[type=checkbox]").val());
+            //alert($(this).find("input[type=checkbox]").val());
         });
         $("#pl_Shouhuo").draggable();
         ShouhuoList($("#rkd").val());
@@ -117,7 +117,7 @@
             if (eval(_orn) > eval(_oys) && eval(_oys) > 0)
                 $(this).addClass("red");;
         });
-        $("#dt_sh").on("dblclick", "tr", function () {
+        $("#dt_sh tbody").on("dblclick", "tr", function () {
             var _sh = $(this).find("input");
             if(eval(_sh.data("ys")))
             {

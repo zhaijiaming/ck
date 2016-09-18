@@ -293,7 +293,18 @@ namespace CKWMS.Controllers
             ViewBag.base_shouhuodanwei = tempData;
             return View();
         }
-
+        public JsonResult GetCust()
+        {
+            var _hzid = Request["hz"] ?? "";
+            if (_hzid.Length == 0)
+                _hzid = "0";
+            if (int.Parse(_hzid) == 0)
+                return Json(-1);
+            var tempData = ob_base_shouhuodanweiservice.LoadSortEntities(p => p.IsDelete == false && p.HuozhuID == int.Parse(_hzid) && p.HezuoSF == true,true,s=>s.Mingcheng);
+            if (tempData == null)
+                return Json(-1);
+            return Json(tempData.ToList<base_shouhuodanwei>(),JsonRequestBehavior.AllowGet);
+        }
         public ActionResult Update()
         {
             string id = Request["id"] ?? "";

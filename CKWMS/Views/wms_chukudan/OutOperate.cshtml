@@ -1,0 +1,154 @@
+﻿@using CKWMS.App_Code
+@using CKWMS.Models
+@using X.PagedList
+@using X.PagedList.Mvc
+@{
+    ViewBag.Title = "出库操作列表";
+    string _searchcondition = ViewBag.SearchCondition;
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("tr").bind("dblclick", function () {
+            var u_id = $(this).find('td').eq(0).find('input').val();
+            if (u_id != null) {
+                var url_go = "/wms_chukudan/Edit/" + u_id;
+                location.href = url_go;
+            }
+        });
+    });
+    function AddInfo() {
+        location.href = "/wms_chukudan/Add";
+    }
+    function EditInfo() {
+        $("#mydatatable tr input[type=checkbox]").each(function () {
+            if (this.checked)
+                location.href = "/wms_chukudan/Edit/" + $(this).val();
+        });
+    }
+    function DelInfo() {
+        var sDel = "";
+        $("#mydatatable tr input[type=checkbox]").each(function () {
+            if (this.checked)
+                sDel = sDel + ", " + $(this).val()
+        });
+        if (sDel.length < 2)
+            return;
+        var url_go = "/wms_chukudan/Delete/?del=" + sDel;
+        location.href = url_go;
+    }
+</script>
+@{
+    List<SearchConditionModel> scms = new List<SearchConditionModel>();
+    if (_searchcondition == null || _searchcondition == "")
+    {
+        SearchConditionModel scm = new SearchConditionModel();
+        scm.ItemCode = "HuozhuID";
+        scm.ItemTitle = "货主序号";
+        scm.ItemType = "System.Int32";
+        scms.Add(scm);
+    }
+    else
+    {
+        string[] scs = _searchcondition.Split(';');
+        if (scs.Length > 0)
+        {
+            SearchConditionModel scm = new SearchConditionModel();
+            scm.ItemCode = "HuozhuID";
+            scm.ItemTitle = "货主序号";
+            scm.ItemType = "System.Int32";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[0].Split(',')[1];
+                scm.ItemOpValue = scs[0].Split(',')[2];
+                scm.ItemJion = scs[0].Split(',')[3];
+            }
+            scms.Add(scm);
+        }
+    }
+}
+
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    </script>
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="/Home">首页</a>
+        </li>
+        <li class="active">出库单</li>
+    </ul>
+</div>
+<div class="page-content">
+    @Html.Search_Condition((int)Session["user_id"], "出库单_条件组合查询", "/wms_chukudan/index", "wms_chukudanindex", scms)
+    <div class="page-header">
+        <p>
+            @*<button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>*@
+            <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
+            <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
+            <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
+            <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
+        </p>
+    </div>
+    <div class="row">
+        <table class="table table-condensed table-hover" id="mydatatable">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>出库编号</td>
+                    <td>货主</td>
+                    <td>客户名称</td>
+                    <td>送货地址</td>
+                    <td>出库日期</td>
+                    <td>储运要求</td>
+                    <td>客户单号</td>
+                    <td>状态</td>
+                    <td>备注</td>
+                    <td>货品</td>
+                    <td>清单</td>
+                    <td>拣货</td>
+                    <td>复核</td>
+                    <td>装箱</td>
+                    <td>详单</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.wms_chukudan)
+                {
+                    <tr>
+                        <td>
+                            <div class="checkbox">
+                                <label><input type="checkbox" value="@item.ID"
+                                              data-ly="@item.XinxiLY"
+                                              data-lx="@item.YewuLX"
+                                              data-kh="@item.KehuID"
+                                              data-fh="@item.FuheSF"
+                                              data-jg="@item.JianguanSF"
+                                              data-jh="@item.JihuaID"></label>
+                            </div>
+                        </td>
+                        <td>@item.ChukudanBH</td>
+                        <td>@item.HuozhuID</td>
+                        <td>@item.KehuMC</td>
+                        <td>@item.Yunsongdizhi</td>
+                        <td>@item.ChukuRQ</td>
+                        <td>@item.ChunyunYQ</td>
+                        <td>@item.KehuDH</td>
+                        <td>@item.JihuaZT</td>
+                        <td>@item.Beizhu</td>
+                        <td><i class="icon-adjust"></i>货品</td>
+                        <td><i class="icon-list"></i>清单</td>
+                        <td><i class="icon-pinterest-sign"></i>拣货</td>
+                        <td><i class="icon-check"></i>复核</td>
+                        <td><i class="icon-paperclip"></i>装箱</td>
+                        <td><i class="icon-print"></i>详单</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="pager">
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("OutOperate", new { page }))
+    </div>
+</div>
