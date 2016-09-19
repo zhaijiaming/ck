@@ -381,7 +381,20 @@ namespace CKWMS.Controllers
             if (tempData == null)
                 return Json(-1);
 
-            return Json(tempData.ToList<wms_storage_v>(),JsonRequestBehavior.AllowGet);
+            return Json(tempData.ToList<wms_storage_v>());
+        }
+        public JsonResult GetCustStoreGood()
+        {
+            int _userid = (int)Session["user_id"];
+            var _custid = Request["cust"] ?? "";
+
+            if (_custid.Length == 0)
+                return Json(-1);
+            var tempData = ob_wms_cunhuoservice.GetInventoryGoodsByCust(int.Parse(_custid),p=>p.chsl>0);
+            if (tempData == null)
+                return Json(-1);
+
+            return Json(tempData.ToList<wms_invgoods_v>(), JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

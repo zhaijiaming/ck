@@ -171,6 +171,10 @@ namespace CKWMS.Controllers
 
             if (_custid.Length == 0 || _cargoid.Length == 0)
                 return Json(-1);
+            base_shangpinxx _spxx = ServiceFactory.base_shangpinxxservice.GetEntityById(s => s.ID == int.Parse(_cargoid));
+            if (_spxx == null)
+                return Json(-1);
+            int _spml = (int)_spxx.Muluxuhao;
             base_shouhuodanwei _shdw = ServiceFactory.base_shouhuodanweiservice.GetEntityById(p => p.ID == int.Parse(_custid));
             if (_shdw == null)
                 return Json(-1);
@@ -178,7 +182,7 @@ namespace CKWMS.Controllers
                 return Json(-1);
             foreach (var i in _shdw.JingyinfanweiDM.Split(';'))
             {
-                if (i == _cargoid)
+                if (i == _spml.ToString())
                     return Json(1);
             }
             return Json(-1);
@@ -187,24 +191,72 @@ namespace CKWMS.Controllers
         {
             int _userid = (int)Session["user_id"];
             var _cargos = Request["cargos"] ?? "";
-
-            if (_cargos.Length < 1)
-                return Json(-1);
-            foreach(var i in _cargos.Split(';'))
+            var _ckd = Request["ck"] ?? "";
+            try
             {
-                if (i.Length > 0)
+                if (_cargos.Length < 1 || _ckd.Length<1)
+                    return Json(-1);
+                foreach (var i in _cargos.Split(';'))
                 {
-                    string[] _
+                    if (i.Length > 0)
+                    {
+                        string[] _p = i.Split(',');
+                        float _ch = float.Parse(_p[21]);
+                        float _ck = float.Parse(_p[1]);
+                        if (_ck > 0 && _ch > 0)
+                        {
+                            double _rt =Math.Round(_ck / _ch,3);
+                            wms_chukumx _mx = new wms_chukumx();
+                            _mx.ChukuID = int.Parse(_ckd);
+                            _mx.ShangpinID = int.Parse(_p[0]);
+                            _mx.ChukuSL = float.Parse(_p[1]);
+                            _mx.ShangpinDM = _p[2];
+                            _mx.ShangpinMC = _p[3];
+                            _mx.JibenDW = _p[4];
+                            _mx.Guige = _p[5];
+                            _mx.Zhucezheng = _p[6];
+                            _mx.Pihao = _p[7];
+                            _mx.ShengchanRQ = DateTime.Parse(_p[8]);
+                            _mx.ShixiaoRQ = DateTime.Parse(_p[9]);
+                            _mx.Xuliema = _p[10];
+                            _mx.BaozhuangDW = _p[11];
+                            _mx.Huansuanlv = float.Parse(_p[12]);
+                            _mx.Changjia = _p[13];
+                            _mx.Chandi = _p[14];
+                            _mx.ShangpinTM = _p[15];
+                            _mx.Zhongliang =(float)Math.Round(_rt*float.Parse(_p[16]),3);
+                            _mx.Jingzhong =(float)Math.Round(_rt*float.Parse(_p[17]),3);
+                            _mx.Tiji =(float)Math.Round(_rt*float.Parse(_p[18]),3);
+                            _mx.Jifeidun =(float)Math.Round(_rt*float.Parse(_p[19]),3);
+                            _mx.HuopinZT = int.Parse(_p[20]);
+                            _mx.MakeDate = DateTime.Now;
+                            _mx.MakeMan = _userid;
+                            _mx = ServiceFactory.wms_chukumxservice.AddEntity(_mx);
+                        }
+                    }
                 }
+                return Json(1);
             }
-            return Json(1);
+            catch (Exception ex)
+            {
+                return Json(-1);
+            }
         }
         public ActionResult Add()
         {
             ViewBag.userid = (int)Session["user_id"];
             return View();
         }
-
+        public ActionResult GetOutDetail(int id)
+        {
+            int userid = (int)Session["user_id"];
+            string page = Request["page"] ?? "";
+            if (page.Length < 1)
+                page = "1";
+            var tempData = ob_wms_chukumxservice.LoadSortEntities(p => p.ChukuID == id && p.IsDelete==false, false, s => s.Guige).ToPagedList<wms_chukumx>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            ViewBag.wms_chukumx = tempData;
+            return View(tempData);
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Save()
