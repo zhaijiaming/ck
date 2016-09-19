@@ -370,6 +370,19 @@ namespace CKWMS.Controllers
             ViewBag.wms_storage_v = tempData;
             return View(tempData);
         }
+        public JsonResult GetCustStore()
+        {
+            int _userid = (int)Session["user_id"];
+            var _custid = Request["cust"] ?? "";
+
+            if (_custid.Length == 0)
+                return Json(-1);
+            var tempData = ob_wms_cunhuoservice.GetStorageList(p => p.HuozhuID == int.Parse(_custid));
+            if (tempData == null)
+                return Json(-1);
+
+            return Json(tempData.ToList<wms_storage_v>(),JsonRequestBehavior.AllowGet);
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Save()

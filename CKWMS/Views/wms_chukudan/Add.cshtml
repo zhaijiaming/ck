@@ -32,21 +32,23 @@
             $("#pl_cy").draggable({ handle: ".panel-heading" });
             $("#dt_cy").on("dblclick", "tr", function () {
                 $("#ChunyunYQ").val($(this).find("td").eq(1).html());
+                $("#pl_cy").hide();
             });
             $("#selkh").change(function () {
                 var _selval = $(this).find("option:selected").val();
                 var _seltxt = $(this).find("option:selected").text();
                 if (eval(_selval) == 0) {
-                    $("#KehuID").val(0);
-                    $("#KehuMC").val("");
+                    $("#kehuid").val(0);
+                    $("#khmc").val("");
                     return;
                 }
-                $("#KehuID").val(_selval);
-                $("#KehuMC").val(_seltxt);
+                $("#kehuid").val(_selval);
+                $("#khmc").val(_seltxt);
                 GetCustAddr(_selval);
             });
             $("#dt_dz tbody").on("dblclick", "tr", function () {
                 $("#Yunsongdizhi").val($(this).find("td").eq(1).html());
+                $("#pl_dizhi").hide();
             });
             $("#pl_dizhi").draggable({ handle: ".panel-heading" });
         });

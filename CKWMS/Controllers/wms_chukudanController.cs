@@ -176,7 +176,6 @@ namespace CKWMS.Controllers
             ViewBag.userid = (int)Session["user_id"];
             return View();
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Save()
@@ -210,6 +209,12 @@ namespace CKWMS.Controllers
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
             string chukudanbh = Request["chukudanbh"] ?? "";
+            if (baoshuisf.IndexOf("true") >= 0)
+                baoshuisf = "true";
+            if (fuhesf.IndexOf("true") >= 0)
+                fuhesf = "true";
+            if (jianguansf.IndexOf("true") >= 0)
+                jianguansf = "true";
             try
             {
                 wms_chukudan ob_wms_chukudan = new wms_chukudan();
@@ -248,7 +253,7 @@ namespace CKWMS.Controllers
             {
                 Console.WriteLine(ex.Message);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("OutOperate");
         }
 
         [OutputCache(Duration = 10)]

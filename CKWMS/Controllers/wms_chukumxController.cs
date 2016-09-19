@@ -163,7 +163,42 @@ namespace CKWMS.Controllers
             ViewBag.wms_chukumx = tempData;
             return View(tempData);
         }
+        public JsonResult ValidateCustCargo()
+        {
+            int _userid = (int)Session["user_id"];
+            var _custid = Request["cust"] ?? "";
+            var _cargoid = Request["cargo"] ?? "";
 
+            if (_custid.Length == 0 || _cargoid.Length == 0)
+                return Json(-1);
+            base_shouhuodanwei _shdw = ServiceFactory.base_shouhuodanweiservice.GetEntityById(p => p.ID == int.Parse(_custid));
+            if (_shdw == null)
+                return Json(-1);
+            if (_shdw.JingyinfanweiDM.Length < 1)
+                return Json(-1);
+            foreach (var i in _shdw.JingyinfanweiDM.Split(';'))
+            {
+                if (i == _cargoid)
+                    return Json(1);
+            }
+            return Json(-1);
+        }
+        public JsonResult AddCargos()
+        {
+            int _userid = (int)Session["user_id"];
+            var _cargos = Request["cargos"] ?? "";
+
+            if (_cargos.Length < 1)
+                return Json(-1);
+            foreach(var i in _cargos.Split(';'))
+            {
+                if (i.Length > 0)
+                {
+                    string[] _
+                }
+            }
+            return Json(1);
+        }
         public ActionResult Add()
         {
             ViewBag.userid = (int)Session["user_id"];

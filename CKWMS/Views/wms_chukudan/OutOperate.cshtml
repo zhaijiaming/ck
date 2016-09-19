@@ -10,20 +10,168 @@
     $(document).ready(function () {
         $("tr").bind("dblclick", function () {
             var u_id = $(this).find('td').eq(0).find('input').val();
-            if (u_id != null) {
-                var url_go = "/wms_chukudan/Edit/" + u_id;
-                location.href = url_go;
+            //if (u_id != null) {
+            //    var url_go = "/wms_chukudan/Edit/" + u_id;
+            //    location.href = url_go;
+            //}
+        });
+        $(".icon-edit-sign").click(function () {
+            var _selv = $(this).parent().parent().find("input[type=checkbox]");
+            var _hz = _selv.data("hz");
+            $("#hz").val(_hz);
+            $("#kh").val(_selv.data("kh"));
+            GetCustStore(_hz);
+            $("#pl_xz").show();
+        });
+        $("#pl_xz_close").click(function () {
+            $("#pl_xz").hide();
+        });
+        $("#dt_xz tbody").on("blur", "input", function () {
+            var _sr = $(this).parent().parent();
+            var _ch = _sr.find("td").eq(3).html();
+            var _sd = _sr.find("td").eq(4).html();
+            try {
+                var _vcc = ValidCustCargo($(this).data("sp"));
+                if (_vcc == -1) {
+                    $(this).val(0);
+                    $(this).attr("readonly", "true");
+                }
+                else {
+                    if (eval($(this).val()) > eval(_ch) - eval(_sd))
+                        $(this).val(eval(_ch) - eval(_sd));
+                }
+
+            } catch (ex) {
+                $(this).val(eval(_ch) - eval(_sd));
+            }
+        });
+        $("#pl_ok").click(function () {
+            var _sval = "";
+            $("#dt_xz tbody tr").each(function () {
+                var _sv = $(this).find("input");
+                if (eval(_sv.val()) > 0) {
+                    _sval = _sval + _sv.data("sp") + "," + _sv.val() + ";"
+                }
+            });
+            //alert(_sval);
+            AddCargo(_sval);
+        });
+        $("#pl_xz").draggable({ handle: ".panel-heading" });
+        $("#dt_xz tbody").on("dblclick", "tr", function () {
+            var _ch = $(this).find("td").eq(3).html();
+            var _sd = $(this).find("td").eq(4).html();
+            var _kh = $("#kh").val();
+            var _sv = $(this).find("input");
+            var _sp = _sv.data("sp");
+            var _vs = ValidCustCargo(_sp);
+            if (_vs == -1) {
+                _sv.attr("readonly", "true");
+            } else {
+                _sv.val(eval(_ch) - eval(_sd));
             }
         });
     });
     function AddInfo() {
         location.href = "/wms_chukudan/Add";
     }
+    function AddCargo(_cargo) {
+        if (_cargo != null) {
+            $.post("/wms_chukumx/addcargos",
+                {
+                    cargos:_cargo
+                },
+                function (data) {
+                    if (data != 1)
+                        alert("添加出库货品失败，请重新选择!");
+                });
+        }
+    }
     function EditInfo() {
         $("#mydatatable tr input[type=checkbox]").each(function () {
             if (this.checked)
                 location.href = "/wms_chukudan/Edit/" + $(this).val();
         });
+    }
+    function ValidCustCargo(_sp) {
+        if (_sp != null) {
+            if (eval(_sp) == 0) {
+                return -1;
+            }
+            $.post("/wms_chukumx/ValidateCustCargo", { cust: $("#kh").val(), cargo: _sp }, function (data) {
+                alert(data);
+                if (data == -1)
+                    return -1;
+                else
+                    return 1;
+            });
+        }
+        return -1;
+    }
+    function GetCustStore(_cust) {
+        var filltable = "";
+        if (_cust == null)
+            return;
+        $.post("/wms_cunhuo/getcuststore",
+            {
+                cust: _cust
+            },
+            function (data) {
+                if (data != -1) {
+                    for (var i in data) {
+                        filltable = filltable + '<tr><td><input type="number" size="5" value="0" data-sp="';
+                        filltable = filltable + data[i].ShangpinID;
+                        filltable = filltable + '"/></td><td>';
+                        filltable = filltable + data[i].Kuwei;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].RukuRQ.toDate().Format("yyyy-MM-dd");
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].sshuliang;
+                        filltable = filltable + '</td><td>';
+                        if (data[i].DaijianSL != null)
+                            filltable = filltable + data[i].DaijianSL;
+                        else
+                            filltable = filltable + '0';
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].ShangpinMC;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].Guige;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].Zhucezheng;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].Pihao;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].ShengchanRQ.toDate().Format("yyyy-MM-dd");
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].ShixiaoRQ.toDate().Format("yyyy-MM-dd");
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].Xuliema;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].JibenDW;
+                        filltable = filltable + '</td><td>';
+                        if (eval(data[i].HegeSF) == true)
+                            filltable = filltable + '合格';
+                        if (eval(data[i].HegeSF) == false)
+                            filltable = filltable + '不合格';
+                        filltable = filltable + '</td><td>';
+                        if (eval(data[i].CunhuoZT) == 0)
+                            filltable = filltable + '';
+                        if (eval(data[i].CunhuoZT) == 1)
+                            filltable = filltable + '正常';
+                        if (eval(data[i].CunhuoZT) == 2)
+                            filltable = filltable + '破损';
+                        if (eval(data[i].CunhuoZT) == 3)
+                            filltable = filltable + '污染';
+                        if (eval(data[i].CunhuoZT) == 4)
+                            filltable = filltable + '渗漏';
+                        if (eval(data[i].CunhuoZT) == 5)
+                            filltable = filltable + '其它';
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].CunhuoSM;
+                        filltable = filltable + '</td></tr>';
+                    }
+                }
+                $("#dt_xz tbody").html(filltable);
+            });
     }
     function DelInfo() {
         var sDel = "";
@@ -82,6 +230,8 @@
 <div class="page-content">
     @Html.Search_Condition((int)Session["user_id"], "出库单_条件组合查询", "/wms_chukudan/index", "wms_chukudanindex", scms)
     <div class="page-header">
+        <input type="hidden" id="hz" />
+        <input type="hidden" id="kh" />
         <p>
             @*<button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>*@
             <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
@@ -105,8 +255,8 @@
                     <td>客户单号</td>
                     <td>状态</td>
                     <td>备注</td>
+                    <td>选择</td>
                     <td>货品</td>
-                    <td>清单</td>
                     <td>拣货</td>
                     <td>复核</td>
                     <td>装箱</td>
@@ -119,30 +269,33 @@
                     <tr>
                         <td>
                             <div class="checkbox">
-                                <label><input type="checkbox" value="@item.ID"
-                                              data-ly="@item.XinxiLY"
-                                              data-lx="@item.YewuLX"
-                                              data-kh="@item.KehuID"
-                                              data-fh="@item.FuheSF"
-                                              data-jg="@item.JianguanSF"
-                                              data-jh="@item.JihuaID"></label>
+                                <label>
+                                    <input type="checkbox" value="@item.ID"
+                                           data-hz="@item.HuozhuID"
+                                           data-ly="@item.XinxiLY"
+                                           data-lx="@item.YewuLX"
+                                           data-kh="@item.KehuID"
+                                           data-fh="@item.FuheSF"
+                                           data-jg="@item.JianguanSF"
+                                           data-jh="@item.JihuaID">
+                                </label>
                             </div>
                         </td>
                         <td>@item.ChukudanBH</td>
-                        <td>@item.HuozhuID</td>
+                        <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
                         <td>@item.KehuMC</td>
                         <td>@item.Yunsongdizhi</td>
-                        <td>@item.ChukuRQ</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ChukuRQ == null ? "" : item.ChukuRQ)</td>
                         <td>@item.ChunyunYQ</td>
                         <td>@item.KehuDH</td>
-                        <td>@item.JihuaZT</td>
+                        <td>@Html.GetCommonValue_ID("出库状态", (int)item.JihuaZT)</td>
                         <td>@item.Beizhu</td>
-                        <td><i class="icon-adjust"></i>货品</td>
-                        <td><i class="icon-list"></i>清单</td>
-                        <td><i class="icon-pinterest-sign"></i>拣货</td>
-                        <td><i class="icon-check"></i>复核</td>
-                        <td><i class="icon-paperclip"></i>装箱</td>
-                        <td><i class="icon-print"></i>详单</td>
+                        <td><i class="icon-edit-sign"></i></td>
+                        <td><i class="icon-list"></i></td>
+                        <td><i class="icon-hand-up"></i></td>
+                        <td><i class="icon-check"></i></td>
+                        <td><i class="icon-bolt"></i></td>
+                        <td><i class="icon-print"></i></td>
                     </tr>
                 }
             </tbody>
@@ -150,5 +303,49 @@
     </div>
     <div class="pager">
         @Html.PagedListPager((IPagedList)Model, page => Url.Action("OutOperate", new { page }))
+    </div>
+</div>
+<div id="pl_xz" class="panel panel-primary" style="display:none;position:absolute;top:30px;left:100px;width:1200px;height:600px;z-index:999;">
+    <div class="panel-heading">
+        <h3 class="panel-title">当前可用库存<button id="pl_xz_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="center">
+            <div class="col-sm-1"><label>库位</label></div>
+            <div class="col-sm-1"><input type="text" id="kw" size="12" /></div>
+            <div class="col-sm-1"><label>批号</label></div>
+            <div class="col-sm-1"><input type="text" id="ph" size="12" /></div>
+            <div class="col-sm-1"><label>规格</label></div>
+            <div class="col-sm-1"><input type="text" id="gg" size="12" /></div>
+            <div class="col-sm-3"><p class="btn default" id="pl_search"><i class="icon-search"></i>查询</p></div>
+            <div class="col-sm-3"><p class="btn default" id="pl_ok"><i class="icon-ok"></i>确定</p></div>
+
+        </div>
+        <div class="row">
+            <table class="table table-condensed" id="dt_xz">
+                <caption></caption>
+                <thead>
+                    <tr>
+                        <td width="20px">出库</td>
+                        <td>库位</td>
+                        <td>入库日期</td>
+                        <td>库存</td>
+                        <td>锁定</td>
+                        <td>商品名称</td>
+                        <td>规格</td>
+                        <td>注册证</td>
+                        <td>批号</td>
+                        <td>生产日期</td>
+                        <td>失效日期</td>
+                        <td>序列码</td>
+                        <td>单位</td>
+                        <td>质量</td>
+                        <td>状态</td>
+                        <td>说明</td>
+                    </tr>
+                </thead>
+                <tbody style="overflow:auto;"></tbody>
+            </table>
+        </div>
     </div>
 </div>

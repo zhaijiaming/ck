@@ -111,7 +111,7 @@ namespace CKWMS.App_Code
                     break;
                 case "仓库":
                     var _cangku = ServiceFactory.wms_cangkuservice.LoadSortEntities(p => p.IsDelete == false, true, s => s.Mingcheng);
-                    foreach(var i in _cangku)
+                    foreach (var i in _cangku)
                     {
                         if (i.ID == selectedvalue && selectedvalue != 0)
                             sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.ID, i.Mingcheng);
@@ -121,7 +121,7 @@ namespace CKWMS.App_Code
                     break;
                 case "医疗器械目录":
                     var _tmpqxml = ServiceFactory.base_qixiemuluservice.LoadSortEntities(p => p.IsDelete == false, true, s => s.Mingcheng);
-                    foreach(var i in _tmpqxml)
+                    foreach (var i in _tmpqxml)
                     {
                         if (i.ID == selectedvalue && selectedvalue != 0)
                             sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.ID, i.Mingcheng);
@@ -225,12 +225,12 @@ namespace CKWMS.App_Code
                     break;
                 case "销售":
                     var tmpsales = ServiceFactory.base_xiaoshouservice.LoadSortEntities(p => p.IsDelete == false && p.ZaizhiSF == true, true, s => s.Xingming);
-                    foreach(var i in tmpsales)
+                    foreach (var i in tmpsales)
                     {
                         if (i.ID == selectedvalue && selectedvalue != 0)
                             sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.ID, i.Xingming);
                         else
-                            sb.AppendFormat("<option value=\"{0}\">{1}</option>", i.ID,i.Xingming);
+                            sb.AppendFormat("<option value=\"{0}\">{1}</option>", i.ID, i.Xingming);
                     }
                     break;
                 case "userinfo"://用户
@@ -865,6 +865,18 @@ namespace CKWMS.App_Code
                             returnvalue = juese.RoleName;
                     }
                     break;
+                case "仓库":
+                    wms_cangku _ck = ServiceFactory.wms_cangkuservice.GetEntityById(p => p.ID == dataValue);
+                    if (_ck == null)
+                        returnvalue = "";
+                    else
+                    {
+                        if (itemName == "名称")
+                            returnvalue = _ck.Mingcheng;
+                        if (itemName == "简称")
+                            returnvalue = _ck.Jiancheng;
+                    }
+                    break;
                 case "销售":
                     base_xiaoshou _xs = ServiceFactory.base_xiaoshouservice.GetEntityById(p => p.ID == dataValue);
                     if (_xs == null)
@@ -946,7 +958,7 @@ namespace CKWMS.App_Code
                     if (_qxml == null)
                         returnvalue = "";
                     else
-                        returnvalue =_qxml.Bianhao+_qxml.Mingcheng;
+                        returnvalue = _qxml.Bianhao + _qxml.Mingcheng;
                     break;
                 case "产品线":
                     base_chanpinxian _cpx = ServiceFactory.base_chanpinxianservice.GetEntityById(p => p.ID == dataValue);
