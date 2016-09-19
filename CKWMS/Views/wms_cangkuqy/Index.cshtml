@@ -46,6 +46,12 @@
         scm.ItemTitle = "仓库序号";
         scm.ItemType = "System.Int32";
         scms.Add(scm);
+
+        //scm = new SearchConditionModel();
+        //scm.ItemCode = "Mingcheng";
+        //scm.ItemTitle = "区域名称";
+        //scm.ItemType = "System.String";
+        //scms.Add(scm);
     }
     else
     {
@@ -59,10 +65,26 @@
             if (scs.Length > 1)
             {
                 scm.ItemValue = scs[0].Split(',')[1];
+                //if (scm.ItemValue.Length == 0)
+                //{
+                //    scm.ItemValue = "0";
+                //}
                 scm.ItemOpValue = scs[0].Split(',')[2];
                 scm.ItemJion = scs[0].Split(',')[3];
             }
             scms.Add(scm);
+
+            //scm = new SearchConditionModel();
+            //scm.ItemCode = "Mingcheng";
+            //scm.ItemTitle = "区域名称";
+            //scm.ItemType = "System.String";
+            //if (scs.Length > 1)
+            //{
+            //    scm.ItemValue = scs[1].Split(',')[1];
+            //    scm.ItemOpValue = scs[1].Split(',')[2];
+            //    scm.ItemJion = scs[1].Split(',')[3];
+            //}
+            //scms.Add(scm);
         }
     }
 }
@@ -96,9 +118,9 @@
             <thead>
                 <tr>
                     <td></td>
-                    <td>仓库序号</td>
-                    <td>名称</td>
-                    <td>代码</td>
+                    <td>仓库</td>
+                    <td>区域名称</td>
+                    <td>区域代码</td>
                     <td>制单日期</td>
                     <td>制单人</td>
                 </tr>
@@ -112,11 +134,13 @@
                                 <label><input type="checkbox" value="@item.ID"></label>
                             </div>
                         </td>
-                        <td>@item.CangkuID</td>
+                        @*<td>@item.CangkuID</td>*@
+                        <td>@Html.GetDataValue_ID("仓库", "", (int)item.CangkuID)</td>
                         <td>@item.Mingcheng</td>
                         <td>@item.Daima</td>
-                        <td>@item.MakeDate</td>
-                        <td>@item.MakeMan</td>
+                        <td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
+                        @*<td>@item.MakeMan</td>*@
+                        <td>@Html.GetDataValue_ID("userinfo","全名",(int)item.MakeMan)</td>
                     </tr>
                 }
             </tbody>

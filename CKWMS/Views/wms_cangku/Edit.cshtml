@@ -41,19 +41,19 @@
                     },
                     function (data) {
                         for (var i in data) {
-                            filltable = filltable + '<tr><td><div class="radio" ><label><input name="radiobox" type="radio" class="radioid" value="';
+                            filltable = filltable + '<tr><td style="width:50px"><div class="radio" ><label><input name="radiobox" type="radio" class="radioid" value="';
                             filltable = filltable + data[i].ID;
-                            filltable = filltable + '"></label></div></td><td><span class="mingzi">';
+                            filltable = filltable + '"></label></div></td><td style="width:60px"><span class="mingzi">';
                             filltable = filltable + data[i].Mingcheng;
                             //filltable = filltable + '</td><td>';
                             //filltable = filltable + data[i].Xingbie;
-                            filltable = filltable + '</td><td>';
+                            filltable = filltable + '</td><td style="width:130px">';
                             filltable = filltable + data[i].Bumen;
-                            filltable = filltable + '</td><td>';
+                            filltable = filltable + '</td><td style="width:130px">';
                             filltable = filltable + data[i].Zhiwei;
-                            filltable = filltable + '</td><td>';
+                            filltable = filltable + '</td><td style="width:130px">';
                             filltable = filltable + data[i].Zhize;
-                            filltable = filltable + '</td><td>';
+                            filltable = filltable + '</td><td style="width:130px">';
                             filltable = filltable + data[i].Beizhu;
                             filltable = filltable + '</td></tr>';
                         }
@@ -236,7 +236,7 @@
         </div>
     }
 </div>
-<div id="pl_Renyuan" class="panel panel-primary" hidden style="display:none;position:fixed;top:100px;left:200px;width:700px;height:400px;z-index:999;">
+<div id="pl_Renyuan" class="panel panel-primary" hidden style="display:none;position:fixed;top:100px;left:200px;width:660px;height:400px;z-index:999;">
     <div class="tuodong panel-heading">
         <h3 class="panel-title">人员信息<button id="pl_close" class="pull-right">X</button></h3>
     </div>
@@ -245,18 +245,18 @@
             <button type="button" class="btn btn-default " id="bt_renyuan_add"><i class="icon-add"></i>确定</button>
             <table class="table" id="rydatatable">
                 <caption></caption>
-                <thead @*style="display:block"*@ class="tuodong">
+                <thead style="display:block" class="tuodong">
                     <tr>
-                        <td></td>
-                        <td>姓名</td>
+                        <td style="width:50px"></td>
+                        <td style="width:60px">姓名</td>
                         @*<td>性别</td>*@
-                        <td>部门</td>
-                        <td>职位</td>
-                        <td>职责</td>
-                        <td>备注</td>
+                        <td style="width:130px">部门</td>
+                        <td style="width:130px">职位</td>
+                        <td style="width:130px">职责</td>
+                        <td style="width:130px">备注</td>
                     </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody style="display:block; max-height:260px;width:630px;overflow:scroll"></tbody>
             </table>
         </div>
     </div>

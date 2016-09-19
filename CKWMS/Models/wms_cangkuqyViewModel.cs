@@ -8,11 +8,14 @@ namespace CKWMS.Models
     {
         [Display(Name = "序号")]
         public int? ID { get; set; }
-        [Display(Name = "仓库序号")]
+        [Display(Name = "仓库")]
+        [Required]
         public int? CangkuID { get; set; }
-        [Display(Name = "名称")]
+        [Display(Name = "区域名称")]
+        [Required]
         public string Mingcheng { get; set; }
-        [Display(Name = "代码")]
+        [Display(Name = "区域代码")]
+        [Required]
         public string Daima { get; set; }
         [Display(Name = "机动1")]
         public string Col1 { get; set; }
