@@ -877,6 +877,13 @@ namespace CKWMS.App_Code
                             returnvalue = _ck.Jiancheng;
                     }
                     break;
+                case "库位":
+                    wms_kuwei _kw = ServiceFactory.wms_kuweiservice.GetEntityById(p => p.ID == dataValue);
+                    if (_kw == null)
+                        returnvalue = "";
+                    else
+                        returnvalue = _kw.Mingcheng;
+                    break;
                 case "销售":
                     base_xiaoshou _xs = ServiceFactory.base_xiaoshouservice.GetEntityById(p => p.ID == dataValue);
                     if (_xs == null)
