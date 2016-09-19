@@ -7,64 +7,63 @@
     <script type="text/javascript">
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
         $(document).ready(function () {
-            document.getElementById("cangkuid").focus();
+        })
+            //    $("#pl_Renyuan").draggable({ handle: '.tuodong' })
+            //    GetUser()
 
-        //    $("#pl_Renyuan").draggable({ handle: '.tuodong' })
-        //    GetUser()
+            //    $("#pl_close").click(function () {
+            //        $("#pl_Renyuan").hide();
+            //        Getu();
+            //    });
 
-        //    $("#pl_close").click(function () {
-        //        $("#pl_Renyuan").hide();
-        //        Getu();
-        //    });
+            //    $("#bt_renyuan_add").click(function () {
 
-        //    $("#bt_renyuan_add").click(function () {
+            //        var valu = $('input:radio[name="radiobox"]:checked').parent().find(".radioid").val();
+            //        if (valu == null) {
+            //            alert("请选择一位人员")
+            //        }
+            //        else {
+            //            $("#renyuanid").val(valu);
+            //            $("#pl_Renyuan").hide();
+            //        }
 
-        //        var valu = $('input:radio[name="radiobox"]:checked').parent().find(".radioid").val();
-        //        if (valu == null) {
-        //            alert("请选择一位人员")
-        //        }
-        //        else {
-        //            $("#renyuanid").val(valu);
-        //            $("#pl_Renyuan").hide();
-        //        }
+            //    })
+            //})
+            //function GetUser() {
+            //    var filltable = "";
+            //    $.post(
+            //            "/userinfo/GetUser",
+            //            {
 
-        //    })
-        //})
-        //function GetUser() {
-        //    var filltable = "";
-        //    $.post(
-        //            "/userinfo/GetUser",
-        //            {
+            //            },
+            //            function (data) {
+            //                for (var i in data) {
+            //                    filltable = filltable + '<tr><td  style="width:150px"><div class="radio" ><label><input name="radiobox" type="radio" class="radioid" value="';
+            //                    filltable = filltable + data[i].ID;
+            //                    filltable = filltable + '"></label></div></td><td style="width:220px"><span class="fullname">';
+            //                    filltable = filltable + data[i].FullName;
+            //                    filltable = filltable + '</td><td style="width:220px">';
+            //                    filltable = filltable + data[i].EmployeeID;
+            //                    filltable = filltable + '</td></tr>';
+            //                }
+            //                $("#pl_Renyuan tbody").html(filltable);
+            //                Getu();
+            //            });
+            //}
+            //function Bt_Renyuanadd() {
+            //    document.getElementById("pl_Renyuan").removeAttribute("hidden");
+            //    $("#pl_Renyuan").show();
+            //}
 
-        //            },
-        //            function (data) {
-        //                for (var i in data) {
-        //                    filltable = filltable + '<tr><td  style="width:150px"><div class="radio" ><label><input name="radiobox" type="radio" class="radioid" value="';
-        //                    filltable = filltable + data[i].ID;
-        //                    filltable = filltable + '"></label></div></td><td style="width:220px"><span class="fullname">';
-        //                    filltable = filltable + data[i].FullName;
-        //                    filltable = filltable + '</td><td style="width:220px">';
-        //                    filltable = filltable + data[i].EmployeeID;
-        //                    filltable = filltable + '</td></tr>';
-        //                }
-        //                $("#pl_Renyuan tbody").html(filltable);
-        //                Getu();
-        //            });
-        //}
-        //function Bt_Renyuanadd() {
-        //    document.getElementById("pl_Renyuan").removeAttribute("hidden");
-        //    $("#pl_Renyuan").show();
-        //}
-
-        //function Getu() {
-        //    var mz = document.getElementsByClassName('fullname');
-        //    var tempry = $("#renyuanid").val();
-        //    for (var i = 0; i < mz.length; i++) {
-        //        if (tempry == $(".fullname").eq(i).html())
-        //            $("#rydatatable tr input[type=radio]").eq(i).prop("checked", true);
-        //    }
-        //}
-
+            //function Getu() {
+            //    var mz = document.getElementsByClassName('fullname');
+            //    var tempry = $("#renyuanid").val();
+            //    for (var i = 0; i < mz.length; i++) {
+            //        if (tempry == $(".fullname").eq(i).html())
+            //            $("#rydatatable tr input[type=radio]").eq(i).prop("checked", true);
+            //    }
+            //}
+       
     </script>
     <ul class="breadcrumb">
         <li>
