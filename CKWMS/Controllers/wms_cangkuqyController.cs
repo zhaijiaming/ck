@@ -170,6 +170,38 @@ namespace CKWMS.Controllers
             return View();
         }
 
+        public JsonResult getData() {
+            string cangkuid = Request["cangkuid"] ?? "";
+            if (string.IsNullOrEmpty(cangkuid))
+            {
+                return Json(-1);
+            }
+            else
+            {
+                var tempdata = ob_wms_cangkuqyservice.LoadSortEntities(p => p.IsDelete == false && p.CangkuID == int.Parse(cangkuid), true, p => p.Mingcheng);
+                if (tempdata == null)
+                    return Json(-1);
+                return Json(tempdata.ToList<wms_cangkuqy>());
+            }
+            
+        }
+
+        public JsonResult getData1() {
+            var tempdata = ob_wms_cangkuqyservice.LoadSortEntities(p => p.IsDelete == false , true, p => p.Mingcheng);
+            if (tempdata == null)
+                return Json(-1);
+            return Json(tempdata.ToList<wms_cangkuqy>());
+        }
+
+        public JsonResult getCangkuData()
+        {
+            string quyu = Request["quyu"] ?? "";
+            var tempdata = ob_wms_cangkuqyservice.LoadSortEntities(p => p.IsDelete == false&&p.Mingcheng == quyu, true, p => p.CangkuID);
+            if (tempdata == null)
+                return Json(-1);
+            return Json(tempdata.ToList<wms_cangkuqy>());
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Save()

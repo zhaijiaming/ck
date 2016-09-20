@@ -2,11 +2,65 @@
 @using CKWMS.Models
 @model wms_kehukwViewModel
 @{ViewBag.Title = "客户库位添加";}
+<script type="text/javascript">
+    try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    $().ready(function () {
+        $("#pl_Kuwei").draggable({ handle: '.tuodong' }, { containment: "parent" });
 
+        //选择库位
+        getKuwei();//获取库位信息
+        $("#btn_kuweu").click(function () {
+            $("#pl_Kuwei").show();
+            $('#pl_Kuwei tbody').find('input[type=checkbox]').bind('click', function () {
+                $('#pl_Kuwei tbody').find('input[type=checkbox]').not(this).attr("checked", false);
+            });
+        });
+
+        $("#pl_close").click(function () {
+            $("#pl_Kuwei").hide();
+        });
+
+        $("#btn_kuwei_add").click(function () {
+            var kwdata = "";
+            var kwid = "";
+            $("#kwdatatable tr input[type=checkbox]").each(function () {
+                if (this.checked) {
+                    kwdata = $(this).parent().parent().parent().find(".kw_mc").html();
+                    kwid = $(this).parent().parent().parent().find(".kw_quyuid").html();
+                }
+                $("#KuweiID").val(kwdata);
+                $("#kuweiid").val(kwid);
+            });
+            $("#pl_Kuwei").hide();
+        });
+
+    });
+    function getKuwei() {
+        var filltable = "";
+        $.post(
+            "/wms_kuwei/GetKwDetail",
+            {},
+            function (data) {
+                if (data == "-1") {
+                    $("#pl_Kuwei tbody").html(" ");
+                } else {
+                    for (var i in data) {
+                        filltable = filltable + '<tr><td><label><input type="checkbox" value="';
+                        filltable = filltable + data[i].ID;
+                        filltable = filltable + '"></label></td><td><span class="kw_quyuid">';
+                        filltable = filltable + data[i].ID;
+                        filltable = filltable + '</span></td><td><span class="kw_mc">';
+                        filltable = filltable + data[i].Mingcheng;
+                        filltable = filltable + '</span></td></tr>';
+                    }
+                    $("#pl_Kuwei tbody").html(filltable);
+                }
+                
+            });
+    }
+</script>
 <div class="breadcrumbs" id="breadcrumbs">
-    <script type="text/javascript">
-        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
-    </script>
+    
     <ul class="breadcrumb">
         <li>
             <i class="icon-home home-icon"></i>
@@ -24,6 +78,8 @@
     {
         @Html.AntiForgeryToken()
         <input type="hidden" name="id" />
+        <input type="hidden" name="makeman" value="@Session["user_id"]" />
+        <input type="hidden" id="kuweiid" name="kuweiid" value="" />
         <div class="page-header">
             <p>
                 <button type="submit" class="btn btn-default"><i class="icon-save"></i>保存</button>
@@ -32,35 +88,54 @@
         </div>
         <div class="container">
             <div class="form-group">
-                @Html.LabelFor(m => m.HuozhuID, new { @class = "control-label col-sm-2" })
+                <label for="name" class="col-sm-2">货主</label>
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.HuozhuID, new { @class = "form-control" })
+                    @*@Html.TextBoxFor(m => m.HuozhuID, new { @class = "form-control" })*@
+                    @Html.SelectList_Auto("huozhuid", "货主", "名称")
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.KuweiID, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.KuweiID, new { @class = "form-control" })
+                <label class="col-sm-2">库位名称</label>
+                <div class="col-sm-8">
+                    <input type="text" readonly id="KuweiID" class="form-control" value="" />
                 </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Col1, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Col1, new { @class = "form-control" })
+                <div class="col-sm-2">
+                    <input type="button" class="form-control" id="btn_kuweu" value="添加库位"/> 
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.MakeDate, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    <input id="MakeDate" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="MakeDate">
+                    <input id="MakeDate" type="date" readonly class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="MakeDate">
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.MakeMan, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.SelectList_Auto("MakeMan", "userinfo", "fullname")
+                    <input type="text" readonly class="form-control" value="@Html.GetDataValue_ID("userinfo", "全名", (int)ViewBag.userid)" />
                 </div>
             </div>
         </div>
     }
+</div>
+<div id="pl_Kuwei" class="panel panel-primary"  style="display:none;position:fixed; top:100px;left:200px;width:300px;height:400px;z-index:999;">
+    <div class="tuodong panel-heading">
+        <h3 class="panel-title">库位管理<button id="pl_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="center">
+            <button type="button" class="btn btn-default" id="btn_kuwei_add"><i class="icon-add"></i>添加</button>
+            <table class="table" id="kwdatatable" style="margin-top:10px;">
+                <caption></caption>
+                <thead class="tuodong">
+                    <tr>
+                        <td></td>
+                        <td>编号</td>
+                        <td>名称</td>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
 </div>

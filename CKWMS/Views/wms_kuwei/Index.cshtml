@@ -15,6 +15,9 @@
                 location.href = url_go;
             }
         });
+
+        
+        
     });
     function AddInfo() {
         location.href = "/wms_kuwei/Add";
@@ -81,6 +84,7 @@
 </div>
 <div class="page-content">
     @Html.Search_Condition((int)Session["user_id"], "库位_条件组合查询", "/wms_kuwei/index", "wms_kuweiindex", scms)
+    <input type="hidden" id="item_sum" value="@ViewBag.wms_kuwei" />
     <div class="page-header">
         <p>
             <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
@@ -104,7 +108,6 @@
                     <td>批次数量</td>
                     <td>最大重量</td>
                     <td>最大体积</td>
-                    <td>是否启用</td>
                     <td>制单日期</td>
                     <td>制单人</td>
                 </tr>
@@ -114,9 +117,7 @@
                 {
                     <tr>
                         <td>
-                            <div class="checkbox">
-                                <label><input type="checkbox" value="@item.ID"></label>
-                            </div>
+                            <label><input class="checkbox" type="checkbox" value="@item.ID"></label>
                         </td>
                         <td>@item.QuyuID</td>
                         <td>@item.Mingcheng</td>
@@ -126,9 +127,8 @@
                         <td>@item.PiciSL</td>
                         <td>@item.MaxWeight</td>
                         <td>@item.MaxVolumn</td>
-                        <td>@item.QiyongSF</td>
-                        <td>@item.MakeDate</td>
-                        <td>@item.MakeMan</td>
+                        <td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
+                        <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
                     </tr>
                 }
             </tbody>

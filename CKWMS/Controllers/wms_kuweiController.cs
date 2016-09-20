@@ -170,6 +170,14 @@ namespace CKWMS.Controllers
             return View();
         }
 
+        public JsonResult GetKwDetail()
+        {
+            var tempdata = ob_wms_kuweiservice.LoadSortEntities(p => p.IsDelete == false, true, s => s.Mingcheng);
+            if (tempdata == null)
+                return Json(-1);
+            return Json(tempdata.ToList<wms_kuwei>());
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Save()
@@ -184,6 +192,10 @@ namespace CKWMS.Controllers
             string maxweight = Request["maxweight"] ?? "";
             string maxvolumn = Request["maxvolumn"] ?? "";
             string qiyongsf = Request["qiyongsf"] ?? "";
+            if (qiyongsf.IndexOf("true") > -1)
+                qiyongsf = "true";
+            else
+                qiyongsf = "false";
             string col1 = Request["col1"] ?? "";
             string col2 = Request["col2"] ?? "";
             string col3 = Request["col3"] ?? "";
@@ -219,6 +231,11 @@ namespace CKWMS.Controllers
         [OutputCache(Duration = 10)]
         public ActionResult Edit(int id)
         {
+            string quyu_id = Request["quyu_id"] ?? "";
+            string quyu_text = Request["quyu_text"] ?? "";
+            ViewBag.quyu_id = quyu_id;
+            ViewBag.quyu_text = quyu_text;
+
             wms_kuwei tempData = ob_wms_kuweiservice.GetEntityById(wms_kuwei => wms_kuwei.ID == id && wms_kuwei.IsDelete == false);
             ViewBag.wms_kuwei = tempData;
             if (tempData == null)
@@ -264,6 +281,10 @@ namespace CKWMS.Controllers
             string col3 = Request["col3"] ?? "";
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
+            if (qiyongsf.IndexOf("true") > -1)
+                qiyongsf = "true";
+            else
+                qiyongsf = "false";
             int uid = int.Parse(id);
             try
             {
@@ -290,7 +311,7 @@ namespace CKWMS.Controllers
                 Console.WriteLine(ex.Message);
                 ViewBag.saveok = ViewAddTag.ModifyNo;
             }
-            return RedirectToAction("Edit", new { id = uid });
+            return RedirectToAction("Index", new { id = uid });
         }
         public ActionResult Delete()
         {

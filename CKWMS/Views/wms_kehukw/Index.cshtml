@@ -7,6 +7,8 @@
     string _searchcondition = ViewBag.SearchCondition;
 }
 <script type="text/javascript">
+    try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+
     $(document).ready(function () {
         $("tr").bind("dblclick", function () {
             var u_id = $(this).find('td').eq(0).find('input').val();
@@ -68,9 +70,6 @@
 }
 
 <div class="breadcrumbs" id="breadcrumbs">
-    <script type="text/javascript">
-        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
-    </script>
     <ul class="breadcrumb">
         <li>
             <i class="icon-home home-icon"></i>
@@ -96,8 +95,8 @@
             <thead>
                 <tr>
                     <td></td>
-                    <td>货主序号</td>
-                    <td>库位序号</td>
+                    <td>货主</td>
+                    <td>库位</td>
                     <td>制单日期</td>
                     <td>制单人</td>
                 </tr>
@@ -107,14 +106,12 @@
                 {
                     <tr>
                         <td>
-                            <div class="checkbox">
-                                <label><input type="checkbox" value="@item.ID"></label>
-                            </div>
+                            <label><input class="checkbox" type="checkbox" value="@item.ID"></label>
                         </td>
-                        <td>@item.HuozhuID</td>
-                        <td>@item.KuweiID</td>
-                        <td>@item.MakeDate</td>
-                        <td>@item.MakeMan</td>
+                        <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
+                        <td>@Html.GetDataValue_ID("库位","",(int)item.KuweiID)</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.MakeDate)</td>
+                        <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
                     </tr>
                 }
             </tbody>
