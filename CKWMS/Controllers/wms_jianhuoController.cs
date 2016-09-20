@@ -163,11 +163,64 @@ namespace CKWMS.Controllers
             ViewBag.wms_jianhuo = tempData;
             return View(tempData);
         }
+        public ActionResult GetPickDetailByOut()
+        {
+            int _userid = (int)Session["user_id"];
+            var _outid = Request["out"] ?? "";
+            if (_outid.Length < 1)
+                _outid = "0";
 
+            var _outdetail = ServiceFactory.wms_chukumxservice.LoadSortEntities(p => p.ChukuID == int.Parse(_outid) && p.IsDelete == false, true, s => s.Guige);
+            ViewBag.outdetail = _outdetail;
+
+            var _pickdetail = ob_wms_jianhuoservice.GetPickDetail(int.Parse(_outid), p => p.DaijianSL > 0);
+            ViewBag.pickdetail = _pickdetail;
+            return View();
+        }
         public ActionResult Add()
         {
             ViewBag.userid = (int)Session["user_id"];
             return View();
+        }
+        public JsonResult GetStoreCargo()
+        {
+            int _userid = (int)Session["user_id"];
+            var _mxid = Request["mx"] ?? "";
+            int _custid = 0;
+            if (_mxid == "")
+                return Json(-1);
+            Expression<Func<wms_storage_v, bool>> where = PredicateExtensionses.True<wms_storage_v>();
+
+            wms_chukumx _mx = ServiceFactory.wms_chukumxservice.GetEntityById(p => p.ID == int.Parse(_mxid));
+            if (_mx == null)
+                return Json(-1);
+            wms_chukudan _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == _mx.ChukuID);
+            _custid = (int)_ckd.HuozhuID;
+            if (_mx.ShangpinID != null)
+                where = where.And(p => p.ShangpinID == _mx.ShangpinID);
+            //if (_mx.ShangpinDM != null)
+            //    where = where.And(p => p.ShangpinDM == _mx.ShangpinDM);
+            //if (_mx.ShangpinMC != null)
+            //    where = where.And(p => p.ShangpinMC == _mx.ShangpinMC);
+            //if (_mx.ShangpinTM != null)
+            //    where = where.And(p => p.ShangpinTM == _mx.ShangpinTM);
+            //if (_mx.Guige != null)
+            //    where = where.And(p => p.Guige == _mx.Guige);
+            if (_mx.Pihao != null)
+                where = where.And(p => p.Pihao == _mx.Pihao);
+            //if (_mx.Pihao1 != null)
+            //    where = where.And(p => p.Pihao1 == _mx.Pihao1);
+            //if (_mx.ShengchanRQ != null)
+            //    where = where.And(p => p.ShengchanRQ == _mx.ShengchanRQ);
+            //if (_mx.ShixiaoRQ != null)
+            //    where = where.And(p => p.ShixiaoRQ == _mx.ShixiaoRQ);
+            //if (_mx.Xuliema != null)
+            //    where = where.And(p => p.Xuliema == _mx.Xuliema);
+            where = where.And(p => p.sshuliang > 0);
+            var tempData = ServiceFactory.wms_cunhuoservice.GetStorageList(_custid, where.Compile());
+            if (tempData == null)
+                return Json(-1);
+            return Json(tempData.ToList<wms_storage_v>());
         }
 
         [HttpPost]

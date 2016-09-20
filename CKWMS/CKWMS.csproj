@@ -784,6 +784,7 @@
     <Content Include="Views\quan_chukufh\Edit.cshtml" />
     <Content Include="Views\quan_chukufh\Index.cshtml" />
     <Content Include="Views\wms_chukumx\GetOutDetail.cshtml" />
+    <Content Include="Views\wms_jianhuo\GetPickDetailByOut.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

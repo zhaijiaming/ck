@@ -451,7 +451,18 @@ namespace CKWMS.Controllers
             }
             return RedirectToAction("Index");
         }
+        public JsonResult GetStorageByCust()
+        {
+            int _userid = (int)Session["user_id"];
+            var _custid = Request["cust"] ?? "";
+            if (_custid == "")
+                return Json(-1);
 
+            var tempData = ob_wms_cunhuoservice.GetStorageList(int.Parse(_custid),p=>p.sshuliang > 0);
+            if (tempData == null)
+                return Json(-1);
+            return Json(tempData.ToList<wms_storage_v>());
+        }
         [OutputCache(Duration = 10)]
         public ActionResult Edit(int id)
         {

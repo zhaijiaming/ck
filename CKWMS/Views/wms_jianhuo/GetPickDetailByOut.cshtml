@@ -1,0 +1,262 @@
+﻿@using CKWMS.App_Code
+@using CKWMS.Models
+@using X.PagedList
+@using X.PagedList.Mvc
+@{
+    ViewBag.Title = "拣货清单";
+    string _searchcondition = ViewBag.SearchCondition;
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("tr").bind("dblclick", function () {
+            var u_id = $(this).find('td').eq(0).find('input').val();
+            //if (u_id != null) {
+            //    var url_go = "/wms_jianhuo/Edit/" + u_id;
+            //    location.href = url_go;
+            //}
+        });
+        $(".icon-hand-right").click(function () {
+            var _sr = $(this).parent().parent();
+            var _sc = _sr.find("input");
+            var _sn = _sr.find("td").eq(11);
+            $("#selmx").val(_sc.val());
+            $("#picknum").val(_sn.html());
+            alert($("#selmx").val());
+            GetInvetoryCargo($("#selmx").val());
+            $("#pl_pk").show();
+        });
+        $("#pl_pk_close").click(function () {
+            $("#pl_pk").hide();
+        });
+        $("#bt_cancel").click(function () {
+            $("#pl_pk").hide();
+        });
+        $("#bt_ok").click(function () {
+            var _pkval = "";
+            $("#dt_ch tbody tr").each(function () {
+                var _ch = $(this).find("td").eq(0).find("input");
+                var _cksl = $(this).find("td").eq(1).find("input");
+                var _cksm = $(this).find("td").eq(2).find("input");
+                if (eval(_cksl.val()) > 0) {
+                    _pkval = _pkval + $("#selmx").val() + "," + _cksl.val() + "," + _cksm.val() + "," + _ch.val() + ";";
+                }
+            });
+            alert(_pkval);
+        });
+        $("#pl_pk").draggable({ handle: ".panel-heading" });
+        $("#dt_ch tbody").on("dblclick", "tr", function () {
+            var _cksl = $(this).find("td").eq(1).find("input");
+            var _chsl = $(this).find("td").eq(4).html();
+            var _sdsl = $(this).find("td").eq(5).html();
+            _cksl.val(eval(_chsl) - eval(_sdsl));
+        });
+    });
+    function GetInvetoryCargo(_ck) {
+        if (_ck != null) {
+            var filltable = "";
+            $.post("/wms_jianhuo/getstorecargo/",
+                { mx: _ck },
+                function (data) {
+                    if (data != -1) {
+                        for (var i in data) {
+                            filltable = filltable + '<tr><td><input type="checkbox" value="';
+                            filltable = filltable + data[i].sid;
+                            filltable = filltable + '" data-kw="';
+                            filltable = filltable + data[i].KuweiID;
+                            filltable = filltable + '"/></td><td>';
+                            filltable = filltable + '<input type="text" size="5" value="0"/>';
+                            filltable = filltable + '</td><td>';
+                            filltable = filltable + '<input type="text" size="10" value=""/>';
+                            filltable = filltable + '</td><td>';
+                            filltable = filltable + data[i].Kuwei;
+                            filltable = filltable + '</td><td>';
+                            filltable = filltable + data[i].sshuliang;
+                            filltable = filltable + '</td><td>';
+                            filltable = filltable + data[i].DaijianSL;
+                            filltable = filltable + '</td><td>';
+                            filltable = filltable + data[i].CunhuoZT;
+                            filltable = filltable + '</td><td>';
+                            filltable = filltable + data[i].CunhuoSM;
+                            filltable = filltable + '</td></tr>';
+                        }
+                    }
+                    $("#dt_ch tbody").html(filltable);
+                });
+        }
+    }
+    function AddInfo() {
+        location.href = "/wms_jianhuo/Add";
+    }
+    function EditInfo() {
+        $("#mydatatable tr input[type=checkbox]").each(function () {
+            if (this.checked)
+                location.href = "/wms_jianhuo/Edit/" + $(this).val();
+        });
+    }
+    function DelInfo() {
+        var sDel = "";
+        $("#mydatatable tr input[type=checkbox]").each(function () {
+            if (this.checked)
+                sDel = sDel + ", " + $(this).val()
+        });
+        if (sDel.length < 2)
+            return;
+        var url_go = "/wms_jianhuo/Delete/?del=" + sDel;
+        location.href = url_go;
+    }
+</script>
+
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    </script>
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="/Home">首页</a>
+        </li>
+        <li class="active">拣货</li>
+    </ul>
+</div>
+<div class="page-content">
+    <input type="hidden" id="selmx" />
+    <input type="hidden" id="ck" />
+    <div class="row" style="height:300px;overflow:auto;">
+        <table class="table table-condensed table-hover" id="mydatatable">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>拣货</td>
+                    <td>商品代码</td>
+                    <td>商品名称</td>
+                    <td>注册证</td>
+                    <td>规格型号</td>
+                    <td>批号</td>
+                    <td>次批号</td>
+                    <td>序列码</td>
+                    <td>生产日期</td>
+                    <td>失效日期</td>
+                    <td>出库数量</td>
+                    <td>基本单位</td>
+                    <td>包装单位</td>
+                    <td>换算率</td>
+                    <td>厂家</td>
+                    <td>产地</td>
+                    <td>备注</td>
+                    <td>货品状态</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.outdetail)
+                {
+                    <tr>
+                        <td>
+                            <label><input type="checkbox" value="@item.ID"></label>
+                        </td>
+                        <td><i class="icon-hand-right"></i></td>
+                        <td>@item.ShangpinDM</td>
+                        <td>@item.ShangpinMC</td>
+                        <td>@item.Zhucezheng</td>
+                        <td>@item.Guige</td>
+                        <td>@item.Pihao</td>
+                        <td>@item.Pihao1</td>
+                        <td>@item.Xuliema</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ == null ? "" : item.ShengchanRQ)</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ == null ? "" : item.ShixiaoRQ)</td>
+                        <td>@item.ChukuSL</td>
+                        <td>@item.JibenDW</td>
+                        <td>@item.BaozhuangDW</td>
+                        <td>@item.Huansuanlv</td>
+                        <td>@item.Changjia</td>
+                        <td>@item.Chandi</td>
+                        <td>@item.Beizhu</td>
+                        <td>@Html.GetCommonValue_ID("存货状态", (int)item.HuopinZT)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="row" style="overflow:auto;">
+        <table class="table table-condensed" id="dt_pick">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>名称</td>
+                    <td>规格</td>
+                    <td>批号</td>
+                    <td>库位</td>
+                    <td>待拣</td>
+                    <td>重量</td>
+                    <td>净重</td>
+                    <td>体积</td>
+                    <td>计费吨</td>
+                    <td>实拣</td>
+                    <td>说明</td>
+                    <td>拣货人</td>
+                    <td>拣货时间</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.pickdetail)
+                {
+                    <tr>
+                        <td>
+                            <div class="checkbox">
+                                <label><input type="checkbox" value="@item.pickid"></label>
+                            </div>
+                        </td>
+                        <td>@item.ShangpinMC</td>
+                        <td>@item.Guige</td>
+                        <td>@item.Pihao</td>
+                        <td>@item.Kuwei</td>
+                        <td>@item.DaijianSL</td>
+                        <td>@item.Zhongliang</td>
+                        <td>@item.Jingzhong</td>
+                        <td>@item.Tiji</td>
+                        <td>@item.Jifeidun</td>
+                        <td>@item.ShijianSL</td>
+                        <td>@item.JianhuoSM</td>
+                        <td>@item.Jianhuoren</td>
+                        <td>@item.JianhuoRQ</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div id="pl_pk" class="panel panel-info" style="display:none;position:absolute;top:100px;left:200px;width:800px;height:500px;overflow:auto;">
+    <div class="panel-heading">
+        <h3 class="panel-title">拣货<button id="pl_pk_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-5"></div>
+            <div class="col-sm-5">
+                <label>待拣数量：</label>
+                <input type="text" size="12" id="picknum" readonly />
+            </div>
+            <div class="col-sm-1 center"><p id="bt_ok" class="btn btn-default">拣货</p></div>
+            <div class="col-sm-1 center"><p id="bt_cancel" class="btn btn-default">取消</p></div>
+        </div>
+        <div class="row">
+            <table class="table table-condensed" id="dt_ch">
+                <caption></caption>
+                <thead>
+                    <tr>
+                        <td></td>
+                        <td>出库数量</td>
+                        <td>拣货说明</td>
+                        <td>库位</td>
+                        <td>存货数量</td>
+                        <td>锁定数量</td>
+                        <td>状态</td>
+                        <td>备注</td>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
