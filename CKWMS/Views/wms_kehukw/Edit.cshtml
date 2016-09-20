@@ -10,6 +10,8 @@
         $("#pl_Kuwei").draggable({ handle: '.tuodong' }, { containment: "parent" });
         $("#text_kw").focus();
         getKuwei();//获取库位信息'id'&'Mingcheng'
+        var kw_id1 = $("#KuweiID").val();//获取后台'库位ID' 
+        $("#kuweiid").val(kw_id1);
         $(function () {
             setTimeout(function () {
                 var kw_id1 = $("#KuweiID").val();//获取后台'库位ID'
