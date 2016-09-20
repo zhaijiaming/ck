@@ -884,6 +884,13 @@ namespace CKWMS.App_Code
                     else
                         returnvalue = _kw.Mingcheng;
                     break;
+                case "区域":
+                    wms_cangkuqy _qy = ServiceFactory.wms_cangkuqyservice.GetEntityById(p => p.ID == dataValue);
+                    if (_qy == null)
+                        returnvalue = "";
+                    else
+                        returnvalue = _qy.Mingcheng;
+                    break;
                 case "销售":
                     base_xiaoshou _xs = ServiceFactory.base_xiaoshouservice.GetEntityById(p => p.ID == dataValue);
                     if (_xs == null)
