@@ -7,12 +7,9 @@
 <script type="text/javascript">
     try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
     $(document).ready(function () {
-        //时间
-        $("#MakeDate").datepicker();
-
-        GetQuyuData();
-        //区域:id->text
-        $("#CangkuID").attr("disabled", "disabled")
+        $("#CangkuID").attr("disabled", "disabled");
+        GetQuyuData();//从wms_cangkuqyController获取区域'id'&'Mingcheng'
+        //区域字段:后台int值转为对应的文本
         setTimeout(function () {
             var quyu_length = $("#select_quyu option").length;
             var quyuid = $("#quyuid").val();
@@ -21,15 +18,12 @@
                     $("#quyu_text").val($(".quyu_id").eq(i).text());
                 }
             }
-
-            //获取仓库
+            //通过区域文本值获取仓库值
             var quyu = $("#quyu_text").val();
-            GetCangku(quyu);
+            GetCangku(quyu);//获取'仓库ID'
         }, 300);
-
-        
     });
-    function GetCangku(qy){
+    function GetCangku(qy) {
         var _quyu = qy;
         var filltable = "";
         $.post(

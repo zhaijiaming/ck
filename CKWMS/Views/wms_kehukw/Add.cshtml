@@ -4,22 +4,22 @@
 @{ViewBag.Title = "客户库位添加";}
 <script type="text/javascript">
     try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
-    $().ready(function () {
+    $(document).ready(function () {
         $("#pl_Kuwei").draggable({ handle: '.tuodong' }, { containment: "parent" });
-
-        //选择库位
-        getKuwei();//获取库位信息
+        getKuwei();//获取库位信息'id'&'Mingcheng'
+        //库位信息->弹框显示
         $("#btn_kuweu").click(function () {
             $("#pl_Kuwei").show();
+            //多选框单选处理
             $('#pl_Kuwei tbody').find('input[type=checkbox]').bind('click', function () {
                 $('#pl_Kuwei tbody').find('input[type=checkbox]').not(this).attr("checked", false);
             });
         });
-
+        //关闭弹框
         $("#pl_close").click(function () {
             $("#pl_Kuwei").hide();
         });
-
+        //库位添加事件
         $("#btn_kuwei_add").click(function () {
             var kwdata = "";
             var kwid = "";
@@ -28,8 +28,8 @@
                     kwdata = $(this).parent().parent().parent().find(".kw_mc").html();
                     kwid = $(this).parent().parent().parent().find(".kw_quyuid").html();
                 }
-                $("#KuweiID").val(kwdata);
-                $("#kuweiid").val(kwid);
+                $("#KuweiID").val(kwdata);//前台显示文本类型
+                $("#kuweiid").val(kwid);//后台存储(int类型)
             });
             $("#pl_Kuwei").hide();
         });
@@ -87,13 +87,14 @@
             </p>
         </div>
         <div class="container">
+            @*货主*@
             <div class="form-group">
                 <label for="name" class="col-sm-2">货主</label>
                 <div class="col-sm-10">
-                    @*@Html.TextBoxFor(m => m.HuozhuID, new { @class = "form-control" })*@
                     @Html.SelectList_Auto("huozhuid", "货主", "名称")
                 </div>
             </div>
+            @*库位名称*@
             <div class="form-group">
                 <label class="col-sm-2">库位名称</label>
                 <div class="col-sm-8">

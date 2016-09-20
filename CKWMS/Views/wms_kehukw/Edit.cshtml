@@ -9,13 +9,10 @@
     $(document).ready(function () {
         $("#pl_Kuwei").draggable({ handle: '.tuodong' }, { containment: "parent" });
         $("#text_kw").focus();
-
-        //选择库位
-        getKuwei();//获取库位信息
-
+        getKuwei();//获取库位信息'id'&'Mingcheng'
         $(function () {
             setTimeout(function () {
-                var kw_id1 = $("#KuweiID").val();
+                var kw_id1 = $("#KuweiID").val();//获取后台'库位ID'
                 var kw_id2 = $(".kw_quyuid").text();
                 var kw_text = $('.kw_mc').text();
                 for (var i = 0; i < $(".kw_quyuid").length; i++) {
@@ -26,20 +23,19 @@
                 }
             },300);
         });
-
-        
-
+        //库位信息->弹框显示
         $("#btn_kuweu").click(function () {
             $("#pl_Kuwei").show();
+            //多选框单选处理
             $('#pl_Kuwei tbody').find('input[type=checkbox]').bind('click', function () {
                 $('#pl_Kuwei tbody').find('input[type=checkbox]').not(this).attr("checked", false);
             });
         });
-
+        //关闭弹框
         $("#pl_close").click(function () {
             $("#pl_Kuwei").hide();
         });
-
+        //库位添加事件
         $("#btn_kuwei_add").click(function () {
             var kwdata = "";
             var kwid = "";
@@ -48,8 +44,8 @@
                     kwdata = $(this).parent().parent().parent().find(".kw_mc").html();
                     kwid = $(this).parent().parent().parent().find(".kw_quyuid").html();
                 }
-                $("#text_kw").val(kwdata);
-                $("#kuweiid").val(kwid);
+                $("#text_kw").val(kwdata);//前台显示文本类型
+                $("#kuweiid").val(kwid); //后台存储(int类型)
             });
             $("#pl_Kuwei").hide();
         });
@@ -74,7 +70,6 @@
                     }
                     $("#pl_Kuwei tbody").html(filltable);
                 }
-
             });
     }
 </script>

@@ -5,18 +5,12 @@
 <script type="text/javascript">
     try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
     $(document).ready(function () {
-        //时间
-        $("#MakeDate").datepicker();
-
-        //仓库->区域
+        //通过"仓库ID"获取对应区域的'Mingcheng'
         $("#CangkuID").change(function () {
             var CkID = $("#CangkuID").val();
-
             GetQuyuData(CkID);
         });
-
     });
-    
     function GetQuyuData(id) {
         var _CkID = id;
         var filltable = "";
@@ -68,16 +62,17 @@
             </p>
         </div>
         <div class="container">
+            @*仓库*@
             <div class="form-group">
                 <label class="col-sm-2">仓库</label>
                 <div class="col-sm-10">
                     @Html.SelectList_Auto("CangkuID", "仓库", "")
                 </div>
             </div>
+            @*区域*@
             <div class="form-group">
                 <label class="col-sm-2">区域</label>
                 <div class="col-sm-10">
-                    @*@Html.TextBoxFor(m => m.QuyuID, new { @class = "form-control" })*@
                     <select name="quyuid" id="select_quyu" style="width:100%;"></select>
                 </div>
             </div>
