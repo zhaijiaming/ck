@@ -378,6 +378,14 @@ namespace CKWMS.Controllers
             string baozhuangdw = Request["baozhuangdw"] ?? "";
             string shangpintm = Request["shangpintm"] ?? "";
             string chandi = Request["chandi"] ?? "";
+            if (shenchasf.IndexOf("true") > -1)
+                shenchasf = "true";
+            else
+                shenchasf = "false";
+            if (jingyinsf.IndexOf("true") > -1)
+                jingyinsf = "true";
+            else
+                jingyinsf = "false";
             try
             {
                 base_shangpinxx ob_base_shangpinxx = new base_shangpinxx();
@@ -407,8 +415,8 @@ namespace CKWMS.Controllers
                 ob_base_shangpinxx.Shouying = shouying == "" ? 0 : int.Parse(shouying);
                 ob_base_shangpinxx.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 ob_base_shangpinxx.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
-                ob_base_shangpinxx.ShenchaSF = shenchasf == "true" ? true : false;
-                ob_base_shangpinxx.JingyinSF = jingyinsf == "true" ? true : false;
+                ob_base_shangpinxx.ShenchaSF = shenchasf == "" ? false : Boolean.Parse(shenchasf);
+                ob_base_shangpinxx.JingyinSF = jingyinsf == "" ? false : Boolean.Parse(jingyinsf);
                 ob_base_shangpinxx.BaozhuangDW = baozhuangdw.Trim();
                 ob_base_shangpinxx.ShangpinTM = shangpintm.Trim();
                 ob_base_shangpinxx.Chandi = chandi.Trim();

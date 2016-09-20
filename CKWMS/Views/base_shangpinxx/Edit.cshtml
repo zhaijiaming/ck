@@ -6,13 +6,20 @@
 }
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#pl_jldw").draggable({ handle: '.tuodong' }, { containment: "parent" });
+        $("#pl_Fanwei").draggable({ handle: '.tuodong' }, { containment: "parent" });
+        $("#pl_Cunchu").draggable({ handle: '.tuodong' }, { containment: "parent" });
         var _ispack = false;
         getCpx(@Model.HuozhuID);
-        getZczgg(@Model.ZhucezhengID );
+        getZczgg(@Model.ZhucezhengID);
         GetJldw();
-        GetFanwei()
+        GetFanwei();
+        //分类目录
         $("#bt_mulu").click(function () {
             $("#pl_Fanwei").show();
+            $("#qxdatatable tr input[type=checkbox]").on('click', function () {
+                $("#qxdatatable tr input[type=checkbox]").not(this).attr("checked", false);
+            });
         });
         $("#bt_fanwei_add").click(function () {
             var _mulu;
@@ -20,13 +27,13 @@
             var _mlfind = false;
             $("#qxdatatable tr input[type=checkbox]").each(function () {
                 if (this.checked) {
-                    _mulu = $(this).parent().parent().parent().siblings().find(".bh").html() + " " + $(this).parent().parent().parent().siblings().find(".mc").html();
+                    _mulu = $(this).parent().parent().siblings().find(".bh").html() + " " + $(this).parent().parent().siblings().find(".mc").html();
                     _muluxh = $(this).val();
                     _mlfind = true;
                 }
             });
             if (_mlfind) {
-                $("#Mulu").html(_mulu);
+                $("#Mulu").val(_mulu);
                 $("#muluxuhao").val(_muluxh);
             }
             $("#pl_Fanwei").hide();
@@ -59,11 +66,17 @@
             _ispack = true;
             $("#pl_jldw .checkbox").prop("checked", false);
             $("#pl_jldw").show();
+            $("#pl_jldw tbody").find("input[type=checkbox]").on('click', function () {
+                $("#pl_jldw tbody").find("input[type=checkbox]").not(this).attr("checked", false);
+            });
         });
         $("#btn_jldw").click(function () {
             _ispack = false;
             $("#pl_jldw .checkbox").prop("checked", false);
             $("#pl_jldw").show();
+            $("#pl_jldw tbody").find("input[type=checkbox]").on('click', function () {
+                $("#pl_jldw tbody").find("input[type=checkbox]").not(this).attr("checked", false);
+            });
         });
         $("#pl_close").click(function () {
             $("#pl_jldw").hide();
@@ -72,7 +85,7 @@
             var _jldw = "";
             $("#jldwdatatable tr input[type=checkbox]").each(function () {
                 if (this.checked) {
-                    _jldw = $(this).parent().parent().parent().siblings().find(".mc").html();
+                    _jldw = $(this).parent().parent().siblings().find(".mc").html();
                 }
             });
             if (_ispack)
@@ -81,13 +94,9 @@
                 $("#Danwei").val(_jldw);
             $("#pl_jldw").hide();
         });
-        $("#pl_jldw").draggable();
-        $("#pl_Fanwei").draggable();
-        $("#pl_Cunchu").draggable({ handle: '.tuodong' });
 
         //存储条件
         $("#ccdatatable tbody tr:first").hide();//第一行为空-->隐藏
-
         $("#btn_cctj").click(function () {
             $("#pl_Cunchu").removeAttr("hidden");
             $("#pl_Cunchu").show();
@@ -98,7 +107,7 @@
             var _cctj = "";
             $("#ccdatatable tr input[type=checkbox]").each(function () {
                 if (this.checked) {
-                    _cctj = $(this).parent().parent().parent().parent().find(".cctj_val").html();
+                    _cctj = $(this).parent().parent().parent().find(".cctj_val").html();
                 }
                 $("#Cunchutiaojian").val(_cctj);
             });
@@ -117,19 +126,19 @@
     function GetFanwei() {
         var filltable = "";
         $.post(
-                "/base_qixiemulu/GetQixiemulu",
+                "/base_qixiemulu/GetQixiemulu1",
                 {},
                 function (data) {
                     for (var i in data) {
-                        filltable = filltable + '<tr><td><div class="checkbox"><label><input type="checkbox" class ="checkbox" value="';
+                        filltable = filltable + '<tr><td style="width:4%"><label><input class="checkbox" type="checkbox" class ="checkbox" value="';
                         filltable = filltable + data[i].ID;
-                        filltable = filltable + '"></label></div></td><td><span class="bh">';
+                        filltable = filltable + '"></label></td><td style="width:10%"><span class="bh">';
                         filltable = filltable + data[i].Bianhao;
-                        filltable = filltable + '</span></td><td><span class="mc">';
+                        filltable = filltable + '</span></td><td style="width:30%"><span class="mc">';
                         filltable = filltable + data[i].Mingcheng;
-                        filltable = filltable + '</span></td><td>';
+                        filltable = filltable + '</span></td><td style="width:30%">';
                         filltable = filltable + data[i].Miaoshu;
-                        filltable = filltable + '</td><td>';
+                        filltable = filltable + '</td><td style="width:10%">';
                         filltable = filltable + data[i].GuanliFL;
                         filltable = filltable + '</td></tr>';
                     }
@@ -218,13 +227,13 @@
             },
                 function (data) {
                     for (var i in data) {
-                        filltable = filltable + '<tr><td><div class="checkbox"><label><input type="checkbox" class ="checkbox" value="';
+                        filltable = filltable + '<tr><td width="50px;"><label><input type="checkbox" class ="checkbox" value="';
                         filltable = filltable + data[i].ID;
-                        filltable = filltable + '"></label></div></td><td><span class="bh">';
+                        filltable = filltable + '"></label></td><td width="30%;"><span class="bh">';
                         filltable = filltable + data[i].Bianhao;
-                        filltable = filltable + '</span></td><td><span class="mc">';
+                        filltable = filltable + '</span></td><td width="30%;"><span class="mc">';
                         filltable = filltable + data[i].Mingcheng;
-                        filltable = filltable + '</span></td><td>';
+                        filltable = filltable + '</span></td><td width="30%;">';
                         filltable = filltable + data[i].Miaoshu;
                         filltable = filltable + '</td></tr>';
                     }
@@ -393,8 +402,7 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2">分类目录</label>
                 <div class="col-sm-8">
-                    @*<label id="Mulu">@Html.GetDataValue_ID("分类目录", "", (int)Model.Muluxuhao)</label>*@
-                    <input type="text" class="form-control" readonly value="@Html.GetDataValue_ID("分类目录", "", (int)Model.Muluxuhao)" />
+                    <input type="text" id="Mulu" class="form-control" readonly value="@Html.GetDataValue_ID("分类目录", "", (int)Model.Muluxuhao)" />
                 </div>
                 <div class="col-sm-2">
                     <input id="bt_mulu" type="button" value="选择分类目录" class="form-control" />
@@ -477,53 +485,53 @@
         </div>
     }
 </div>
-<div id="pl_jldw" class="panel panel-primary " style="display:none;position:fixed;top:100px;left:500px;z-index:9999;">
-    <div class="panel-heading">
+<div id="pl_jldw" class="panel panel-primary " style="display:none;position:fixed;top:100px;left:250px;z-index:99999;">
+    <div class="panel-heading tuodong">
         <h3 class="panel-title">计量单位<button id="pl_close" class="pull-right">X</button></h3>
     </div>
     <div class="panel-body">
         <div class="center">
             <button type="button" class="btn btn-default " id="bt_jldw_add"><i class="icon-add"></i>确定</button>
-            <table class="table" id="jldwdatatable">
+            <table class="table" id="jldwdatatable" style="margin-top:10px;">
                 <caption></caption>
                 <thead style="display:block">
                     <tr>
-                        <td></td>
-                        <td>编号</td>
-                        <td>名称</td>
-                        <td>说明</td>
+                        <td width="50px;"></td>
+                        <td width="30%;">编号</td>
+                        <td width="30%;">名称</td>
+                        <td width="30%;">说明</td>
                     </tr>
                 </thead>
-                <tbody style="display:block; max-height:600px;min-height:300px; overflow:auto"></tbody>
+                <tbody style="display:block; max-height:180px;overflow:auto;"></tbody>
             </table>
         </div>
     </div>
 </div>
-<div id="pl_Fanwei" class="panel panel-primary " style="display:none;position:absolute;top:10px;left:100px;width:800px;height:600px;z-index:999;">
-    <div class="panel-heading">
+<div id="pl_Fanwei" class="panel panel-primary " style="display:none;position:fixed;top:100px;left:200px;z-index:999;">
+    <div class="panel-heading tuodong">
         <h3 class="panel-title">分类目录<button id="plfw_close" class="pull-right">X</button></h3>
     </div>
     <div class="panel-body">
         <div class="center">
             <button type="button" class="btn btn-default " id="bt_fanwei_add"><i class="icon-add"></i>确定</button>
-            <table class="table" id="qxdatatable">
+            <table class="table" id="qxdatatable" style="margin-top:10px;">
                 <caption></caption>
                 <thead style="display:block">
                     <tr>
-                        <td></td>
-                        <td style="width:150px">编号</td>
-                        <td style="width:60px">名称</td>
-                        <td style="width:930px">描述</td>
-                        <td style="width:100px">管理分类</td>
+                        <td style="width:4%"></td>
+                        <td style="width:10%">编号</td>
+                        <td style="width:30%">名称</td>
+                        <td style="width:30%">描述</td>
+                        <td style="width:10%">管理分类</td>
                     </tr>
                 </thead>
-                <tbody style="display:block; max-height:460px;overflow:scroll"></tbody>
+                <tbody style="display:block; max-height:330px;overflow:auto;"></tbody>
             </table>
         </div>
     </div>
 </div>
 @*存储条件*@
-<div id="pl_Cunchu" class="panel panel-primary" hidden style="position:fixed;top:10px;left:240px;width:240px;height:auto;z-index:999;">
+<div id="pl_Cunchu" class="panel panel-primary" hidden style="position:fixed;top:100px;left:240px;width:240px;height:auto;z-index:999;">
     <div class="panel-heading tuodong">
         <h3 class="panel-title">存储条件<button id="plcc_close" class="pull-right">X</button></h3>
     </div>
@@ -544,9 +552,7 @@
                     {
                         <tr>
                             <td>
-                                <div class="checkbox">
-                                    <label><input type="checkbox" value="" /></label>
-                                </div>
+                                <label><input class="checkbox" type="checkbox" value="" /></label>
                             </td>
                             <td width="90px">@dd.Key</td>
                             <td width="100px" class="cctj_val">@dd.Value</td>
