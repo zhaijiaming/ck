@@ -14,13 +14,48 @@
         $("#shouying").val("1");//默认首营状态为"新建"
         GetJldw();
         GetFanwei();
-        //选择分类目录
+        //分类目录
         $("#bt_mulu").click(function () {
             $("#pl_Fanwei").show();
             $("#qxdatatable tr input[type=checkbox]").on('click', function () {
                 $("#qxdatatable tr input[type=checkbox]").not(this).attr("checked", false);
             });
         });
+        //选择管理分类
+        $("#cata_guanlifenlei").change(function () {
+            var fl = $('.glfl').text();
+            var lb = $("#cata_guanlifenlei").find("option:selected").text();
+            switch (lb) {
+                case "一类":
+                    for (var i = 0; i < fl.length; i++) {
+                        if ($(".glfl").eq(i).text() == "1") {
+                            $(".bg").eq(i).show();
+                        }
+                        else { $(".bg").eq(i).hide(); }
+                    }
+                    break;
+                case "二类":
+                    for (var i = 0; i < fl.length; i++) {
+                        if ($(".glfl").eq(i).text() == "2") {
+                            $(".bg").eq(i).show();
+                        }
+                        else { $(".bg").eq(i).hide(); }
+                    }
+                    break;
+                case "三类":
+                    for (var i = 0; i < fl.length; i++) {
+                        if ($(".glfl").eq(i).text() == "3") {
+                            $(".bg").eq(i).show();
+                        }
+                        else { $(".bg").eq(i).hide(); }
+                    }
+                    break;
+                default:
+                    $(".bg").show();
+                    break;
+            }
+        });
+        //分类目录添加事件
         $("#bt_fanwei_add").click(function () {
             var _mulu;
             var _muluxh;
@@ -56,9 +91,10 @@
             var _huozhuid = $("#huozhuid").val();
             getCpx(_huozhuid);
         });
+        //注册证→获取其他信息
         $("#zhucezhengid").change(function () {
             var _zczid = $("#zhucezhengid").val();
-            $("#Daima").val("");
+            //$("#Daima").val("");
             getZCZ(_zczid);
         });
         //计量单位
@@ -131,7 +167,7 @@
                 {},
                 function (data) {
                     for (var i in data) {
-                        filltable = filltable + '<tr><td style="width:4%"><label><input class="checkbox" type="checkbox" class ="checkbox" value="';
+                        filltable = filltable + '<tr class="bg"><td style="width:4%"><label><input class="checkbox" type="checkbox" class ="checkbox" value="';
                         filltable = filltable + data[i].ID;
                         filltable = filltable + '"></label></td><td style="width:10%"><span class="bh">';
                         filltable = filltable + data[i].Bianhao;
@@ -139,9 +175,9 @@
                         filltable = filltable + data[i].Mingcheng;
                         filltable = filltable + '</span></td><td style="width:30%">';
                         filltable = filltable + data[i].Miaoshu;
-                        filltable = filltable + '</td><td style="width:10%">';
+                        filltable = filltable + '</td><td style="width:10%"><span class="glfl">';
                         filltable = filltable + data[i].GuanliFL;
-                        filltable = filltable + '</td></tr>';
+                        filltable = filltable + '</span></td></tr>';
                     }
                     $("#pl_Fanwei tbody").html(filltable);
                 });
@@ -189,8 +225,13 @@
                         filltable = filltable + '</option>';
                     }
                     $("#select_gg").html(filltable);
+                    GetFirstDaima();
                 }
             });
+    }
+    function GetFirstDaima() {
+        var guige = $("#select_gg").find("option:selected").text();
+        $("#Daima").val(guige);
     }
     function getZczgg(zczid) {
         var _zczid = zczid;
@@ -291,7 +332,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.Daima, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Daima, new { @class = "form-control" })
+                    @Html.TextBoxFor(m => m.Daima, new { @class = "form-control", @placeholder = "请选择注册证" })
                     @Html.ValidationMessageFor(m => m.Daima)
                 </div>
             </div>
@@ -511,6 +552,15 @@
     <div class="panel-body">
         <div class="center">
             <button type="button" class="btn btn-default " id="bt_fanwei_add"><i class="icon-add"></i>确定</button>
+            <span class="gllb" >
+                <span style="margin-left:10px;">管理类别</span>
+                <select name="cata_guanlifenlei" id="cata_guanlifenlei">
+                    <option value="全部">全部</option>
+                    <option value="一类">一类</option>
+                    <option value="二类">二类</option>
+                    <option value="三类">三类</option>
+                </select>
+            </span>
             <table class="table" id="qxdatatable" style="margin-top:10px;">
                 <caption></caption>
                 <thead style="display:block">
