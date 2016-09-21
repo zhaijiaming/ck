@@ -310,8 +310,8 @@ namespace CKWMS.Controllers
                                     _hj = (int.Parse(hj) + i).ToString();
                                 }
                             }
-                            else if (hj.Length == 3) { _hj = (int.Parse(hj) + i).ToString(); }
-                            else { }
+                            else /*if (hj.Length == 3)*/ { _hj = (int.Parse(hj) + i).ToString(); }
+                            //else { }
 
                             if (ls.Length == 1)
                             {
@@ -340,39 +340,59 @@ namespace CKWMS.Controllers
                                     _ls = (int.Parse(ls) + j).ToString();
                                 }
                             }
-                            else if (ls.Length == 3) { _ls = (int.Parse(ls) + j).ToString(); }
-                            else { }
+                            else /*if (ls.Length == 3) */{ _ls = (int.Parse(ls) + j).ToString(); }
+                            //else { }
 
+                            //if (cs.Length == 1)
+                            //{
+                            //    zimu = cs[0];
+                            //    if (zimu >= 48 && zimu <= 57)
+                            //    {
+                            //        if ((int.Parse(cs) + k) < 10)
+                            //        { 
+                            //            _cs = "00" + (int.Parse(cs) + k).ToString();
+                            //        }
+                            //        else
+                            //        {
+                            //            _cs = "0" + (int.Parse(cs) + k).ToString();
+                            //        }
+                            //    }
+                            //    else { tempchar = (char)(zimu + k); _cs = tempchar.ToString() + "1"; }
+                            //}
+                            //else if (cs.Length == 2)
+                            //{
+                            //    if ((int.Parse(cs) + k) < 100)
+                            //    {
+                            //        _cs = "0" + (int.Parse(cs) + k).ToString();
+                            //    }
+                            //    else
+                            //    {
+                            //        _cs = (int.Parse(cs) + k).ToString();
+                            //    }
+                            //}
+                            //else if (cs.Length == 3) { _cs = (int.Parse(cs) + k).ToString(); }
+                            //else { }
                             if (cs.Length == 1)
                             {
                                 zimu = cs[0];
                                 if (zimu >= 48 && zimu <= 57)
                                 {
                                     if ((int.Parse(cs) + k) < 10)
-                                    { 
-                                        _cs = "00" + (int.Parse(cs) + k).ToString();
+                                    {
+                                        _cs = "0" + (int.Parse(cs) + k).ToString();
                                     }
                                     else
                                     {
-                                        _cs = "0" + (int.Parse(cs) + k).ToString();
+                                        _cs = (int.Parse(cs) + k).ToString();
                                     }
                                 }
                                 else { tempchar = (char)(zimu + k); _cs = tempchar.ToString() + "1"; }
                             }
-                            else if (cs.Length == 2)
-                            {
-                                if ((int.Parse(cs) + k) < 100)
-                                {
-                                    _cs = "0" + (int.Parse(cs) + k).ToString();
-                                }
-                                else
-                                {
-                                    _cs = (int.Parse(cs) + k).ToString();
-                                }
-                            }
-                            else if (cs.Length == 3) { _cs = (int.Parse(cs) + k).ToString(); }
-                            else { }
-
+                            else /*if (cs.Length == 2)*/
+                            {                               
+                                    _cs = (int.Parse(cs) + k).ToString();                              
+                            }                           
+                            //else { }
 
                             wms_kuwei ob_wms_kuwei = new wms_kuwei();
                             ob_wms_kuwei.Mingcheng = qydaima + "-" + _hj + "-" + _ls + "-" + _cs;
