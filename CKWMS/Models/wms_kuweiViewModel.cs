@@ -14,6 +14,8 @@ namespace CKWMS.Models
         public string Mingcheng { get; set; }
         [Display(Name = "货架")]
         public int? Huojia { get; set; }
+        [Display(Name = "列数")]
+        public int? Lieshu { get; set; }
         [Display(Name = "层数")]
         public int? Censhu { get; set; }
         [Display(Name = "商品数量")]

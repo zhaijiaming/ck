@@ -22,6 +22,9 @@
     function AddInfo() {
         location.href = "/wms_kuwei/Add";
     }
+    function AddkwInfo() {
+        location.href = "/wms_kuwei/Addkw";
+    }
     function EditInfo() {
         $("#mydatatable tr input[type=checkbox]").each(function () {
             if (this.checked)
@@ -92,6 +95,7 @@
             <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
             <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
+            <button type="button" class="btn btn-default " id="bt_addkwInfo" onclick="AddkwInfo()"><i class="icon-adn"></i>生成库位</button>
         </p>
     </div>
     <div class="row">
@@ -103,6 +107,7 @@
                     <td>区域序号</td>
                     <td>库位名称</td>
                     <td>货架</td>
+                    <td>列数</td>
                     <td>层数</td>
                     <td>商品数量</td>
                     <td>批次数量</td>
@@ -122,6 +127,7 @@
                         <td>@Html.GetDataValue_ID("区域","",(int)item.QuyuID)</td>
                         <td>@item.Mingcheng</td>
                         <td>@item.Huojia</td>
+                        <td>@item.Lieshu</td>
                         <td>@item.Censhu</td>
                         <td>@item.ShangpinSL</td>
                         <td>@item.PiciSL</td>

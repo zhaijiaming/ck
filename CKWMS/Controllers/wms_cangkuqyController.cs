@@ -13,6 +13,11 @@ using CKWMS.Filters;
 
 namespace CKWMS.Controllers
 {
+    public class CangKuqy
+    {
+        public int ID { get; set; }
+        public string Daima { get; set; }
+    }
     public class wms_cangkuqyController : Controller
     {
         private Iwms_cangkuqyService ob_wms_cangkuqyservice = ServiceFactory.wms_cangkuqyservice;
@@ -310,6 +315,13 @@ namespace CKWMS.Controllers
                 }
             }
             return RedirectToAction("Index");
+        }
+        public string GetDaima(int id)
+        {
+            wms_cangkuqy ob_wms_cangkuqy;
+            ob_wms_cangkuqy = ob_wms_cangkuqyservice.GetEntityById(wms_cangkuqy => wms_cangkuqy.IsDelete == false && wms_cangkuqy.ID == id);
+            string dm = ob_wms_cangkuqy.Daima;
+            return dm;
         }
     }
 }
