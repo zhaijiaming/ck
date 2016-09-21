@@ -12,6 +12,15 @@
         $("#Huansuanlv").val("1");//换算率默认为1
         $("#makedate").datepicker();//时间
         $("#shouying").val("1");//默认首营状态为"新建"
+        $("#huozhuid").attr('required', 'required');
+        //$("#shangpinxx_save").validate({
+        //    rules: {
+        //        huozhuid: "required",
+        //    },
+        //    messages: {
+        //        huozhuid: "请输入您的名字",
+        //    }
+        //});
         GetJldw();
         GetFanwei();
         //分类目录
@@ -55,10 +64,10 @@
                     break;
             }
         });
-        //分类目录添加事件
+        //添加分类目录事件
         $("#bt_fanwei_add").click(function () {
-            var _mulu;
-            var _muluxh;
+            var _mulu = "";
+            var _muluxh = "";
             var _mlfind = false;
             $("#qxdatatable tr input[type=checkbox]").each(function () {
                 if (this.checked) {
@@ -89,7 +98,11 @@
         //货主ID→产品线名称
         $("#huozhuid").change(function () {
             var _huozhuid = $("#huozhuid").val();
-            getCpx(_huozhuid);
+            if (_huozhuid == "") {
+                $("#select_cpx").text("");
+            } else {
+                getCpx(_huozhuid);
+            }
         });
         //注册证→获取其他信息
         $("#zhucezhengid").change(function () {
@@ -130,7 +143,13 @@
                 $("#Danwei").val(_jldw);
             $("#pl_jldw").hide();
         });
-
+        $("#jldwdatatable").on("dblclick", "tr", function () {
+            if (_ispack)
+                $("#BaozhuangDW").val($(this).find(".mc").html());
+            else
+                $("#Danwei").val($(this).find(".mc").html());
+            $("#pl_jldw").hide();
+        });
         //存储条件
         $("#ccdatatable tbody tr:first").hide();//第一行为空-->隐藏
 
@@ -139,7 +158,6 @@
             $("#pl_Cunchu").show();
             $("#pl_Cunchu .checkbox").prop("checked", false);
         });
-
         $("#bt_cunchu_add").click(function () {
             var _cctj = "";
             $("#ccdatatable tr input[type=checkbox]").each(function () {
@@ -150,12 +168,13 @@
             });
             $("#pl_Cunchu").hide();
         });
-
         $("#plcc_close").click(function () {
             $("#pl_Cunchu").hide();
         });
-
-        //复选框只能选一次
+        $("#ccdatatable").on("dblclick", "tr", function () {
+            $("#Cunchutiaojian").val($(this).find(".cctj_val").html());
+            $("#pl_Cunchu").hide();
+        });
         $("#ccdatatable tr input[type=checkbox]").bind("click", function () {
             $("#ccdatatable tr input[type=checkbox]").not(this).attr("checked", false);
         });
@@ -276,18 +295,12 @@
                     $("#pl_jldw tbody").html(filltable);
                 });
     }
-    function GetChecked() {
-        var mc = $(".mc").text();
-        //alert(mc);
-        var i = $("#Danwei").val();
-        var t = i.split(";");
-        //alert(t);
-
-        for (var k = 0; k < t.length; k++) {
-            for (var l = 0; l < mc.length; l++) {
-                if (t[k] == $(".mc").eq(l).text())
-                    $("input:checkbox").eq(l).attr("checked", true);
-            }
+    function GetChecked(getExist,getAll) {
+        var _Exist = getExist;
+        var _All = getAll;
+        for (var i = 0; i < _All.length; i++) {
+            if (_Exist == _All.eq(i).val())
+            $("input:checkbox").eq(l).attr("checked", true);
         }
     }
 </script>
@@ -318,22 +331,21 @@
         <input type="hidden" id="MakeMan" name="MakeMan" value=@Session["user_id"] />
         <div class="page-header">
             <p>
-                <button type="submit" class="btn btn-default"><i class="icon-save"></i>保存</button>
+                <button type="submit" id="shangpinxx_save" class="btn btn-default"><i class="icon-save"></i>保存</button>
                 <button type="button" class="btn btn-default" onclick="javascript:history.back(-1); "><i class="icon-hand-left"></i>返回</button>
             </p>
         </div>
         <div class="container">
             <div class="form-group">
-                <label for="name" class="col-sm-2">货主</label>
+                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>货主</label>
                 <div class="col-sm-10">
                     @Html.SelectList_Auto("huozhuid", "货主", "名称")
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.Daima, new { @class = "control-label col-sm-2" })
+                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>代码</label>
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.Daima, new { @class = "form-control", @placeholder = "请选择注册证" })
-                    @Html.ValidationMessageFor(m => m.Daima)
                 </div>
             </div>
             @*注册证*@
@@ -552,7 +564,7 @@
     <div class="panel-body">
         <div class="center">
             <button type="button" class="btn btn-default " id="bt_fanwei_add"><i class="icon-add"></i>确定</button>
-            <span class="gllb" >
+            <span class="gllb">
                 <span style="margin-left:10px;">管理类别</span>
                 <select name="cata_guanlifenlei" id="cata_guanlifenlei">
                     <option value="全部">全部</option>
