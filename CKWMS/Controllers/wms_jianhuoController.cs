@@ -206,23 +206,78 @@ namespace CKWMS.Controllers
             //    where = where.And(p => p.ShangpinTM == _mx.ShangpinTM);
             //if (_mx.Guige != null)
             //    where = where.And(p => p.Guige == _mx.Guige);
+            //if (_mx.Zhucezheng != null)
+            //    where = where.And(p => p.Zhucezheng == _mx.Zhucezheng);
             if (_mx.Pihao != null)
                 where = where.And(p => p.Pihao == _mx.Pihao);
-            //if (_mx.Pihao1 != null)
-            //    where = where.And(p => p.Pihao1 == _mx.Pihao1);
+            if (_mx.Pihao1 != null)
+                where = where.And(p => p.Pihao1 == _mx.Pihao1);
             //if (_mx.ShengchanRQ != null)
             //    where = where.And(p => p.ShengchanRQ == _mx.ShengchanRQ);
             //if (_mx.ShixiaoRQ != null)
             //    where = where.And(p => p.ShixiaoRQ == _mx.ShixiaoRQ);
-            //if (_mx.Xuliema != null)
-            //    where = where.And(p => p.Xuliema == _mx.Xuliema);
+            if (_mx.Xuliema != null)
+                where = where.And(p => p.Xuliema == _mx.Xuliema);
             where = where.And(p => p.sshuliang > 0);
             var tempData = ServiceFactory.wms_cunhuoservice.GetStorageList(_custid, where.Compile());
             if (tempData == null)
                 return Json(-1);
             return Json(tempData.ToList<wms_storage_v>());
         }
+        public JsonResult AddPickGoods()
+        {
+            int _userid = (int)Session["user_id"];
+            var _pickgoods = Request["pickgd"] ?? "";
+            if (_pickgoods == "")
+                return Json(-1);
+            foreach (var _pg in _pickgoods.Split(';'))
+            {
+                if (_pg.Length > 3)
+                {
+                    string[] _rec = _pg.Split(',');
+                    int _ckmx = int.Parse(_rec[0]);
+                    float _pknum = float.Parse(_rec[1]);
+                    string _pkmemo = _rec[2];
+                    int _chmx = int.Parse(_rec[3]);
 
+                    wms_cunhuo _ch = ServiceFactory.wms_cunhuoservice.GetEntityById(p => p.ID == _chmx);
+                    if (_ch != null)
+                    {
+                        var _rt = _pknum / _ch.Shuliang;
+                        wms_jianhuo _jh = new wms_jianhuo();
+                        _jh.CKMXID = _ckmx;
+                        _jh.DaijianSL = _pknum;
+                        _jh.JianhuoRQ = DateTime.Now;
+                        _jh.JianhuoSM = _pkmemo;
+                        _jh.KCID = _chmx;
+                        _jh.Kuwei = _ch.Kuwei;
+                        _jh.KuweiID = _ch.KuweiID;
+                        _jh.Zhongliang = (float)Math.Round((double)(_rt * _ch.Zhongliang), 3);
+                        _jh.Jingzhong = (float)Math.Round((double)(_rt * _ch.Jingzhong), 3);
+                        _jh.Tiji = (float)Math.Round((double)(_rt * _ch.Tiji), 3);
+                        _jh.Jifeidun = (float)Math.Round((double)(_rt * _ch.Jifeidun), 3);
+                        _jh.MakeMan = _userid;
+                        //É¨Ãè¼ð»õºóÈ¥³ý
+                        _jh.Jianhuoren = _userid;
+                        //_jh.ShijianSL = _pknum;
+                        _jh = ob_wms_jianhuoservice.AddEntity(_jh);
+                        if (_jh != null)
+                        {
+                            wms_chukumx _ck = ServiceFactory.wms_chukumxservice.GetEntityById(p => p.ID == _ckmx);
+                            if (_ck != null)
+                            {
+                                _ck.Jianhuo = true;
+                                if (_ck.JianhuoSL == null)
+                                    _ck.JianhuoSL = 0;
+                                _ck.JianhuoSL = _ck.JianhuoSL + _pknum;
+                                ServiceFactory.wms_chukumxservice.UpdateEntity(_ck);
+                            }
+                        }
+                    }
+                }
+            }
+            return Json(1);
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Save()
@@ -274,7 +329,17 @@ namespace CKWMS.Controllers
             }
             return RedirectToAction("Index");
         }
-
+        public JsonResult GetDetailByMX()
+        {
+            int _userid = (int)Session["user_id"];
+            var _mxid = Request["mx"] ?? "";
+            if (_mxid == "")
+                return Json(-1);
+            var tempData = ob_wms_jianhuoservice.GetPickDetailByMX(int.Parse(_mxid), p => p.DaijianSL > 0);
+            if (tempData == null)
+                return Json(tempData.ToList<wms_pick_v>());
+            return Json(1);
+        }
         [OutputCache(Duration = 10)]
         public ActionResult Edit(int id)
         {
@@ -306,7 +371,20 @@ namespace CKWMS.Controllers
                 return View(wms_jianhuoviewmodel);
             }
         }
-
+        public JsonResult DelPick()
+        {
+            int _userid = (int)Session["user_id"];
+            var _delid = Request["del"] ?? "";
+            if (_delid == "")
+                return Json(-1);
+            wms_jianhuo _jh = ob_wms_jianhuoservice.GetEntityById(p => p.ID == int.Parse(_delid));
+            if (_jh == null)
+                return Json(-1);
+            var b = ob_wms_jianhuoservice.DeleteEntity(_jh);
+            if (!b)
+                return Json(-1);
+            return Json(1);
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Update()
