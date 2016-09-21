@@ -218,6 +218,8 @@ namespace CKWMS.Controllers
             //    where = where.And(p => p.ShixiaoRQ == _mx.ShixiaoRQ);
             if (_mx.Xuliema != null)
                 where = where.And(p => p.Xuliema == _mx.Xuliema);
+            if (_mx.HuopinZT != null)
+                where = where.And(p => p.CunhuoZT == _mx.HuopinZT);
             where = where.And(p => p.sshuliang > 0);
             var tempData = ServiceFactory.wms_cunhuoservice.GetStorageList(_custid, where.Compile());
             if (tempData == null)

@@ -75,7 +75,20 @@ namespace CKWMS.Controllers
             ViewBag.quan_chukufh = tempData;
             return View(tempData);
         }
+        public ActionResult OutInventoryCheck(int id)
+        {
+            int _userid = (int)Session["user_id"];
+            var _username = Session["user_name"];
+            //var _ckid = Request["ck"] ?? "";
+            //if (_ckid == "")
+            //    _ckid = "0";
 
+            var tempData = ServiceFactory.quan_chukufhservice.GetOutcheckByCK(id,p=>p.JianhuoSL>0);
+            ViewBag.waitcheck = tempData;
+            ViewBag.userid = _userid;
+            ViewBag.username = _username;
+            return View();
+        }
         [HttpPost]
         [OutputCache(Duration = 30)]
         public ActionResult Index()

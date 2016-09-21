@@ -1,0 +1,260 @@
+﻿@using CKWMS.App_Code
+@using CKWMS.Models
+@using X.PagedList
+@using X.PagedList.Mvc
+@{
+    ViewBag.Title = "出库复核";
+    string _searchcondition = ViewBag.SearchCondition;
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("tr").bind("dblclick", function () {
+            var u_id = $(this).find('td').eq(0).find('input').val();
+        });
+        $("#yhsm").change(function () {
+            $("#YanshouSM").val($(this).find("option:selected").text());
+        });
+        $("#Yanshou").change(function () {
+            var _sval = $(this).find("option:selected").val();
+            if (eval(_sval) == 0) {
+                $("#Ngnum").val("0");
+                $("#Oknum").val("0");
+            }
+            if (eval(_sval) == 1) {
+                $("#Ngnum").val("0");
+                $("#Oknum").val($("#YanshouSL").val());
+            }
+            if (eval(_sval) == 2) {
+                $("#Ngnum").val("0");
+                $("#Oknum").val("0");
+            }
+            if (eval(_sval) == 3) {
+                $("#Ngnum").val($("#YanshouSL").val());
+                $("#Oknum").val("0");
+            }
+        });
+        $(".icon-youtube-play").click(function () {
+            var _selrow = $(this).parent().parent();
+            var _onum = _selrow.find('td').eq(10).html();
+            if (_selrow.hasClass("green") || _selrow.hasClass("red"))
+                return;
+            _selrow.addClass("blue");
+            $("#shmx").val(_selrow.find("input").val());
+            $("#YanshouSL").val(_onum);
+            $("#pl_yanshou").show();
+        });
+        $("#pl_close").click(function () {
+            $("#pl_yanshou").hide();
+        });
+        $("#pl_yanshou").draggable();
+        $("#yscancel").click(function () {
+            $("#pl_yanshou").hide();
+        });
+        $("#yssave").click(function () {
+            var _ysresult = $("#Yanshou").find("option:selected").val();
+            if (eval(_ysresult) == 0) {
+                alert("请选择验收结果后再完成检验！");
+                return;
+            }
+            var _ysnum = $("#YanshouSL").val();
+            if (eval(_ysnum) == 0) {
+                alert("验收数量不对，请重新输入！");
+                return;
+            }
+            var _oknum = $("#Oknum").val();
+            var _ngnum = $("#Ngnum").val();
+            if (eval(_ysnum) != eval(_oknum) + eval(_ngnum)) {
+                alert("验收数量不正确，请重新输入！");
+                return;
+            }
+            if (eval(_ysresult) == 2)
+                $.post("/quan_rukuys/addcheckpart", {
+                    shmx: $("#shmx").val(),
+                    oknum: _oknum,
+                    ngnum: _ngnum,
+                    ys: _ysresult,
+                    ysr: $("#Yanshouren").val(),
+                    yssm: $("#YanshouSM").val(),
+                }, function (data) {
+                    if (data == -1)
+                        alert("验收数据保存失败，请重新验收！");
+                    else
+                        location.reload();
+                });
+            else
+                $.post("/quan_rukuys/addcheck", {
+                    shmx: $("#shmx").val(),
+                    sl: _ysnum,
+                    ys: _ysresult,
+                    ysr: $("#Yanshouren").val(),
+                    yssm: $("#YanshouSM").val(),
+                }, function (data) {
+                    if (data == -1)
+                        alert("验收数据保存失败，请重新验收！");
+                    else {
+                        ShowCheck();
+                        $("#pl_yanshou").hide();
+                    }
+                });
+        });
+        $("#mydatatable tbody tr").each(function () {
+            var _ysn = $(this).find('td').eq(13).html();
+            var _shn = $(this).find('td').eq(10).html();
+            var _ys = $(this).find('td').eq(14).html();
+            try {
+                if (eval(_shn) == eval(_ysn)) {
+                    if (_ys == "不合格")
+                        $(this).addClass("red");
+                    else
+                        $(this).addClass("green");
+                }
+            }
+            catch (err) {
+            }
+        });
+    });
+    function ShowCheck() {
+        $("#mydatatable tbody tr").each(function () {
+            var _mx = $(this).find("input").val();
+            if (_mx == $("#shmx").val()) {
+                if ($(this).hasClass("blue"))
+                    $(this).removeClass("blue");
+                $(this).find('td').eq(13).html($("#YanshouSL").val());
+                $(this).find('td').eq(14).html($("#Yanshou").find("option:selected").text());
+                $(this).find('td').eq(15).html($("#Yanshouren").val());
+                $(this).find('td').eq(16).html($("#YanshouSM").val());
+                $(this).find('td').eq(17).html('@string.Format("{0:yyyy-MM-dd}",DateTime.Now)');
+                if (eval($("#Yanshou").find("option:selected").val()) == 3)
+                    $(this).addClass("red");
+                else
+                    $(this).addClass("green");
+            }
+        });
+    }
+</script>
+
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    </script>
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="/Home">首页</a>
+        </li>
+        <li class="active">出库复核</li>
+    </ul>
+</div>
+<div class="page-content">
+    <input type="hidden" id="shmx" />
+    <input type="hidden" id="username" value="@ViewBag.username" />
+    <input type="hidden" id="userid" value="@ViewBag.userid" />
+    <div class="row">
+        <table class="table table-condensed" id="mydatatable">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>复核</td>
+                    <td>商品名称</td>
+                    <td>注册证</td>
+                    <td>规格</td>
+                    <td>批号</td>
+                    <td>次批号</td>
+                    <td>序列码</td>
+                    <td>生产日期</td>
+                    <td>失效日期</td>
+                    <td>数量</td>
+                    <td>厂家</td>
+                    <td>产地</td>
+                    <td>复核数量</td>
+                    <td>复核结果</td>
+                    <td>复核人</td>
+                    <td>复核说明</td>
+                    <td>复核日期</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.waitcheck)
+                {
+                    <tr>
+                        <td>
+                            <label><input type="checkbox" value="@item.ID"></label>
+                        </td>
+                        <td><i class="icon-youtube-play"></i></td>
+                        <td>@item.ShangpinMC</td>
+                        <td>@item.Zhucezheng</td>
+                        <td>@item.Guige</td>
+                        <td>@item.Pihao</td>
+                        <td>@item.Pihao1</td>
+                        <td>@item.Xuliema</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ)</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ)</td>
+                        <td>@item.JianhuoSL</td>
+                        <td>@item.Changjia</td>
+                        <td>@item.Chandi</td>
+                        <td>@item.FuheSL</td>
+                        <td>@Html.GetCommonValue_ID("验收结果", (int)(item.Fuhe == null ? 0 : item.Fuhe))</td>
+                        <td>@item.Fuheren</td>
+                        <td>@item.FuheSM</td>
+                        <td>@item.MakeDate</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    @*<div class="pager">
+            @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+        </div>*@
+</div>
+<div id="pl_yanshou" class="panel panel-info" style="display:none;position:absolute;top:100px;left:200px;width:600px;height:360px;z-index:999;">
+    <div class="panel-heading">
+        <h3 class="panel-title">货品验收<button id="pl_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Yanshouren">验收人</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="Yanshouren" name="Yanshouren" type="text" value="@ViewBag.username" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="YanshouSL">验收数量</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="YanshouSL" name="YanshouSL" type="text" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Yanshou">验收结果</label>
+            <div class="col-sm-10">
+                @*<input class="form-control" id="Yanshou" name="Yanshou" type="text" value="" />*@
+                @Html.SelectList_Common("Yanshou", "验收结果")
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Ngnum">不合格数量</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="Ngnum" name="Ngnum" type="text" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Oknum">合格数量</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="Oknum" name="Oknum" type="text" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="YanshouSM">检验说明</label>
+            <div class="col-sm-10">
+                @Html.SelectList_Common("yhsm", "验收不符合项说明")
+            </div>
+        </div>
+        <div class="form-group">
+            <textarea class="form-control" id="YanshouSM" name="YanshouSM"></textarea>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-6 center"><p id="yssave" class="btn btn-default"><i class="icon-save"></i>完成</p></div>
+            <div class="col-sm-6 center"><p id="yscancel" class="btn btn-default"><i class="glyphicon-backward"></i>取消</p></div>
+        </div>
+    </div>
+</div>
