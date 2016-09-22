@@ -33,6 +33,9 @@
                 $("#Oknum").val("0");
             }
         });
+        $("#pl_jh_cancel").click(function () {
+            $("#pl_jh").hide();
+        });
         $(".icon-youtube-play").click(function () {
             var _selrow = $(this).parent().parent();
             var _onum = _selrow.find('td').eq(10).html();
@@ -49,6 +52,10 @@
         $("#pl_yanshou").draggable();
         $("#yscancel").click(function () {
             $("#pl_yanshou").hide();
+        });
+        $("#pl_jh").draggable();
+        $("#pl_jh_cancel").click(function () {
+            $("#pl_jh").hide();
         });
         $("#yssave").click(function () {
             var _ysresult = $("#Yanshou").find("option:selected").val();
@@ -67,35 +74,39 @@
                 alert("验收数量不正确，请重新输入！");
                 return;
             }
-            if (eval(_ysresult) == 2)
-                $.post("/quan_rukuys/addcheckpart", {
-                    shmx: $("#shmx").val(),
-                    oknum: _oknum,
-                    ngnum: _ngnum,
-                    ys: _ysresult,
-                    ysr: $("#Yanshouren").val(),
-                    yssm: $("#YanshouSM").val(),
-                }, function (data) {
-                    if (data == -1)
-                        alert("验收数据保存失败，请重新验收！");
-                    else
-                        location.reload();
-                });
-            else
-                $.post("/quan_rukuys/addcheck", {
-                    shmx: $("#shmx").val(),
-                    sl: _ysnum,
-                    ys: _ysresult,
-                    ysr: $("#Yanshouren").val(),
-                    yssm: $("#YanshouSM").val(),
-                }, function (data) {
-                    if (data == -1)
-                        alert("验收数据保存失败，请重新验收！");
-                    else {
-                        ShowCheck();
-                        $("#pl_yanshou").hide();
-                    }
-                });
+            if (eval(_ysresult) == 2) {
+                alert("请标识不合格的货品！");
+                $("#bhg").val($("#Ngnum").val());
+                GetPick($("#shmx").val());
+                $("#pl_jh").show();
+                //$("#pl_yanshou").hide();
+            }
+            else {
+                if (eval(_ysresult) == 3) {
+                    $.post("/wms_jianhuo/ngpick", { mx: $("#shmx").val() }, function (data) {
+                        if (data == -1)
+                            alert("标识不合格商品失败！");
+                        else
+                            $("#pl_yanshou").hide();
+                    });
+                    alert("产品不合格，需要重新拣货！");
+                }
+                else
+                    $.post("/quan_chukufh/addcheck", {
+                        shmx: $("#shmx").val(),
+                        sl: _ysnum,
+                        ys: _ysresult,
+                        ysr: $("#Yanshouren").val(),
+                        yssm: $("#YanshouSM").val(),
+                    }, function (data) {
+                        if (data == -1)
+                            alert("验收数据保存失败，请重新验收！");
+                        else {
+                            ShowCheck();
+                            $("#pl_yanshou").hide();
+                        }
+                    });
+            }
         });
         $("#mydatatable tbody tr").each(function () {
             var _ysn = $(this).find('td').eq(13).html();
@@ -111,6 +122,51 @@
             }
             catch (err) {
             }
+        });
+        $("#pl_jh_close").click(function () {
+            $("#pl_jh").hide();
+        });
+        $("#Oknum").blur(function () {
+            if (eval($(this).val()) > 0) {
+                if (eval($(this).val()) > eval($("#YanshouSL").val()))
+                    $(this).val($("#YanshouSL").val());
+                else
+                    $("#Ngnum").val(eval($("#YanshouSL").val()) - eval($(this).val()));
+            }
+        });
+        $("#Ngnum").blur(function () {
+            if (eval($(this).val()) > 0) {
+                if (eval($(this).val()) > eval($("#YanshouSL").val()))
+                    $(this).val($("#YanshouSL").val());
+                else
+                    $("#Oknum").val(eval($("#YanshouSL").val()) - eval($(this).val()));
+            }
+        });
+        $("#pl_jh_ok").click(function () {
+            var _ngn = 0;
+            var _ngv = "";
+            $("#dt_jh tbody tr").each(function () {
+                var _sr = $(this).find("input");
+                if (eval(_sr.val()) > 0) {
+                    _ngn = _ngn + eval(_sr.val());
+                    _ngv = _ngv + _sr.data("pk") + "," + _sr.val() + ";";
+                }
+            });
+            if (_ngn != eval($("#bhg").val())) {
+                alert("不合格商品数量有误，请重新输入！");
+                return;
+            }
+            $.post("/wms_jianhuo/ngchange", { ch: _ngv }, function (data) {
+                if (data == -1) {
+                    alert("标识不合格商品失败！");
+                    $("#pl_jh").hide();
+                }
+                else {
+                    location.reload();
+                    //$("#pl_jh").hide();
+                    //$("#pl_yanshou").hide();
+                }
+            });
         });
     });
     function ShowCheck() {
@@ -130,6 +186,53 @@
                     $(this).addClass("green");
             }
         });
+    }
+    function GetPick(_detail) {
+        var filltable = "";
+        if (_detail != null) {
+            $.post("/wms_jianhuo/getdetailbymx", { mx: _detail }, function (data) {
+                if (data == -1) { }
+                else {
+                    for (var i in data) {
+                        filltable = filltable + '<tr><td><input type="number" size="5" value="0" data-pk="';
+                        filltable = filltable + data[i].pickid;
+                        filltable = filltable + '"/></td><td>';
+                        filltable = filltable + data[i].Kuwei;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].DaijianSL;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].Guige;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].ShengchanRQ.toDate().Format("yyyy-MM-dd");
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].ShixiaoRQ.toDate().Format("yyyy-MM-dd");
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].Xuliema;
+                        filltable = filltable + '</td><td>';
+                        if (eval(data[i].Fuhe) == true)
+                            filltable = filltable + '合格';
+                        if (eval(data[i].Fuhe) == false)
+                            filltable = filltable + '不合格';
+                        filltable = filltable + '</td><td>';
+                        if (eval(data[i].HuopinZT) == 0)
+                            filltable = filltable + '';
+                        if (eval(data[i].HuopinZT) == 1)
+                            filltable = filltable + '正常';
+                        if (eval(data[i].HuopinZT) == 2)
+                            filltable = filltable + '破损';
+                        if (eval(data[i].HuopinZT) == 3)
+                            filltable = filltable + '污染';
+                        if (eval(data[i].HuopinZT) == 4)
+                            filltable = filltable + '渗漏';
+                        if (eval(data[i].HuopinZT) == 5)
+                            filltable = filltable + '其它';
+                        filltable = filltable + '</td></tr>';
+                    }
+                    alert(filltable);
+                    $("#dt_jh tbody").html(filltable);
+                }
+            });
+        }
     }
 </script>
 
@@ -209,38 +312,38 @@
 </div>
 <div id="pl_yanshou" class="panel panel-info" style="display:none;position:absolute;top:100px;left:200px;width:600px;height:360px;z-index:999;">
     <div class="panel-heading">
-        <h3 class="panel-title">货品验收<button id="pl_close" class="pull-right">X</button></h3>
+        <h3 class="panel-title">出库复核<button id="pl_close" class="pull-right">X</button></h3>
     </div>
     <div class="panel-body">
         <div class="form-group">
-            <label class="control-label col-sm-2" for="Yanshouren">验收人</label>
+            <label class="control-label col-sm-2" for="Yanshouren">复核人</label>
             <div class="col-sm-10">
                 <input class="form-control" id="Yanshouren" name="Yanshouren" type="text" value="@ViewBag.username" />
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="YanshouSL">验收数量</label>
+            <label class="control-label col-sm-2" for="YanshouSL">复核数量</label>
             <div class="col-sm-10">
                 <input class="form-control" id="YanshouSL" name="YanshouSL" type="text" value="" />
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="Yanshou">验收结果</label>
+            <label class="control-label col-sm-2" for="Yanshou">复核结果</label>
             <div class="col-sm-10">
                 @*<input class="form-control" id="Yanshou" name="Yanshou" type="text" value="" />*@
                 @Html.SelectList_Common("Yanshou", "验收结果")
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="Ngnum">不合格数量</label>
-            <div class="col-sm-10">
-                <input class="form-control" id="Ngnum" name="Ngnum" type="text" value="" />
-            </div>
-        </div>
-        <div class="form-group">
             <label class="control-label col-sm-2" for="Oknum">合格数量</label>
             <div class="col-sm-10">
                 <input class="form-control" id="Oknum" name="Oknum" type="text" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Ngnum">不合格数量</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="Ngnum" name="Ngnum" type="text" value="" />
             </div>
         </div>
         <div class="form-group">
@@ -255,6 +358,40 @@
         <div class="form-group">
             <div class="col-sm-6 center"><p id="yssave" class="btn btn-default"><i class="icon-save"></i>完成</p></div>
             <div class="col-sm-6 center"><p id="yscancel" class="btn btn-default"><i class="glyphicon-backward"></i>取消</p></div>
+        </div>
+    </div>
+</div>
+<div id="pl_jh" class="panel panel-primary" style="display:none;position:absolute;top:30px;left:100px;width:800px;height:600px;z-index:999;">
+    <div class="panel-heading">
+        <h3 class="panel-title">货品下架记录<button id="pl_jh_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="center">
+            <div class="col-sm-8">
+                <label>不合格数量：</label>
+                <input type="number" id="bhg" />
+            </div>
+            <div class="col-sm-2"><p class="btn default" id="pl_jh_ok"><i class="icon-ok"></i>确定</p></div>
+            <div class="col-sm-2"><p class="btn default" id="pl_jh_cancel"><i class="ui-icon-cancel"></i>取消</p></div>
+        </div>
+        <div class="row">
+            <table class="table table-condensed" id="dt_jh">
+                <caption></caption>
+                <thead>
+                    <tr>
+                        <td>不合格</td>
+                        <td>库位</td>
+                        <td>数量</td>
+                        <td>规格</td>
+                        <td>生产日期</td>
+                        <td>失效日期</td>
+                        <td>序列码</td>
+                        <td>质量</td>
+                        <td>状态</td>
+                    </tr>
+                </thead>
+                <tbody style="overflow:auto;"></tbody>
+            </table>
         </div>
     </div>
 </div>

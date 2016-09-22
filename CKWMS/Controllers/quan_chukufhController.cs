@@ -176,6 +176,34 @@ namespace CKWMS.Controllers
             ViewBag.quan_chukufh = tempData;
             return View(tempData);
         }
+        public JsonResult AddCheck()
+        {
+            int _userid = (int)Session["user_id"];
+            string _mxid = Request["shmx"] ?? "";
+            string _fhsl = Request["sl"] ?? "";
+            string _fhresult = Request["ys"] ?? "";
+            string _fhren = Request["ysr"] ?? "";
+            string _fhsm = Request["yssm"] ?? "";
+            try
+            {
+                quan_chukufh ob_quan_rukuys = new quan_chukufh();
+                ob_quan_rukuys.MingxiID = _mxid == "" ? 0 : int.Parse(_mxid);
+                ob_quan_rukuys.FuheSL = _fhsl == "" ? 0 : float.Parse(_fhsl);
+                ob_quan_rukuys.Fuhe = _fhresult == "" ? 0 : int.Parse(_fhresult);
+                ob_quan_rukuys.Fuheren = _fhren.Trim();
+                ob_quan_rukuys.FuheSM = _fhsm.Trim();
+                ob_quan_rukuys.FuheZT = 3;
+                ob_quan_rukuys.MakeDate = DateTime.Now;
+                ob_quan_rukuys.MakeMan = _userid;
+                ob_quan_rukuys = ob_quan_chukufhservice.AddEntity(ob_quan_rukuys);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return Json(-1);
+            }
+            return Json(1);
+        }
 
         public ActionResult Add()
         {

@@ -50,6 +50,22 @@
         $("#yscancel").click(function () {
             $("#pl_yanshou").hide();
         });
+        $("#Oknum").blur(function () {
+            if (eval($(this).val()) > 0) {
+                if (eval($(this).val()) > eval($("#YanshouSL").val()))
+                    $(this).val($("#YanshouSL").val());
+                else
+                    $("#Ngnum").val(eval($("#YanshouSL").val()) - eval($(this).val()));
+            }
+        });
+        $("#Ngnum").blur(function () {
+            if (eval($(this).val()) > 0) {
+                if (eval($(this).val()) > eval($("#YanshouSL").val()))
+                    $(this).val($("#YanshouSL").val());
+                else
+                    $("#Oknum").val(eval($("#YanshouSL").val()) - eval($(this).val()));
+            }
+        });
         $("#yssave").click(function () {
             var _ysresult = $("#Yanshou").find("option:selected").val();
             if (eval(_ysresult) == 0) {
@@ -271,15 +287,15 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="Ngnum">不合格数量</label>
-            <div class="col-sm-10">
-                <input class="form-control" id="Ngnum" name="Ngnum" type="text" value="" />
-            </div>
-        </div>
-        <div class="form-group">
             <label class="control-label col-sm-2" for="Oknum">合格数量</label>
             <div class="col-sm-10">
                 <input class="form-control" id="Oknum" name="Oknum" type="text" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Ngnum">不合格数量</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="Ngnum" name="Ngnum" type="text" value="" />
             </div>
         </div>
         <div class="form-group">

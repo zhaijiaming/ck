@@ -339,8 +339,8 @@ namespace CKWMS.Controllers
                 return Json(-1);
             var tempData = ob_wms_jianhuoservice.GetPickDetailByMX(int.Parse(_mxid), p => p.DaijianSL > 0);
             if (tempData == null)
-                return Json(tempData.ToList<wms_pick_v>());
-            return Json(1);
+                return Json(-1);
+            return Json(tempData.ToList<wms_pick_v>());
         }
         [OutputCache(Duration = 10)]
         public ActionResult Edit(int id)
@@ -385,6 +385,56 @@ namespace CKWMS.Controllers
             var b = ob_wms_jianhuoservice.DeleteEntity(_jh);
             if (!b)
                 return Json(-1);
+            return Json(1);
+        }
+        public JsonResult NGChange()
+        {
+            int _userid = (int)Session["user_id"];
+            var _ngv = Request["ch"] ?? "";
+            if (_ngv == "" || _ngv.Length < 2)
+                return Json(-1);
+            foreach (var ng in _ngv.Split(';'))
+            {
+                if (ng.Length > 2)
+                {
+                    string[] _np = ng.Split(',');
+                    if (int.Parse(_np[0]) > 0 && int.Parse(_np[1]) > 0)
+                    {
+                        wms_jianhuo _jh = ob_wms_jianhuoservice.GetEntityById(p => p.ID == int.Parse(_np[0]));
+                        if (_jh != null)
+                        {
+                            wms_jianhuo _njh = ob_wms_jianhuoservice.AddNGPick(_jh, int.Parse(_np[1]));
+                            if (_njh != null)
+                            {
+                                _njh.Fuhe = false;
+                                ob_wms_jianhuoservice.UpdateEntity(_njh);
+                            }
+                        }
+                    }
+                }
+            }
+            return Json(1);
+        }
+        public JsonResult NGPick()
+        {
+            int _userid = (int)Session["user_id"];
+            var _mxid = Request["mx"] ?? "";
+            if (_mxid == "")
+                return Json(-1);
+            var _pklist = ob_wms_jianhuoservice.GetPickDetailByMX(int.Parse(_mxid), p => p.DaijianSL > 0);
+            if (_pklist != null)
+            {
+                foreach (var _pk in _pklist.ToList<wms_pick_v>())
+                {
+                    var _pid = _pk.pickid;
+                    wms_jianhuo _jh = ob_wms_jianhuoservice.GetEntityById(g => g.ID ==_pid && g.IsDelete==false);
+                    if (_jh != null)
+                    {
+                        _jh.Fuhe = false;
+                        ob_wms_jianhuoservice.UpdateEntity(_jh);
+                    }
+                }
+            }
             return Json(1);
         }
         [HttpPost]
