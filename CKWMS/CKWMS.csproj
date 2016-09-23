@@ -290,6 +290,7 @@
     <Compile Include="Controllers\base_feiyongxmController.cs" />
     <Compile Include="Controllers\base_huobiController.cs" />
     <Compile Include="Controllers\base_quyuController.cs" />
+    <Compile Include="Controllers\cfda_cangkuController.cs" />
     <Compile Include="Controllers\cfda_zizhiController.cs" />
     <Compile Include="Controllers\quan_chukufhController.cs" />
     <Compile Include="Controllers\wms_cangguanszController.cs" />
@@ -793,6 +794,10 @@
     <Content Include="Views\wms_chukuxlm\Edit.cshtml" />
     <Content Include="Views\wms_chukuxlm\Index.cshtml" />
     <Content Include="Views\wms_kuwei\daviskw.cshtml" />
+    <Content Include="Views\cfda_cangku\Index.cshtml" />
+    <Content Include="Views\cfda_cangku\GetInventory.cshtml" />
+    <Content Include="Views\cfda_cangku\GetOutrec.cshtml" />
+    <Content Include="Views\cfda_cangku\GetEntryrec.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

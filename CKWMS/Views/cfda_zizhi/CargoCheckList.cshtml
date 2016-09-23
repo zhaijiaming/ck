@@ -6,6 +6,15 @@
     ViewBag.Title = "委托产品信息";
     string _searchcondition = ViewBag.SearchCondition;
 }
+<script type="text/javascript">
+    $(document).ready(function () {
+        var i = 0;
+        $("#mydatatable tbody tr").each(function () {
+            i = i + 1;
+            $(this).find("td").eq(0).html(i);
+        });
+    });
+</script>
 
 @{
     List<SearchConditionModel> scms = new List<SearchConditionModel>();
@@ -99,7 +108,7 @@
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
         </p>
     </div>
-    <div id="splist" style="overflow:auto;">
+    <div id="splist"  class="row">
         <div class="table-responsive">
             <table class="table table-condensed table-hover" style="overflow: hidden;text-overflow:ellipsis;white-space: nowrap;" id="mydatatable">
                 <caption></caption>

@@ -1,0 +1,127 @@
+﻿@using CKWMS.App_Code
+@using CKWMS.Models
+@using X.PagedList
+@using X.PagedList.Mvc
+@{
+    ViewBag.Title = "出库信息";
+    string _searchcondition = ViewBag.SearchCondition;
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var i = 0;
+        $("#mydatatable tbody tr").each(function () {
+            i = i + 1;
+            $(this).find("td").eq(0).html(i);
+        });
+    });
+</script>
+
+@{
+    List<SearchConditionModel> scms = new List<SearchConditionModel>();
+    if (_searchcondition == null || _searchcondition == "")
+    {
+        SearchConditionModel scm = new SearchConditionModel();
+        scm.ItemCode = "HuozhuID";
+        scm.ItemShowName = "huozhuid";
+        scm.ItemTitle = "货主";
+        scm.ItemType = "货主.简称";
+        scms.Add(scm);
+    }
+    else
+    {
+        string[] scs = _searchcondition.Split(';');
+        if (scs.Length > 0)
+        {
+            SearchConditionModel scm = new SearchConditionModel();
+            scm.ItemCode = "HuozhuID";
+            scm.ItemShowName = "huozhuid";
+            scm.ItemTitle = "货主";
+            scm.ItemType = "货主.简称";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[0].Split(',')[1];
+                if (scm.ItemValue.Length == 0)
+                {
+                    scm.ItemValue = "0";
+                }
+                scm.ItemOpValue = scs[0].Split(',')[2];
+                scm.ItemJion = scs[0].Split(',')[3];
+            }
+            scms.Add(scm);
+        }
+    }
+}
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    </script>
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="/Home">首页</a>
+        </li>
+        <li class="active">出库信息</li>
+    </ul>
+</div>
+<div class="page-content">
+    @Html.Search_Condition((int)Session["user_id"], "出库_条件组合查询", "/cfda_cangku/getoutrec", "cfda_cangku_outrec", scms)
+    <div class="page-header">
+        <p>
+            <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
+            <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
+        </p>
+    </div>
+    <div class="row">
+        <table class="table table-condensed table-hover" id="mydatatable" style="overflow: hidden;text-overflow:ellipsis;white-space: nowrap;">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <td>序号</td>
+                    <td>委托方企业名称</td>
+                    <td>出库日期</td>
+                    <td>出库类型</td>
+                    <td>产品名称</td>
+                    <td>规格(型号)</td>
+                    <td>生产企业</td>
+                    <td>产品注册证号/备案凭证号</td>
+                    <td>生产批号/序列号</td>
+                    <td>储运条件</td>
+                    <td>单位</td>
+                    <td>数量</td>
+                    <td>收货客户名称</td>
+                    <td>收货地址</td>
+                    <td>联系人</td>
+                    <td>联系方式</td>
+                    <td>备注</td>
+                </tr>
+            </thead>
+            <tbody style="overflow:auto;">
+                @foreach (var item in ViewBag.outrec)
+                {
+                    <tr>
+                        <td></td>
+                        <td>@Html.GetDataValue_ID("货主","名称",(int)item.HuozhuID)</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ChukuRQ == null ? "" : item.ChukuRQ)</td>
+                        <td>@Html.GetCommonValue_ID("出库类型", (int)item.YewuLX)</td>
+                        <td>@item.ShangpinMC</td>
+                        <td>@item.Guige</td>
+                        <td>@item.Changjia</td>
+                        <td>@item.Zhucezheng</td>
+                        <td>@item.Pihao/@item.Xuliema</td>
+                        <td>@item.ChunyunYQ</td>
+                        <td>@item.JibenDW</td>
+                        <td>@item.ChukuSL</td>
+                        <td>@item.KehuMC</td>
+                        <td>@item.Yunsongdizhi</td>
+                        <td>@item.Lianxiren</td>
+                        <td>@item.LianxiDH</td>
+                        <td>@item.Beizhu</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="pager">
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("getoutrec", new { page }))
+    </div>
+</div>
