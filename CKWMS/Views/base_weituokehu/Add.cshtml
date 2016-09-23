@@ -3,12 +3,11 @@
 @model base_weituokehuViewModel
 @{ViewBag.Title = "委托客户添加";}
 @Html.GetFileUpload("YingyezhizhaoTP", "yyzz", "z", "cus", 6, 0, new Dictionary<string, string>() { { "yyzz", "YingyezhizhaoTP" }, { "zzjg", "ZuzhijigouTP" }, { "swdj", "ShuiwudengjiTP" }, { "jyxk", "JingyingxukeTP" }, { "batp", "beiantp" }, { "hetp", "hetongtp" } })
-<div class="breadcrumbs" id="breadcrumbs">
-    <script type="text/javascript">
-        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
-
-        $(document).ready(function () {
-            document.getElementById("Daima").focus();
+<script type="text/javascript">
+    try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    $(document).ready(function () {
+            $("#Kehumingcheng").focus();
+            $("#pl_Fanwei").draggable({ handle: '.tuodong' }, { containment: [-1000, 50, 1300, 600] });
             //时间
             $("#MakeDate").datepicker();
             $("#YingyezhizhaoYXQ").datepicker();
@@ -20,27 +19,21 @@
             $("#XukePZRQ").datepicker();
             $("#WeituoKSRQ").datepicker();
             $("#WeituoJSRQ").datepicker();
-
-
             //计算俩日期的月份
             var a = $("#WeituoKSRQ").val();
             var b = $("#WeituoJSRQ").val();
             calculateMon(a, b);
-
             $("#WeituoKSRQ").change(function () {
                 var a = $("#WeituoKSRQ").val();
                 var b = $("#WeituoJSRQ").val();
                 calculateMon(a, b);
             });
-
             $("#WeituoJSRQ").change(function () {
                 var a = $("#WeituoKSRQ").val();
                 var b = $("#WeituoJSRQ").val();
                 calculateMon(a, b);
             });
-
-            //获取器械数据          
-            $("#pl_Fanwei").draggable({ handle: '.tuodong' }, { containment: [-1000, 50, 1300, 600] });
+            //获取器械数据
             var bj = 0;
             GetFanwei1();
             //显示全部
@@ -74,7 +67,6 @@
                 tempid = tempid.substring(0, tempid.length - 1);
                 GetFanwei(bj, tempid);
             });
-
             //显示大类
             $("#bt_fanwei_showdalei").click(function () {
                 var bj = 1;
@@ -179,9 +171,8 @@
                     $(".bg").show();
                 }
             });
-        });
-
-        function GetFanwei1(a, b) {
+    });
+    function GetFanwei1(a, b) {
             var bj = a;
             var tempid = b;
             var filltable = "";
@@ -207,8 +198,8 @@
                         $("#pl_Fanwei tbody").html(filltable);
                         GetData(bj, tempid)
                     });
-        }
-        function GetFanwei(a, b) {
+    }
+    function GetFanwei(a, b) {
             var bj = a;
             var tempid = b;
             var filltable = "";
@@ -234,9 +225,8 @@
                         $("#pl_Fanwei tbody").html(filltable);
                         GetData(bj, tempid)
                     });
-        }
-        //打勾
-        function GetData(a, tempid) {
+    }
+    function GetData(a, tempid) {
             var fw = document.getElementsByClassName('xulieid');
             var bj = a;
             var i = tempid;
@@ -252,15 +242,13 @@
                         $("#qxdatatable tr input[type=checkbox]").eq(l).attr("checked", true);
                 }
             }
-        }
-
-        //点击修改or增加
-        function Bt_Fanweiadd() {
+    }
+    function Bt_Fanweiadd() {
             document.getElementById("pl_Fanwei").removeAttribute("hidden");
             $("#pl_Fanwei").show();
         }
-        //获取相对应的汉语拼音首字母串
-        function GetSpell() {
+    //获取首字母
+    function GetSpell() {
             $.post("/Service/GetSpellCode",
                 {
                     yourwords: $("#Kehumingcheng").val()
@@ -269,9 +257,8 @@
                 $("#Daima").val(response);
             });
         }
-
-        //计算日期月份差
-        function calculateMon(time1, time2) {
+    //计算月份差
+    function calculateMon(time1, time2) {
             var a = time1.split("-");
             var b = time2.split("-");
 
@@ -284,7 +271,8 @@
                 $("#WeituoQX").val(sunMon);
             }
         }
-    </script>
+</script>
+<div class="breadcrumbs" id="breadcrumbs">
     <ul class="breadcrumb">
         <li>
             <i class="icon-home home-icon"></i>
@@ -296,7 +284,6 @@
         <li class="active"> 新增</li>
     </ul>
 </div>
-
 <div class="page-content">
     @using (Html.BeginForm("Save", "base_weituokehu", FormMethod.Post, new { @role = "form" }))
     {
@@ -317,7 +304,7 @@
                 <div class="widget-box transparent">
                     <div class="widget-header">
                         <h3 class="lighter">货主定义</h3>
-                        
+
                         <div class="widget-toolbar no-border">
                             <ul class="nav nav-tabs" id="myTab2">
                                 <li class="active">
@@ -344,20 +331,23 @@
                                 <div id="home2" class="tab-pane active">
                                     <div class="slimScrollDiv">
                                         <div class="slim-scroll">
+                                            @*客户代码*@
                                             <div class="form-group">
-                                                @Html.LabelFor(m => m.Daima, new { @class = "control-label col-sm-2" })
+                                                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>客户代码</label>
                                                 <div class="col-sm-10">
-                                                    @Html.TextBoxFor(m => m.Daima, new { @class = "form-control" })
+                                                    @Html.TextBoxFor(m => m.Daima, new { @class = "form-control", @placeholder = "请填写客户名称" })
                                                 </div>
                                             </div>
+                                            @*客户简称*@
                                             <div class="form-group">
-                                                @Html.LabelFor(m => m.Jiancheng, new { @class = "control-label col-sm-2" })
+                                                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>客户简称</label>
                                                 <div class="col-sm-10">
                                                     @Html.TextBoxFor(m => m.Jiancheng, new { @class = "form-control" })
                                                 </div>
                                             </div>
+                                            @*客户名称*@
                                             <div class="form-group">
-                                                @Html.LabelFor(m => m.Kehumingcheng, new { @class = "control-label col-sm-2" })
+                                                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>客户名称</label>
                                                 <div class="col-sm-8">
                                                     @Html.TextBoxFor(m => m.Kehumingcheng, new { @class = "form-control" })
                                                 </div>
@@ -462,7 +452,7 @@
                                                     <button type="button" class="icon-edit" id="bt_Fanweiadd" onclick="Bt_Fanweiadd()">修改</button>
                                                 </div>
                                                 <div class="col-sm-10">
-                                                    @Html.TextAreaFor(m => m.Jingyingfanwei, new { @class = "form-control", id = "jingyingfanwei", @readonly = true , rows = "3" })
+                                                    @Html.TextAreaFor(m => m.Jingyingfanwei, new { @class = "form-control", id = "jingyingfanwei", @readonly = true, rows = "3" })
                                                 </div>
                                             </div>
                                             <div class="form-group" style="display:none">
@@ -486,10 +476,10 @@
                                                 <div class="control-label col-sm-1">
                                                     @Html.LabelFor(m => m.HeyiSF)
                                                 </div>
-                                                <div class="col-sm-1" >
+                                                <div class="col-sm-1">
                                                     @Html.CheckBoxFor(m => m.HeyiSF, new { @class = "form-control", style = "width:30px;height:30px" })
                                                 </div>
-                                                </div>
+                                            </div>
                                             <div class="form-group">
                                                 @Html.LabelFor(m => m.YingyezhizhaoYXQ, new { @class = "control-label col-sm-2" })
                                                 <div class="col-sm-10">
@@ -530,7 +520,7 @@
                                             <div class="form-group">
                                                 @Html.LabelFor(m => m.ZuzhijigouTP, new { @class = "control-label col-sm-2" })
                                                 <div class="col-sm-6">
-                                                    <input type="text" class="form-control" readonly name="zuzhijigoutp" id="ZuzhijigouTP"/>
+                                                    <input type="text" class="form-control" readonly name="zuzhijigoutp" id="ZuzhijigouTP" />
                                                 </div>
                                                 <div class="col-sm-2">
                                                     <button class="form-control" data-toggle="modal" data-target="#myModalUpload" onclick="btn2()">上传</button>
@@ -588,7 +578,7 @@
                                             <div class="form-group">
                                                 @Html.LabelFor(m => m.JingyingxukeTP, new { @class = "control-label col-sm-2" })
                                                 <div class="col-sm-6">
-                                                    <input type="text" class="form-control" readonly name="jingyingxuketp" id="JingyingxukeTP"/>
+                                                    <input type="text" class="form-control" readonly name="jingyingxuketp" id="JingyingxukeTP" />
                                                 </div>
                                                 <div class="col-sm-2">
                                                     <button class="form-control" data-toggle="modal" data-target="#myModalUpload" onclick="btn4()">上传</button>
@@ -650,7 +640,7 @@
                                                     </span>
                                                 </div>
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -715,7 +705,7 @@
                                                     @Html.CheckBoxFor(m => m.TieZWBQ, new { @class = "form-control" })
                                                 </div>
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -734,42 +724,42 @@
             </div>
 
 
-                        
-          </div>
+
+        </div>
     }
 </div>
 
 <div id="pl_Fanwei" class="panel panel-primary" hidden style="display:none;position:fixed;top:100px;left:200px;width:1100px;height:600px;z-index:999;">
-                    <div class="tuodong panel-heading">
-                        <h3 class="panel-title">经营范围管理<button id="pl_close" class="pull-right">X</button></h3>
-                    </div>
-                    <div class="panel-body" @*style="width:1090px;height:550px;z-index:999;overflow:scroll"*@>
-                        <div class="center">
-                            <button type="button" class="btn btn-default " id="bt_fanwei_add"><i class="icon-add"></i>确定</button>
-                            <button type="button" class="btn btn-default " id="bt_fanwei_all">全选</button>
-                            <button type="button" class="btn btn-default " id="bt_fanwei_clear">全部取消</button>
-                            <button type="button" class="btn btn-default " id="bt_fanwei_showdalei">显示大类</button>
-                            <button type="button" class="btn btn-default " id="bt_fanwei_showall">显示全部</button>
-                            <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;管理类别</label>
-                            <select name="guanlifenlei" id="guanlifenlei">
-                                <option value="全部">全部</option>
-                                <option value="一类">一类</option>
-                                <option value="二类">二类</option>
-                                <option value="三类">三类</option>
-                            </select>
-                            <table class="table" id="qxdatatable">
-                                <caption></caption>
-                                <thead style="display:block" class="tuodong">
-                                    <tr>
-                                        <td></td>
-                                        <td style="width:120px">编号</td>
-                                        <td style="width:80px">名称</td>
-                                        <td style="width:930px">描述</td>
-                                        <td style="width:100px">管理分类</td>
-                                    </tr>
-                                </thead>
-                                <tbody style="display:block; max-height:460px;width:1070px;overflow:scroll"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+    <div class="tuodong panel-heading">
+        <h3 class="panel-title">经营范围管理<button id="pl_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body" @*style="width:1090px;height:550px;z-index:999;overflow:scroll"*@>
+        <div class="center">
+            <button type="button" class="btn btn-default " id="bt_fanwei_add"><i class="icon-add"></i>确定</button>
+            <button type="button" class="btn btn-default " id="bt_fanwei_all">全选</button>
+            <button type="button" class="btn btn-default " id="bt_fanwei_clear">全部取消</button>
+            <button type="button" class="btn btn-default " id="bt_fanwei_showdalei">显示大类</button>
+            <button type="button" class="btn btn-default " id="bt_fanwei_showall">显示全部</button>
+            <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;管理类别</label>
+            <select name="guanlifenlei" id="guanlifenlei">
+                <option value="全部">全部</option>
+                <option value="一类">一类</option>
+                <option value="二类">二类</option>
+                <option value="三类">三类</option>
+            </select>
+            <table class="table" id="qxdatatable">
+                <caption></caption>
+                <thead style="display:block" class="tuodong">
+                    <tr>
+                        <td></td>
+                        <td style="width:120px">编号</td>
+                        <td style="width:80px">名称</td>
+                        <td style="width:930px">描述</td>
+                        <td style="width:100px">管理分类</td>
+                    </tr>
+                </thead>
+                <tbody style="display:block; max-height:460px;width:1070px;overflow:scroll"></tbody>
+            </table>
+        </div>
+    </div>
+</div>

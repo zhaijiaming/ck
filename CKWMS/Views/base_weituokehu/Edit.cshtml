@@ -5,13 +5,12 @@
     ViewBag.Title = "委托客户修改";
 }
 @Html.GetFileUpload("YingyezhizhaoTP", "yyzz", "z", "cus", 6, 0, new Dictionary<string, string>() { { "yyzz", "YingyezhizhaoTP" }, { "zzjg", "ZuzhijigouTP" }, { "swdj", "ShuiwudengjiTP" }, { "jyxk", "JingyingxukeTP" }, { "batp", "beiantp" }, { "hetp", "hetongtp" } })
-<div class="breadcrumbs" id="breadcrumbs">
-    <script type="text/javascript">
+<script type="text/javascript">
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
-
         $(document).ready(function () {
             //时间
             //$("#MakeDate").datepicker();
+            $("#pl_Fanwei").draggable({ handle: '.tuodong' }, { containment: [-1000, 50, 1300, 600] });
             $("#YingyezhizhaoYXQ").datepicker();
             $("#ZuzhijigouYXQ").datepicker();
             $("#ShuiwudengjiYXQ").datepicker();
@@ -21,12 +20,10 @@
             $("#XukePZRQ").datepicker();
             $("#WeituoKSRQ").datepicker();
             $("#WeituoJSRQ").datepicker();
-
             //计算俩日期的月份
             var a = $("#WeituoKSRQ").val();
             var b = $("#WeituoJSRQ").val();
             calculateMon(a, b);
-
             $("#WeituoKSRQ").change(function () {
                 var a = $("#WeituoKSRQ").val();
                 var b = $("#WeituoJSRQ").val();
@@ -38,26 +35,6 @@
                 var b = $("#WeituoJSRQ").val();
                 calculateMon(a, b);
             });
-
-
-            ////'true'->'是','false'->'否'
-            //var a = $("#En_tiezwbq").val();
-            //if (a == "false") {
-            //    $("#Zn_tiezwbq").val("否");
-            //} else {
-            //    $("#Zn_tiezwbq").val("是");
-            //}
-
-            //$("#Zn_tiezwbq").change(function () {
-            //    var b = $("#Zn_tiezwbq").val();
-            //    if (b == "否") {
-            //        $("#En_tiezwbq").val("false");
-            //    } else {
-            //        $("#En_tiezwbq").val("true");
-            //    }
-            //});
-
-            $("#pl_Fanwei").draggable({ handle: '.tuodong' }, { containment: [-1000, 50, 1300, 600] });
             var bj = 0;
             GetFanwei1(bj);
             //显示全部
@@ -91,7 +68,6 @@
                 tempid = tempid.substring(0, tempid.length - 1);
                 GetFanwei(bj, tempid);
             });
-
             //显示大类
             $("#bt_fanwei_showdalei").click(function () {
                 var bj = 1;
@@ -110,7 +86,6 @@
                 $("#guanlifenlei").val("全部");
                 GetFanwei1(bj);
             });
-
             //添加范围
             $("#bt_fanwei_add").click(function () {
                 var _jyfw = "";
@@ -251,8 +226,8 @@
                         GetData(bj, tempid)
                     });
         }
-            //打勾
-            function GetData(a, tempid) {
+        //打勾
+        function GetData(a, tempid) {
                 var fw = document.getElementsByClassName('xulieid');
                 var bj = a;
                 var i = tempid;
@@ -300,7 +275,8 @@
                 $("#WeituoQX").val(sunMon);
             }
         }
-    </script>
+</script>
+<div class="breadcrumbs" id="breadcrumbs">
     <ul class="breadcrumb">
         <li>
             <i class="icon-home home-icon"></i>
