@@ -169,7 +169,10 @@ namespace CKWMS.Controllers
             ViewBag.userid = (int)Session["user_id"];
             return View();
         }
-
+        public ActionResult daviskw()
+        {
+            return View();
+        }
         public ActionResult Addkw()
         {
             ViewBag.userid = (int)Session["user_id"];

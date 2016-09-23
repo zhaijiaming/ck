@@ -792,6 +792,7 @@
     <Content Include="Views\wms_chukuxlm\Add.cshtml" />
     <Content Include="Views\wms_chukuxlm\Edit.cshtml" />
     <Content Include="Views\wms_chukuxlm\Index.cshtml" />
+    <Content Include="Views\wms_kuwei\daviskw.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -811,6 +812,7 @@
     <Folder Include="logs\" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="reports\daviskw.rdlc" />
     <EmbeddedResource Include="reports\rptQuanxian.rdlc" />
   </ItemGroup>
   <PropertyGroup>
