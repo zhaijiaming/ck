@@ -297,6 +297,7 @@
     <Compile Include="Controllers\wms_cangkuqyController.cs" />
     <Compile Include="Controllers\wms_chukudanController.cs" />
     <Compile Include="Controllers\wms_chukumxController.cs" />
+    <Compile Include="Controllers\wms_chukuxlmController.cs" />
     <Compile Include="Controllers\wms_jianhuoController.cs" />
     <Compile Include="Controllers\wms_kehukwController.cs" />
     <Compile Include="Controllers\wms_kuweiController.cs" />
@@ -311,6 +312,7 @@
     <Compile Include="Models\wms_cangkuqyViewModel.cs" />
     <Compile Include="Models\wms_cangkuViewModel.cs" />
     <Compile Include="Models\wms_chukumxViewModel.cs" />
+    <Compile Include="Models\wms_chukuxlmViewModel.cs" />
     <Compile Include="Models\wms_jianhuoViewModel.cs" />
     <Compile Include="Models\wms_kehukwViewModel.cs" />
     <Compile Include="Models\wms_kuweiViewModel.cs" />
@@ -787,6 +789,9 @@
     <Content Include="Views\wms_jianhuo\GetPickDetailByOut.cshtml" />
     <Content Include="Views\wms_kuwei\Addkw.cshtml" />
     <Content Include="Views\quan_chukufh\OutInventoryCheck.cshtml" />
+    <Content Include="Views\wms_chukuxlm\Add.cshtml" />
+    <Content Include="Views\wms_chukuxlm\Edit.cshtml" />
+    <Content Include="Views\wms_chukuxlm\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

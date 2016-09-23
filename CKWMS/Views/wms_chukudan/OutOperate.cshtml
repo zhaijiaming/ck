@@ -60,6 +60,35 @@
                 $(this).val(eval(_ch) - eval(_sd));
             }
         });
+        $("#pl_xlm").draggable({ handle: ".panel-heading" });
+        $("#pl_xlm_close").click(function () {
+            $("#pl_xlm").hide();
+        })
+        $("#pl_xlm_cancel").click(function () {
+            $("#pl_xlm").hide();
+        });
+        $("#pl_xlm_ok").click(function () {
+            alert($("#xlm").val());
+            $.post("/wms_chukuxlm/addxlm",
+                {
+                    xlm: $("#xlm").val(),
+                    ckd:$("#ckd").val(),
+                    ck:$("#ck").val()
+                }, function (data) {
+                if (data == -1)
+                    alert("导入序列码失败，请与管理员联系！");
+                    $("#pl_xlm").hide();
+            });
+        });
+        $("#pl_xlm_clear").click(function () {
+            $("#xlm").val("");
+        });
+        $(".icon-barcode").click(function () {
+            var _sr = $(this).parent().parent();
+            $("#ck").val(_sr.find("input[type=checkbox]").val());
+            $("#ckd").val(_sr.find("td").eq(1).html());
+            $("#pl_xlm").show();
+        });
         $("#pl_ok").click(function () {
             var _sval = "";
             $("#dt_xz tbody tr").each(function () {
@@ -333,6 +362,7 @@
         <input type="hidden" id="hz" />
         <input type="hidden" id="kh" />
         <input type="hidden" id="ck" />
+        <input type="hidden" id="ckd" />
         <p>
             @*<button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>*@
             <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
@@ -360,7 +390,7 @@
                     <td>列表</td>
                     <td>拣货</td>
                     <td>复核</td>
-                    <td>装箱</td>
+                    <td>序列</td>
                     <td>详单</td>
                 </tr>
             </thead>
@@ -369,7 +399,6 @@
                 {
                     <tr>
                         <td>
-                            <div class="checkbox">
                                 <label>
                                     <input type="checkbox" value="@item.ID"
                                            data-hz="@item.HuozhuID"
@@ -380,7 +409,6 @@
                                            data-jg="@item.JianguanSF"
                                            data-jh="@item.JihuaID">
                                 </label>
-                            </div>
                         </td>
                         <td>@item.ChukudanBH</td>
                         <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
@@ -395,7 +423,7 @@
                         <td><a href="/wms_chukumx/GetOutDetail/@item.ID" target="_blank"><i class="icon-list"></i></a></td>
                         <td><a href="/wms_jianhuo/getpickdetailbyout?out=@item.ID" target="_blank"><i class="icon-hand-up"></i></a></td>
                         <td><a href="/quan_chukufh/outinventorycheck/@item.ID" target="_blank"><i class="icon-check"></i></a></td>
-                        <td><i class="icon-bolt"></i></td>
+                        <td><i class="icon-barcode"></i></td>
                         <td><i class="icon-print"></i></td>
                     </tr>
                 }
@@ -449,6 +477,21 @@
                 </thead>
                 <tbody style="overflow:auto;"></tbody>
             </table>
+        </div>
+    </div>
+</div>
+<div id="pl_xlm" class="panel panel-primary" style="display:none;position:absolute;top:100px;left:200px;width:500px;height:500px;z-index:999;">
+    <div class="panel-heading">
+        <h3 class="panel-title">登记出库单的序列码<button id="pl_xlm_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="center">
+            <div class="col-sm-4"><p class="btn default" id="pl_xlm_clear"><i class="icon-ok"></i>清除</p></div>
+            <div class="col-sm-4"><p class="btn default" id="pl_xlm_ok"><i class="icon-ok"></i>确定</p></div>
+            <div class="col-sm-4"><p class="btn default" id="pl_xlm_cancel"><i class="icon-search"></i>取消</p></div>
+        </div>
+        <div class="center">
+            <textarea id="xlm" style="width:480px;height:400px;overflow:auto"></textarea>
         </div>
     </div>
 </div>

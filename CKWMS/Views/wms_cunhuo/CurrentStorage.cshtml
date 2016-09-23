@@ -75,6 +75,7 @@
             <thead>
                 <tr>
                     <td></td>
+                    <td>货主</td>
                     <td>入库单</td>
                     <td>库位</td>
                     <td>入库日期</td>
@@ -100,6 +101,7 @@
                         <td>
                                 <label><input type="checkbox" value="@item.sid"></label>
                         </td>
+                        <td>@Html.GetDataValue_ID("货主","简称",(int)item.HuozhuID)</td>
                         <td>@item.RukudanBH</td>
                         <td>@item.Kuwei</td>
                         <td>@string.Format("{0:yyyy-MM-dd}", item.RukuRQ == null ? "" : item.RukuRQ)</td>
