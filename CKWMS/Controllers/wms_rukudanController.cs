@@ -10,6 +10,7 @@ using CKWMS.BSL;
 using CKWMS.Common;
 using CKWMS.Models;
 using CKWMS.Filters;
+using System.Text;
 
 namespace CKWMS.Controllers
 {
@@ -394,6 +395,14 @@ namespace CKWMS.Controllers
             }
             return RedirectToAction("Index");
         }
+        public ActionResult Export()
+        {
+            var resultList = ob_wms_rukudanservice.LoadEntities(p => p.IsDelete == false);
+            ViewBag.NoPaging = true;
+            ViewBag.wms_rukudan = resultList;
+            ViewData.Model = resultList;
+            string viewHtml = ExportNow.RenderPartialViewToString(this, "Export");
+            return File(System.Text.Encoding.UTF8.GetBytes(viewHtml), "application/ms-excel", string.Format("rdk_{0}.xls", DateTime.Now.ToShortDateString()));
+        }
     }
 }
-

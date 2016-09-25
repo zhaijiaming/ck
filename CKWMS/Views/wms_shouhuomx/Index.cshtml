@@ -3,17 +3,17 @@
 @using X.PagedList
 @using X.PagedList.Mvc
 @{
-    ViewBag.Title = "收货明细清单";
+    ViewBag.Title = "入库货品";
     string _searchcondition = ViewBag.SearchCondition;
 }
 <script type="text/javascript">
     $(document).ready(function () {
         $("tr").bind("dblclick", function () {
             var u_id = $(this).find('td').eq(0).find('input').val();
-            if (u_id != null) {
-                var url_go = "/wms_shouhuomx/Edit/" + u_id;
-                location.href = url_go;
-            }
+            //if (u_id != null) {
+            //    var url_go = "/wms_shouhuomx/Edit/" + u_id;
+            //    location.href = url_go;
+            //}
         });
     });
     function AddInfo() {
@@ -82,7 +82,7 @@
             <i class="icon-home home-icon"></i>
             <a href="/Home">首页</a>
         </li>
-        <li class="active">收货明细</li>
+        <li class="active">入库货品</li>
     </ul>
 </div>
 <div class="page-content">
@@ -90,9 +90,9 @@
     <div class="page-header">
         <p>
             <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
-            <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
+            @*<button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
             <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
-            <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
+            <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>*@
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
         </p>
     </div>
@@ -121,9 +121,9 @@
                     <td>净重</td>
                     <td>体积</td>
                     <td>计费吨</td>
-                    <td>制单日期</td>
-                    <td>制单人</td>
+                    <td>收货日期</td>
                     <td>备注</td>
+                    <td>状态</td>
                 </tr>
             </thead>
             <tbody>
@@ -155,8 +155,8 @@
                         <td>@item.Tiji</td>
                         <td>@item.Jifeidun</td>
                         <td>@string.Format("{0:yyyy-MM-dd}", item.MakeDate)</td>
-                        <td>@Html.GetDataValue_ID("userinfo","名称",(int) item.MakeMan)</td>
                         <td>@item.Beizhu</td>
+                        <td>@Html.GetCommonValue_ID("存货状态", (int)item.HuopinZT)</td>
                     </tr>
                 }
             </tbody>

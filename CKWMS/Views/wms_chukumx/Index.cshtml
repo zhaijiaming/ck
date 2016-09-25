@@ -10,10 +10,10 @@
     $(document).ready(function () {
         $("tr").bind("dblclick", function () {
             var u_id = $(this).find('td').eq(0).find('input').val();
-            if (u_id != null) {
-                var url_go = "/wms_chukumx/Edit/" + u_id;
-                location.href = url_go;
-            }
+            //if (u_id != null) {
+            //    var url_go = "/wms_chukumx/Edit/" + u_id;
+            //    location.href = url_go;
+            //}
         });
     });
     function AddInfo() {
@@ -76,7 +76,7 @@
             <i class="icon-home home-icon"></i>
             <a href="/Home">首页</a>
         </li>
-        <li class="active">出库明细</li>
+        <li class="active">出库货品</li>
     </ul>
 </div>
 <div class="page-content">
@@ -84,20 +84,19 @@
     <div class="page-header">
         <p>
             <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
-            <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
+            @*<button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
             <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
-            <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
+            <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>*@
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
         </p>
     </div>
     <div class="row">
-        <table class="table" id="mydatatable">
+        <table class="table table-condensed table-hover" id="mydatatable">
             <caption></caption>
             <thead>
                 <tr>
                     <td></td>
-                    <td>出库单序号</td>
-                    <td>商品序号</td>
+                    <td>商品代码</td>
                     <td>商品名称</td>
                     <td>注册证</td>
                     <td>规格型号</td>
@@ -117,11 +116,7 @@
                     <td>体积</td>
                     <td>计费吨</td>
                     <td>备注</td>
-                    <td>制单日期</td>
-                    <td>制单人</td>
-                    <td>商品代码</td>
                     <td>货品状态</td>
-                    <td>拣货</td>
                 </tr>
             </thead>
             <tbody>
@@ -133,16 +128,15 @@
                                 <label><input type="checkbox" value="@item.ID"></label>
                             </div>
                         </td>
-                        <td>@item.ChukuID</td>
-                        <td>@item.ShangpinID</td>
+                        <td>@item.ShangpinDM</td>
                         <td>@item.ShangpinMC</td>
                         <td>@item.Zhucezheng</td>
                         <td>@item.Guige</td>
                         <td>@item.Pihao</td>
                         <td>@item.Pihao1</td>
                         <td>@item.Xuliema</td>
-                        <td>@item.ShengchanRQ</td>
-                        <td>@item.ShixiaoRQ</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ)</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ)</td>
                         <td>@item.ChukuSL</td>
                         <td>@item.JibenDW</td>
                         <td>@item.BaozhuangDW</td>
@@ -154,11 +148,7 @@
                         <td>@item.Tiji</td>
                         <td>@item.Jifeidun</td>
                         <td>@item.Beizhu</td>
-                        <td>@item.MakeDate</td>
-                        <td>@item.MakeMan</td>
-                        <td>@item.ShangpinDM</td>
-                        <td>@item.HuopinZT</td>
-                        <td>@item.Jianhuo</td>
+                        <td>@Html.GetCommonValue_ID("存货状态", (int)item.HuopinZT)</td>
                     </tr>
                 }
             </tbody>

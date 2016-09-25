@@ -285,6 +285,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\ExportNow.cs" />
     <Compile Include="Controllers\auth_gongsiController.cs" />
     <Compile Include="Controllers\base_bumenController.cs" />
     <Compile Include="Controllers\base_feiyongxmController.cs" />
@@ -798,6 +799,7 @@
     <Content Include="Views\cfda_cangku\GetInventory.cshtml" />
     <Content Include="Views\cfda_cangku\GetOutrec.cshtml" />
     <Content Include="Views\cfda_cangku\GetEntryrec.cshtml" />
+    <Content Include="Views\wms_rukudan\Export.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

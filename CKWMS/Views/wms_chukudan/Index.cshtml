@@ -3,15 +3,17 @@
 @using X.PagedList
 @using X.PagedList.Mvc
 @{
-    ViewBag.Title = "出库单清单";
+    ViewBag.Title = "出库记录";
     string _searchcondition = ViewBag.SearchCondition;
 }
 <script type="text/javascript">
     $(document).ready(function () {
         $("tr").bind("dblclick", function () {
-            var u_id = $(this).find('td').eq(0).find('input').val();
+            var u_id = $(this).find('td').eq(0).find('input');
+            if (eval(u_id.data("zt")) > 4)
+                return;
             if (u_id != null) {
-                var url_go = "/wms_chukudan/Edit/" + u_id;
+                var url_go = "/wms_chukudan/Edit/" + u_id.val();
                 location.href = url_go;
             }
         });
@@ -21,14 +23,14 @@
     }
     function EditInfo() {
         $("#mydatatable tr input[type=checkbox]").each(function () {
-            if (this.checked)
+            if (this.checked && eval($(this).data("zt"))<5)
                 location.href = "/wms_chukudan/Edit/" + $(this).val();
         });
     }
     function DelInfo() {
         var sDel = "";
         $("#mydatatable tr input[type=checkbox]").each(function () {
-            if (this.checked)
+            if (this.checked && eval($(this).data("zt")) ==1)
                 sDel = sDel + ", " + $(this).val()
         });
         if (sDel.length < 2)
@@ -96,31 +98,23 @@
             <thead>
                 <tr>
                     <td></td>
-                    <td>货主序号</td>
-                    <td>计划序号</td>
-                    <td>信息来源</td>
-                    <td>客户序号</td>
-                    <td>客户名称</td>
-                    <td>发货地址</td>
+                    <td>出库单</td>
+                    <td>货主</td>
+                    <td>客户</td>
                     <td>送货地址</td>
                     <td>出库日期</td>
                     <td>业务类型</td>
-                    <td>是否保税</td>
-                    <td>是否复核</td>
                     <td>储运要求</td>
                     <td>是否监管</td>
                     <td>客户单号</td>
-                    <td>客服序号</td>
+                    <td>客服</td>
                     <td>联系人</td>
                     <td>联系电话</td>
-                    <td>计划状态</td>
-                    <td>出库条码</td>
-                    <td>摆放区域</td>
+                    <td>出库状态</td>
                     <td>拣货人</td>
                     <td>备注</td>
                     <td>制单日期</td>
                     <td>制单人</td>
-                    <td>出库单编号</td>
                 </tr>
             </thead>
             <tbody>
@@ -129,34 +123,26 @@
                     <tr>
                         <td>
                             <div class="checkbox">
-                                <label><input type="checkbox" value="@item.ID"></label>
+                                <label><input type="checkbox" value="@item.ID" data-zt="@item.JihuaZT"></label>
                             </div>
                         </td>
-                        <td>@item.HuozhuID</td>
-                        <td>@item.JihuaID</td>
-                        <td>@item.XinxiLY</td>
-                        <td>@item.KehuID</td>
+                        <td>@item.ChukudanBH</td>
+                        <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
                         <td>@item.KehuMC</td>
-                        <td>@item.Fahuodizhi</td>
                         <td>@item.Yunsongdizhi</td>
-                        <td>@item.ChukuRQ</td>
-                        <td>@item.YewuLX</td>
-                        <td>@item.BaoshuiSF</td>
-                        <td>@item.FuheSF</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}",item.ChukuRQ)</td>
+                        <td>@Html.GetCommonValue_ID("出库类型",(int)item.YewuLX)</td>
                         <td>@item.ChunyunYQ</td>
-                        <td>@item.JianguanSF</td>
+                        <td>@string.Format("{0}",item.JianguanSF==true?"是":"否")</td>
                         <td>@item.KehuDH</td>
-                        <td>@item.KefuID</td>
+                        <td>@Html.GetDataValue_ID("userinfo","全名",(int)item.KefuID)</td>
                         <td>@item.Lianxiren</td>
                         <td>@item.LianxiDH</td>
-                        <td>@item.JihuaZT</td>
-                        <td>@item.ChukuTM</td>
-                        <td>@item.BaifangQY</td>
-                        <td>@item.Jianhuoren</td>
+                        <td>@Html.GetCommonValue_ID("出库状态",(int)item.JihuaZT)</td>
+                        <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.Jianhuoren)</td>
                         <td>@item.Beizhu</td>
-                        <td>@item.MakeDate</td>
-                        <td>@item.MakeMan</td>
-                        <td>@item.ChukudanBH</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.MakeDate)</td>
+                        <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
                     </tr>
                 }
             </tbody>
