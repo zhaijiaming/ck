@@ -13,6 +13,12 @@ using CKWMS.Filters;
 
 namespace CKWMS.Controllers
 {
+    public class KuWei
+    {
+        public int Huojia { get; set; }
+        public int Lieshu { get; set; }
+        public int Censhu { get; set; }
+    }
     public class wms_kuweiController : Controller
     {
         private Iwms_kuweiService ob_wms_kuweiservice = ServiceFactory.wms_kuweiservice;
@@ -191,6 +197,7 @@ namespace CKWMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Save()
         {
+            
             string id = Request["id"] ?? "";
             string quyuid = Request["quyuid"] ?? "";
             string mingcheng = Request["mingcheng"] ?? "";
@@ -238,11 +245,13 @@ namespace CKWMS.Controllers
                 Console.WriteLine(ex.Message);
             }
             return RedirectToAction("Index");
+
         }
 
 
         public ActionResult Savekw()
         {
+            int flag = -1;
             string id = Request["id"] ?? "";
             //string quyuid = Request["quyuid"] ?? "";
             string mingcheng = Request["mingcheng"] ?? "";
@@ -269,13 +278,16 @@ namespace CKWMS.Controllers
             string lieshu = Request["lieshu"] ?? "";
             string censhu = Request["censhu"] ?? "";
             string qydaima = Request["qydaima"] ?? "";
-            int _huojia = int.Parse(huojia);        
+            int _huojia = int.Parse(huojia);
             int _lieshu = int.Parse(lieshu);
             int _censhu = int.Parse(censhu);
             string quyuid = Request["quyuid"] ?? "";
             string hj = Request["huojia1"] ?? "";
             string ls = Request["lieshu1"] ?? "";
             string cs = Request["censhu1"] ?? "";
+            string hji = int.Parse(hj).ToString();
+            string lsi = int.Parse(ls).ToString();
+            string csi = int.Parse(cs).ToString();
             string _hj = "";
             string _ls = "";
             string _cs = "";
@@ -283,67 +295,68 @@ namespace CKWMS.Controllers
             char tempchar;
             for (int i = 0; i < _huojia; i++)
                 for (int j = 0; j < _lieshu; j++)
-                    for (int k = 0; k < _censhu; k++) {
+                    for (int k = 0; k < _censhu; k++)
+                    {
                         try
                         {
-                            if (hj.Length == 1)
+                            if (hji.Length == 1)
                             {
                                 zimu = hj[0];
                                 if (zimu >= 48 && zimu <= 57)
                                 {
                                     if ((int.Parse(hj) + i) < 10)
                                     {
-                                        _hj = "00" + (int.Parse(hj) + i).ToString();
+                                        _hj = "0" + (int.Parse(hj) + i).ToString();
                                     }
                                     else
                                     {
-                                        _hj = "0" + (int.Parse(hj) + i).ToString();
+                                        _hj = (int.Parse(hj) + i).ToString();
                                     }
                                 }
                                 else { tempchar = (char)(zimu + i); _hj = tempchar.ToString() + "1"; }
                             }
-                            else if (hj.Length == 2)
-                            {
-                                if ((int.Parse(hj) + i) < 100)
-                                {
-                                    _hj = "0" + (int.Parse(hj) + i).ToString();
-                                }
-                                else
-                                {
-                                    _hj = (int.Parse(hj) + i).ToString();
-                                }
-                            }
-                            else /*if (hj.Length == 3)*/ { _hj = (int.Parse(hj) + i).ToString(); }
+                            //else if (hji.Length == 2)
+                            //{
+                            //    if ((int.Parse(hj) + i) < 100)
+                            //    {
+                            //        _hj = "0" + (int.Parse(hj) + i).ToString();
+                            //    }
+                            //    else
+                            //    {
+                            //        _hj = (int.Parse(hj) + i).ToString();
+                            //    }
+                            //}
+                            else /*if (hji.Length == 3)*/ { _hj = (int.Parse(hj) + i).ToString(); }
                             //else { }
 
-                            if (ls.Length == 1)
+                            if (lsi.Length == 1)
                             {
                                 zimu = ls[0];
                                 if (zimu >= 48 && zimu <= 57)
                                 {
                                     if ((int.Parse(ls) + j) < 10)
                                     {
-                                        _ls = "00" + (int.Parse(ls) + j).ToString();
+                                        _ls = "0" + (int.Parse(ls) + j).ToString();
                                     }
                                     else
                                     {
-                                        _ls = "0" + (int.Parse(ls) + j).ToString();
+                                        _ls = (int.Parse(ls) + j).ToString();
                                     }
                                 }
                                 else { tempchar = (char)(zimu + j); _ls = tempchar.ToString() + "1"; }
                             }
-                            else if (ls.Length == 2)
-                            {
-                                if ((int.Parse(ls) + j) < 100)
-                                { 
-                                    _ls = "0" + (int.Parse(ls) + j).ToString();
-                                }
-                                else
-                                {
-                                    _ls = (int.Parse(ls) + j).ToString();
-                                }
-                            }
-                            else /*if (ls.Length == 3) */{ _ls = (int.Parse(ls) + j).ToString(); }
+                            //else if (lsi.Length == 2)
+                            //{
+                            //    if ((int.Parse(ls) + j) < 100)
+                            //    {
+                            //        _ls = "0" + (int.Parse(ls) + j).ToString();
+                            //    }
+                            //    else
+                            //    {
+                            //        _ls = (int.Parse(ls) + j).ToString();
+                            //    }
+                            //}
+                            else /*if (lsi.Length == 3) */{ _ls = (int.Parse(ls) + j).ToString(); }
                             //else { }
 
                             //if (cs.Length == 1)
@@ -375,7 +388,7 @@ namespace CKWMS.Controllers
                             //}
                             //else if (cs.Length == 3) { _cs = (int.Parse(cs) + k).ToString(); }
                             //else { }
-                            if (cs.Length == 1)
+                            if (csi.Length == 1)
                             {
                                 zimu = cs[0];
                                 if (zimu >= 48 && zimu <= 57)
@@ -391,10 +404,10 @@ namespace CKWMS.Controllers
                                 }
                                 else { tempchar = (char)(zimu + k); _cs = tempchar.ToString() + "1"; }
                             }
-                            else /*if (cs.Length == 2)*/
-                            {                               
-                                    _cs = (int.Parse(cs) + k).ToString();                              
-                            }                           
+                            else /*if (csi.Length == 2)*/
+                            {
+                                _cs = (int.Parse(cs) + k).ToString();
+                            }
                             //else { }
 
                             wms_kuwei ob_wms_kuwei = new wms_kuwei();
@@ -417,14 +430,17 @@ namespace CKWMS.Controllers
                             ob_wms_kuwei.Lieshu = lieshu == "" ? 0 : int.Parse(lieshu);
                             ob_wms_kuwei = ob_wms_kuweiservice.AddEntity(ob_wms_kuwei);
                             ViewBag.wms_kuwei = ob_wms_kuwei;
+                            flag = 1;
 
                         }
                         catch (Exception ex)
                         {
                             Console.WriteLine(ex.Message);
+                            flag = -1;
                         }
                     }
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
+            return Json(new { _flag = flag });
         }
 
         [OutputCache(Duration = 10)]
@@ -531,6 +547,24 @@ namespace CKWMS.Controllers
                 }
             }
             return RedirectToAction("Index");
+        }
+        public JsonResult Xuhao()
+        {
+            var tempData = ob_wms_kuweiservice.LoadSortEntities(wms_kuwei => wms_kuwei.IsDelete == false, false, wms_kuwei => wms_kuwei.Huojia);
+            List<KuWei> _kwlist = new List<KuWei>();
+            KuWei _kw;
+            foreach (var kw in tempData)
+            {
+                _kw = new KuWei();
+                _kw.Huojia = (int)kw.Huojia;
+                _kw.Lieshu = (int)kw.Lieshu;
+                _kw.Censhu = (int)kw.Censhu;
+                _kwlist.Add(_kw);
+            }
+            //return Json(_kwlist[0].Huojia);
+
+            return Json(new { huojia = _kwlist[0].Huojia });
+
         }
     }
 }

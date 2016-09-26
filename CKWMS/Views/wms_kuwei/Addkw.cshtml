@@ -84,6 +84,60 @@
             var cs2 = $("#censhu2").val();
             Chcenshu(cs, cs1, cs2);
         })
+
+        $("#sub").click(function () {
+            if ($("#huojia").val() == "" || $("#lieshu").val() == "" || $("#censhu").val() == "" || $("#select_quyu").val() == null || $("#huojia1").val() == "起始序号" || $("#lieshu1").val() == "起始序号" || $("#censhu1").val() == "起始序号" || $("#huojia1").val() == "" || $("#lieshu1").val() == "" || $("#censhu1").val() == "") {
+                alert("请完整填写信息！")
+            }
+            else if (($("#qydaima").val().length + $("#huojia1").val().length + $("#lieshu1").val().length + $("#censhu1").val().length) > 22)
+            {
+                alert("库位太长！")
+            }
+            else { 
+                form.submit();
+            }
+        })
+    
+        var form = $("#tempform");
+        form.submit(function () {
+            loadingShow();
+            if ($("#huojia").val() == "" || $("#lieshu").val() == "" || $("#censhu").val() == "" || $("#select_quyu").val() == null || $("#huojia1").val() == "起始序号" || $("#lieshu1").val() == "起始序号" || $("#censhu1").val() == "起始序号"||$("#huojia1").val() == "" || $("#lieshu1").val() == "" || $("#censhu1").val() == "") {
+                Finished();
+            }
+            $.post(form.attr("action"),
+                  form.serialize(),              
+                  function (result, status) {
+                      //alert(status);
+                      if (result._flag == 1) {
+                          Finished();
+                          alert("添加成功");
+                          loadingShow();
+                          location.href = "/wms_kuwei/Index";                        
+                      }
+                      else if (result._flag == -1) {
+                          Finished();
+                          alert("添加失败");
+                      }
+                      else {
+                          Finished();
+                          alert("添加失败");
+                      }
+                  },
+                    "json");
+            return false;
+
+        });
+
+        $("#12345").click(function () {
+            $.post("/wms_kuwei/Xuhao",
+            {
+                
+            },
+        function (result) {
+            alert(result.huojia)
+        });
+        })
+
     });
 
     //货架结束序号自动生成
@@ -159,7 +213,7 @@
                 if (cs1.charCodeAt() >= 48 && cs1.charCodeAt() <= 57) {
                     $("#censhu2").val(Number(cs) + Number(cs1) - 1);
                 }
-                else if (cs1.charCodeAt() >= 65 && cs.charCodeAt() <= 90) {
+                else if (cs1.charCodeAt() >= 65 && cs1.charCodeAt() <= 90) {
                     tempz = Number(cs) + Number(cs1.charCodeAt()) - 1;
                     if (tempz > 90) {
                         $("#censhu2").val("范围不符")
@@ -222,7 +276,42 @@
                 }
             )
     }
+
+
+    function loadingShow() {
+        var loadingContainer = $("div.loading");
+        if (loadingContainer.length <= 0) {
+
+            loadingContainer = $("<div>", { Class: "loading", id: "loading" });
+            var img = $("<img>", { src: "/Imgs/LOADING.gif" });
+            loadingContainer.html("");
+            loadingContainer.append(img).css({
+                position: "fixed",
+                zIndex: "9999",
+                textAlign: "center",
+                //paddingTop: "18px",
+                //fontSize: "14px",
+                top: "30%",
+                left: "40%",
+                height: "300px",
+                width: "400px"
+            });
+            //document.body.appendChild(loadingContainer);
+            loadingContainer.appendTo('body');
+        }
+        //$(loadingContainer).show();
+    }
+
+
+    function Finished() {
+        $("#loading").remove();
+    }
+
+
+
 </script>
+
+
 <div class="breadcrumbs" id="breadcrumbs">
     <ul class="breadcrumb">
         <li>
@@ -237,31 +326,32 @@
 </div>
 
 <div class="page-content">
-    @using (Html.BeginForm("Savekw", "wms_kuwei", FormMethod.Post, new { @role = "form" }))
+    @using (Html.BeginForm("Savekw", "wms_kuwei", FormMethod.Post, new { @role = "form", id = "tempform" }))
     {
         @Html.AntiForgeryToken()
         <input type="hidden" name="id" />
         <input type="hidden" id="makeman" name="makeman" value="@Session["user_id"]" />
         <input type="hidden" id="qydaima" name="qydaima" />
+        <button type="button" id="12345" >12345</button>
         <div class="page-header">
             <p>
-                <button type="submit" id="kuwei_savekw" class="btn btn-default"><i class="icon-save"></i>保存</button>
+                <button type="button" id="sub" class="btn btn-default"><i class="icon-save"></i>保存</button>
                 <button type="button" class="btn btn-default" onclick="javascript:history.back(-1); "><i class="icon-hand-left"></i>返回</button>
 
             </p>
         </div>
         <div class="container">
             <div class="form-group">
-                <label class="col-sm-2">仓库</label>
+                <label class="col-sm-2"><i class="icon-leaf red"></i>仓库</label>
                 <div class="col-sm-10">
                     @Html.SelectList_Auto("CangkuID", "仓库", "")
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2">区域</label>
+                <label class="col-sm-2"><i class="icon-leaf red"></i>区域</label>
                 <div class="col-sm-10">
                     @*@Html.TextBoxFor(m => m.QuyuID, new { @class = "form-control" })*@
-                    <select name="quyuid" id="select_quyu" style="width:100%;"></select>
+                    <select name="quyuid" id="select_quyu" style="width:100%;" required></select>
                 </div>
             </div>
             <div class="form-group" style="display:none">
@@ -271,54 +361,72 @@
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.Huojia, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-5">
-                    @*@Html.TextBoxFor(m => m.Huojia, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Huojia)*@
-                    <input class="form-control" data-val="true" data-val-required="不能为空" type="text" id="huojia" name="Huojia" @*value="数量" onfocus="javascript: if (this.value == '数量') this.value = '';"*@>
+                <div class = "control-label col-sm-2">
+                    <i class="icon-leaf red"></i>@Html.LabelFor(m => m.Huojia)
                 </div>
-                <div class="col-sm-2">
-                    <input class="form-control" data-val="true" data-val-required="不能为空" type="text" id="huojia1" name="Huojia1" value="起始序号" onfocus="javascript: if (this.value == '起始序号') this.value = '';">
+                    <div class="col-sm-3">
+                        @Html.TextBoxFor(m => m.Huojia, new { @class = "form-control", id = "huojia" })
+                        @*<input class="form-control" type="text" id="huojia" name="Huojia" required>*@
+                    </div>
+                    <div class="col-sm-3">
+                        <input class="form-control" type="text" id="huojia1" name="Huojia1" value="起始序号" onfocus="javascript: if (this.value == '起始序号') this.value = '';" required>
+                    </div>
+                    <div class="col-sm-1">
+                        <label>-</label>
+                    </div>
+                    <div class="col-sm-3">
+                        <input class="form-control" type="text" id="huojia2" name="Huojia2" value="结束序号" onfocus="javascript: if (this.value == '结束序号') this.value = '';">
+                    </div>
                 </div>
-                <div class="col-sm-1">
-                    <label>-</label>
-                </div>
-                <div class="col-sm-2">
-                    <input class="form-control" type="text" id="huojia2" name="Huojia2" value="结束序号" onfocus="javascript: if (this.value == '结束序号') this.value = '';">
+            <div class="form-group">
+                <div style="margin-left:250px" id="yanzheng1">
+                    @Html.ValidationMessageFor(m => m.Huojia)
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.Lieshu, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-5">
-                    @*@Html.TextBoxFor(m => m.Lieshu, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Lieshu)*@
-                    <input class="form-control" data-val="true" data-val-required="不能为空" type="text" id="lieshu" name="Lieshu" @*value="数量" onfocus="javascript: if (this.value == '数量') this.value = '';"*@>
+                <div class="control-label col-sm-2">
+                    <i class="icon-leaf red"></i>@Html.LabelFor(m => m.Lieshu)
                 </div>
-                <div class="col-sm-2">
-                    <input class="form-control" data-val="true" data-val-required="不能为空" type="text" id="lieshu1" name="Lieshu1" value="起始序号" onfocus="javascript: if (this.value == '起始序号') this.value = '';">
+                    <div class="col-sm-3">
+                        @Html.TextBoxFor(m => m.Lieshu, new { @class = "form-control" ,id = "lieshu" })
+                        @*<input class="form-control" type="text" id="lieshu" name="Lieshu" required>*@
+                    </div>
+                    <div class="col-sm-3">
+                        <input class="form-control" type="text" id="lieshu1" name="Lieshu1" value="起始序号" onfocus="javascript: if (this.value == '起始序号') this.value = '';" required>
+                    </div>
+                    <div class="col-sm-1">
+                        <label>-</label>
+                    </div>
+                    <div class="col-sm-3">
+                        <input class="form-control" type="text" id="lieshu2" name="Lieshu2" value="结束序号" onfocus="javascript: if (this.value == '结束序号') this.value = '';">
+                    </div>
                 </div>
-                <div class="col-sm-1">
-                    <label>-</label>
-                </div>
-                <div class="col-sm-2">
-                    <input class="form-control" type="text" id="lieshu2" name="Lieshu2" value="结束序号" onfocus="javascript: if (this.value == '结束序号') this.value = '';">
+            <div class="form-group">
+                <div style="margin-left:250px" id="yanzheng2">
+                    @Html.ValidationMessageFor(m => m.Lieshu)
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.Censhu, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-5">
-                    @*@Html.TextBoxFor(m => m.Censhu, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Censhu)*@
-                    <input class="form-control" data-val="true" data-val-required="不能为空" type="text" id="censhu" name="Censhu" @*value="数量" onfocus="javascript: if (this.value == '数量') this.value = '';"*@>
+                <div class="control-label col-sm-2">
+                    <i class="icon-leaf red"></i>@Html.LabelFor(m => m.Censhu)
                 </div>
-                <div class="col-sm-2">
-                    <input class="form-control" data-val="true" data-val-required="不能为空" type="text" id="censhu1" name="Censhu1" value="起始序号" onfocus="javascript: if (this.value == '起始序号') this.value = '';">
+                    <div class="col-sm-3">
+                        @Html.TextBoxFor(m => m.Censhu, new { @class = "form-control", id = "censhu" })
+                        @*<input class="form-control" type="text" id="censhu" name="Censhu" required>*@
+                    </div>
+                    <div class="col-sm-3">
+                        <input class="form-control" type="text" id="censhu1" name="Censhu1" value="起始序号" onfocus="javascript: if (this.value == '起始序号') this.value = '';" required>
+                    </div>
+                    <div class="col-sm-1">
+                        <label>-</label>
+                    </div>
+                    <div class="col-sm-3">
+                        <input class="form-control" type="text" id="censhu2" name="Censhu2" value="结束序号" onfocus="javascript: if (this.value == '结束序号') this.value = '';">
+                    </div>
                 </div>
-                <div class="col-sm-1">
-                    <label>-</label>
-                </div>
-                <div class="col-sm-2">
-                    <input class="form-control" type="text" id="censhu2" name="Censhu2" value="结束序号" onfocus="javascript: if (this.value == '结束序号') this.value = '';">
+            <div class="form-group">
+                <div style="margin-left:250px"  id="yanzheng3">
+                    @Html.ValidationMessageFor(m => m.Censhu)
                 </div>
             </div>
             <div class="form-group">

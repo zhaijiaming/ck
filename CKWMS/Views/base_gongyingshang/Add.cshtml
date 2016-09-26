@@ -162,6 +162,33 @@
                 $(".bg").show();
             }
         });
+
+        $("#sub").click(function () {
+            form.submit();
+        })
+
+        //var form = $("#tempform");
+        //form.submit(function () {
+        //    $.post(form.attr("action"),
+        //          form.serialize(),
+        //          function (result, status) {
+        //              //alert(status);
+        //              if (result._flag == 1) {
+        //                  alert("成功");
+        //                  location.href = "/base_gongyingshang/Index";
+        //              }
+        //              else if (result._flag == -1) {
+        //                  alert("失败");
+        //              }
+        //              else {
+        //                  alert("234");
+        //              }                       
+        //          },
+        //            "json");
+        //    return false;
+            
+        //});
+        
     });
 
     //点击修改or增加
@@ -176,7 +203,7 @@
         $.post(
                 "/base_qixiemulu/GetQixiemulu1",
                 {
-                    
+
                 },
                 function (data) {
                     for (var i in data) {
@@ -272,18 +299,17 @@
 </div>
 
 <div class="page-content">
-    <form role="form" action="/base_gongyingshang/Save" method="post">
+    <form role="form" action="/base_gongyingshang/Save" method="post" >
         <input type="hidden" name="ob_base_gongyingshang_id" />
         <input type="hidden" id="btnSelect" value="" />
         <input type="hidden" id="MakeMan" name="MakeMan" value=@Session["user_id"] />
         <input type="hidden" id="Shouying" name="Shouying" value="1" />
 
-
         @*<input id="qxml" type="hidden" name="id" value="@ViewData.Model.ID" />*@
 
         <div class="page-header">
             <p>
-                <button type="submit" class="btn btn-default"><i class="icon-save"></i>保存</button>
+                <button type="submit" class="btn btn-default" id="sub"><i class="icon-save"></i>保存</button>
                 <button type="button" class="btn btn-default" onclick="javascript:history.back(-1); "><i class="icon-hand-left"></i>返回</button>
             </p>
         </div>
@@ -291,24 +317,30 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>代码</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" data-val="true" data-val-required="Daima 字段是必需的。" id="daima" name="ob_base_gongyingshang_daima">
-                    @*@Html.TextBoxFor(m => m.Daima, new { @class = "form-control", id = "daima" })*@
-                    @*@Html.ValidationMessageFor(m => m.Daima)*@
-
+                    @*<input type="text" class="form-control" data-val="true" data-val-required="Daima 字段是必需的。" id="daima" name="ob_base_gongyingshang_daima">*@
+                    @Html.TextBoxFor(m => m.Daima, new { @class = "form-control", id = "daima" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="center">
+                    @Html.ValidationMessageFor(m => m.Daima)
                 </div>
             </div>
             <div class="form-group">
                 <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>名称</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" data-val="true" data-val-required="Mingcheng 字段是必需的。" id="shengcheng" name="ob_base_gongyingshang_mingcheng">
-                    @*@Html.TextBoxFor(m => m.Mingcheng, new { @class = "form-control", id = "shengcheng" })
-                        @Html.ValidationMessageFor(m => m.Mingcheng)*@
+                    @*<input type="text" class="form-control" data-val="true" data-val-required="Mingcheng 字段是必需的。" id="shengcheng" name="ob_base_gongyingshang_mingcheng">*@
+                    @Html.TextBoxFor(m => m.Mingcheng, new { @class = "form-control", id = "shengcheng" })
                 </div>
-
                 <div class="col-sm-2">
                     <button type="button" class="form-control" data-val-required onclick="GetSpell()">生成代码</button>
                 </div>
-
+            </div>
+            @*检验提示信息*@
+            <div class="form-group">
+                <div class="center">
+                    @Html.ValidationMessageFor(m => m.Mingcheng)
+                </div>
             </div>
             <div class="form-group">
                 <label for="name" class="col-sm-2">营业执照编号</label>

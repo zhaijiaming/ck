@@ -288,8 +288,8 @@ namespace CKWMS.Controllers
         public ActionResult Save()
         {
             string id = Request["ob_base_gongyingshang_id"] ?? "";
-            string daima = Request["ob_base_gongyingshang_daima"] ?? "";
-            string mingcheng = Request["ob_base_gongyingshang_mingcheng"] ?? "";
+            string daima = Request["Daima"] ?? "";
+            string mingcheng = Request["Mingcheng"] ?? "";
             string yingyezhizhaobh = Request["ob_base_gongyingshang_yingyezhizhaobh"] ?? "";
             string yingyezhizhaoyxq = Request["ob_base_gongyingshang_yingyezhizhaoyxq"] ?? "";
             string yingyezhizhaotp = Request["ob_base_gongyingshang_yingyezhizhaotp"] ?? "";
@@ -315,7 +315,6 @@ namespace CKWMS.Controllers
                 shenchasf = "true";
             if (hezuosf.IndexOf("true") > -1)
                 hezuosf = "true";
-
             try
             {
                 base_gongyingshang ob_base_gongyingshang = new base_gongyingshang();
@@ -345,7 +344,6 @@ namespace CKWMS.Controllers
 
                 ob_base_gongyingshang = ob_base_gongyingshangservice.AddEntity(ob_base_gongyingshang);
                 ViewBag.base_gongyingshang = ob_base_gongyingshang;
-                ViewBag.flag = "1";
                 
 
 
@@ -353,11 +351,9 @@ namespace CKWMS.Controllers
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                ViewBag.flag = "2";
                 
             }
             return RedirectToAction("Index");
-            //return Content("<script>alert('" + ff + "');location.href='Index'</script>");
         }
         public ActionResult Edit(int id)
         {
@@ -482,7 +478,11 @@ namespace CKWMS.Controllers
                 }
             }
             return RedirectToAction("Index");
-        }       
+        }
     }
+
+    
+
+    
 }
 

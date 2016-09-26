@@ -13,10 +13,13 @@ namespace CKWMS.Models
         [Display(Name = "库位名称")]
         public string Mingcheng { get; set; }
         [Display(Name = "货架")]
+        [Required]
         public int? Huojia { get; set; }
         [Display(Name = "列数")]
+        [Required]
         public int? Lieshu { get; set; }
         [Display(Name = "层数")]
+        [Required]
         public int? Censhu { get; set; }
         [Display(Name = "商品数量")]
         public float? ShangpinSL { get; set; }

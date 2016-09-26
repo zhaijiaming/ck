@@ -41,10 +41,17 @@
     List<SearchConditionModel> scms = new List<SearchConditionModel>();
     if (_searchcondition == null || _searchcondition == "")
     {
+        //SearchConditionModel scm = new SearchConditionModel();
+        //scm.ItemCode = "CangkuID";
+        //scm.ItemTitle = "仓库序号";
+        //scm.ItemType = "System.Int32";
+        //scms.Add(scm);
+
         SearchConditionModel scm = new SearchConditionModel();
         scm.ItemCode = "CangkuID";
-        scm.ItemTitle = "仓库序号";
-        scm.ItemType = "System.Int32";
+        scm.ItemShowName = "cangkuid";
+        scm.ItemTitle = "仓库";
+        scm.ItemType = "";
         scms.Add(scm);
     }
     else
@@ -52,13 +59,31 @@
         string[] scs = _searchcondition.Split(';');
         if (scs.Length > 0)
         {
+            //SearchConditionModel scm = new SearchConditionModel();
+            //scm.ItemCode = "CangkuID";
+            //scm.ItemTitle = "仓库序号";
+            //scm.ItemType = "System.Int32";
+            //if (scs.Length > 1)
+            //{
+            //    scm.ItemValue = scs[0].Split(',')[1];
+            //    scm.ItemOpValue = scs[0].Split(',')[2];
+            //    scm.ItemJion = scs[0].Split(',')[3];
+            //}
+            //scms.Add(scm);
+
             SearchConditionModel scm = new SearchConditionModel();
             scm.ItemCode = "CangkuID";
-            scm.ItemTitle = "仓库序号";
-            scm.ItemType = "System.Int32";
+            scm.ItemShowName = "cangkuid";
+            scm.ItemTitle = "仓库";
+            scm.ItemType = "";
             if (scs.Length > 1)
             {
+
                 scm.ItemValue = scs[0].Split(',')[1];
+                if (scm.ItemValue.Length == 0)
+                {
+                    scm.ItemValue = "0";
+                }
                 scm.ItemOpValue = scs[0].Split(',')[2];
                 scm.ItemJion = scs[0].Split(',')[3];
             }
