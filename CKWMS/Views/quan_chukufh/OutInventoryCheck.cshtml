@@ -39,11 +39,16 @@
         $(".icon-youtube-play").click(function () {
             var _selrow = $(this).parent().parent();
             var _onum = _selrow.find('td').eq(10).html();
+            var _fnum = _selrow.find('td').eq(13).html();
             if (_selrow.hasClass("green") || _selrow.hasClass("red"))
                 return;
             _selrow.addClass("blue");
             $("#shmx").val(_selrow.find("input").val());
-            $("#YanshouSL").val(_onum);
+            $("#fhid").val(_selrow.find("input").data("fh"));
+            if (eval($("#fhid").val()) > 0)
+                $("#YanshouSL").val(eval(_onum) - eval(_fnum));
+            else
+                $("#YanshouSL").val(_onum);
             $("#pl_yanshou").show();
         });
         $("#pl_close").click(function () {
@@ -97,7 +102,7 @@
                         sl: _ysnum,
                         ys: _ysresult,
                         ysr: $("#Yanshouren").val(),
-                        yssm: $("#YanshouSM").val(),
+                        yssm: $("#YanshouSM").val()
                     }, function (data) {
                         if (data == -1)
                             alert("验收数据保存失败，请重新验收！");
@@ -249,6 +254,7 @@
 </div>
 <div class="page-content">
     <input type="hidden" id="shmx" />
+    <input type="hidden" id="fhid" />
     <input type="hidden" id="username" value="@ViewBag.username" />
     <input type="hidden" id="userid" value="@ViewBag.userid" />
     <div class="row">
@@ -281,7 +287,7 @@
                 {
                     <tr>
                         <td>
-                            <label><input type="checkbox" value="@item.ID"></label>
+                            <label><input type="checkbox" value="@item.ID" data-fh="@item.fhid"></label>
                         </td>
                         <td><i class="icon-youtube-play"></i></td>
                         <td>@item.ShangpinMC</td>

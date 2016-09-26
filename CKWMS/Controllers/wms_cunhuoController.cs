@@ -309,7 +309,7 @@ namespace CKWMS.Controllers
             }
             ViewBag.SearchCondition = sc.ConditionInfo;
 
-            var tempData = ob_wms_cunhuoservice.GetStorageList(where.Compile()).ToPagedList<wms_storage_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            var tempData = ob_wms_cunhuoservice.GetInventory(where.Compile()).ToPagedList<wms_storage_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.wms_storage_v = tempData;
             return View(tempData);
         }
@@ -366,7 +366,7 @@ namespace CKWMS.Controllers
                 ViewBag.SearchCondition = sc.ConditionInfo;
             }        
 
-            var tempData = ob_wms_cunhuoservice.GetStorageList(where.Compile()).ToPagedList<wms_storage_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            var tempData = ob_wms_cunhuoservice.GetInventory(where.Compile()).ToPagedList<wms_storage_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.wms_storage_v = tempData;
             return View(tempData);
         }

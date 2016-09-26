@@ -321,7 +321,7 @@ namespace CKWMS.Controllers
                 ob_wms_jianhuo.Col3 = col3.Trim();
                 ob_wms_jianhuo.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 ob_wms_jianhuo.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
-                ob_wms_jianhuo.Fuhe = fuhe == "" ? false : Boolean.Parse(fuhe);
+                ob_wms_jianhuo.Fuhe = fuhe == "" ? true : Boolean.Parse(fuhe);
                 ob_wms_jianhuo = ob_wms_jianhuoservice.AddEntity(ob_wms_jianhuo);
                 ViewBag.wms_jianhuo = ob_wms_jianhuo;
             }
