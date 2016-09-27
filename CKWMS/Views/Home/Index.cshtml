@@ -4,7 +4,35 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $.get("/service/getspellcode?yourwords=嘉事堂", function (result) {
-            $(".widget-main p").text(result);;
+            $(".widget-main p").text(result);
+        });
+
+
+        $(document).click(function () {
+            event = event || window.event;
+            var x = event.offsetX || event.originalEvent.layerX;
+            var y = event.offsetY || event.originalEvent.layerY;
+            if (x > 4 && x < 76 && y > 62 && y < 91) {
+                location.href = "/quan_shouyingsq/index";
+            }
+            else if (x > 4 && x < 76 && y > 130 && y < 157) {
+                location.href = "/wms_rukudan/index";
+            }
+            else if (x > 4 && x < 76 && y > 185 && y < 213) {
+                location.href = "/wms_rukudan/OperateList";
+            }
+            else if (x > 285 && x < 357 && y > 63 && y < 91) {
+                location.href = "/wms_chukudan/index";
+            }
+            else if (x > 277 && x < 367 && y > 123 && y < 152) {
+                location.href = "/wms_chukudan/outoperate";
+            }
+            else if (x > 285 && x < 356 && y > 180 && y < 206) {
+                location.href = "/wms_chukudan/outoperate";
+            }
+            else if (x > 287 && x < 361 && y > 245 && y < 272) {
+                location.href = "/wms_chukudan/outoperate";
+            }
         });
     });
     //a(document).on("click.ace.widget","[data-action]",

@@ -128,15 +128,15 @@
 
         });
 
-        $("#12345").click(function () {
-            $.post("/wms_kuwei/Xuhao",
-            {
+        //$("#12345").click(function () {
+        //    $.post("/wms_kuwei/Xuhao",
+        //    {
                 
-            },
-        function (result) {
-            alert(result.huojia)
-        });
-        })
+        //    },
+        //function (result) {
+        //    alert(result.huojia)
+        //});
+        //})
 
     });
 
@@ -332,7 +332,7 @@
         <input type="hidden" name="id" />
         <input type="hidden" id="makeman" name="makeman" value="@Session["user_id"]" />
         <input type="hidden" id="qydaima" name="qydaima" />
-        <button type="button" id="12345" >12345</button>
+        @*<button type="button" id="12345" >12345</button>*@
         <div class="page-header">
             <p>
                 <button type="button" id="sub" class="btn btn-default"><i class="icon-save"></i>保存</button>

@@ -263,6 +263,21 @@ namespace CKWMS.Controllers
 
         public ActionResult Savekw()
         {
+            var tempData = ob_wms_kuweiservice.LoadSortEntities(wms_kuwei => wms_kuwei.IsDelete == false, false, wms_kuwei => wms_kuwei.Huojia);
+            List<KuWei> _kwlist = new List<KuWei>();
+            KuWei _kw;
+            foreach (var kw in tempData)
+            {
+                _kw = new KuWei();
+                _kw.Huojia = (int)kw.Huojia;
+                _kwlist.Add(_kw);
+            }
+
+            int? huojiaxh = _kwlist[0].Huojia;
+            int _huojiaxh;
+            int _lieshuxh;
+            int _censhuxh;
+
             int flag = -1;
             string id = Request["id"] ?? "";
             //string quyuid = Request["quyuid"] ?? "";
@@ -283,9 +298,6 @@ namespace CKWMS.Controllers
             string col3 = Request["col3"] ?? "";
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
-            //string lieshu = Request["lieshu"] ?? "";
-
-
             string huojia = Request["huojia"] ?? "";
             string lieshu = Request["lieshu"] ?? "";
             string censhu = Request["censhu"] ?? "";
@@ -306,9 +318,14 @@ namespace CKWMS.Controllers
             int zimu;
             char tempchar;
             for (int i = 0; i < _huojia; i++)
+            {
+                _huojiaxh = (int)huojiaxh + i + 1;
                 for (int j = 0; j < _lieshu; j++)
+                {
+                    _lieshuxh = j + 1;
                     for (int k = 0; k < _censhu; k++)
                     {
+                        _censhuxh = k + 1;
                         try
                         {
                             if (hji.Length == 1)
@@ -427,8 +444,10 @@ namespace CKWMS.Controllers
 
                             ob_wms_kuwei.QuyuID = quyuid == "" ? 0 : int.Parse(quyuid);
                             //ob_wms_kuwei.Mingcheng = mingcheng.Trim();
-                            ob_wms_kuwei.Huojia = huojia == "" ? 0 : int.Parse(huojia);
-                            ob_wms_kuwei.Censhu = censhu == "" ? 0 : int.Parse(censhu);
+                            //ob_wms_kuwei.Huojia = huojia == "" ? 0 : int.Parse(huojia);
+                            ob_wms_kuwei.Huojia = huojia == "" ? 1 : _huojiaxh;
+                            //ob_wms_kuwei.Censhu = censhu == "" ? 0 : int.Parse(censhu);
+                            ob_wms_kuwei.Censhu = censhu == "" ? 1 : _censhuxh;
                             ob_wms_kuwei.ShangpinSL = shangpinsl == "" ? 0 : float.Parse(shangpinsl);
                             ob_wms_kuwei.PiciSL = picisl == "" ? 0 : float.Parse(picisl);
                             ob_wms_kuwei.MaxWeight = maxweight == "" ? 0 : float.Parse(maxweight);
@@ -439,7 +458,8 @@ namespace CKWMS.Controllers
                             ob_wms_kuwei.Col3 = col3.Trim();
                             ob_wms_kuwei.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                             ob_wms_kuwei.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
-                            ob_wms_kuwei.Lieshu = lieshu == "" ? 0 : int.Parse(lieshu);
+                            //ob_wms_kuwei.Lieshu = lieshu == "" ? 0 : int.Parse(lieshu);
+                            ob_wms_kuwei.Lieshu = lieshu == "" ? 1 : _lieshuxh;
                             ob_wms_kuwei = ob_wms_kuweiservice.AddEntity(ob_wms_kuwei);
                             ViewBag.wms_kuwei = ob_wms_kuwei;
                             flag = 1;
@@ -451,6 +471,8 @@ namespace CKWMS.Controllers
                             flag = -1;
                         }
                     }
+                }
+            }
             //return RedirectToAction("Index");
             return Json(new { _flag = flag });
         }
@@ -560,24 +582,26 @@ namespace CKWMS.Controllers
             }
             return RedirectToAction("Index");
         }
-        public JsonResult Xuhao()
-        {
-            var tempData = ob_wms_kuweiservice.LoadSortEntities(wms_kuwei => wms_kuwei.IsDelete == false, false, wms_kuwei => wms_kuwei.Huojia);
-            List<KuWei> _kwlist = new List<KuWei>();
-            KuWei _kw;
-            foreach (var kw in tempData)
-            {
-                _kw = new KuWei();
-                _kw.Huojia = (int)kw.Huojia;
-                _kw.Lieshu = (int)kw.Lieshu;
-                _kw.Censhu = (int)kw.Censhu;
-                _kwlist.Add(_kw);
-            }
-            //return Json(_kwlist[0].Huojia);
-
-            return Json(new { huojia = _kwlist[0].Huojia });
-
-        }
+        //public JsonResult Xuhao()
+        //{
+        //    var tempData = ob_wms_kuweiservice.LoadSortEntities(wms_kuwei => wms_kuwei.IsDelete == false, false, wms_kuwei => wms_kuwei.Huojia);
+        //    if (tempData == null) {
+        //        return Json(new { huojia = 0 });
+        //    }
+        //    else { 
+        //    List<KuWei> _kwlist = new List<KuWei>();
+        //    KuWei _kw;
+        //    foreach (var kw in tempData)
+        //    {
+        //        _kw = new KuWei();
+        //        _kw.Huojia = (int)kw.Huojia;
+        //        _kwlist.Add(_kw);
+        //    }
+        //    //return Json(_kwlist[0].Huojia);                       
+         
+        //    return Json(new { huojia = _kwlist[0].Huojia });
+        //    }
+        //}
     }
 }
 
