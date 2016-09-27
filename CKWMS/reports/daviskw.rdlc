@@ -353,11 +353,18 @@
       </ConnectionProperties>
       <rd:DataSourceID>81f8beb0-fd92-42fc-bd1f-04734d78a1e1</rd:DataSourceID>
     </DataSource>
+    <DataSource Name="ReportDataSetZY">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>6d68b3f3-d011-4e8a-8a69-bcb573fd3703</rd:DataSourceID>
+    </DataSource>
   </DataSources>
   <DataSets>
     <DataSet Name="DataSet1">
       <Query>
-        <DataSourceName>ReportDataSet</DataSourceName>
+        <DataSourceName>ReportDataSetZY</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
@@ -379,9 +386,9 @@
         </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>ReportDataSet</rd:DataSetName>
-        <rd:SchemaPath>D:\Projects\CKWMS\CKWMS\reports\ReportDataSet.xsd</rd:SchemaPath>
-        <rd:TableName>davistest-kw</rd:TableName>
+        <rd:DataSetName>ReportDataSetZY</rd:DataSetName>
+        <rd:SchemaPath>D:\Projects\CKWMS\CKWMS\reports\ReportDataSetZY.xsd</rd:SchemaPath>
+        <rd:TableName>davistest_kw</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
         <rd:TableAdapterName />

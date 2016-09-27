@@ -323,6 +323,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ReportDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="reports\ReportDataSetZY.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReportDataSetZY.xsd</DependentUpon>
+    </Compile>
     <Compile Include="reports\ReportNow.aspx.cs">
       <DependentUpon>ReportNow.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -420,6 +425,13 @@
     <Compile Include="Models\wms_rukumxViewModel.cs" />
     <Compile Include="Models\wms_shouhuomxViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="reports\ReportZY.aspx.cs">
+      <DependentUpon>ReportZY.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="reports\ReportZY.aspx.designer.cs">
+      <DependentUpon>ReportZY.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -544,6 +556,7 @@
     <Content Include="Imgs\ckflow.jpg" />
     <Content Include="Imgs\page1_pic4.jpg" />
     <Content Include="reports\ReportNow.aspx" />
+    <Content Include="reports\ReportZY.aspx" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -569,6 +582,17 @@
     </None>
     <Content Include="reports\ReportDataSet.xss">
       <DependentUpon>ReportDataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="reports\ReportDataSetZY.xsc">
+      <DependentUpon>ReportDataSetZY.xsd</DependentUpon>
+    </Content>
+    <None Include="reports\ReportDataSetZY.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ReportDataSetZY.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="reports\ReportDataSetZY.xss">
+      <DependentUpon>ReportDataSetZY.xsd</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\davisfunction.js" />
