@@ -175,6 +175,7 @@ namespace CKWMS.Controllers
 
             var _pickdetail = ob_wms_jianhuoservice.GetPickDetail(int.Parse(_outid), p => p.DaijianSL > 0);
             ViewBag.pickdetail = _pickdetail;
+            ViewBag.chukudan = _outid;
             return View();
         }
         public ActionResult Add()

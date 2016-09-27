@@ -82,6 +82,18 @@
                     location.reload();
             });
         });
+        $("#kuwei").blur(function () {
+            $.post("/wms_kuwei/validlocation", { loc: $("#kuwei").val() }, function (data) {
+                if (data == -1) {
+                    alert($("#kuwei").val() + "，该库位不存在或不可用，请重新选择！");
+                    $("#kuwei").val("");
+                    $("#kid").val(0);
+                    return;
+                }
+                else
+                    $("#kid").val(data);
+            });
+        });
         $("#sjSL").blur(function () {
             var _ssl = $("#sjSL").val();
             var _orn = $("#orinum").val();

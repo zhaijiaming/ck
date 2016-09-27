@@ -24,6 +24,9 @@
             GetCustStore(_hz);
             $("#pl_xz").show();
         });
+        $("#pl_search").click(function () {
+            GetCustStore($("#hz").val());
+        });
         $("#pl_xz_close").click(function () {
             $("#pl_xz").hide();
         });
@@ -180,7 +183,10 @@
             return;
         $.post("/wms_cunhuo/getcuststoregood",
             {
-                cust: _cust
+                cust: _cust,
+                mc:$("#mc").val(),
+                gg:$("#gg").val(),
+                ph:$("#ph").val()
             },
             function (data) {
                 if (data != -1) {

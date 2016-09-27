@@ -184,7 +184,19 @@ namespace CKWMS.Controllers
             ViewBag.userid = (int)Session["user_id"];
             return View();
         }
+        public JsonResult ValidLocation()
+        {
+            int _userid = (int)Session["user_id"];
+            var _loc = Request["loc"] ?? "";
 
+            if (string.IsNullOrEmpty(_loc))
+                return Json(-1);
+            var _kw = ob_wms_kuweiservice.GetEntityById(p => p.Mingcheng == _loc);
+            if (_kw == null)
+                return Json(-1);
+
+            return Json(_kw.ID);
+        }
         public JsonResult GetKwDetail()
         {
             var tempdata = ob_wms_kuweiservice.LoadSortEntities(p => p.IsDelete == false, true, s => s.Mingcheng);

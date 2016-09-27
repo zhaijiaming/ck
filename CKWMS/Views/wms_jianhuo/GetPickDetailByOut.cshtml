@@ -15,6 +15,9 @@
             //    location.href = url_go;
             //}
         });
+        $("#bt_fn_print").click(function () {
+            alert("print now");
+        });
         $(".icon-hand-right").click(function () {
             var _sr = $(this).parent().parent();
             var _sc = _sr.find("input");
@@ -33,6 +36,15 @@
                 $(this).addClass("green");
             if (_cksl > _djsl && _djsl > 0)
                 $(this).addClass("red");
+        });
+        $("#mydatatable tbody").on("dbl", "tr", function () {
+            $("#pl_fun").show();
+        });
+        $("#pl_fn_cancel").click(function () {
+            $("#pl_fun").hide();
+        });
+        $("#pl_fn_close").click(function () {
+            $("#pl_fun").hide();
         });
         $("#pl_pk_close").click(function () {
             $("#pl_pk").hide();
@@ -103,7 +115,7 @@
                     _cksl.val(_zdj);
                     _zdj = 0;
                 }
-                $("#picknum").val(_zdj);
+                //$("#picknum").val(_zdj);
             }
         });
     });
@@ -194,6 +206,7 @@
     </ul>
 </div>
 <div class="page-content">
+    <input type="hidden" id="ckd" value="@ViewBag.chukudan"/>
     <input type="hidden" id="selmx" />
     <input type="hidden" id="ck" />
     <div class="row" style="height:300px;overflow:auto;">
@@ -334,6 +347,17 @@
                 </thead>
                 <tbody></tbody>
             </table>
+        </div>
+    </div>
+</div>
+<div id="pl_fun" class="panel panel-info" style="display:none;position:absolute;top:200px;left:300px;width:200px;height:500px;overflow:auto;">
+    <div class="panel-heading">
+        <h3 class="panel-title">拣货<button id="pl_fn_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="center"><p id="bt_fn_print" class="btn btn-default">打印</p></div>
+            <div class="center"><p id="bt_fn_cancel" class="btn btn-default">取消</p></div>
         </div>
     </div>
 </div>
