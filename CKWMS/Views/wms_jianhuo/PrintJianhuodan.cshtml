@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "拣货单表";
+    Layout = "~/Views/Shared/EmptyView.cshtml";
+}
+<script type="text/javascript">
+    $(window).load(function () {
+        var chukuid = $("#chukuid").val();
+        document.getElementById("myReport").src = "../../reports/ReportZY.aspx?pid=JianHuoDan&out=" + chukuid;
+        $("#autoUpdate").show();
+    });
+</script>
+<div id="autoUpdate" style="display:none; overflow-y: auto;background-color:white">
+    <input type="hidden" id="chukuid" value="@ViewBag.id" />
+    <table style="height:100%;width:100%">
+        <tr>
+            <td></td>
+        </tr>
+        <tr><td class="center"><iframe id="myReport" style="width:830px;height:630px;"></iframe></td></tr>
+    </table>
+</div>
+
+

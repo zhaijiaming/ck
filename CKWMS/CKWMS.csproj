@@ -824,6 +824,7 @@
     <Content Include="Views\cfda_cangku\GetOutrec.cshtml" />
     <Content Include="Views\cfda_cangku\GetEntryrec.cshtml" />
     <Content Include="Views\wms_rukudan\Export.cshtml" />
+    <Content Include="Views\wms_jianhuo\PrintJianhuodan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -844,6 +845,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="reports\daviskw.rdlc" />
+    <EmbeddedResource Include="reports\rptJianHuoDan.rdlc" />
     <EmbeddedResource Include="reports\rptQuanxian.rdlc" />
   </ItemGroup>
   <PropertyGroup>

@@ -163,6 +163,14 @@ namespace CKWMS.Controllers
             ViewBag.wms_jianhuo = tempData;
             return View(tempData);
         }
+        public ActionResult PrintJianhuodan()
+        {
+            var id = Request["id"] ?? "";
+            if (id.Length < 1)
+                id = "0";
+            ViewBag.id = id;
+            return View();
+        }
         public ActionResult GetPickDetailByOut()
         {
             int _userid = (int)Session["user_id"];
