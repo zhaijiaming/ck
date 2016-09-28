@@ -72,6 +72,21 @@ namespace CKWMS.reports
                                 dtjhd.Rows.Add(drjhd);
                             }
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["JianHuoDan"]));
+
+                            wms_chukudan tempdata = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid));
+                            DataTable dtjhdt = _rds.Tables["JianHuoDanTitle"];
+                            DataRow drjhdt =dtjhdt.NewRow();
+                            drjhdt["Yunsongdizhi"] = tempdata.Yunsongdizhi;
+                            drjhdt["Beizhu"] = tempdata.Beizhu;
+                            drjhdt["ChukuRQ"] = tempdata.ChukuRQ;
+                            drjhdt["ChukudanBH"] = tempdata.ChukudanBH;
+                            drjhdt["Lianxiren"] = tempdata.Lianxiren;
+                            drjhdt["LianxiDH"] = tempdata.LianxiDH;
+                            base_weituokehu wtkhdata = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == tempdata.HuozhuID);
+                            drjhdt["HuozhuID"] = wtkhdata.Kehumingcheng;
+                            drjhdt["KehuMC"] = tempdata.KehuMC;
+                            dtjhdt.Rows.Add(drjhdt);
+                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["JianHuoDanTitle"]));
                             break;
                         default:
                             break;
