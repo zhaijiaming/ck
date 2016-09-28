@@ -7,6 +7,17 @@
     <script type="text/javascript">
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
         $(document).ready(function () {
+            $("#pl_cy_close").click(function () {
+                $("#pl_cy").hide();
+            });
+            $("#selyq").click(function () {
+                $("#pl_cy").show();
+            });
+            $("#pl_cy").draggable({ handle: ".panel-heading" });
+            $("#dt_cy").on("dblclick", "tr", function () {
+                $("#ChunyunYQ").val($(this).find("td").eq(1).html());
+                $("#pl_cy").hide();
+            });
             $("#RukuRQ").datepicker();
             $("#bt_save").click(function () {
                 var lessday = new Date();
@@ -116,9 +127,12 @@
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.ChunyunYQ, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
+                <div class="col-sm-8">
                     @Html.TextBoxFor(m => m.ChunyunYQ, new { @class = "form-control" })
                 </div>
+                <div class="col-sm-2">
+                    <p id="selyq" class="form-control blue">常用</p>
+                </div>            
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.KehuDH, new { @class = "control-label col-sm-2" })
@@ -191,4 +205,31 @@
             </div>
         </div>
     }
+</div>
+<div id="pl_cy" class="panel panel-primary" style="display:none;position:absolute;top:50px;left:100px;width:300px;height:200px;z-index:999;">
+    <div class="panel-heading">
+        <h3 class="panel-title">常用储运条件<button id="pl_cy_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <table class="table table-condensed" id="dt_cy">
+                <caption></caption>
+                <thead>
+                    <tr>
+                        <td>序号</td>
+                        <td>储运条件</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var cy in MvcApplication.TranCondition)
+                    {
+                        <tr>
+                            <td>@cy.Key</td>
+                            <td>@cy.Value</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

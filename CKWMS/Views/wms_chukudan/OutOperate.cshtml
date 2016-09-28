@@ -15,6 +15,24 @@
             //    location.href = url_go;
             //}
         });
+        $("#bt_over").click(function () {
+            var sDel = "";
+            $("#mydatatable tbody tr input[type=checkbox]").each(function () {
+                if (this.checked)
+                    sDel = sDel + ", " + $(this).val()
+            });
+            if (sDel.length < 2)
+                return;
+            $.post("/wms_chukudan/outfinish", { ck: sDel }, function (data) {
+                if (data == -1)
+                    alert("操作失败，请联系管理员！");
+                else
+                    location.reload();
+            });
+        });
+        $(".icon-print").click(function () {
+            alert("随货通行打印");
+        });
         $(".icon-edit-sign").click(function () {
             var _selv = $(this).parent().parent().find("input[type=checkbox]");
             var _hz = _selv.data("hz");
@@ -69,6 +87,7 @@
         })
         $("#pl_xlm_cancel").click(function () {
             $("#pl_xlm").hide();
+            //getCount();
         });
         $("#pl_xlm_ok").click(function () {
             alert($("#xlm").val());
@@ -139,6 +158,15 @@
             }
         });
     });
+    function getCount() {
+        var range = document.getElementById("xlm");
+        var rect = range.getClientRects();
+        alert(rect.length);
+
+        var p = $("#xlm").val();
+        alert(p);
+        alert((p.split()).length);
+    }
     function AddInfo() {
         location.href = "/wms_chukudan/Add";
     }
@@ -370,11 +398,11 @@
         <input type="hidden" id="ck" />
         <input type="hidden" id="ckd" />
         <p>
-            @*<button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>*@
             <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
             <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
             <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
+            <button type="button" class="btn btn-default " id="bt_over"><i class="icon-ok"></i>完成</button>
         </p>
     </div>
     <div class="row">
@@ -492,9 +520,10 @@
     </div>
     <div class="panel-body">
         <div class="center">
-            <div class="col-sm-4"><p class="btn default" id="pl_xlm_clear"><i class="icon-ok"></i>清除</p></div>
-            <div class="col-sm-4"><p class="btn default" id="pl_xlm_ok"><i class="icon-ok"></i>确定</p></div>
-            <div class="col-sm-4"><p class="btn default" id="pl_xlm_cancel"><i class="icon-search"></i>取消</p></div>
+            <div class="col-sm-6"><label></label></div>
+            <div class="col-sm-2"><p class="btn default" id="pl_xlm_clear"><i class="icon-ok"></i>清除</p></div>
+            <div class="col-sm-2"><p class="btn default" id="pl_xlm_ok"><i class="icon-ok"></i>确定</p></div>
+            <div class="col-sm-2"><p class="btn default" id="pl_xlm_cancel"><i class="icon-search"></i>取消</p></div>
         </div>
         <div class="center">
             <textarea id="xlm" style="width:480px;height:400px;overflow:auto"></textarea>

@@ -1016,6 +1016,23 @@ namespace CKWMS.App_Code
             }
             return MvcHtmlString.Create(returnvalue);
         }
+        public static MvcHtmlString GetOtherValue_ID(this HtmlHelper html, string itemName, int dataValue)
+        {
+            string returnvalue = "";
+            switch (itemName)
+            {
+                case "出库单客户名称":
+                    wms_chukudan _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == dataValue);
+                    if (_ckd == null)
+                        returnvalue = "";
+                    else
+                        returnvalue = _ckd.KehuMC;
+                    break;
+                default:
+                    break;
+            }
+            return MvcHtmlString.Create(returnvalue);
+        }
         public static MvcHtmlString GetCommonValue_ID(this HtmlHelper html, string itemName, int dataValue)
         {
             string returnvalue = "";

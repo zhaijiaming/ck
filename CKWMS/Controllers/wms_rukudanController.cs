@@ -172,7 +172,23 @@ namespace CKWMS.Controllers
             ViewBag.wms_rukudan = tempData;
             return View();
         }
-
+        public JsonResult EntryFinish()
+        {
+            var _ids = Request["rk"] ?? "";
+            if (string.IsNullOrEmpty(_ids))
+                return Json(-1);
+            string[] _efs = _ids.Split(',');
+            foreach(var _rkid in _efs)
+            {
+                wms_rukudan _rkd = ob_wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_rkid));
+                if (_rkd != null)
+                {
+                    _rkd.RukuZT = 5;
+                    ob_wms_rukudanservice.UpdateEntity(_rkd);
+                }
+            }
+            return Json(1);
+        }
         public ActionResult Add()
         {
             ViewBag.userid = (int)Session["user_id"];

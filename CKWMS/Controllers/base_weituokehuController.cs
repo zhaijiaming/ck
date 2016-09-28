@@ -250,7 +250,16 @@ namespace CKWMS.Controllers
             ViewBag.base_weituokehu = tempData;
             return View(tempData);
         }
-
+        public JsonResult GetCustomer()
+        {
+            var _custid = Request["cust"] ?? "";
+            if (string.IsNullOrEmpty(_custid))
+                return Json(-1);
+            var _custallow = ob_base_weituokehuservice.GetEntityById(p => p.ID == int.Parse(_custid));
+            if (_custallow == null)
+                return Json(-1);
+            return Json(_custallow);
+        }
         public ActionResult Add()
         {
             ViewBag.userid = (int)Session["user_id"];

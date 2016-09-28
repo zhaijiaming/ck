@@ -298,7 +298,23 @@ namespace CKWMS.Controllers
                 return View(wms_chukudanviewmodel);
             }
         }
-
+        public JsonResult OutFinish()
+        {
+            var _ids = Request["ck"] ?? "";
+            if (string.IsNullOrEmpty(_ids))
+                return Json(-1);
+            string[] _efs = _ids.Split(',');
+            foreach (var _ckid in _efs)
+            {
+                wms_chukudan _ckd = ob_wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_ckid));
+                if (_ckd != null)
+                {
+                    _ckd.JihuaZT = 5;
+                    ob_wms_chukudanservice.UpdateEntity(_ckd);
+                }
+            }
+            return Json(1);
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Update()

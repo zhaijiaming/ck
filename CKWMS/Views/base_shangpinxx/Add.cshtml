@@ -9,6 +9,16 @@
         $("#pl_Fanwei").draggable({ handle: '.tuodong' }, { containment: "parent" });
         $("#pl_Cunchu").draggable({ handle: '.tuodong' }, { containment: "parent" });
         var _ispack = false;
+        //$("#shangpinxx_save").click(function () {
+        //    //check info
+        //    var _ml = $("#Muluxuhao").val();
+        //    var _fw = $("#hz_allow").val();
+        //    if (_fw.indexOf(_ml) == -1) {
+        //        alert("产品不在经营范围内，请重新设定！")
+        //        return;
+        //    }
+        //    $("form").submit();
+        //});
         $("#Huansuanlv").val("1");//换算率默认为1
         $("#makedate").datepicker();//时间
         $("#shouying").val("1");//默认首营状态为"新建"
@@ -100,8 +110,10 @@
             var _huozhuid = $("#huozhuid").val();
             if (_huozhuid == "") {
                 $("#select_cpx").text("");
+                $("#hz_allow").val("");
             } else {
                 getCpx(_huozhuid);
+                getAllow(_huozhuid);
             }
         });
         //注册证→获取其他信息
@@ -200,6 +212,15 @@
                     }
                     $("#pl_Fanwei tbody").html(filltable);
                 });
+    }
+    function getAllow(huozhuid) {
+        var _hzid = huozhuid;
+        $.post("/base_weituokehu/getcustomer", { cust: _hzid }, function (data) {
+            if (data == -1)
+                $("#hz_allow").val("");
+            else
+                $("#hz_allow").val(data.JingyingfanweiDM);
+        });
     }
     function getCpx(huozhuid) {
         var _huozhuid = huozhuid;
@@ -328,6 +349,7 @@
         <input type="hidden" name="Muluxuhao" id="muluxuhao" />
         <input type="hidden" name="zhucezhengbh" id="zhucezhengbh" />
         <input type="hidden" id="Shouying" name="Shouying" value="1" />
+        <input type="hidden" id="hz_allow" />
         <input type="hidden" id="MakeMan" name="MakeMan" value=@Session["user_id"] />
         <div class="page-header">
             <p>
