@@ -163,6 +163,11 @@ namespace CKWMS.Controllers
             ViewBag.wms_chukudan = tempData;
             return View(tempData);
         }
+        public ActionResult PrintTongxing() {
+            var id = Request["out"] ?? "";
+            ViewBag.id = id;
+            return View();
+        }
         public ActionResult OutOperate()
         {
             int userid = (int)Session["user_id"];

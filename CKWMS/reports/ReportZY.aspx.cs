@@ -15,6 +15,7 @@ namespace CKWMS.reports
     public partial class ReportZY : System.Web.UI.Page
     {
         private Iwms_jianhuoService ob_wms_jianhuoservice = ServiceFactory.wms_jianhuoservice;
+        private Iwms_chukumxService ob_wms_chukumxservice = ServiceFactory.wms_chukumxservice;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -28,7 +29,7 @@ namespace CKWMS.reports
                 if (Request.QueryString["pid"] != null)
                 {
                     name = Request.QueryString["pid"];
-                    
+                    _outid = Request.QueryString["out"] ?? "";
                     switch (name)
                     {
                         case "daviskw":
@@ -51,7 +52,6 @@ namespace CKWMS.reports
                             break;
                         case "JianHuoDan":
                             rptView.Reset();
-                            _outid = Request.QueryString["out"] ?? "";
                             rptView.LocalReport.ReportPath = "reports/rptJianHuoDan.rdlc";
                             rptView.LocalReport.DataSources.Clear();
                             DataTable dtjhd = _rds.Tables["JianHuoDan"];
@@ -62,7 +62,7 @@ namespace CKWMS.reports
                                 drjhd = dtjhd.NewRow();
                                 drjhd["Mingcheng"] = _pv.ShangpinMC;
                                 drjhd["Shuliang"] = _pv.DaijianSL;
-                                drjhd["ShixiaoRQ"] = _pv.ShixiaoRQ;
+                                drjhd["ShixiaoRQ"] = string.Format("{0:yyyy-MM-dd}", _pv.ShixiaoRQ);
                                 drjhd["Guige"] = _pv.Guige;
                                 drjhd["Pihao"] = _pv.Pihao;
                                 drjhd["Kuwei"] = _pv.Kuwei;
@@ -74,11 +74,11 @@ namespace CKWMS.reports
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["JianHuoDan"]));
 
                             wms_chukudan tempdata = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid));
-                            DataTable dtjhdt = _rds.Tables["JianHuoDanTitle"];
+                            DataTable dtjhdt = _rds.Tables["ChuKuDan"];
                             DataRow drjhdt =dtjhdt.NewRow();
                             drjhdt["Yunsongdizhi"] = tempdata.Yunsongdizhi;
                             drjhdt["Beizhu"] = tempdata.Beizhu;
-                            drjhdt["ChukuRQ"] = tempdata.ChukuRQ;
+                            drjhdt["ChukuRQ"] = string.Format("{0:yyyy-MM-dd}", tempdata.ChukuRQ);
                             drjhdt["ChukudanBH"] = tempdata.ChukudanBH;
                             drjhdt["Lianxiren"] = tempdata.Lianxiren;
                             drjhdt["LianxiDH"] = tempdata.LianxiDH;
@@ -86,7 +86,46 @@ namespace CKWMS.reports
                             drjhdt["HuozhuID"] = wtkhdata.Kehumingcheng;
                             drjhdt["KehuMC"] = tempdata.KehuMC;
                             dtjhdt.Rows.Add(drjhdt);
-                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["JianHuoDanTitle"]));
+                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["ChuKuDan"]));
+                            break;
+                        case "tongxingdan":
+                            rptView.Reset();
+                            rptView.LocalReport.ReportPath = "reports/rptTongxing.rdlc";
+                            rptView.LocalReport.DataSources.Clear();
+                            DataTable dttx = _rds.Tables["TongXingDan"];
+                            var _ckmxs = ob_wms_chukumxservice.LoadSortEntities(p => p.ID == int.Parse(_outid) && p.IsDelete == false, false, p => p.ID);
+                            DataRow drtx;
+                            foreach (wms_chukumx _mx in _ckmxs)
+                            {
+                                drtx = dttx.NewRow();
+                                drtx["Guige"] = _mx.Guige;
+                                drtx["ShangpinMC"] = _mx.ShangpinMC;
+                                drtx["Pihao"] = _mx.Pihao;
+                                drtx["ShixiaoRQ"] = string.Format("{0:yyyy-MM-dd}",_mx.ShixiaoRQ);
+                                drtx["Zhucezheng"] = _mx.Zhucezheng;
+                                drtx["ChukuSL"] = _mx.ChukuSL;
+                                drtx["JibenDW"] = _mx.JibenDW;
+                                drtx["Changjia"] = _mx.Changjia;
+                                drtx["Beizhu"] = _mx.Beizhu;
+                                dttx.Rows.Add(drtx);
+                            }
+                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["TongXingDan"]));
+
+                            wms_chukudan ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid));
+                            DataTable dtckd = _rds.Tables["ChuKuDan"];
+                            DataRow drckd = dtckd.NewRow();
+                            drckd["ChukudanBH"] = ckd.ChukudanBH;
+                            drckd["KehuMC"] = ckd.KehuMC;
+                            drckd["Yunsongdizhi"] = ckd.Yunsongdizhi;
+                            drckd["ChukuRQ"] = string.Format("{0:yyyy-MM-dd}", ckd.ChukuRQ);
+                            drckd["Lianxiren"] = ckd.Lianxiren;
+                            drckd["LianxiDH"] = ckd.LianxiDH;
+
+                            base_weituokehu wtkhdata1 = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == ckd.HuozhuID);
+                            drckd["HuozhuID"] = wtkhdata1.Kehumingcheng;
+
+                            dtckd.Rows.Add(drckd);
+                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["ChuKuDan"]));
                             break;
                         default:
                             break;

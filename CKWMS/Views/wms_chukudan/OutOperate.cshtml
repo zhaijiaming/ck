@@ -30,8 +30,9 @@
                     location.reload();
             });
         });
+        var outOperateid = $(".outOperateid").val();
         $(".icon-print").click(function () {
-            alert("随货通行打印");
+            window.open("/wms_chukudan/PrintTongxing?out=" + outOperateid);
         });
         $(".icon-edit-sign").click(function () {
             var _selv = $(this).parent().parent().find("input[type=checkbox]");
@@ -434,7 +435,7 @@
                     <tr>
                         <td>
                                 <label>
-                                    <input type="checkbox" value="@item.ID"
+                                    <input type="checkbox" class="outOperateid" value="@item.ID"
                                            data-hz="@item.HuozhuID"
                                            data-ly="@item.XinxiLY"
                                            data-lx="@item.YewuLX"
