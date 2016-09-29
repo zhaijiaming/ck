@@ -95,7 +95,7 @@ namespace CKWMS.reports
                             rptView.LocalReport.ReportPath = "reports/rptTongxing.rdlc";
                             rptView.LocalReport.DataSources.Clear();
                             DataTable dttx = _rds.Tables["TongXingDan"];
-                            var _ckmxs = ob_wms_chukumxservice.LoadSortEntities(p => p.ID == int.Parse(_outid) && p.IsDelete == false, false, p => p.ID);
+                            var _ckmxs = ob_wms_chukumxservice.LoadSortEntities(p => p.ChukuID == int.Parse(_outid) && p.IsDelete == false, false, p => p.Guige);
                             DataRow drtx;
                             foreach (wms_chukumx _mx in _ckmxs)
                             {
@@ -112,7 +112,7 @@ namespace CKWMS.reports
                                 drtx["ShengchanxukeBH"] = _scqy.ShengchanxukeBH;
                                 drtx["BeianBH"] = _scqy.BeianBH;
                                 wms_chukudan _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid));
-                                 drtx["ChunyunYQ"] = _ckd.ChunyunYQ;
+                                drtx["ChunyunYQ"] = _ckd.ChunyunYQ;
                                 dttx.Rows.Add(drtx);
                             }
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["TongXingDan"]));
