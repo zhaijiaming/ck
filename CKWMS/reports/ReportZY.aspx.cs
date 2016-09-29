@@ -69,6 +69,8 @@ namespace CKWMS.reports
                                 drjhd["ShijianSL"] = _pv.ShijianSL;
                                 drjhd["Fuhe"] = _pv.Fuhe;
                                 drjhd["Zhucezheng"] = _pv.Zhucezheng;
+                                drjhd["ShengchanRQ"] = string.Format("{0:yyyy-MM-dd}", _pv.ShengchanRQ);
+                                drjhd["Changjia"] = _pv.Changjia;
                                 dtjhd.Rows.Add(drjhd);
                             }
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["JianHuoDan"]));
@@ -106,7 +108,11 @@ namespace CKWMS.reports
                                 drtx["ChukuSL"] = _mx.ChukuSL;
                                 drtx["JibenDW"] = _mx.JibenDW;
                                 drtx["Changjia"] = _mx.Changjia;
-                                drtx["Beizhu"] = _mx.Beizhu;
+                                base_shengchanqiye _scqy = ServiceFactory.base_shengchanqiyeservice.GetEntityById(p => p.Qiyemingcheng == _mx.Changjia);
+                                drtx["ShengchanxukeBH"] = _scqy.ShengchanxukeBH;
+                                drtx["BeianBH"] = _scqy.BeianBH;
+                                wms_chukudan _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid));
+                                 drtx["ChunyunYQ"] = _ckd.ChunyunYQ;
                                 dttx.Rows.Add(drtx);
                             }
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["TongXingDan"]));
