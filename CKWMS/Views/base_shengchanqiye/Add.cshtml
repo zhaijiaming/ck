@@ -112,9 +112,10 @@
                         $("#pl_Fanwei").hide();
                         var bj = "0";
                     }
+                    $("#guanlifenlei").val("全部");
+                    GetFanwei1(bj);
                 }
-                $("#guanlifenlei").val("全部");
-                GetFanwei1(bj);
+                
             });
             //全选
             $("#bt_fanwei_all").click(function () {
@@ -157,9 +158,9 @@
                 }
             });
 
-            $("#123").click(function () {
-                $("form").submit();
-            })
+            //$("#123").click(function () {
+            //    $("form").submit();
+            //})
         });
         //点击修改or增加
         function Bt_Fanweiadd() {

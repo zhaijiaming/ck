@@ -100,6 +100,7 @@
     
         var form = $("#tempform");
         form.submit(function () {
+            //$("#qyiddaima").val($("#select_quyu option:selected").val());
             loadingShow();
             if ($("#huojia").val() == "" || $("#lieshu").val() == "" || $("#censhu").val() == "" || $("#select_quyu").val() == null || $("#huojia1").val() == "起始序号" || $("#lieshu1").val() == "起始序号" || $("#censhu1").val() == "起始序号"||$("#huojia1").val() == "" || $("#lieshu1").val() == "" || $("#censhu1").val() == "") {
                 Finished();
@@ -129,13 +130,9 @@
         });
 
         //$("#12345").click(function () {
-        //    $.post("/wms_kuwei/Xuhao",
-        //    {
-                
-        //    },
-        //function (result) {
-        //    alert(result.huojia)
-        //});
+            
+        //    $("#qyiddaima").val($("#select_quyu option:selected").val());
+          
         //})
 
     });
@@ -332,6 +329,7 @@
         <input type="hidden" name="id" />
         <input type="hidden" id="makeman" name="makeman" value="@Session["user_id"]" />
         <input type="hidden" id="qydaima" name="qydaima" />
+        @*<input type="hidden" id="qyiddaima" name="qyiddaima" />*@
         @*<button type="button" id="12345" >12345</button>*@
         <div class="page-header">
             <p>
@@ -443,21 +441,27 @@
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.MaxWeight, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
+                <div class="col-sm-8">
                     @Html.TextBoxFor(m => m.MaxWeight, new { @class = "form-control" })
+                </div>              
+                <div class="col-sm-2">
+                    <input value="千克(KG)" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.MaxVolumn, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
+                <div class="col-sm-8">
                     @Html.TextBoxFor(m => m.MaxVolumn, new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    <input value="立方米(M^3)" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.QiyongSF, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     @*@Html.TextBoxFor(m => m.QiyongSF, new { @class = "form-control" })*@
-                    @Html.CheckBoxFor(m => m.QiyongSF, new { @class = "form-control" })
+                    @Html.CheckBoxFor(m => m.QiyongSF, new { @class = "form-control",@checked =true })
                 </div>
             </div>
             <div class="form-group">

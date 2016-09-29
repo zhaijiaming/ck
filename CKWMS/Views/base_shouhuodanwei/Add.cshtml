@@ -18,39 +18,64 @@
         //经营范围
         //$("#pl_Fanwei").hide();
         $("#pl_Fanwei").draggable({ handle: '.tuodong' });
-        $("#bt_Fanweiadd").click(function () {
-            GetQixiemulu1();//获取医疗器械目录大类
-            document.getElementById("pl_Fanwei").removeAttribute("hidden");
-            $("#pl_Fanwei").show();
-        });
 
-        $("#pl_close").click(function () {
-            $("#pl_Fanwei").hide();
-        });
+        var bj = 0;
+        GetFanwei1();
 
-        //添加数据
-        $("#bt_fanwei_add").click(function () {
-            //记录数据
+        //显示全部
+        $("#bt_fanwei_showall").click(function () {
+            var bj = 1;
+            var tempid = "";
+            $("#qxdatatable tr input[type=checkbox]").each(function () {
+                if (this.checked) {
+                    tempid = tempid + $(this).parent().find(".xulieid").val() + ";";
+                }
+            });
             var fw = document.getElementsByClassName('xulieid');
             var i = $("#jingyingfanweidm").val();
             var ti = i.split(";");
-            var j = $("#jingyingfanwei").val();
-            var tj = j.split(";");
-            //var xiaolei = new Array();
-            //var miaoshu = new Array();
-            //var x = 0;
-            //for (var k = 0; k < ti.length; k++, x = 0) {
-            //    for (var l = 0; l < fw.length; l++) {
-            //        if (ti[k] == $(".xulieid").eq(l).val()) {
-            //            x = 1;
-            //        }
-            //    }
-            //    if (x != 1) {
-            //        xiaolei.push(ti[k]);
-            //        miaoshu.push(tj[k]);
-            //    }
-            //}
+            //ti.splice(ti.length - 1);
+            var xiaolei = new Array();
+            var x = 0;
+            for (var k = 0; k < ti.length; k++, x = 0) {
+                for (var l = 0; l < fw.length; l++) {
+                    if (ti[k] == $(".xulieid").eq(l).val()) {
+                        x = 1;
+                    }
+                }
+                if (x != 1) {
+                    xiaolei.push(ti[k]);
+                }
+            }
+            for (k = 0; k < xiaolei.length; k++) {
+                tempid = tempid + xiaolei[k] + ";";
+            }
+            tempid = tempid.substring(0, tempid.length - 1);
+            GetFanwei(bj, tempid);
+        });
 
+        //显示大类
+        $("#bt_fanwei_showdalei").click(function () {
+            var bj = 1;
+            var tempid = "";
+            $("#qxdatatable tr input[type=checkbox]").each(function () {
+                if (this.checked) {
+                    tempid = tempid + $(this).parent().find(".xulieid").val() + ";";
+                }
+            });
+            GetFanwei1(bj, tempid);
+        });
+
+        //关闭窗口
+        $("#pl_close").click(function () {
+            $("#pl_Fanwei").hide();
+            var bj = 0;
+            $("#guanlifenlei").val("全部");
+            GetFanwei1(bj);
+        });
+
+        //添加范围
+        $("#bt_fanwei_add").click(function () {
             var _jyfw = "";
             var _jyfw1 = "";
             var _jyfw2 = "";
@@ -79,19 +104,8 @@
             if (_jyfw1 == "")
                 _jyfw = _jyfw.replace("一类:", "");
 
-            //for (k = 0; k < xiaolei.length; k++) {
-            //    _jyfwjm = _jyfwjm + xiaolei[k] + ";";
-            //}
-            //_jyfwjm = _jyfwjm.substring(0, _jyfwjm.length - 1);
-
-            //for (k = 0; k < miaoshu.length; k++) {
-            //    _jyfw = _jyfw + miaoshu[k] + ";";
-            //}
-            //_jyfw = _jyfw.substring(0, _jyfw.length - 1);
-
             var _addok = confirm("确定要修改经营范围吗？");
             if (_addok) {
-
                 if (_jyfw.length >= 512) {
                     alert("所选数据超过范围，请重新选择。")
                 }
@@ -99,64 +113,69 @@
                     $("#jingyingfanwei").val(_jyfw);
                     $("#jingyingfanweidm").val(_jyfwjm);
                     $("#pl_Fanwei").hide();
-
+                    var bj = "0";
                 }
+                $("#guanlifenlei").val("全部");
+                GetFanwei1(bj);
             }
+            
         });
-
         //全选
         $("#bt_fanwei_all").click(function () {
             $(".xulieid").prop("checked", true);
-        });
-
-        //取消全选
+        })
+        //全部取消
         $("#bt_fanwei_clear").click(function () {
             $(".xulieid").prop("checked", false);
+        })
+        //选择管理分类
+        $("#guanlifenlei").change(function () {
+            var fl = document.getElementsByClassName('glfl');
+            var lb = $("#guanlifenlei").find("option:selected").text();
+            if (lb == "一类") {
+                for (var i = 0; i < fl.length; i++) {
+                    if ($(".glfl").eq(i).text() == "1") {
+                        $(".bg").eq(i).show();
+                    }
+                    else { $(".bg").eq(i).hide(); }
+                }
+            }
+            if (lb == "二类") {
+                for (var i = 0; i < fl.length; i++) {
+                    if ($(".glfl").eq(i).text() == "2") {
+                        $(".bg").eq(i).show();
+                    }
+                    else { $(".bg").eq(i).hide(); }
+                }
+            }
+            if (lb == "三类") {
+                for (var i = 0; i < fl.length; i++) {
+                    if ($(".glfl").eq(i).text() == "3") {
+                        $(".bg").eq(i).show();
+                    }
+                    else { $(".bg").eq(i).hide(); }
+                }
+            }
+            if (lb == "全部") {
+                $(".bg").show();
+            }
         });
-
-        //显示大类
-        $("#bt_fanwei_showdalei").click(function () {
-            GetQixiemulu1();
-        });
-
-        //显示全部
-        $("#bt_fanwei_showall").click(function () {
-            GetQixiemulu();
-        });
-
     });
 
-    function GetQixiemulu() {
+    //点击修改or增加
+    function Bt_Fanweiadd() {
+        document.getElementById("pl_Fanwei").removeAttribute("hidden");
+        $("#pl_Fanwei").show();
+    }
+    function GetFanwei1(a, b) {
+        var bj = a;
+        var tempid = b;
         var filltable = "";
-
-        $.post(
-                "/base_qixiemulu/GetQixiemulu",
-                {},
-                function (data) {
-                    for (var i in data) {
-                        filltable = filltable + '<tr class="bg"><td><div class="checkbox"><label><input type="checkbox" class ="xulieid" value="';
-                        filltable = filltable + data[i].ID;
-                        filltable = filltable + '"></label></div></td><td style="width:80px"><span class="bh">';
-                        filltable = filltable + data[i].Bianhao;
-                        filltable = filltable + '</span></td><td style="width:150px"><span class="mc">';
-                        filltable = filltable + data[i].Mingcheng;
-                        filltable = filltable + '</span></td><td style="width:800px">';
-                        filltable = filltable + data[i].Miaoshu;
-                        filltable = filltable + '</td><td style="width:100px"><span class="glfl">';
-                        filltable = filltable + data[i].GuanliFL;
-                        filltable = filltable + '</span></td></tr>';
-                    }
-                    $("#pl_Fanwei tbody").html(filltable);
-                    GetExistingData();
-                });
-    };
-
-    function GetQixiemulu1() {
-        var filltable = "";
-
         $.post(
                 "/base_qixiemulu/GetQixiemulu1",
-                {},
+                {
+
+                },
                 function (data) {
                     for (var i in data) {
                         filltable = filltable + '<tr class="bg"><td><div class="checkbox"><label><input type="checkbox" class ="xulieid" value="';
@@ -172,30 +191,54 @@
                         filltable = filltable + '</span></td></tr>';
                     }
                     $("#pl_Fanwei tbody").html(filltable);
-                    GetExistingData();
+                    GetData(bj, tempid)
                 });
-    };
-
-    function GetExistingData() {
-        //var fw = $("input[type=checkbox]").val();
-
-        text = $("input:checkbox").map(function(index,elem) {
-            return $(elem).val();
-        }).get().join(',');
-        //alert("选中的checkbox的值为："+text);
-        var d = text.split(",");
-        //alert(d[0]);
-
-        var i = $("#jingyingfanweidm").val();
-        var t = i.split(";");
-
+    }
+    function GetFanwei(a, b) {
+        var bj = a;
+        var tempid = b;
+        var filltable = "";
+        $.post(
+                "/base_qixiemulu/GetQixiemulu",
+                {
+                    //qxml: _qxmlid
+                },
+                function (data) {
+                    for (var i in data) {
+                        filltable = filltable + '<tr class="bg"><td><div class="checkbox"><label><input type="checkbox" class ="xulieid" value="';
+                        filltable = filltable + data[i].ID;
+                        filltable = filltable + '"></label></div></td><td style="width:80px"><span class="bh">';
+                        filltable = filltable + data[i].Bianhao;
+                        filltable = filltable + '</span></td><td style="width:150px"><span class="mc">';
+                        filltable = filltable + data[i].Mingcheng;
+                        filltable = filltable + '</span></td><td style="width:800px">';
+                        filltable = filltable + data[i].Miaoshu;
+                        filltable = filltable + '</td><td style="width:100px"><span class="glfl">';
+                        filltable = filltable + data[i].GuanliFL;
+                        filltable = filltable + '</span></td></tr>';
+                    }
+                    $("#pl_Fanwei tbody").html(filltable);
+                    GetData(bj, tempid)
+                });
+    }
+    //打勾
+    function GetData(a, tempid) {
+        var fw = document.getElementsByClassName('xulieid');
+        var bj = a;
+        var i = tempid;
+        if (bj == 0) {
+            var i = $("#jingyingfanweidm").val();
+        }
+        if (i != null) {
+            var t = i.split(";");
+        } else { t = "" }
         for (var k = 0; k < t.length; k++) {
-            for (var l = 0; l < d.length; l++) {
-                if (t[k] == d[l])
-                    $("input:checkbox").eq(l).attr("checked", true);
+            for (var l = 0; l < fw.length; l++) {
+                if (t[k] == $(".xulieid").eq(l).val())
+                    $("#qxdatatable tr input[type=checkbox]").eq(l).attr("checked", true);
             }
         }
-    };
+    }
 </script>
 <div class="breadcrumbs" id="breadcrumbs">
     <ul class="breadcrumb">
@@ -320,7 +363,7 @@
             <div class="form-group">
                 <div class="col-sm-2">
                     <label for="name">经营范围</label><br />
-                    <button type="button" class="icon-edit" id="bt_Fanweiadd">修改</button>
+                    <button type="button" class="icon-add" id="bt_Fanweiadd" onclick="Bt_Fanweiadd()">增加</button>
                 </div>
                 <div class="col-sm-10">
                     <textarea type="text" class="form-control" readonly id="jingyingfanwei" name="jingyingfanwei" rows="3"></textarea>
@@ -437,6 +480,13 @@
             <button type="button" class="btn btn-default " id="bt_fanwei_clear">全部取消</button>
             <button type="button" class="btn btn-default " id="bt_fanwei_showdalei">显示大类</button>
             <button type="button" class="btn btn-default " id="bt_fanwei_showall">显示全部</button>
+            <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;管理类别</label>
+            <select name="guanlifenlei" id="guanlifenlei">
+                <option value="全部">全部</option>
+                <option value="一类">一类</option>
+                <option value="二类">二类</option>
+                <option value="三类">三类</option>
+            </select>
             <table class="table" id="qxdatatable">
                 <caption></caption>
                 <thead style="display:block" class="tuodong">

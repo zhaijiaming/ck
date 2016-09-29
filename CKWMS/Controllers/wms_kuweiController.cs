@@ -263,17 +263,22 @@ namespace CKWMS.Controllers
 
         public ActionResult Savekw()
         {
-            var tempData = ob_wms_kuweiservice.LoadSortEntities(wms_kuwei => wms_kuwei.IsDelete == false, false, wms_kuwei => wms_kuwei.Huojia);
-            List<KuWei> _kwlist = new List<KuWei>();
-            KuWei _kw;
-            foreach (var kw in tempData)
+            string quyuid = Request["quyuid"] ?? "";
+            int? huojiaxh;
+            var tempData = ob_wms_kuweiservice.LoadSortEntities(wms_kuwei => wms_kuwei.IsDelete == false && wms_kuwei.QuyuID == int.Parse(quyuid), false, wms_kuwei => wms_kuwei.Huojia);
+            if (tempData.Count()!=0)
             {
-                _kw = new KuWei();
-                _kw.Huojia = (int)kw.Huojia;
-                _kwlist.Add(_kw);
+                List<KuWei> _kwlist = new List<KuWei>();
+                KuWei _kw;
+                foreach (var kw in tempData)
+                {
+                    _kw = new KuWei();
+                    _kw.Huojia = (int)kw.Huojia;
+                    _kwlist.Add(_kw);
+                }
+                huojiaxh = _kwlist[0].Huojia;
             }
-
-            int? huojiaxh = _kwlist[0].Huojia;
+            else huojiaxh = 0;
             int _huojiaxh;
             int _lieshuxh;
             int _censhuxh;
@@ -282,6 +287,7 @@ namespace CKWMS.Controllers
             string id = Request["id"] ?? "";
             //string quyuid = Request["quyuid"] ?? "";
             string mingcheng = Request["mingcheng"] ?? "";
+            string qydaima = Request["qydaima"] ?? "";
             //string huojia = Request["huojia"] ?? "";
             //string censhu = Request["censhu"] ?? "";
             string shangpinsl = Request["shangpinsl"] ?? "";
@@ -301,11 +307,11 @@ namespace CKWMS.Controllers
             string huojia = Request["huojia"] ?? "";
             string lieshu = Request["lieshu"] ?? "";
             string censhu = Request["censhu"] ?? "";
-            string qydaima = Request["qydaima"] ?? "";
+            
             int _huojia = int.Parse(huojia);
             int _lieshu = int.Parse(lieshu);
             int _censhu = int.Parse(censhu);
-            string quyuid = Request["quyuid"] ?? "";
+          
             string hj = Request["huojia1"] ?? "";
             string ls = Request["lieshu1"] ?? "";
             string cs = Request["censhu1"] ?? "";
@@ -422,16 +428,9 @@ namespace CKWMS.Controllers
                                 zimu = cs[0];
                                 if (zimu >= 48 && zimu <= 57)
                                 {
-                                    if ((int.Parse(cs) + k) < 10)
-                                    {
-                                        _cs = "0" + (int.Parse(cs) + k).ToString();
-                                    }
-                                    else
-                                    {
-                                        _cs = (int.Parse(cs) + k).ToString();
-                                    }
+                                    _cs = (int.Parse(cs) + k).ToString();
                                 }
-                                else { tempchar = (char)(zimu + k); _cs = tempchar.ToString() + "1"; }
+                                else { tempchar = (char)(zimu + k); _cs = tempchar.ToString(); }
                             }
                             else /*if (csi.Length == 2)*/
                             {
@@ -440,7 +439,7 @@ namespace CKWMS.Controllers
                             //else { }
 
                             wms_kuwei ob_wms_kuwei = new wms_kuwei();
-                            ob_wms_kuwei.Mingcheng = qydaima + "-" + _hj + "-" + _ls + "-" + _cs;
+                            ob_wms_kuwei.Mingcheng = qydaima + "-" + _hj + "-" + _ls + "-" + _cs + "1";
 
                             ob_wms_kuwei.QuyuID = quyuid == "" ? 0 : int.Parse(quyuid);
                             //ob_wms_kuwei.Mingcheng = mingcheng.Trim();

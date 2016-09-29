@@ -19,6 +19,10 @@
             window.open("/wms_kuwei/daviskw");
         });
 
+        $("#quanxuan").click(function () {
+            $(".checkbox").prop("checked", true);
+        })
+
     });
     function AddInfo() {
         location.href = "/wms_kuwei/Add";
@@ -98,7 +102,8 @@
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
             <button type="button" class="btn btn-default " id="bt_addkwInfo" onclick="AddkwInfo()"><i class="icon-adn"></i>生成库位</button>
             <button type="button" class="btn btn-default " id="bt_daviskw"><i class="icon-adn"></i>DAVIS</button>
-       </p>
+            <button type="button" class="btn btn-default " id="quanxuan">全选</button>
+        </p>
     </div>
     <div class="row">
         <table class="table table-condensed table-hover" id="mydatatable">
