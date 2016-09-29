@@ -309,9 +309,9 @@ namespace CKWMS.Controllers
             string hj = Request["huojia1"] ?? "";
             string ls = Request["lieshu1"] ?? "";
             string cs = Request["censhu1"] ?? "";
-            string hji = int.Parse(hj).ToString();
-            string lsi = int.Parse(ls).ToString();
-            string csi = int.Parse(cs).ToString();
+            string hji = hj.ToString();
+            string lsi = ls.ToString();
+            string csi = cs.ToString();
             string _hj = "";
             string _ls = "";
             string _cs = "";

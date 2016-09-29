@@ -20,7 +20,7 @@
         $("#huojia").change(function () {
             var hj = $("#huojia").val();
             if (!/^[0-9]*$/.test(hj)) { alert("请输入数量!");$("#huojia").val(""); var hj = $("#huojia").val(); }
-            if (hj > 200) { alert("数量超过范围！"); $("#huojia").val(""); var hj = $("#huojia").val(); }
+            if (hj > 200) { alert("数量超过范围！（最多200个）"); $("#huojia").val(""); var hj = $("#huojia").val(); }
             var hj1 = $("#huojia1").val();
             var hj2 = $("#huojia2").val();
             Chhuojia(hj, hj1, hj2);
@@ -43,7 +43,7 @@
         $("#lieshu").change(function () {
             var ls = $("#lieshu").val();
             if (!/^[0-9]*$/.test(ls)) { alert("请输入数量!"); $("#lieshu").val(""); var ls = $("#lieshu").val(); }
-            if (ls > 50) { alert("数量超过范围！"); $("#lieshu").val(""); var ls = $("#lieshu").val(); }
+            if (ls > 50) { alert("数量超过范围！（最多50列）"); $("#lieshu").val(""); var ls = $("#lieshu").val(); }
             var ls1 = $("#lieshu1").val();
             var ls2 = $("#lieshu2").val();
             Chlieshu(ls, ls1, ls2);
@@ -65,7 +65,7 @@
         $("#censhu").change(function () {
             var cs = $("#censhu").val();
             if (!/^[0-9]*$/.test(cs)) { alert("请输入数量!"); $("#censhu").val(""); var cs = $("#censhu").val(); }
-            if (cs > 10) { alert("数量超过范围！"); $("#censhu").val(""); var cs = $("#censhu").val(); }
+            if (cs > 10) { alert("数量超过范围！（最多10层）"); $("#censhu").val(""); var cs = $("#censhu").val(); }
             var cs1 = $("#censhu1").val();
             var cs2 = $("#censhu2").val();
             Chcenshu(cs, cs1, cs2);
