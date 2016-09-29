@@ -11,6 +11,9 @@
         $("tr").bind("dblclick", function () {
             var u_id = $(this).find('td').eq(0).find('input').val();
         });
+        $("#bt_print").click(function () {
+            alert("print now");
+        });
         $("#mydatatable tbody tr").each(function () {
             if ($(this).find("td").eq(14).html() == "不合格")
                 $(this).addClass("red");
@@ -67,7 +70,8 @@
         <p>
             <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
-        </p>
+            <button type="button" class="btn btn-default " id="bt_print"><i class="icon-print"></i>打印</button>
+       </p>
     </div>
     <div class="row">
         <table class="table table-condensed table-hover" id="mydatatable">

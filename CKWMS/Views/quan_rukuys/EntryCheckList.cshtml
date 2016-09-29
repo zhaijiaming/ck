@@ -11,6 +11,20 @@
         $("tr").bind("dblclick", function () {
             var u_id = $(this).find('td').eq(0).find('input').val();
         });
+        $("#bt_fn_print").click(function () {
+            alert("print now");
+            $("#pl_fun").hide();
+        });
+        $("#pl_fun").draggable({ containment: "parent" });
+        $("#mydatatable tbody").on("dblclick", "tr", function () {
+            $("#pl_fun").show();
+        });
+        $("#pl_fn_cancel").click(function () {
+            $("#pl_fun").hide();
+        });
+        $("#pl_fn_close").click(function () {
+            $("#pl_fun").hide();
+        });
         $("#yhsm").change(function () {
             $("#YanshouSM").val($(this).find("option:selected").text());
         });
@@ -310,6 +324,18 @@
         <div class="form-group">
             <div class="col-sm-6 center"><p id="yssave" class="btn btn-default"><i class="icon-save"></i>完成</p></div>
             <div class="col-sm-6 center"><p id="yscancel" class="btn btn-default"><i class="glyphicon-backward"></i>取消</p></div>
+        </div>
+    </div>
+</div>
+<div id="pl_fun" class="panel panel-info" style="display:none;position:absolute;top:200px;left:300px;width:200px;height:200px;overflow:auto;">
+    <div class="panel-heading">
+        <h3 class="panel-title">功能菜单<button id="pl_fn_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="center"><p id="bt_fn_print" class="btn btn-default">打印</p></div>
+            <br />
+            <div class="center"><p id="pl_fn_cancel" class="btn btn-default">取消</p></div>
         </div>
     </div>
 </div>

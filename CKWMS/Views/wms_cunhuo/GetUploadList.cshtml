@@ -8,13 +8,29 @@
 }
 <script type="text/javascript">
     $(document).ready(function () {
-        $("tr").bind("dblclick", function () {
-            var _sl = $(this).find('td').eq(13).html();
+        var _selrow;
+        $("#bt_fn_print").click(function () {
+            alert("print now");
+            $("#pl_fun").hide();
+        });
+        $("#pl_fun").draggable({ containment: "parent" });
+        $("#mydatatable tbody").on("dblclick", "tr", function () {
+            _selrow = $(this);
+            $("#pl_fun").show();
+        });
+        $("#pl_fn_cancel").click(function () {
+            $("#pl_fun").hide();
+        });
+        $("#pl_fn_close").click(function () {
+            $("#pl_fun").hide();
+        });
+        $("#bt_fn_del").click(function () {
+            var _sl = _selrow.find('td').eq(13).html();
             if (eval(_sl) <= 0)
                 return;
-            if ($(this).find("input").data("sid") == "")
+            if (_selrow.find("input").data("sid") == "")
                 return;
-            var u_id = $(this).find('input');
+            var u_id = _selrow.find('input');
             if (confirm("确实要删除此上架记录吗？") == true) {
                 var _sjid = u_id.data("sid");
                 $.post("/wms_cunhuo/delete", { del: _sjid }, function (data) { location.reload(); });
@@ -269,6 +285,20 @@
         <div class="form-group">
             <div class="col-sm-6 center"><p id="sjsave" class="btn btn-default"><i class="icon-save"></i>完成</p></div>
             <div class="col-sm-6 center"><p id="sjcancel" class="btn btn-default"><i class="glyphicon-backward"></i>取消</p></div>
+        </div>
+    </div>
+</div>
+<div id="pl_fun" class="panel panel-info" style="display:none;position:absolute;top:200px;left:300px;width:200px;height:250px;overflow:auto;">
+    <div class="panel-heading">
+        <h3 class="panel-title">功能菜单<button id="pl_fn_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="center"><p id="bt_fn_del" class="btn btn-default">删除</p></div>
+            <br />
+            <div class="center"><p id="bt_fn_print" class="btn btn-default">打印</p></div>
+            <br />
+            <div class="center"><p id="pl_fn_cancel" class="btn btn-default">取消</p></div>
         </div>
     </div>
 </div>

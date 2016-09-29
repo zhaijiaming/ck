@@ -15,6 +15,23 @@
             //    location.href = url_go;
             //}
         });
+        $("#bt_print").click(function () {
+            alert("print now");
+        });
+        $("#bt_fn_print").click(function () {
+            alert("print now");
+            $("#pl_fun").hide();
+        });
+        $("#pl_fun").draggable({ handle: ".panel-heading" }, { containment: "parent" });
+        //$("#mydatatable tbody").on("dblclick", "tr", function () {
+        //    $("#pl_fun").show();
+        //});
+        $("#pl_fn_cancel").click(function () {
+            $("#pl_fun").hide();
+        });
+        $("#pl_fn_close").click(function () {
+            $("#pl_fun").hide();
+        });
     });
     function AddInfo() {
         location.href = "/wms_chukumx/Add";
@@ -57,6 +74,7 @@
             <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>*@
             <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
+            <button type="button" class="btn btn-default " id="bt_print" ><i class="icon-print"></i>打印</button>
         </p>
     </div>
     <div class="row">
@@ -129,5 +147,17 @@
     </div>
     <div class="pager">
         @Html.PagedListPager((IPagedList)Model, page => Url.Action("GetOutDetail", new { page }))
+    </div>
+</div>
+<div id="pl_fun" class="panel panel-info" style="display:none;position:absolute;top:200px;left:300px;width:200px;height:200px;overflow:auto;">
+    <div class="panel-heading">
+        <h3 class="panel-title">功能菜单<button id="pl_fn_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="center"><p id="bt_fn_print" class="btn btn-default">打印</p></div>
+            <br />
+            <div class="center"><p id="bt_fn_cancel" class="btn btn-default">取消</p></div>
+        </div>
     </div>
 </div>

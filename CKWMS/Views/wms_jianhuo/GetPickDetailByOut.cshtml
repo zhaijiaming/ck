@@ -8,7 +8,6 @@
 }
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#pl_fun").draggable({ handle: '.tuodong' }, { containment: "parent" });
         $("tr").bind("dblclick", function () {
             var u_id = $(this).find('td').eq(0).find('input').val();
             //if (u_id != null) {
@@ -19,6 +18,16 @@
         var chukuid = $("#ckd").val();
         $("#bt_fn_print").click(function () {
             window.open("/wms_jianhuo/PrintJianhuodan?id=" + chukuid);
+            $("#pl_fun").hide();
+        });
+        $("#pl_fun").draggable({ handle: '.tuodong' }, { containment: "parent" });
+        $("#mydatatable tbody").on("dblclick", "tr", function () {
+            $("#pl_fun").show();
+        });
+        $("#pl_fn_cancel").click(function () {
+            $("#pl_fun").hide();
+        });
+        $("#pl_fn_close").click(function () {
             $("#pl_fun").hide();
         });
         $(".icon-hand-right").click(function () {
@@ -39,15 +48,6 @@
                 $(this).addClass("green");
             if (_cksl > _djsl && _djsl > 0)
                 $(this).addClass("red");
-        });
-        $("#mydatatable tbody").on("dblclick", "tr", function () {
-            $("#pl_fun").show();
-        });
-        $("#pl_fn_cancel").click(function () {
-            $("#pl_fun").hide();
-        });
-        $("#pl_fn_close").click(function () {
-            $("#pl_fun").hide();
         });
         $("#pl_pk_close").click(function () {
             $("#pl_pk").hide();

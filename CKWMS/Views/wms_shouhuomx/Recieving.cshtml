@@ -9,8 +9,64 @@
     try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
     $(document).ready(function () {
         var _selall = false;
+        var _selr;
         $("#ShengchanRQ").datepicker();
         $("#ShixiaoRQ").datepicker();
+        $("#bt_fn_print").click(function () {
+            alert("print now");
+            $("#pl_fun").hide();
+        });
+        $("#bt_fn_del").click(function () {
+            var _sh = _selr.find("input");
+            if (eval(_sh.data("ys"))) {
+                alert("货品已验收，不能删除！");
+                return;
+            }
+            if (eval(_sh.data("sj")) > 0) {
+                alert("货品已上架，不能删除！");
+                return;
+            }
+            if (confirm("确实要删除此条收货记录吗？")) {
+                $.post("/wms_shouhuomx/delbyid",
+                     {
+                         del: _selr.find("input[type=checkbox]").val(),
+                     },
+                    function (data) {
+                        if (data == -1)
+                            alert("删除记录出错！");
+                        else {
+                            var _delmx = _selr.find("input[type=checkbox]").data("mx");
+                            var _delnum = _selr.find("input[type=checkbox]").data("sl");
+                            $("#dt_rk tr input[type=checkbox]").each(function () {
+                                if (eval($(this).val()) == eval(_delmx)) {
+                                    var _seltr = $(this).parent().parent().parent().parent();
+                                    var _ornum = _seltr.find('td').eq(11).html();
+                                    var _orys = _seltr.find('td').eq(12).html();
+                                    _seltr.find('td').eq(12).html(eval(_orys) - eval(_delnum));
+                                    if (eval(_ornum) == eval(_num)) {
+                                        if (eval(_orys) > 0)
+                                            _seltr.removeClass("blue");
+                                        _seltr.addClass("green");
+                                    }
+                                    if (eval(_ornum) > eval(_num) && eval(_num) > 0)
+                                        _seltr.addClass("blue");
+                                }
+                            });
+                            location.reload();
+                        }
+                    });
+            }
+        });
+        $("#pl_fun").draggable({ containment: "parent" });
+        //$("#dt_sh tbody").on("dblclick", "tr", function () {
+        //    $("#pl_fun").show();
+        //});
+        $("#bt_fn_cancel").click(function () {
+            $("#pl_fun").hide();
+        });
+        $("#pl_fn_close").click(function () {
+            $("#pl_fun").hide();
+        });
         $(".icon-briefcase").click(function () {
             var _rk = $(this).parent().parent().parent().find("input");
             var _onum = $(this).parent().parent().parent().find('td').eq(11).html();
@@ -87,12 +143,12 @@
                                 var _orys = _seltr.find('td').eq(12).html();
                                 _seltr.find('td').eq(12).html(eval(_num) + eval(_orys));
                                 if (eval(_ornum) == eval(_num)) {
-                                    if (_seltr.hasClass("red"))
-                                        _seltr.removeClass("red");
+                                    if (_seltr.hasClass("blue"))
+                                        _seltr.removeClass("blue");
                                     _seltr.addClass("green");
                                 }
                                 if (eval(_ornum) > eval(_num) && eval(_num) > 0) {
-                                    _seltr.addClass("red");
+                                    _seltr.addClass("blue");
                                 }
                             }
                         });
@@ -115,50 +171,50 @@
             if (eval(_orn) == eval(_oys))
                 $(this).addClass("green");;
             if (eval(_orn) > eval(_oys) && eval(_oys) > 0)
-                $(this).addClass("red");;
+                $(this).addClass("blue");;
         });
         $("#dt_sh tbody").on("dblclick", "tr", function () {
             var _sh = $(this).find("input");
-            if(eval(_sh.data("ys")))
-            {
-                alert("货品已验收，不能删除！");
-                return;
-            }
-            if (eval(_sh.data("sj")) > 0)
-            {
-                alert("货品已上架，不能删除！");
-                return;
-            }
-            if (confirm("确实要删除此条收货记录吗？")) {
-                $.post("/wms_shouhuomx/delbyid",
-                     {
-                         del: $(this).find("input[type=checkbox]").val(),
-                     },
-                    function (data) {
-                        if (data == -1)
-                            alert("删除记录出错！");
-                        else {
-                            var _delmx = $(this).find("input[type=checkbox]").data("mx");
-                            var _delnum = $(this).find("input[type=checkbox]").data("sl");
-                            $("#dt_rk tr input[type=checkbox]").each(function () {
-                                if (eval($(this).val()) == eval(_delmx)) {
-                                    var _seltr = $(this).parent().parent().parent().parent();
-                                    var _ornum = _seltr.find('td').eq(11).html();
-                                    var _orys = _seltr.find('td').eq(12).html();
-                                    _seltr.find('td').eq(12).html(eval(_orys) - eval(_delnum));
-                                    if (eval(_ornum) == eval(_num)) {
-                                        if (eval(_orys) > 0)
-                                            _seltr.removeClass("red");
-                                        _seltr.addClass("green");
-                                    }
-                                    if (eval(_ornum) > eval(_num) && eval(_num) > 0)
-                                        _seltr.addClass("red");
-                                }
-                            });
-                            location.reload();
-                        }
-                    });
-            }
+            _selr = $(this);
+            $("#pl_fun").show();
+            //if (eval(_sh.data("ys"))) {
+            //    alert("货品已验收，不能删除！");
+            //    return;
+            //}
+            //if (eval(_sh.data("sj")) > 0) {
+            //    alert("货品已上架，不能删除！");
+            //    return;
+            //}
+            //if (confirm("确实要删除此条收货记录吗？")) {
+            //    $.post("/wms_shouhuomx/delbyid",
+            //         {
+            //             del: $(this).find("input[type=checkbox]").val(),
+            //         },
+            //        function (data) {
+            //            if (data == -1)
+            //                alert("删除记录出错！");
+            //            else {
+            //                var _delmx = $(this).find("input[type=checkbox]").data("mx");
+            //                var _delnum = $(this).find("input[type=checkbox]").data("sl");
+            //                $("#dt_rk tr input[type=checkbox]").each(function () {
+            //                    if (eval($(this).val()) == eval(_delmx)) {
+            //                        var _seltr = $(this).parent().parent().parent().parent();
+            //                        var _ornum = _seltr.find('td').eq(11).html();
+            //                        var _orys = _seltr.find('td').eq(12).html();
+            //                        _seltr.find('td').eq(12).html(eval(_orys) - eval(_delnum));
+            //                        if (eval(_ornum) == eval(_num)) {
+            //                            if (eval(_orys) > 0)
+            //                                _seltr.removeClass("blue");
+            //                            _seltr.addClass("green");
+            //                        }
+            //                        if (eval(_ornum) > eval(_num) && eval(_num) > 0)
+            //                            _seltr.addClass("blue");
+            //                    }
+            //                });
+            //                location.reload();
+            //            }
+            //        });
+            //}
         });
     });
     Date.prototype.Format = function (fmt) {
@@ -242,7 +298,7 @@
                     $("#dt_sh tbody").html(filltable);
                     $("#dt_sh tbody tr").each(function () {
                         if (eval($(this).find("input").data("ys")))
-                            $(this).addClass("blue");
+                            $(this).addClass("gray");
                     });
                 });
     }
@@ -484,6 +540,20 @@
         <div class="form-group">
             <div class="col-sm-6 center"><p id="shsave" class="btn btn-default"><i class="icon-save"></i>保存</p></div>
             <div class="col-sm-6 center"><p id="shcancel" class="btn btn-default"><i class="glyphicon-backward"></i>取消</p></div>
+        </div>
+    </div>
+</div>
+<div id="pl_fun" class="panel panel-info" style="display:none;position:absolute;top:200px;left:300px;width:200px;height:260px;overflow:auto;">
+    <div class="panel-heading">
+        <h3 class="panel-title">功能菜单<button id="pl_fn_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="center"><p id="bt_fn_del" class="btn btn-default">删除</p></div>
+            <br />
+            <div class="center"><p id="bt_fn_print" class="btn btn-default">打印</p></div>
+            <br />
+            <div class="center"><p id="bt_fn_cancel" class="btn btn-default">取消</p></div>
         </div>
     </div>
 </div>
