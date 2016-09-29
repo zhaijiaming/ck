@@ -83,6 +83,10 @@ namespace CKWMS
         /// 存货状态
         /// </summary>
         public static Dictionary<int, string> CargoState;
+        /// <summary>
+        /// 仓库区域类型
+        /// </summary>
+        public static Dictionary<int, string> AreaType;
 
         protected void Application_Start()
         {
@@ -143,6 +147,12 @@ namespace CKWMS
             TranCondition.Add(1, "常温");
             TranCondition.Add(2, "冷藏");
             TranCondition.Add(3, "冷冻");
+
+            AreaType = new Dictionary<int, string>();
+            AreaType.Add(0, "");
+            AreaType.Add(1, "常温");
+            AreaType.Add(2, "冷藏");
+            AreaType.Add(3, "冷冻");
 
             EntryType = new Dictionary<int, string>();
             EntryType.Add(0, "");
