@@ -181,7 +181,7 @@ namespace CKWMS.Controllers
             var _outdetail = ServiceFactory.wms_chukumxservice.LoadSortEntities(p => p.ChukuID == int.Parse(_outid) && p.IsDelete == false, true, s => s.Guige);
             ViewBag.outdetail = _outdetail;
 
-            var _pickdetail = ob_wms_jianhuoservice.GetPickDetail(int.Parse(_outid), p => p.DaijianSL > 0);
+            var _pickdetail = ob_wms_jianhuoservice.GetPickDetail(int.Parse(_outid), p => p.DaijianSL > 0).OrderByDescending(s=>s.JianhuoRQ);
             ViewBag.pickdetail = _pickdetail;
             ViewBag.chukudan = _outid;
             return View();
@@ -230,7 +230,7 @@ namespace CKWMS.Controllers
             if (_mx.HuopinZT != null)
                 where = where.And(p => p.CunhuoZT == _mx.HuopinZT);
             where = where.And(p => p.sshuliang > 0);
-            var tempData = ServiceFactory.wms_cunhuoservice.GetStorageList(_custid, where.Compile());
+            var tempData = ServiceFactory.wms_cunhuoservice.GetStorageList(_custid, where.Compile()).OrderBy(s=>s.ShixiaoRQ).ThenBy(s=>s.RukuRQ);
             if (tempData == null)
                 return Json(-1);
             return Json(tempData.ToList<wms_storage_v>());
@@ -261,6 +261,7 @@ namespace CKWMS.Controllers
                         _jh.JianhuoRQ = DateTime.Now;
                         _jh.JianhuoSM = _pkmemo;
                         _jh.KCID = _chmx;
+                        _jh.Fuhe = _ch.HegeSF;
                         _jh.Kuwei = _ch.Kuwei;
                         _jh.KuweiID = _ch.KuweiID;
                         _jh.Zhongliang = (float)Math.Round((double)(_rt * _ch.Zhongliang), 3);

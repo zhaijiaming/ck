@@ -36,7 +36,10 @@
             var _sn = _sr.find("td").eq(11).html();
             var _sj = _sr.find("td").eq(12).html();
             $("#selmx").val(_sc.val());
-            $("#picknum").val(eval(_sn)-eval(_sj));
+            if (_sj == "")
+                $("#picknum").val(eval(_sn));
+            else
+                $("#picknum").val(eval(_sn) - eval(_sj));
             GetInvetoryCargo($("#selmx").val());
             $("#pl_pk").show();
             _sr.addClass("blue");
@@ -100,7 +103,7 @@
                     _sl.val(_ky);
                 if (eval(_sl.val()) > _zd)
                     _sl.val(_zd);
-}
+            }
         });
         $("#pl_pk").draggable({ handle: ".panel-heading" });
         $("#dt_ch tbody").on("dblclick", "tr", function () {
@@ -209,7 +212,7 @@
     </ul>
 </div>
 <div class="page-content">
-    <input type="hidden" id="ckd" value="@ViewBag.chukudan"/>
+    <input type="hidden" id="ckd" value="@ViewBag.chukudan" />
     <input type="hidden" id="selmx" />
     <input type="hidden" id="ck" />
     <div class="row" style="height:300px;overflow:auto;">
@@ -360,7 +363,7 @@
     <div class="panel-body">
         <div class="row">
             <div class="center"><p id="bt_fn_print" class="btn btn-default">打印</p></div>
-            <br/>
+            <br />
             <div class="center"><p id="bt_fn_cancel" class="btn btn-default">取消</p></div>
         </div>
     </div>
