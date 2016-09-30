@@ -243,7 +243,7 @@ namespace CKWMS.reports
                                 wms_rukudan rkd = ServiceFactory.wms_rukudanservice.GetEntityById(s=>s.ID == int.Parse(_rkysid));
                                 base_gongyingshang gys = ServiceFactory.base_gongyingshangservice.GetEntityById(p => p.ID == rkd.GongyingshangID);
                                 drzlysbg["GYSMingcheng"] = gys.Mingcheng;
-                                //厂家
+                                drzlysbg["ystime"] = string.Format("{0:yyyy-MM-dd}", rkd.RukuRQ);
                                 drzlysbg["Changjia"] = _pr.Changjia;
                                 drzlysbg["ShangpinMC"] = _pr.ShangpinMC;
                                 drzlysbg["Guige"] = _pr.Guige;
@@ -272,11 +272,20 @@ namespace CKWMS.reports
                                         drzlysbg["YanshouBHGSL"] = _pr.YanshouSL;
                                     }
                                 }
-                                drzlysbg["ystime"] = string.Format("{0:yyyy-MM-dd}", _pr.ystime);
-                                
                                 dtzlysbg.Rows.Add(drzlysbg);
                             }
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["RKYanshouDan"]));
+                            
+                            DataTable dtrkfhjy = _rds.Tables["RKYanshouDanTitle"];
+                            DataRow drrkfhjy = dtrkfhjy.NewRow();
+                            wms_rukudan rkd_others = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_rkysid));
+                            base_weituokehu wtkh_others = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == rkd_others.HuozhuID);
+                            drrkfhjy["HuozhuID"] = wtkh_others.Kehumingcheng;
+                            drrkfhjy["RukuRQ"] = string.Format("{0:yyyy-MM-dd}", rkd_others.RukuRQ);
+                            drrkfhjy["MakeDate"] = string.Format("{0:yyyy-MM-dd}", rkd_others.MakeDate);
+
+                            dtrkfhjy.Rows.Add(drrkfhjy);
+                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["RKYanshouDanTitle"]));
                             break;
                         default:
                             break;
