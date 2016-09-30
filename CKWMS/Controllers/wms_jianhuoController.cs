@@ -218,15 +218,15 @@ namespace CKWMS.Controllers
             //if (_mx.Zhucezheng != null)
             //    where = where.And(p => p.Zhucezheng == _mx.Zhucezheng);
             if (_mx.Pihao != null)
-                where = where.And(p => p.Pihao == _mx.Pihao);
+                where = where.And(p => p.Pihao.Contains(_mx.Pihao));
             if (_mx.Pihao1 != null)
-                where = where.And(p => p.Pihao1 == _mx.Pihao1);
+                where = where.And(p => p.Pihao1.Contains(_mx.Pihao1));
             //if (_mx.ShengchanRQ != null)
             //    where = where.And(p => p.ShengchanRQ == _mx.ShengchanRQ);
             //if (_mx.ShixiaoRQ != null)
             //    where = where.And(p => p.ShixiaoRQ == _mx.ShixiaoRQ);
             if (_mx.Xuliema != null)
-                where = where.And(p => p.Xuliema == _mx.Xuliema);
+                where = where.And(p => p.Xuliema.Contains(_mx.Xuliema));
             if (_mx.HuopinZT != null)
                 where = where.And(p => p.CunhuoZT == _mx.HuopinZT);
             where = where.And(p => p.sshuliang > 0);

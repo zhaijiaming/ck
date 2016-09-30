@@ -23,7 +23,7 @@ namespace CKWMS.Controllers
                 page = "1";
             int userid = (int)Session["user_id"];
             string pagetag = "quan_rukuys_index";
-            Expression<Func<quan_rukuys, bool>> where = PredicateExtensionses.True<quan_rukuys>();
+            Expression<Func<quan_inrec_v, bool>> where = PredicateExtensionses.True<quan_inrec_v>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc != null && sc.ConditionInfo != null)
             {
@@ -42,23 +42,23 @@ namespace CKWMS.Controllers
                                 if (mingxiidequal.Equals("="))
                                 {
                                     if (mingxiidand.Equals("and"))
-                                        where = where.And(quan_rukuys => quan_rukuys.MingxiID == int.Parse(mingxiid));
+                                        where = where.And(quan_inrec_v => quan_inrec_v.ID == int.Parse(mingxiid));
                                     else
-                                        where = where.Or(quan_rukuys => quan_rukuys.MingxiID == int.Parse(mingxiid));
+                                        where = where.Or(quan_inrec_v => quan_inrec_v.ID == int.Parse(mingxiid));
                                 }
                                 if (mingxiidequal.Equals(">"))
                                 {
                                     if (mingxiidand.Equals("and"))
-                                        where = where.And(quan_rukuys => quan_rukuys.MingxiID > int.Parse(mingxiid));
+                                        where = where.And(quan_inrec_v => quan_inrec_v.ID > int.Parse(mingxiid));
                                     else
-                                        where = where.Or(quan_rukuys => quan_rukuys.MingxiID > int.Parse(mingxiid));
+                                        where = where.Or(quan_inrec_v => quan_inrec_v.ID > int.Parse(mingxiid));
                                 }
                                 if (mingxiidequal.Equals("<"))
                                 {
                                     if (mingxiidand.Equals("and"))
-                                        where = where.And(quan_rukuys => quan_rukuys.MingxiID < int.Parse(mingxiid));
+                                        where = where.And(quan_inrec_v => quan_inrec_v.ID < int.Parse(mingxiid));
                                     else
-                                        where = where.Or(quan_rukuys => quan_rukuys.MingxiID < int.Parse(mingxiid));
+                                        where = where.Or(quan_inrec_v => quan_inrec_v.ID < int.Parse(mingxiid));
                                 }
                             }
                             break;
@@ -69,10 +69,8 @@ namespace CKWMS.Controllers
                 ViewBag.SearchCondition = sc.ConditionInfo;
             }
 
-            where = where.And(quan_rukuys => quan_rukuys.IsDelete == false);
-
-            var tempData = ob_quan_rukuysservice.LoadSortEntities(where.Compile(), false, quan_rukuys => quan_rukuys.ID).ToPagedList<quan_rukuys>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
-            ViewBag.quan_rukuys = tempData;
+            var tempData = ob_quan_rukuysservice.GetInrec(where.Compile()).ToPagedList<quan_inrec_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            ViewBag.quan_inrec = tempData;
             return View(tempData);
         }
 
@@ -86,7 +84,7 @@ namespace CKWMS.Controllers
             string mingxiid = Request["mingxiid"] ?? "";
             string mingxiidequal = Request["mingxiidequal"] ?? "";
             string mingxiidand = Request["mingxiidand"] ?? "";
-            Expression<Func<quan_rukuys, bool>> where = PredicateExtensionses.True<quan_rukuys>();
+            Expression<Func<quan_inrec_v, bool>> where = PredicateExtensionses.True<quan_inrec_v>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
             {
@@ -98,23 +96,23 @@ namespace CKWMS.Controllers
                     if (mingxiidequal.Equals("="))
                     {
                         if (mingxiidand.Equals("and"))
-                            where = where.And(quan_rukuys => quan_rukuys.MingxiID == int.Parse(mingxiid));
+                            where = where.And(quan_inrec_v => quan_inrec_v.ID == int.Parse(mingxiid));
                         else
-                            where = where.Or(quan_rukuys => quan_rukuys.MingxiID == int.Parse(mingxiid));
+                            where = where.Or(quan_inrec_v => quan_inrec_v.ID == int.Parse(mingxiid));
                     }
                     if (mingxiidequal.Equals(">"))
                     {
                         if (mingxiidand.Equals("and"))
-                            where = where.And(quan_rukuys => quan_rukuys.MingxiID > int.Parse(mingxiid));
+                            where = where.And(quan_inrec_v => quan_inrec_v.ID > int.Parse(mingxiid));
                         else
-                            where = where.Or(quan_rukuys => quan_rukuys.MingxiID > int.Parse(mingxiid));
+                            where = where.Or(quan_inrec_v => quan_inrec_v.ID > int.Parse(mingxiid));
                     }
                     if (mingxiidequal.Equals("<"))
                     {
                         if (mingxiidand.Equals("and"))
-                            where = where.And(quan_rukuys => quan_rukuys.MingxiID < int.Parse(mingxiid));
+                            where = where.And(quan_inrec_v => quan_inrec_v.ID < int.Parse(mingxiid));
                         else
-                            where = where.Or(quan_rukuys => quan_rukuys.MingxiID < int.Parse(mingxiid));
+                            where = where.Or(quan_inrec_v => quan_inrec_v.ID < int.Parse(mingxiid));
                     }
                 }
                 if (!string.IsNullOrEmpty(mingxiid))
@@ -131,23 +129,23 @@ namespace CKWMS.Controllers
                     if (mingxiidequal.Equals("="))
                     {
                         if (mingxiidand.Equals("and"))
-                            where = where.And(quan_rukuys => quan_rukuys.MingxiID == int.Parse(mingxiid));
+                            where = where.And(quan_inrec_v => quan_inrec_v.ID == int.Parse(mingxiid));
                         else
-                            where = where.Or(quan_rukuys => quan_rukuys.MingxiID == int.Parse(mingxiid));
+                            where = where.Or(quan_inrec_v => quan_inrec_v.ID == int.Parse(mingxiid));
                     }
                     if (mingxiidequal.Equals(">"))
                     {
                         if (mingxiidand.Equals("and"))
-                            where = where.And(quan_rukuys => quan_rukuys.MingxiID > int.Parse(mingxiid));
+                            where = where.And(quan_inrec_v => quan_inrec_v.ID > int.Parse(mingxiid));
                         else
-                            where = where.Or(quan_rukuys => quan_rukuys.MingxiID > int.Parse(mingxiid));
+                            where = where.Or(quan_inrec_v => quan_inrec_v.ID > int.Parse(mingxiid));
                     }
                     if (mingxiidequal.Equals("<"))
                     {
                         if (mingxiidand.Equals("and"))
-                            where = where.And(quan_rukuys => quan_rukuys.MingxiID < int.Parse(mingxiid));
+                            where = where.And(quan_inrec_v => quan_inrec_v.ID < int.Parse(mingxiid));
                         else
-                            where = where.Or(quan_rukuys => quan_rukuys.MingxiID < int.Parse(mingxiid));
+                            where = where.Or(quan_inrec_v => quan_inrec_v.ID < int.Parse(mingxiid));
                     }
                 }
                 if (!string.IsNullOrEmpty(mingxiid))
@@ -157,10 +155,8 @@ namespace CKWMS.Controllers
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;
-            where = where.And(quan_rukuys => quan_rukuys.IsDelete == false);
-
-            var tempData = ob_quan_rukuysservice.LoadSortEntities(where.Compile(), false, quan_rukuys => quan_rukuys.ID).ToPagedList<quan_rukuys>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
-            ViewBag.quan_rukuys = tempData;
+            var tempData = ob_quan_rukuysservice.GetInrec(where.Compile()).ToPagedList<quan_inrec_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            ViewBag.quan_inrec = tempData;
             return View(tempData);
         }
         [OutputCache(Duration =30)]

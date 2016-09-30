@@ -10,32 +10,8 @@
     $(document).ready(function () {
         $("tr").bind("dblclick", function () {
             var u_id = $(this).find('td').eq(0).find('input').val();
-            if (u_id != null) {
-                var url_go = "/quan_chukufh/Edit/" + u_id;
-                location.href = url_go;
-            }
         });
     });
-    function AddInfo() {
-        location.href = "/quan_chukufh/Add";
-    }
-    function EditInfo() {
-        $("#mydatatable tr input[type=checkbox]").each(function () {
-            if (this.checked)
-                location.href = "/quan_chukufh/Edit/" + $(this).val();
-        });
-    }
-    function DelInfo() {
-        var sDel = "";
-        $("#mydatatable tr input[type=checkbox]").each(function () {
-            if (this.checked)
-                sDel = sDel + ", " + $(this).val()
-        });
-        if (sDel.length < 2)
-            return;
-        var url_go = "/quan_chukufh/Delete/?del=" + sDel;
-        location.href = url_go;
-    }
 </script>
 @{
     List<SearchConditionModel> scms = new List<SearchConditionModel>();
@@ -84,45 +60,64 @@
     <div class="page-header">
         <p>
             <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
-            <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
-            <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
-            <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
         </p>
     </div>
-    <div class="row">
-        <table class="table" id="mydatatable">
+    <div style="overflow:auto">
+        <table class="table table-condensed" id="mydatatable" style="overflow: hidden;text-overflow:ellipsis;white-space: nowrap;">
             <caption></caption>
             <thead>
                 <tr>
                     <td></td>
-                    <td>明细序号</td>
+                    <td>出库编号</td>
+                    <td>货主</td>
+                    <td>客户</td>
+                    <td>出库日期</td>
+                    <td>商品名称</td>
+                    <td>注册证</td>
+                    <td>规格</td>
+                    <td>批号</td>
+                    <td>次批号</td>
+                    <td>序列码</td>
+                    <td>生产日期</td>
+                    <td>失效日期</td>
+                    <td>数量</td>
+                    <td>厂家</td>
+                    <td>产地</td>
                     <td>复核数量</td>
-                    <td>复核</td>
+                    <td>复核结果</td>
                     <td>复核人</td>
                     <td>复核说明</td>
-                    <td>复核状态</td>
-                    <td>制单日期</td>
-                    <td>制单人</td>
+                    <td>复核日期</td>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in ViewBag.quan_chukufh)
+                @foreach (var item in ViewBag.quan_outrec)
                 {
                     <tr>
                         <td>
-                            <div class="checkbox">
                                 <label><input type="checkbox" value="@item.ID"></label>
-                            </div>
                         </td>
-                        <td>@item.MingxiID</td>
+                        <td>@item.ChukudanBH</td>
+                        <td>@Html.GetDataValue_ID("货主","名称",(int)item.HuozhuID)</td>
+                        <td>@item.KehuMC</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}",item.ChukuRQ)</td>
+                        <td>@item.ShangpinMC</td>
+                        <td>@item.Zhucezheng</td>
+                        <td>@item.Guige</td>
+                        <td>@item.Pihao</td>
+                        <td>@item.Pihao1</td>
+                        <td>@item.Xuliema</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ)</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ)</td>
+                        <td>@item.JianhuoSL</td>
+                        <td>@item.Changjia</td>
+                        <td>@item.Chandi</td>
                         <td>@item.FuheSL</td>
-                        <td>@item.Fuhe</td>
+                        <td>@Html.GetCommonValue_ID("验收结果", (int)(item.Fuhe == null ? 0 : item.Fuhe))</td>
                         <td>@item.Fuheren</td>
                         <td>@item.FuheSM</td>
-                        <td>@item.FuheZT</td>
                         <td>@item.MakeDate</td>
-                        <td>@item.MakeMan</td>
                     </tr>
                 }
             </tbody>

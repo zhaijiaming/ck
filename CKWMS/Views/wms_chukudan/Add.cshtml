@@ -27,7 +27,23 @@
                     return;
                 }
                 $("#huozhuid").val(_selval);
-                GetCust(_selval);
+                //GetCust(_selval);
+                GetCustPanel(_selval);
+            });
+            $("#dt_cust tbody").on("dblclick", "tr", function () {
+                var _sr = $(this);
+                var _cid = _sr.find("input").val();
+                var _cnm = _sr.find("td").eq(1).html();
+                $("#KehuMC").val(_cnm);
+                $("#kehuid").val(_cid);
+                $("#khmc").val(_cnm)
+            });
+            $("#pl_cust").draggable({ handle: ".panel-heading" }, { containment: "parent" });
+            $("#pl_cust_close").click(function () {
+                $("#pl_cust").hide();
+            });
+            $("#selcust").click(function () {
+                $("#pl_cust").show();
             });
             $("#pl_cy").draggable({ handle: ".panel-heading" });
             $("#dt_cy").on("dblclick", "tr", function () {
@@ -79,6 +95,29 @@
                     });
             }
         }
+        function GetCustPanel(_hz) {
+            if (_hz != null) {
+                var _dz = "";
+                $.post("/base_shouhuodanwei/getcust",
+                    { hz: _hz },
+                    function (data) {
+                        if (data != -1) {
+                            for (var i in data) {
+                                _dz = _dz + '<tr><td><label><input type="checkbox" class ="checkbox" value="';
+                                _dz = _dz + data[i].ID;
+                                _dz = _dz + '"></label></td><td>';
+                                _dz = _dz + data[i].Mingcheng;
+                                _dz = _dz + '</td><td>';
+                                _dz = _dz + data[i].SonghuoDZ;
+                                _dz = _dz + '</td><td>';
+                                _dz = _dz + data[i].Jingyinfanwei;
+                                _dz = _dz + '</td></tr>';
+                            }
+                            $("#dt_cust tbody").html(_dz);
+                        }
+                    });
+            }
+        }
         function GetCust(_hz) {
             if (_hz != null) {
                 var _opt = '<option value="0"></option>';
@@ -114,7 +153,7 @@
         <input type="hidden" name="id" />
         <input type="hidden" id="huozhuid" />
         <input type="hidden" name="KehuID" id="kehuid" />
-        <input type="hidden" name="KehuMC" id="khmc" />
+        <input type="hidden" id="khmc" />
         <div class="page-header">
             <p>
                 <button type="submit" class="btn btn-default"><i class="icon-save"></i>保存</button>
@@ -144,9 +183,12 @@
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.KehuMC, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @*@Html.TextBoxFor(m => m.KehuMC, new { @class = "form-control" })*@
-                    <select id="selkh" class="form-control"></select>
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(m => m.KehuMC, new { @class = "form-control"})
+                    @*<select id="selkh" class="form-control"></select>*@
+                </div>
+                <div class="col-sm-2">
+                    <p id="selcust" class="form-control blue">选择</p>
                 </div>
             </div>
             <div class="form-group">
@@ -308,6 +350,27 @@
                         </tr>
                     }
                 </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div id="pl_cust" class="panel panel-primary" style="display:none;overflow:auto;position:absolute;top:50px;left:100px;width:800px;height:400px;z-index:999;">
+    <div class="panel-heading">
+        <h3 class="panel-title">请选择客户<button id="pl_cust_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <table class="table table-condensed" id="dt_cust">
+                <caption></caption>
+                <thead>
+                    <tr>
+                        <td></td>
+                        <td>名称</td>
+                        <td>地址</td>
+                        <td>经营范围</td>
+                    </tr>
+                </thead>
+                <tbody></tbody>
             </table>
         </div>
     </div>
