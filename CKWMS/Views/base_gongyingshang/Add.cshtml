@@ -165,30 +165,31 @@
         });
 
         $("#sub").click(function () {
-            $("form").submit();
+            form.submit();
         })
 
-        //var form = $("#tempform");
-        //form.submit(function () {
-        //    $.post(form.attr("action"),
-        //          form.serialize(),
-        //          function (result, status) {
-        //              //alert(status);
-        //              if (result._flag == 1) {
-        //                  alert("成功");
-        //                  location.href = "/base_gongyingshang/Index";
-        //              }
-        //              else if (result._flag == -1) {
-        //                  alert("失败");
-        //              }
-        //              else {
-        //                  alert("234");
-        //              }                       
-        //          },
-        //            "json");
-        //    return false;
+        var form = $("#tempform");
+        form.submit(function () {
+            $.post(form.attr("action"),
+                  form.serialize(),
+                  function (result, status) {
+                      //alert(status);
+                      if (result._flag == 1) {
+                          alert("保存成功");
+                          location.href = "/base_gongyingshang/Index";
+                      }
+                      else if (result._flag == -1) {
+                          alert("保存失败");
+                      }
+                      else if (result._flag == -2) {
+                          alert("保存失败，该代码已存在");
+                      }
+                      else { alert("未知异常"); }
+                  },
+                    "json");
+            return false;
             
-        //});
+        });
         
     });
 
@@ -303,8 +304,8 @@
     <form role="form" action="/base_gongyingshang/Save" method="post" id="tempform">
         <input type="hidden" name="ob_base_gongyingshang_id" />
         <input type="hidden" id="btnSelect" value="" />
-        <input type="hidden" id="MakeMan" name="MakeMan" value=@Session["user_id"] />
-        <input type="hidden" id="Shouying" name="Shouying" value="1" />
+        <input type="hidden" id="MakeMan" name="ob_base_gongyingshang_makeman" value=@Session["user_id"] />
+        @*<input type="hidden" id="Shouying" name="ob_base_gongyingshang_shouying" value="1" />*@
 
         @*<input id="qxml" type="hidden" name="id" value="@ViewData.Model.ID" />*@
 

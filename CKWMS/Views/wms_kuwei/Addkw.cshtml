@@ -9,6 +9,10 @@
         //仓库->区域
         $("#CangkuID").change(function () {
             var CkID = $("#CangkuID").val();
+            if (CkID == 0) {
+                $("#select_quyu").val(0);
+                return;
+            }
             GetQuyuData(CkID);
         });
 
@@ -101,7 +105,7 @@
         var form = $("#tempform");
         form.submit(function () {
             //$("#qyiddaima").val($("#select_quyu option:selected").val());
-            loadingShow();
+            loadingShow_save();
             if ($("#huojia").val() == "" || $("#lieshu").val() == "" || $("#censhu").val() == "" || $("#select_quyu").val() == null || $("#huojia1").val() == "起始序号" || $("#lieshu1").val() == "起始序号" || $("#censhu1").val() == "起始序号"||$("#huojia1").val() == "" || $("#lieshu1").val() == "" || $("#censhu1").val() == "") {
                 Finished();
             }
@@ -112,7 +116,7 @@
                       if (result._flag == 1) {
                           Finished();
                           alert("添加成功");
-                          loadingShow();
+                          loadingShow_complete();
                           location.href = "/wms_kuwei/Index";                        
                       }
                       else if (result._flag == -1) {
@@ -275,7 +279,7 @@
     }
 
 
-    function loadingShow() {
+    function loadingShow_save() {
         var loadingContainer = $("div.loading");
         if (loadingContainer.length <= 0) {
 
@@ -295,10 +299,34 @@
             });
             //document.body.appendChild(loadingContainer);
             loadingContainer.appendTo('body');
+            loadingContainer.append("<p>正在保存，请耐心等待</p>");
         }
         //$(loadingContainer).show();
     }
 
+    function loadingShow_complete() {
+        var loadingContainer = $("div.loading");
+        if (loadingContainer.length <= 0) {
+
+            loadingContainer = $("<div>", { Class: "loading", id: "loading" });
+            var img = $("<img>", { src: "/Imgs/LOADING.gif" });
+            loadingContainer.html("");
+            loadingContainer.append(img).css({
+                position: "fixed",
+                zIndex: "9999",
+                textAlign: "center",
+                //paddingTop: "18px",
+                //fontSize: "14px",
+                top: "30%",
+                left: "40%",
+                height: "300px",
+                width: "400px"
+            });
+            loadingContainer.appendTo('body');
+            loadingContainer.append("<p>正在跳转，请耐心等待</p>");
+        }
+       
+    }
 
     function Finished() {
         $("#loading").remove();

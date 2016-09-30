@@ -315,6 +315,7 @@ namespace CKWMS.Controllers
                 shenchasf = "true";
             if (hezuosf.IndexOf("true") > -1)
                 hezuosf = "true";
+            int flag = 0;
             try
             {
                 base_gongyingshang ob_base_gongyingshang = new base_gongyingshang();
@@ -344,16 +345,20 @@ namespace CKWMS.Controllers
 
                 ob_base_gongyingshang = ob_base_gongyingshangservice.AddEntity(ob_base_gongyingshang);
                 ViewBag.base_gongyingshang = ob_base_gongyingshang;
-                
-
-
+                if (ViewBag.base_gongyingshang == null)
+                {
+                    flag = -2;
+                }
+                else { flag = 1; }             
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                
+                flag = -1;
+
             }
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
+            return Json(new { _flag = flag });
         }
         public ActionResult Edit(int id)
         {
