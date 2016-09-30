@@ -109,6 +109,7 @@
               <xs:element name="YanshouBHGSL" msprop:Generator_ColumnVarNameInTable="columnYanshouBHGSL" msprop:Generator_ColumnPropNameInRow="YanshouBHGSL" msprop:Generator_ColumnPropNameInTable="YanshouBHGSLColumn" msprop:Generator_UserColumnName="YanshouBHGSL" type="xs:string" minOccurs="0" />
               <xs:element name="ystime" msprop:Generator_ColumnVarNameInTable="columnystime" msprop:Generator_ColumnPropNameInRow="ystime" msprop:Generator_ColumnPropNameInTable="ystimeColumn" msprop:Generator_UserColumnName="ystime" type="xs:string" minOccurs="0" />
               <xs:element name="ysresult" msprop:Generator_ColumnVarNameInTable="columnysresult" msprop:Generator_ColumnPropNameInRow="ysresult" msprop:Generator_ColumnPropNameInTable="ysresultColumn" msprop:Generator_UserColumnName="ysresult" type="xs:string" minOccurs="0" />
+              <xs:element name="ChunyunYQ" msprop:Generator_ColumnVarNameInTable="columnChunyunYQ" msprop:Generator_ColumnPropNameInRow="ChunyunYQ" msprop:Generator_ColumnPropNameInTable="ChunyunYQColumn" msprop:Generator_UserColumnName="ChunyunYQ" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

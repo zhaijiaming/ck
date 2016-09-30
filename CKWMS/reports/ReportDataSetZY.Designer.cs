@@ -2410,6 +2410,8 @@ namespace CKWMS.reports {
             
             private global::System.Data.DataColumn columnysresult;
             
+            private global::System.Data.DataColumn columnChunyunYQ;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public RKYanshouDanDataTable() {
@@ -2549,6 +2551,14 @@ namespace CKWMS.reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ChunyunYQColumn {
+                get {
+                    return this.columnChunyunYQ;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -2584,7 +2594,7 @@ namespace CKWMS.reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public RKYanshouDanRow AddRKYanshouDanRow(string GYSMingcheng, string Changjia, string ShangpinMC, string Guige, string Pihao, string ShengchanRQ, string ShixiaoRQ, string Zhucezheng, string Shuliang, string YanshouHGSL, string YanshouBHGSL, string ystime, string ysresult) {
+            public RKYanshouDanRow AddRKYanshouDanRow(string GYSMingcheng, string Changjia, string ShangpinMC, string Guige, string Pihao, string ShengchanRQ, string ShixiaoRQ, string Zhucezheng, string Shuliang, string YanshouHGSL, string YanshouBHGSL, string ystime, string ysresult, string ChunyunYQ) {
                 RKYanshouDanRow rowRKYanshouDanRow = ((RKYanshouDanRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         GYSMingcheng,
@@ -2599,7 +2609,8 @@ namespace CKWMS.reports {
                         YanshouHGSL,
                         YanshouBHGSL,
                         ystime,
-                        ysresult};
+                        ysresult,
+                        ChunyunYQ};
                 rowRKYanshouDanRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowRKYanshouDanRow);
                 return rowRKYanshouDanRow;
@@ -2635,6 +2646,7 @@ namespace CKWMS.reports {
                 this.columnYanshouBHGSL = base.Columns["YanshouBHGSL"];
                 this.columnystime = base.Columns["ystime"];
                 this.columnysresult = base.Columns["ysresult"];
+                this.columnChunyunYQ = base.Columns["ChunyunYQ"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2666,6 +2678,8 @@ namespace CKWMS.reports {
                 base.Columns.Add(this.columnystime);
                 this.columnysresult = new global::System.Data.DataColumn("ysresult", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnysresult);
+                this.columnChunyunYQ = new global::System.Data.DataColumn("ChunyunYQ", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnChunyunYQ);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4808,6 +4822,22 @@ namespace CKWMS.reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string ChunyunYQ {
+                get {
+                    try {
+                        return ((string)(this[this.tableRKYanshouDan.ChunyunYQColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("表“RKYanshouDan”中列“ChunyunYQ”的值为 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableRKYanshouDan.ChunyunYQColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsGYSMingchengNull() {
                 return this.IsNull(this.tableRKYanshouDan.GYSMingchengColumn);
             }
@@ -4960,6 +4990,18 @@ namespace CKWMS.reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetysresultNull() {
                 this[this.tableRKYanshouDan.ysresultColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsChunyunYQNull() {
+                return this.IsNull(this.tableRKYanshouDan.ChunyunYQColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetChunyunYQNull() {
+                this[this.tableRKYanshouDan.ChunyunYQColumn] = global::System.Convert.DBNull;
             }
         }
         

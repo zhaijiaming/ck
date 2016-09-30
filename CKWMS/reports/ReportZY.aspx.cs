@@ -287,6 +287,46 @@ namespace CKWMS.reports
                             dtrkfhjy.Rows.Add(drrkfhjy);
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["RKYanshouDanTitle"]));
                             break;
+                        case "YanShouJiLu":
+                            rptView.Reset();
+                            rptView.LocalReport.ReportPath = "reports/rptRKYanShouJiLu.rdlc";
+                            rptView.LocalReport.DataSources.Clear();
+                            DataTable dtrkysjl = _rds.Tables["RKYanshouDan"];
+                            var _rkysjls = ServiceFactory.quan_rukuysservice.GetEntrycheckByRK(int.Parse(_rkysid)).ToList<quan_entrycheck_v>();
+                            DataRow drrkysjl;
+                            foreach (quan_entrycheck_v _pr in _rkysjls)
+                            {
+                                drrkysjl = dtrkysjl.NewRow();
+                                //供应商
+                                wms_rukudan rkd = ServiceFactory.wms_rukudanservice.GetEntityById(s => s.ID == int.Parse(_rkysid));
+                                base_gongyingshang gys = ServiceFactory.base_gongyingshangservice.GetEntityById(p => p.ID == rkd.GongyingshangID);
+                                drrkysjl["GYSMingcheng"] = gys.Mingcheng;
+                                drrkysjl["ystime"] = string.Format("{0:yyyy-MM-dd}", rkd.RukuRQ);
+                                drrkysjl["Changjia"] = _pr.Changjia;
+                                drrkysjl["ShangpinMC"] = _pr.ShangpinMC;
+                                drrkysjl["Guige"] = _pr.Guige;
+                                drrkysjl["Pihao"] = _pr.Pihao;
+                                drrkysjl["ShengchanRQ"] = string.Format("{0:yyyy-MM-dd}", _pr.ShengchanRQ);
+                                drrkysjl["ShixiaoRQ"] = string.Format("{0:yyyy-MM-dd}", _pr.ShixiaoRQ);
+                                drrkysjl["Zhucezheng"] = _pr.Zhucezheng;
+                                drrkysjl["Shuliang"] = _pr.Shuliang;
+                                drrkysjl["ChunyunYQ"] = rkd.ChunyunYQ;
+
+                                dtrkysjl.Rows.Add(drrkysjl);
+                            }
+                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["RKYanshouDan"]));
+
+                            DataTable dtysjl = _rds.Tables["RKYanshouDanTitle"];
+                            DataRow drysjl = dtysjl.NewRow();
+                            wms_rukudan rkjl_others = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_rkysid));
+                            base_weituokehu wtkhjl_others = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == rkjl_others.HuozhuID);
+                            drysjl["HuozhuID"] = wtkhjl_others.Kehumingcheng;
+                            drysjl["RukuRQ"] = string.Format("{0:yyyy-MM-dd}", rkjl_others.RukuRQ);
+                            drysjl["MakeDate"] = string.Format("{0:yyyy-MM-dd}", rkjl_others.MakeDate);
+
+                            dtysjl.Rows.Add(drysjl);
+                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["RKYanshouDanTitle"]));
+                            break;
                         default:
                             break;
                     }

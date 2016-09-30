@@ -6,13 +6,13 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>3.47172cm</Width>
+              <Width>1.60838cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.25812cm</Width>
+              <Width>1.43115cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.47354cm</Width>
+              <Width>1.46344cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.38875cm</Width>
@@ -27,22 +27,37 @@
               <Width>1.865cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.49458cm</Width>
+              <Width>1.38902cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.99188cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.33583cm</Width>
+              <Width>1.01833cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.70625cm</Width>
+              <Width>1.46813cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.05021cm</Width>
+              <Width>1.91792cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.50183cm</Width>
+              <Width>0.96542cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1.36229cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1.38875cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>0.88604cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1.04479cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1.31662cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -483,6 +498,186 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
+                    <Textbox Name="Textbox50">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>储运条件</Value>
+                              <Style>
+                                <FontFamily>宋体</FontFamily>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox50</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox46">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>包装质量</Value>
+                              <Style>
+                                <FontFamily>宋体</FontFamily>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox46</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox48">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>外观质量</Value>
+                              <Style>
+                                <FontFamily>宋体</FontFamily>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox48</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox52">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>中文标签</Value>
+                              <Style>
+                                <FontFamily>宋体</FontFamily>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox52</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox54">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>合格证</Value>
+                              <Style>
+                                <FontFamily>宋体</FontFamily>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox54</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
                     <Textbox Name="Textbox27">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
@@ -520,7 +715,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.779cm</Height>
+              <Height>1.22879cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -823,7 +1018,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!YanshouHGSL.Value</Value>
+                              <Value />
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -857,7 +1052,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!YanshouBHGSL.Value</Value>
+                              <Value />
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -916,6 +1111,218 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
+                    <Textbox Name="ChunyunYQ">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!ChunyunYQ.Value</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>ChunyunYQ</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox47">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>□合格</Value>
+                              <Style>
+                                <FontFamily>宋体</FontFamily>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>□不合格</Value>
+                              <Style>
+                                <FontFamily>宋体</FontFamily>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox47</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox49">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>□合格</Value>
+                              <Style>
+                                <FontFamily>宋体</FontFamily>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>□不合格</Value>
+                              <Style>
+                                <FontFamily>宋体</FontFamily>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox49</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox53">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>□有</Value>
+                              <Style>
+                                <FontFamily>宋体</FontFamily>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>□无</Value>
+                              <Style>
+                                <FontFamily>宋体</FontFamily>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox53</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox55">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>□有</Value>
+                              <Style>
+                                <FontFamily>宋体</FontFamily>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>□无</Value>
+                              <Style>
+                                <FontFamily>宋体</FontFamily>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox55</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
                     <Textbox Name="ysresult">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
@@ -923,8 +1330,21 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!ysresult.Value</Value>
+                              <Value>□合格</Value>
                               <Style>
+                                <FontFamily>宋体</FontFamily>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>□不合格</Value>
+                              <Style>
+                                <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
@@ -965,6 +1385,11 @@
             <TablixMember />
             <TablixMember />
             <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
           </TablixMembers>
         </TablixColumnHierarchy>
         <TablixRowHierarchy>
@@ -978,9 +1403,9 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
-        <Top>0.10583cm</Top>
-        <Height>1.379cm</Height>
-        <Width>24.765cm</Width>
+        <Top>0.17639cm</Top>
+        <Height>1.82879cm</Height>
+        <Width>24.7332cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -988,13 +1413,13 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>0.82291in</Height>
+    <Height>0.97917in</Height>
     <Style />
   </Body>
-  <Width>9.75in</Width>
+  <Width>9.7495in</Width>
   <Page>
     <PageHeader>
-      <Height>2.83104cm</Height>
+      <Height>3.28083cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1005,7 +1430,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>入库质量验收报告</Value>
+                  <Value>入库质量验收记录</Value>
                   <Style>
                     <FontFamily>宋体</FontFamily>
                     <FontSize>14pt</FontSize>
@@ -1019,7 +1444,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox29</rd:DefaultName>
-          <Top>0.49953cm</Top>
+          <Top>0.94932cm</Top>
           <Left>9.96437cm</Left>
           <Height>0.70583cm</Height>
           <Width>5.19088cm</Width>
@@ -1052,7 +1477,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox2</rd:DefaultName>
-          <Top>1.45465cm</Top>
+          <Top>1.90444cm</Top>
           <Left>0.36724cm</Left>
           <Height>0.6cm</Height>
           <Width>4.405cm</Width>
@@ -1086,7 +1511,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox2</rd:DefaultName>
-          <Top>2.23104cm</Top>
+          <Top>2.68083cm</Top>
           <Left>0.36724cm</Left>
           <Height>0.6cm</Height>
           <Width>1.65333cm</Width>
@@ -1120,7 +1545,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox2</rd:DefaultName>
-          <Top>2.23104cm</Top>
+          <Top>2.68083cm</Top>
           <Left>18.17087cm</Left>
           <Height>0.6cm</Height>
           <Width>1.63979cm</Width>
@@ -1155,46 +1580,11 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>HuozhuID</rd:DefaultName>
-          <Top>2.23104cm</Top>
+          <Top>2.68083cm</Top>
           <Left>2.02057cm</Left>
           <Height>0.6cm</Height>
           <Width>5.81835cm</Width>
           <ZIndex>4</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <VerticalAlign>Middle</VerticalAlign>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="RukuRQ">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>=First(Fields!RukuRQ.Value, "DataSet2")</Value>
-                  <Style>
-                    <FontSize>8pt</FontSize>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style>
-                <TextAlign>Left</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>RukuRQ</rd:DefaultName>
-          <Top>2.23104cm</Top>
-          <Left>19.81066cm</Left>
-          <Height>0.6cm</Height>
-          <Width>2.5cm</Width>
-          <ZIndex>5</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1214,7 +1604,7 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>2.77812cm</Height>
+      <Height>2.54cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1236,8 +1626,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox2</rd:DefaultName>
-          <Top>0.07056cm</Top>
-          <Left>0.33196cm</Left>
+          <Top>0.03528cm</Top>
+          <Left>0.36724cm</Left>
           <Height>0.6cm</Height>
           <Width>1.65333cm</Width>
           <Style>
@@ -1269,8 +1659,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox2</rd:DefaultName>
-          <Top>0.07056cm</Top>
-          <Left>2.02057cm</Left>
+          <Top>0.03528cm</Top>
+          <Left>2.05585cm</Left>
           <Height>0.6cm</Height>
           <Width>1.65333cm</Width>
           <ZIndex>1</ZIndex>
@@ -1303,8 +1693,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox2</rd:DefaultName>
-          <Top>0.77639cm</Top>
-          <Left>0.33196cm</Left>
+          <Top>0.74111cm</Top>
+          <Left>0.36724cm</Left>
           <Height>0.6cm</Height>
           <Width>2.12485cm</Width>
           <ZIndex>2</ZIndex>
@@ -1339,8 +1729,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox18</rd:DefaultName>
-          <Top>1.81667cm</Top>
-          <Left>11.48289cm</Left>
+          <Top>1.78139cm</Top>
+          <Left>11.51817cm</Left>
           <Height>0.44125cm</Height>
           <Width>0.40979cm</Width>
           <ZIndex>3</ZIndex>
@@ -1375,8 +1765,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox18</rd:DefaultName>
-          <Top>1.81667cm</Top>
-          <Left>11.92796cm</Left>
+          <Top>1.78139cm</Top>
+          <Left>11.96324cm</Left>
           <Height>0.44125cm</Height>
           <Width>0.40979cm</Width>
           <ZIndex>4</ZIndex>
@@ -1411,8 +1801,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox18</rd:DefaultName>
-          <Top>1.81667cm</Top>
-          <Left>12.78254cm</Left>
+          <Top>1.78139cm</Top>
+          <Left>12.81782cm</Left>
           <Height>0.44125cm</Height>
           <Width>0.40979cm</Width>
           <ZIndex>5</ZIndex>
@@ -1447,8 +1837,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox18</rd:DefaultName>
-          <Top>1.81667cm</Top>
-          <Left>12.33747cm</Left>
+          <Top>1.78139cm</Top>
+          <Left>12.37275cm</Left>
           <Height>0.44125cm</Height>
           <Width>0.40979cm</Width>
           <ZIndex>6</ZIndex>
@@ -1482,8 +1872,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>PageNumber</rd:DefaultName>
-          <Top>1.81667cm</Top>
-          <Left>11.48289cm</Left>
+          <Top>1.78139cm</Top>
+          <Left>11.51817cm</Left>
           <Height>0.44125cm</Height>
           <Width>0.85486cm</Width>
           <ZIndex>7</ZIndex>
@@ -1517,46 +1907,11 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>OverallPageNumber</rd:DefaultName>
-          <Top>1.81667cm</Top>
-          <Left>12.33747cm</Left>
+          <Top>1.78139cm</Top>
+          <Left>12.37275cm</Left>
           <Height>0.44125cm</Height>
           <Width>0.85486cm</Width>
           <ZIndex>8</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <VerticalAlign>Middle</VerticalAlign>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="MakeDate">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>=First(Fields!MakeDate.Value, "DataSet2")</Value>
-                  <Style>
-                    <FontSize>8pt</FontSize>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style>
-                <TextAlign>Left</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>MakeDate</rd:DefaultName>
-          <Top>0.77639cm</Top>
-          <Left>2.45682cm</Left>
-          <Height>0.6cm</Height>
-          <Width>2.5cm</Width>
-          <ZIndex>9</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1591,7 +1946,7 @@
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>3399841c-cb42-44a3-89ac-ee7b69075985</rd:DataSourceID>
+      <rd:DataSourceID>b501418a-980d-44ee-81a1-60ac296277b6</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
@@ -1701,5 +2056,5 @@
     </DataSet>
   </DataSets>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
-  <rd:ReportID>56c474a7-6329-4715-be63-f0d846da4a50</rd:ReportID>
+  <rd:ReportID>84f0cf4d-b17f-48fa-9d30-c979f8ba2214</rd:ReportID>
 </Report>

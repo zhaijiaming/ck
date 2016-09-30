@@ -11,10 +11,15 @@
         $("tr").bind("dblclick", function () {
             var u_id = $(this).find('td').eq(0).find('input').val();
         });
-        //入库质量验收报告打印
+        //入库质量验收报告
         var rkysid = $("#rkysid").val();
         $("#bt_fn_print").click(function () {
             window.open("/quan_rukuys/PrintYanShouBaoGao?rkysid=" + rkysid);
+            $("#pl_fun").hide();
+        });
+        //入库质量验收记录
+        $("#bt_fn_JLprint").click(function () {
+            window.open("/quan_rukuys/PrintYanShouJiLu?rkysid=" + rkysid);
             $("#pl_fun").hide();
         });
         $("#pl_fun").draggable({ containment: "parent" });

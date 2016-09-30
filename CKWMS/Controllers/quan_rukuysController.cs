@@ -419,6 +419,12 @@ namespace CKWMS.Controllers
             ViewBag.rkysid = rkysid;
             return View();
         }
+        public ActionResult PrintYanShouJiLu()
+        {
+            var rkysid = Request["rkysid"] ?? "";
+            ViewBag.rkysid = rkysid;
+            return View();
+        }
 
     }
 }
