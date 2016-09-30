@@ -234,13 +234,13 @@ namespace CKWMS.reports
                             rptView.LocalReport.ReportPath = "reports/rptRKyanshouBGdan.rdlc";
                             rptView.LocalReport.DataSources.Clear();
                             DataTable dtzlysbg = _rds.Tables["RKYanshouDan"];
-                            var _zlysbgs = ServiceFactory.quan_rukuysservice.GetEntrycheckByRK(int.Parse(_rkysid));
+                            var _zlysbgs = ServiceFactory.quan_rukuysservice.GetEntrycheckByRK(int.Parse(_rkysid)).ToList<quan_entrycheck_v>();
                             DataRow drzlysbg;
                             foreach (quan_entrycheck_v _pr in _zlysbgs)
                             {
                                 drzlysbg = dtzlysbg.NewRow();
                                 //供应商
-                                wms_rukudan rkd = ServiceFactory.wms_rukudanservice.GetEntityById(p=>p.ID == int.Parse(_rkysid));
+                                wms_rukudan rkd = ServiceFactory.wms_rukudanservice.GetEntityById(s=>s.ID == int.Parse(_rkysid));
                                 base_gongyingshang gys = ServiceFactory.base_gongyingshangservice.GetEntityById(p => p.ID == rkd.GongyingshangID);
                                 drzlysbg["GYSMingcheng"] = gys.Mingcheng;
                                 //厂家
