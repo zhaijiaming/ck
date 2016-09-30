@@ -220,6 +220,7 @@ namespace CKWMS.Controllers
             string col3 = Request["col3"] ?? "";
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
+            string leixing = Request["leixing"] ?? "";
             try
             {
                 wms_cangkuqy ob_wms_cangkuqy = new wms_cangkuqy();
@@ -231,6 +232,7 @@ namespace CKWMS.Controllers
                 ob_wms_cangkuqy.Col3 = col3.Trim();
                 ob_wms_cangkuqy.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 ob_wms_cangkuqy.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
+                ob_wms_cangkuqy.Leixing = leixing == "" ? 0 : int.Parse(leixing);
                 ob_wms_cangkuqy = ob_wms_cangkuqyservice.AddEntity(ob_wms_cangkuqy);
                 ViewBag.wms_cangkuqy = ob_wms_cangkuqy;
             }
@@ -260,6 +262,7 @@ namespace CKWMS.Controllers
                 wms_cangkuqyviewmodel.Col3 = tempData.Col3;
                 wms_cangkuqyviewmodel.MakeDate = tempData.MakeDate;
                 wms_cangkuqyviewmodel.MakeMan = tempData.MakeMan;
+                wms_cangkuqyviewmodel.Leixing = tempData.Leixing;
                 return View(wms_cangkuqyviewmodel);
             }
         }
@@ -277,6 +280,7 @@ namespace CKWMS.Controllers
             string col3 = Request["col3"] ?? "";
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
+            string leixing = Request["leixing"] ?? "";
             int uid = int.Parse(id);
             try
             {
@@ -289,6 +293,7 @@ namespace CKWMS.Controllers
                 p.Col3 = col3.Trim();
                 p.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 p.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
+                p.Leixing = leixing == "" ? 0 : int.Parse(leixing);
                 ob_wms_cangkuqyservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;
             }

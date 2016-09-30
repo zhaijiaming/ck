@@ -121,6 +121,7 @@
                     <td>仓库</td>
                     <td>区域名称</td>
                     <td>区域代码</td>
+                    <td>类型</td>
                     <td>制单日期</td>
                     <td>制单人</td>
                 </tr>
@@ -138,6 +139,7 @@
                         <td>@Html.GetDataValue_ID("仓库", "名称", (int)item.CangkuID)</td>
                         <td>@item.Mingcheng</td>
                         <td>@item.Daima</td>
+                        <td>@Html.GetCommonValue_ID("仓库区域类型", (int)item.Leixing)</td>
                         <td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
                         @*<td>@item.MakeMan</td>*@
                         <td>@Html.GetDataValue_ID("userinfo","全名",(int)item.MakeMan)</td>

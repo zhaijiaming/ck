@@ -14,6 +14,7 @@
         $("#date_beianpzrq").datepicker();
         $("#date_xukepzrq").datepicker();
         $("#date_makedate").datepicker();
+        $("#pl_Quyu").draggable({ handle: '.tuodong' });
 
         //经营范围
         //$("#pl_Fanwei").hide();
@@ -21,6 +22,7 @@
 
         var bj = 0;
         GetFanwei1();
+        Getquyu();
 
         //显示全部
         $("#bt_fanwei_showall").click(function () {
@@ -160,6 +162,25 @@
                 $(".bg").show();
             }
         });
+
+        //区域
+
+        $("#qy_close").click(function () {
+            $("#pl_Quyu").hide();
+            Getqy();
+        });
+
+        $("#bt_quyu_add").click(function () {
+            var valqy = $('input:radio[name="radiobox"]:checked').parent().parent().parent().siblings().find(".qymingcheng").html();
+            if (valqy == null) {
+                alert("没有选择区域哦")
+            }
+            else {
+                $("#quyu").val(valqy);
+                $("#pl_Quyu").hide();
+            }
+        });
+
     });
 
     //点击修改or增加
@@ -221,6 +242,36 @@
                     GetData(bj, tempid)
                 });
     }
+
+    function Bt_Quyuadd() {
+        Getquyu();
+        document.getElementById("pl_Quyu").removeAttribute("hidden");
+        $("#pl_Quyu").show();
+    }
+
+    function Getquyu() {
+        var filltable = "";
+        $.post(
+            "/base_quyu/GetQuyu",
+            {
+
+            },
+            function (data) {
+                for (var i in data) {
+                    filltable = filltable + '<tr style="display:table;width:100%;table-layout:fixed"><td style="width:5%"><div class="radio" ><label><input name="radiobox" type="radio" class="radioid" value="';
+                    filltable = filltable + data[i].ID;
+                    filltable = filltable + '"></label></div></td><td style="width:15%">';
+                    filltable = filltable + data[i].Bianhao;
+                    filltable = filltable + '</td><td style="width:20%"><span class="qymingcheng">';
+                    filltable = filltable + data[i].Mingcheng;
+                    filltable = filltable + '</td><td>';
+                    filltable = filltable + data[i].Miaoshu;
+                    filltable = filltable + '</td></tr>';
+                }
+                $("#pl_Quyu tbody").html(filltable);
+                Getqy();
+            });
+    }
     //打勾
     function GetData(a, tempid) {
         var fw = document.getElementsByClassName('xulieid');
@@ -237,6 +288,15 @@
                 if (t[k] == $(".xulieid").eq(l).val())
                     $("#qxdatatable tr input[type=checkbox]").eq(l).attr("checked", true);
             }
+        }
+    }
+
+    function Getqy() {
+        var qymc = document.getElementsByClassName('qymingcheng');
+        var tempqy = $("#quyu").val();
+        for (var i = 0; i < qymc.length; i++) {
+            if (tempqy == $(".qymingcheng").eq(i).html())
+                $("#rydatatable tr input[type=radio]").eq(i).prop("checked", true);
         }
     }
 </script>
@@ -379,8 +439,11 @@
             @*区域*@
             <div class="form-group">
                 <label for="name" class="col-sm-2">区域</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="quyu">
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" name="quyu" id="quyu">
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" class="form-control" id="bt_Quyuadd" onclick="Bt_Quyuadd()">增加</button>
                 </div>
             </div>
             @*备案编号*@
@@ -499,6 +562,28 @@
                     </tr>
                 </thead>
                 <tbody style="display:block; max-height:460px;width:1070px;overflow:scroll"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div id="pl_Quyu" class="panel panel-primary" hidden style="display:none;position:fixed;top:100px;left:200px;width:640px;height:400px;z-index:999;">
+    <div class="tuodong panel-heading">
+        <h3 class="panel-title">区域信息<button id="qy_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body" @*style="width:630px;height:350px;z-index:999;overflow:scroll"*@>
+        <div class="center">
+            <button type="button" class="btn btn-default " id="bt_quyu_add"><i class="icon-add"></i>确定</button>
+            <table class="table" id="rydatatable">
+                <caption></caption>
+                <thead class="tuodong" style="display:table;width:100%;table-layout:fixed;width: calc( 100% - 1em )">
+                    <tr style="display:table;width:100%;table-layout:fixed">
+                        <td style="width:5%"></td>
+                        <td style="width:15%">编号</td>
+                        <td style="width:20%">名称</td>
+                        <td>描述</td>
+                    </tr>
+                </thead>
+                <tbody style="display:block;max-height:265px;width:620px;overflow:scroll"></tbody>
             </table>
         </div>
     </div>

@@ -15,6 +15,13 @@ namespace CKWMS.Controllers
 {
     public class base_quyuController : Controller
     {
+        public class Quyu
+        {
+            public int ID { get; set; }
+            public string Bianhao { get; set; }
+            public string Mingcheng { get; set; }
+            public string Miaoshu { get; set; }
+        }
         private Ibase_quyuService ob_base_quyuservice = ServiceFactory.base_quyuservice;
         [OutputCache(Duration = 30)]
         public ActionResult Index(string page)
@@ -296,6 +303,21 @@ namespace CKWMS.Controllers
                 }
             }
             return RedirectToAction("Index");
+        }
+        public JsonResult Getquyu() {
+            var tempquyu = ob_base_quyuservice.LoadSortEntities(p => p.IsDelete == false, true, p => p.ID);
+            List<Quyu> _quyulist = new List<Quyu>();
+            Quyu _qy;
+            foreach (var qy in tempquyu)
+            {
+                _qy = new Quyu();
+                _qy.ID = qy.ID;
+                _qy.Bianhao = qy.Bianhao;
+                _qy.Mingcheng = qy.Mingcheng;
+                _qy.Miaoshu = qy.Miaoshu;
+                _quyulist.Add(_qy);
+            }
+            return Json(_quyulist);
         }
     }
 }
