@@ -156,7 +156,7 @@
                         <td>@item.Jifeidun</td>
                         <td>@string.Format("{0:yyyy-MM-dd}", item.MakeDate)</td>
                         <td>@item.Beizhu</td>
-                        <td>@Html.GetCommonValue_ID("存货状态", (int)item.HuopinZT)</td>
+                        <td>@Html.GetCommonValue_ID("存货状态", (int)(item.HuopinZT==null?0:item.HuopinZT))</td>
                     </tr>
                 }
             </tbody>
