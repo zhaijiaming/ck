@@ -9,6 +9,7 @@ using CKWMS.BSL;
 using CKWMS.EFModels;
 using CKWMS.BSL;
 using CKWMS.IBSL;
+using CKWMS.App_Code;
 
 namespace CKWMS.reports
 {
@@ -131,6 +132,58 @@ namespace CKWMS.reports
                             drckd["HuozhuID"] = wtkhdata1.Kehumingcheng;
 
                             dtckd.Rows.Add(drckd);
+                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["ChuKuDan"]));
+                            break;
+                        case "CKFuheDan":
+                            rptView.Reset();
+                            rptView.LocalReport.ReportPath = "reports/rptCKFuheDan.rdlc";
+                            rptView.LocalReport.DataSources.Clear();
+                            DataTable dtfh = _rds.Tables["CKFuheDan"];
+                            var _fhs = ServiceFactory.quan_chukufhservice.GetOutcheckByCK(int.Parse(_outid), p => p.JianhuoSL > 0);
+                            DataRow drfh;
+                            foreach (quan_outcheck_v _fh in _fhs)
+                            {
+                                drfh = dtfh.NewRow();
+                                drfh["ShangpinMC"] = _fh.ShangpinMC;
+                                drfh["Zhucezheng"] = _fh.Zhucezheng;
+                                drfh["Guige"] = _fh.Guige;
+                                drfh["Pihao"] = _fh.Pihao;
+                                drfh["Pihao1"] = _fh.Pihao1;
+                                drfh["Xuliema"] = _fh.Xuliema;
+                                drfh["ShengchanRQ"] = string.Format("{0:yyyy-MM-dd}", _fh.ShengchanRQ) ;
+                                drfh["ShixiaoRQ"] = string.Format("{0:yyyy-MM-dd}", _fh.ShixiaoRQ);
+                                drfh["JianhuoSL"] = _fh.JianhuoSL;
+                                drfh["Changjia"] = _fh.Changjia;
+                                drfh["Chandi"] = _fh.Chandi;
+                                drfh["FuheSL"] = _fh.FuheSL;
+                                if (_fh.Fuhe == null)
+                                {
+                                    drfh["Fuhe"] = MvcApplication.CheckResult[0];
+                                }
+                                else
+                                {
+                                    drfh["Fuhe"] = MvcApplication.CheckResult[(int)_fh.Fuhe];
+                                }
+                                drfh["Fuheren"] = _fh.Fuheren;
+                                drfh["FuheSM"] = _fh.FuheSM;
+                                drfh["MakeDate"] = string.Format("{0:yyyy-MM-dd}", _fh.MakeDate); 
+                                dtfh.Rows.Add(drfh);
+                            }
+                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["CKFuheDan"]));
+
+                            wms_chukudan _ckfhds = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid));
+                            DataTable dtckfh = _rds.Tables["ChuKuDan"];
+                            DataRow drckfh = dtckfh.NewRow();
+                            drckfh["Yunsongdizhi"] = _ckfhds.Yunsongdizhi;
+                            drckfh["Beizhu"] = _ckfhds.Beizhu;
+                            drckfh["ChukuRQ"] = string.Format("{0:yyyy-MM-dd}", _ckfhds.ChukuRQ);
+                            drckfh["ChukudanBH"] = _ckfhds.ChukudanBH;
+                            drckfh["Lianxiren"] = _ckfhds.Lianxiren;
+                            drckfh["LianxiDH"] = _ckfhds.LianxiDH;
+                            base_weituokehu fh_wtkhdata = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == _ckfhds.HuozhuID);
+                            drckfh["HuozhuID"] = fh_wtkhdata.Kehumingcheng;
+                            drckfh["KehuMC"] = _ckfhds.KehuMC;
+                            dtckfh.Rows.Add(drckfh);
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["ChuKuDan"]));
                             break;
                         default:

@@ -77,6 +77,7 @@ namespace CKWMS.Controllers
         }
         public ActionResult OutInventoryCheck(int id)
         {
+            var outid = id;
             int _userid = (int)Session["user_id"];
             var _username = Session["user_name"];
             //var _ckid = Request["ck"] ?? "";
@@ -87,8 +88,16 @@ namespace CKWMS.Controllers
             ViewBag.waitcheck = tempData;
             ViewBag.userid = _userid;
             ViewBag.username = _username;
+            ViewBag.outid = outid;
             return View();
         }
+        public ActionResult PrintFuheDan()
+        {
+            var id = Request["ckfhid"] ?? "";
+            ViewBag.id = id;
+            return View();
+        }
+
         [HttpPost]
         [OutputCache(Duration = 30)]
         public ActionResult Index()

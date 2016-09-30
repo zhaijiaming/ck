@@ -12,8 +12,9 @@
             var u_id = $(this).find('td').eq(0).find('input').val();
         });
         //出库复核单
+        var outid = $("#outid").val();
         $("#bt_fn_print").click(function () {
-            alert("print now");
+            window.open("/quan_chukufh/PrintFuheDan?ckfhid=" + outid);
             $("#pl_fun").hide();
         });
         $("#pl_fun").draggable({ handle: ".panel-heading" }, { containment: "parent" });
@@ -272,6 +273,7 @@
     <input type="hidden" id="fhid" />
     <input type="hidden" id="username" value="@ViewBag.username" />
     <input type="hidden" id="userid" value="@ViewBag.userid" />
+    <input type="hidden" id="outid" value="@ViewBag.outid" />
     <div class="row">
         <table class="table table-condensed" id="mydatatable">
             <caption></caption>
