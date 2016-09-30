@@ -11,10 +11,15 @@
         $("tr").bind("dblclick", function () {
             var u_id = $(this).find('td').eq(0).find('input').val();
         });
-        //出库复核单
+        //出库复核报告单
         var outid = $("#outid").val();
         $("#bt_fn_print").click(function () {
             window.open("/quan_chukufh/PrintFuheDan?ckfhid=" + outid);
+            $("#pl_fun").hide();
+        });
+        //出库复核检验单
+        $("#bt_fhjy_print").click(function () {
+            window.open("/quan_chukufh/PrintFuhejianyan?ckfhid=" + outid);
             $("#pl_fun").hide();
         });
         $("#pl_fun").draggable({ handle: ".panel-heading" }, { containment: "parent" });
@@ -417,13 +422,15 @@
         </div>
     </div>
 </div>
-<div id="pl_fun" class="panel panel-info" style="display:none;position:absolute;top:200px;left:300px;width:200px;height:200px;overflow:auto;">
+<div id="pl_fun" class="panel panel-info" style="display:none;position:absolute;top:200px;left:300px;width:200px;overflow:auto;">
     <div class="panel-heading">
         <h3 class="panel-title">功能菜单<button id="pl_fn_close" class="pull-right">X</button></h3>
     </div>
     <div class="panel-body">
         <div class="row">
-            <div class="center"><p id="bt_fn_print" class="btn btn-default">打印</p></div>
+            <div class="center"><p id="bt_fn_print" class="btn btn-default">报告单打印</p></div>
+            <br />
+            <div class="center"><p id="bt_fhjy_print" class="btn btn-default">检验单打印</p></div>
             <br />
             <div class="center"><p id="bt_fn_cancel" class="btn btn-default">取消</p></div>
         </div>

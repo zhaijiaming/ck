@@ -1,11 +1,11 @@
 ﻿@{
-    ViewBag.Title = "出库复核报告单";
+    ViewBag.Title = "出库复核检验单";
     Layout = "~/Views/Shared/EmptyView.cshtml";
 }
 <script type="text/javascript">
     $(window).load(function () {
         var fhid = $("#ckfuhedan").val();
-        document.getElementById("myReport").src = "../../reports/ReportZY.aspx?pid=CKFuheDan&out=" + fhid;
+        document.getElementById("myReport").src = "../../reports/ReportZY.aspx?pid=CKFuhejianyan&out=" + fhid;
         $("#autoUpdate").show();
     });
 </script>

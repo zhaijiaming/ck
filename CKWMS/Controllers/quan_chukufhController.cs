@@ -97,6 +97,12 @@ namespace CKWMS.Controllers
             ViewBag.id = id;
             return View();
         }
+        public ActionResult PrintFuhejianyan()
+        {
+            var id = Request["ckfhid"] ?? "";
+            ViewBag.id = id;
+            return View();
+        }
 
         [HttpPost]
         [OutputCache(Duration = 30)]
