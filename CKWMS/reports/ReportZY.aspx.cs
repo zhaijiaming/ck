@@ -25,12 +25,14 @@ namespace CKWMS.reports
                 string name = "";
                 int i = 0;
                 string _outid = "";
+                string _rkysid = "";
                 ReportDataSetZY _rds = new ReportDataSetZY();
                 //DataTable _dt;                
                 if (Request.QueryString["pid"] != null)
                 {
                     name = Request.QueryString["pid"];
                     _outid = Request.QueryString["out"] ?? "";
+                    _rkysid = Request.QueryString["rkysid"] ?? "";
                     switch (name)
                     {
                         case "daviskw":
@@ -226,6 +228,55 @@ namespace CKWMS.reports
                             drckfhjy["KehuMC"] = _ckfhjys.KehuMC;
                             dtckfhjy.Rows.Add(drckfhjy);
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["ChuKuDan"]));
+                            break;
+                        case "YanShouBaoGao":
+                            rptView.Reset();
+                            rptView.LocalReport.ReportPath = "reports/rptRKyanshouBGdan.rdlc";
+                            rptView.LocalReport.DataSources.Clear();
+                            DataTable dtzlysbg = _rds.Tables["RKYanshouDan"];
+                            var _zlysbgs = ServiceFactory.quan_rukuysservice.GetEntrycheckByRK(int.Parse(_rkysid));
+                            DataRow drzlysbg;
+                            foreach (quan_entrycheck_v _pr in _zlysbgs)
+                            {
+                                drzlysbg = dtzlysbg.NewRow();
+                                //供应商
+                                wms_rukudan rkd = ServiceFactory.wms_rukudanservice.GetEntityById(p=>p.ID == int.Parse(_rkysid));
+                                base_gongyingshang gys = ServiceFactory.base_gongyingshangservice.GetEntityById(p => p.ID == rkd.GongyingshangID);
+                                drzlysbg["GYSMingcheng"] = gys.Mingcheng;
+                                //厂家
+                                drzlysbg["Changjia"] = _pr.Changjia;
+                                drzlysbg["ShangpinMC"] = _pr.ShangpinMC;
+                                drzlysbg["Guige"] = _pr.Guige;
+                                drzlysbg["Pihao"] = _pr.Pihao;
+                                drzlysbg["ShengchanRQ"] = string.Format("{0:yyyy-MM-dd}", _pr.ShengchanRQ);
+                                drzlysbg["ShixiaoRQ"] = string.Format("{0:yyyy-MM-dd}", _pr.ShixiaoRQ);
+                                drzlysbg["Zhucezheng"] = _pr.Zhucezheng;
+                                drzlysbg["Shuliang"] = _pr.Shuliang;
+                                //验收结果
+                                if (_pr.ysresult == null)
+                                {
+                                    drzlysbg["ysresult"] = MvcApplication.CheckResult[0];
+                                }
+                                else
+                                {
+                                    drzlysbg["ysresult"] = MvcApplication.CheckResult[(int)_pr.ysresult];
+                                    var ysresult = MvcApplication.CheckResult[(int)_pr.ysresult];
+                                    if (ysresult == "合格")
+                                    {
+                                        drzlysbg["YanshouHGSL"] = _pr.YanshouSL;
+                                        drzlysbg["YanshouBHGSL"] = "";
+                                    }
+                                    if (ysresult == "不合格")
+                                    {
+                                        drzlysbg["YanshouHGSL"] = "";
+                                        drzlysbg["YanshouBHGSL"] = _pr.YanshouSL;
+                                    }
+                                }
+                                drzlysbg["ystime"] = string.Format("{0:yyyy-MM-dd}", _pr.ystime);
+                                
+                                dtzlysbg.Rows.Add(drzlysbg);
+                            }
+                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["RKYanshouDan"]));
                             break;
                         default:
                             break;

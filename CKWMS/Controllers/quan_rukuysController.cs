@@ -162,12 +162,14 @@ namespace CKWMS.Controllers
         [OutputCache(Duration =30)]
         public ActionResult EntryCheckList(int id)
         {
+            var rkysid = id;
             var _username = Session["user_name"];
             var _userid = Session["user_id"];
             var tempData = ob_quan_rukuysservice.GetEntrycheckByRK(id);
             ViewBag.userid = _userid;
             ViewBag.username = _username;
             ViewBag.quan_entrycheck = tempData;
+            ViewBag.rkysid = rkysid;
             return View();
         }
         public JsonResult AddCheckPart()
@@ -411,6 +413,13 @@ namespace CKWMS.Controllers
             }
             return RedirectToAction("Index");
         }
+        public ActionResult PrintYanShouBaoGao()
+        {
+            var rkysid = Request["rkysid"] ?? "";
+            ViewBag.rkysid = rkysid;
+            return View();
+        }
+
     }
 }
 

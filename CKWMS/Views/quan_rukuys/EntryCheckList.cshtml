@@ -11,8 +11,10 @@
         $("tr").bind("dblclick", function () {
             var u_id = $(this).find('td').eq(0).find('input').val();
         });
+        //入库质量验收报告打印
+        var rkysid = $("#rkysid").val();
         $("#bt_fn_print").click(function () {
-            alert("print now");
+            window.open("/quan_rukuys/PrintYanShouBaoGao?rkysid=" + rkysid);
             $("#pl_fun").hide();
         });
         $("#pl_fun").draggable({ containment: "parent" });
@@ -218,6 +220,7 @@
     <input type="hidden" id="shmx" />
     <input type="hidden" id="username" value="@ViewBag.username" />
     <input type="hidden" id="userid" value="@ViewBag.userid" />
+    <input type="hidden" id="rkysid" value="@ViewBag.rkysid" />
     <div class="row">
         <table class="table table-condensed" id="mydatatable">
             <caption></caption>
@@ -327,13 +330,15 @@
         </div>
     </div>
 </div>
-<div id="pl_fun" class="panel panel-info" style="display:none;position:absolute;top:200px;left:300px;width:200px;height:200px;overflow:auto;">
+<div id="pl_fun" class="panel panel-info" style="display:none;position:absolute;top:200px;left:300px;width:200px;overflow:auto;">
     <div class="panel-heading">
         <h3 class="panel-title">功能菜单<button id="pl_fn_close" class="pull-right">X</button></h3>
     </div>
     <div class="panel-body">
         <div class="row">
-            <div class="center"><p id="bt_fn_print" class="btn btn-default">打印</p></div>
+            <div class="center"><p id="bt_fn_print" class="btn btn-default">验收报告打印</p></div>
+            <br />
+            <div class="center"><p id="bt_fn_JLprint" class="btn btn-default">验收记录打印</p></div>
             <br />
             <div class="center"><p id="pl_fn_cancel" class="btn btn-default">取消</p></div>
         </div>
