@@ -17,7 +17,92 @@
                 location.href = url_go;
             }
         });
+        $("#pl_cargo_close").click(function () {
+            $("#pl_cargo").hide();
+        });
+        $(".icon-list-alt").click(function () {
+            var _sr = $(this).parent();
+            var _srk = _sr.find("input");
+            if (eval(_srk.val()) > 0) {
+                getCargos(_srk.val());
+                $("#pl_cargo").show();
+            }
+        });
+        $("#pl_cargo").draggable({ handle: ".panel-heading" });
     });
+    function getCargos(ckd) {
+        var rkdetail = "";
+        $.post(
+            "/wms_chukumx/getcargodetail",
+            { ckd: ckd },
+            function (data) {
+                if (data!=-1) {
+                    for (var i in data) {
+                        rkdetail = rkdetail + '<tr><td><label><input type="checkbox" value="';
+                        rkdetail = rkdetail + data[i].ID;
+                        rkdetail = rkdetail + '" data-ckd="';
+                        rkdetail = rkdetail + data[i].ChukuID;
+                        rkdetail = rkdetail + '"></label></td>';
+                        rkdetail = rkdetail + '<td>';
+                        rkdetail = rkdetail + data[i].ShangpinDM;
+                        rkdetail = rkdetail + '</td><td>';
+                        rkdetail = rkdetail + data[i].ShangpinMC;
+                        rkdetail = rkdetail + '</td><td>';
+                        rkdetail = rkdetail + data[i].Zhucezheng;
+                        rkdetail = rkdetail + '</td><td>';
+                        rkdetail = rkdetail + data[i].Guige;
+                        rkdetail = rkdetail + '</td><td>';
+                        rkdetail = rkdetail + data[i].Pihao;
+                        rkdetail = rkdetail + '</td><td>';
+                        rkdetail = rkdetail + data[i].Pihao1;
+                        rkdetail = rkdetail + '</td><td>';
+                        rkdetail = rkdetail + data[i].Xuliema;
+                        rkdetail = rkdetail + '</td><td>';
+                        rkdetail = rkdetail + data[i].ShengchanRQ.toDate().Format("yyyy-MM-dd");
+                        rkdetail = rkdetail + '</td><td>';
+                        rkdetail = rkdetail + data[i].ShixiaoRQ.toDate().Format("yyyy-MM-dd");
+                        rkdetail = rkdetail + '</td><td>';
+                        rkdetail = rkdetail + data[i].ChukuSL;
+                        rkdetail = rkdetail + '</td><td>';
+                        rkdetail = rkdetail + data[i].JibenDW;
+                        rkdetail = rkdetail + '</td><td>';
+                        rkdetail = rkdetail + data[i].BaozhuangDW;
+                        rkdetail = rkdetail + '</td><td>';
+                        rkdetail = rkdetail + data[i].Huansuanlv;
+                        rkdetail = rkdetail + '</td><td>';
+                        rkdetail = rkdetail + data[i].Changjia;
+                        rkdetail = rkdetail + '</td><td>';
+                        rkdetail = rkdetail + data[i].Chandi;
+                        rkdetail = rkdetail + '</td><td>';
+                        rkdetail = rkdetail + data[i].Zhongliang;
+                        rkdetail = rkdetail + '</td><td>';
+                        rkdetail = rkdetail + data[i].Jingzhong;
+                        rkdetail = rkdetail + '</td><td>';
+                        rkdetail = rkdetail + data[i].Tiji;
+                        rkdetail = rkdetail + '</td><td>';
+                        rkdetail = rkdetail + data[i].Jifeidun;
+                        rkdetail = rkdetail + '</td><td>';
+                        rkdetail = rkdetail + data[i].Beizhu;
+                        rkdetail = rkdetail + '</td><td>';
+                        if (eval(data[i].HuopinZT) == 0)
+                            rkdetail = rkdetail + '';
+                        if (eval(data[i].HuopinZT) == 1)
+                            rkdetail = rkdetail + '正常';
+                        if (eval(data[i].HuopinZT) == 2)
+                            rkdetail = rkdetail + '破损';
+                        if (eval(data[i].HuopinZT) == 3)
+                            rkdetail = rkdetail + '污染';
+                        if (eval(data[i].HuopinZT) == 4)
+                            rkdetail = rkdetail + '渗漏';
+                        if (eval(data[i].HuopinZT) == 5)
+                            rkdetail = rkdetail + '其它';
+                        rkdetail = rkdetail + '</td></tr>';
+                    }
+                }
+                $("#dt_cargo tbody").html(rkdetail);
+            }
+            );
+    }
     function AddInfo() {
         location.href = "/wms_chukudan/Add";
     }
@@ -78,7 +163,7 @@
             <i class="icon-home home-icon"></i>
             <a href="/Home">首页</a>
         </li>
-        <li class="active">出库单</li>
+        <li class="active">出库历史</li>
     </ul>
 </div>
 <div class="page-content">
@@ -86,9 +171,9 @@
     <div class="page-header">
         <p>
             <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
-            <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
+            @*<button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
             <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
-            <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
+            <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>*@
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
         </p>
     </div>
@@ -97,8 +182,8 @@
             <caption></caption>
             <thead>
                 <tr>
-                    <td></td>
-                    <td>出库单</td>
+                    <td>货品</td>
+                    <td>出库编号</td>
                     <td>货主</td>
                     <td>客户</td>
                     <td>送货地址</td>
@@ -122,9 +207,7 @@
                 {
                     <tr>
                         <td>
-                            <div class="checkbox">
-                                <label><input type="checkbox" value="@item.ID" data-zt="@item.JihuaZT"></label>
-                            </div>
+                                <label><i class="icon-list-alt"></i><input type="hidden" value="@item.ID" data-zt="@item.JihuaZT"></label>
                         </td>
                         <td>@item.ChukudanBH</td>
                         <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
@@ -150,5 +233,45 @@
     </div>
     <div class="pager">
         @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+    </div>
+</div>
+<div id="pl_cargo" class="panel panel-primary" style="display:none;position:absolute;top:50px;left:100px;width:1200px;height:600px;z-index:999;overflow:hidden">
+    <div class="panel-heading">
+        <h3 class="panel-title">货品列表<button id="pl_cargo_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="row" style="width:1180px;height:580px;overflow:auto">
+            <table class="table table-condensed table-hover" id="dt_cargo">
+                <caption></caption>
+                <thead>
+                    <tr>
+                        <td></td>
+                        <td>商品代码</td>
+                        <td>商品名称</td>
+                        <td>注册证</td>
+                        <td>规格型号</td>
+                        <td>批号</td>
+                        <td>次批号</td>
+                        <td>序列码</td>
+                        <td>生产日期</td>
+                        <td>失效日期</td>
+                        <td>出库数量</td>
+                        <td>基本单位</td>
+                        <td>包装单位</td>
+                        <td>换算率</td>
+                        <td>厂家</td>
+                        <td>产地</td>
+                        <td>重量</td>
+                        <td>净重</td>
+                        <td>体积</td>
+                        <td>计费吨</td>
+                        <td>备注</td>
+                        <td>货品状态</td>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

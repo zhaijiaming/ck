@@ -70,7 +70,7 @@ namespace CKWMS.Controllers
                 ViewBag.SearchCondition = sc.ConditionInfo;
             }
 
-            where = where.And(wms_rukudan => wms_rukudan.IsDelete == false);
+            where = where.And(wms_rukudan => wms_rukudan.IsDelete == false && wms_rukudan.RukuZT>4);
 
             var tempData = ob_wms_rukudanservice.LoadSortEntities(where.Compile(), false, wms_rukudan => wms_rukudan.ID).ToPagedList<wms_rukudan>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.wms_rukudan = tempData;
@@ -158,7 +158,7 @@ namespace CKWMS.Controllers
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;
-            where = where.And(wms_rukudan => wms_rukudan.IsDelete == false);
+            where = where.And(wms_rukudan => wms_rukudan.IsDelete == false && wms_rukudan.RukuZT>4);
 
             var tempData = ob_wms_rukudanservice.LoadSortEntities(where.Compile(), false, wms_rukudan => wms_rukudan.ID).ToPagedList<wms_rukudan>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.wms_rukudan = tempData;

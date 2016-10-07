@@ -26,7 +26,9 @@
     {
         @Html.AntiForgeryToken()
         <input type="hidden" name="id" value="@ViewData.Model.ID" />
-        <div class="page-header">
+        <input type="hidden" name="KehuID" value="@ViewData.Model.KehuID" />
+        <input type="hidden" name="JihuaZT" value="@ViewData.Model.JihuaZT" />
+        <div id="pl_fun" class="page-header">
             <p>
                 <button type="submit" class="btn btn-default"><i class="icon-save"></i>更新</button>
                 <button type="button" class="btn btn-default" onclick="javascript: history.back(-1); "><i class="icon-hand-left"></i>返回</button>
@@ -34,29 +36,36 @@
         </div>
         <div class="container">
             <div class="form-group">
+                @Html.LabelFor(m => m.ChukudanBH, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.ChukudanBH, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
                 @Html.LabelFor(m => m.HuozhuID, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.HuozhuID, new { @class = "form-control" })
+                    @*@Html.TextBoxFor(m => m.HuozhuID, new { @class = "form-control" })*@
+                    @Html.SelectList_Auto("HuozhuID", "货主","名称",(long)Model.HuozhuID)
                 </div>
             </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.JihuaID, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.JihuaID, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.XinxiLY, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.XinxiLY, new { @class = "form-control" })
-                </div>
-            </div>
+            @*<div class="form-group">
+        @Html.LabelFor(m => m.JihuaID, new { @class = "control-label col-sm-2" })
+        <div class="col-sm-10">
+            @Html.TextBoxFor(m => m.JihuaID, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.XinxiLY, new { @class = "control-label col-sm-2" })
+        <div class="col-sm-10">
+            @Html.TextBoxFor(m => m.XinxiLY, new { @class = "form-control" })
+        </div>
+    </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.KehuID, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.KehuID, new { @class = "form-control" })
                 </div>
-            </div>
+            </div>*@
             <div class="form-group">
                 @Html.LabelFor(m => m.KehuMC, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
@@ -84,7 +93,8 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.YewuLX, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.YewuLX, new { @class = "form-control" })
+                    @*@Html.TextBoxFor(m => m.YewuLX, new { @class = "form-control" })*@
+                    @Html.SelectList_Common("YewuLX", "出库类型",(long)Model.YewuLX)
                 </div>
             </div>
             <div class="form-group">
@@ -166,24 +176,6 @@
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.Col1, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Col1, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Col2, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Col2, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Col3, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Col3, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
                 @Html.LabelFor(m => m.MakeDate, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     <input id="MakeDate" type="date" class="form-control" name="MakeDate" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.MakeDate)">
@@ -193,12 +185,6 @@
                 @Html.LabelFor(m => m.MakeMan, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     @Html.SelectList_Auto("MakeMan", "userinfo", "fullname", (long)ViewData.Model.MakeMan)
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.ChukudanBH, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.ChukudanBH, new { @class = "form-control" })
                 </div>
             </div>
         </div>

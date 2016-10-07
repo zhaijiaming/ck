@@ -389,7 +389,7 @@
             <i class="icon-home home-icon"></i>
             <a href="/Home">首页</a>
         </li>
-        <li class="active">出库单</li>
+        <li class="active">出库操作</li>
     </ul>
 </div>
 <div class="page-content">
@@ -470,7 +470,7 @@
         @Html.PagedListPager((IPagedList)Model, page => Url.Action("OutOperate", new { page }))
     </div>
 </div>
-<div id="pl_xz" class="panel panel-primary" style="display:none;position:absolute;top:30px;left:100px;width:1200px;height:600px;z-index:999;">
+<div id="pl_xz" class="panel panel-primary" style="display:none;position:absolute;top:20px;left:50px;width:1200px;height:600px;z-index:999;">
     <div class="panel-heading">
         <h3 class="panel-title">当前可用库存<button id="pl_xz_close" class="pull-right">X</button></h3>
     </div>
@@ -486,7 +486,7 @@
             <div class="col-sm-3"><p class="btn default" id="pl_ok"><i class="icon-ok"></i>确定</p></div>
 
         </div>
-        <div class="row">
+        <div class="row" style="width:1190px;height:500px;overflow:auto">
             <table class="table table-condensed" id="dt_xz">
                 <caption></caption>
                 <thead>
