@@ -435,9 +435,9 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\aspnet-CKWMS-2016.mdf" />
-    <Content Include="App_Data\aspnet-CKWMS-2016_log.ldf">
-      <DependentUpon>aspnet-CKWMS-2016.mdf</DependentUpon>
+    <Content Include="App_Data\aspnet-CKWMS-20160526025717.mdf" />
+    <Content Include="App_Data\aspnet-CKWMS-20160526025717_log.ldf">
+      <DependentUpon>aspnet-CKWMS-20160526025717.mdf</DependentUpon>
     </Content>
     <Content Include="assets\avatars\avatar.png" />
     <Content Include="assets\avatars\avatar1.png" />
@@ -571,6 +571,9 @@
     <Content Include="CommonValue.json" />
     <Content Include="Metadata\deploymentTemplates\apiappconfig.azureresource.json" />
     <Content Include="apiapp.json" />
+    <None Include="Properties\PublishProfiles\davis-ck.pubxml" />
+    <None Include="Properties\PublishProfiles\davis-ck1.pubxml" />
+    <None Include="Properties\PublishProfiles\davis-ck2.pubxml" />
     <None Include="Properties\PublishProfiles\davis1.pubxml" />
     <Content Include="reports\ReportDataSet.xsc">
       <DependentUpon>ReportDataSet.xsd</DependentUpon>
