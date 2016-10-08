@@ -15,7 +15,7 @@
               <Width>3.56644cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.89376cm</Width>
+              <Width>2.01067cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.8407cm</Width>
@@ -59,6 +59,7 @@
                               <Style>
                                 <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -114,6 +115,7 @@
                               <Style>
                                 <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -169,6 +171,7 @@
                               <Style>
                                 <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -224,6 +227,7 @@
                               <Style>
                                 <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -279,6 +283,7 @@
                               <Style>
                                 <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -334,6 +339,7 @@
                               <Style>
                                 <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -389,6 +395,7 @@
                               <Style>
                                 <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -444,6 +451,7 @@
                               <Style>
                                 <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -499,6 +507,7 @@
                               <Style>
                                 <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -554,6 +563,7 @@
                               <Style>
                                 <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -609,6 +619,7 @@
                               <Style>
                                 <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -664,6 +675,7 @@
                               <Style>
                                 <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -722,6 +734,7 @@
                             <TextRun>
                               <Value>=Fields!Guige.Value</Value>
                               <Style>
+                                <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
@@ -776,6 +789,7 @@
                             <TextRun>
                               <Value>=Fields!Changjia.Value</Value>
                               <Style>
+                                <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
@@ -830,6 +844,7 @@
                             <TextRun>
                               <Value>=Fields!ShangpinMC.Value</Value>
                               <Style>
+                                <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
@@ -864,6 +879,7 @@
                             <TextRun>
                               <Value>=Fields!Pihao.Value</Value>
                               <Style>
+                                <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
@@ -918,6 +934,7 @@
                             <TextRun>
                               <Value>=Fields!ShixiaoRQ.Value</Value>
                               <Style>
+                                <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
@@ -972,6 +989,7 @@
                             <TextRun>
                               <Value>=Fields!Zhucezheng.Value</Value>
                               <Style>
+                                <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
@@ -1026,6 +1044,7 @@
                             <TextRun>
                               <Value>=Fields!ChukuSL.Value</Value>
                               <Style>
+                                <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
@@ -1080,6 +1099,7 @@
                             <TextRun>
                               <Value>=Fields!JibenDW.Value</Value>
                               <Style>
+                                <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
@@ -1134,6 +1154,7 @@
                             <TextRun>
                               <Value>=Fields!ChunyunYQ.Value</Value>
                               <Style>
+                                <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
@@ -1188,6 +1209,7 @@
                             <TextRun>
                               <Value>=Fields!ShengchanxukeBH.Value</Value>
                               <Style>
+                                <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
@@ -1242,6 +1264,7 @@
                             <TextRun>
                               <Value>=Fields!BeianBH.Value</Value>
                               <Style>
+                                <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
@@ -1296,6 +1319,7 @@
                             <TextRun>
                               <Value>=Fields!Beizhu.Value</Value>
                               <Style>
+                                <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
@@ -1370,10 +1394,10 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
-        <Top>0.81703cm</Top>
+        <Top>0.18203cm</Top>
         <Left>0.22932cm</Left>
         <Height>1.2cm</Height>
-        <Width>24.01096cm</Width>
+        <Width>24.12786cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1381,7 +1405,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>1.15625in</Height>
+    <Height>0.59375in</Height>
     <Style />
   </Body>
   <Width>9.66928in</Width>
@@ -1401,7 +1425,7 @@
                   <Value>随货同行单</Value>
                   <Style>
                     <FontFamily>宋体</FontFamily>
-                    <FontSize>12pt</FontSize>
+                    <FontSize>14pt</FontSize>
                     <FontWeight>Bold</FontWeight>
                   </Style>
                 </TextRun>
@@ -1412,8 +1436,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox19</rd:DefaultName>
-          <Top>1.16099cm</Top>
-          <Left>9.72971cm</Left>
+          <Top>0.84349cm</Top>
+          <Left>9.82613cm</Left>
           <Height>0.67938cm</Height>
           <Width>4.90771cm</Width>
           <Style>
@@ -1438,17 +1462,24 @@
                     <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
+                <TextRun>
+                  <Value>=First(Fields!ChukudanBH.Value, "DataSet2")</Value>
+                  <Style>
+                    <FontFamily>宋体</FontFamily>
+                    <FontSize>8pt</FontSize>
+                  </Style>
+                </TextRun>
               </TextRuns>
               <Style>
-                <TextAlign>Right</TextAlign>
+                <TextAlign>Left</TextAlign>
               </Style>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox2</rd:DefaultName>
-          <Top>2.27059cm</Top>
+          <Top>2.37642cm</Top>
           <Left>0.93411cm</Left>
           <Height>0.6cm</Height>
-          <Width>1.60359cm</Width>
+          <Width>6.35255cm</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border />
@@ -1472,9 +1503,16 @@
                     <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
+                <TextRun>
+                  <Value>=First(Fields!KehuMC.Value, "DataSet2")</Value>
+                  <Style>
+                    <FontFamily>宋体</FontFamily>
+                    <FontSize>8pt</FontSize>
+                  </Style>
+                </TextRun>
               </TextRuns>
               <Style>
-                <TextAlign>Right</TextAlign>
+                <TextAlign>Left</TextAlign>
               </Style>
             </Paragraph>
           </Paragraphs>
@@ -1482,7 +1520,7 @@
           <Top>2.97642cm</Top>
           <Left>0.93411cm</Left>
           <Height>0.6cm</Height>
-          <Width>1.60359cm</Width>
+          <Width>6.35255cm</Width>
           <ZIndex>2</ZIndex>
           <Style>
             <Border />
@@ -1506,9 +1544,16 @@
                     <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
+                <TextRun>
+                  <Value>=First(Fields!Yunsongdizhi.Value, "DataSet2")</Value>
+                  <Style>
+                    <FontFamily>宋体</FontFamily>
+                    <FontSize>8pt</FontSize>
+                  </Style>
+                </TextRun>
               </TextRuns>
               <Style>
-                <TextAlign>Right</TextAlign>
+                <TextAlign>Left</TextAlign>
               </Style>
             </Paragraph>
           </Paragraphs>
@@ -1516,7 +1561,7 @@
           <Top>2.97642cm</Top>
           <Left>8.75259cm</Left>
           <Height>0.6cm</Height>
-          <Width>1.77271cm</Width>
+          <Width>7.73194cm</Width>
           <ZIndex>3</ZIndex>
           <Style>
             <Border />
@@ -1540,9 +1585,16 @@
                     <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
+                <TextRun>
+                  <Value>=First(Fields!ChukuRQ.Value, "DataSet2")</Value>
+                  <Style>
+                    <FontFamily>宋体</FontFamily>
+                    <FontSize>8pt</FontSize>
+                  </Style>
+                </TextRun>
               </TextRuns>
               <Style>
-                <TextAlign>Right</TextAlign>
+                <TextAlign>Left</TextAlign>
               </Style>
             </Paragraph>
           </Paragraphs>
@@ -1550,7 +1602,7 @@
           <Top>2.27059cm</Top>
           <Left>8.75259cm</Left>
           <Height>0.6cm</Height>
-          <Width>1.77271cm</Width>
+          <Width>7.73194cm</Width>
           <ZIndex>4</ZIndex>
           <Style>
             <Border />
@@ -1574,9 +1626,16 @@
                     <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
+                <TextRun>
+                  <Value>=First(Fields!Lianxiren.Value, "DataSet2")</Value>
+                  <Style>
+                    <FontFamily>宋体</FontFamily>
+                    <FontSize>8pt</FontSize>
+                  </Style>
+                </TextRun>
               </TextRuns>
               <Style>
-                <TextAlign>Right</TextAlign>
+                <TextAlign>Left</TextAlign>
               </Style>
             </Paragraph>
           </Paragraphs>
@@ -1584,7 +1643,7 @@
           <Top>2.27059cm</Top>
           <Left>18.53686cm</Left>
           <Height>0.6cm</Height>
-          <Width>1.73871cm</Width>
+          <Width>4.80949cm</Width>
           <ZIndex>5</ZIndex>
           <Style>
             <Border />
@@ -1608,9 +1667,16 @@
                     <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
+                <TextRun>
+                  <Value>=First(Fields!LianxiDH.Value, "DataSet2")</Value>
+                  <Style>
+                    <FontFamily>宋体</FontFamily>
+                    <FontSize>8pt</FontSize>
+                  </Style>
+                </TextRun>
               </TextRuns>
               <Style>
-                <TextAlign>Right</TextAlign>
+                <TextAlign>Left</TextAlign>
               </Style>
             </Paragraph>
           </Paragraphs>
@@ -1618,203 +1684,11 @@
           <Top>2.97642cm</Top>
           <Left>18.53686cm</Left>
           <Height>0.6cm</Height>
-          <Width>1.73871cm</Width>
+          <Width>4.80949cm</Width>
           <ZIndex>6</ZIndex>
           <Style>
             <Border />
             <VerticalAlign>Middle</VerticalAlign>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="ChukudanBH">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>=First(Fields!ChukudanBH.Value, "DataSet2")</Value>
-                  <Style>
-                    <FontSize>8pt</FontSize>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style />
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>ChukudanBH</rd:DefaultName>
-          <Top>2.27059cm</Top>
-          <Left>2.5377cm</Left>
-          <Height>0.6cm</Height>
-          <Width>4.00812cm</Width>
-          <ZIndex>7</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="KehuMC">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>=First(Fields!KehuMC.Value, "DataSet2")</Value>
-                  <Style>
-                    <FontSize>8pt</FontSize>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style />
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>KehuMC</rd:DefaultName>
-          <Top>2.97642cm</Top>
-          <Left>2.5377cm</Left>
-          <Height>0.6cm</Height>
-          <Width>4.74896cm</Width>
-          <ZIndex>8</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="Yunsongdizhi">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>=First(Fields!Yunsongdizhi.Value, "DataSet2")</Value>
-                  <Style>
-                    <FontSize>8pt</FontSize>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style />
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Yunsongdizhi</rd:DefaultName>
-          <Top>2.97642cm</Top>
-          <Left>10.5253cm</Left>
-          <Height>0.6cm</Height>
-          <Width>6.1541cm</Width>
-          <ZIndex>9</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="ChukuRQ">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>=First(Fields!ChukuRQ.Value, "DataSet2")</Value>
-                  <Style>
-                    <FontSize>8pt</FontSize>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style />
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>ChukuRQ</rd:DefaultName>
-          <Top>2.27059cm</Top>
-          <Left>10.5253cm</Left>
-          <Height>0.6cm</Height>
-          <Width>3.135cm</Width>
-          <ZIndex>10</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="Lianxiren">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>=First(Fields!Lianxiren.Value, "DataSet2")</Value>
-                  <Style>
-                    <FontSize>8pt</FontSize>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style />
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Lianxiren</rd:DefaultName>
-          <Top>2.27059cm</Top>
-          <Left>20.27556cm</Left>
-          <Height>0.6cm</Height>
-          <Width>3.07079cm</Width>
-          <ZIndex>11</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="LianxiDH">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>=First(Fields!LianxiDH.Value, "DataSet2")</Value>
-                  <Style>
-                    <FontSize>8pt</FontSize>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style />
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>LianxiDH</rd:DefaultName>
-          <Top>2.97642cm</Top>
-          <Left>20.27556cm</Left>
-          <Height>0.6cm</Height>
-          <Width>3.07079cm</Width>
-          <ZIndex>12</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
             <PaddingTop>2pt</PaddingTop>
@@ -1846,17 +1720,24 @@
                     <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
+                <TextRun>
+                  <Value>=First(Fields!HuozhuID.Value, "DataSet2")</Value>
+                  <Style>
+                    <FontFamily>宋体</FontFamily>
+                    <FontSize>8pt</FontSize>
+                  </Style>
+                </TextRun>
               </TextRuns>
               <Style>
-                <TextAlign>Right</TextAlign>
+                <TextAlign>Left</TextAlign>
               </Style>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox20</rd:DefaultName>
-          <Top>0.88222cm</Top>
-          <Left>0.9341cm</Left>
+          <Top>0.63528cm</Top>
+          <Left>0.93411cm</Left>
           <Height>0.6cm</Height>
-          <Width>1.80005cm</Width>
+          <Width>7.31631cm</Width>
           <Style>
             <Border />
             <VerticalAlign>Middle</VerticalAlign>
@@ -1881,13 +1762,13 @@
                 </TextRun>
               </TextRuns>
               <Style>
-                <TextAlign>Right</TextAlign>
+                <TextAlign>Left</TextAlign>
               </Style>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox20</rd:DefaultName>
-          <Top>1.58805cm</Top>
-          <Left>0.90765cm</Left>
+          <Top>1.23528cm</Top>
+          <Left>0.93411cm</Left>
           <Height>0.6cm</Height>
           <Width>1.80004cm</Width>
           <ZIndex>1</ZIndex>
@@ -1915,13 +1796,13 @@
                 </TextRun>
               </TextRuns>
               <Style>
-                <TextAlign>Right</TextAlign>
+                <TextAlign>Left</TextAlign>
               </Style>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox20</rd:DefaultName>
-          <Top>2.29388cm</Top>
-          <Left>0.90766cm</Left>
+          <Top>1.83528cm</Top>
+          <Left>0.93411cm</Left>
           <Height>0.6cm</Height>
           <Width>1.80004cm</Width>
           <ZIndex>2</ZIndex>
@@ -1954,8 +1835,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox20</rd:DefaultName>
-          <Top>0.17639cm</Top>
-          <Left>16.84098cm</Left>
+          <Top>0.03528cm</Top>
+          <Left>15.88848cm</Left>
           <Height>0.6cm</Height>
           <Width>3.43458cm</Width>
           <ZIndex>3</ZIndex>
@@ -1988,8 +1869,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox20</rd:DefaultName>
-          <Top>0.88222cm</Top>
-          <Left>17.77556cm</Left>
+          <Top>0.63528cm</Top>
+          <Left>16.82306cm</Left>
           <Height>0.6cm</Height>
           <Width>2.5cm</Width>
           <ZIndex>4</ZIndex>
@@ -2022,46 +1903,14 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox20</rd:DefaultName>
-          <Top>1.58805cm</Top>
-          <Left>17.77556cm</Left>
+          <Top>1.23528cm</Top>
+          <Left>16.82306cm</Left>
           <Height>0.6cm</Height>
           <Width>2.5cm</Width>
           <ZIndex>5</ZIndex>
           <Style>
             <Border />
             <VerticalAlign>Middle</VerticalAlign>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="HuozhuID">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>=First(Fields!HuozhuID.Value, "DataSet2")</Value>
-                  <Style>
-                    <FontSize>8pt</FontSize>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style />
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>HuozhuID</rd:DefaultName>
-          <Top>0.88222cm</Top>
-          <Left>2.7077cm</Left>
-          <Height>0.6cm</Height>
-          <Width>5.54272cm</Width>
-          <ZIndex>6</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
             <PaddingTop>2pt</PaddingTop>
@@ -2075,41 +1924,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>发货单位：</Value>
-                  <Style>
-                    <FontFamily>宋体</FontFamily>
-                    <FontSize>8pt</FontSize>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style>
-                <TextAlign>Right</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox20</rd:DefaultName>
-          <Top>0.17639cm</Top>
-          <Left>0.93411cm</Left>
-          <Height>0.6cm</Height>
-          <Width>1.80004cm</Width>
-          <ZIndex>7</ZIndex>
-          <Style>
-            <Border />
-            <VerticalAlign>Middle</VerticalAlign>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="Textbox30">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>上海嘉和诚康医疗器械有限公司</Value>
+                  <Value>发货单位：上海嘉和诚康医疗器械有限公司</Value>
                   <Style>
                     <FontFamily>宋体</FontFamily>
                     <FontSize>8pt</FontSize>
@@ -2122,11 +1937,11 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox20</rd:DefaultName>
-          <Top>0.17639cm</Top>
-          <Left>2.7077cm</Left>
+          <Top>0.03528cm</Top>
+          <Left>0.93411cm</Left>
           <Height>0.6cm</Height>
-          <Width>5.34917cm</Width>
-          <ZIndex>8</ZIndex>
+          <Width>7.31631cm</Width>
+          <ZIndex>6</ZIndex>
           <Style>
             <Border />
             <VerticalAlign>Middle</VerticalAlign>
@@ -2136,7 +1951,7 @@
             <PaddingBottom>2pt</PaddingBottom>
           </Style>
         </Textbox>
-        <Textbox Name="Textbox41">
+        <Textbox Name="Textbox26">
           <CanGrow>true</CanGrow>
           <KeepTogether>true</KeepTogether>
           <Paragraphs>
@@ -2155,12 +1970,12 @@
               </Style>
             </Paragraph>
           </Paragraphs>
-          <rd:DefaultName>Textbox41</rd:DefaultName>
-          <Top>3.43159cm</Top>
-          <Left>11.07922cm</Left>
-          <Height>0.6cm</Height>
-          <Width>0.589cm</Width>
-          <ZIndex>9</ZIndex>
+          <rd:DefaultName>Textbox18</rd:DefaultName>
+          <Top>3.34243cm</Top>
+          <Left>11.43446cm</Left>
+          <Height>0.44125cm</Height>
+          <Width>0.40979cm</Width>
+          <ZIndex>7</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -2172,7 +1987,7 @@
             <PaddingBottom>2pt</PaddingBottom>
           </Style>
         </Textbox>
-        <Textbox Name="Textbox42">
+        <Textbox Name="Textbox27">
           <CanGrow>true</CanGrow>
           <KeepTogether>true</KeepTogether>
           <Paragraphs>
@@ -2191,12 +2006,12 @@
               </Style>
             </Paragraph>
           </Paragraphs>
-          <rd:DefaultName>Textbox41</rd:DefaultName>
-          <Top>3.43159cm</Top>
-          <Left>11.66822cm</Left>
-          <Height>0.6cm</Height>
-          <Width>0.58523cm</Width>
-          <ZIndex>10</ZIndex>
+          <rd:DefaultName>Textbox18</rd:DefaultName>
+          <Top>3.34243cm</Top>
+          <Left>11.87953cm</Left>
+          <Height>0.44125cm</Height>
+          <Width>0.40979cm</Width>
+          <ZIndex>8</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -2208,7 +2023,43 @@
             <PaddingBottom>2pt</PaddingBottom>
           </Style>
         </Textbox>
-        <Textbox Name="Textbox43">
+        <Textbox Name="Textbox28">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>页</Value>
+                  <Style>
+                    <FontFamily>宋体</FontFamily>
+                    <FontSize>8pt</FontSize>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox18</rd:DefaultName>
+          <Top>3.34243cm</Top>
+          <Left>12.73411cm</Left>
+          <Height>0.44125cm</Height>
+          <Width>0.40979cm</Width>
+          <ZIndex>9</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <VerticalAlign>Middle</VerticalAlign>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="Textbox34">
           <CanGrow>true</CanGrow>
           <KeepTogether>true</KeepTogether>
           <Paragraphs>
@@ -2227,12 +2078,12 @@
               </Style>
             </Paragraph>
           </Paragraphs>
-          <rd:DefaultName>Textbox41</rd:DefaultName>
-          <Top>3.43159cm</Top>
-          <Left>12.28873cm</Left>
-          <Height>0.6cm</Height>
-          <Width>0.46676cm</Width>
-          <ZIndex>11</ZIndex>
+          <rd:DefaultName>Textbox18</rd:DefaultName>
+          <Top>3.34243cm</Top>
+          <Left>12.28904cm</Left>
+          <Height>0.44125cm</Height>
+          <Width>0.40979cm</Width>
+          <ZIndex>10</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -2244,78 +2095,7 @@
             <PaddingBottom>2pt</PaddingBottom>
           </Style>
         </Textbox>
-        <Textbox Name="Textbox44">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>页</Value>
-                  <Style>
-                    <FontFamily>宋体</FontFamily>
-                    <FontSize>8pt</FontSize>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style>
-                <TextAlign>Center</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox41</rd:DefaultName>
-          <Top>3.43159cm</Top>
-          <Left>12.79077cm</Left>
-          <Height>0.6cm</Height>
-          <Width>0.51968cm</Width>
-          <ZIndex>12</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <VerticalAlign>Middle</VerticalAlign>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="OverallPageNumber">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>=Globals!OverallPageNumber</Value>
-                  <Style>
-                    <FontSize>8pt</FontSize>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style>
-                <TextAlign>Center</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>OverallPageNumber</rd:DefaultName>
-          <Top>3.43159cm</Top>
-          <Left>12.25345cm</Left>
-          <Height>0.6cm</Height>
-          <Width>1.02171cm</Width>
-          <ZIndex>13</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <VerticalAlign>Middle</VerticalAlign>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="PageNumber">
+        <Textbox Name="PageNumber2">
           <CanGrow>true</CanGrow>
           <KeepTogether>true</KeepTogether>
           <Paragraphs>
@@ -2334,11 +2114,46 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>PageNumber</rd:DefaultName>
-          <Top>3.43159cm</Top>
-          <Left>11.10554cm</Left>
-          <Height>0.6cm</Height>
-          <Width>1.14791cm</Width>
-          <ZIndex>14</ZIndex>
+          <Top>3.34243cm</Top>
+          <Left>11.43446cm</Left>
+          <Height>0.44125cm</Height>
+          <Width>0.85486cm</Width>
+          <ZIndex>11</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <VerticalAlign>Middle</VerticalAlign>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="OverallPageNumber2">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=Globals!OverallPageNumber</Value>
+                  <Style>
+                    <FontSize>8pt</FontSize>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>OverallPageNumber</rd:DefaultName>
+          <Top>3.34243cm</Top>
+          <Left>12.28904cm</Left>
+          <Height>0.44125cm</Height>
+          <Width>0.85486cm</Width>
+          <ZIndex>12</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>

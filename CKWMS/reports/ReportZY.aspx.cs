@@ -106,7 +106,7 @@ namespace CKWMS.reports
                                 drtx["Guige"] = _mx.Guige;
                                 drtx["ShangpinMC"] = _mx.ShangpinMC;
                                 drtx["Pihao"] = _mx.Pihao;
-                                drtx["ShixiaoRQ"] = string.Format("{0:yyyy-MM-dd}",_mx.ShixiaoRQ);
+                                drtx["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}",_mx.ShixiaoRQ);
                                 drtx["Zhucezheng"] = _mx.Zhucezheng;
                                 drtx["ChukuSL"] = _mx.ChukuSL;
                                 drtx["JibenDW"] = _mx.JibenDW;
@@ -126,7 +126,7 @@ namespace CKWMS.reports
                             drckd["ChukudanBH"] = ckd.ChukudanBH;
                             drckd["KehuMC"] = ckd.KehuMC;
                             drckd["Yunsongdizhi"] = ckd.Yunsongdizhi;
-                            drckd["ChukuRQ"] = string.Format("{0:yyyy-MM-dd}", ckd.ChukuRQ);
+                            drckd["ChukuRQ"] = string.Format("{0:yyyy/MM/dd}", ckd.ChukuRQ);
                             drckd["Lianxiren"] = ckd.Lianxiren;
                             drckd["LianxiDH"] = ckd.LianxiDH;
 
@@ -152,8 +152,8 @@ namespace CKWMS.reports
                                 drfh["Pihao"] = _fh.Pihao;
                                 drfh["Pihao1"] = _fh.Pihao1;
                                 drfh["Xuliema"] = _fh.Xuliema;
-                                drfh["ShengchanRQ"] = string.Format("{0:yyyy-MM-dd}", _fh.ShengchanRQ) ;
-                                drfh["ShixiaoRQ"] = string.Format("{0:yyyy-MM-dd}", _fh.ShixiaoRQ);
+                                drfh["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _fh.ShengchanRQ) ;
+                                drfh["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _fh.ShixiaoRQ);
                                 drfh["JianhuoSL"] = _fh.JianhuoSL;
                                 drfh["Changjia"] = _fh.Changjia;
                                 drfh["Chandi"] = _fh.Chandi;
@@ -168,7 +168,7 @@ namespace CKWMS.reports
                                 }
                                 drfh["Fuheren"] = _fh.Fuheren;
                                 drfh["FuheSM"] = _fh.FuheSM;
-                                drfh["MakeDate"] = string.Format("{0:yyyy-MM-dd}", _fh.MakeDate); 
+                                drfh["MakeDate"] = string.Format("{0:yyyy/MM/dd}", _fh.MakeDate); 
                                 dtfh.Rows.Add(drfh);
                             }
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["CKFuheDan"]));
@@ -178,7 +178,7 @@ namespace CKWMS.reports
                             DataRow drckfh = dtckfh.NewRow();
                             drckfh["Yunsongdizhi"] = _ckfhds.Yunsongdizhi;
                             drckfh["Beizhu"] = _ckfhds.Beizhu;
-                            drckfh["ChukuRQ"] = string.Format("{0:yyyy-MM-dd}", _ckfhds.ChukuRQ);
+                            drckfh["ChukuRQ"] = string.Format("{0:yyyy/MM/dd}", _ckfhds.ChukuRQ);
                             drckfh["ChukudanBH"] = _ckfhds.ChukudanBH;
                             drckfh["Lianxiren"] = _ckfhds.Lianxiren;
                             drckfh["LianxiDH"] = _ckfhds.LianxiDH;
@@ -204,8 +204,8 @@ namespace CKWMS.reports
                                 drfhjy["Pihao"] = _fh.Pihao;
                                 drfhjy["Pihao1"] = _fh.Pihao1;
                                 drfhjy["Xuliema"] = _fh.Xuliema;
-                                drfhjy["ShengchanRQ"] = string.Format("{0:yyyy-MM-dd}", _fh.ShengchanRQ);
-                                drfhjy["ShixiaoRQ"] = string.Format("{0:yyyy-MM-dd}", _fh.ShixiaoRQ);
+                                drfhjy["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _fh.ShengchanRQ);
+                                drfhjy["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _fh.ShixiaoRQ);
                                 drfhjy["JianhuoSL"] = _fh.JianhuoSL;
                                 drfhjy["Changjia"] = _fh.Changjia;
                                 drfhjy["Chandi"] = _fh.Chandi;
@@ -219,7 +219,7 @@ namespace CKWMS.reports
                             DataRow drckfhjy = dtckfhjy.NewRow();
                             drckfhjy["Yunsongdizhi"] = _ckfhjys.Yunsongdizhi;
                             drckfhjy["Beizhu"] = _ckfhjys.Beizhu;
-                            drckfhjy["ChukuRQ"] = string.Format("{0:yyyy-MM-dd}", _ckfhjys.ChukuRQ);
+                            drckfhjy["ChukuRQ"] = string.Format("{0:yyyy/MM/dd}", _ckfhjys.ChukuRQ);
                             drckfhjy["ChukudanBH"] = _ckfhjys.ChukudanBH;
                             drckfhjy["Lianxiren"] = _ckfhjys.Lianxiren;
                             drckfhjy["LianxiDH"] = _ckfhjys.LianxiDH;
@@ -243,13 +243,13 @@ namespace CKWMS.reports
                                 wms_rukudan rkd = ServiceFactory.wms_rukudanservice.GetEntityById(s=>s.ID == int.Parse(_rkysid));
                                 base_gongyingshang gys = ServiceFactory.base_gongyingshangservice.GetEntityById(p => p.ID == rkd.GongyingshangID);
                                 drzlysbg["GYSMingcheng"] = gys.Mingcheng;
-                                drzlysbg["ystime"] = string.Format("{0:yyyy-MM-dd}", rkd.RukuRQ);
+                                drzlysbg["ystime"] = string.Format("{0:yyyy/MM/dd}", rkd.RukuRQ);
                                 drzlysbg["Changjia"] = _pr.Changjia;
                                 drzlysbg["ShangpinMC"] = _pr.ShangpinMC;
                                 drzlysbg["Guige"] = _pr.Guige;
                                 drzlysbg["Pihao"] = _pr.Pihao;
-                                drzlysbg["ShengchanRQ"] = string.Format("{0:yyyy-MM-dd}", _pr.ShengchanRQ);
-                                drzlysbg["ShixiaoRQ"] = string.Format("{0:yyyy-MM-dd}", _pr.ShixiaoRQ);
+                                drzlysbg["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShengchanRQ);
+                                drzlysbg["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShixiaoRQ);
                                 drzlysbg["Zhucezheng"] = _pr.Zhucezheng;
                                 drzlysbg["Shuliang"] = _pr.Shuliang;
                                 //验收结果
@@ -280,9 +280,12 @@ namespace CKWMS.reports
                             DataRow drrkfhjy = dtrkfhjy.NewRow();
                             wms_rukudan rkd_others = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_rkysid));
                             base_weituokehu wtkh_others = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == rkd_others.HuozhuID);
+                            var _ysbgs = ServiceFactory.quan_rukuysservice.GetEntrycheckByRK(int.Parse(_rkysid)).ToList<quan_entrycheck_v>();
                             drrkfhjy["HuozhuID"] = wtkh_others.Kehumingcheng;
-                            drrkfhjy["RukuRQ"] = string.Format("{0:yyyy-MM-dd}", rkd_others.RukuRQ);
-                            drrkfhjy["MakeDate"] = string.Format("{0:yyyy-MM-dd}", rkd_others.MakeDate);
+                            drrkfhjy["RukuRQ"] = string.Format("{0:yyyy/MM/dd}", rkd_others.RukuRQ);
+                            drrkfhjy["MakeDate"] = string.Format("{0:yyyy/MM/dd}", _ysbgs[0].ystime);
+                            userinfo man = ServiceFactory.userinfoservice.GetEntityById(p => p.ID == (int)Session["user_id"]);
+                            drrkfhjy["MakeMan"] = man.FullName;
 
                             dtrkfhjy.Rows.Add(drrkfhjy);
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["RKYanshouDanTitle"]));
@@ -301,13 +304,13 @@ namespace CKWMS.reports
                                 wms_rukudan rkd = ServiceFactory.wms_rukudanservice.GetEntityById(s => s.ID == int.Parse(_rkysid));
                                 base_gongyingshang gys = ServiceFactory.base_gongyingshangservice.GetEntityById(p => p.ID == rkd.GongyingshangID);
                                 drrkysjl["GYSMingcheng"] = gys.Mingcheng;
-                                drrkysjl["ystime"] = string.Format("{0:yyyy-MM-dd}", rkd.RukuRQ);
+                                drrkysjl["ystime"] = string.Format("{0:yyyy/MM/dd}", rkd.RukuRQ);
                                 drrkysjl["Changjia"] = _pr.Changjia;
                                 drrkysjl["ShangpinMC"] = _pr.ShangpinMC;
                                 drrkysjl["Guige"] = _pr.Guige;
                                 drrkysjl["Pihao"] = _pr.Pihao;
-                                drrkysjl["ShengchanRQ"] = string.Format("{0:yyyy-MM-dd}", _pr.ShengchanRQ);
-                                drrkysjl["ShixiaoRQ"] = string.Format("{0:yyyy-MM-dd}", _pr.ShixiaoRQ);
+                                drrkysjl["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShengchanRQ);
+                                drrkysjl["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShixiaoRQ);
                                 drrkysjl["Zhucezheng"] = _pr.Zhucezheng;
                                 drrkysjl["Shuliang"] = _pr.Shuliang;
                                 drrkysjl["ChunyunYQ"] = rkd.ChunyunYQ;
@@ -321,8 +324,8 @@ namespace CKWMS.reports
                             wms_rukudan rkjl_others = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_rkysid));
                             base_weituokehu wtkhjl_others = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == rkjl_others.HuozhuID);
                             drysjl["HuozhuID"] = wtkhjl_others.Kehumingcheng;
-                            drysjl["RukuRQ"] = string.Format("{0:yyyy-MM-dd}", rkjl_others.RukuRQ);
-                            drysjl["MakeDate"] = string.Format("{0:yyyy-MM-dd}", rkjl_others.MakeDate);
+                            drysjl["RukuRQ"] = string.Format("{0:yyyy/MM/dd}", rkjl_others.RukuRQ);
+                            drysjl["MakeDate"] = string.Format("{0:yyyy/MM/dd}", rkjl_others.MakeDate);
 
                             dtysjl.Rows.Add(drysjl);
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["RKYanshouDanTitle"]));

@@ -12,7 +12,7 @@
     <Shape ID="DesignTable:TongXingDan" ZOrder="5" X="177" Y="134" Height="28" Width="151" AdapterExpanded="true" DataTableExpanded="false" OldAdapterHeight="0" OldDataTableHeight="235" SplitterPosition="24" />
     <Shape ID="DesignTable:CKFuheDan" ZOrder="3" X="0" Y="18" Height="28" Width="150" AdapterExpanded="true" DataTableExpanded="false" OldAdapterHeight="0" OldDataTableHeight="235" SplitterPosition="24" />
     <Shape ID="DesignTable:RKYanshouDan" ZOrder="2" X="429" Y="38" Height="257" Width="161" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="253" />
-    <Shape ID="DesignTable:RKYanshouDanTitle" ZOrder="1" X="628" Y="77" Height="105" Width="188" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="82" />
+    <Shape ID="DesignTable:RKYanshouDanTitle" ZOrder="1" X="628" Y="77" Height="124" Width="188" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="120" />
   </Shapes>
   <Connectors />
 </DiagramLayout>

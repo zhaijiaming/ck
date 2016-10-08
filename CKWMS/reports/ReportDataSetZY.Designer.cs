@@ -2821,6 +2821,8 @@ namespace CKWMS.reports {
             
             private global::System.Data.DataColumn columnMakeDate;
             
+            private global::System.Data.DataColumn columnMakeMan;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public RKYanshouDanTitleDataTable() {
@@ -2888,6 +2890,14 @@ namespace CKWMS.reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn MakeManColumn {
+                get {
+                    return this.columnMakeMan;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -2923,13 +2933,14 @@ namespace CKWMS.reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public RKYanshouDanTitleRow AddRKYanshouDanTitleRow(string HuozhuID, string RukuRQ, string Yanshouren, string MakeDate) {
+            public RKYanshouDanTitleRow AddRKYanshouDanTitleRow(string HuozhuID, string RukuRQ, string Yanshouren, string MakeDate, string MakeMan) {
                 RKYanshouDanTitleRow rowRKYanshouDanTitleRow = ((RKYanshouDanTitleRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         HuozhuID,
                         RukuRQ,
                         Yanshouren,
-                        MakeDate};
+                        MakeDate,
+                        MakeMan};
                 rowRKYanshouDanTitleRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowRKYanshouDanTitleRow);
                 return rowRKYanshouDanTitleRow;
@@ -2956,6 +2967,7 @@ namespace CKWMS.reports {
                 this.columnRukuRQ = base.Columns["RukuRQ"];
                 this.columnYanshouren = base.Columns["Yanshouren"];
                 this.columnMakeDate = base.Columns["MakeDate"];
+                this.columnMakeMan = base.Columns["MakeMan"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2969,6 +2981,8 @@ namespace CKWMS.reports {
                 base.Columns.Add(this.columnYanshouren);
                 this.columnMakeDate = new global::System.Data.DataColumn("MakeDate", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnMakeDate);
+                this.columnMakeMan = new global::System.Data.DataColumn("MakeMan", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMakeMan);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5085,6 +5099,22 @@ namespace CKWMS.reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string MakeMan {
+                get {
+                    try {
+                        return ((string)(this[this.tableRKYanshouDanTitle.MakeManColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("表“RKYanshouDanTitle”中列“MakeMan”的值为 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableRKYanshouDanTitle.MakeManColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsHuozhuIDNull() {
                 return this.IsNull(this.tableRKYanshouDanTitle.HuozhuIDColumn);
             }
@@ -5129,6 +5159,18 @@ namespace CKWMS.reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetMakeDateNull() {
                 this[this.tableRKYanshouDanTitle.MakeDateColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsMakeManNull() {
+                return this.IsNull(this.tableRKYanshouDanTitle.MakeManColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetMakeManNull() {
+                this[this.tableRKYanshouDanTitle.MakeManColumn] = global::System.Convert.DBNull;
             }
         }
         
