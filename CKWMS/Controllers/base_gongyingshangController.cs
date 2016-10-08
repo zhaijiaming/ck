@@ -431,6 +431,7 @@ namespace CKWMS.Controllers
             if (hezuosf.IndexOf("true") > -1)
                 hezuosf = "true";
             int uid = int.Parse(id);
+            int flag = 0;
             try
             {
                 base_gongyingshang p = ob_base_gongyingshangservice.GetEntityById(base_gongyingshang => base_gongyingshang.ID == uid);
@@ -457,15 +458,22 @@ namespace CKWMS.Controllers
                 p.BeianTP = beiantp.Trim();
                 p.XukePZRQ = xukepzrq == "" ? DateTime.Now : DateTime.Parse(xukepzrq);
                 p.XukeFZJG = xukefzjg.Trim();
-                ob_base_gongyingshangservice.UpdateEntity(p);
+                bool tt = ob_base_gongyingshangservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;
+                if (!tt)
+                {
+                    flag = -2;
+                }
+                else { flag = 1; }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 ViewBag.saveok = ViewAddTag.ModifyNo;
+                flag = -1;
             }
-            return RedirectToAction("Edit", new { id = uid });
+            //return RedirectToAction("Edit", new { id = uid, _flag = flag });
+            return Json(new { id = uid, _flag = flag });
         }
         public ActionResult Delete()
         {

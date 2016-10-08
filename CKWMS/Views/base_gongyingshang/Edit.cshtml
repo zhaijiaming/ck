@@ -231,6 +231,46 @@
                 ob_base_gongyingshang_mingcheng: { required: "请输入mingcheng" },
             }
         });
+
+        $("#sub").click(function () {
+            if ($("#daima").val() == "") {
+                alert("代码不能为空");
+                document.getElementById("daima").focus();
+            }
+            else if ($("#shengcheng").val() == "") {
+                alert("名称不能为空");
+                document.getElementById("shengcheng").focus();
+            }
+            else { form.submit(); }
+
+        })
+
+        //$("#sub").click(function (){
+        //    form.submit();
+        //})
+
+        var form = $("#tempform");
+        form.submit(function () {
+            $.post(form.attr("action"),
+                  form.serialize(),
+
+                  function (result, status) {
+                      //alert(status);                              
+                      if (result._flag == 1) {
+                          alert("更新成功");
+                      }
+                      else if (result._flag == -1) {
+                          alert("更新失败");
+                      }
+                      else if (result._flag == -2) {
+                          alert("更新失败，该代码已存在");
+                      }
+                      else { alert("未知异常"); }
+                  },
+                    "json");
+            return false;
+
+        });
     });
 
     //经营范围
@@ -392,7 +432,7 @@
 </div>
 
 <div class="page-content">
-    <form role="form" action="/base_gongyingshang/Update" method="post">
+    <form role="form" action="/base_gongyingshang/Update" method="post" id="tempform">
 
         <input type="hidden" name="ob_base_gongyingshang_id" value="@item.ID" />
         <input type="hidden" id="btnSelect" value="" />
@@ -400,7 +440,7 @@
         <input type="hidden" id="ob_base_gongyingshang_makedate" name="ob_base_gongyingshang_makedate" value=@string.Format("{0:yyyy-MM-dd}",DateTime.Now) />
         <div class="page-header">
             <p>
-                <button type="submit" class="btn btn-default"><i class="icon-save"></i>更新</button>
+                <button type="button" class="btn btn-default" id="sub"><i class="icon-save"></i>更新</button>
                 <button type="button" class="btn btn-default" onclick="javascript: history.back(-1); "><i class="icon-hand-left"></i>返回</button>
             </p>
         </div>

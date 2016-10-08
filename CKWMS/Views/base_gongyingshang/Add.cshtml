@@ -164,16 +164,26 @@
             }
         });
 
-        $("#sub").click(function () {
-            form.submit();
+        $("#sub").click(function () {          
+            if ($("#daima").val() == "") {
+                alert("代码不能为空");
+                document.getElementById("daima").focus();
+            }
+            else if ($("#shengcheng").val() == "") {
+                alert("名称不能为空");
+                document.getElementById("shengcheng").focus();
+            }
+            else { form.submit(); }
+            
         })
 
         var form = $("#tempform");
         form.submit(function () {
             $.post(form.attr("action"),
                   form.serialize(),
+
                   function (result, status) {
-                      //alert(status);
+                      //alert(status);                              
                       if (result._flag == 1) {
                           alert("保存成功");
                           location.href = "/base_gongyingshang/Index";

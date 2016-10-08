@@ -13,34 +13,72 @@
             var x = event.offsetX || event.originalEvent.layerX;
             var y = event.offsetY || event.originalEvent.layerY;
             if (x > 4 && x < 76 && y > 62 && y < 91) {
+                loadingShow_warp();
                 location.href = "/quan_shouyingsq/index";
             }
             else if (x > 4 && x < 76 && y > 130 && y < 157) {
+                loadingShow_warp();
                 location.href = "/wms_rukudan/index";
             }
             else if (x > 4 && x < 76 && y > 185 && y < 213) {
+                loadingShow_warp();
                 location.href = "/wms_rukudan/OperateList";
             }
             else if (x > 285 && x < 357 && y > 63 && y < 91) {
+                loadingShow_warp();
                 location.href = "/wms_chukudan/index";
             }
             else if (x > 277 && x < 367 && y > 123 && y < 152) {
+                loadingShow_warp();
                 location.href = "/wms_chukudan/outoperate";
             }
             else if (x > 285 && x < 356 && y > 180 && y < 206) {
+                loadingShow_warp();
                 location.href = "/wms_chukudan/outoperate";
             }
             else if (x > 287 && x < 361 && y > 245 && y < 272) {
+                loadingShow_warp();
                 location.href = "/wms_chukudan/outoperate";
             }
             else if (x > 4 && x < 76 && y > 249 && y < 279) {
+                loadingShow_warp();
                 location.href = "/wms_rukudan/OperateList";
             }
             else if (x > 4 && x < 76 && y > 313 && y < 342) {
+                loadingShow_warp();
                 location.href = "/wms_rukudan/OperateList";
+            }
+            else if (x > 147 && x < 218 && y > 313 && y < 343) {
+                loadingShow_warp();
+                location.href = "/wms_cunhuo/currentstorage";
             }
         });
     });
+
+    function loadingShow_warp() {
+        var loadingContainer = $("div.loading");
+        if (loadingContainer.length <= 0) {
+
+            loadingContainer = $("<div>", { Class: "loading", id: "loading" });
+            var img = $("<img>", { src: "/Imgs/LOADING.gif" });
+            loadingContainer.html("");
+            loadingContainer.append(img).css({
+                position: "fixed",
+                zIndex: "9999",
+                textAlign: "center",
+                top: "30%",
+                left: "40%",
+                height: "300px",
+                width: "400px"
+            });
+            loadingContainer.appendTo('body');
+            loadingContainer.append("<p>正在跳转，请耐心等待</p>");
+        }
+    }
+
+    function Finished() {
+        $("#loading").remove();
+    }
     //a(document).on("click.ace.widget","[data-action]",
     //    function(o){
     //        o.preventDefault();
