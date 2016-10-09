@@ -6,22 +6,22 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>1.91691cm</Width>
+              <Width>2.99668cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.30438cm</Width>
+              <Width>1.48897cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.04918cm</Width>
+              <Width>1.26382cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.1371cm</Width>
+              <Width>1.41144cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.16281cm</Width>
+              <Width>1.44235cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.75334cm</Width>
+              <Width>1.80212cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.77682cm</Width>
@@ -33,13 +33,13 @@
               <Width>0.83373cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.78436cm</Width>
+              <Width>2.94377cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.63919cm</Width>
+              <Width>1.79229cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.59979cm</Width>
+              <Width>1.44104cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.48229cm</Width>
@@ -48,7 +48,7 @@
               <Width>1.15504cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.04581cm</Width>
+              <Width>1.68893cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.74501cm</Width>
@@ -123,7 +123,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>注册证</Value>
+                              <Value>注册证号</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -235,7 +235,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>批号</Value>
+                              <Value>生产批号</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -347,7 +347,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>序列码</Value>
+                              <Value>序列号</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -571,7 +571,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>厂家</Value>
+                              <Value>生产厂家</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -1649,9 +1649,9 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
-        <Top>0.32839cm</Top>
+        <Top>0.08351cm</Top>
         <Height>1.67156cm</Height>
-        <Width>25.17959cm</Width>
+        <Width>27.05813cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1659,13 +1659,13 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>0.89583in</Height>
+    <Height>0.71875in</Height>
     <Style />
   </Body>
-  <Width>9.91322in</Width>
+  <Width>10.65281in</Width>
   <Page>
     <PageHeader>
-      <Height>3.97329cm</Height>
+      <Height>3.47913cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1690,9 +1690,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox2</rd:DefaultName>
-          <Top>0.70556cm</Top>
-          <Left>9.76979cm</Left>
-          <Height>0.6cm</Height>
+          <Left>10.88074cm</Left>
+          <Height>0.70583cm</Height>
           <Width>5.29666cm</Width>
           <Style>
             <Border>
@@ -1732,8 +1731,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>2.17329cm</Top>
-          <Left>0.56601cm</Left>
+          <Top>1.59741cm</Top>
+          <Left>0.56603cm</Left>
           <Height>0.6cm</Height>
           <Width>6.91407cm</Width>
           <ZIndex>1</ZIndex>
@@ -1775,8 +1774,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>2.77329cm</Top>
-          <Left>0.56602cm</Left>
+          <Top>2.19741cm</Top>
+          <Left>0.56604cm</Left>
           <Height>0.6cm</Height>
           <Width>7.7577cm</Width>
           <ZIndex>2</ZIndex>
@@ -1818,8 +1817,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>3.37329cm</Top>
-          <Left>0.56603cm</Left>
+          <Top>2.79741cm</Top>
+          <Left>0.56605cm</Left>
           <Height>0.6cm</Height>
           <Width>7.75769cm</Width>
           <ZIndex>3</ZIndex>
@@ -1861,8 +1860,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>2.77329cm</Top>
-          <Left>11.41141cm</Left>
+          <Top>1.59741cm</Top>
+          <Left>11.89178cm</Left>
           <Height>0.6cm</Height>
           <Width>4.28563cm</Width>
           <ZIndex>4</ZIndex>
@@ -1884,7 +1883,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>发货日期:</Value>
+                  <Value>出库日期:</Value>
                   <Style>
                     <FontFamily>宋体</FontFamily>
                     <FontSize>8pt</FontSize>
@@ -1904,8 +1903,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>3.37329cm</Top>
-          <Left>11.41141cm</Left>
+          <Top>2.79741cm</Top>
+          <Left>11.89178cm</Left>
           <Height>0.6cm</Height>
           <Width>4.28562cm</Width>
           <ZIndex>5</ZIndex>
@@ -1947,8 +1946,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>2.77329cm</Top>
-          <Left>18.31581cm</Left>
+          <Top>2.27913cm</Top>
+          <Left>21.50785cm</Left>
           <Height>0.6cm</Height>
           <Width>4.28562cm</Width>
           <ZIndex>6</ZIndex>
@@ -1990,11 +1989,54 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>3.37329cm</Top>
-          <Left>18.31581cm</Left>
+          <Top>2.87913cm</Top>
+          <Left>21.50785cm</Left>
           <Height>0.6cm</Height>
           <Width>4.28562cm</Width>
           <ZIndex>7</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <VerticalAlign>Middle</VerticalAlign>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="Textbox31">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>收货单位:</Value>
+                  <Style>
+                    <FontFamily>宋体</FontFamily>
+                    <FontSize>8pt</FontSize>
+                  </Style>
+                </TextRun>
+                <TextRun>
+                  <Value>=First(Fields!KehuMC.Value, "DataSet2")</Value>
+                  <Style>
+                    <FontFamily>宋体</FontFamily>
+                    <FontSize>8pt</FontSize>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox25</rd:DefaultName>
+          <Top>2.19741cm</Top>
+          <Left>11.89178cm</Left>
+          <Height>0.56472cm</Height>
+          <Width>6.38874cm</Width>
+          <ZIndex>8</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -2014,7 +2056,7 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>2.51354cm</Height>
+      <Height>2.2225cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -2045,7 +2087,6 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox25</rd:DefaultName>
-          <Top>0cm</Top>
           <Left>0.54559cm</Left>
           <Height>0.6cm</Height>
           <Width>7.77813cm</Width>
@@ -2117,53 +2158,10 @@
           </Paragraphs>
           <rd:DefaultName>Textbox25</rd:DefaultName>
           <Top>0.6cm</Top>
-          <Left>16.21269cm</Left>
+          <Left>20.98686cm</Left>
           <Height>0.6cm</Height>
           <Width>1.78562cm</Width>
           <ZIndex>2</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <VerticalAlign>Middle</VerticalAlign>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="Textbox31">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>收货单位:</Value>
-                  <Style>
-                    <FontFamily>宋体</FontFamily>
-                    <FontSize>8pt</FontSize>
-                  </Style>
-                </TextRun>
-                <TextRun>
-                  <Value>=First(Fields!KehuMC.Value, "DataSet2")</Value>
-                  <Style>
-                    <FontFamily>宋体</FontFamily>
-                    <FontSize>8pt</FontSize>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style>
-                <TextAlign>Left</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox25</rd:DefaultName>
-          <Top>0cm</Top>
-          <Left>16.21269cm</Left>
-          <Height>0.6cm</Height>
-          <Width>6.38874cm</Width>
-          <ZIndex>3</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -2196,10 +2194,10 @@
           </Paragraphs>
           <rd:DefaultName>Textbox18</rd:DefaultName>
           <Top>1.71083cm</Top>
-          <Left>11.41141cm</Left>
+          <Left>12.627cm</Left>
           <Height>0.44125cm</Height>
           <Width>0.40979cm</Width>
-          <ZIndex>4</ZIndex>
+          <ZIndex>3</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -2232,10 +2230,10 @@
           </Paragraphs>
           <rd:DefaultName>Textbox18</rd:DefaultName>
           <Top>1.71083cm</Top>
-          <Left>11.85648cm</Left>
+          <Left>13.07207cm</Left>
           <Height>0.44125cm</Height>
           <Width>0.40979cm</Width>
-          <ZIndex>5</ZIndex>
+          <ZIndex>4</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -2268,10 +2266,10 @@
           </Paragraphs>
           <rd:DefaultName>Textbox18</rd:DefaultName>
           <Top>1.71083cm</Top>
-          <Left>12.71106cm</Left>
+          <Left>13.92665cm</Left>
           <Height>0.44125cm</Height>
           <Width>0.40979cm</Width>
-          <ZIndex>6</ZIndex>
+          <ZIndex>5</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -2304,10 +2302,10 @@
           </Paragraphs>
           <rd:DefaultName>Textbox18</rd:DefaultName>
           <Top>1.71083cm</Top>
-          <Left>12.26599cm</Left>
+          <Left>13.48159cm</Left>
           <Height>0.44125cm</Height>
           <Width>0.40979cm</Width>
-          <ZIndex>7</ZIndex>
+          <ZIndex>6</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -2339,10 +2337,10 @@
           </Paragraphs>
           <rd:DefaultName>PageNumber</rd:DefaultName>
           <Top>1.71083cm</Top>
-          <Left>11.41141cm</Left>
+          <Left>12.627cm</Left>
           <Height>0.44125cm</Height>
           <Width>0.85486cm</Width>
-          <ZIndex>8</ZIndex>
+          <ZIndex>7</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -2374,10 +2372,10 @@
           </Paragraphs>
           <rd:DefaultName>OverallPageNumber</rd:DefaultName>
           <Top>1.71083cm</Top>
-          <Left>12.26599cm</Left>
+          <Left>13.48159cm</Left>
           <Height>0.44125cm</Height>
           <Width>0.85486cm</Width>
-          <ZIndex>9</ZIndex>
+          <ZIndex>8</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -2398,10 +2396,10 @@
     </PageFooter>
     <PageHeight>21cm</PageHeight>
     <PageWidth>29.7cm</PageWidth>
-    <LeftMargin>2cm</LeftMargin>
-    <RightMargin>2cm</RightMargin>
-    <TopMargin>2cm</TopMargin>
-    <BottomMargin>2cm</BottomMargin>
+    <LeftMargin>1cm</LeftMargin>
+    <RightMargin>1cm</RightMargin>
+    <TopMargin>1cm</TopMargin>
+    <BottomMargin>1cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>

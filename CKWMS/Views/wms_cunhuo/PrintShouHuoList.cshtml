@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "收货清单表";
+    Layout = "~/Views/Shared/EmptyView.cshtml";
+}
+<script type="text/javascript">
+    $(window).load(function () {
+        var shqdid = $("#shqdid").val();
+        document.getElementById("myReport").src = "../../reports/ReportZY.aspx?pid=ShouHuoList&shqdid=" + shqdid;
+        $("#autoUpdate").show();
+    });
+</script>
+<div id="autoUpdate" style="display:none; overflow-y: auto;background-color:white">
+    <input type="hidden" id="shqdid" value="@ViewBag.shqdid" />
+    <table style="height:100%;width:100%">
+        <tr>
+
+            <td></td>
+        </tr>
+        <tr><td class="center"><iframe id="myReport" style="width:1000px;height:800px;"></iframe></td></tr>
+    </table>
+</div>
+
