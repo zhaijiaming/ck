@@ -456,8 +456,19 @@ namespace CKWMS.App_Code
                         Console.WriteLine(rp.ryid);
                     }
                 }
-                sb.AppendLine("</ul>");
-                sb.AppendLine("</li>");
+            }
+            if(userid==-1)
+            {
+                sb.AppendLine("<li><a href=\"#\" class=\"dropdown-toggle\">");
+                sb.AppendLine("<i class=\"icon-ban-circle\"></i>");
+                sb.AppendLine("<span class=\"menu-text\">权限管理</span>");
+                sb.AppendLine("<b class=\"arrow icon-angle-down\"></b></a>");
+                sb.AppendLine("<ul class=\"submenu\">");
+                sb.AppendLine("<li><i class=\"icon-double-angle-right\"></i><a href=\"/auth_juese/Index\">系统角色</a></li>");
+                sb.AppendLine("<li><i class=\"icon-double-angle-right\"></i><a href=\"/auth_gongneng/index\">功能设定</a></li>");
+                sb.AppendLine("<li><i class=\"icon-double-angle-right\"></i><a href=\"/auth_juesemx/index\">角色明细</a></li>");
+                sb.AppendLine("<li><i class=\"icon-double-angle-right\"></i><a href=\"/auth_quanxian/index\">权限清单</a></li>");
+                sb.AppendLine("</ul></li>");
             }
             return MvcHtmlString.Create(sb.ToString());
         }

@@ -93,7 +93,7 @@ namespace CKWMS.Controllers
                         Session["user_account"] = model.Email;
                         Session["user_id"] = ui.ID;
                         Session["user_name"] = ui.FullName;
-                        log4net.LogManager.GetLogger(ui.ID.ToString()).Info(string.Format("{0} login at {1}!",ui.FullName,DateTime.Now.ToString()));
+                        log4net.LogManager.GetLogger(ui.ID.ToString()).Info(string.Format("{0} login at {1}!", ui.FullName, DateTime.Now.ToString()));
                         return RedirectToLocal(returnUrl);
                     }
                 case SignInStatus.LockedOut:
@@ -188,10 +188,13 @@ namespace CKWMS.Controllers
                     ui.Status = 1;
                     ui.InputDate = DateTime.Now;
                     ui.ModifyDate = DateTime.Now;
-                    ui=uiservice.AddEntity(ui);
-                    Session["user_account"] = ui.Account;
-                    Session["user_id"] = ui.ID;
-                    Session["user_name"] = ui.FullName;
+                    ui = uiservice.AddEntity(ui);
+                    if (ui != null)
+                    {
+                        Session["user_account"] = ui.Account;
+                        Session["user_id"] = ui.ID;
+                        Session["user_name"] = ui.FullName;
+                    }
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
@@ -427,11 +430,11 @@ namespace CKWMS.Controllers
         public ActionResult LogOut()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            log4net.LogManager.GetLogger(Session["user_id"].ToString()).Info(string.Format("{0} log out at {1}",Session["user_name"].ToString(),DateTime.Now.ToString()));
+            log4net.LogManager.GetLogger(Session["user_id"].ToString()).Info(string.Format("{0} log out at {1}", Session["user_name"].ToString(), DateTime.Now.ToString()));
 
             Session["user_account"] = null;
             Session["user_id"] = null;
-            Session["user_name"] =null;
+            Session["user_name"] = null;
 
             return RedirectToAction("Index", "Home");
         }
