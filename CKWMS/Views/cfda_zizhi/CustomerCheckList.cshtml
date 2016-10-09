@@ -79,8 +79,10 @@
                     <td>经营场所</td>
                     <td>库房地址</td>
                     <td>经营范围</td>
-                    <td>经营许可证号/备案凭证号</td>
-                    <td>许可证(备案凭证)效期</td>
+                    <td>经营许可证号</td>
+                    <td>许可证效期</td>
+                    <td>备案凭证号</td>
+                    <td>备案凭证效期</td>
                     <td>发证机关</td>
                     <td>开始委托时间</td>
                     <td>停止委托时间</td>
@@ -105,8 +107,10 @@
                         <td>@item.JingyinDZ</td>
                         <td>@item.KufangDZ</td>
                         <td>@item.Jingyingfanwei</td>
-                        <td>@item.JingyingxukeBH/@item.BeianBH</td>
-                        <td>@string.Format("{0:yyyy-MM-dd}", item.JingyingxukeYXQ == null ? "" : item.JingyingxukeYXQ)/@string.Format("{0:yyyy-MM-dd}", item.BeianYXQ == null ? "" : item.BeianYXQ)</td>
+                        <td>@item.JingyingxukeBH</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.JingyingxukeYXQ == null ? "" : item.JingyingxukeYXQ)</td>
+                        <td>@item.BeianBH</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.BeianYXQ == null ? "" : item.BeianYXQ)</td>
                         <td>@item.XukeFZJG/@item.BeianFZJG</td>
                         <td>@string.Format("{0:yyyy-MM-dd}", item.WeituoKSRQ == null ? "" : item.WeituoKSRQ)</td>
                         <td>@string.Format("{0:yyyy-MM-dd}", item.WeituoJSRQ == null ? "" : item.WeituoJSRQ)</td>

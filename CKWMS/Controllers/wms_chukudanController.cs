@@ -69,7 +69,7 @@ namespace CKWMS.Controllers
                 ViewBag.SearchCondition = sc.ConditionInfo;
             }
 
-            where = where.And(wms_chukudan => wms_chukudan.IsDelete == false && wms_chukudan.JihuaZT>4);
+            where = where.And(wms_chukudan => wms_chukudan.IsDelete == false && wms_chukudan.JihuaZT > 4);
 
             var tempData = ob_wms_chukudanservice.LoadSortEntities(where.Compile(), false, wms_chukudan => wms_chukudan.ID).ToPagedList<wms_chukudan>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.wms_chukudan = tempData;
@@ -157,13 +157,14 @@ namespace CKWMS.Controllers
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;
-            where = where.And(wms_chukudan => wms_chukudan.IsDelete == false && wms_chukudan.JihuaZT>4);
+            where = where.And(wms_chukudan => wms_chukudan.IsDelete == false && wms_chukudan.JihuaZT > 4);
 
             var tempData = ob_wms_chukudanservice.LoadSortEntities(where.Compile(), false, wms_chukudan => wms_chukudan.ID).ToPagedList<wms_chukudan>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.wms_chukudan = tempData;
             return View(tempData);
         }
-        public ActionResult PrintTongxing() {
+        public ActionResult PrintTongxing()
+        {
             var id = Request["out"] ?? "";
             ViewBag.id = id;
             return View();
@@ -171,8 +172,8 @@ namespace CKWMS.Controllers
         public ActionResult OutOperate()
         {
             int userid = (int)Session["user_id"];
-            string page =Request["page"]??"1";
-            var tempData = ob_wms_chukudanservice.LoadSortEntities(wms_chukudan => wms_chukudan.IsDelete == false, false, wms_chukudan => wms_chukudan.ID).ToPagedList<wms_chukudan>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            string page = Request["page"] ?? "1";
+            var tempData = ob_wms_chukudanservice.LoadSortEntities(wms_chukudan => wms_chukudan.IsDelete == false && wms_chukudan.JihuaZT<5, false, wms_chukudan => wms_chukudan.ID).ToPagedList<wms_chukudan>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.wms_chukudan = tempData;
             return View(tempData);
         }
@@ -314,8 +315,23 @@ namespace CKWMS.Controllers
                 wms_chukudan _ckd = ob_wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_ckid));
                 if (_ckd != null)
                 {
-                    _ckd.JihuaZT = 5;
-                    ob_wms_chukudanservice.UpdateEntity(_ckd);
+                    var _ckmx = ServiceFactory.wms_chukumxservice.LoadEntities(p => p.ChukuID == _ckd.ID).ToList<wms_chukumx>();
+                    var _ng = false;
+                    if (_ckmx.Count == 0)
+                        _ng = true;
+                    foreach (wms_chukumx mx in _ckmx)
+                    {
+                        if (mx.ChukuSL != mx.JianhuoSL)
+                        {
+                            _ng = true;
+                            break;
+                        }
+                    }
+                    if (!_ng)
+                    {
+                        _ckd.JihuaZT = 5;
+                        ob_wms_chukudanservice.UpdateEntity(_ckd);
+                    }
                 }
             }
             return Json(1);

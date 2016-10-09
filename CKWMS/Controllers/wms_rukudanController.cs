@@ -168,7 +168,7 @@ namespace CKWMS.Controllers
         {
             int userid = (int)Session["user_id"];
 
-            var tempData = ob_wms_rukudanservice.LoadSortEntities(p => p.IsDelete == false, false, s => s.MakeDate);
+            var tempData = ob_wms_rukudanservice.LoadSortEntities(p => p.IsDelete == false && p.RukuZT<5, false, s => s.MakeDate);
             ViewBag.wms_rukudan = tempData;
             return View();
         }

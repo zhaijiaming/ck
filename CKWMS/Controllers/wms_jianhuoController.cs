@@ -177,6 +177,8 @@ namespace CKWMS.Controllers
             var _outid = Request["out"] ?? "";
             if (_outid.Length < 1)
                 _outid = "0";
+            var _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid));
+            ViewBag.chukubh = _ckd.ChukudanBH;
 
             var _outdetail = ServiceFactory.wms_chukumxservice.LoadSortEntities(p => p.ChukuID == int.Parse(_outid) && p.IsDelete == false, true, s => s.Guige);
             ViewBag.outdetail = _outdetail;
