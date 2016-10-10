@@ -1674,7 +1674,7 @@
                   <Value>收货清单</Value>
                   <Style>
                     <FontFamily>宋体</FontFamily>
-                    <FontSize>14pt</FontSize>
+                    <FontSize>16pt</FontSize>
                     <FontWeight>Bold</FontWeight>
                   </Style>
                 </TextRun>

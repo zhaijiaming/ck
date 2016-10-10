@@ -1674,7 +1674,7 @@
                   <Value>入库质量验收报告</Value>
                   <Style>
                     <FontFamily>宋体</FontFamily>
-                    <FontSize>14pt</FontSize>
+                    <FontSize>16pt</FontSize>
                     <FontWeight>Bold</FontWeight>
                   </Style>
                 </TextRun>
@@ -2062,7 +2062,6 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox14</rd:DefaultName>
-          <Top>0cm</Top>
           <Left>0.74057cm</Left>
           <Height>0.6cm</Height>
           <Width>4.86361cm</Width>
