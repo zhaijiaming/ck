@@ -70,7 +70,7 @@ namespace CKWMS.Controllers
                 ViewBag.SearchCondition = sc.ConditionInfo;
             }
 
-            where = where.And(wms_rukudan => wms_rukudan.IsDelete == false && wms_rukudan.RukuZT>4);
+            where = where.And(wms_rukudan => wms_rukudan.IsDelete == false && wms_rukudan.RukuZT > 4);
 
             var tempData = ob_wms_rukudanservice.LoadSortEntities(where.Compile(), false, wms_rukudan => wms_rukudan.ID).ToPagedList<wms_rukudan>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.wms_rukudan = tempData;
@@ -158,7 +158,7 @@ namespace CKWMS.Controllers
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;
-            where = where.And(wms_rukudan => wms_rukudan.IsDelete == false && wms_rukudan.RukuZT>4);
+            where = where.And(wms_rukudan => wms_rukudan.IsDelete == false && wms_rukudan.RukuZT > 4);
 
             var tempData = ob_wms_rukudanservice.LoadSortEntities(where.Compile(), false, wms_rukudan => wms_rukudan.ID).ToPagedList<wms_rukudan>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.wms_rukudan = tempData;
@@ -168,7 +168,7 @@ namespace CKWMS.Controllers
         {
             int userid = (int)Session["user_id"];
 
-            var tempData = ob_wms_rukudanservice.LoadSortEntities(p => p.IsDelete == false && p.RukuZT<5, false, s => s.MakeDate);
+            var tempData = ob_wms_rukudanservice.LoadSortEntities(p => p.IsDelete == false && p.RukuZT < 5, false, s => s.MakeDate);
             ViewBag.wms_rukudan = tempData;
             return View();
         }
@@ -178,7 +178,7 @@ namespace CKWMS.Controllers
             if (string.IsNullOrEmpty(_ids))
                 return Json(-1);
             string[] _efs = _ids.Split(',');
-            foreach(var _rkid in _efs)
+            foreach (var _rkid in _efs)
             {
                 wms_rukudan _rkd = ob_wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_rkid));
                 if (_rkd != null)
@@ -419,6 +419,11 @@ namespace CKWMS.Controllers
             ViewData.Model = resultList;
             string viewHtml = ExportNow.RenderPartialViewToString(this, "Export");
             return File(System.Text.Encoding.UTF8.GetBytes(viewHtml), "application/ms-excel", string.Format("rdk_{0}.xls", DateTime.Now.ToShortDateString()));
+        }
+        public ActionResult PrintRuKuXiangDan(){
+            var rkxdid = Request["rkxdid"] ?? "";
+            ViewBag.rkxdid = rkxdid;
+            return View();
         }
     }
 }

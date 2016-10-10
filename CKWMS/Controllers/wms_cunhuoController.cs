@@ -166,7 +166,7 @@ namespace CKWMS.Controllers
         [OutputCache(Duration = 30)]
         public ActionResult GetUploadList(int id)
         {
-            var _shqdid = id;
+            var _sjdid = id;
             int _userid = (int)Session["user_id"];
             var _username = Session["user_name"];
 
@@ -174,7 +174,7 @@ namespace CKWMS.Controllers
             ViewBag.username = _username;
             ViewBag.userid = _userid;
             ViewBag.wms_upload = tempData;
-            ViewBag.shqdid = _shqdid;
+            ViewBag.sjdid = _sjdid;
             return View();
         }
         public JsonResult AddUpload()
@@ -586,8 +586,8 @@ namespace CKWMS.Controllers
         }
         public ActionResult PrintShouHuoList()
         {
-            var _shqdid = Request["shqdid"] ?? "";
-            ViewBag.shqdid = _shqdid;
+            var _sjdid = Request["sjdid"] ?? "";
+            ViewBag.sjdid = _sjdid;
             return View();
         }
 

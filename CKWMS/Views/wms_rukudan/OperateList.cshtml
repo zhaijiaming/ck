@@ -30,6 +30,11 @@
                     location.reload();
             });
         });
+        //入库详单打印
+        $("#mydatatable").on("click", ".operatelistid", function () {
+            var operatelistid = $(this).find(".input_operatelistid").val();
+            window.open("/wms_rukudan/PrintRuKuXiangDan?rkxdid=" + operatelistid);
+        });
     });
     function AddInfo() {
         location.href = "/wms_rukudan/Add";
@@ -147,7 +152,7 @@
                         <td><a href="/wms_shouhuomx/recieving/?rkd=@item.ID" target="_blank"><i class="icon-hand-up"></i></a></td>
                         <td><a href="/quan_rukuys/entrychecklist/@item.ID" target="_blank"><i class="icon-check"></i></a></td>
                         <td><a href="/wms_cunhuo/getuploadlist/@item.ID" target="_blank"><i class="icon-shopping-cart"></i></a></td>
-                        <td><i class="icon-print"></i></td>
+                        <td class="operatelistid"><i class="icon-print"><input type="hidden" class="input_operatelistid" value="@item.ID" /></i></td>
                     </tr>
                 }
             </tbody>

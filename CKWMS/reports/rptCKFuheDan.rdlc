@@ -1570,7 +1570,7 @@
   <Width>10.66471in</Width>
   <Page>
     <PageHeader>
-      <Height>3.33789cm</Height>
+      <Height>2.86164cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1584,7 +1584,7 @@
                   <Value>出库复核报告单</Value>
                   <Style>
                     <FontFamily>宋体</FontFamily>
-                    <FontSize>14pt</FontSize>
+                    <FontSize>16pt</FontSize>
                     <FontWeight>Bold</FontWeight>
                   </Style>
                 </TextRun>
@@ -1595,8 +1595,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox2</rd:DefaultName>
-          <Left>10.67095cm</Left>
-          <Height>0.6cm</Height>
+          <Left>10.67096cm</Left>
+          <Height>0.86294cm</Height>
           <Width>5.74645cm</Width>
           <Style>
             <Border>
@@ -1636,7 +1636,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>1.53789cm</Top>
+          <Top>1.03933cm</Top>
           <Left>0.70685cm</Left>
           <Height>0.6cm</Height>
           <Width>7.11411cm</Width>
@@ -1679,7 +1679,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>2.13789cm</Top>
+          <Top>1.63933cm</Top>
           <Left>0.70686cm</Left>
           <Height>0.6cm</Height>
           <Width>10.23087cm</Width>
@@ -1722,7 +1722,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>2.73789cm</Top>
+          <Top>2.23933cm</Top>
           <Left>0.70686cm</Left>
           <Height>0.6cm</Height>
           <Width>7.84457cm</Width>
@@ -1765,7 +1765,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>1.53789cm</Top>
+          <Top>1.03933cm</Top>
           <Left>11.84104cm</Left>
           <Height>0.6cm</Height>
           <Width>4.86406cm</Width>
@@ -1808,7 +1808,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>2.73789cm</Top>
+          <Top>2.23933cm</Top>
           <Left>11.84106cm</Left>
           <Height>0.6cm</Height>
           <Width>4.86405cm</Width>
@@ -1851,7 +1851,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>2.13789cm</Top>
+          <Top>1.63933cm</Top>
           <Left>20.25002cm</Left>
           <Height>0.6cm</Height>
           <Width>4.28561cm</Width>
@@ -1894,7 +1894,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>2.73789cm</Top>
+          <Top>2.23933cm</Top>
           <Left>20.25002cm</Left>
           <Height>0.6cm</Height>
           <Width>4.28561cm</Width>
@@ -1937,7 +1937,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox25</rd:DefaultName>
-          <Top>2.13789cm</Top>
+          <Top>1.63933cm</Top>
           <Left>11.84106cm</Left>
           <Height>0.6cm</Height>
           <Width>6.55738cm</Width>
@@ -1992,7 +1992,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox25</rd:DefaultName>
-          <Top>0.03528cm</Top>
+          <Top>0cm</Top>
           <Left>1.06166cm</Left>
           <Height>0.6cm</Height>
           <Width>7.92211cm</Width>
@@ -2027,7 +2027,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox25</rd:DefaultName>
-          <Top>0.63528cm</Top>
+          <Top>0.6cm</Top>
           <Left>1.06166cm</Left>
           <Height>0.6cm</Height>
           <Width>1.78562cm</Width>
@@ -2063,7 +2063,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox25</rd:DefaultName>
-          <Top>0.63528cm</Top>
+          <Top>0.6cm</Top>
           <Left>20.25003cm</Left>
           <Height>0.6cm</Height>
           <Width>2.34125cm</Width>

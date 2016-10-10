@@ -834,6 +834,7 @@
     <Content Include="Views\quan_rukuys\PrintYanShouBaoGao.cshtml" />
     <Content Include="Views\quan_rukuys\PrintYanShouJiLu.cshtml" />
     <Content Include="Views\wms_cunhuo\PrintShouHuoList.cshtml" />
+    <Content Include="Views\wms_rukudan\PrintRuKuXiangDan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -860,6 +861,7 @@
     <EmbeddedResource Include="reports\rptRKYanShouJiLu.rdlc" />
     <EmbeddedResource Include="reports\rptQuanxian.rdlc" />
     <EmbeddedResource Include="reports\rptRKyanshouBGdan.rdlc" />
+    <EmbeddedResource Include="reports\rptShangJiaList.rdlc" />
     <EmbeddedResource Include="reports\rptShouHuoList.rdlc" />
     <EmbeddedResource Include="reports\rptTongxing.rdlc" />
   </ItemGroup>

@@ -9,10 +9,10 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var _selrow;
-        //收货清单打印
+        //上架单打印
         $("#bt_fn_print").click(function () {
-            var shqdid = $("#shqdid").val();
-            window.open("/wms_cunhuo/PrintShouHuoList?shqdid=" + shqdid);
+            var sjdid = $("#sjdid").val();
+            window.open("/wms_cunhuo/PrintShouHuoList?sjdid=" + sjdid);
             $("#pl_fun").hide();
         });
         $("#pl_fun").draggable({ containment: "parent" });
@@ -169,7 +169,7 @@
     <input type="hidden" id="orinum" />
     <input type="hidden" id="cargostate" />
     <input type="hidden" id="kid" value="0" />
-    <input type="hidden" id="shqdid" value="@ViewBag.shqdid" />
+    <input type="hidden" id="sjdid" value="@ViewBag.sjdid" />
     <div class="row">
         <table class="table table-condensed" id="mydatatable">
             <caption></caption>

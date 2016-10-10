@@ -1400,7 +1400,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Fields!sshuliang.Value</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -1455,7 +1455,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Fields!Kuwei.Value</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -1510,7 +1510,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Fields!CunhuoSM.Value</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -1565,7 +1565,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Fields!MakeDate.Value</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -1660,7 +1660,7 @@
   <Width>10.66544in</Width>
   <Page>
     <PageHeader>
-      <Height>2.64583cm</Height>
+      <Height>2.03729cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1726,8 +1726,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox60</rd:DefaultName>
-          <Top>1.41056cm</Top>
-          <Left>0.55437cm</Left>
+          <Top>0.77639cm</Top>
+          <Left>0.55438cm</Left>
           <Height>0.6cm</Height>
           <Width>8.215cm</Width>
           <ZIndex>1</ZIndex>
@@ -1769,8 +1769,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox60</rd:DefaultName>
-          <Top>2.04583cm</Top>
-          <Left>0.55438cm</Left>
+          <Top>1.41166cm</Top>
+          <Left>0.55439cm</Left>
           <Height>0.6cm</Height>
           <Width>8.215cm</Width>
           <ZIndex>2</ZIndex>
@@ -1812,8 +1812,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox60</rd:DefaultName>
-          <Top>1.41056cm</Top>
-          <Left>19.39147cm</Left>
+          <Top>0.77639cm</Top>
+          <Left>19.39148cm</Left>
           <Height>0.6cm</Height>
           <Width>5.96604cm</Width>
           <ZIndex>3</ZIndex>
@@ -1855,8 +1855,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox60</rd:DefaultName>
-          <Top>2.04583cm</Top>
-          <Left>19.39147cm</Left>
+          <Top>1.41166cm</Top>
+          <Left>19.39148cm</Left>
           <Height>0.6cm</Height>
           <Width>5.96604cm</Width>
           <ZIndex>4</ZIndex>

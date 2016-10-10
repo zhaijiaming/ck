@@ -1,16 +1,16 @@
 ﻿@{
-    ViewBag.Title = "上架单表";
+    ViewBag.Title = "上架详单表";
     Layout = "~/Views/Shared/EmptyView.cshtml";
 }
 <script type="text/javascript">
     $(window).load(function () {
-        var sjdid = $("#sjdid").val();
-        document.getElementById("myReport").src = "../../reports/ReportZY.aspx?pid=ShangJiaList&sjdid=" + sjdid;
+        var rkxdid = $("#rkxdid").val();
+        document.getElementById("myReport").src = "../../reports/ReportZY.aspx?pid=RuKuXiangDan&rkxdid=" + rkxdid;
         $("#autoUpdate").show();
     });
 </script>
 <div id="autoUpdate" style="display:none; overflow-y: auto;background-color:white">
-    <input type="hidden" id="sjdid" value="@ViewBag.sjdid" />
+    <input type="hidden" id="rkxdid" value="@ViewBag.rkxdid" />
     <table style="height:100%;width:100%">
         <tr>
 
@@ -19,4 +19,5 @@
         <tr><td class="center"><iframe id="myReport" style="width:1000px;height:800px;"></iframe></td></tr>
     </table>
 </div>
+
 
