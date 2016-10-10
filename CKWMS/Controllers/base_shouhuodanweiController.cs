@@ -368,7 +368,7 @@ namespace CKWMS.Controllers
                 Console.WriteLine(ex.Message);
                 ViewBag.saveok = ViewAddTag.ModifyNo;
             }
-            return RedirectToAction("Index", new { id = uid });
+            return RedirectToAction("Edit", new { id = uid });
         }
 
         public JsonResult UpdateDz()
