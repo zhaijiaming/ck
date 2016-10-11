@@ -15,6 +15,16 @@
                 location.href = url_go;
             }
         });
+        $("#bt_johnson").click(function () {
+            //var _back = "";
+            //$.get("https://test.clsdata.cn/api/OBDs?datepoint=20160101",
+            //    {
+            //        Host: "test.clsdata.cn",
+            //        Authorization: "Basic dGVzdDp0ZXN0",
+            //    }, function (data) {
+            //        alert(data);
+            //});
+        });
     });
     function AddInfo() {
         location.href = "/auth_quanxian/Add";
@@ -94,6 +104,7 @@
             <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
             <button type="button" class="btn btn-default " id="bt_printperson"><i class="icon-print"></i>打印</button>
+            <button type="button" class="btn btn-default " id="bt_johnson"><i class="icon-print"></i>johnson</button>
         </p>
     </div>
     <div class="row">

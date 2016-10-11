@@ -11,6 +11,7 @@
     $(document).ready(function () {
         var _zczid = $("#zczbh").val();
         $("#pl_guige").hide();
+        $("#pl_guige").draggable();
         $(".guige").click(function () {
             _zczid=$(this).parent().parent().find("input[type=checkbox]").val();
             getGuiGe(_zczid);

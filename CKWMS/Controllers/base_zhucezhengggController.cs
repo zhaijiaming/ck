@@ -221,8 +221,8 @@ namespace CKWMS.Controllers
                     var _gg = _guige.Split();
                     foreach(var gg in _gg)
                     {
-                        base_zhucezhenggg ob_base_zhucezhenggg = ob_base_zhucezhengggservice.GetEntityById(p => p.Guige == gg.Trim() && p.IsDelete == false);
-                        if (ob_base_zhucezhenggg == null)
+                        base_zhucezhenggg ob_base_zhucezhenggg = ob_base_zhucezhengggservice.GetEntityById(p =>p.ZCZID==int.Parse(_zczid) && p.Guige == gg.Trim() && p.IsDelete == false);
+                        if (ob_base_zhucezhenggg == null && gg.Length>0)
                         {
                             ob_base_zhucezhenggg = new base_zhucezhenggg();
                             ob_base_zhucezhenggg.ZCZID = int.Parse(_zczid);
