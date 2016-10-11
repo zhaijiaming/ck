@@ -302,6 +302,7 @@ namespace CKWMS.Controllers
                 shenchasf = "true";
             if (hezuosf.IndexOf("true") > -1)
                 hezuosf = "true";
+            int flag = 0; 
 
             try
             {
@@ -334,12 +335,20 @@ namespace CKWMS.Controllers
 
                 ob_base_shengchanqiye = ob_base_shengchanqiyeservice.AddEntity(ob_base_shengchanqiye);
                 ViewBag.base_shengchanqiye = ob_base_shengchanqiye;
+                if (ViewBag.base_shengchanqiye == null)
+                {
+                    flag = -2;
+                }
+                else { flag = 1; }
+
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                flag = -1;
             }
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
+            return Json(new { _flag = flag });
         }
 
         [OutputCache(Duration = 10)]
@@ -419,6 +428,7 @@ namespace CKWMS.Controllers
             if (hezuosf.IndexOf("true") > -1)
                 hezuosf = "true";
             int uid = int.Parse(id);
+            int flag = 0;
 
             try
             {
@@ -451,13 +461,20 @@ namespace CKWMS.Controllers
 
                 ob_base_shengchanqiyeservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;
+                if (!ob_base_shengchanqiyeservice.UpdateEntity(p))
+                {
+                    flag = -2;
+                }
+                else { flag = 1; }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 ViewBag.saveok = ViewAddTag.ModifyNo;
+                flag = -1;
             }
-            return RedirectToAction("Edit", new { id = uid });
+            //return RedirectToAction("Edit", new { id = uid });
+            return Json(new { _flag = flag });
         }
         public ActionResult Delete()
         {

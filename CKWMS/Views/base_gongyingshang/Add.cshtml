@@ -164,6 +164,7 @@
             }
         });
 
+        //BUTTON提交
         $("#sub").click(function () {          
             if ($("#daima").val() == "") {
                 alert("代码不能为空");
@@ -173,15 +174,13 @@
                 alert("名称不能为空");
                 document.getElementById("shengcheng").focus();
             }
-            else { form.submit(); }
-            
+            else { form.submit(); }         
         })
 
         var form = $("#tempform");
         form.submit(function () {
             $.post(form.attr("action"),
                   form.serialize(),
-
                   function (result, status) {
                       //alert(status);                              
                       if (result._flag == 1) {

@@ -11,6 +11,7 @@
             var CkID = $("#CangkuID").val();
             if (CkID == 0) {
                 $("#select_quyu").val(0);
+                GetQuyuData(0);
                 return;
             }
             GetQuyuData(CkID);
@@ -255,27 +256,33 @@
     function GetQuyuData(id) {
         var _CkID = id;
         var filltable = "";
-        $.post(
-                "/wms_cangkuqy/getData",
-                {
-                    cangkuid: _CkID
-                },
-                function (data) {
-                    if (data == "-1") {
+        if (_CkID != 0) {
+            $.post(
+                    "/wms_cangkuqy/getData",
+                    {
+                        cangkuid: _CkID
+                    },
+                    function (data) {
+                        if (data == "-1") {
 
-                    } else {
-                        for (var i in data) {
-                            filltable = filltable + '<option class = "qyid" value="';
-                            filltable = filltable + data[i].ID;
-                            filltable = filltable + '">';
-                            filltable = filltable + data[i].Mingcheng;
-                            filltable = filltable + '</option>';
+                        } else {
+                            for (var i in data) {
+                                filltable = filltable + '<option class = "qyid" value="';
+                                filltable = filltable + data[i].ID;
+                                filltable = filltable + '">';
+                                filltable = filltable + data[i].Mingcheng;
+                                filltable = filltable + '</option>';
+                            }
+                            $("#select_quyu").html(filltable);
+                            $("#select_quyu").change()
                         }
-                        $("#select_quyu").html(filltable);
-                        $("#select_quyu").change()
                     }
-                }
-            )
+                )
+        }
+        else {
+            $("#select_quyu").html(filltable);
+            $("#select_quyu").change()
+        }
     }
 
 

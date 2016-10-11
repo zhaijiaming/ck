@@ -74,6 +74,10 @@
         var url_go = "/base_gongyingshang/Delete/?del=" + sDel;
         location.href = url_go;
     }
+
+    function Export() {
+        location.href = "/base_gongyingshang/Export";
+    }
 </script>
 @{
     List<SearchConditionModel> scms = new List<SearchConditionModel>();
@@ -164,7 +168,8 @@
             <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
             <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
-        </p>
+            @*<button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="Export()">表格</button>*@
+             </p>
     </div>
 
     <div class="row">
@@ -175,17 +180,45 @@
                     <td></td>
                     <td>
                         @Html.ActionLink("代码", "Index", new
-                       {
-                           sortOrder = ViewBag.DaimaSortParm,
-                       })
+                   {
+                       sortOrder = ViewBag.DaimaSortParm
+                   })
                     </td>
-                    <td>名称</td>
-                    <td>营业执照编号</td>
+                    <td>@Html.ActionLink("名称", "Index", new
+                   {
+                       sortOrder = ViewBag.NameSortParm
+                   })
+                    </td>
+                    @*<td>营业执照编号</td>
                     <td>营业执照有效期</td>
                     <td>营业执照照片</td>
                     <td>经营许可编号</td>
                     <td>经营许可有效期</td>
-                    <td>经营许可照片</td>
+                    <td>经营许可照片</td>*@
+                    <td>@Html.ActionLink("营业执照编号", "Index", new
+                   {
+                       sortOrder = ViewBag.YyzzSortParm
+                   })</td>
+                    <td>@Html.ActionLink("营业执照有效期", "Index", new
+                   {
+                       sortOrder = ViewBag.YyzzyxqSortParm
+                   })</td>
+                    <td>@Html.ActionLink("营业执照照片", "Index", new
+                   {
+                       sortOrder = ViewBag.YyzztpSortParm
+                   })</td>
+                    <td>@Html.ActionLink("经营许可编号", "Index", new
+                   {
+                       sortOrder = ViewBag.JyxkSortParm
+                   })</td>
+                    <td>@Html.ActionLink("经营许可有效期", "Index", new
+                   {
+                       sortOrder = ViewBag.JyxkyxqSortParm
+                   })</td>
+                    <td>@Html.ActionLink("经营许可照片", "Index", new
+                   {
+                       sortOrder = ViewBag.JyxktpSortParm
+                   })</td>
                     @*<td>经营范围</td>*@
                     @*<td>经营范围简码</td>*@
                     @*<td>首营状态</td>*@

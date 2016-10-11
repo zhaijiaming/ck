@@ -215,6 +215,41 @@
                 $(".bg").show();
             }
         });
+
+        //BUTTON提交
+        $("#sub").click(function () {
+            if ($("#daima").val() == "") {
+                alert("代码不能为空");
+                document.getElementById("daima").focus();
+            }
+            else if ($("#shengcheng").val() == "") {
+                alert("名称不能为空");
+                document.getElementById("shengcheng").focus();
+            }
+            else { form.submit(); }
+        })
+
+        var form = $("#tempform");
+        form.submit(function () {
+            $.post(form.attr("action"),
+                  form.serialize(),
+                  function (result, status) {
+                      //alert(status);                              
+                      if (result._flag == 1) {
+                          alert("更新成功");
+                      }
+                      else if (result._flag == -1) {
+                          alert("更新失败");
+                      }
+                      else if (result._flag == -2) {
+                          alert("更新失败，该代码已存在");
+                      }
+                      else { alert("未知异常"); }
+                  },
+                    "json");
+            return false;
+
+        });
     });
 
 
@@ -359,7 +394,7 @@
 </div>
 
 <div class="page-content">
-    @using (Html.BeginForm("Update", "base_shengchanqiye", FormMethod.Post, new { @role = "form" }))
+    @using (Html.BeginForm("Update", "base_shengchanqiye", FormMethod.Post, new { @role = "form",id = "tempform" }))
     {
         @Html.AntiForgeryToken()
         <input type="hidden" name="id" value="@ViewData.Model.ID" />
@@ -369,7 +404,7 @@
         <input type="hidden" id="Shouying" name="Shouying" value="@ViewData.Model.Shouying" />
         <div class="page-header">
             <p>
-                <button type="submit" class="btn btn-default"><i class="icon-save"></i>更新</button>
+                <button type="button" class="btn btn-default" id="sub"><i class="icon-save"></i>更新</button>
                 <button type="button" class="btn btn-default" onclick="javascript: history.back(-1); "><i class="icon-hand-left"></i>返回</button>
             </p>
         </div>
