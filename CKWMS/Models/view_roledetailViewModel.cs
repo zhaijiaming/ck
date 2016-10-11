@@ -7,6 +7,8 @@ namespace CKWMS.Models
     public partial class view_roledetailViewModel
     {
         [Display(Name = "序号")]
+        public int ID { get; set; }
+        [Display(Name = "序号")]
         public int id { get; set; }
         [Display(Name = "角色")]
         public string rolename { get; set; }

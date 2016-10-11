@@ -541,12 +541,6 @@
     <Content Include="cssview\ace.css" />
     <Content Include="cssview\fontawesome.css" />
     <Content Include="cssview\StyleSheet1.css" />
-    <Content Include="dlls\CKWMS.BSL.dll" />
-    <Content Include="dlls\CKWMS.Common.dll" />
-    <Content Include="dlls\CKWMS.DAL.dll" />
-    <Content Include="dlls\CKWMS.EFModels.dll" />
-    <Content Include="dlls\CKWMS.IBSL.dll" />
-    <Content Include="dlls\CKWMS.IDAL.dll" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

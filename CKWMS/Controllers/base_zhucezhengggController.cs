@@ -218,18 +218,33 @@ namespace CKWMS.Controllers
                     return 0;
                 else
                 {
-                    base_zhucezhenggg ob_base_zhucezhenggg = ob_base_zhucezhengggservice.GetEntityById(p => p.Guige == _guige.Trim() && p.IsDelete == false);
-                    if (ob_base_zhucezhenggg == null)
+                    var _gg = _guige.Split();
+                    foreach(var gg in _gg)
                     {
-                        ob_base_zhucezhenggg = new base_zhucezhenggg();
-                        ob_base_zhucezhenggg.ZCZID = int.Parse(_zczid);
-                        ob_base_zhucezhenggg.Guige = _guige.Trim();
-                        ob_base_zhucezhenggg.Memo = _memo.Trim();
-                        ob_base_zhucezhenggg.MakeDate = DateTime.Now;
-                        ob_base_zhucezhenggg.MakeMan = _userid;
-                        ob_base_zhucezhenggg = ob_base_zhucezhengggservice.AddEntity(ob_base_zhucezhenggg);
-                        ViewBag.base_zhucezhenggg = ob_base_zhucezhenggg;
+                        base_zhucezhenggg ob_base_zhucezhenggg = ob_base_zhucezhengggservice.GetEntityById(p => p.Guige == gg.Trim() && p.IsDelete == false);
+                        if (ob_base_zhucezhenggg == null)
+                        {
+                            ob_base_zhucezhenggg = new base_zhucezhenggg();
+                            ob_base_zhucezhenggg.ZCZID = int.Parse(_zczid);
+                            ob_base_zhucezhenggg.Guige = gg.Trim();
+                            ob_base_zhucezhenggg.Memo = _memo.Trim();
+                            ob_base_zhucezhenggg.MakeDate = DateTime.Now;
+                            ob_base_zhucezhenggg.MakeMan = _userid;
+                            ob_base_zhucezhenggg = ob_base_zhucezhengggservice.AddEntity(ob_base_zhucezhenggg);
+                        }
                     }
+                    //base_zhucezhenggg ob_base_zhucezhenggg = ob_base_zhucezhengggservice.GetEntityById(p => p.Guige == _guige.Trim() && p.IsDelete == false);
+                    //if (ob_base_zhucezhenggg == null)
+                    //{
+                    //    ob_base_zhucezhenggg = new base_zhucezhenggg();
+                    //    ob_base_zhucezhenggg.ZCZID = int.Parse(_zczid);
+                    //    ob_base_zhucezhenggg.Guige = _guige.Trim();
+                    //    ob_base_zhucezhenggg.Memo = _memo.Trim();
+                    //    ob_base_zhucezhenggg.MakeDate = DateTime.Now;
+                    //    ob_base_zhucezhenggg.MakeMan = _userid;
+                    //    ob_base_zhucezhenggg = ob_base_zhucezhengggservice.AddEntity(ob_base_zhucezhenggg);
+                    //    ViewBag.base_zhucezhenggg = ob_base_zhucezhenggg;
+                    //}
                 }
             }
             catch (Exception ex)

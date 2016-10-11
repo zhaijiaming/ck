@@ -25,7 +25,7 @@
     @using (Html.BeginForm("Update", "view_roledetail", FormMethod.Post, new { @role = "form" }))
     {
         @Html.AntiForgeryToken()
-        <input type="hidden" name="id" value="@ViewData.Model.ID" />
+        <input type="hidden" name="id" value="@ViewData.Model.id" />
         <div class="page-header">
             <p>
                 <button type="submit" class="btn btn-default"><i class="icon-save"></i>更新</button>

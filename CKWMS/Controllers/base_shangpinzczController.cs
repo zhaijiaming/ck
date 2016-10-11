@@ -260,13 +260,14 @@ namespace CKWMS.Controllers
                 ob_base_shangpinzcz.PizhunRQ = pizhunrq == "" ? DateTime.Now : DateTime.Parse(pizhunrq);
 
                 ob_base_shangpinzcz = ob_base_shangpinzczservice.AddEntity(ob_base_shangpinzcz);
+                id = ob_base_shangpinzcz.ID.ToString();
                 ViewBag.base_shangpinzcz = ob_base_shangpinzcz;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Edit", new { id = int.Parse(id) });
         }
 
         [OutputCache(Duration = 10)]
