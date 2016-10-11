@@ -278,13 +278,14 @@ namespace CKWMS.Controllers
                 ob_base_shouhuodanwei.SonghuoDZ = songhuodz.Trim();
 
                 ob_base_shouhuodanwei = ob_base_shouhuodanweiservice.AddEntity(ob_base_shouhuodanwei);
+                id = ob_base_shouhuodanwei.ID.ToString();
                 ViewBag.base_shouhuodanwei = ob_base_shouhuodanwei;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Edit",new { id = int.Parse(id) });
         }
 
         public ActionResult Edit(int id)
@@ -368,7 +369,7 @@ namespace CKWMS.Controllers
                 Console.WriteLine(ex.Message);
                 ViewBag.saveok = ViewAddTag.ModifyNo;
             }
-            return RedirectToAction("Edit", new { id = uid });
+            return RedirectToAction("Index");
         }
 
         public JsonResult UpdateDz()
