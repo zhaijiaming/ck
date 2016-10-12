@@ -215,7 +215,24 @@ namespace CKWMS.Controllers
             ViewBag.userid = (int)Session["user_id"];
             return View();
         }
+        public JsonResult GetZCZNow()
+        {
+            int _userid = (int)Session["user_id"];
+            var _mc = Request["mc"]??"";
+            var _bh = Request["bh"] ?? "";
 
+            Expression<Func<base_shangpinzcz, bool>> where = PredicateExtensionses.True<base_shangpinzcz>();
+                      
+            if (string.IsNullOrEmpty(_mc) && string.IsNullOrEmpty(_bh))
+                return Json(1);
+            if (!string.IsNullOrEmpty(_mc))
+                where = where.And(p => p.Mingcheng.Contains(_mc));
+            if (!string.IsNullOrEmpty(_bh))
+                where = where.And(p => p.Bianhao.Contains(_bh));
+            where = where.And(p =>p.ShixiaoSF==false && p.IsDelete == false);
+            var _zczlist = ob_base_shangpinzczservice.LoadSortEntities(where.Compile(),true,s=>s.Bianhao);
+            return Json(_zczlist.ToList<base_shangpinzcz>());
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Save()

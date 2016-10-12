@@ -243,7 +243,7 @@ namespace CKWMS.Controllers
             int _userid = (int)Session["user_id"];
             string _username = (string)Session["user_name"];
 
-            var tempdata = ob_base_jiliangdwservice.LoadSortEntities(p => p.IsDelete == false, false, p => p.Mingcheng);
+            var tempdata = ob_base_jiliangdwservice.LoadSortEntities(p => p.IsDelete == false, true, p => p.Bianhao);
             IList<Danwei> _danweis = new List<Danwei>();
             Danwei _danwei;
             foreach(base_jiliangdw _jldw in tempdata )

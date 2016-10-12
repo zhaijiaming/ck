@@ -11,7 +11,7 @@
         $("#pl_Cunchu").draggable({ handle: '.tuodong' }, { containment: "parent" });
         var _ispack = false;
         getCpx(@Model.HuozhuID);
-        getZczgg(@Model.ZhucezhengID);
+        //getZczgg(Model.ZhucezhengID);
         $("#huozhuid").attr('required', 'required');
         GetJldw();
         GetFanwei();
@@ -97,11 +97,11 @@
             }
         });
         //注册证→获取其他信息
-        $("#zhucezhengid").change(function () {
-            var _zczid = $("#zhucezhengid").val();
-            //$("#Daima").val("");
-            getZCZ(_zczid);
-        });
+        //$("#zhucezhengid").change(function () {
+        //    var _zczid = $("#zhucezhengid").val();
+        //    //$("#Daima").val("");
+        //    getZCZ(_zczid);
+        //});
         //计量单位
         $("#btn_jldw1").click(function () {
             _ispack = true;
@@ -317,6 +317,7 @@
         <input type="hidden" name="qiyeid" id="qiyeid" value="@Model.QiyeID" />
         <input type="hidden" name="Muluxuhao" id="muluxuhao" value="@Model.Muluxuhao" />
         <input type="hidden" name="zhucezhengbh" id="zhucezhengbh" value="@Model.ZhucezhengBH" />
+        <input type="hidden" name="zhucezhengid" id="zhucezhengid" value="@Model.ZhucezhengID" />
         <input type="hidden" id="ohzid" value="@Model.HuozhuID" />
         <input type="hidden" id="ocpx" value="@Model.Chanpinxian" />
         <input type="hidden" id="ogg" value="@Model.Guige" />
@@ -349,7 +350,8 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2">注册证</label>
                 <div class="col-sm-10">
-                    @Html.SelectList_Auto("zhucezhengid", "注册证", "编号", (long)ViewData.Model.ZhucezhengID)
+                    @*@Html.SelectList_Auto("zhucezhengid", "注册证", "编号", (long)ViewData.Model.ZhucezhengID)*@
+                <input type="text" class="form-control" value="@Model.ZhucezhengBH" readonly />
                 </div>
             </div>
             @*商品名称*@
@@ -363,8 +365,8 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2">规格</label>
                 <div class="col-sm-10">
-                    @*@Html.TextBoxFor(m => m.Guige, new { @class = "form-control" })*@
-                    <select name="guige" id="select_gg" style="width:100%;"></select>
+                    @Html.TextBoxFor(m => m.Guige, new { @class = "form-control",@readonly="true"})
+                    @*<select name="guige" id="select_gg" style="width:100%;"></select>*@
                 </div>
             </div>
             @*生产企业*@
@@ -553,7 +555,7 @@
                         <td width="30%;">说明</td>
                     </tr>
                 </thead>
-                <tbody style="display:block; max-height:180px;overflow:auto;"></tbody>
+                <tbody style="display:block; max-height:380px;overflow:auto;"></tbody>
             </table>
         </div>
     </div>

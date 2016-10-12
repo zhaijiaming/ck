@@ -8,6 +8,24 @@
         $("#pl_jldw").draggable({ handle: '.tuodong' }, { containment: "parent" });
         $("#pl_Fanwei").draggable({ handle: '.tuodong' }, { containment: "parent" });
         $("#pl_Cunchu").draggable({ handle: '.tuodong' }, { containment: "parent" });
+        $("#pl_zcz").draggable({ handle: ".panel-heading" });
+        $("#pl_zcz_close").click(function () {
+            $("#pl_zcz").hide();
+        });
+        $("#pl_zcz_search").click(function () {
+            GetZCZNow();
+        });
+        $("#selzcz").click(function () {
+            $("#pl_zcz").show();
+        });
+        $("#dt_zcz tbody").on("dblclick", "tr", function () {
+            $("#zhucezhengid").val($(this).find("input").val());
+            $("#zhucezhengbh").val($(this).find("td").eq(1).html());
+            $("#zczbh").val($("#zhucezhengbh").val());
+            $("#pl_gg").html('<select name="guige" id="select_gg" style="width:100%;"></select>');
+            getZCZ($("#zhucezhengid").val());
+            $("#pl_zcz").hide();
+        });
         var _ispack = false;
         //$("#shangpinxx_save").click(function () {
         //    //check info
@@ -117,11 +135,11 @@
             }
         });
         //注册证→获取其他信息
-        $("#zhucezhengid").change(function () {
-            var _zczid = $("#zhucezhengid").val();
-            //$("#Daima").val("");
-            getZCZ(_zczid);
-        });
+        //$("#zhucezhengid").change(function () {
+        //    var _zczid = $("#zhucezhengid").val();
+        //    //$("#Daima").val("");
+        //    getZCZ(_zczid);
+        //});
         //计量单位
         $("#btn_jldw1").click(function () {
             _ispack = true;
@@ -191,6 +209,35 @@
             $("#ccdatatable tr input[type=checkbox]").not(this).attr("checked", false);
         });
     });
+    function GetZCZNow() {
+        var filltable = "";
+        $.post(
+                "/base_shangpinzcz/getzcznow",
+                {
+                    bh: $("#pl_zcz_bh").val(),
+                    mc: $("#pl_zcz_mc").val()
+                },
+                function (data) {
+                    if (data == 1)
+                        alert("必须通过编号或名称进行查询！");
+                    else {
+                        for (var i in data) {
+                            filltable = filltable + '<tr><td><label><input class="checkbox" type="checkbox" class ="checkbox" value="';
+                            filltable = filltable + data[i].ID;
+                            filltable = filltable + '"></label></td><td>';
+                            filltable = filltable + data[i].Bianhao;
+                            filltable = filltable + '</td><td>';
+                            filltable = filltable + data[i].Mingcheng;
+                            filltable = filltable + '</td><td>';
+                            filltable = filltable + data[i].ZhucezhengYXQ;
+                            filltable = filltable + '</td><td>';
+                            filltable = filltable + data[i].ShiyongFW;
+                            filltable = filltable + '</td></tr>';
+                        }
+                    }
+                    $("#pl_zcz tbody").html(filltable);
+                });
+    }
     function GetFanwei() {
         var filltable = "";
         $.post(
@@ -316,12 +363,12 @@
                     $("#pl_jldw tbody").html(filltable);
                 });
     }
-    function GetChecked(getExist,getAll) {
+    function GetChecked(getExist, getAll) {
         var _Exist = getExist;
         var _All = getAll;
         for (var i = 0; i < _All.length; i++) {
             if (_Exist == _All.eq(i).val())
-            $("input:checkbox").eq(l).attr("checked", true);
+                $("input:checkbox").eq(l).attr("checked", true);
         }
     }
 </script>
@@ -348,6 +395,7 @@
         <input type="hidden" name="qiyeid" id="qiyeid" />
         <input type="hidden" name="Muluxuhao" id="muluxuhao" />
         <input type="hidden" name="zhucezhengbh" id="zhucezhengbh" />
+        <input type="hidden" name="zhucezhengid" id="zhucezhengid" />
         <input type="hidden" id="Shouying" name="Shouying" value="1" />
         <input type="hidden" id="hz_allow" />
         <input type="hidden" id="MakeMan" name="MakeMan" value=@Session["user_id"] />
@@ -373,8 +421,12 @@
             @*注册证*@
             <div class="form-group">
                 <label for="name" class="col-sm-2">注册证</label>
-                <div class="col-sm-10">
-                    @Html.SelectList_Auto("zhucezhengid", "注册证", "编号")
+                <div class="col-sm-8">
+                    @*@Html.SelectList_Auto("zhucezhengid", "注册证", "编号")*@
+                    <input type="text" id="zczbh" class="form-control" readonly />
+                </div>
+                <div class="col-sm-2">
+                    <input type="button" id="selzcz" value="选择" class="form-control" />
                 </div>
             </div>
             @*名称*@
@@ -387,8 +439,9 @@
             </div>
             <div class="form-group">
                 <label for="name" class="col-sm-2">规格</label>
-                <div class="col-sm-10">
-                    <select name="guige" id="select_gg" style="width:100%;"></select>
+                <div id="pl_gg" class="col-sm-10">
+                    <input type="text" name="guige" id="guige" class="form-control" />
+                    @*<select name="guige" id="select_gg" style="width:100%;"></select>*@
                 </div>
             </div>
             @*生产企业*@
@@ -612,7 +665,7 @@
     </div>
 </div>
 @*存储条件*@
-<div id="pl_Cunchu" class="panel panel-primary" hidden style="position:fixed;top:100px;left:240px;width:240px;height:auto;z-index:999;">
+<div id="pl_Cunchu" class="panel panel-primary" style="display:none;position:fixed;top:100px;left:240px;width:240px;height:auto;z-index:999;">
     <div class="panel-heading tuodong">
         <h3 class="panel-title">存储条件<button id="plcc_close" class="pull-right">X</button></h3>
     </div>
@@ -640,6 +693,43 @@
                         </tr>
                     }
                 </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div id="pl_zcz" class="panel panel-primary" style="display:none;position:fixed;top:100px;left:240px;width:800px;height:600px;z-index:999;">
+    <div class="panel-heading tuodong">
+        <h3 class="panel-title">注册证<button id="pl_zcz_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+                <label class="col-sm-1">编号</label>
+            <div class="col-sm-3">
+                <input type="text" id="pl_zcz_bh" />
+            </div>
+            <div class="col-sm-1">
+                <label>名称</label>
+            </div>
+            <div class="col-sm-3">
+                <input type="text" id="pl_zcz_mc" />
+            </div>
+            <div class="col-sm-4 center">
+                <button type="button" class="btn btn-default" id="pl_zcz_search"><i class="icon-search"></i>查询</button>
+            </div>
+        </div>
+        <div>
+            <table class="table table-condensed" id="dt_zcz">
+                <caption></caption>
+                <thead>
+                    <tr>
+                        <td></td>
+                        <td>编号</td>
+                        <td>名称</td>
+                        <td>失效日期</td>
+                        <td>使用范围</td>
+                    </tr>
+                </thead>
+                <tbody></tbody>
             </table>
         </div>
     </div>

@@ -24,7 +24,7 @@ namespace CKWMS.Controllers
                 page = "1";
             int userid = (int)Session["user_id"];
             string pagetag = "base_shangpinxx_index";
-            Expression<Func<base_shangpinxx, bool>> where = PredicateExtensionses.True<base_shangpinxx>();
+            Expression<Func<base_shangpin_v, bool>> where = PredicateExtensionses.True<base_shangpin_v>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc != null)
             {
@@ -43,23 +43,23 @@ namespace CKWMS.Controllers
                                 if (huozhuidequal.Equals("="))
                                 {
                                     if (huozhuidand.Equals("and"))
-                                        where = where.And(base_shangpinxx => base_shangpinxx.HuozhuID == int.Parse(huozhuid));
+                                        where = where.And(base_shangpin_v => base_shangpin_v.huozhuid == int.Parse(huozhuid));
                                     else
-                                        where = where.Or(base_shangpinxx => base_shangpinxx.HuozhuID == int.Parse(huozhuid));
+                                        where = where.Or(base_shangpin_v => base_shangpin_v.huozhuid == int.Parse(huozhuid));
                                 }
                                 if (huozhuidequal.Equals(">"))
                                 {
                                     if (huozhuidand.Equals("and"))
-                                        where = where.And(base_shangpinxx => base_shangpinxx.HuozhuID > int.Parse(huozhuid));
+                                        where = where.And(base_shangpin_v => base_shangpin_v.huozhuid > int.Parse(huozhuid));
                                     else
-                                        where = where.Or(base_shangpinxx => base_shangpinxx.HuozhuID > int.Parse(huozhuid));
+                                        where = where.Or(base_shangpin_v => base_shangpin_v.huozhuid > int.Parse(huozhuid));
                                 }
                                 if (huozhuidequal.Equals("<"))
                                 {
                                     if (huozhuidand.Equals("and"))
-                                        where = where.And(base_shangpinxx => base_shangpinxx.HuozhuID < int.Parse(huozhuid));
+                                        where = where.And(base_shangpin_v => base_shangpin_v.huozhuid < int.Parse(huozhuid));
                                     else
-                                        where = where.Or(base_shangpinxx => base_shangpinxx.HuozhuID < int.Parse(huozhuid));
+                                        where = where.Or(base_shangpin_v => base_shangpin_v.huozhuid < int.Parse(huozhuid));
                                 }
                             }
                             break;
@@ -70,9 +70,9 @@ namespace CKWMS.Controllers
                 ViewBag.SearchCondition = sc.ConditionInfo;
             }
 
-            where = where.And(base_shangpinxx => base_shangpinxx.IsDelete == false);
+            where = where.And(base_shangpin_v => base_shangpin_v.IsDelete == false);
 
-            var tempData = ob_base_shangpinxxservice.LoadSortEntities(where.Compile(), false, base_shangpinxx => base_shangpinxx.ID).ToPagedList<base_shangpinxx>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            var tempData = ob_base_shangpinxxservice.LoadShangpinAll(where.Compile()).ToPagedList<base_shangpin_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.base_shangpinxx = tempData;
             return View(tempData);
         }
@@ -97,7 +97,7 @@ namespace CKWMS.Controllers
             string mingchengequal = Request["mingchengequal"] ?? "";
             string mingchengand = Request["mingchengand"] ?? "";
 
-            Expression<Func<base_shangpinxx, bool>> where = PredicateExtensionses.True<base_shangpinxx>();
+            Expression<Func<base_shangpin_v, bool>> where = PredicateExtensionses.True<base_shangpin_v>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
             {
@@ -110,23 +110,23 @@ namespace CKWMS.Controllers
                     if (huozhuidequal.Equals("="))
                     {
                         if (huozhuidand.Equals("and"))
-                            where = where.And(base_shangpinxx => base_shangpinxx.HuozhuID == int.Parse(huozhuid));
+                            where = where.And(base_shangpin_v => base_shangpin_v.huozhuid == int.Parse(huozhuid));
                         else
-                            where = where.Or(base_shangpinxx => base_shangpinxx.HuozhuID == int.Parse(huozhuid));
+                            where = where.Or(base_shangpin_v => base_shangpin_v.huozhuid == int.Parse(huozhuid));
                     }
                     if (huozhuidequal.Equals(">"))
                     {
                         if (huozhuidand.Equals("and"))
-                            where = where.And(base_shangpinxx => base_shangpinxx.HuozhuID > int.Parse(huozhuid));
+                            where = where.And(base_shangpin_v => base_shangpin_v.huozhuid > int.Parse(huozhuid));
                         else
-                            where = where.Or(base_shangpinxx => base_shangpinxx.HuozhuID > int.Parse(huozhuid));
+                            where = where.Or(base_shangpin_v => base_shangpin_v.huozhuid > int.Parse(huozhuid));
                     }
                     if (huozhuidequal.Equals("<"))
                     {
                         if (huozhuidand.Equals("and"))
-                            where = where.And(base_shangpinxx => base_shangpinxx.HuozhuID < int.Parse(huozhuid));
+                            where = where.And(base_shangpin_v => base_shangpin_v.huozhuid < int.Parse(huozhuid));
                         else
-                            where = where.Or(base_shangpinxx => base_shangpinxx.HuozhuID < int.Parse(huozhuid));
+                            where = where.Or(base_shangpin_v => base_shangpin_v.huozhuid < int.Parse(huozhuid));
                     }
                 }
                 if (!string.IsNullOrEmpty(huozhuid))
@@ -139,16 +139,16 @@ namespace CKWMS.Controllers
                     if (daimaequal.Equals("="))
                     {
                         if (daimaand.Equals("and"))
-                            where = where.And(base_shangpinxx => base_shangpinxx.Daima == daima);
+                            where = where.And(base_shangpin_v => base_shangpin_v.daima == daima);
                         else
-                            where = where.Or(base_shangpinxx => base_shangpinxx.Daima == daima);
+                            where = where.Or(base_shangpin_v => base_shangpin_v.daima == daima);
                     }
                     if (daimaequal.Equals("like"))
                     {
                         if (daimaand.Equals("and"))
-                            where = where.And(base_shangpinxx => base_shangpinxx.Daima.Contains(daima));
+                            where = where.And(base_shangpin_v => base_shangpin_v.daima.Contains(daima));
                         else
-                            where = where.Or(base_shangpinxx => base_shangpinxx.Daima.Contains(daima));
+                            where = where.Or(base_shangpin_v => base_shangpin_v.daima.Contains(daima));
                     }
                 }
                 if (!string.IsNullOrEmpty(daima))
@@ -161,16 +161,16 @@ namespace CKWMS.Controllers
                     if (mingchengequal.Equals("="))
                     {
                         if (mingchengand.Equals("and"))
-                            where = where.And(base_shangpinxx => base_shangpinxx.Mingcheng == mingcheng);
+                            where = where.And(base_shangpin_v => base_shangpin_v.mingcheng == mingcheng);
                         else
-                            where = where.Or(base_shangpinxx => base_shangpinxx.Mingcheng == mingcheng);
+                            where = where.Or(base_shangpin_v => base_shangpin_v.mingcheng == mingcheng);
                     }
                     if (mingchengequal.Equals("like"))
                     {
                         if (mingchengand.Equals("and"))
-                            where = where.And(base_shangpinxx => base_shangpinxx.Mingcheng.Contains(mingcheng));
+                            where = where.And(base_shangpin_v => base_shangpin_v.mingcheng.Contains(mingcheng));
                         else
-                            where = where.Or(base_shangpinxx => base_shangpinxx.Mingcheng.Contains(mingcheng));
+                            where = where.Or(base_shangpin_v => base_shangpin_v.mingcheng.Contains(mingcheng));
                     }
                 }
                 if (!string.IsNullOrEmpty(mingcheng))
@@ -189,23 +189,23 @@ namespace CKWMS.Controllers
                     if (huozhuidequal.Equals("="))
                     {
                         if (huozhuidand.Equals("and"))
-                            where = where.And(base_shangpinxx => base_shangpinxx.HuozhuID == int.Parse(huozhuid));
+                            where = where.And(base_shangpin_v => base_shangpin_v.huozhuid == int.Parse(huozhuid));
                         else
-                            where = where.Or(base_shangpinxx => base_shangpinxx.HuozhuID == int.Parse(huozhuid));
+                            where = where.Or(base_shangpin_v => base_shangpin_v.huozhuid == int.Parse(huozhuid));
                     }
                     if (huozhuidequal.Equals(">"))
                     {
                         if (huozhuidand.Equals("and"))
-                            where = where.And(base_shangpinxx => base_shangpinxx.HuozhuID > int.Parse(huozhuid));
+                            where = where.And(base_shangpin_v => base_shangpin_v.huozhuid > int.Parse(huozhuid));
                         else
-                            where = where.Or(base_shangpinxx => base_shangpinxx.HuozhuID > int.Parse(huozhuid));
+                            where = where.Or(base_shangpin_v => base_shangpin_v.huozhuid > int.Parse(huozhuid));
                     }
                     if (huozhuidequal.Equals("<"))
                     {
                         if (huozhuidand.Equals("and"))
-                            where = where.And(base_shangpinxx => base_shangpinxx.HuozhuID < int.Parse(huozhuid));
+                            where = where.And(base_shangpin_v => base_shangpin_v.huozhuid < int.Parse(huozhuid));
                         else
-                            where = where.Or(base_shangpinxx => base_shangpinxx.HuozhuID < int.Parse(huozhuid));
+                            where = where.Or(base_shangpin_v => base_shangpin_v.huozhuid < int.Parse(huozhuid));
                     }
                 }
                 if (!string.IsNullOrEmpty(huozhuid))
@@ -218,16 +218,16 @@ namespace CKWMS.Controllers
                     if (daimaequal.Equals("="))
                     {
                         if (daimaand.Equals("and"))
-                            where = where.And(base_shangpinxx => base_shangpinxx.Daima == daima);
+                            where = where.And(base_shangpin_v => base_shangpin_v.daima == daima);
                         else
-                            where = where.Or(base_shangpinxx => base_shangpinxx.Daima == daima);
+                            where = where.Or(base_shangpin_v => base_shangpin_v.daima == daima);
                     }
                     if (daimaequal.Equals("like"))
                     {
                         if (daimaand.Equals("and"))
-                            where = where.And(base_shangpinxx => base_shangpinxx.Daima.Contains(daima));
+                            where = where.And(base_shangpin_v => base_shangpin_v.daima.Contains(daima));
                         else
-                            where = where.Or(base_shangpinxx => base_shangpinxx.Daima.Contains(daima));
+                            where = where.Or(base_shangpin_v => base_shangpin_v.daima.Contains(daima));
                     }
                 }
                 if (!string.IsNullOrEmpty(daima))
@@ -240,16 +240,16 @@ namespace CKWMS.Controllers
                     if (mingchengequal.Equals("="))
                     {
                         if (mingchengand.Equals("and"))
-                            where = where.And(base_shangpinxx => base_shangpinxx.Mingcheng == mingcheng);
+                            where = where.And(base_shangpin_v => base_shangpin_v.mingcheng == mingcheng);
                         else
-                            where = where.Or(base_shangpinxx => base_shangpinxx.Mingcheng == mingcheng);
+                            where = where.Or(base_shangpin_v => base_shangpin_v.mingcheng == mingcheng);
                     }
                     if (mingchengequal.Equals("like"))
                     {
                         if (mingchengand.Equals("and"))
-                            where = where.And(base_shangpinxx => base_shangpinxx.Mingcheng.Contains(mingcheng));
+                            where = where.And(base_shangpin_v => base_shangpin_v.mingcheng.Contains(mingcheng));
                         else
-                            where = where.Or(base_shangpinxx => base_shangpinxx.Mingcheng.Contains(mingcheng));
+                            where = where.Or(base_shangpin_v => base_shangpin_v.mingcheng.Contains(mingcheng));
                     }
                 }
                 if (!string.IsNullOrEmpty(mingcheng))
@@ -260,9 +260,9 @@ namespace CKWMS.Controllers
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;
-            where = where.And(base_shangpinxx => base_shangpinxx.IsDelete == false);
+            where = where.And(base_shangpin_v => base_shangpin_v.IsDelete == false);
 
-            var tempData = ob_base_shangpinxxservice.LoadSortEntities(where.Compile(), false, base_shangpinxx => base_shangpinxx.ID).ToPagedList<base_shangpinxx>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            var tempData = ob_base_shangpinxxservice.LoadShangpinAll(where.Compile()).ToPagedList<base_shangpin_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.base_shangpinxx = tempData;
             return View(tempData);
         }
