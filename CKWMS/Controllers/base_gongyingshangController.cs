@@ -68,89 +68,90 @@ namespace CKWMS.Controllers
 
             where = where.And(base_gongyingshang => base_gongyingshang.IsDelete == false);
 
-            ViewBag.DaimaSortParm = sortOrder == "daima" ? "daima_desc" : "daima";
-            ViewBag.NameSortParm = sortOrder == "name" ? "name_desc" : "name";
-            ViewBag.YyzzSortParm = sortOrder == "Yyzz" ? "Yyzz_desc" : "Yyzz";
-            ViewBag.YyzzyxqSortParm = sortOrder == "Yyzzyxq" ? "Yyzzyxq_desc" : "Yyzzyxq";
-            ViewBag.YyzztpSortParm = sortOrder == "Yyzztp" ? "Yyzztp_desc" : "Yyzztp";
-            ViewBag.JyxkSortParm = sortOrder == "Jyxk" ? "Jyxk_desc" : "Jyxk";
-            ViewBag.JyxkyxqSortParm = sortOrder == "Jyxkyxq" ? "Jyxkyxq_desc" : "Jyxkyxq";
-            ViewBag.JyxktpSortParm = sortOrder == "Jyxktp" ? "Jyxktp_desc" : "Jyxktp";
-            switch (sortOrder)
-            {
-                case "daima":
-                    var tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), true, base_gongyingshang => base_gongyingshang.Daima).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
-                    ViewBag.base_gongyingshang = tempData;
-                    return View(tempData);
-                case "daima_desc":
-                    tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), false, base_gongyingshang => base_gongyingshang.Daima).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
-                    ViewBag.base_gongyingshang = tempData;
-                    return View(tempData);
-                case "name":
-                    tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), true, base_gongyingshang => base_gongyingshang.Mingcheng).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
-                    ViewBag.base_gongyingshang = tempData;
-                    return View(tempData);
-                case "name_desc":
-                    tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), false, base_gongyingshang => base_gongyingshang.Mingcheng).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
-                    ViewBag.base_gongyingshang = tempData;
-                    return View(tempData);
-                case "Yyzz":
-                    tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), true, base_gongyingshang => base_gongyingshang.YingyezhizhaoBH).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
-                    ViewBag.base_gongyingshang = tempData;
-                    return View(tempData);
-                case "Yyzz_desc":
-                    tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), false, base_gongyingshang => base_gongyingshang.YingyezhizhaoBH).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
-                    ViewBag.base_gongyingshang = tempData;
-                    return View(tempData);
-                case "Yyzzyxq":
-                    tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), true, base_gongyingshang => base_gongyingshang.YingyezhizhaoYXQ).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
-                    ViewBag.base_gongyingshang = tempData;
-                    return View(tempData);
-                case "Yyzzyxq_desc":
-                    tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), false, base_gongyingshang => base_gongyingshang.YingyezhizhaoYXQ).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
-                    ViewBag.base_gongyingshang = tempData;
-                    return View(tempData);
-                case "Yyzztp":
-                    tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), true, base_gongyingshang => base_gongyingshang.YingyezhizhaoTP).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
-                    ViewBag.base_gongyingshang = tempData;
-                    return View(tempData);
-                case "Yyzztp_desc":
-                    tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), false, base_gongyingshang => base_gongyingshang.YingyezhizhaoTP).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
-                    ViewBag.base_gongyingshang = tempData;
-                    return View(tempData);
-                case "Jyxk":
-                    tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), true, base_gongyingshang => base_gongyingshang.JingyingxukeBH).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
-                    ViewBag.base_gongyingshang = tempData;
-                    return View(tempData);
-                case "Jyxk_desc":
-                    tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), false, base_gongyingshang => base_gongyingshang.JingyingxukeBH).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
-                    ViewBag.base_gongyingshang = tempData;
-                    return View(tempData);
-                case "Jyxkyxq":
-                    tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), true, base_gongyingshang => base_gongyingshang.JingyingxukeYXQ).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
-                    ViewBag.base_gongyingshang = tempData;
-                    return View(tempData);
-                case "Jyxkyxq_desc":
-                    tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), false, base_gongyingshang => base_gongyingshang.JingyingxukeYXQ).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
-                    ViewBag.base_gongyingshang = tempData;
-                    return View(tempData);
-                case "Jyxktp":
-                    tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), true, base_gongyingshang => base_gongyingshang.JingyingxukeTP).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
-                    ViewBag.base_gongyingshang = tempData;
-                    return View(tempData);
-                case "Jyxktp_desc":
-                    tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), false, base_gongyingshang => base_gongyingshang.JingyingxukeTP).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
-                    ViewBag.base_gongyingshang = tempData;
-                    return View(tempData);
-                default:
-                    tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), false, base_gongyingshang => base_gongyingshang.ID).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
-                    ViewBag.base_gongyingshang = tempData;
-                    return View(tempData);
-            }
-                    //var tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), false, base_gongyingshang => base_gongyingshang.ID).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
-                    //ViewBag.base_gongyingshang = tempData;
-            
-            
+            //ViewBag.DaimaSortParm = sortOrder == "daima" ? "daima_desc" : "daima";
+            //ViewBag.NameSortParm = sortOrder == "name" ? "name_desc" : "name";
+            //ViewBag.YyzzSortParm = sortOrder == "Yyzz" ? "Yyzz_desc" : "Yyzz";
+            //ViewBag.YyzzyxqSortParm = sortOrder == "Yyzzyxq" ? "Yyzzyxq_desc" : "Yyzzyxq";
+            //ViewBag.YyzztpSortParm = sortOrder == "Yyzztp" ? "Yyzztp_desc" : "Yyzztp";
+            //ViewBag.JyxkSortParm = sortOrder == "Jyxk" ? "Jyxk_desc" : "Jyxk";
+            //ViewBag.JyxkyxqSortParm = sortOrder == "Jyxkyxq" ? "Jyxkyxq_desc" : "Jyxkyxq";
+            //ViewBag.JyxktpSortParm = sortOrder == "Jyxktp" ? "Jyxktp_desc" : "Jyxktp";
+            //switch (sortOrder)
+            //{
+            //    case "daima":
+            //        var tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), true, base_gongyingshang => base_gongyingshang.Daima).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            //        ViewBag.base_gongyingshang = tempData;
+            //        return View(tempData);
+            //    case "daima_desc":
+            //        tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), false, base_gongyingshang => base_gongyingshang.Daima).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            //        ViewBag.base_gongyingshang = tempData;
+            //        return View(tempData);
+            //    case "name":
+            //        tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), true, base_gongyingshang => base_gongyingshang.Mingcheng).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            //        ViewBag.base_gongyingshang = tempData;
+            //        return View(tempData);
+            //    case "name_desc":
+            //        tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), false, base_gongyingshang => base_gongyingshang.Mingcheng).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            //        ViewBag.base_gongyingshang = tempData;
+            //        return View(tempData);
+            //    case "Yyzz":
+            //        tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), true, base_gongyingshang => base_gongyingshang.YingyezhizhaoBH).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            //        ViewBag.base_gongyingshang = tempData;
+            //        return View(tempData);
+            //    case "Yyzz_desc":
+            //        tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), false, base_gongyingshang => base_gongyingshang.YingyezhizhaoBH).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            //        ViewBag.base_gongyingshang = tempData;
+            //        return View(tempData);
+            //    case "Yyzzyxq":
+            //        tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), true, base_gongyingshang => base_gongyingshang.YingyezhizhaoYXQ).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            //        ViewBag.base_gongyingshang = tempData;
+            //        return View(tempData);
+            //    case "Yyzzyxq_desc":
+            //        tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), false, base_gongyingshang => base_gongyingshang.YingyezhizhaoYXQ).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            //        ViewBag.base_gongyingshang = tempData;
+            //        return View(tempData);
+            //    case "Yyzztp":
+            //        tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), true, base_gongyingshang => base_gongyingshang.YingyezhizhaoTP).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            //        ViewBag.base_gongyingshang = tempData;
+            //        return View(tempData);
+            //    case "Yyzztp_desc":
+            //        tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), false, base_gongyingshang => base_gongyingshang.YingyezhizhaoTP).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            //        ViewBag.base_gongyingshang = tempData;
+            //        return View(tempData);
+            //    case "Jyxk":
+            //        tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), true, base_gongyingshang => base_gongyingshang.JingyingxukeBH).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            //        ViewBag.base_gongyingshang = tempData;
+            //        return View(tempData);
+            //    case "Jyxk_desc":
+            //        tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), false, base_gongyingshang => base_gongyingshang.JingyingxukeBH).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            //        ViewBag.base_gongyingshang = tempData;
+            //        return View(tempData);
+            //    case "Jyxkyxq":
+            //        tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), true, base_gongyingshang => base_gongyingshang.JingyingxukeYXQ).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            //        ViewBag.base_gongyingshang = tempData;
+            //        return View(tempData);
+            //    case "Jyxkyxq_desc":
+            //        tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), false, base_gongyingshang => base_gongyingshang.JingyingxukeYXQ).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            //        ViewBag.base_gongyingshang = tempData;
+            //        return View(tempData);
+            //    case "Jyxktp":
+            //        tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), true, base_gongyingshang => base_gongyingshang.JingyingxukeTP).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            //        ViewBag.base_gongyingshang = tempData;
+            //        return View(tempData);
+            //    case "Jyxktp_desc":
+            //        tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), false, base_gongyingshang => base_gongyingshang.JingyingxukeTP).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            //        ViewBag.base_gongyingshang = tempData;
+            //        return View(tempData);
+            //    default:
+            //        tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), false, base_gongyingshang => base_gongyingshang.ID).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            //        ViewBag.base_gongyingshang = tempData;
+            //        return View(tempData);
+            //}
+            var tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), false, base_gongyingshang => base_gongyingshang.ID).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            ViewBag.base_gongyingshang = tempData;
+            return View(tempData);
+
+
 
 
 
@@ -173,7 +174,7 @@ namespace CKWMS.Controllers
             //        break;
             //}
             //return View(gongyingshangs.ToList());
-            
+
         }
 
 

@@ -178,7 +178,7 @@
             <thead>
                 <tr>
                     <td></td>
-                    <td>
+                    @*<td>
                         @Html.ActionLink("代码", "Index", new
                    {
                        sortOrder = ViewBag.DaimaSortParm
@@ -188,14 +188,16 @@
                    {
                        sortOrder = ViewBag.NameSortParm
                    })
-                    </td>
-                    @*<td>营业执照编号</td>
+                    </td>*@
+                    <td>代码</td>
+                    <td>名称</td>
+                    <td>营业执照编号</td>
                     <td>营业执照有效期</td>
                     <td>营业执照照片</td>
                     <td>经营许可编号</td>
                     <td>经营许可有效期</td>
-                    <td>经营许可照片</td>*@
-                    <td>@Html.ActionLink("营业执照编号", "Index", new
+                    <td>经营许可照片</td>
+                    @*<td>@Html.ActionLink("营业执照编号", "Index", new
                    {
                        sortOrder = ViewBag.YyzzSortParm
                    })</td>
@@ -218,7 +220,7 @@
                     <td>@Html.ActionLink("经营许可照片", "Index", new
                    {
                        sortOrder = ViewBag.JyxktpSortParm
-                   })</td>
+                   })</td>*@
                     @*<td>经营范围</td>*@
                     @*<td>经营范围简码</td>*@
                     @*<td>首营状态</td>*@
