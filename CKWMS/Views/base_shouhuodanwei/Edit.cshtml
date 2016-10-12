@@ -16,7 +16,8 @@
         $("#date_beianpzrq").datepicker();
         $("#date_xukepzrq").datepicker();
         $("#date_makedate").datepicker();
-
+        //验证
+        $("#mingcheng").attr('required', 'required');
         //获取收货信息
         var shdw_id = $("#shdw_id").val();
         var huozhuid = $("#huozhuid").val();
@@ -226,14 +227,15 @@
                 $(".bg").show();
             }
         });
-
         //区域
-
         $("#qy_close").click(function () {
             $("#pl_Quyu").hide();
             Getqy();
         });
-
+        $("#rydatatable").on("dblclick", "tr", function () {
+            $("#quyu").val($(this).find(".qymingcheng").html());
+            $("#pl_Quyu").hide();
+        });
         $("#bt_quyu_add").click(function () {
             var valqy = $('input:radio[name="radiobox"]:checked').parent().parent().parent().siblings().find(".qymingcheng").html();
             if (valqy == null) {
@@ -244,7 +246,25 @@
                 $("#pl_Quyu").hide();
             }
         });
-
+        //单击tr打钩，双击取值
+        $("#rydatatable").on("dblclick", "tr", function () {
+            $("#quyu").val($(this).find(".qymingcheng").html());
+            $("#pl_Quyu").hide();
+        });
+        $("#rydatatable").on("click", "tr", function () {
+            if ($(this).find(":radio").is(':checked')) {
+                $(this).find(":radio").prop("checked", false);
+            } else {
+                $(this).find(":radio").prop("checked", true);
+            }
+        });
+        $("#qxdatatable").on("click", "tr", function () {
+            if ($(this).find(":checkbox").is(':checked')) {
+                $(this).find(":checkbox").prop("checked", false);
+            } else {
+                $(this).find(":checkbox").prop("checked", true);
+            }
+        });
         //默认地址
         $("#btn_Default").click(function () {
             var num = $("input[type=checkbox]:checked").length;
@@ -492,7 +512,7 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>单位名称</label>
                 <div class="col-sm-10">
-                    <input id="shdw_mingcheng" type="text" class="form-control" name="mingcheng" value="@item.Mingcheng">
+                    <input id="mingcheng" type="text" class="form-control" name="mingcheng" value="@item.Mingcheng">
                 </div>
             </div>
             @*营业执照编号*@

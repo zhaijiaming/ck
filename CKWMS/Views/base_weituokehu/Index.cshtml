@@ -28,6 +28,28 @@
                     alert("送审失败，请重新上传！");
             });
         });
+        //判断照片是否存在
+        var num = $("#mydatatable tr").length -1;
+        for (var i = 0; i < num; i++) {
+            //营业执照
+            var val_yyzzTP = $(".val_yyzzTP").eq(i).val();
+            if (val_yyzzTP == "" || val_yyzzTP == null) {
+                $(".YingyezhizhaoTP").eq(i).removeAttr("href");
+                $(".YingyezhizhaoTP").eq(i).html("暂无");
+            } else {
+                $(".YingyezhizhaoTP").eq(i).html("浏览");
+            }
+            //经营许可
+            var val_jyxkTP = $(".val_jyxkTP").eq(i).val();
+            if (val_jyxkTP == "" || val_jyxkTP == null) {
+
+                $(".JingyingxukeTP").eq(i).removeAttr("href");
+                $(".JingyingxukeTP").eq(i).html("暂无");
+            } else {
+                $(".JingyingxukeTP").eq(i).html("浏览");
+            }
+        }
+
     });
     function AddInfo() {
         location.href = "/base_weituokehu/Add";
@@ -177,10 +199,16 @@
                         <td>@item.Hetongbianhao</td>
                         <td>@item.YingyezhizhaoBH</td>
                         <td>@string.Format("{0:yyyy-MM-dd}", item.YingyezhizhaoYXQ)</td>
-                        <td><a href='/files/zhengzhao/@item.YingyezhizhaoTP' target='_blank'>浏览</a></td>
+                        <td>
+                            <a href='/files/zhengzhao/@item.YingyezhizhaoTP' target='_blank' class="YingyezhizhaoTP"></a>
+                            <label><input type="hidden" class="val_yyzzTP" value="@item.YingyezhizhaoTP"></label>
+                        </td>
                         <td>@item.JingyingxukeBH</td>
                         <td>@string.Format("{0:yyyy-MM-dd}", item.JingyingxukeYXQ)</td>
-                        <td><a href='/files/zhengzhao/@item.JingyingxukeTP' target='_blank'>浏览</a></td>
+                        <td>
+                            <a href='/files/zhengzhao/@item.JingyingxukeTP' target='_blank' class="JingyingxukeTP"></a>
+                            <label><input type="hidden" class="val_jyxkTP" value="@item.JingyingxukeTP"></label>
+                        </td>
                         <td>@item.Lianxiren</td>
                         <td>@item.Lianxidianhua</td>
                         <td>@item.Beizhu</td>

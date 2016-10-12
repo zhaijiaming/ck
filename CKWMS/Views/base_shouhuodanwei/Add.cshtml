@@ -15,7 +15,9 @@
         $("#date_xukepzrq").datepicker();
         $("#date_makedate").datepicker();
         $("#pl_Quyu").draggable({ handle: '.tuodong' });
-
+        //验证
+        $("#huozhuid").attr('required', 'required'); 
+        $("#Mingcheng").attr('required', 'required');
         //经营范围
         //$("#pl_Fanwei").hide();
         $("#pl_Fanwei").draggable({ handle: '.tuodong' });
@@ -67,7 +69,6 @@
             });
             GetFanwei1(bj, tempid);
         });
-
         //关闭窗口
         $("#pl_close").click(function () {
             $("#pl_Fanwei").hide();
@@ -75,7 +76,6 @@
             $("#guanlifenlei").val("全部");
             GetFanwei1(bj);
         });
-
         //添加范围
         $("#bt_fanwei_add").click(function () {
             var _jyfw = "";
@@ -162,27 +162,41 @@
                 $(".bg").show();
             }
         });
-
         //区域
-
         $("#qy_close").click(function () {
             $("#pl_Quyu").hide();
             Getqy();
         });
-
         $("#bt_quyu_add").click(function () {
             var valqy = $('input:radio[name="radiobox"]:checked').parent().parent().parent().siblings().find(".qymingcheng").html();
             if (valqy == null) {
-                alert("没有选择区域哦")
+                alert("没有选择区域哦");
             }
             else {
                 $("#quyu").val(valqy);
                 $("#pl_Quyu").hide();
             }
         });
-
+        //单击tr打钩，双击取值
+        $("#rydatatable").on("dblclick", "tr", function () {
+            $("#quyu").val($(this).find(".qymingcheng").html());
+            $("#pl_Quyu").hide();
+        });
+        $("#rydatatable").on("click", "tr", function () {
+            if ($(this).find(":radio").is(':checked')) {
+                $(this).find(":radio").prop("checked", false);
+            } else {
+                $(this).find(":radio").prop("checked", true);
+            }
+        });
+        $("#qxdatatable").on("click", "tr", function () {
+            if ($(this).find(":checkbox").is(':checked')) {
+                $(this).find(":checkbox").prop("checked", false);
+            } else {
+                $(this).find(":checkbox").prop("checked", true);
+            }
+        });
     });
-
     //点击修改or增加
     function Bt_Fanweiadd() {
         document.getElementById("pl_Fanwei").removeAttribute("hidden");
@@ -331,7 +345,6 @@
                 <div class="col-sm-10">
                     @*<input type="text" class="form-control" name="ob_base_shouhuodanwei_huozhuid">*@
                     @Html.SelectList_Auto("huozhuid", "货主", "都有")
-                    @Html.ValidationMessageFor(m => m.HuozhuID)
                 </div>
             </div>
             @*单位名称*@
@@ -339,7 +352,6 @@
                 <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>单位名称</label>
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.Mingcheng, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Mingcheng)
                 </div>
             </div>
             @*营业执照编号*@

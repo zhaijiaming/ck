@@ -10,8 +10,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var _zczid = $("#zczbh").val();
-        $("#pl_guige").hide();
-        $("#pl_guige").draggable();
+        $("#pl_guige").draggable({ handle: '.tuodong' }, { containment: "parent" });
         $(".guige").click(function () {
             _zczid=$(this).parent().parent().find("input[type=checkbox]").val();
             getGuiGe(_zczid);
@@ -48,6 +47,10 @@
         $("#bt_guige_refresh").click(function () {
             getGuiGe(_zczid);
         });
+        //全部取消
+        $("#bt_guige_clear").click(function () {
+            $(".checkbox_guige").prop("checked",false);
+        });
         $("tr").bind("dblclick", function () {
             var u_id = $(this).find('td').eq(0).find('input').val();
             if (u_id != null) {
@@ -55,6 +58,18 @@
                 location.href = url_go;
             }
         });
+        //判断照片是否存在
+        var num = $("#mydatatable tr").length -1;
+        for (var i = 0; i < num; i++) {
+            var val_zczTP = $(".val_zczTP").eq(i).val();
+            if (val_zczTP == "" || val_zczTP == null) {
+                $(".ZhucezhengTP").eq(i).removeAttr("href");
+                $(".ZhucezhengTP").eq(i).html("暂无");
+            } else {
+                $(".ZhucezhengTP").eq(i).html("浏览");
+            }
+        }
+        
     });
     function AddInfo() {
         location.href = "/base_shangpinzcz/Add";
@@ -87,7 +102,7 @@
             },
             function (data) {
                 for (var i in data) {
-                    filltable = filltable + '<tr><td style="width:40px"><div class="checkbox"><label><input  type="checkbox" value="';
+                    filltable = filltable + '<tr><td style="width:40px"><div class="checkbox"><label><input class="checkbox_guige" type="checkbox" value="';
                     filltable = filltable + data[i].ID;
                     filltable = filltable + '"></label></div></td><td style="width:150px">';
                     filltable = filltable + data[i].Guige;
@@ -179,11 +194,11 @@
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
         </p>
     </div>
-    <div style="overflow:auto;">
+    <div style="overflow:auto;max-height:480px;">
         <div class="table-responsive">
-            <table class="table" style="overflow: hidden;text-overflow:ellipsis;white-space: nowrap;" id="mydatatable">
+            <table class="table" id="mydatatable">
                 <caption></caption>
-                <thead>
+                <thead style="white-space: nowrap;">
                     <tr>
                         <td></td>
                         <td>注册证编号</td>
@@ -198,8 +213,8 @@
                         <td>生产企业</td>
                         <td>服务机构</td>
                         <td>注册证照片</td>
-                        <td>输入人</td>
-                        <td>备注</td>
+                        @*<td>输入人</td>
+                        <td>备注</td>*@
                         @*<td>是否失效</td>
                         <td>适用范围</td>
                         <td>注册代理</td>*@
@@ -218,7 +233,7 @@
                             <td>@item.Bianhao</td>
                             <td>@item.Mingcheng</td>
                             @*规格*@
-                            <td><button class="btn guige">浏览</button></td>
+                            <td><a class="guige">浏览</a></td>
                             <td>@item.Bianzhun</td>
                             <td>@item.ZhucezhengYXQ.ToString("yyyy-MM-dd")</td>
                             <td>@string.Format("{0:yyyy-MM-dd}", item.PizhunRQ==null?"":item.PizhunRQ)</td>
@@ -227,9 +242,12 @@
                             <td>@item.Chandi</td>
                             <td>@Html.GetDataValue_ID("生产企业", "名称",(int)item.ShengchanqiyeID)</td>
                             <td>@item.ShouhuoJG</td>
-                            <td><a href="/files/zhengzhao/@item.ZhucezhengTP" target="_blank">浏览</a></td>
-                            <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
-                            <td>@item.Beizhu</td>
+                            <td>
+                                <a href="/files/zhengzhao/@item.ZhucezhengTP" target="_blank" class="ZhucezhengTP"></a>
+                                <label><input type="hidden" class="val_zczTP" value="@item.ZhucezhengTP"></label>
+                            </td>
+                            @*<td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
+                            <td>@item.Beizhu</td>*@
                             @*<td id="changeText">@item.ShixiaoSF</td>
                             <td>@item.ShiyongFW</td>
                             <td>@item.ZhuceDL</td>*@
@@ -247,12 +265,13 @@
         </div>
     </div>
 </div>
-<div id="pl_guige" class="panel panel-primary" style="position:fixed;top:100px;left:200px;width:600px;height:400px;z-index:999;">
-    <div class="panel-heading">
+<div id="pl_guige" class="panel panel-primary" hidden style="position:fixed;top:100px;left:200px;width:600px;height:600px;z-index:999;">
+    <div class="panel-heading tuodong">
         <h3 class="panel-title">规格管理<button id="pl_close" class="pull-right">X</button></h3>
     </div>
     <div class="panel-body">
         <div class="center">
+            <button type="button" class="btn btn-default " id="bt_guige_clear">全部取消</button>
             <button type="button" class="btn btn-default " id="bt_guige_delete"><i class="icon-remove"></i>删除</button>
             <button type="button" class="btn btn-default " id="bt_guige_refresh"><i class="icon-refresh"></i>刷新</button>
             <table class="table" id="ggdatatable">
@@ -266,7 +285,7 @@
                         <td style="width:190px">制单人</td>
                     </tr>
                 </thead>
-                <tbody style="display:block;max-height:268px;width:572px;overflow:scroll;"></tbody>
+                <tbody style="display:block;max-height:465px;min-height:465px;width:572px;overflow:scroll;"></tbody>
             </table>
         </div>
     </div>

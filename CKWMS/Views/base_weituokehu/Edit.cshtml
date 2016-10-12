@@ -172,6 +172,14 @@
                     $(".bg").show();
                 }
             });
+            //点击tr打钩
+            $("#qxdatatable").on("click", "tr", function () {
+                if ($(this).find(":checkbox").is(':checked')) {
+                    $(this).find(":checkbox").prop("checked", false);
+                } else {
+                    $(this).find(":checkbox").prop("checked", true);
+                }
+            });
         });
         function GetFanwei1(a, b) {
             var bj = a;
@@ -701,7 +709,7 @@
                                                     <input type="text" readonly class="form-control" name="weituoqx" id="WeituoQX" value="@ViewData.Model.WeituoQX">
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <input type="text" class="form-control" style="text-align:center" value="月">
+                                                    <label class="form-control" style="text-align:center">月</label>
                                                 </div>
                                             </div>
                                             @*贴中文标签*@

@@ -9,10 +9,12 @@
     $(document).ready(function () {
         $("#makedate").datepicker();//录入日期
         $("#pizhunrq").datepicker();//批准日期
-        $("#pl_guige_add").draggable();
+        $("#pl_guige_add,#pl_guige").draggable({ handle: '.tuodong' }, { containment: "parent" });
+        //验证
+        $("#Bianhao").attr('required', 'required');
+        $("#Mingcheng").attr('required', 'required');
+        //规格管理
         var _zczid = $("#zczbh").val();
-        $("#pl_guige").hide();
-        $("#pl_guige_add").hide();
         $("#bt_guige").click(function () {
             getGuiGe();
             $("#pl_guige").show();
@@ -45,9 +47,11 @@
                 }
             }
         });
+        //刷新
         $("#bt_guige_refresh").click(function () {
             getGuiGe();
         });
+        //添加规格
         $("#bt_guige_add").click(function () {
             $("#pl_guige_add").show();
         });
@@ -59,6 +63,18 @@
         });
         $("#bt_add_save1").click(function () {
             saveGuiGe(2);
+        });
+        //全部取消
+        $("#bt_guige_clear").click(function () {
+            $(".checkbox_guige").prop("checked", false);
+        });
+        //单击tr打钩
+        $("#ggdatatable").on("click", "tr", function () {
+            if ($(this).find(":checkbox").is(':checked')) {
+                $(this).find(":checkbox").prop("checked", false);
+            } else {
+                $(this).find(":checkbox").prop("checked", true);
+            }
         });
     });
     function saveGuiGe(aftersave) {
@@ -103,7 +119,7 @@
             },
             function (data) {
                 for (var i in data) {
-                    filltable = filltable + '<tr><td><div class="checkbox"><label><input type="checkbox" value="';
+                    filltable = filltable + '<tr><td><div class="checkbox"><label><input class="checkbox_guige" type="checkbox" value="';
                     filltable = filltable + data[i].ID;
                     filltable = filltable + '"></label></div></td><td style="width:150px">';
                     filltable = filltable + data[i].Guige;
@@ -150,12 +166,9 @@
         <div class="container">
             @*注册证编号*@
             <div class="form-group">
-                <div class="col-sm-2 control-label">
-                    <i class="icon-leaf red"></i>@Html.LabelFor(m => m.Bianhao)
-                </div>
+                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>注册证编号</label>
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.Bianhao, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Bianhao)
                 </div>
             </div>
             @*商品名称*@
@@ -165,7 +178,6 @@
                 </div>
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.Mingcheng, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Mingcheng)
                 </div>
             </div>
             @*规格*@
@@ -297,7 +309,7 @@
                     <input type="text" class="form-control" readonly value="@Html.GetDataValue_ID("userinfo", "全名", (int)ViewData.Model.MakeMan)" />
                 </div>
             </div>
-            
+
             @*是否失效*@
             @*<div class="form-group">
                     <div class="control-label col-sm-2">
@@ -318,16 +330,17 @@
                         </label>
                     </div>
                 </div>*@
-            
+
         </div>
     }
 </div>
-<div id="pl_guige" class="panel panel-primary" style="display:none;position:absolute;top:100px;left:200px;width:600px;height:600px;z-index:999;">
-    <div class="panel-heading">
+<div id="pl_guige" class="panel panel-primary" hidden style="position:absolute;top:100px;left:200px;width:600px;height:600px;z-index:999;">
+    <div class="panel-heading tuodong">
         <h3 class="panel-title">规格管理<button id="pl_close" class="pull-right">X</button></h3>
     </div>
     <div class="panel-body">
         <div class="center">
+            <button type="button" class="btn btn-default " id="bt_guige_clear">全部取消</button>
             <button type="button" class="btn btn-default " id="bt_guige_delete"><i class="icon-remove"></i>删除</button>
             <button type="button" class="btn btn-default " id="bt_guige_refresh"><i class="icon-refresh"></i>刷新</button>
             <table class="table" id="ggdatatable">
@@ -341,13 +354,13 @@
                         <td style="width:190px">制单人</td>
                     </tr>
                 </thead>
-                <tbody style="display:block;max-height:268px;width:572px;overflow:scroll;"></tbody>
+                <tbody style="display:block;max-height:465px;min-height:465px;width:572px;overflow:scroll;"></tbody>
             </table>
         </div>
     </div>
 </div>
-<div id="pl_guige_add" class="panel panel-primary" style="display:none;position:absolute;top:200px;left:400px;width:400px;height:210px;z-index:999;">
-    <div class="panel-heading">
+<div id="pl_guige_add" class="panel panel-primary" hidden style="position:absolute;top:200px;left:400px;width:400px;height:210px;z-index:999;">
+    <div class="panel-heading tuodong">
         <h3 class="panel-title">规格添加<button id="pl_add_close" class="pull-right">X</button></h3>
     </div>
     <div class="panel-body">
