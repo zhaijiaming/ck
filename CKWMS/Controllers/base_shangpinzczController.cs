@@ -220,15 +220,24 @@ namespace CKWMS.Controllers
             int _userid = (int)Session["user_id"];
             var _mc = Request["mc"]??"";
             var _bh = Request["bh"] ?? "";
+            var _gg = Request["gg"] ?? "";
 
             Expression<Func<base_shangpinzcz, bool>> where = PredicateExtensionses.True<base_shangpinzcz>();
                       
-            if (string.IsNullOrEmpty(_mc) && string.IsNullOrEmpty(_bh))
+            if (string.IsNullOrEmpty(_mc) && string.IsNullOrEmpty(_bh) && string.IsNullOrEmpty(_gg))
                 return Json(1);
             if (!string.IsNullOrEmpty(_mc))
                 where = where.And(p => p.Mingcheng.Contains(_mc));
             if (!string.IsNullOrEmpty(_bh))
                 where = where.And(p => p.Bianhao.Contains(_bh));
+            if (!string.IsNullOrEmpty(_gg))
+            {
+                var _gglist = ServiceFactory.base_zhucezhengggservice.LoadEntities(g => g.Guige.Contains(_gg)).ToList<base_zhucezhenggg>();
+                var _zidlist = from gg in _gglist
+                               select (int)gg.ZCZID;
+                var _zid = _zidlist.Distinct().ToList();
+                where = where.And(p=>_zid.Contains(p.ID));
+            }
             where = where.And(p =>p.ShixiaoSF==false && p.IsDelete == false);
             var _zczlist = ob_base_shangpinzczservice.LoadSortEntities(where.Compile(),true,s=>s.Bianhao);
             return Json(_zczlist.ToList<base_shangpinzcz>());

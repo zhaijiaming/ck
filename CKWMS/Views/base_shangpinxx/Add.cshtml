@@ -25,6 +25,11 @@
             $("#pl_gg").html('<select name="guige" id="select_gg" style="width:100%;"></select>');
             getZCZ($("#zhucezhengid").val());
             $("#pl_zcz").hide();
+            $("#select_gg").change(function () {
+                var guige = $("#select_gg").find("option:selected").text();
+                $("#Daima").val(guige);
+            });
+
         });
         var _ispack = false;
         //$("#shangpinxx_save").click(function () {
@@ -119,10 +124,15 @@
             $("#pl_Fanwei").hide();
         });
         //注册证规格→代码
-        $("#select_gg").change(function () {
-            var guige = $("#select_gg").find("option:selected").text();
-            $("#Daima").val(guige);
-        });
+        //$("#select_gg").change(function () {
+        //    var guige = $("#select_gg").find("option:selected").text();
+        //    $("#Daima").val(guige);
+        //});
+        //$("#select_gg").on("change", function () {
+        //    alert("ok");
+        //    var guige = $("#select_gg").find("option:selected").text();
+        //    $("#Daima").val(guige);
+        //});
         //货主ID→产品线名称
         $("#huozhuid").change(function () {
             var _huozhuid = $("#huozhuid").val();
@@ -215,7 +225,8 @@
                 "/base_shangpinzcz/getzcznow",
                 {
                     bh: $("#pl_zcz_bh").val(),
-                    mc: $("#pl_zcz_mc").val()
+                    mc: $("#pl_zcz_mc").val(),
+                    gg: $("#pl_zcz_gg").val()
                 },
                 function (data) {
                     if (data == 1)
@@ -229,7 +240,7 @@
                             filltable = filltable + '</td><td>';
                             filltable = filltable + data[i].Mingcheng;
                             filltable = filltable + '</td><td>';
-                            filltable = filltable + data[i].ZhucezhengYXQ;
+                            filltable = filltable + data[i].ZhucezhengYXQ.toDate().Format("yyyy-MM-dd");
                             filltable = filltable + '</td><td>';
                             filltable = filltable + data[i].ShiyongFW;
                             filltable = filltable + '</td></tr>';
@@ -290,7 +301,7 @@
     }
     function getZCZ(zczid) {
         var _zczid = zczid;
-        var filltable = "";
+        var filltable = '<option value=""></option>';
         var fillmc = "";
         $.post(
             "/base_shangpinzcz/getdetail",
@@ -697,23 +708,29 @@
         </div>
     </div>
 </div>
-<div id="pl_zcz" class="panel panel-primary" style="display:none;position:fixed;top:100px;left:240px;width:800px;height:600px;z-index:999;">
+<div id="pl_zcz" class="panel panel-primary" style="display:none;position:fixed;top:100px;left:240px;width:1000px;height:600px;z-index:999;">
     <div class="panel-heading tuodong">
         <h3 class="panel-title">注册证<button id="pl_zcz_close" class="pull-right">X</button></h3>
     </div>
     <div class="panel-body">
         <div class="row">
-                <label class="col-sm-1">编号</label>
-            <div class="col-sm-3">
-                <input type="text" id="pl_zcz_bh" />
+            <label class="col-sm-1"><i class="icon-leaf red"></i>编号</label>
+            <div class="col-sm-2">
+                <input type="text" id="pl_zcz_bh" size="20" />
             </div>
             <div class="col-sm-1">
-                <label>名称</label>
+                <label><i class="icon-leaf red"></i>名称</label>
             </div>
-            <div class="col-sm-3">
-                <input type="text" id="pl_zcz_mc" />
+            <div class="col-sm-2">
+                <input type="text" id="pl_zcz_mc" size="20" />
             </div>
-            <div class="col-sm-4 center">
+            <div class="col-sm-1">
+                <label><i class="icon-leaf red"></i>规格</label>
+            </div>
+            <div class="col-sm-2">
+                <input type="text" id="pl_zcz_gg" size="20" />
+            </div>
+            <div class="col-sm-3 center">
                 <button type="button" class="btn btn-default" id="pl_zcz_search"><i class="icon-search"></i>查询</button>
             </div>
         </div>

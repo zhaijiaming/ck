@@ -45,6 +45,22 @@
             $("#selcust").click(function () {
                 $("#pl_cust").show();
             });
+            $("#dt_cust tbody").on("dblclick", "tr", function () {
+                var _selval = $(this).find("input").val();
+                var _seltxt = $(this).find("td").eq(1).html();
+                var _seladdr = $(this).find("td").eq(2).html();
+                if (eval(_selval) == 0) {
+                    $("#kehuid").val(0);
+                    $("#khmc").val("");
+                    $("#Yunsongdizhi").val("");
+                    return;
+                }
+                $("#kehuid").val(_selval);
+                $("#khmc").val(_seltxt);
+                $("#Yunsongdizhi").val(_seladdr);
+                GetCustAddr(_selval);
+                $("#pl_cust").hide();
+            });
             $("#pl_cy").draggable({ handle: ".panel-heading" });
             $("#dt_cy").on("dblclick", "tr", function () {
                 $("#ChunyunYQ").val($(this).find("td").eq(1).html());
@@ -153,6 +169,7 @@
         <input type="hidden" name="id" />
         <input type="hidden" id="huozhuid" />
         <input type="hidden" name="KehuID" id="kehuid" />
+        <input type="hidden"  name="JihuaZT" id="JihuaZT" value="1" />
         <input type="hidden" id="khmc" />
         <div class="page-header">
             <p>
@@ -198,6 +215,12 @@
                 </div>
                 <div class="col-sm-2">
                     <p id="seladdr" class="form-control blue">选择</p>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.CKID, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.SelectList_Auto("CKID", "仓库", "")
                 </div>
             </div>
             <div class="form-group">
@@ -281,7 +304,8 @@
                 @Html.LabelFor(m => m.JihuaZT, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     @*@Html.TextBoxFor(m => m.JihuaZT, new { @class = "form-control" })*@
-                    @Html.SelectList_Common("JihuaZT", "出库状态")
+                    @*@Html.SelectList_Common("JihuaZT", "出库状态")*@
+                    <input type="text" readonly class="form-control" value='@Html.GetCommonValue_ID("出库状态",1)' />
                 </div>
             </div>
             <div class="form-group">
@@ -327,7 +351,7 @@
         </div>
     </div>
 </div>
-<div id="pl_cy" class="panel panel-primary" style="display:none;position:absolute;top:50px;left:100px;width:300px;height:200px;z-index:999;">
+<div id="pl_cy" class="panel panel-primary" style="display:none;position:absolute;top:250px;left:200px;width:300px;height:200px;z-index:999;">
     <div class="panel-heading">
         <h3 class="panel-title">常用储运条件<button id="pl_cy_close" class="pull-right">X</button></h3>
     </div>

@@ -184,10 +184,29 @@ namespace CKWMS.App_Code
                     var tmpscqy = scqy.LoadSortEntities(base_shengchanqiye => base_shengchanqiye.IsDelete == false, true, base_shengchanqiye => base_shengchanqiye.Daima);
                     foreach (var i in tmpscqy)
                     {
-                        if (i.ID == selectedvalue && selectedvalue != 0)
-                            sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}_{2}</option>", i.ID, i.Daima, i.Qiyemingcheng);
-                        else
-                            sb.AppendFormat("<option value=\"{0}\">{1}_{2}</option>", i.ID, i.Daima, i.Qiyemingcheng);
+                        switch (itemname)
+                        {
+                            case "名称":
+                                if (i.ID == selectedvalue && selectedvalue != 0)
+                                    sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.ID, i.Qiyemingcheng);
+                                else
+                                    sb.AppendFormat("<option value=\"{0}\">{1}</option>", i.ID, i.Qiyemingcheng);
+                                break;
+                            case "代码":
+                                if (i.ID == selectedvalue && selectedvalue != 0)
+                                    sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.ID, i.Daima);
+                                else
+                                    sb.AppendFormat("<option value=\"{0}\">{1}</option>", i.ID, i.Daima);
+                                break;
+                            case "都有":
+                                if (i.ID == selectedvalue && selectedvalue != 0)
+                                    sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}_{2}</option>", i.ID, i.Daima, i.Qiyemingcheng);
+                                else
+                                    sb.AppendFormat("<option value=\"{0}\">{1}_{2}</option>", i.ID, i.Daima, i.Qiyemingcheng);
+                                break;
+                            default:
+                                break;
+                        }
                     }
                     break;
                 case "公司": //"auth_gongsi":
@@ -337,7 +356,7 @@ namespace CKWMS.App_Code
                     break;
                 case "首营种类":
                     sb.Append(GetCommonSelect(selectedValue, MvcApplication.ShouYingType));
-                    break; 
+                    break;
                 case "储运要求":
                     sb.Append(GetCommonSelect(selectedValue, MvcApplication.TranCondition));
                     break;
@@ -457,7 +476,7 @@ namespace CKWMS.App_Code
                     }
                 }
             }
-            if(userid==-1)
+            if (userid == -1)
             {
                 sb.AppendLine("<li><a href=\"#\" class=\"dropdown-toggle\">");
                 sb.AppendLine("<i class=\"icon-ban-circle\"></i>");

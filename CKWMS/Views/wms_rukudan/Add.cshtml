@@ -74,6 +74,12 @@
                 </div>
             </div>
             <div class="form-group">
+                @Html.LabelFor(m => m.CangkuID, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.SelectList_Auto("CangkuID", "仓库", "")
+                </div>
+            </div>
+            <div class="form-group">
                 @Html.LabelFor(m => m.Fahuodizhi, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.Fahuodizhi, new { @class = "form-control" })
@@ -200,13 +206,13 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.MakeMan, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.SelectList_Auto("MakeMan", "userinfo", "fullname")
+                    @Html.SelectList_Auto("MakeMan", "userinfo", "fullname",(long)ViewBag.userid)
                 </div>
             </div>
         </div>
     }
 </div>
-<div id="pl_cy" class="panel panel-primary" style="display:none;position:absolute;top:50px;left:100px;width:300px;height:200px;z-index:999;">
+<div id="pl_cy" class="panel panel-primary" style="display:none;position:absolute;top:200px;left:300px;width:300px;height:200px;z-index:999;">
     <div class="panel-heading">
         <h3 class="panel-title">常用储运条件<button id="pl_cy_close" class="pull-right">X</button></h3>
     </div>

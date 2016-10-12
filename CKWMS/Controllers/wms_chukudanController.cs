@@ -215,6 +215,7 @@ namespace CKWMS.Controllers
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
             string chukudanbh = Request["chukudanbh"] ?? "";
+            string ckid = Request["ckid"] ?? "";
             if (baoshuisf.IndexOf("true") >= 0)
                 baoshuisf = "true";
             if (fuhesf.IndexOf("true") >= 0)
@@ -252,6 +253,7 @@ namespace CKWMS.Controllers
                 ob_wms_chukudan.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 ob_wms_chukudan.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
                 ob_wms_chukudan.ChukudanBH = chukudanbh.Trim();
+                ob_wms_chukudan.CKID= ckid == "" ? 0 : int.Parse(ckid);
                 ob_wms_chukudan = ob_wms_chukudanservice.AddEntity(ob_wms_chukudan);
                 ViewBag.wms_chukudan = ob_wms_chukudan;
             }
@@ -301,6 +303,7 @@ namespace CKWMS.Controllers
                 wms_chukudanviewmodel.MakeDate = tempData.MakeDate;
                 wms_chukudanviewmodel.MakeMan = tempData.MakeMan;
                 wms_chukudanviewmodel.ChukudanBH = tempData.ChukudanBH;
+                wms_chukudanviewmodel.CKID = tempData.CKID;
                 return View(wms_chukudanviewmodel);
             }
         }
@@ -369,6 +372,7 @@ namespace CKWMS.Controllers
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
             string chukudanbh = Request["chukudanbh"] ?? "";
+            string ckid = Request["ckid"] ?? "";
             int uid = int.Parse(id);
             try
             {
@@ -401,6 +405,7 @@ namespace CKWMS.Controllers
                 p.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 p.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
                 p.ChukudanBH = chukudanbh.Trim();
+                p.CKID = ckid == "" ? 0 : int.Parse(ckid);
                 ob_wms_chukudanservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;
             }

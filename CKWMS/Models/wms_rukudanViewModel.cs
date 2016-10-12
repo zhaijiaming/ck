@@ -8,13 +8,13 @@ namespace CKWMS.Models
     {
         [Display(Name = "序号")]
         public int? ID { get; set; }
-        [Display(Name = "货主序号")]
+        [Display(Name = "货主")]
         public int? HuozhuID { get; set; }
-        [Display(Name = "计划序号")]
+        [Display(Name = "计划")]
         public int? JihuaID { get; set; }
         [Display(Name = "信息来源")]
         public int? XinxiLY { get; set; }
-        [Display(Name = "供应商序号")]
+        [Display(Name = "供应商")]
         public int? GongyingshangID { get; set; }
         [Display(Name = "发货地址")]
         public string Fahuodizhi { get; set; }
@@ -35,7 +35,7 @@ namespace CKWMS.Models
         public string ChunyunYQ { get; set; }
         [Display(Name = "客户单号")]
         public string KehuDH { get; set; }
-        [Display(Name = "客服序号")]
+        [Display(Name = "客服")]
         public int? KefuID { get; set; }
         [Display(Name = "联系人")]
         public string Lianxiren { get; set; }
@@ -68,6 +68,8 @@ namespace CKWMS.Models
         public string RukudanBH { get; set; }
         [Display(Name = "直接收货")]
         public bool ZhijieSH { get; set; }
+        [Display(Name = "仓库")]
+        public int? CangkuID { get; set; }
     }
 }
 

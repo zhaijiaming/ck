@@ -37,7 +37,7 @@ namespace CKWMS.Models
         public bool JianguanSF { get; set; }
         [Display(Name = "客户单号")]
         public string KehuDH { get; set; }
-        [Display(Name = "客服序号")]
+        [Display(Name = "客服")]
         public int? KefuID { get; set; }
         [Display(Name = "联系人")]
         public string Lianxiren { get; set; }
@@ -68,6 +68,8 @@ namespace CKWMS.Models
         public bool IsDelete { get; set; }
         [Display(Name = "出库单编号")]
         public string ChukudanBH { get; set; }
+        [Display(Name = "仓库")]
+        public int? CKID { get; set; }
     }
 }
 

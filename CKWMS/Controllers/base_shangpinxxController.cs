@@ -301,13 +301,23 @@ namespace CKWMS.Controllers
                     return Json("");
                 else
                 {
-                    //var _splist= ServiceFactory.base_shangpinxxservice.LoadSortEntities(g => g.HuozhuID == _rkd.HuozhuID && g.JingyinSF==true && g.IsDelete == false, true, s => s.Mingcheng).ToList<base_shangpinxx>();
-                    var _splist = ServiceFactory.base_shangpinxxservice.LoadShangpinCust((int)_rkd.HuozhuID).Where<base_shangpin_v>(p => p.jingyinsf == true).ToList<base_shangpin_v>().OrderBy(s => s.mingcheng);
-                    if (_splist == null)
-                        return Json("");
+                    if (_rkd.JianguanSF)
+                    {
+                        var _splist0 = ServiceFactory.base_shangpinxxservice.LoadShangpinCust((int)_rkd.HuozhuID).Where<base_shangpin_v>(p => p.Shouying == 5 && p.jingyinsf == true).ToList<base_shangpin_v>().OrderBy(s => s.mingcheng);
+                        if (_splist0 == null)
+                            return Json("");
+                        else
+                            return Json(_splist0);
+                    }
                     else
-                        return Json(_splist);
-
+                    {
+                        //var _splist= ServiceFactory.base_shangpinxxservice.LoadSortEntities(g => g.HuozhuID == _rkd.HuozhuID && g.JingyinSF==true && g.IsDelete == false, true, s => s.Mingcheng).ToList<base_shangpinxx>();
+                        var _splist = ServiceFactory.base_shangpinxxservice.LoadShangpinCust((int)_rkd.HuozhuID).Where<base_shangpin_v>(p => p.jingyinsf == true).ToList<base_shangpin_v>().OrderBy(s => s.mingcheng);
+                        if (_splist == null)
+                            return Json("");
+                        else
+                            return Json(_splist);
+                    }
                 }
             }
         }

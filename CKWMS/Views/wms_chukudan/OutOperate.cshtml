@@ -57,29 +57,30 @@
             var _sd = _sr.find("td").eq(4).html();
             try {
                 var _vcc = 0;
-                $.ajax({
-                    type: "post",
-                    url: "/wms_chukumx/ValidateCustCargo",
-                    data: { cust: $("#kh").val(), cargo: $(this).data("sp") },
-                    async: false,
-                    success: function (data) {
-                        _vcc = data;
-                        if (eval(data) == -1)
-                            return -1;
-                        else
-                            return 1;
-                    }
-                });
+                //$.ajax({
+                //    type: "post",
+                //    url: "/wms_chukumx/ValidateCustCargo",
+                //    data: { cust: $("#kh").val(), cargo: $(this).data("sp") },
+                //    async: false,
+                //    success: function (data) {
+                //        _vcc = data;
+                //        if (eval(data) == -1)
+                //            return -1;
+                //        else
+                //            return 1;
+                //    }
+                //});
 
-                if (_vcc == -1) {
-                    $(this).val(0);
-                    $(this).attr("readonly", "true");
-                }
-                else {
-                    if (eval($(this).val()) > eval(_ch) - eval(_sd))
-                        $(this).val(eval(_ch) - eval(_sd));
-                }
-
+                //if (_vcc == -1) {
+                //    $(this).val(0);
+                //    $(this).attr("readonly", "true");
+                //}
+                //else {
+                //    if (eval($(this).val()) > eval(_ch) - eval(_sd))
+                //        $(this).val(eval(_ch) - eval(_sd));
+                //}
+                if (eval($(this).val()) > eval(_ch) - eval(_sd))
+                    $(this).val(eval(_ch) - eval(_sd));
             } catch (ex) {
                 $(this).val(eval(_ch) - eval(_sd));
             }
@@ -97,13 +98,13 @@
             $.post("/wms_chukuxlm/addxlm",
                 {
                     xlm: $("#xlm").val(),
-                    ckd:$("#ckd").val(),
-                    ck:$("#ck").val()
+                    ckd: $("#ckd").val(),
+                    ck: $("#ck").val()
                 }, function (data) {
-                if (data == -1)
-                    alert("导入序列码失败，请与管理员联系！");
+                    if (data == -1)
+                        alert("导入序列码失败，请与管理员联系！");
                     $("#pl_xlm").hide();
-            });
+                });
         });
         $("#pl_xlm_clear").click(function () {
             $("#xlm").val("");
@@ -128,7 +129,7 @@
                     + "," + $(this).find("td").eq(13).html() + "," + $(this).find("td").eq(14).html()
                     + "," + $(this).find("td").eq(15).html() + "," + $(this).find("td").eq(16).html()
                     + "," + _sv.data("zl") + "," + _sv.data("jz") + "," + _sv.data("tj")
-                    + "," + _sv.data("jf") + ","+_sv.data("zt")+"," + $(this).find("td").eq(3).html() + ";";
+                    + "," + _sv.data("jf") + "," + _sv.data("zt") + "," + $(this).find("td").eq(3).html() + ";";
                 }
             });
             AddCargo(_sval);
@@ -215,9 +216,9 @@
         $.post("/wms_cunhuo/getcuststoregood",
             {
                 cust: _cust,
-                mc:$("#mc").val(),
-                gg:$("#gg").val(),
-                ph:$("#ph").val()
+                mc: $("#mc").val(),
+                gg: $("#gg").val(),
+                ph: $("#ph").val()
             },
             function (data) {
                 if (data != -1) {
@@ -436,16 +437,16 @@
                 {
                     <tr>
                         <td>
-                                <label>
-                                    <input type="checkbox" value="@item.ID"
-                                           data-hz="@item.HuozhuID"
-                                           data-ly="@item.XinxiLY"
-                                           data-lx="@item.YewuLX"
-                                           data-kh="@item.KehuID"
-                                           data-fh="@item.FuheSF"
-                                           data-jg="@item.JianguanSF"
-                                           data-jh="@item.JihuaID">
-                                </label>
+                            <label>
+                                <input type="checkbox" value="@item.ID"
+                                       data-hz="@item.HuozhuID"
+                                       data-ly="@item.XinxiLY"
+                                       data-lx="@item.YewuLX"
+                                       data-kh="@item.KehuID"
+                                       data-fh="@item.FuheSF"
+                                       data-jg="@item.JianguanSF"
+                                       data-jh="@item.JihuaID">
+                            </label>
                         </td>
                         <td>@item.ChukudanBH</td>
                         <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
@@ -461,7 +462,7 @@
                         <td><a href="/wms_jianhuo/getpickdetailbyout?out=@item.ID" target="_blank"><i class="icon-hand-up"></i></a></td>
                         <td><a href="/quan_chukufh/outinventorycheck/@item.ID" target="_blank"><i class="icon-check"></i></a></td>
                         <td><i class="icon-barcode"></i></td>
-                        <td class="outOperateid"><i class="icon-print"><input type="hidden" class="input_outOperateid"  value="@item.ID" /></i></td>
+                        <td class="outOperateid"><i class="icon-print"><input type="hidden" class="input_outOperateid" value="@item.ID" /></i></td>
                     </tr>
                 }
             </tbody>

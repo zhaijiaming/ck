@@ -227,12 +227,16 @@ namespace CKWMS.Controllers
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
             string rukudanbh = Request["rukudanbh"] ?? "";
+            string cangkuid = Request["cangkuid"] ?? "";
+            string zhijiesh = Request["zhijiesh"] ?? "";
             if (baoshuisf.IndexOf("true") >= 0)
                 baoshuisf = "true";
             if (jianguansf.IndexOf("true") >= 0)
                 jianguansf = "true";
             if (yanshousf.IndexOf("true") >= 0)
                 yanshousf = "true";
+            if (zhijiesh.IndexOf("true") >= 0)
+                zhijiesh = "true";
             try
             {
                 wms_rukudan ob_wms_rukudan = new wms_rukudan();
@@ -263,14 +267,17 @@ namespace CKWMS.Controllers
                 ob_wms_rukudan.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 ob_wms_rukudan.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
                 ob_wms_rukudan.RukudanBH = rukudanbh.Trim();
+                ob_wms_rukudan.ZhijieSH = zhijiesh == "" ? false : Boolean.Parse(zhijiesh);
+                ob_wms_rukudan.CangkuID=cangkuid ==""?0:int.Parse(cangkuid);
                 ob_wms_rukudan = ob_wms_rukudanservice.AddEntity(ob_wms_rukudan);
+                id = ob_wms_rukudan.ID.ToString();
                 ViewBag.wms_rukudan = ob_wms_rukudan;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("OperateList");
         }
 
         [OutputCache(Duration = 10)]
@@ -311,6 +318,8 @@ namespace CKWMS.Controllers
                 wms_rukudanviewmodel.MakeDate = tempData.MakeDate;
                 wms_rukudanviewmodel.MakeMan = tempData.MakeMan;
                 wms_rukudanviewmodel.RukudanBH = tempData.RukudanBH;
+                wms_rukudanviewmodel.ZhijieSH = tempData.ZhijieSH;
+                wms_rukudanviewmodel.CangkuID = tempData.CangkuID;
                 return View(wms_rukudanviewmodel);
             }
         }
@@ -347,6 +356,8 @@ namespace CKWMS.Controllers
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
             string rukudanbh = Request["rukudanbh"] ?? "";
+            string zhijiesh = Request["zhijiesh"] ?? "";
+            string cangkuid = Request["cangkuid"] ?? "";
             int uid = int.Parse(id);
             if (baoshuisf.IndexOf("true") >= 0)
                 baoshuisf = "true";
@@ -354,6 +365,8 @@ namespace CKWMS.Controllers
                 jianguansf = "true";
             if (yanshousf.IndexOf("true") >= 0)
                 yanshousf = "true";
+            if (zhijiesh.IndexOf("true") >= 0)
+                zhijiesh = "true";
             try
             {
                 wms_rukudan p = ob_wms_rukudanservice.GetEntityById(wms_rukudan => wms_rukudan.ID == uid);
@@ -384,6 +397,8 @@ namespace CKWMS.Controllers
                 p.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 p.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
                 p.RukudanBH = rukudanbh.Trim();
+                p.CangkuID = cangkuid == "" ? 0 : int.Parse(cangkuid);
+                p.ZhijieSH= zhijiesh == "" ? false : Boolean.Parse(zhijiesh);
                 ob_wms_rukudanservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;
             }
