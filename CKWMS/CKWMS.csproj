@@ -547,6 +547,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Imgs\20140321021230992.jpg" />
     <Content Include="Imgs\cachet0.png" />
+    <Content Include="Imgs\ck1.jpg" />
     <Content Include="Imgs\ckflow.jpg" />
     <Content Include="Imgs\page1_pic4.jpg" />
     <Content Include="reports\ReportNow.aspx" />

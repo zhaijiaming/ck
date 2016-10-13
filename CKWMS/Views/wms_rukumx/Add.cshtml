@@ -33,6 +33,7 @@
                         $("#Changjia").val($(this).data("qymc"));
                         $("#ShangpinTM").val($(this).data("tm"));
                         $("#Huansuanlv").val($(this).data("hsl"));
+                        $("#Chandi").val($(this).data("chd"));
                     }
                 });
                 $("#pl_shangpin").hide();
@@ -53,6 +54,7 @@
                         $("#Changjia").val(u_id.data("qymc"));
                         $("#ShangpinTM").val(u_id.data("tm"));
                         $("#Huansuanlv").val(u_id.data("hsl"));
+                        $("#Chandi").val(u_id.data("chd"));
                         $("#pl_shangpin").hide();
                     }
             });
@@ -72,11 +74,11 @@
                             _filldata = _filldata + data[i].id;
                             _filldata = _filldata + '" data-dm="' + data[i].daima + '" data-mc="' + data[i].mingcheng + '" data-zcz="';
                             _filldata = _filldata + data[i].ZhucezhengBH + '" data-gg="' + data[i].Guige + '" data-xh="' + data[i].Xinghao;
-                            _filldata = _filldata + '" data-dw="' + data[i].danwei + '" data-bdw="' + data[i].BaozhuangDW;
+                            _filldata = _filldata + '" data-dw="' + data[i].danwei + '" data-chd="' + data[i].chandi + '" data-bdw="' + data[i].BaozhuangDW;
                             _filldata = _filldata + '" data-hsl="' + data[i].huansuanlv + '" data-cpx="' + data[i].chanpinxian + '" data-cpxmc="' + data[i].cpxmingcheng;
                             _filldata = _filldata + '" data-ml="' + data[i].muluxuhao + '" data-mlmc="' + data[i].mulubh + '" data-glfl="' + data[i].guanlifenlei;
                             _filldata = _filldata + '" data-cctj="' + data[i].Cunchutiaojian + '" data-qyid="' + data[i].qiyeid + '" data-qymc="' + data[i].Qiyemingcheng;
-                            _filldata = _filldata + '" data-gys="' + data[i].GongyingID + '" data-gysmc="' + data[i].gysmingcheng + '" data-tm="' + data[i].ShangpinTM + '"';
+                            _filldata = _filldata + '" data-gys="' + data[i].GongyingID + '" data-gysmc="' + data[i].gysmingcheng + '" data-tm="' + data[i].shangpintm + '"';
                             _filldata = _filldata + '></label></div></td><td>';
                             _filldata = _filldata + data[i].daima;
                             _filldata = _filldata + '</td><td>';
@@ -210,7 +212,7 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.YishouSL, new { @class = "control-label col-sm-2" })
                     <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.YishouSL, new { @class = "form-control" })
+                        @Html.TextBoxFor(m => m.YishouSL, new { @class = "form-control",@readonly="true"})
                     </div>
                 </div>
                 <div class="form-group">
