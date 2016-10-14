@@ -1,0 +1,51 @@
+﻿@using CKWMS.App_Code
+@using CKWMS.Models
+
+<div class="row">
+    <table class="table table-condensed table-hover" id="mydatatable">
+        <caption></caption>
+        <thead>
+            <tr>
+                <td>入库单</td>
+                <td>库位</td>
+                <td>入库日期</td>
+                <td>商品代码</td>
+                <td>商品名称</td>
+                <td>规格</td>
+                <td>注册证</td>
+                <td>批号</td>
+                <td>生产日期</td>
+                <td>失效日期</td>
+                <td>序列码</td>
+                <td>数量</td>
+                <td>单位</td>
+                <td>质量</td>
+                <td>状态</td>
+                <td>说明</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.wms_storage_v)
+            {
+                <tr>
+                    <td>@item.RukudanBH</td>
+                    <td>@item.Kuwei</td>
+                    <td>@string.Format("{0:yyyy-MM-dd}", item.RukuRQ == null ? "" : item.RukuRQ)</td>
+                    <td>@item.ShangpinDM</td>
+                    <td>@item.ShangpinMC</td>
+                    <td>@item.Guige</td>
+                    <td>@item.Zhucezheng</td>
+                    <td>@item.Pihao</td>
+                    <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ == null ? "" : item.ShengchanRQ)</td>
+                    <td>@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ == null ? "" : item.ShixiaoRQ)</td>
+                    <td>@item.Xuliema</td>
+                    <td>@item.sshuliang</td>
+                    <td>@item.JibenDW</td>
+                    <td>@Html.Encode(item.HegeSF == true ? "合格" : "不合格")</td>
+                    <td>@Html.GetCommonValue_ID("存货状态", (int)item.CunhuoZT)</td>
+                    <td>@item.CunhuoSM</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -229,8 +229,67 @@ namespace CKWMS.Controllers
             ViewBag.userid = (int)Session["user_id"];
             return View();
         }
+        [OutputCache(Duration = 30)]
+        public ActionResult CurrentStorageExport()
+        {
+            string page = "1";
+            int userid = (int)Session["user_id"];
+            string pagetag = "wms_cunhuo_currentstorage";
+            Expression<Func<wms_storage_v, bool>> where = PredicateExtensionses.True<wms_storage_v>();
+            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            if (sc != null && sc.ConditionInfo != null)
+            {
+                string[] sclist = sc.ConditionInfo.Split(';');
+                foreach (string scl in sclist)
+                {
+                    string[] scld = scl.Split(',');
+                    switch (scld[0])
+                    {
+                        case "rkmxid":
+                            string rkmxid = scld[1];
+                            string rkmxidequal = scld[2];
+                            string rkmxidand = scld[3];
+                            if (!string.IsNullOrEmpty(rkmxid))
+                            {
+                                if (rkmxidequal.Equals("="))
+                                {
+                                    if (rkmxidand.Equals("and"))
+                                        where = where.And(wms_storage_v => wms_storage_v.RKMXID == int.Parse(rkmxid));
+                                    else
+                                        where = where.Or(wms_storage_v => wms_storage_v.RKMXID == int.Parse(rkmxid));
+                                }
+                                if (rkmxidequal.Equals(">"))
+                                {
+                                    if (rkmxidand.Equals("and"))
+                                        where = where.And(wms_storage_v => wms_storage_v.RKMXID > int.Parse(rkmxid));
+                                    else
+                                        where = where.Or(wms_storage_v => wms_storage_v.RKMXID > int.Parse(rkmxid));
+                                }
+                                if (rkmxidequal.Equals("<"))
+                                {
+                                    if (rkmxidand.Equals("and"))
+                                        where = where.And(wms_storage_v => wms_storage_v.RKMXID < int.Parse(rkmxid));
+                                    else
+                                        where = where.Or(wms_storage_v => wms_storage_v.RKMXID < int.Parse(rkmxid));
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                ViewBag.SearchCondition = sc.ConditionInfo;
+            }
+
+            var tempData = ob_wms_cunhuoservice.GetInventory(where.Compile());
+            ViewBag.NoPaging = true;
+            ViewBag.wms_storage_v = tempData;
+            ViewData.Model = tempData;
+            string viewHtml = ExportNow.RenderPartialViewToString(this, "CurrentStorageExport");
+            return File(System.Text.Encoding.UTF8.GetBytes(viewHtml), "application/ms-excel", string.Format("inventory_{0}.xls", DateTime.Now.ToShortDateString()));
+        }
         [HttpPost]
-        [OutputCache(Duration =30)]
+        [OutputCache(Duration = 30)]
         public ActionResult CurrentStorage()
         {
             int userid = (int)Session["user_id"];
@@ -366,7 +425,7 @@ namespace CKWMS.Controllers
                     }
                 }
                 ViewBag.SearchCondition = sc.ConditionInfo;
-            }        
+            }
 
             var tempData = ob_wms_cunhuoservice.GetInventory(where.Compile()).ToPagedList<wms_storage_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.wms_storage_v = tempData;
@@ -403,7 +462,7 @@ namespace CKWMS.Controllers
                 where = where.And(p => p.Pihao == _ph);
             where = where.And(p => p.chsl > 0);
             //var tempData = ob_wms_cunhuoservice.GetInventoryGoodsByCust(int.Parse(_custid),p=>p.chsl>0);
-            var tempData = ob_wms_cunhuoservice.GetInventoryGoodsByCust(int.Parse(_custid),where.Compile());
+            var tempData = ob_wms_cunhuoservice.GetInventoryGoodsByCust(int.Parse(_custid), where.Compile());
             if (tempData == null)
                 return Json(-1);
 
@@ -471,7 +530,7 @@ namespace CKWMS.Controllers
             if (_custid == "")
                 return Json(-1);
 
-            var tempData = ob_wms_cunhuoservice.GetStorageList(int.Parse(_custid),p=>p.sshuliang > 0);
+            var tempData = ob_wms_cunhuoservice.GetStorageList(int.Parse(_custid), p => p.sshuliang > 0);
             if (tempData == null)
                 return Json(-1);
             return Json(tempData.ToList<wms_storage_v>());

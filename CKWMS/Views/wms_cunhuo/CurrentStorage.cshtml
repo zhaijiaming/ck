@@ -14,6 +14,9 @@
         $("#bt_print").click(function () {
             alert("print now");
         });
+        $("#bt_export").click(function () {
+            window.open("/wms_cunhuo/currentstorageexport", "_blank");
+        });
         $("#mydatatable tbody tr").each(function () {
             if ($(this).find("td").eq(14).html() == "不合格")
                 $(this).addClass("red");
@@ -71,6 +74,7 @@
             <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
             <button type="button" class="btn btn-default " id="bt_print"><i class="icon-print"></i>打印</button>
+            <button type="button" class="btn btn-default" id="bt_export"><i class="icon-file"></i>导出</button>
        </p>
     </div>
     <div class="row">

@@ -293,6 +293,10 @@
     <Compile Include="Controllers\base_quyuController.cs" />
     <Compile Include="Controllers\cfda_cangkuController.cs" />
     <Compile Include="Controllers\cfda_zizhiController.cs" />
+    <Compile Include="Controllers\json_batchController.cs" />
+    <Compile Include="Controllers\json_deliveryController.cs" />
+    <Compile Include="Controllers\json_importController.cs" />
+    <Compile Include="Controllers\json_packageController.cs" />
     <Compile Include="Controllers\quan_chukufhController.cs" />
     <Compile Include="Controllers\wms_cangguanszController.cs" />
     <Compile Include="Controllers\wms_cangkuController.cs" />
@@ -309,6 +313,10 @@
     <Compile Include="Models\base_huobiViewModel.cs" />
     <Compile Include="Models\base_kaipiaoxxViewModel.cs" />
     <Compile Include="Models\base_quyuViewModel.cs" />
+    <Compile Include="Models\json_batchViewModel.cs" />
+    <Compile Include="Models\json_deliveryViewModel.cs" />
+    <Compile Include="Models\json_importViewModel.cs" />
+    <Compile Include="Models\json_packageViewModel.cs" />
     <Compile Include="Models\quan_chukufhViewModel.cs" />
     <Compile Include="Models\wms_cangguanszViewModel.cs" />
     <Compile Include="Models\wms_cangkuqyViewModel.cs" />
@@ -830,6 +838,19 @@
     <Content Include="Views\quan_rukuys\PrintYanShouJiLu.cshtml" />
     <Content Include="Views\wms_cunhuo\PrintShouHuoList.cshtml" />
     <Content Include="Views\wms_rukudan\PrintRuKuXiangDan.cshtml" />
+    <Content Include="Views\json_batch\Add.cshtml" />
+    <Content Include="Views\json_batch\Edit.cshtml" />
+    <Content Include="Views\json_batch\Index.cshtml" />
+    <Content Include="Views\json_delivery\Add.cshtml" />
+    <Content Include="Views\json_delivery\Edit.cshtml" />
+    <Content Include="Views\json_delivery\Index.cshtml" />
+    <Content Include="Views\json_import\Add.cshtml" />
+    <Content Include="Views\json_import\Edit.cshtml" />
+    <Content Include="Views\json_import\Index.cshtml" />
+    <Content Include="Views\json_package\Add.cshtml" />
+    <Content Include="Views\json_package\Edit.cshtml" />
+    <Content Include="Views\json_package\Index.cshtml" />
+    <Content Include="Views\wms_cunhuo\CurrentStorageExport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
