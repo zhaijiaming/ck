@@ -472,6 +472,21 @@
                     <input type="date" id="date_beianyxq" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="beianyxq">
                 </div>
             </div>
+            @*备案照片*@
+            <div class="form-group">
+                <label for="name" class="col-sm-2">备案照片</label>
+                <div class="col-sm-6">
+                    <input type="text" readonly class="form-control" name="beiantp" id="beiantp">
+                </div>
+                <div class="col-sm-2">
+                    <button class="form-control" data-toggle="modal" data-target="#myModalUpload" onclick="btn3()">上传</button>
+                </div>
+                <div class="col-sm-2">
+                    <span class="form-control" id="batp">
+                        <a>浏览</a>
+                    </span>
+                </div>
+            </div>
             @*备案批准日期*@
             <div class="form-group">
                 <label for="name" class="col-sm-2">备案批准日期</label>
@@ -484,21 +499,6 @@
                 <label for="name" class="col-sm-2">备案发证机关</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" name="beianfzjg">
-                </div>
-            </div>
-            @*备案文件*@
-            <div class="form-group">
-                <label for="name" class="col-sm-2">备案文件</label>
-                <div class="col-sm-6">
-                    <input type="text" readonly class="form-control" name="beiantp" id="beiantp">
-                </div>
-                <div class="col-sm-2">
-                    <button class="form-control" data-toggle="modal" data-target="#myModalUpload" onclick="btn3()">上传</button>
-                </div>
-                <div class="col-sm-2">
-                    <span class="form-control" id="batp">
-                        <a>浏览</a>
-                    </span>
                 </div>
             </div>
             @*首营状态*@

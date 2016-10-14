@@ -1,18 +1,18 @@
 ﻿@using CKWMS.App_Code
 @using CKWMS.Models
 @model base_shangpinzczViewModel
-@{ViewBag.Title = "商品注册证添加";}
-@Html.GetFileUpload("zhucezhengtp", "zcz", "z", "cus", 2, 0, new Dictionary<string, string>() { { "zcz", "zhucezhengtp" } } )
+@{ViewBag.Title = "注册证添加";}
+@Html.GetFileUpload("zhucezhengtp", "zcz", "z", "cus", 2, 0, new Dictionary<string, string>() { { "zcz", "zhucezhengtp" } })
 
 <script type="text/javascript">
-        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
-        $(document).ready(function(){
-            $("#makedate").datepicker();//录入日期
-            $("#pizhunrq").datepicker();//批准日期
-            //验证
-            $("#Bianhao").attr('required', 'required');
-            $("#Mingcheng").attr('required', 'required');
-        });
+    try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    $(document).ready(function () {
+        $("#makedate").datepicker();//录入日期
+        $("#pizhunrq").datepicker();//批准日期
+        //验证
+        $("#Bianhao").attr('required', 'required');
+        $("#Mingcheng").attr('required', 'required');
+    });
 </script>
 <div class="breadcrumbs" id="breadcrumbs">
 
@@ -22,7 +22,7 @@
             <a href="/Home">首页</a>
         </li>
         <li>
-            <a href="/base_shangpinzcz">商品注册证</a>
+            <a href="/base_shangpinzcz">注册证</a>
         </li>
         <li class="active">新增</li>
     </ul>
@@ -58,12 +58,12 @@
                 </div>
             </div>
             @*规格
-            <div class="form-group">
-                @Html.LabelFor(m => m.Guige, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Guige, new { @class = "form-control" })
-                </div>
-            </div>*@
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Guige, new { @class = "control-label col-sm-2" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.Guige, new { @class = "form-control" })
+                    </div>
+                </div>*@
             @*产品标准*@
             <div class="form-group">
                 @Html.LabelFor(m => m.Bianzhun, new { @class = "control-label col-sm-2" })
@@ -93,7 +93,7 @@
                 </div>
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.BianhaoZW, new { @class = "form-control" })
-                    
+
                 </div>
             </div>
             @*产地*@
@@ -103,7 +103,7 @@
                 </div>
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.Chandi, new { @class = "form-control" })
-                    
+
                 </div>
             </div>
             @*生产企业*@
@@ -112,7 +112,7 @@
                     @Html.LabelFor(m => m.ShengchanqiyeID)
                 </div>
                 <div class="col-sm-10">
-                     @Html.SelectList_Auto("Shengchanqiyeid", "厂家","")
+                    @Html.SelectList_Auto("Shengchanqiyeid", "厂家", "")
                 </div>
             </div>
             @*服务机构*@
@@ -122,7 +122,7 @@
                 </div>
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.ShouhuoJG, new { @class = "form-control" })
-                    
+
                 </div>
             </div>
             @*注册证照片*@
@@ -147,7 +147,7 @@
                 </div>
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.ZhuceDL, new { @class = "form-control" })
-                    
+
                 </div>
             </div>
             @*试用范围*@
@@ -182,24 +182,24 @@
                     <input type="text" class="form-control" readonly value="@Html.GetDataValue_ID("userinfo", "全名", (int)ViewBag.userid)" />
                 </div>
             </div>
-            
+
             @*是否失效
-            <div class="form-group">
-                <div class="control-label col-sm-2">
-                    @Html.LabelFor(m => m.ShixiaoSF)
-                </div>
-                <div>
-                    <label class="radio-inline">
-                        <input type="radio" name="shixiaosf" value="true">
-                        是
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" name="shixiaosf" value="false">
-                        否
-                    </label>
-                </div>
-            </div>*@
-            
+                <div class="form-group">
+                    <div class="control-label col-sm-2">
+                        @Html.LabelFor(m => m.ShixiaoSF)
+                    </div>
+                    <div>
+                        <label class="radio-inline">
+                            <input type="radio" name="shixiaosf" value="true">
+                            是
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="shixiaosf" value="false">
+                            否
+                        </label>
+                    </div>
+                </div>*@
+
         </div>
     }
 </div>

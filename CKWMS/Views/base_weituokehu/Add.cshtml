@@ -8,6 +8,10 @@
     $(document).ready(function () {
             $("#Kehumingcheng").focus();
             $("#pl_Fanwei").draggable({ handle: '.tuodong' }, { containment: [-1000, 50, 1300, 600] });
+            //验证
+            $("#Daima").attr("required", "required");
+            $("#Jiancheng").attr("required", "required");
+            $("#Kehumingcheng").attr("required", "required");
             //时间
             $("#MakeDate").datepicker();
             $("#YingyezhizhaoYXQ").datepicker();
@@ -130,7 +134,7 @@
                     $("#guanlifenlei").val("全部");
                     GetFanwei1(bj);
                 }
-               
+
             });
             //全选
             $("#bt_fanwei_all").click(function () {
@@ -622,21 +626,9 @@
                                                     <input id="BeianYXQ" type="date" class="form-control" name="beianyxq" value="@DateTime.Now.ToString("yyyy-MM-dd")">
                                                 </div>
                                             </div>
+                                            @*备案照片*@
                                             <div class="form-group">
-                                                <label class="control-label col-sm-2" for="BeianPZRQ">备案批准日期</label>
-                                                <div class="col-sm-10">
-                                                    <input id="BeianPZRQ" type="date" class="form-control" name="beianpzrq" value="@DateTime.Now.ToString("yyyy-MM-dd")">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                @Html.LabelFor(m => m.BeianFZJG, new { @class = "control-label col-sm-2" })
-                                                <div class="col-sm-10">
-                                                    @Html.TextBoxFor(m => m.BeianFZJG, new { @class = "form-control" })
-                                                </div>
-                                            </div>
-                                            @*备案文件*@
-                                            <div class="form-group">
-                                                <label for="name" class="col-sm-2">备案文件</label>
+                                                <label for="name" class="col-sm-2">备案照片</label>
                                                 <div class="col-sm-6">
                                                     <input type="text" readonly class="form-control" name="beiantp" id="beiantp">
                                                 </div>
@@ -649,7 +641,18 @@
                                                     </span>
                                                 </div>
                                             </div>
-
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-2" for="BeianPZRQ">备案批准日期</label>
+                                                <div class="col-sm-10">
+                                                    <input id="BeianPZRQ" type="date" class="form-control" name="beianpzrq" value="@DateTime.Now.ToString("yyyy-MM-dd")">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.BeianFZJG, new { @class = "control-label col-sm-2" })
+                                                <div class="col-sm-10">
+                                                    @Html.TextBoxFor(m => m.BeianFZJG, new { @class = "form-control" })
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -704,7 +707,7 @@
                                                     <input type="text" readonly class="form-control" name="weituoqx" id="WeituoQX">
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <label class="form-control" style="text-align:center" >月</label>
+                                                    <label class="form-control" style="text-align:center">月</label>
                                                 </div>
                                             </div>
                                             @*贴中文标签*@

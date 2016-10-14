@@ -20,6 +20,10 @@
             $("#XukePZRQ").datepicker();
             $("#WeituoKSRQ").datepicker();
             $("#WeituoJSRQ").datepicker();
+            //验证
+            $("#Daima").attr("required", "required");
+            $("#Jiancheng").attr("required", "required");
+            $("#Kehumingcheng").attr("required", "required");
             //计算俩日期的月份
             var a = $("#WeituoKSRQ").val();
             var b = $("#WeituoJSRQ").val();
@@ -349,19 +353,19 @@
                                     <div class="slimScrollDiv">
                                         <div class="slim-scroll">
                                             <div class="form-group">
-                                                @Html.LabelFor(m => m.Daima, new { @class = "control-label col-sm-2" })
+                                                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>客户代码</label>
                                                 <div class="col-sm-10">
                                                     @Html.TextBoxFor(m => m.Daima, new { @class = "form-control" })
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                @Html.LabelFor(m => m.Jiancheng, new { @class = "control-label col-sm-2" })
+                                                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>客户简称</label>
                                                 <div class="col-sm-10">
                                                     @Html.TextBoxFor(m => m.Jiancheng, new { @class = "form-control" })
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                @Html.LabelFor(m => m.Kehumingcheng, new { @class = "control-label col-sm-2" })
+                                                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>客户名称</label>
                                                 <div class="col-sm-8">
                                                     @Html.TextBoxFor(m => m.Kehumingcheng, new { @class = "form-control" })
                                                 </div>
@@ -627,21 +631,9 @@
                                                     <input id="BeianYXQ" type="date" class="form-control" name="BeianYXQ" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.BeianYXQ)">
                                                 </div>
                                             </div>
+                                            @*备案照片*@
                                             <div class="form-group">
-                                                @Html.LabelFor(m => m.BeianPZRQ, new { @class = "control-label col-sm-2" })
-                                                <div class="col-sm-10">
-                                                    <input id="BeianPZRQ" type="date" class="form-control" name="BeianPZRQ" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.BeianPZRQ)">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                @Html.LabelFor(m => m.BeianFZJG, new { @class = "control-label col-sm-2" })
-                                                <div class="col-sm-10">
-                                                    @Html.TextBoxFor(m => m.BeianFZJG, new { @class = "form-control" })
-                                                </div>
-                                            </div>
-                                            @*备案文件*@
-                                            <div class="form-group">
-                                                <label for="name" class="col-sm-2">备案文件</label>
+                                                <label for="name" class="col-sm-2">备案照片</label>
                                                 <div class="col-sm-6">
                                                     <input type="text" readonly class="form-control" name="beiantp" id="beiantp" value="@ViewData.Model.BeianTP">
                                                 </div>
@@ -654,7 +646,18 @@
                                                     </span>
                                                 </div>
                                             </div>
-                                            
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.BeianPZRQ, new { @class = "control-label col-sm-2" })
+                                                <div class="col-sm-10">
+                                                    <input id="BeianPZRQ" type="date" class="form-control" name="BeianPZRQ" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.BeianPZRQ)">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.BeianFZJG, new { @class = "control-label col-sm-2" })
+                                                <div class="col-sm-10">
+                                                    @Html.TextBoxFor(m => m.BeianFZJG, new { @class = "form-control" })
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
