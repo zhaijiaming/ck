@@ -337,7 +337,7 @@
             @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
         </div>*@
 </div>
-<div id="pl_yanshou" class="panel panel-info" style="display:none;position:absolute;top:100px;left:200px;width:600px;height:360px;z-index:999;">
+<div id="pl_yanshou" class="panel panel-info" style="display:none;position:fixed;top:100px;left:200px;width:600px;height:360px;z-index:999;">
     <div class="panel-heading">
         <h3 class="panel-title">出库复核<button id="pl_close" class="pull-right">X</button></h3>
     </div>
@@ -388,7 +388,7 @@
         </div>
     </div>
 </div>
-<div id="pl_jh" class="panel panel-primary" style="display:none;position:absolute;top:30px;left:100px;width:800px;height:600px;z-index:999;">
+<div id="pl_jh" class="panel panel-primary" style="display:none;position:fixed;top:30px;left:100px;width:800px;height:600px;z-index:999;">
     <div class="panel-heading">
         <h3 class="panel-title">货品下架记录<button id="pl_jh_close" class="pull-right">X</button></h3>
     </div>
@@ -422,7 +422,7 @@
         </div>
     </div>
 </div>
-<div id="pl_fun" class="panel panel-info" style="display:none;position:absolute;top:200px;left:300px;width:200px;overflow:auto;">
+<div id="pl_fun" class="panel panel-info" style="display:none;position:fixed;top:200px;left:300px;width:200px;overflow:auto;">
     <div class="panel-heading">
         <h3 class="panel-title">功能菜单<button id="pl_fn_close" class="pull-right">X</button></h3>
     </div>
