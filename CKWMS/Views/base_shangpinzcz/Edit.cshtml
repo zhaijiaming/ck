@@ -236,8 +236,7 @@
                     @Html.LabelFor(m => m.ShengchanqiyeID)
                 </div>
                 <div class="col-sm-10">
-                    @Html.SelectList_Auto("Shengchanqiyeid", "厂家", "", (long)ViewData.Model.ShengchanqiyeID)
-                    @Html.ValidationMessageFor(m => m.ShengchanqiyeID)
+                    @Html.SelectList_Auto("Shengchanqiyeid", "厂家", "名称", (long)ViewData.Model.ShengchanqiyeID)
                 </div>
             </div>
             @*售后机构*@
@@ -359,7 +358,7 @@
         </div>
     </div>
 </div>
-<div id="pl_guige_add" class="panel panel-primary" hidden style="position:absolute;top:200px;left:400px;width:400px;height:210px;z-index:999;">
+<div id="pl_guige_add" class="panel panel-primary" hidden style="position:absolute;top:200px;left:400px;width:400px;z-index:999;">
     <div class="panel-heading tuodong">
         <h3 class="panel-title">规格添加<button id="pl_add_close" class="pull-right">X</button></h3>
     </div>
@@ -375,10 +374,11 @@
             <div class="form-group">
                 <label class="control-label col-sm-2" for="Memo">说明</label>
                 <div class="col-sm-10">
-                    <input class="form-control" id="pl_add_memo" name="Memo" type="text" value="" />
+                    @*<input class="form-control" id="pl_add_memo" name="Memo" type="text" value="" />*@
+                    <textarea class="form-control" id="pl_add_memo" name="Memo"></textarea>
                 </div>
             </div>
-            <h1></h1>
+            <br />
             <div class="form-group">
                 <div class="col-sm-6">
                     <p id="bt_add_save" class="btn btn-default">保存并关闭</p>
