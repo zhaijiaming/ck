@@ -78,9 +78,20 @@
             $("#pl_Fanwei").hide();
         });
         $("#makedate").datepicker();
-        $("#qxdatatable").on("dblclick", "tr", function () {
-            $("#Mulu").html($(this).find(".bh").html() + " " + $(this).find(".mc").html());
+        $("#qxdatatable tbody").on("dblclick", "tr", function () {
+            $("#Mulu").val($(this).find(".bh").html() + " " + $(this).find(".mc").html());
             $("#muluxuhao").val($(this).find("input[type=checkbox]").val());
+            $("#pl_Fanwei").hide();
+        });
+        //单击打钩
+        $("#qxdatatable").on("click", "tr", function (e) {
+            if (e.target.tagName == "TD" || e.target.tagName == "SPAN") {
+                if ($(this).find(":checkbox").is(':checked')) {
+                    $(this).find(":checkbox").prop("checked", false);
+                } else {
+                    $(this).find(":checkbox").prop("checked", true);
+                }
+            }
         });
         //注册证规格→代码
         $("#select_gg").change(function () {
@@ -135,12 +146,23 @@
                 $("#Danwei").val(_jldw);
             $("#pl_jldw").hide();
         });
-        $("#jldwdatatable").on("dblclick", "tr", function () {
+        //双击取值
+        $("#jldwdatatable tbody").on("dblclick", "tr", function () {
             if (_ispack)
                 $("#BaozhuangDW").val($(this).find(".mc").html());
             else
                 $("#Danwei").val($(this).find(".mc").html());
             $("#pl_jldw").hide();
+        });
+        //单击打钩
+        $("#jldwdatatable").on("click", "tr", function (e) {
+            if (e.target.tagName == "TD" || e.target.tagName == "SPAN") {
+                if ($(this).find(":checkbox").is(':checked')) {
+                    $(this).find(":checkbox").prop("checked", false);
+                } else {
+                    $(this).find(":checkbox").prop("checked", true);
+                }
+            }
         });
         //存储条件
         $("#ccdatatable tbody tr:first").hide();//第一行为空-->隐藏
@@ -162,12 +184,19 @@
         $("#plcc_close").click(function () {
             $("#pl_Cunchu").hide();
         });
-        $("#ccdatatable").on("dblclick", "tr", function () {
+        $("#ccdatatable tbody").on("dblclick", "tr", function () {
             $("#Cunchutiaojian").val($(this).find(".cctj_val").html());
             $("#pl_Cunchu").hide();
         });
-        $("#ccdatatable tr input[type=checkbox]").bind("click", function () {
-            $("#ccdatatable tr input[type=checkbox]").not(this).attr("checked", false);
+        //单击打钩
+        $("#ccdatatable").on("click", "tr", function (e) {
+            if (e.target.tagName == "TD" || e.target.tagName == "SPAN") {
+                if ($(this).find(":checkbox").is(':checked')) {
+                    $(this).find(":checkbox").prop("checked", false);
+                } else {
+                    $(this).find(":checkbox").prop("checked", true);
+                }
+            }
         });
     });
     function GetFanwei() {

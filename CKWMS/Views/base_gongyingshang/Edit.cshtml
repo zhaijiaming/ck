@@ -11,64 +11,6 @@
 @Html.GetFileUpload("ob_base_gongyingshang_yingyezhizhaotp", "zztp", "z", "gys", 3, 0, new Dictionary<string, string>() { { "zztp", "ob_base_gongyingshang_yingyezhizhaotp" }, { "yxtp", "ob_base_gongyingshang_jingyingxuketp" }, { "BATP", "ob_base_gongyingshang_beiantp" } })
 
 <script type="text/javascript">
-    //function doUpload() {
-    //    var formData = new FormData($("#uploadForm")[0]);
-    //    var strBack = "";
-    //    var strWrite = "";
-    //    var strSel = $("#btnSelect").val();
-    //    $.ajax({
-    //        url: 'http://localhost:6446/upload/UploadOK',
-    //        type: 'POST',
-    //        data: formData,
-    //        async: false,
-    //        cache: false,
-    //        contentType: false,
-    //        processData: false,
-    //        success: function (returndata) {
-    //            strBack = returndata;
-    //        },
-    //        error: function (returndata) {
-    //            strBack = "fail";
-    //        }
-    //    });
-    //    switch (strBack) {
-    //        case "0":
-    //            strWrite = "无传送值，上传失败！";
-    //            break;
-    //        case "1":
-    //            strWrite = "空文件，上传失败！";
-    //            break;
-    //        case "2":
-    //            strWrite = "错误，上传失败！";
-    //            break;
-    //        case "3":
-    //            strWrite = "文件尺寸超过4M，上传失败！";
-    //            break;
-    //        case "fail":
-    //            strWrite = "文件太大，上传失败！";
-    //            break;
-    //        default:
-    //            strWrite = "文件上传成功！";
-    //            break;
-    //    }
-    //    switch (strSel) {
-    //        case "picsel1":
-    //            $("#ob_base_gongyingshang_yingyezhizhaotp").val(strBack);
-    //            $("#zztp").html("<a href='/files/zhengzhao/" + strBack + "'  target='_blank'>浏览</a>");
-    //            break;
-    //        case "picsel2":
-    //            $("#ob_base_gongyingshang_jingyingxuketp").val(strBack);
-    //            $("#yxtp").html("<a href='/files/zhengzhao/" + strBack + "'  target='_blank'>浏览</a>");
-    //            break;
-    //        case "":
-    //        default:
-    //            $("#ob_base_gongyingshang_yingyezhizhaotp").val(strBack);
-    //            $("#zztp").html("<a href='/files/zhengzhao/" + strBack + "'  target='_blank'>浏览</a>");
-    //            break;
-    //    }
-    //    alert(strWrite);
-    //}
-
     $(document).ready(function () {
         $("#pl_Fanwei").draggable({ handle: '.tuodong' }, { containment: [-1000,50,1300,600] });
         $("#ob_base_gongyingshang_makedate").datepicker();
@@ -173,7 +115,7 @@
             if (_jyfw1 == "")
                 _jyfw = _jyfw.replace("一类:", "");
 
-            var _addok = confirm("确定要修改经营范围吗？");
+            var _addok = confirm("确定要修改这些数据吗？");
             if (_addok) {
                 if (_jyfw.length >= 512) {
                     alert("所选数据超过范围，请重新选择。")
@@ -219,6 +161,55 @@
             }
             if (lb == "全部") {
                 $(".bg").show();
+            }
+        });
+        //双击选取，单击打钩
+        $("#qxdatatable").on("dblclick", "tr", function () {
+            var _jyfw = "";
+            var _jyfw1 = "";
+            var _jyfw2 = "";
+            var _jyfw3 = "";
+            var _jyfwjm = "";
+            var t = document.getElementsByClassName('xulieid');
+            var bhmc = $(this).find(".glfl").html();
+            switch (bhmc) {
+                case "1": _jyfw1 = _jyfw1 + $(this).find(".bh").html() + "," + $(this).find(".mc").html() + ";";
+                    break;
+                case "2": _jyfw2 = _jyfw2 + $(this).find(".bh").html() + "," + $(this).find(".mc").html() + ";";
+                    break;
+                case "3": _jyfw3 = _jyfw3 + $(this).find(".bh").html() + "," + $(this).find(".mc").html() + ";";
+                    break;
+            }
+            _jyfwjm = _jyfwjm + $(this).find(".xulieid").val() + ";";
+            _jyfw = "三类:" + _jyfw3 + "\n" + "二类:" + _jyfw2 + "\n" + "一类:" + _jyfw1;
+            if (_jyfw3 == "")
+                _jyfw = _jyfw.replace("三类:\n", "");
+            if (_jyfw2 == "")
+                _jyfw = _jyfw.replace("二类:\n", "");
+            if (_jyfw1 == "")
+                _jyfw = _jyfw.replace("一类:", "");
+            var _addok = confirm("确定要修改这条数据吗？");
+            if (_addok) {
+                if (_jyfw.length >= 512) {
+                    alert("所选数据超过范围，请重新选择。")
+                }
+                else {
+                    $("#jingyingfanwei").val(_jyfw);
+                    $("#jingyingfanweijianma").val(_jyfwjm);
+                    $("#pl_Fanwei").hide();
+                    var bj = "0";
+                }
+                $("#guanlifenlei").val("全部");
+                GetFanwei1(bj);
+            }
+        });
+        $("#qxdatatable").on("click", "tr", function (e) {
+            if (e.target.tagName == "TD" || e.target.tagName == "SPAN") {
+                if ($(this).find(":checkbox").is(':checked')) {
+                    $(this).find(":checkbox").prop("checked", false);
+                } else {
+                    $(this).find(":checkbox").prop("checked", true);
+                }
             }
         });
         $("form").validate({

@@ -69,11 +69,13 @@
             $(".checkbox_guige").prop("checked", false);
         });
         //单击tr打钩
-        $("#ggdatatable").on("click", "tr", function () {
-            if ($(this).find(":checkbox").is(':checked')) {
-                $(this).find(":checkbox").prop("checked", false);
-            } else {
-                $(this).find(":checkbox").prop("checked", true);
+        $("#ggdatatable").on("click", "tr", function (e) {
+            if (e.target.tagName == "TD") {
+                if ($(this).find(":checkbox").is(':checked')) {
+                    $(this).find(":checkbox").prop("checked", false);
+                } else {
+                    $(this).find(":checkbox").prop("checked", true);
+                }
             }
         });
     });
