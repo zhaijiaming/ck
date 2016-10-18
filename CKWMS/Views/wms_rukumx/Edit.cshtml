@@ -33,7 +33,7 @@
     @using (Html.BeginForm("Update", "wms_rukumx", FormMethod.Post, new { @role = "form" }))
     {
         @Html.AntiForgeryToken()
-        <input type="hidden" name="rkdid" value="@ViewData.Model.RukuID" />
+        <input type="hidden" name="rukuid" value="@ViewData.Model.RukuID" />
         <input type="hidden" name="id" value="@ViewData.Model.ID" />
         <input type="hidden" name="spid" value="@ViewData.Model.ShangpinID" />
         <div class="page-header">
