@@ -8,12 +8,13 @@
 }
 <script type="text/javascript">
     $(document).ready(function () {
-        $("tr").bind("dblclick", function () {
-            var u_id = $(this).find('td').eq(0).find('input').val();
+        $("tr").bind("click", function () {
+            //var u_id = $(this).find('td').eq(0).find('input').val();
             //if (u_id != null) {
             //    var url_go = "/wms_chukudan/Edit/" + u_id;
             //    location.href = url_go;
             //}
+            $(this).addClass("blue");
         });
         $("#bt_over").click(function () {
             var sDel = "";

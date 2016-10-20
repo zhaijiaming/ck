@@ -70,16 +70,20 @@
                 $("#YanshouSL").val(eval(_onum) - eval(_fnum));
             else
                 $("#YanshouSL").val(_onum);
+            $("#Yanshou").val(0);
+            $("#Oknum").val(0);
+            $("#Ngnum").val(0);
+            $("#YanshouSM").val("");
             $("#pl_yanshou").show();
         });
         $("#pl_close").click(function () {
             $("#pl_yanshou").hide();
         });
-        $("#pl_yanshou").draggable();
+        $("#pl_yanshou").draggable({ handle: ".panel-heading" },{containment: "parent"});
         $("#yscancel").click(function () {
             $("#pl_yanshou").hide();
         });
-        $("#pl_jh").draggable();
+        $("#pl_jh").draggable({ handle: ".panel-heading" }, { containment: "parent" });
         $("#pl_jh_cancel").click(function () {
             $("#pl_jh").hide();
         });
@@ -388,7 +392,7 @@
         </div>
     </div>
 </div>
-<div id="pl_jh" class="panel panel-primary" style="display:none;position:fixed;top:30px;left:100px;width:800px;height:600px;z-index:999;">
+<div id="pl_jh" class="panel panel-primary" style="display:none;position:fixed;top:50px;left:100px;width:800px;height:600px;z-index:999;">
     <div class="panel-heading">
         <h3 class="panel-title">货品下架记录<button id="pl_jh_close" class="pull-right">X</button></h3>
     </div>
