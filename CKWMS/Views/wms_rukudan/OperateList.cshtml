@@ -122,9 +122,10 @@
                     <td>储运条件</td>
                     <td>收货人</td>
                     <td>备注</td>
+                    <td>录入人</td>
                     <td>状态</td>
-                    <td>登记</td>
                     <td>货品</td>
+                    <td>登记</td>
                     <td>收货</td>
                     <td>验收</td>
                     <td>上架</td>
@@ -145,9 +146,10 @@
                         <td>@item.ChunyunYQ</td>
                         <td>@Html.GetDataValue_ID("userinfo","全名",(int)item.Shouhuoren)</td>
                         <td>@item.Beizhu</td>
+                        <td>@Html.GetDataValue_ID("userinfo","全名",(int)item.MakeMan )</td>
                         <td>@Html.GetCommonValue_ID("入库状态",(int)item.RukuZT)</td>
-                        <td><a href="/wms_rukumx/add/?rkid=@item.ID" target="_blank"><i class="icon-pencil"></i></a></td>
                         <td><a href="/wms_rukumx/getcargos/@item.ID" target="_blank"><i class="icon-list"></i></a></td>
+                        <td><a href="/wms_rukumx/add/?rkid=@item.ID" target="_blank"><i class="icon-pencil"></i></a></td>
                         <td><a href="/wms_shouhuomx/recieving/?rkd=@item.ID" target="_blank"><i class="icon-hand-up"></i></a></td>
                         <td><a href="/quan_rukuys/entrychecklist/@item.ID" target="_blank"><i class="icon-check"></i></a></td>
                         <td><a href="/wms_cunhuo/getuploadlist/@item.ID" target="_blank"><i class="icon-shopping-cart"></i></a></td>

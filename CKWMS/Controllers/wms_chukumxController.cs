@@ -200,7 +200,7 @@ namespace CKWMS.Controllers
                 {
                     if (i.Length > 0)
                     {
-                        string[] _p = i.Split(',');
+                        string[] _p = i.Split('$');
                         float _ch = float.Parse(_p[21]);
                         float _ck = float.Parse(_p[1]);
                         if (_ck > 0 && _ch > 0)

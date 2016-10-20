@@ -85,7 +85,7 @@
                 $(this).val(eval(_ch) - eval(_sd));
             }
         });
-        $("#pl_xlm").draggable({ handle: ".panel-heading" });
+        $("#pl_xlm").draggable({ handle: ".panel-heading" }, { containment: "parent" });
         $("#pl_xlm_close").click(function () {
             $("#pl_xlm").hide();
         })
@@ -120,21 +120,21 @@
             $("#dt_xz tbody tr").each(function () {
                 var _sv = $(this).find("input");
                 if (eval(_sv.val()) > 0) {
-                    _sval = _sval + _sv.data("sp") + "," + _sv.val() + ","
-                        + $(this).find("td").eq(1).html() + "," + $(this).find("td").eq(2).html()
-                    + "," + $(this).find("td").eq(5).html() + "," + $(this).find("td").eq(6).html()
-                    + "," + $(this).find("td").eq(7).html() + "," + $(this).find("td").eq(8).html()
-                    + "," + $(this).find("td").eq(9).html() + "," + $(this).find("td").eq(10).html()
-                    + "," + $(this).find("td").eq(11).html() + "," + $(this).find("td").eq(12).html()
-                    + "," + $(this).find("td").eq(13).html() + "," + $(this).find("td").eq(14).html()
-                    + "," + $(this).find("td").eq(15).html() + "," + $(this).find("td").eq(16).html()
-                    + "," + _sv.data("zl") + "," + _sv.data("jz") + "," + _sv.data("tj")
-                    + "," + _sv.data("jf") + "," + _sv.data("zt") + "," + $(this).find("td").eq(3).html() + ";";
+                    _sval = _sval + _sv.data("sp") + "$" + _sv.val() + "$"
+                        + $(this).find("td").eq(1).html() + "$" + $(this).find("td").eq(2).html()
+                    + "$" + $(this).find("td").eq(5).html() + "$" + $(this).find("td").eq(6).html()
+                    + "$" + $(this).find("td").eq(7).html() + "$" + $(this).find("td").eq(8).html()
+                    + "$" + $(this).find("td").eq(9).html() + "$" + $(this).find("td").eq(10).html()
+                    + "$" + $(this).find("td").eq(11).html() + "$" + $(this).find("td").eq(12).html()
+                    + "$" + $(this).find("td").eq(13).html() + "$" + $(this).find("td").eq(14).html()
+                    + "$" + $(this).find("td").eq(15).html() + "$" + $(this).find("td").eq(16).html()
+                    + "$" + _sv.data("zl") + "$" + _sv.data("jz") + "$" + _sv.data("tj")
+                    + "$" + _sv.data("jf") + "$" + _sv.data("zt") + "$" + $(this).find("td").eq(3).html() + ";";
                 }
             });
             AddCargo(_sval);
         });
-        $("#pl_xz").draggable({ handle: ".panel-heading" });
+        $("#pl_xz").draggable({ handle: ".panel-heading" },{containment: "parent"});
         $("#dt_xz tbody").on("dblclick", "tr", function () {
             var _ch = $(this).find("td").eq(3).html();
             var _sd = $(this).find("td").eq(4).html();
@@ -424,8 +424,9 @@
                     <td>客户单号</td>
                     <td>状态</td>
                     <td>备注</td>
-                    <td>选货</td>
+                    <td>录入</td>
                     <td>列表</td>
+                    <td>选货</td>
                     <td>拣货</td>
                     <td>复核</td>
                     <td>序列</td>
@@ -457,8 +458,9 @@
                         <td>@item.KehuDH</td>
                         <td>@Html.GetCommonValue_ID("出库状态", (int)item.JihuaZT)</td>
                         <td>@item.Beizhu</td>
-                        <td><i class="icon-edit-sign"></i></td>
+                        <td>@Html.GetDataValue_ID("userinfo","全名",(int)item.MakeMan)</td>
                         <td><a href="/wms_chukumx/GetOutDetail/@item.ID" target="_blank"><i class="icon-list"></i></a></td>
+                       <td><i class="icon-edit-sign"></i></td>
                         <td><a href="/wms_jianhuo/getpickdetailbyout?out=@item.ID" target="_blank"><i class="icon-hand-up"></i></a></td>
                         <td><a href="/quan_chukufh/outinventorycheck/@item.ID" target="_blank"><i class="icon-check"></i></a></td>
                         <td><i class="icon-barcode"></i></td>
@@ -472,7 +474,7 @@
         @Html.PagedListPager((IPagedList)Model, page => Url.Action("OutOperate", new { page }))
     </div>
 </div>
-<div id="pl_xz" class="panel panel-primary" style="display:none;position:fixed;top:20px;left:50px;width:1200px;height:600px;z-index:999;">
+<div id="pl_xz" class="panel panel-primary" style="display:none;position:fixed;top:50px;left:50px;width:1200px;height:600px;z-index:999;">
     <div class="panel-heading">
         <h3 class="panel-title">当前可用库存<button id="pl_xz_close" class="pull-right">X</button></h3>
     </div>
@@ -524,8 +526,7 @@
     </div>
     <div class="panel-body">
         <div class="center">
-            <div class="col-sm-6"><label></label></div>
-            <div class="col-sm-2"><p class="btn default" id="pl_xlm_clear"><i class="icon-ok"></i>清除</p></div>
+            <div class="col-sm-4"><p class="btn default" id="pl_xlm_clear"><i class="icon-ok"></i>清除</p></div>
             <div class="col-sm-2"><p class="btn default" id="pl_xlm_ok"><i class="icon-ok"></i>确定</p></div>
             <div class="col-sm-2"><p class="btn default" id="pl_xlm_cancel"><i class="icon-search"></i>取消</p></div>
         </div>

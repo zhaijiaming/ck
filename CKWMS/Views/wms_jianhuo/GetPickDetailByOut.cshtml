@@ -105,7 +105,7 @@
                     _sl.val(_zd);
             }
         });
-        $("#pl_pk").draggable({ handle: ".panel-heading" });
+        $("#pl_pk").draggable({ handle: ".panel-heading" }, { containment: "parent" });
         $("#dt_ch tbody").on("dblclick", "tr", function () {
             var _cksl = $(this).find("td").eq(1).find("input");
             var _chsl = $(this).find("td").eq(4).html();
@@ -138,7 +138,7 @@
                             filltable = filltable + '" data-kw="';
                             filltable = filltable + data[i].KuweiID;
                             filltable = filltable + '"/></td><td>';
-                            filltable = filltable + '<input type="text" size="5" value="0"/>';
+                            filltable = filltable + '<input type="text" size="5" value=""/>';
                             filltable = filltable + '</td><td>';
                             filltable = filltable + '<input type="text" size="10" value=""/>';
                             filltable = filltable + '</td><td>';

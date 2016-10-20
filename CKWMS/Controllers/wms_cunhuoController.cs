@@ -455,11 +455,11 @@ namespace CKWMS.Controllers
                 return Json(-1);
             Expression<Func<wms_invgoods_v, bool>> where = PredicateExtensionses.True<wms_invgoods_v>();
             if (!string.IsNullOrEmpty(_mc))
-                where = where.And(p => p.ShangpinMC == _mc);
+                where = where.And(p => p.ShangpinMC.Contains(_mc));
             if (!string.IsNullOrEmpty(_gg))
-                where = where.And(p => p.Guige == _gg);
+                where = where.And(p => p.Guige.Contains(_gg));
             if (!string.IsNullOrEmpty(_ph))
-                where = where.And(p => p.Pihao == _ph);
+                where = where.And(p => p.Pihao.Contains(_ph));
             where = where.And(p => p.chsl > 0);
             //var tempData = ob_wms_cunhuoservice.GetInventoryGoodsByCust(int.Parse(_custid),p=>p.chsl>0);
             var tempData = ob_wms_cunhuoservice.GetInventoryGoodsByCust(int.Parse(_custid), where.Compile());

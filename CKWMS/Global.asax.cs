@@ -145,14 +145,16 @@ namespace CKWMS
             TranCondition = new Dictionary<int, string>();
             TranCondition.Add(0, "");
             TranCondition.Add(1, "常温");
-            TranCondition.Add(2, "冷藏");
-            TranCondition.Add(3, "冷冻");
+            TranCondition.Add(2, "阴凉");
+            TranCondition.Add(3, "冷藏");
+            TranCondition.Add(4, "冷冻");
 
             AreaType = new Dictionary<int, string>();
             AreaType.Add(0, "");
             AreaType.Add(1, "常温");
-            AreaType.Add(2, "冷藏");
-            AreaType.Add(3, "冷冻");
+            AreaType.Add(2, "阴凉");
+            AreaType.Add(3, "冷藏");
+            AreaType.Add(4, "冷冻");
 
             EntryType = new Dictionary<int, string>();
             EntryType.Add(0, "");
