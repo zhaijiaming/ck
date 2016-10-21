@@ -250,6 +250,12 @@ namespace CKWMS.Controllers
             string xukefzjg = Request["xukefzjg"] ?? "";
             string qiyedz = Request["qiyedz"] ?? "";
             string songhuodz = Request["songhuodz"] ?? "";
+            string shenchasf = Request["shenchasf"] ?? "";
+            string hezuosf = Request["hezuosf"] ?? "";
+            if (shenchasf.IndexOf("true") > -1)
+                shenchasf = "true";
+            if (hezuosf.IndexOf("true") > -1)
+                hezuosf = "true";
             try
             {
                 base_shouhuodanwei ob_base_shouhuodanwei = new base_shouhuodanwei();
@@ -274,6 +280,8 @@ namespace CKWMS.Controllers
                 ob_base_shouhuodanwei.BeianTP = beiantp.Trim();
                 ob_base_shouhuodanwei.XukePZRQ = xukepzrq == "" ? DateTime.Now : DateTime.Parse(xukepzrq);
                 ob_base_shouhuodanwei.XukeFZJG = xukefzjg.Trim();
+                ob_base_shouhuodanwei.ShenchaSF = shenchasf == "" ? false : Boolean.Parse(shenchasf);
+                ob_base_shouhuodanwei.HezuoSF = hezuosf == "" ? false : Boolean.Parse(hezuosf);
                 ob_base_shouhuodanwei.QiyeDZ = qiyedz.Trim();
                 ob_base_shouhuodanwei.SonghuoDZ = songhuodz.Trim();
 
@@ -332,6 +340,12 @@ namespace CKWMS.Controllers
             string xukefzjg = Request["xukefzjg"] ?? "";
             string qiyedz = Request["qiyedz"] ?? "";
             string songhuodz = Request["songhuodz"] ?? "";
+            string shenchasf = Request["shenchasf"] ?? "";
+            string hezuosf = Request["hezuosf"] ?? "";
+            if (shenchasf.IndexOf("true") > -1)
+                shenchasf = "true";
+            if (hezuosf.IndexOf("true") > -1)
+                hezuosf = "true";
 
             int uid = int.Parse(id);
             try
@@ -360,6 +374,8 @@ namespace CKWMS.Controllers
                 p.XukeFZJG = xukefzjg.Trim();
                 p.QiyeDZ = qiyedz.Trim();
                 p.SonghuoDZ = songhuodz.Trim();
+                p.ShenchaSF = shenchasf == "" ? false : Boolean.Parse(shenchasf);
+                p.HezuoSF = hezuosf == "" ? false : Boolean.Parse(hezuosf);
 
                 ob_base_shouhuodanweiservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;

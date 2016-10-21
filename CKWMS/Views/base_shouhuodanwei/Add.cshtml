@@ -501,6 +501,18 @@
                     <input type="text" class="form-control" name="beianfzjg">
                 </div>
             </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-2">是否审查</label>
+                <div class="col-sm-10">
+                    @Html.CheckBoxFor(m => m.ShenchaSF, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-2">是否合作</label>
+                <div class="col-sm-10">
+                    @Html.CheckBoxFor(m => m.HezuoSF, new { @class = "form-control" })
+                </div>
+            </div>
             @*首营状态*@
             <div class="form-group" style="display:none">
                 <label for="name" class="col-sm-2">首营状态</label>
