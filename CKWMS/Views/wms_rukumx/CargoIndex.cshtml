@@ -28,6 +28,41 @@
             if (eval(_orn) > eval(_oys) && eval(_oys) > 0)
                 $(this).addClass("blue");;
         });
+        $("#pl_fn_close").click(function () {
+            $("#pl_fun").hide();
+        });
+        $("#bt_fn_ok").click(function () {
+            if ($("#pl_code").val() == "") {
+                alert("供应商的随货同行单编号必须输入！");
+                return;
+            }
+            if ($("#rkid").val() == "")
+                return;
+            $.post("/wms_rukumx/importdata",
+                {
+                    bh: $("#pl_code").val(),
+                    rk: $("#rkid").val()
+                }, function (data) {
+                    if (data == 1)
+                        location.reload();
+                    else {
+                        if(data==-1)
+                            alert("导入失败！");
+                        if (data == -2)
+                            alert("只有强生公司才能使用此功能！");
+                        if (data == -3)
+                            alert("此发货单编号不存在，请重新输入！");
+                    }
+                });
+        });
+        $("#bt_fn_cancel").click(function () {
+            $("#pl_fun").hide();
+        });
+        $("#pl_fun").draggable({ handler: ".panel-heading" });
+        $("#bt_import").click(function () {
+            $("#pl_code").val("");
+            $("#pl_fun").show();
+        });
     });
     function AddInfo() {
         location.href = "/wms_rukumx/Add/?rkid=" + $("#rkid").val();
@@ -47,8 +82,7 @@
     function DelInfo() {
         var sDel = "";
         $("#mydatatable tr input[type=checkbox]").each(function () {
-            if (this.checked)
-            {
+            if (this.checked) {
                 var _shsl = $(this).parent().parent().parent().parent().find("td").eq(11).html();
                 if (eval(_shsl) > 0) {
                     alert("商品已经收货，不能删除！");
@@ -87,6 +121,7 @@
             <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
             <button type="button" class="btn btn-default " id="bt_print"><i class="icon-print"></i>打印</button>
+            <button type="button" class="btn btn-default " id="bt_import"><i class="icon-inbox"></i>导入</button>
         </p>
     </div>
     <div class="row">
@@ -137,8 +172,8 @@
                         <td>@item.Pihao</td>
                         <td>@item.Pihao1</td>
                         <td>@item.Xuliema</td>
-                        <td>@string.Format("{0:yyyy-MM-dd}",item.ShengchanRQ)</td>
-                        <td>@string.Format("{0:yyyy-MM-dd}",item.ShixiaoRQ)</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ)</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ)</td>
                         <td>@item.DaohuoSL</td>
                         <td>@item.YishouSL</td>
                         <td>@item.JibenDW</td>
@@ -152,10 +187,26 @@
                         <td>@item.Jifeidun</td>
                         <td>@item.Beizhu</td>
                         <td>@string.Format("{0:yyyy-MM-dd}", item.MakeDate)</td>
-                        <td>@Html.GetDataValue_ID("userinfo","名称",(int)item.MakeMan)</td>
+                        <td>@Html.GetDataValue_ID("userinfo", "名称", (int)item.MakeMan)</td>
                     </tr>
                 }
             </tbody>
         </table>
+    </div>
+</div>
+<div id="pl_fun" class="panel panel-info" style="display:none;position:fixed;top:200px;left:300px;width:200px;height:300px;overflow:auto;">
+    <div class="panel-heading">
+        <h3 class="panel-title">发货编号<button id="pl_fn_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="center">
+                <input type="text" id="pl_code" value="" />
+            </div>
+            <br />
+            <div class="center"><p id="bt_fn_ok" class="btn btn-default">确定</p></div>
+            <br />
+            <div class="center"><p id="pl_fn_cancel" class="btn btn-default">取消</p></div>
+        </div>
     </div>
 </div>

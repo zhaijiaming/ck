@@ -170,7 +170,7 @@ namespace CKWMS.Controllers
                 return Json("");
             else
             {
-                var _mxtmp = ob_wms_rukumxservice.LoadSortEntities(p => p.RukuID == int.Parse(_rkuid) && p.IsDelete==false, true, s => s.ShangpinMC).ToList<wms_rukumx>();
+                var _mxtmp = ob_wms_rukumxservice.LoadSortEntities(p => p.RukuID == int.Parse(_rkuid) && p.IsDelete == false, true, s => s.ShangpinMC).ToList<wms_rukumx>();
                 return Json(_mxtmp);
             }
         }
@@ -236,7 +236,23 @@ namespace CKWMS.Controllers
             ViewBag.rkdid = rkid;
             return View();
         }
+        public JsonResult ImportData()
+        {
+            int _userid = (int)Session["user_id"];
+            var _bh = Request["bh"] ?? "";
+            var _rkid = Request["rk"] ?? "";
 
+            wms_rukudan _rkd = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_rkid) && p.IsDelete == false);
+            if (_rkd == null)
+                return Json(-1);
+            if (_rkd.GongyingshangID != 2)
+                return Json(-2);
+            json_delivery _del = ServiceFactory.json_deliveryservice.GetEntityById(p => p.DELIVERY_NUMBER == _bh && p.IsDelete == false);
+            if (_del == null)
+                return Json(-3);
+            int _i = ServiceFactory.json_batchservice.ImportBatch(_del.DELIVERY_NUMBER, _rkd.KehuDH, _rkd.ID, _del.ID, _userid);
+            return Json(_i);
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Save()

@@ -129,16 +129,16 @@
                         <td>@item.BATCH_NUMBER</td>
                         <td>@item.DELIVERY_QTY</td>
                         <td>@item.UOM</td>
-                        <td>@item.EXP_DATE</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}",item.EXP_DATE)</td>
                         <td>@item.SN_FLAG</td>
-                        <td>@item.DOM_DATE</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}",item.DOM_DATE)</td>
                         <td>@item.DESCRIPTION_SC</td>
                         <td>@item.MANUFACTURER_NAME</td>
                         <td>@item.PRODUCT_LABEL_NAME</td>
                         <td>@item.LICENSE_NO</td>
                         <td>@item.OTHER_CONDITION</td>
                         <td>@item.MakeDate</td>
-                        <td>@item.MakeMan</td>
+                        <td>@Html.GetDataValue_ID("userinfo","全名",(int)item.MakeMan)</td>
                     </tr>
                 }
             </tbody>
