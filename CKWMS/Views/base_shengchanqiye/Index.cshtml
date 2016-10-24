@@ -189,6 +189,7 @@
             <thead>
                 <tr>
                     <td></td>
+                    <td>首营状态</td>
                     <td>代码</td>
                     <td>名称</td>
                     <td>营业执照编号</td>
@@ -197,13 +198,12 @@
                     <td>生产许可编号</td>
                     <td>生产许可有效期</td>
                     <td>生产许可照片</td>
-                    <td>首营状态</td>
+                    <td>是否合作</td>
                     @*<td>录入日期</td>
                       <td>输入人</td>*@
                     @*新增*@
                     @*<td>企业地址</td>
                     <td>生产地址</td>*@
-                    <td>是否合作</td>
                 </tr>
             </thead>
             <tbody>
@@ -218,6 +218,7 @@
                                 <label><input type="checkbox" value="@item.ID"></label>
                             </div>
                         </td>
+                        <td>@Html.GetCommonValue_ID("首营状态", (int)item.Shouying)</td>
                         <td>@item.Daima</td>
                         <td>@item.Qiyemingcheng</td>
                         <td>@item.YingyezhizhaoBH</td>
@@ -226,15 +227,13 @@
                         <td>@item.ShengchanxukeBH</td>
                         <td>@item.ShengchanxukeYXQ.ToString("yyyy-MM-dd")</td>
                         <td><a href="/files/zhengzhao/@item.ShengchanxukeTP" target="_blank" class="scxktp">浏览</a></td>
+                        <td><span class="hezuo">@item.HezuoSF</span></td>
                         @*<td>@item.Shouying</td>*@
-                        <td>@Html.GetCommonValue_ID("首营状态", (int)item.Shouying)</td>
                         @*<td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
                         <td>@item.MakeMan</td>
                         <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>*@
-                        
                         @*<td>@item.Qiyedizhi</td>
                         <td>@item.Shengchandizhi</td>*@
-                        <td><span class="hezuo" >@item.HezuoSF</span></td>
                         @*<td>@item.HezuoSF</td>*@
                     </tr>
                 }
