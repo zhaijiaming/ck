@@ -280,6 +280,7 @@ namespace CKWMS.Controllers
             var _user = (int)Session["user_id"];
             var _ph1 = Request["ph1"] ?? "";
             var _ph = Request["ph"] ?? "";
+            var _zcz = Request["zcz"] ?? "";
             var _xlm = Request["xlm"] ?? "";
             var _scrq = Request["scrq"] ?? "";
             var _sxrq = Request["sxrq"] ?? "";
@@ -311,7 +312,7 @@ namespace CKWMS.Controllers
                     _shmx.ShangpinDM = _rkmx.ShangpinDM;
                     _shmx.ShangpinMC = _rkmx.ShangpinMC;
                     _shmx.ShangpinTM = _rkmx.ShangpinTM;
-                    _shmx.Zhucezheng = _rkmx.Zhucezheng;
+                    //_shmx.Zhucezheng = _rkmx.Zhucezheng;
                     _shmx.JibenDW = _rkmx.JibenDW;
                     _shmx.BaozhuangDW = _rkmx.BaozhuangDW;
                     _shmx.Chandi = _rkmx.Chandi;
@@ -319,6 +320,7 @@ namespace CKWMS.Controllers
                     _shmx.Guige = _rkmx.Guige;
                     _shmx.Huansuanlv = _rkmx.Huansuanlv;
 
+                    _shmx.Zhucezheng = _zcz;
                     _shmx.Pihao = _ph;
                     _shmx.Pihao1 = _ph1;
                     _shmx.Xuliema = _xlm;

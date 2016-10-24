@@ -74,6 +74,7 @@
             $("#plmod").val(1);
             $("#selrk").val(_rk.val());
             $("#selnum").val(eval(_onum) - eval(_oys));
+            $("#Zhucezheng").val(_rk.data("zcz"));
             $("#Pihao").val(_rk.data("ph"));
             $("#Pihao1").val(_rk.data("ph1"));
             $("#Xuliema").val(_rk.data("xlm"));
@@ -119,6 +120,7 @@
                 "/wms_shouhuomx/addbyrukumx",
                 {
                     rk: $("#selrk").val(),
+                    zcz:$("#Zhucezheng").val(),
                     ph: $("#Pihao").val(),
                     ph1: $("#Pihao1").val(),
                     xlm: $("#Xuliema").val(),
@@ -387,8 +389,8 @@
                                            data-ph="@item.Pihao"
                                            data-ph1="@item.Pihao1"
                                            data-xlm="@item.Xuliema"
-                                           data-scrq=@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ)
-                                           data-sxrq=@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ)
+                                           data-scrq=@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ==null?"":item.ShengchanRQ)
+                                           data-sxrq=@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ==null?"":item.ShixiaoRQ)
                                            data-sl="@item.DaohuoSL"
                                            data-ys="@item.YishouSL"
                                            data-jbdw="@item.JibenDW"
@@ -413,8 +415,8 @@
                         <td>@item.Pihao</td>
                         <td>@item.Pihao1</td>
                         <td>@item.Xuliema</td>
-                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ)</td>
-                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ)</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ==null?"":item.ShengchanRQ)</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ==null?"":item.ShixiaoRQ)</td>
                         <td>@item.DaohuoSL</td>
                         <td>@item.YishouSL</td>
                         <td>@item.JibenDW</td>
@@ -461,6 +463,12 @@
         <h3 class="panel-title">收货登记<button id="pl_close" class="pull-right">X</button></h3>
     </div>
     <div class="panel-body">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Zhucezheng">注册证</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="Zhucezheng" name="Zhucezheng" type="text" value="" />
+            </div>
+        </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for="Pihao">批号</label>
             <div class="col-sm-10">

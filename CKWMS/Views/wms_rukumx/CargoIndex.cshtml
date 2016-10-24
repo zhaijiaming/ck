@@ -39,9 +39,9 @@
             if ($("#rkid").val() == "")
                 return;
             var _rkstr = $("#pl_code").val();
-            if (_rkstr.length< 10)
+            var _rk0 = "";
+            if (_rkstr.length < 10)
             {
-                var _rk0 = "";
                 for (var i = 0; i < (10 - _rkstr.length) ; i++) {
                     _rk0 = _rk0 + "0";
                 }
@@ -61,6 +61,8 @@
                             alert("只有强生公司才能使用此功能！");
                         if (data == -3)
                             alert("此发货单编号不存在，请重新输入！");
+                        if (data == -4)
+                            alert("此发货单已经导入完成，请勿重复导入！");
                     }
                 });
         });
@@ -181,8 +183,8 @@
                         <td>@item.Pihao</td>
                         <td>@item.Pihao1</td>
                         <td>@item.Xuliema</td>
-                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ)</td>
-                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ)</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ==null?"":item.ShengchanRQ)</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ==null?"":item.ShixiaoRQ)</td>
                         <td>@item.DaohuoSL</td>
                         <td>@item.YishouSL</td>
                         <td>@item.JibenDW</td>
