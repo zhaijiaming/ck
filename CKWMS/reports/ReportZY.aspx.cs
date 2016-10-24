@@ -28,6 +28,7 @@ namespace CKWMS.reports
                 string _rkysid = "";
                 string _rkxdid = "";
                 string _sjdid = "";
+                string _rkmxid = "";
                 ReportDataSetZY _rds = new ReportDataSetZY();
                 //DataTable _dt;                
                 if (Request.QueryString["pid"] != null)
@@ -37,6 +38,7 @@ namespace CKWMS.reports
                     _rkysid = Request.QueryString["rkysid"] ?? "";
                     _rkxdid = Request.QueryString["rkxdid"] ?? "";
                     _sjdid = Request.QueryString["sjdid"] ?? "";
+                    _rkmxid = Request.QueryString["rkmxid"] ?? "";
                     switch (name)
                     {
                         case "daviskw":
@@ -419,6 +421,42 @@ namespace CKWMS.reports
                             drsjlist_others["ChunyunYQ"] = rksjlist_others.ChunyunYQ;
 
                             dtsjlist_others.Rows.Add(drsjlist_others);
+                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["ShouHuoListTitle"]));
+                            break;
+                        case "RuKuMX":
+                            rptView.Reset();
+                            rptView.LocalReport.ReportPath = "reports/rptRuKumingxi.rdlc";
+                            rptView.LocalReport.DataSources.Clear();
+                            DataTable dtRuKuMX = _rds.Tables["RuKumingxi"];
+                            var _RuKuMXs = ServiceFactory.wms_rukumxservice.LoadSortEntities(p => p.RukuID == int.Parse(_rkmxid) && p.IsDelete == false, true, s => s.ShangpinMC);
+                            DataRow drRuKuMX;
+                            foreach (wms_rukumx _pr in _RuKuMXs)
+                            {
+                                drRuKuMX = dtRuKuMX.NewRow();
+                                drRuKuMX["ShangpinMC"] = _pr.ShangpinMC;
+                                drRuKuMX["Zhucezheng"] = _pr.Zhucezheng;
+                                drRuKuMX["Guige"] = _pr.Guige;
+                                drRuKuMX["Pihao"] = _pr.Pihao;
+                                drRuKuMX["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShengchanRQ);
+                                drRuKuMX["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShixiaoRQ);
+                                drRuKuMX["DaohuoSL"] = _pr.DaohuoSL;
+                                drRuKuMX["Changjia"] = _pr.Changjia;
+                                drRuKuMX["Chandi"] = _pr.Chandi;
+
+                                dtRuKuMX.Rows.Add(drRuKuMX);
+                            }
+                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["RuKumingxi"]));
+
+                            DataTable dtRuKuMX_others = _rds.Tables["ShouHuoListTitle"];
+                            DataRow drRuKuMX_others = dtRuKuMX_others.NewRow();
+                            wms_rukudan RuKuMX_others = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_rkmxid));
+                            base_weituokehu wtkhRuKuMX_others = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == RuKuMX_others.HuozhuID);
+                            drRuKuMX_others["RukudanBH"] = RuKuMX_others.RukudanBH;
+                            drRuKuMX_others["HuozhuID"] = wtkhRuKuMX_others.Kehumingcheng;
+                            drRuKuMX_others["RukuRQ"] = string.Format("{0:yyyy/MM/dd}", RuKuMX_others.RukuRQ);
+                            drRuKuMX_others["ChunyunYQ"] = RuKuMX_others.ChunyunYQ;
+
+                            dtRuKuMX_others.Rows.Add(drRuKuMX_others);
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["ShouHuoListTitle"]));
                             break;
                         default:

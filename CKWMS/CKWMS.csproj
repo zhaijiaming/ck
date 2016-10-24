@@ -851,6 +851,7 @@
     <Content Include="Views\json_package\Edit.cshtml" />
     <Content Include="Views\json_package\Index.cshtml" />
     <Content Include="Views\wms_cunhuo\CurrentStorageExport.cshtml" />
+    <Content Include="Views\wms_rukumx\PrintRuKuMX.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -877,6 +878,7 @@
     <EmbeddedResource Include="reports\rptRKYanShouJiLu.rdlc" />
     <EmbeddedResource Include="reports\rptQuanxian.rdlc" />
     <EmbeddedResource Include="reports\rptRKyanshouBGdan.rdlc" />
+    <EmbeddedResource Include="reports\rptRuKumingxi.rdlc" />
     <EmbeddedResource Include="reports\rptShangJiaList.rdlc" />
     <EmbeddedResource Include="reports\rptShouHuoList.rdlc" />
     <EmbeddedResource Include="reports\rptTongxing.rdlc" />

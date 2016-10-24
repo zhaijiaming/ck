@@ -470,6 +470,14 @@ namespace CKWMS.Controllers
             }
             return RedirectToAction("Index");
         }
+        public ActionResult PrintRuKuMX()
+        {
+            var rkmxid = Request["rkmxid"] ?? "";
+            ViewBag.rkmxid = rkmxid;
+
+            return View();
+        }
+
     }
 }
 

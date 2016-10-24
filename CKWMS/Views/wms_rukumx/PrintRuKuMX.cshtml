@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "入库货品列表";
+    Layout = "~/Views/Shared/EmptyView.cshtml";
+}
+<script type="text/javascript">
+    $(window).load(function () {
+        var rkmxid = $("#rkmxid").val();
+        document.getElementById("myReport").src = "../../reports/ReportZY.aspx?pid=RuKuMX&rkmxid=" + rkmxid;
+        $("#autoUpdate").show();
+    });
+</script>
+<div id="autoUpdate" style="display:none; overflow-y: auto;background-color:white">
+    <input type="hidden" id="rkmxid" value="@ViewBag.rkmxid" />
+    <table style="height:100%;width:100%">
+        <tr>
+
+            <td></td>
+        </tr>
+        <tr><td class="center"><iframe id="myReport" style="width:1000px;height:800px;"></iframe></td></tr>
+    </table>
+</div>
+
+
+
