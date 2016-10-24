@@ -71,8 +71,9 @@
             $.post("/wms_jianhuo/addpickgoods", { pickgd: _pkval }, function (data) {
                 if (data == -1)
                     alert("拣货失败，请重试！");
-                else
+                else {
                     location.reload();
+                }
             });
         });
         $("#dt_pick tbody").on("dblclick", "tr", function () {

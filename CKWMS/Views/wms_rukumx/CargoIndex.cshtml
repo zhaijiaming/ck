@@ -38,9 +38,18 @@
             }
             if ($("#rkid").val() == "")
                 return;
+            var _rkstr = $("#pl_code").val();
+            if (_rkstr.length< 10)
+            {
+                var _rk0 = "";
+                for (var i = 0; i < (10 - _rkstr.length) ; i++) {
+                    _rk0 = _rk0 + "0";
+                }
+            }
+            _rkstr = _rk0 + _rkstr;
             $.post("/wms_rukumx/importdata",
                 {
-                    bh: $("#pl_code").val(),
+                    bh: _rkstr,
                     rk: $("#rkid").val()
                 }, function (data) {
                     if (data == 1)

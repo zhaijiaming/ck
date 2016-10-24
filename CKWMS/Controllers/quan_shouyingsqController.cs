@@ -160,7 +160,7 @@ namespace CKWMS.Controllers
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;
-            where = where.And(quan_shouyingsq => quan_shouyingsq.IsDelete == false && quan_shouyingsq.Zhuangtai>0 && quan_shouyingsq.Zhuangtai<5);
+            where = where.And(quan_shouyingsq => quan_shouyingsq.IsDelete == false && quan_shouyingsq.Zhuangtai > 0 && quan_shouyingsq.Zhuangtai < 5);
 
             var tempData = ob_quan_shouyingsqservice.LoadSortEntities(where.Compile(), false, quan_shouyingsq => quan_shouyingsq.ID).ToPagedList<quan_shouyingsq>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.quan_shouyingsq = tempData;
@@ -333,7 +333,7 @@ namespace CKWMS.Controllers
                 {
                     if (_cv.Length > 0)
                     {
-                        quan_shouyingsq _sq = ob_quan_shouyingsqservice.GetEntityById(p =>p.Leibie==int.Parse(_checktype) && p.ShenqingID == int.Parse(_cv) && p.Zhuangtai!=-1 && p.IsDelete == false);
+                        quan_shouyingsq _sq = ob_quan_shouyingsqservice.GetEntityById(p => p.Leibie == int.Parse(_checktype) && p.ShenqingID == int.Parse(_cv) && p.Zhuangtai != -1 && p.IsDelete == false);
                         if (_sq == null)
                         {
                             _sq = new quan_shouyingsq();
@@ -406,6 +406,64 @@ namespace CKWMS.Controllers
             return 1;
         }
         /// <summary>
+        /// 质量部审核
+        /// </summary>
+        /// <returns>1 成功，0 不正常操作，-1 报错</returns>
+        [HttpPost]
+        public int AuthorCheck(bool allow)
+        {
+            try
+            {
+                int _userid = (int)Session["user_id"];
+                string _username = (string)Session["user_name"];
+                string _authorval = Request["authorval"] ?? "";
+                int _sq = 0;
+                string _shwords = "";
+                bool _ok = false;
+                if (_authorval.Length < 1)
+                {
+                    return 0;
+                }
+                var _av = JArray.Parse(_authorval);
+                //JObject _av = JObject.Parse(_authorval);
+                foreach (JObject jsq in _av)
+                {
+                    if (jsq["sq"].ToString().Length > 0)
+                    {
+                        _sq = int.Parse(jsq["sq"].ToString());
+                        _shwords = jsq["msg"].ToString();
+                        _ok = bool.Parse(jsq["ok"].ToString());
+                        quan_shouyingsq _shouyingsq = ob_quan_shouyingsqservice.GetEntityById(p => p.ID == _sq && p.IsDelete == false);
+                        if (_shouyingsq == null)
+                            return -1;
+                        else
+                        {
+                            if (_shouyingsq.Zhuangtai < 3)
+                            {
+                                _shouyingsq.Shenheshuoming = _shwords;
+                                _shouyingsq.Shenheren = _username;
+                                if (_ok)
+                                {
+                                    if (allow)
+                                        _shouyingsq.Zhuangtai = 5;
+                                    else
+                                        _shouyingsq.Zhuangtai = 3;
+                                }
+                                else
+                                    _shouyingsq.Zhuangtai = -1;
+                                ob_quan_shouyingsqservice.UpdateEntity(_shouyingsq);
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                return -1;
+            }
+            return 1;
+        }
+        /// <summary>
         /// 质量负责人审核
         /// </summary>
         /// <returns>1 成功，-1 出错，0 不正常操作</returns>
@@ -443,7 +501,65 @@ namespace CKWMS.Controllers
                                 _shouyingsq.FuzerenSM = _shwords;
                                 _shouyingsq.Fuzeren = _username;
                                 if (_ok)
-                                    _shouyingsq.Zhuangtai = 4;
+                                    _shouyingsq.Zhuangtai = 5;
+                                else
+                                    _shouyingsq.Zhuangtai = -1;
+                                ob_quan_shouyingsqservice.UpdateEntity(_shouyingsq);
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                return -1;
+            }
+            return 1;
+        }
+        /// <summary>
+        /// 质量负责人审核
+        /// </summary>
+        /// <returns>1 成功，-1 出错，0 不正常操作</returns>
+        [HttpPost]
+        public int TopCheck(bool allow)
+        {
+            try
+            {
+                int _userid = (int)Session["user_id"];
+                string _username = (string)Session["user_name"];
+                string _topval = Request["topval"] ?? "";
+                int _sq = 0;
+                string _shwords = "";
+                bool _ok = false;
+                if (_topval.Length < 1)
+                {
+                    return 0;
+                }
+                var _av = JArray.Parse(_topval);
+                //JObject _av = JObject.Parse(_topval);
+                foreach (JObject jsq in _av)
+                {
+                    if (jsq["sq"].ToString().Length > 0)
+                    {
+                        _sq = int.Parse(jsq["sq"].ToString());
+                        _shwords = jsq["msg"].ToString();
+                        _ok = bool.Parse(jsq["ok"].ToString());
+                        quan_shouyingsq _shouyingsq = ob_quan_shouyingsqservice.GetEntityById(p => p.ID == _sq && p.IsDelete == false);
+                        if (_shouyingsq == null)
+                            return -1;
+                        else
+                        {
+                            if (_shouyingsq.Zhuangtai < 4)
+                            {
+                                _shouyingsq.FuzerenSM = _shwords;
+                                _shouyingsq.Fuzeren = _username;
+                                if (_ok)
+                                {
+                                    if (!allow)
+                                        _shouyingsq.Zhuangtai = 4;
+                                    else
+                                        _shouyingsq.Zhuangtai = 5;
+                                }
                                 else
                                     _shouyingsq.Zhuangtai = -1;
                                 ob_quan_shouyingsqservice.UpdateEntity(_shouyingsq);
@@ -460,7 +576,7 @@ namespace CKWMS.Controllers
         }
         private void AuthorRecord()
         {
-            
+
         }
         private string GetShenqingContent(int valid, int valtype)
         {
@@ -478,7 +594,7 @@ namespace CKWMS.Controllers
                 case 1:
                     base_shangpinxx _spxx = ServiceFactory.base_shangpinxxservice.GetEntityById(p => p.ID == valid);
                     if (_spxx != null)
-                        _sqcontent = string.Format("商品首营申请：名称，{0}；注册证编号：{1}；厂家：{2}；",_spxx.Mingcheng,_spxx.ZhucezhengBH,_spxx.Qiyemingcheng);
+                        _sqcontent = string.Format("商品首营申请：名称，{0}；注册证编号：{1}；厂家：{2}；", _spxx.Mingcheng, _spxx.ZhucezhengBH, _spxx.Qiyemingcheng);
                     break;
                 case 2:
                     Ibase_weituokehuService _wtservice = ServiceFactory.base_weituokehuservice;
@@ -488,17 +604,17 @@ namespace CKWMS.Controllers
                     break;
                 case 3:
                     base_gongyingshang _gys = ServiceFactory.base_gongyingshangservice.GetEntityById(p => p.ID == valid);
-                    if(_gys!=null)
+                    if (_gys != null)
                         _sqcontent = string.Format("供应商首营申请：名称，{0}；营业执照：{1}；经营许可：{2}；", _gys.Mingcheng, _gys.YingyezhizhaoBH, _gys.JingyingxukeBH);
                     break;
                 case 4:
                     base_shouhuodanwei _shdw = ServiceFactory.base_shouhuodanweiservice.GetEntityById(p => p.ID == valid);
-                    if(_shdw!=null)
-                        _sqcontent = string.Format("货主首营申请：名称，{0}；营业执照：{1}；经营许可：{2}；", _shdw.Mingcheng, _shdw.YingyezhizhaoBH,_shdw.JingyingxukeBH);
+                    if (_shdw != null)
+                        _sqcontent = string.Format("货主首营申请：名称，{0}；营业执照：{1}；经营许可：{2}；", _shdw.Mingcheng, _shdw.YingyezhizhaoBH, _shdw.JingyingxukeBH);
                     break;
                 case 5:
                     base_shengchanqiye _scqy = ServiceFactory.base_shengchanqiyeservice.GetEntityById(p => p.ID == valid);
-                    if(_scqy!=null)
+                    if (_scqy != null)
                         _sqcontent = string.Format("货主首营申请：名称，{0}；营业执照：{1}；经营许可：{2}；", _scqy.Qiyemingcheng, _scqy.YingyezhizhaoBH, _scqy.ShengchanxukeBH);
                     break;
                 case 6:

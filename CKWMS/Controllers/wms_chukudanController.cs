@@ -318,7 +318,7 @@ namespace CKWMS.Controllers
                 wms_chukudan _ckd = ob_wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_ckid));
                 if (_ckd != null)
                 {
-                    var _ckmx = ServiceFactory.wms_chukumxservice.LoadEntities(p => p.ChukuID == _ckd.ID).ToList<wms_chukumx>();
+                    var _ckmx = ServiceFactory.wms_chukumxservice.LoadEntities(p => p.ChukuID == _ckd.ID && p.IsDelete==false).ToList<wms_chukumx>();
                     var _ng = false;
                     if (_ckmx.Count == 0)
                         _ng = true;
