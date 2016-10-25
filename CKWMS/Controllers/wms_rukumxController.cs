@@ -250,7 +250,7 @@ namespace CKWMS.Controllers
             json_delivery _del = ServiceFactory.json_deliveryservice.GetEntityById(p => p.DELIVERY_NUMBER == _bh && p.IsDelete == false);
             if (_del == null)
                 return Json(-3);
-            json_import _imp = ServiceFactory.json_importservice.GetEntityById(p => p.BillNum == _del.DELIVERY_NUMBER && p.PlanID == _rkd.ID && p.IsDelete==false);
+            json_import _imp = ServiceFactory.json_importservice.GetEntityById(p => p.BillNum == _del.DELIVERY_NUMBER && p.PlanID == _rkd.ID && p.IsDelete == false);
             if (_imp != null)
                 return Json(-4);
             int _i = ServiceFactory.json_batchservice.ImportBatch(_del.DELIVERY_NUMBER, _rkd.KehuDH, _rkd.ID, _del.ID, _userid);
@@ -464,8 +464,11 @@ namespace CKWMS.Controllers
                 {
                     id = int.Parse(sD);
                     ob_wms_rukumx = ob_wms_rukumxservice.GetEntityById(wms_rukumx => wms_rukumx.ID == id && wms_rukumx.IsDelete == false);
-                    ob_wms_rukumx.IsDelete = true;
-                    ob_wms_rukumxservice.UpdateEntity(ob_wms_rukumx);
+                    if (ob_wms_rukumx.YishouSL == 0)
+                    {
+                        ob_wms_rukumx.IsDelete = true;
+                        ob_wms_rukumxservice.UpdateEntity(ob_wms_rukumx);
+                    }
                 }
             }
             return RedirectToAction("Index");

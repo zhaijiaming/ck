@@ -280,7 +280,7 @@ namespace CKWMS.Controllers
             var _ckd = Request["ck"] ?? "";
             try
             {
-                if (_cargos.Length < 1 || _ckd.Length<1)
+                if (_cargos.Length < 1 || _ckd.Length < 1)
                     return Json(-1);
                 foreach (var i in _cargos.Split(';'))
                 {
@@ -291,7 +291,7 @@ namespace CKWMS.Controllers
                         float _ck = float.Parse(_p[1]);
                         if (_ck > 0 && _ch > 0)
                         {
-                            double _rt =Math.Round(_ck / _ch,3);
+                            double _rt = Math.Round(_ck / _ch, 3);
                             wms_chukumx _mx = new wms_chukumx();
                             _mx.ChukuID = int.Parse(_ckd);
                             _mx.ShangpinID = int.Parse(_p[0]);
@@ -310,10 +310,10 @@ namespace CKWMS.Controllers
                             _mx.Changjia = _p[13];
                             _mx.Chandi = _p[14];
                             _mx.ShangpinTM = _p[15];
-                            _mx.Zhongliang =(float)Math.Round(_rt*float.Parse(_p[16]),3);
-                            _mx.Jingzhong =(float)Math.Round(_rt*float.Parse(_p[17]),3);
-                            _mx.Tiji =(float)Math.Round(_rt*float.Parse(_p[18]),3);
-                            _mx.Jifeidun =(float)Math.Round(_rt*float.Parse(_p[19]),3);
+                            _mx.Zhongliang = (float)Math.Round(_rt * float.Parse(_p[16]), 3);
+                            _mx.Jingzhong = (float)Math.Round(_rt * float.Parse(_p[17]), 3);
+                            _mx.Tiji = (float)Math.Round(_rt * float.Parse(_p[18]), 3);
+                            _mx.Jifeidun = (float)Math.Round(_rt * float.Parse(_p[19]), 3);
                             _mx.HuopinZT = int.Parse(_p[20]);
                             _mx.MakeDate = DateTime.Now;
                             _mx.MakeMan = _userid;
@@ -339,10 +339,10 @@ namespace CKWMS.Controllers
             string page = Request["page"] ?? "";
             if (page.Length < 1)
                 page = "1";
-            var tempdt = ob_wms_chukumxservice.LoadSortEntities(p => p.ChukuID==id && p.IsDelete==false,false,s=>s.Guige).ToList<wms_chukumx>();
+            var tempdt = ob_wms_chukumxservice.LoadSortEntities(p => p.ChukuID == id && p.IsDelete == false, false, s => s.Guige).ToList<wms_chukumx>();
             ViewBag.linecount = tempdt.Count;
             ViewBag.totalproduct = tempdt.Sum(p => p.ChukuSL);
-            var tempData = ob_wms_chukumxservice.LoadSortEntities(p => p.ChukuID == id && p.IsDelete==false, false, s => s.Guige).ToPagedList<wms_chukumx>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            var tempData = ob_wms_chukumxservice.LoadSortEntities(p => p.ChukuID == id && p.IsDelete == false, false, s => s.Guige).ToPagedList<wms_chukumx>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.wms_chukumx = tempData;
             return View(tempData);
         }
@@ -564,8 +564,11 @@ namespace CKWMS.Controllers
                 {
                     id = int.Parse(sD);
                     ob_wms_chukumx = ob_wms_chukumxservice.GetEntityById(wms_chukumx => wms_chukumx.ID == id && wms_chukumx.IsDelete == false);
-                    ob_wms_chukumx.IsDelete = true;
-                    ob_wms_chukumxservice.UpdateEntity(ob_wms_chukumx);
+                    if (ob_wms_chukumx.JianhuoSL == 0)
+                    {
+                        ob_wms_chukumx.IsDelete = true;
+                        ob_wms_chukumxservice.UpdateEntity(ob_wms_chukumx);
+                    }
                 }
             }
             return RedirectToAction("Index");

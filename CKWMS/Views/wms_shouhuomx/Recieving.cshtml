@@ -392,8 +392,8 @@
                                            data-ph="@item.Pihao"
                                            data-ph1="@item.Pihao1"
                                            data-xlm="@item.Xuliema"
-                                           data-scrq=@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ==null?"":item.ShengchanRQ)
-                                           data-sxrq=@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ==null?"":item.ShixiaoRQ)
+                                           data-scrq=@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ==null?DateTime.Now:item.ShengchanRQ)
+                                           data-sxrq=@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ==null?DateTime.Now:item.ShixiaoRQ)
                                            data-sl="@item.DaohuoSL"
                                            data-ys="@item.YishouSL"
                                            data-jbdw="@item.JibenDW"
@@ -418,8 +418,8 @@
                         <td>@item.Pihao</td>
                         <td>@item.Pihao1</td>
                         <td>@item.Xuliema</td>
-                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ == null ? "" : item.ShengchanRQ)</td>
-                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ == null ? "" : item.ShixiaoRQ)</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ == null ? DateTime.Now : item.ShengchanRQ)</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ == null ? DateTime.Now : item.ShixiaoRQ)</td>
                         <td>@item.DaohuoSL</td>
                         <td>@item.YishouSL</td>
                         <td>@item.JibenDW</td>
@@ -461,7 +461,7 @@
         </table>
     </div>
 </div>
-<div id="pl_Shouhuo" class="panel panel-info" style="display:none;position:fixed;top:100px;left:200px;width:700px;height:500px;z-index:999;">
+<div id="pl_Shouhuo" class="panel panel-info" style="display:none;position:fixed;top:100px;left:200px;width:700px;height:550px;z-index:999;">
     <div class="panel-heading">
         <h3 class="panel-title">收货登记<button id="pl_close" class="pull-right">X</button></h3>
     </div>
