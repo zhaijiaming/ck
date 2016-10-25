@@ -390,6 +390,9 @@ namespace CKWMS.App_Code
                 case "验收不符合项说明":
                     sb.Append(GetCommonSelect(selectedValue, MvcApplication.CheckMemo));
                     break;
+                case "复核不符合项说明":
+                    sb.Append(GetCommonSelect(selectedValue, MvcApplication.CheckMemo1));
+                    break;
                 case "验收标准":
                     sb.Append(GetCommonSelect(selectedValue, MvcApplication.CheckStandard));
                     break;
@@ -1138,6 +1141,10 @@ namespace CKWMS.App_Code
                 case "验收不符合项":
                     if (MvcApplication.CheckMemo.ContainsKey(dataValue))
                         returnvalue = MvcApplication.CheckMemo[dataValue];
+                    break;
+                case "复核不符合项":
+                    if (MvcApplication.CheckMemo1.ContainsKey(dataValue))
+                        returnvalue = MvcApplication.CheckMemo1[dataValue];
                     break;
                 case "验收标准":
                     if (MvcApplication.CheckMemo.ContainsKey(dataValue))

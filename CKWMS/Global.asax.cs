@@ -76,6 +76,10 @@ namespace CKWMS
         /// </summary>
         public static Dictionary<int, string> CheckMemo;
         /// <summary>
+        /// 复核不符合项说明
+        /// </summary>
+        public static Dictionary<int, string> CheckMemo1;
+        /// <summary>
         /// 验收标准
         /// </summary>
         public static Dictionary<int, string> CheckStandard;
@@ -210,6 +214,15 @@ namespace CKWMS
             CheckMemo.Add(4, "包装损坏，货品经检验后合格，可入库");
             CheckMemo.Add(5, "包装破损，不合格");
             CheckMemo.Add(6, "货品经检验后判定不合格");
+
+            CheckMemo1 = new Dictionary<int, string>();
+            CheckMemo1.Add(0, "");
+            CheckMemo1.Add(1, "未见异常，检查合格");
+            CheckMemo1.Add(2, "近效期，包装外观未见异常");
+            CheckMemo1.Add(3, "不合格：包装出现破损、污染、封口不牢、封条损坏等问题");
+            CheckMemo1.Add(4, "不合格：标签脱落、字迹模糊不清或者标示内容与实物不符");
+            CheckMemo1.Add(5, "不合格：医疗器械超过有效期");
+            CheckMemo1.Add(6, "不合格：存在其他异常情况的医疗器械");
 
             CargoState = new Dictionary<int, string>();
             CargoState.Add(0, "");
