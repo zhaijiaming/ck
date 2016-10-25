@@ -68,9 +68,15 @@
             $("#pl_fun").hide();
         });
         $(".icon-briefcase").click(function () {
+            var _sr = $(this).parent().parent().parent();
             var _rk = $(this).parent().parent().parent().find("input");
             var _onum = $(this).parent().parent().parent().find('td').eq(11).html();
             var _oys = $(this).parent().parent().parent().find('td').eq(12).html();
+            if (eval(_onum) - eval(_oys) <= 0) {
+                alert("收货已经完成，不能再次再次收货！");
+                return;
+            }
+            //_sr.addClass("brown");
             $("#plmod").val(1);
             $("#selrk").val(_rk.val());
             $("#selnum").val(eval(_onum) - eval(_oys));
@@ -86,10 +92,7 @@
             $("#Tiji").val(_rk.data("tj"));
             $("#Jifeidun").val(_rk.data("jfd"));
             $("#Beizhu").val(_rk.data("bz"));
-            if (eval(_onum) - eval(_oys) <= 0)
-                alert("收货已经完成，不能再次再次收货！")
-            else
-                $("#pl_Shouhuo").show();
+            $("#pl_Shouhuo").show();
         });
         $("#pl_close").click(function () {
             $("#pl_Shouhuo").hide();
@@ -120,7 +123,7 @@
                 "/wms_shouhuomx/addbyrukumx",
                 {
                     rk: $("#selrk").val(),
-                    zcz:$("#Zhucezheng").val(),
+                    zcz: $("#Zhucezheng").val(),
                     ph: $("#Pihao").val(),
                     ph1: $("#Pihao1").val(),
                     xlm: $("#Xuliema").val(),
@@ -415,8 +418,8 @@
                         <td>@item.Pihao</td>
                         <td>@item.Pihao1</td>
                         <td>@item.Xuliema</td>
-                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ==null?"":item.ShengchanRQ)</td>
-                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ==null?"":item.ShixiaoRQ)</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ == null ? "" : item.ShengchanRQ)</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ == null ? "" : item.ShixiaoRQ)</td>
                         <td>@item.DaohuoSL</td>
                         <td>@item.YishouSL</td>
                         <td>@item.JibenDW</td>
