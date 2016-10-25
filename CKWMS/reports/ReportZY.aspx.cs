@@ -10,6 +10,7 @@ using CKWMS.EFModels;
 using CKWMS.BSL;
 using CKWMS.IBSL;
 using CKWMS.App_Code;
+using System.Web.Mvc;
 
 namespace CKWMS.reports
 {
@@ -440,7 +441,6 @@ namespace CKWMS.reports
                                 drRuKuMX["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShengchanRQ);
                                 drRuKuMX["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShixiaoRQ);
                                 drRuKuMX["DaohuoSL"] = _pr.DaohuoSL;
-                                drRuKuMX["Changjia"] = _pr.Changjia;
                                 drRuKuMX["Chandi"] = _pr.Chandi;
 
                                 dtRuKuMX.Rows.Add(drRuKuMX);
@@ -455,6 +455,10 @@ namespace CKWMS.reports
                             drRuKuMX_others["HuozhuID"] = wtkhRuKuMX_others.Kehumingcheng;
                             drRuKuMX_others["RukuRQ"] = string.Format("{0:yyyy/MM/dd}", RuKuMX_others.RukuRQ);
                             drRuKuMX_others["ChunyunYQ"] = RuKuMX_others.ChunyunYQ;
+                            base_gongyingshang RuKuMXgys = ServiceFactory.base_gongyingshangservice.GetEntityById(p => p.ID == RuKuMX_others.GongyingshangID);
+                            drRuKuMX_others["GongyingshangID"] = RuKuMXgys.Mingcheng;
+                            wms_cangku RuKuMX_ck = ServiceFactory.wms_cangkuservice.GetEntityById(p => p.ID == RuKuMX_others.CangkuID);
+                            drRuKuMX_others["CangkuID"] = RuKuMX_ck.Mingcheng;
 
                             dtRuKuMX_others.Rows.Add(drRuKuMX_others);
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["ShouHuoListTitle"]));

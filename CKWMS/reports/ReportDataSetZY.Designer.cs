@@ -3686,6 +3686,10 @@ namespace CKWMS.reports {
             
             private global::System.Data.DataColumn columnChunyunYQ;
             
+            private global::System.Data.DataColumn columnGongyingshangID;
+            
+            private global::System.Data.DataColumn columnCangkuID;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ShouHuoListTitleDataTable() {
@@ -3753,6 +3757,22 @@ namespace CKWMS.reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn GongyingshangIDColumn {
+                get {
+                    return this.columnGongyingshangID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CangkuIDColumn {
+                get {
+                    return this.columnCangkuID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -3788,13 +3808,15 @@ namespace CKWMS.reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ShouHuoListTitleRow AddShouHuoListTitleRow(string RukudanBH, string HuozhuID, string RukuRQ, string ChunyunYQ) {
+            public ShouHuoListTitleRow AddShouHuoListTitleRow(string RukudanBH, string HuozhuID, string RukuRQ, string ChunyunYQ, string GongyingshangID, string CangkuID) {
                 ShouHuoListTitleRow rowShouHuoListTitleRow = ((ShouHuoListTitleRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         RukudanBH,
                         HuozhuID,
                         RukuRQ,
-                        ChunyunYQ};
+                        ChunyunYQ,
+                        GongyingshangID,
+                        CangkuID};
                 rowShouHuoListTitleRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowShouHuoListTitleRow);
                 return rowShouHuoListTitleRow;
@@ -3821,6 +3843,8 @@ namespace CKWMS.reports {
                 this.columnHuozhuID = base.Columns["HuozhuID"];
                 this.columnRukuRQ = base.Columns["RukuRQ"];
                 this.columnChunyunYQ = base.Columns["ChunyunYQ"];
+                this.columnGongyingshangID = base.Columns["GongyingshangID"];
+                this.columnCangkuID = base.Columns["CangkuID"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3834,6 +3858,10 @@ namespace CKWMS.reports {
                 base.Columns.Add(this.columnRukuRQ);
                 this.columnChunyunYQ = new global::System.Data.DataColumn("ChunyunYQ", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnChunyunYQ);
+                this.columnGongyingshangID = new global::System.Data.DataColumn("GongyingshangID", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnGongyingshangID);
+                this.columnCangkuID = new global::System.Data.DataColumn("CangkuID", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCangkuID);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6955,6 +6983,38 @@ namespace CKWMS.reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string GongyingshangID {
+                get {
+                    try {
+                        return ((string)(this[this.tableShouHuoListTitle.GongyingshangIDColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("表“ShouHuoListTitle”中列“GongyingshangID”的值为 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableShouHuoListTitle.GongyingshangIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string CangkuID {
+                get {
+                    try {
+                        return ((string)(this[this.tableShouHuoListTitle.CangkuIDColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("表“ShouHuoListTitle”中列“CangkuID”的值为 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableShouHuoListTitle.CangkuIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsRukudanBHNull() {
                 return this.IsNull(this.tableShouHuoListTitle.RukudanBHColumn);
             }
@@ -6999,6 +7059,30 @@ namespace CKWMS.reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetChunyunYQNull() {
                 this[this.tableShouHuoListTitle.ChunyunYQColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsGongyingshangIDNull() {
+                return this.IsNull(this.tableShouHuoListTitle.GongyingshangIDColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetGongyingshangIDNull() {
+                this[this.tableShouHuoListTitle.GongyingshangIDColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsCangkuIDNull() {
+                return this.IsNull(this.tableShouHuoListTitle.CangkuIDColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetCangkuIDNull() {
+                this[this.tableShouHuoListTitle.CangkuIDColumn] = global::System.Convert.DBNull;
             }
         }
         
