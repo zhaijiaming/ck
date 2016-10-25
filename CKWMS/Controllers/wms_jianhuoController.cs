@@ -182,11 +182,19 @@ namespace CKWMS.Controllers
 
             var _outdetail = ServiceFactory.wms_chukumxservice.LoadSortEntities(p => p.ChukuID == int.Parse(_outid) && p.IsDelete == false, true, s => s.Guige);
             ViewBag.outdetail = _outdetail;
-
-            var _pickdetail = ob_wms_jianhuoservice.GetPickDetail(int.Parse(_outid), p => p.DaijianSL > 0).OrderByDescending(s=>s.JianhuoRQ);
-            ViewBag.pickdetail = _pickdetail;
             ViewBag.chukudan = _outid;
             return View();
+        }
+        public JsonResult GetPickByOut()
+        {
+            int _userid = (int)Session["user_id"];
+            var _outid = Request["out"] ?? "";
+            if (string.IsNullOrEmpty(_outid))
+                _outid = "0";
+            var _pickdetail = ob_wms_jianhuoservice.GetPickDetail(int.Parse(_outid), p => p.DaijianSL > 0).OrderByDescending(s => s.JianhuoRQ);
+            if (_pickdetail == null)
+                return Json(-1);
+            return Json(_pickdetail.ToList<wms_pick_v>());
         }
         public ActionResult Add()
         {

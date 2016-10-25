@@ -20,6 +20,15 @@
             window.open("/wms_jianhuo/PrintJianhuodan?id=" + chukuid);
             $("#pl_fun").hide();
         });
+        $("#bt_fn_show").click(function () {
+            $("#pl_fun").hide();
+            $("#pl_picklist").show();
+            GetPickList($("#ckd").val());
+        });
+        $("#pl_pl_close").click(function () {
+            $("#pl_picklist").hide();
+        });
+        $("#pl_picklist").draggable({ handle: ".panel-heading" });
         $("#pl_fun").draggable({ handle: '.tuodong' }, { containment: "parent" });
         $("#mydatatable tbody").on("dblclick", "tr", function () {
             $("#pl_fun").show();
@@ -35,6 +44,9 @@
             var _sc = _sr.find("input");
             var _sn = _sr.find("td").eq(11).html();
             var _sj = _sr.find("td").eq(12).html();
+            if (eval(_sj) == eval(_sn))
+                return;
+            _sr.addClass("gray");
             $("#selmx").val(_sc.val());
             if (_sj == "")
                 $("#picknum").val(eval(_sn));
@@ -42,16 +54,9 @@
                 $("#picknum").val(eval(_sn) - eval(_sj));
             GetInvetoryCargo($("#selmx").val());
             $("#pl_pk").show();
-            _sr.addClass("grey");
+            _sr.addClass("brown");
         });
-        $("#mydatatable tbody tr").each(function () {
-            var _cksl = eval($(this).find("td").eq(11).html());
-            var _djsl = eval($(this).find("td").eq(12).html());
-            if (_cksl == _djsl)
-                $(this).addClass("green");
-            if (_cksl > _djsl && _djsl > 0)
-                $(this).addClass("blue");
-        });
+        PaintTable();
         $("#pl_pk_close").click(function () {
             $("#pl_pk").hide();
         });
@@ -60,11 +65,13 @@
         });
         $("#bt_ok").click(function () {
             var _pkval = "";
+            var _pkct = 0;
             $("#dt_ch tbody tr").each(function () {
                 var _ch = $(this).find("td").eq(0).find("input");
                 var _cksl = $(this).find("td").eq(1).find("input");
                 var _cksm = $(this).find("td").eq(2).find("input");
                 if (eval(_cksl.val()) > 0 && _cksl.val() != "") {
+                    _pkct = _pkct + eval(_cksl.val());
                     _pkval = _pkval + $("#selmx").val() + "," + _cksl.val() + "," + _cksm.val() + "," + _ch.val() + ";";
                 }
             });
@@ -72,7 +79,21 @@
                 if (data == -1)
                     alert("拣货失败，请重试！");
                 else {
-                    location.reload();
+                    $("#mydatatable tr").each(function () {
+                        var _sv = $(this).find("input").val();
+                        if ($("#selmx").val() == _sv) {
+                            var _ssj = 0;
+                            var _son = $(this).find("td").eq(11).html();
+                            var _snn = $(this).find("td").eq(12).html();
+                            if (_snn == "") 
+                                _ssj = _pkct;
+                            else 
+                                _ssj = eval(_snn) + _pkct;
+                            $(this).find("td").eq(12).html(_ssj);
+                        }
+                    });
+                    PaintTable();
+                    $("#pl_pk").hide();
                 }
             });
         });
@@ -126,6 +147,16 @@
             }
         });
     });
+    function PaintTable() {
+        $("#mydatatable tbody tr").each(function () {
+            var _cksl = eval($(this).find("td").eq(11).html());
+            var _djsl = eval($(this).find("td").eq(12).html());
+            if (_cksl == _djsl)
+                $(this).addClass("green");
+            if (_cksl > _djsl && _djsl > 0)
+                $(this).addClass("blue");
+        });
+}
     function GetInvetoryCargo(_ck) {
         if (_ck != null) {
             var filltable = "";
@@ -178,6 +209,47 @@
                 });
         }
     }
+    function GetPickList(_ck) {
+        if (_ck != null) {
+            var filltable = "";
+            $.post("/wms_jianhuo/getpickbyout/",
+                { out: _ck },
+                function (data) {
+                    if (data != -1) {
+                        for (var i in data) {
+                            filltable = filltable + '<tr><td><input type="checkbox" value="';
+                            filltable = filltable + data[i].pickid;
+                            filltable = filltable + '"/></td><td>';
+                            filltable = filltable + data[i].ShangpinMC;
+                            filltable = filltable + '</td><td>';
+                            filltable = filltable + data[i].Guige;
+                            filltable = filltable + '</td><td>';
+                            filltable = filltable + data[i].Pihao;
+                            filltable = filltable + '</td><td>';
+                            filltable = filltable + data[i].Kuwei;
+                            filltable = filltable + '</td><td>';
+                            filltable = filltable + data[i].DaijianSL;
+                            filltable = filltable + '</td><td>';
+                            filltable = filltable + data[i].Zhongliang;
+                            filltable = filltable + '</td><td>';
+                            filltable = filltable + data[i].Jingzhong;
+                            filltable = filltable + '</td><td>';
+                            filltable = filltable + data[i].Tiji;
+                            filltable = filltable + '</td><td>';
+                            filltable = filltable + data[i].Jifeidun;
+                            filltable = filltable + '</td><td>';
+                            filltable = filltable + data[i].ShijianSL;
+                            filltable = filltable + '</td><td>';
+                            filltable = filltable + data[i].JianhuoSM;
+                            filltable = filltable + '</td><td>';
+                            filltable = filltable + data[i].JianhuoRQ.toDate().Format("yyyy-MM-dd");
+                            filltable = filltable + '</td></tr>';
+                        }
+                    }
+                    $("#dt_pick tbody").html(filltable);
+                });
+        }
+    }
     function AddInfo() {
         location.href = "/wms_jianhuo/Add";
     }
@@ -216,7 +288,7 @@
     <input type="hidden" id="ckd" value="@ViewBag.chukudan" />
     <input type="hidden" id="selmx" />
     <input type="hidden" id="ck" />
-    <div class="row" style="height:300px;overflow:auto;">
+    <div id="pl_data" class="row" style="overflow:auto;">
         <table class="table table-condensed table-hover" id="mydatatable">
             <caption></caption>
             <thead>
@@ -272,7 +344,12 @@
             </tbody>
         </table>
     </div>
-    <div class="row" style="overflow:auto;">
+</div>
+<div id="pl_picklist" class="panel panel-info" style="position:fixed;top:100px;left:200px;width:1000px;height:500px;display:none;overflow:auto;">
+    <div class="panel-heading">
+        <h3 class="panel-title">拣货清单<button id="pl_pl_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
         <table class="table table-condensed" id="dt_pick">
             <caption></caption>
             <thead>
@@ -289,32 +366,30 @@
                     <td>计费吨</td>
                     <td>下架</td>
                     <td>说明</td>
-                    <td>拣货人</td>
                     <td>拣货时间</td>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in ViewBag.pickdetail)
-                {
-                    <tr>
-                        <td>
-                            <label><input type="checkbox" value="@item.pickid"></label>
-                        </td>
-                        <td>@item.ShangpinMC</td>
-                        <td>@item.Guige</td>
-                        <td>@item.Pihao</td>
-                        <td>@item.Kuwei</td>
-                        <td>@item.DaijianSL</td>
-                        <td>@item.Zhongliang</td>
-                        <td>@item.Jingzhong</td>
-                        <td>@item.Tiji</td>
-                        <td>@item.Jifeidun</td>
-                        <td>@item.ShijianSL</td>
-                        <td>@item.JianhuoSM</td>
-                        <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.Jianhuoren)</td>
-                        <td>@string.Format("{0:yyyy-MM-dd hh:mm:ss}", item.JianhuoRQ)</td>
-                    </tr>
-                }
+                @*@foreach (var item in ViewBag.pickdetail)
+                    {
+                        <tr>
+                            <td>
+                                <label><input type="checkbox" value="@item.pickid"></label>
+                            </td>
+                            <td>@item.ShangpinMC</td>
+                            <td>@item.Guige</td>
+                            <td>@item.Pihao</td>
+                            <td>@item.Kuwei</td>
+                            <td>@item.DaijianSL</td>
+                            <td>@item.Zhongliang</td>
+                            <td>@item.Jingzhong</td>
+                            <td>@item.Tiji</td>
+                            <td>@item.Jifeidun</td>
+                            <td>@item.ShijianSL</td>
+                            <td>@item.JianhuoSM</td>
+                            <td>@string.Format("{0:yyyy-MM-dd hh:mm:ss}", item.JianhuoRQ)</td>
+                        </tr>
+                    }*@
             </tbody>
         </table>
     </div>
@@ -357,12 +432,14 @@
         </div>
     </div>
 </div>
-<div id="pl_fun" class="panel panel-info" style="display:none;position:fixed;top:200px;left:300px;width:200px;height:200px;overflow:auto;">
+<div id="pl_fun" class="panel panel-info" style="display:none;position:fixed;top:200px;left:300px;width:200px;height:250px;overflow:auto;">
     <div class="panel-heading tuodong">
         <h3 class="panel-title">拣货<button id="pl_fn_close" class="pull-right">X</button></h3>
     </div>
     <div class="panel-body">
         <div class="row">
+            <div class="center"><p id="bt_fn_show" class="btn btn-default">清单</p></div>
+            <br />
             <div class="center"><p id="bt_fn_print" class="btn btn-default">打印</p></div>
             <br />
             <div class="center"><p id="pl_fn_cancel" class="btn btn-default">取消</p></div>
