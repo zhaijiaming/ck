@@ -83,9 +83,18 @@ namespace CKWMS.Controllers
             int userid = (int)Session["user_id"];
             string pagetag = "wms_chukumx_index";
             string page = "1";
-            string chukuid = Request["chukuid"] ?? "";
-            string chukuidequal = Request["chukuidequal"] ?? "";
-            string chukuidand = Request["chukuidand"] ?? "";
+            //shangpindm
+            string shangpindm = Request["shangpindm"] ?? "";
+            string shangpindmequal = Request["shangpindmequal"] ?? "";
+            string shangpindmand = Request["shangpindmand"] ?? "";
+            //shangpinmc
+            string shangpinmc = Request["shangpinmc"] ?? "";
+            string shangpinmcequal = Request["shangpinmcequal"] ?? "";
+            string shangpinmcand = Request["shangpinmcand"] ?? "";
+            //guige
+            string guige = Request["guige"] ?? "";
+            string guigeequal = Request["guigeequal"] ?? "";
+            string guigeand = Request["guigeand"] ?? "";
             Expression<Func<wms_chukumx, bool>> where = PredicateExtensionses.True<wms_chukumx>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -93,67 +102,144 @@ namespace CKWMS.Controllers
                 sc = new searchcondition();
                 sc.UserID = userid;
                 sc.PageBrief = pagetag;
-                if (!string.IsNullOrEmpty(chukuid))
+                //shangpindm
+                if (!string.IsNullOrEmpty(shangpindm))
                 {
-                    if (chukuidequal.Equals("="))
+                    if (shangpindmequal.Equals("="))
                     {
-                        if (chukuidand.Equals("and"))
-                            where = where.And(wms_chukumx => wms_chukumx.ChukuID == int.Parse(chukuid));
+                        if (shangpindmand.Equals("and"))
+                            where = where.And(wms_chukumx => wms_chukumx.ShangpinDM == shangpindm);
                         else
-                            where = where.Or(wms_chukumx => wms_chukumx.ChukuID == int.Parse(chukuid));
+                            where = where.Or(wms_chukumx => wms_chukumx.ShangpinDM == shangpindm);
                     }
-                    if (chukuidequal.Equals(">"))
+                    if (shangpindmequal.Equals("like"))
                     {
-                        if (chukuidand.Equals("and"))
-                            where = where.And(wms_chukumx => wms_chukumx.ChukuID > int.Parse(chukuid));
+                        if (shangpindmand.Equals("and"))
+                            where = where.And(wms_chukumx => wms_chukumx.ShangpinDM.Contains(shangpindm));
                         else
-                            where = where.Or(wms_chukumx => wms_chukumx.ChukuID > int.Parse(chukuid));
-                    }
-                    if (chukuidequal.Equals("<"))
-                    {
-                        if (chukuidand.Equals("and"))
-                            where = where.And(wms_chukumx => wms_chukumx.ChukuID < int.Parse(chukuid));
-                        else
-                            where = where.Or(wms_chukumx => wms_chukumx.ChukuID < int.Parse(chukuid));
+                            where = where.Or(wms_chukumx => wms_chukumx.ShangpinDM.Contains(shangpindm));
                     }
                 }
-                if (!string.IsNullOrEmpty(chukuid))
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "chukuid", chukuid, chukuidequal, chukuidand);
+                if (!string.IsNullOrEmpty(shangpindm))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpindm", shangpindm, shangpindmequal, shangpindmand);
                 else
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "chukuid", "", chukuidequal, chukuidand);
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpindm", "", shangpindmequal, shangpindmand);
+                //shangpinmc
+                if (!string.IsNullOrEmpty(shangpinmc))
+                {
+                    if (shangpinmcequal.Equals("="))
+                    {
+                        if (shangpinmcand.Equals("and"))
+                            where = where.And(wms_chukumx => wms_chukumx.ShangpinMC == shangpinmc);
+                        else
+                            where = where.Or(wms_chukumx => wms_chukumx.ShangpinMC == shangpinmc);
+                    }
+                    if (shangpinmcequal.Equals("like"))
+                    {
+                        if (shangpinmcand.Equals("and"))
+                            where = where.And(wms_chukumx => wms_chukumx.ShangpinMC.Contains(shangpinmc));
+                        else
+                            where = where.Or(wms_chukumx => wms_chukumx.ShangpinMC.Contains(shangpinmc));
+                    }
+                }
+                if (!string.IsNullOrEmpty(shangpinmc))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpinmc", shangpinmc, shangpinmcequal, shangpinmcand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpinmc", "", shangpinmcequal, shangpinmcand);
+                //guige
+                if (!string.IsNullOrEmpty(guige))
+                {
+                    if (guigeequal.Equals("="))
+                    {
+                        if (guigeand.Equals("and"))
+                            where = where.And(wms_chukumx => wms_chukumx.Guige == guige);
+                        else
+                            where = where.Or(wms_chukumx => wms_chukumx.Guige == guige);
+                    }
+                    if (guigeequal.Equals("like"))
+                    {
+                        if (guigeand.Equals("and"))
+                            where = where.And(wms_chukumx => wms_chukumx.Guige.Contains(guige));
+                        else
+                            where = where.Or(wms_chukumx => wms_chukumx.Guige.Contains(guige));
+                    }
+                }
+                if (!string.IsNullOrEmpty(guige))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "guige", guige, guigeequal, guigeand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "guige", "", guigeequal, guigeand);
+
                 searchconditionService.GetInstance().AddEntity(sc);
             }
             else
             {
                 sc.ConditionInfo = "";
-                if (!string.IsNullOrEmpty(chukuid))
+                //shangpindm
+                if (!string.IsNullOrEmpty(shangpindm))
                 {
-                    if (chukuidequal.Equals("="))
+                    if (shangpindmequal.Equals("="))
                     {
-                        if (chukuidand.Equals("and"))
-                            where = where.And(wms_chukumx => wms_chukumx.ChukuID == int.Parse(chukuid));
+                        if (shangpindmand.Equals("and"))
+                            where = where.And(wms_chukumx => wms_chukumx.ShangpinDM == shangpindm);
                         else
-                            where = where.Or(wms_chukumx => wms_chukumx.ChukuID == int.Parse(chukuid));
+                            where = where.Or(wms_chukumx => wms_chukumx.ShangpinDM == shangpindm);
                     }
-                    if (chukuidequal.Equals(">"))
+                    if (shangpindmequal.Equals("like"))
                     {
-                        if (chukuidand.Equals("and"))
-                            where = where.And(wms_chukumx => wms_chukumx.ChukuID > int.Parse(chukuid));
+                        if (shangpindmand.Equals("and"))
+                            where = where.And(wms_chukumx => wms_chukumx.ShangpinDM.Contains(shangpindm));
                         else
-                            where = where.Or(wms_chukumx => wms_chukumx.ChukuID > int.Parse(chukuid));
-                    }
-                    if (chukuidequal.Equals("<"))
-                    {
-                        if (chukuidand.Equals("and"))
-                            where = where.And(wms_chukumx => wms_chukumx.ChukuID < int.Parse(chukuid));
-                        else
-                            where = where.Or(wms_chukumx => wms_chukumx.ChukuID < int.Parse(chukuid));
+                            where = where.Or(wms_chukumx => wms_chukumx.ShangpinDM.Contains(shangpindm));
                     }
                 }
-                if (!string.IsNullOrEmpty(chukuid))
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "chukuid", chukuid, chukuidequal, chukuidand);
+                if (!string.IsNullOrEmpty(shangpindm))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpindm", shangpindm, shangpindmequal, shangpindmand);
                 else
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "chukuid", "", chukuidequal, chukuidand);
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpindm", "", shangpindmequal, shangpindmand);
+                //shangpinmc
+                if (!string.IsNullOrEmpty(shangpinmc))
+                {
+                    if (shangpinmcequal.Equals("="))
+                    {
+                        if (shangpinmcand.Equals("and"))
+                            where = where.And(wms_chukumx => wms_chukumx.ShangpinMC == shangpinmc);
+                        else
+                            where = where.Or(wms_chukumx => wms_chukumx.ShangpinMC == shangpinmc);
+                    }
+                    if (shangpinmcequal.Equals("like"))
+                    {
+                        if (shangpinmcand.Equals("and"))
+                            where = where.And(wms_chukumx => wms_chukumx.ShangpinMC.Contains(shangpinmc));
+                        else
+                            where = where.Or(wms_chukumx => wms_chukumx.ShangpinMC.Contains(shangpinmc));
+                    }
+                }
+                if (!string.IsNullOrEmpty(shangpinmc))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpinmc", shangpinmc, shangpinmcequal, shangpinmcand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpinmc", "", shangpinmcequal, shangpinmcand);
+                //guige
+                if (!string.IsNullOrEmpty(guige))
+                {
+                    if (guigeequal.Equals("="))
+                    {
+                        if (guigeand.Equals("and"))
+                            where = where.And(wms_chukumx => wms_chukumx.Guige == guige);
+                        else
+                            where = where.Or(wms_chukumx => wms_chukumx.Guige == guige);
+                    }
+                    if (guigeequal.Equals("like"))
+                    {
+                        if (guigeand.Equals("and"))
+                            where = where.And(wms_chukumx => wms_chukumx.Guige.Contains(guige));
+                        else
+                            where = where.Or(wms_chukumx => wms_chukumx.Guige.Contains(guige));
+                    }
+                }
+                if (!string.IsNullOrEmpty(guige))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "guige", guige, guigeequal, guigeand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "guige", "", guigeequal, guigeand);
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;
