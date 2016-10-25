@@ -434,14 +434,14 @@ namespace CKWMS.reports
                             foreach (wms_rukumx _pr in _RuKuMXs)
                             {
                                 drRuKuMX = dtRuKuMX.NewRow();
-                                drRuKuMX["ShangpinMC"] = _pr.ShangpinMC;
+                                //drRuKuMX["ShangpinMC"] = _pr.ShangpinMC;
                                 drRuKuMX["Zhucezheng"] = _pr.Zhucezheng;
                                 drRuKuMX["Guige"] = _pr.Guige;
                                 drRuKuMX["Pihao"] = _pr.Pihao;
                                 drRuKuMX["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShengchanRQ);
                                 drRuKuMX["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShixiaoRQ);
                                 drRuKuMX["DaohuoSL"] = _pr.DaohuoSL;
-                                drRuKuMX["Chandi"] = _pr.Chandi;
+                                //drRuKuMX["Chandi"] = _pr.Chandi;
 
                                 dtRuKuMX.Rows.Add(drRuKuMX);
                             }
