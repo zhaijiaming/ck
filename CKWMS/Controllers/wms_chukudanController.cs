@@ -62,6 +62,72 @@ namespace CKWMS.Controllers
                                 }
                             }
                             break;
+                        case "chukudanbh":
+                            string chukudanbh = scld[1];
+                            string chukudanbhequal = scld[2];
+                            string chukudanbhand = scld[3];
+                            if (!string.IsNullOrEmpty(chukudanbh))
+                            {
+                                if (chukudanbhequal.Equals("="))
+                                {
+                                    if (chukudanbhand.Equals("and"))
+                                        where = where.And(wms_chukudan => wms_chukudan.ChukudanBH == chukudanbh);
+                                    else
+                                        where = where.Or(wms_chukudan => wms_chukudan.ChukudanBH == chukudanbh);
+                                }
+                                if (chukudanbhequal.Equals("like"))
+                                {
+                                    if (chukudanbhand.Equals("and"))
+                                        where = where.And(wms_chukudan => wms_chukudan.ChukudanBH.Contains(chukudanbh));
+                                    else
+                                        where = where.Or(wms_chukudan => wms_chukudan.ChukudanBH.Contains(chukudanbh));
+                                }
+                            }
+                            break;
+                        case "kehumc":
+                            string kehumc = scld[1];
+                            string kehumcequal = scld[2];
+                            string kehumcand = scld[3];
+                            if (!string.IsNullOrEmpty(kehumc))
+                            {
+                                if (kehumcequal.Equals("="))
+                                {
+                                    if (kehumcand.Equals("and"))
+                                        where = where.And(wms_chukudan => wms_chukudan.KehuMC == kehumc);
+                                    else
+                                        where = where.Or(wms_chukudan => wms_chukudan.KehuMC == kehumc);
+                                }
+                                if (kehumcequal.Equals("like"))
+                                {
+                                    if (kehumcand.Equals("and"))
+                                        where = where.And(wms_chukudan => wms_chukudan.KehuMC.Contains(kehumc));
+                                    else
+                                        where = where.Or(wms_chukudan => wms_chukudan.KehuMC.Contains(kehumc));
+                                }
+                            }
+                            break;
+                        case "yunsongdizhi":
+                            string yunsongdizhi = scld[1];
+                            string yunsongdizhiequal = scld[2];
+                            string yunsongdizhiand = scld[3];
+                            if (!string.IsNullOrEmpty(yunsongdizhi))
+                            {
+                                if (yunsongdizhiequal.Equals("="))
+                                {
+                                    if (yunsongdizhiand.Equals("and"))
+                                        where = where.And(wms_chukudan => wms_chukudan.Yunsongdizhi == yunsongdizhi);
+                                    else
+                                        where = where.Or(wms_chukudan => wms_chukudan.Yunsongdizhi == yunsongdizhi);
+                                }
+                                if (yunsongdizhiequal.Equals("like"))
+                                {
+                                    if (yunsongdizhiand.Equals("and"))
+                                        where = where.And(wms_chukudan => wms_chukudan.Yunsongdizhi.Contains(yunsongdizhi));
+                                    else
+                                        where = where.Or(wms_chukudan => wms_chukudan.Yunsongdizhi.Contains(yunsongdizhi));
+                                }
+                            }
+                            break;
                         default:
                             break;
                     }
@@ -83,19 +149,19 @@ namespace CKWMS.Controllers
             int userid = (int)Session["user_id"];
             string pagetag = "wms_chukudan_index";
             string page = "1";
-            //出库单编号
+            //chukudanbh
             string chukudanbh = Request["chukudanbh"] ?? "";
             string chukudanbhequal = Request["chukudanbhequal"] ?? "";
             string chukudanbhand = Request["chukudanbhand"] ?? "";
-            //货主
+            //huozhuid
             string huozhuid = Request["huozhuid"] ?? "";
             string huozhuidequal = Request["huozhuidequal"] ?? "";
             string huozhuidand = Request["huozhuidand"] ?? "";
-            //客户
+            //kehumc
             string kehumc = Request["kehumc"] ?? "";
             string kehumcequal = Request["kehumcequal"] ?? "";
             string kehumcand = Request["kehumcand"] ?? "";
-            //送货地址
+            //yunsongdizhi
             string yunsongdizhi = Request["yunsongdizhi"] ?? "";
             string yunsongdizhiequal = Request["yunsongdizhiequal"] ?? "";
             string yunsongdizhiand = Request["yunsongdizhiand"] ?? "";

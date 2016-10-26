@@ -617,6 +617,94 @@ namespace CKWMS.Controllers
                                 }
                             }
                             break;
+                        case "rukudanbh":
+                            string rukudanbh = scld[1];
+                            string rukudanbhequal = scld[2];
+                            string rukudanbhand = scld[3];
+                            if (!string.IsNullOrEmpty(rukudanbh))
+                            {
+                                if (rukudanbhequal.Equals("="))
+                                {
+                                    if (rukudanbhand.Equals("and"))
+                                        where = where.And(wms_storage_v => wms_storage_v.RukudanBH == rukudanbh);
+                                    else
+                                        where = where.Or(wms_storage_v => wms_storage_v.RukudanBH == rukudanbh);
+                                }
+                                if (rukudanbhequal.Equals("like"))
+                                {
+                                    if (rukudanbhand.Equals("and"))
+                                        where = where.And(wms_storage_v => wms_storage_v.RukudanBH.Contains(rukudanbh));
+                                    else
+                                        where = where.Or(wms_storage_v => wms_storage_v.RukudanBH.Contains(rukudanbh));
+                                }
+                            }
+                            break;
+                        case "kuwei":
+                            string kuwei = scld[1];
+                            string kuweiequal = scld[2];
+                            string kuweiand = scld[3];
+                            if (!string.IsNullOrEmpty(kuwei))
+                            {
+                                if (kuweiequal.Equals("="))
+                                {
+                                    if (kuweiand.Equals("and"))
+                                        where = where.And(wms_storage_v => wms_storage_v.Kuwei == kuwei);
+                                    else
+                                        where = where.Or(wms_storage_v => wms_storage_v.Kuwei == kuwei);
+                                }
+                                if (kuweiequal.Equals("like"))
+                                {
+                                    if (kuweiand.Equals("and"))
+                                        where = where.And(wms_storage_v => wms_storage_v.Kuwei.Contains(kuwei));
+                                    else
+                                        where = where.Or(wms_storage_v => wms_storage_v.Kuwei.Contains(kuwei));
+                                }
+                            }
+                            break;
+                        case "shangpindm":
+                            string shangpindm = scld[1];
+                            string shangpindmequal = scld[2];
+                            string shangpindmand = scld[3];
+                            if (!string.IsNullOrEmpty(shangpindm))
+                            {
+                                if (shangpindmequal.Equals("="))
+                                {
+                                    if (shangpindmand.Equals("and"))
+                                        where = where.And(wms_storage_v => wms_storage_v.ShangpinDM == shangpindm);
+                                    else
+                                        where = where.Or(wms_storage_v => wms_storage_v.ShangpinDM == shangpindm);
+                                }
+                                if (shangpindmequal.Equals("like"))
+                                {
+                                    if (shangpindmand.Equals("and"))
+                                        where = where.And(wms_storage_v => wms_storage_v.ShangpinDM.Contains(shangpindm));
+                                    else
+                                        where = where.Or(wms_storage_v => wms_storage_v.ShangpinDM.Contains(shangpindm));
+                                }
+                            }
+                            break;
+                        case "shangpinmc":
+                            string shangpinmc = scld[1];
+                            string shangpinmcequal = scld[2];
+                            string shangpinmcand = scld[3];
+                            if (!string.IsNullOrEmpty(shangpinmc))
+                            {
+                                if (shangpinmcequal.Equals("="))
+                                {
+                                    if (shangpinmcand.Equals("and"))
+                                        where = where.And(wms_storage_v => wms_storage_v.ShangpinMC == shangpinmc);
+                                    else
+                                        where = where.Or(wms_storage_v => wms_storage_v.ShangpinMC == shangpinmc);
+                                }
+                                if (shangpinmcequal.Equals("like"))
+                                {
+                                    if (shangpinmcand.Equals("and"))
+                                        where = where.And(wms_storage_v => wms_storage_v.ShangpinMC.Contains(shangpinmc));
+                                    else
+                                        where = where.Or(wms_storage_v => wms_storage_v.ShangpinMC.Contains(shangpinmc));
+                                }
+                            }
+                            break;
                         default:
                             break;
                     }

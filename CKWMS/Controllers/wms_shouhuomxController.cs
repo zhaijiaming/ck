@@ -33,32 +33,91 @@ namespace CKWMS.Controllers
                     string[] scld = scl.Split(',');
                     switch (scld[0])
                     {
-                        case "rkmxid":
-                            string rkmxid = scld[1];
-                            string rkmxidequal = scld[2];
-                            string rkmxidand = scld[3];
-                            if (!string.IsNullOrEmpty(rkmxid))
+                        case "shangpinmc":
+                            string shangpinmc = scld[1];
+                            string shangpinmcequal = scld[2];
+                            string shangpinmcand = scld[3];
+                            if (!string.IsNullOrEmpty(shangpinmc))
                             {
-                                if (rkmxidequal.Equals("="))
+                                if (shangpinmcequal.Equals("="))
                                 {
-                                    if (rkmxidand.Equals("and"))
-                                        where = where.And(wms_shouhuomx => wms_shouhuomx.RKMXID == int.Parse(rkmxid));
+                                    if (shangpinmcand.Equals("and"))
+                                        where = where.And(wms_shouhuomx => wms_shouhuomx.ShangpinMC == shangpinmc);
                                     else
-                                        where = where.Or(wms_shouhuomx => wms_shouhuomx.RKMXID == int.Parse(rkmxid));
+                                        where = where.Or(wms_shouhuomx => wms_shouhuomx.ShangpinMC == shangpinmc);
                                 }
-                                if (rkmxidequal.Equals(">"))
+                                if (shangpinmcequal.Equals("like"))
                                 {
-                                    if (rkmxidand.Equals("and"))
-                                        where = where.And(wms_shouhuomx => wms_shouhuomx.RKMXID > int.Parse(rkmxid));
+                                    if (shangpinmcand.Equals("and"))
+                                        where = where.And(wms_shouhuomx => wms_shouhuomx.ShangpinMC.Contains(shangpinmc));
                                     else
-                                        where = where.Or(wms_shouhuomx => wms_shouhuomx.RKMXID > int.Parse(rkmxid));
+                                        where = where.Or(wms_shouhuomx => wms_shouhuomx.ShangpinMC.Contains(shangpinmc));
                                 }
-                                if (rkmxidequal.Equals("<"))
+                            }
+                            break;
+                        case "zhucezheng":
+                            string zhucezheng = scld[1];
+                            string zhucezhengequal = scld[2];
+                            string zhucezhengand = scld[3];
+                            if (!string.IsNullOrEmpty(zhucezheng))
+                            {
+                                if (zhucezhengequal.Equals("="))
                                 {
-                                    if (rkmxidand.Equals("and"))
-                                        where = where.And(wms_shouhuomx => wms_shouhuomx.RKMXID < int.Parse(rkmxid));
+                                    if (zhucezhengand.Equals("and"))
+                                        where = where.And(wms_shouhuomx => wms_shouhuomx.Zhucezheng == zhucezheng);
                                     else
-                                        where = where.Or(wms_shouhuomx => wms_shouhuomx.RKMXID < int.Parse(rkmxid));
+                                        where = where.Or(wms_shouhuomx => wms_shouhuomx.Zhucezheng == zhucezheng);
+                                }
+                                if (zhucezhengequal.Equals("like"))
+                                {
+                                    if (zhucezhengand.Equals("and"))
+                                        where = where.And(wms_shouhuomx => wms_shouhuomx.Zhucezheng.Contains(zhucezheng));
+                                    else
+                                        where = where.Or(wms_shouhuomx => wms_shouhuomx.Zhucezheng.Contains(zhucezheng));
+                                }
+                            }
+                            break;
+                        case "guige":
+                            string guige = scld[1];
+                            string guigeequal = scld[2];
+                            string guigeand = scld[3];
+                            if (!string.IsNullOrEmpty(guige))
+                            {
+                                if (guigeequal.Equals("="))
+                                {
+                                    if (guigeand.Equals("and"))
+                                        where = where.And(wms_shouhuomx => wms_shouhuomx.Guige == guige);
+                                    else
+                                        where = where.Or(wms_shouhuomx => wms_shouhuomx.Guige == guige);
+                                }
+                                if (guigeequal.Equals("like"))
+                                {
+                                    if (guigeand.Equals("and"))
+                                        where = where.And(wms_shouhuomx => wms_shouhuomx.Guige.Contains(guige));
+                                    else
+                                        where = where.Or(wms_shouhuomx => wms_shouhuomx.Guige.Contains(guige));
+                                }
+                            }
+                            break;
+                        case "pihao":
+                            string pihao = scld[1];
+                            string pihaoequal = scld[2];
+                            string pihaoand = scld[3];
+                            if (!string.IsNullOrEmpty(pihao))
+                            {
+                                if (pihaoequal.Equals("="))
+                                {
+                                    if (pihaoand.Equals("and"))
+                                        where = where.And(wms_shouhuomx => wms_shouhuomx.Pihao == pihao);
+                                    else
+                                        where = where.Or(wms_shouhuomx => wms_shouhuomx.Pihao == pihao);
+                                }
+                                if (pihaoequal.Equals("like"))
+                                {
+                                    if (pihaoand.Equals("and"))
+                                        where = where.And(wms_shouhuomx => wms_shouhuomx.Pihao.Contains(pihao));
+                                    else
+                                        where = where.Or(wms_shouhuomx => wms_shouhuomx.Pihao.Contains(pihao));
                                 }
                             }
                             break;

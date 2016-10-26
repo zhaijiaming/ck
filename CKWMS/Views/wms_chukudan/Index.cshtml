@@ -129,16 +129,17 @@
     if (_searchcondition == null || _searchcondition == "")
     {
         SearchConditionModel scm = new SearchConditionModel();
+        scm.ItemCode = "ChukudanBH";
+        scm.ItemTitle = "出库编号";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
         scm.ItemCode = "HuozhuID";
         scm.ItemTitle = "货主";
         scm.ItemType = "货主.名称";
         scms.Add(scm);
 
-        scm = new SearchConditionModel();
-        scm.ItemCode = "ChukudanBH";
-        scm.ItemTitle = "出库编号";
-        scm.ItemType = "System.String";
-        scms.Add(scm);
 
         scm = new SearchConditionModel();
         scm.ItemCode = "KehuMC";
@@ -158,6 +159,18 @@
         if (scs.Length > 0)
         {
             SearchConditionModel scm = new SearchConditionModel();
+            scm.ItemCode = "ChukudanBH";
+            scm.ItemTitle = "出库编号";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[1].Split(',')[1];
+                scm.ItemOpValue = scs[1].Split(',')[2];
+                scm.ItemJion = scs[1].Split(',')[3];
+            }
+            scms.Add(scm);
+            
+            scm = new SearchConditionModel();
             scm.ItemCode = "HuozhuID";
             scm.ItemTitle = "货主";
             scm.ItemType = "货主.名称";
@@ -170,18 +183,6 @@
                 }
                 scm.ItemOpValue = scs[0].Split(',')[2];
                 scm.ItemJion = scs[0].Split(',')[3];
-            }
-            scms.Add(scm);
-
-            scm = new SearchConditionModel();
-            scm.ItemCode = "ChukudanBH";
-            scm.ItemTitle = "出库编号";
-            scm.ItemType = "System.String";
-            if (scs.Length > 1)
-            {
-                scm.ItemValue = scs[1].Split(',')[1];
-                scm.ItemOpValue = scs[1].Split(',')[2];
-                scm.ItemJion = scs[1].Split(',')[3];
             }
             scms.Add(scm);
 
