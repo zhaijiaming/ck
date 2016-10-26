@@ -55,6 +55,50 @@ namespace CKWMS.Controllers
                                 }
                             }
                             break;
+                        case "jiancheng":
+                            string jiancheng = scld[1];
+                            string jianchengequal = scld[2];
+                            string jianchengand = scld[3];
+                            if (!string.IsNullOrEmpty(jiancheng))
+                            {
+                                if (jianchengequal.Equals("="))
+                                {
+                                    if (jianchengand.Equals("and"))
+                                        where = where.And(base_weituokehu => base_weituokehu.Jiancheng == jiancheng);
+                                    else
+                                        where = where.Or(base_weituokehu => base_weituokehu.Jiancheng == jiancheng);
+                                }
+                                if (jianchengequal.Equals("like"))
+                                {
+                                    if (jianchengand.Equals("and"))
+                                        where = where.And(base_weituokehu => base_weituokehu.Jiancheng.Contains(jiancheng));
+                                    else
+                                        where = where.Or(base_weituokehu => base_weituokehu.Jiancheng.Contains(jiancheng));
+                                }
+                            }
+                            break;
+                        case "hetongbianhao":
+                            string hetongbianhao = scld[1];
+                            string hetongbianhaoequal = scld[2];
+                            string hetongbianhaoand = scld[3];
+                            if (!string.IsNullOrEmpty(hetongbianhao))
+                            {
+                                if (hetongbianhaoequal.Equals("="))
+                                {
+                                    if (hetongbianhaoand.Equals("and"))
+                                        where = where.And(base_weituokehu => base_weituokehu.Hetongbianhao == hetongbianhao);
+                                    else
+                                        where = where.Or(base_weituokehu => base_weituokehu.Hetongbianhao == hetongbianhao);
+                                }
+                                if (hetongbianhaoequal.Equals("like"))
+                                {
+                                    if (hetongbianhaoand.Equals("and"))
+                                        where = where.And(base_weituokehu => base_weituokehu.Hetongbianhao.Contains(hetongbianhao));
+                                    else
+                                        where = where.Or(base_weituokehu => base_weituokehu.Hetongbianhao.Contains(hetongbianhao));
+                                }
+                            }
+                            break;
                         default:
                             break;
                     }
