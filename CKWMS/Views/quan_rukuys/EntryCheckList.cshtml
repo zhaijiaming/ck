@@ -65,7 +65,7 @@
             $("#Yanshou").val(0);
             $("#Oknum").val(0);
             $("#Ngnum").val(0);
-            $("#YanshouSM").val("");
+            //$("#YanshouSM").val("");
             $("#pl_yanshou").show();
         });
         $("#pl_close").click(function () {
@@ -108,6 +108,7 @@
                 alert("验收数量不正确，请重新输入！");
                 return;
             }
+            $("#pl_yanshou").hide();
             if (eval(_ysresult) == 2)
                 $.post("/quan_rukuys/addcheckpart", {
                     shmx: $("#shmx").val(),
@@ -134,7 +135,6 @@
                         alert("验收数据保存失败，请重新验收！");
                     else {
                         ShowCheck();
-                        $("#pl_yanshou").hide();
                     }
                 });
         });

@@ -73,13 +73,13 @@
             $("#Yanshou").val(0);
             $("#Oknum").val(0);
             $("#Ngnum").val(0);
-            $("#YanshouSM").val("");
+            //$("#YanshouSM").val("");
             $("#pl_yanshou").show();
         });
         $("#pl_close").click(function () {
             $("#pl_yanshou").hide();
         });
-        $("#pl_yanshou").draggable({ handle: ".panel-heading" },{containment: "parent"});
+        $("#pl_yanshou").draggable({ handle: ".panel-heading" });
         $("#yscancel").click(function () {
             $("#pl_yanshou").hide();
         });
@@ -112,6 +112,7 @@
                 //$("#pl_yanshou").hide();
             }
             else {
+                $("#pl_yanshou").hide();
                 if (eval(_ysresult) == 3) {
                     $.post("/wms_jianhuo/ngpick", { mx: $("#shmx").val() }, function (data) {
                         if (data == -1)
@@ -133,7 +134,6 @@
                             alert("验收数据保存失败，请重新验收！");
                         else {
                             ShowCheck();
-                            $("#pl_yanshou").hide();
                         }
                     });
             }
