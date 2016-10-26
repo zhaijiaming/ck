@@ -457,6 +457,7 @@ namespace CKWMS.Controllers
         {
             string sdel = Request["del"] ?? "";
             int id;
+            int _rkid = 0;
             wms_rukumx ob_wms_rukumx;
             foreach (string sD in sdel.Split(','))
             {
@@ -464,14 +465,15 @@ namespace CKWMS.Controllers
                 {
                     id = int.Parse(sD);
                     ob_wms_rukumx = ob_wms_rukumxservice.GetEntityById(wms_rukumx => wms_rukumx.ID == id && wms_rukumx.IsDelete == false);
-                    if (ob_wms_rukumx.YishouSL == 0)
+                    _rkid = (int)ob_wms_rukumx.RukuID;
+                    if (ob_wms_rukumx.YishouSL == 0 || ob_wms_rukumx.YishouSL==null)
                     {
                         ob_wms_rukumx.IsDelete = true;
                         ob_wms_rukumxservice.UpdateEntity(ob_wms_rukumx);
                     }
                 }
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("GetCargos",new { id=_rkid});
         }
         public ActionResult PrintRuKuMX()
         {

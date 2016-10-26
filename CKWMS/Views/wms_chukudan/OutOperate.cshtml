@@ -135,7 +135,7 @@
             });
             AddCargo(_sval);
         });
-        $("#pl_xz").draggable({ handle: ".panel-heading" },{containment: "parent"});
+        $("#pl_xz").draggable({ handle: ".panel-heading" });
         $("#dt_xz tbody").on("dblclick", "tr", function () {
             var _ch = $(this).find("td").eq(3).html();
             var _sd = $(this).find("td").eq(4).html();

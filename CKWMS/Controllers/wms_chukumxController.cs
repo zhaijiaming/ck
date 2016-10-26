@@ -556,22 +556,24 @@ namespace CKWMS.Controllers
         public ActionResult Delete()
         {
             string sdel = Request["del"] ?? "";
-            int id;
+            int _id;
+            int _ckid = 0;
             wms_chukumx ob_wms_chukumx;
             foreach (string sD in sdel.Split(','))
             {
                 if (sD.Length > 0)
                 {
-                    id = int.Parse(sD);
-                    ob_wms_chukumx = ob_wms_chukumxservice.GetEntityById(wms_chukumx => wms_chukumx.ID == id && wms_chukumx.IsDelete == false);
-                    if (ob_wms_chukumx.JianhuoSL == 0)
+                    _id = int.Parse(sD);
+                    ob_wms_chukumx = ob_wms_chukumxservice.GetEntityById(wms_chukumx => wms_chukumx.ID == _id && wms_chukumx.IsDelete == false);
+                    _ckid=(int)ob_wms_chukumx.ChukuID;
+                    if (ob_wms_chukumx.JianhuoSL == 0 || ob_wms_chukumx.JianhuoSL==null)
                     {
                         ob_wms_chukumx.IsDelete = true;
                         ob_wms_chukumxservice.UpdateEntity(ob_wms_chukumx);
                     }
                 }
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("GetOutDetail",new { id=_ckid});
         }
     }
 }
