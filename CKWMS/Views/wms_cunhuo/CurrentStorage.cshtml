@@ -30,9 +30,33 @@
     if (_searchcondition == null || _searchcondition == "")
     {
         SearchConditionModel scm = new SearchConditionModel();
-        scm.ItemCode = "RKMXID";
-        scm.ItemTitle = "明细序号";
-        scm.ItemType = "System.Int32";
+        scm.ItemCode = "HuozhuID";
+        scm.ItemTitle = "货主";
+        scm.ItemType = "货主.名称";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "RukudanBH";
+        scm.ItemTitle = "入库编号";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "Kuwei";
+        scm.ItemTitle = "库位";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "ShangpinDM";
+        scm.ItemTitle = "商品代码";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "ShangpinMC";
+        scm.ItemTitle = "商品名称";
+        scm.ItemType = "System.String";
         scms.Add(scm);
     }
     else
@@ -41,14 +65,66 @@
         if (scs.Length > 0)
         {
             SearchConditionModel scm = new SearchConditionModel();
-            scm.ItemCode = "RKMXID";
-            scm.ItemTitle = "明细序号";
-            scm.ItemType = "System.Int32";
+            scm.ItemCode = "HuozhuID";
+            scm.ItemTitle = "货主";
+            scm.ItemType = "货主.名称";
             if (scs.Length > 1)
             {
                 scm.ItemValue = scs[0].Split(',')[1];
+                if (scm.ItemValue.Length == 0)
+                {
+                    scm.ItemValue = "0";
+                }
                 scm.ItemOpValue = scs[0].Split(',')[2];
                 scm.ItemJion = scs[0].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "RukudanBH";
+            scm.ItemTitle = "入库编号";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[1].Split(',')[1];
+                scm.ItemOpValue = scs[1].Split(',')[2];
+                scm.ItemJion = scs[1].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "Kuwei";
+            scm.ItemTitle = "库位";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[2].Split(',')[1];
+                scm.ItemOpValue = scs[2].Split(',')[2];
+                scm.ItemJion = scs[2].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "ShangpinDM";
+            scm.ItemTitle = "商品代码";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[3].Split(',')[1];
+                scm.ItemOpValue = scs[3].Split(',')[2];
+                scm.ItemJion = scs[3].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "ShangpinMC";
+            scm.ItemTitle = "商品名称";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[4].Split(',')[1];
+                scm.ItemOpValue = scs[4].Split(',')[2];
+                scm.ItemJion = scs[4].Split(',')[3];
             }
             scms.Add(scm);
         }
@@ -68,7 +144,7 @@
     </ul>
 </div>
 <div class="page-content">
-    @Html.Search_Condition((int)Session["user_id"], "存货_条件组合查询", "/wms_cunhuo/index", "wms_cunhuo_currentstorage", scms)
+    @Html.Search_Condition((int)Session["user_id"], "存货_条件组合查询", "/wms_cunhuo/CurrentStorage", "wms_cunhuo_currentstorage", scms)
     <div class="page-header">
         <p>
             <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
