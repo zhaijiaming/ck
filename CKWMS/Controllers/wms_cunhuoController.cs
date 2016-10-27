@@ -370,7 +370,6 @@ namespace CKWMS.Controllers
             }
 
             var tempData = ob_wms_cunhuoservice.GetInventory(where.Compile());
-            //ViewBag.NoPaging = true;
             ViewBag.wms_storage_v = tempData;
             ViewData.Model = tempData;
             string viewHtml = ExportNow.RenderPartialViewToString(this, "CurrentStorageExport");

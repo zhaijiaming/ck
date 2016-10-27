@@ -22,12 +22,50 @@
             window.open("/quan_chukufh/PrintFuhejianyan?ckfhid=" + outid);
             $("#pl_fun").hide();
         });
-        $("#pl_fun").draggable({ handle: ".panel-heading" }, { containment: "parent" });
-        $("#mydatatable tbody").on("dblclick", "tr", function () {
-            $("#pl_fun").show();
-        });
-        $("#pl_fn_cancel").click(function () {
+        $("#bt_fn_cancel").click(function () {
             $("#pl_fun").hide();
+        });
+        $("#bt_fn_over").click(function () {
+            var _isover = true;
+            $("#pl_fun").hide();
+            $("#mydatatable tbody tr").each(function () {
+                var _fhsl = $(this).find('td').eq(13).html();
+                if (_fhsl == "" || eval(_fhsl) == 0)
+                    _isover = false;
+            });
+            if (!_isover)
+                alert("还有货品需要复核，不能完成！");
+            else 
+                $.post("/quan_chukufh/checkover",
+                    { ck: $("#outid").val() },
+                    function (data) {
+                        if (data == -1)
+                            alert("复核完成操作失败，请重试！");
+                        if (data == -2)
+                            alert("已经完成复核，不能再次确认完成！");
+                        if (data == 1)
+                            window.close();
+                    });
+        });
+        $("#bt_fn_delete").click(function () {
+            $("#pl_fun").hide();
+            $.post("/quan_chukufh/checkdelete",
+                {
+                    ck: $("#outid").val(),
+                    fh: $("#fhid").val()
+                }, function (data) {
+                    if (data == -1)
+                        alert("删除复核记录失败，请重试！");
+                    if (data == -2)
+                        alert("复核已经完成，记录已被锁定，不能删除！");
+                    if (data == 1)
+                        location.reload();
+                });
+        });
+        $("#pl_fun").draggable({ handle: ".panel-heading" });
+        $("#mydatatable tbody").on("dblclick", "tr", function () {
+            $("#fhid").val($(this).find("input").data("fh"));
+            $("#pl_fun").show();
         });
         $("#pl_fn_close").click(function () {
             $("#pl_fun").hide();
@@ -435,6 +473,10 @@
             <div class="center"><p id="bt_fhjy_print" class="btn btn-default">复核检验</p></div>
             <br />
             <div class="center"><p id="bt_fn_print" class="btn btn-default">复核报告</p></div>
+            <br />
+            <div class="center"><p id="bt_fn_over" class="btn btn-default">复核完成</p></div>
+            <br />
+            <div class="center"><p id="bt_fn_delete" class="btn btn-default">删除选中</p></div>
             <br />
             <div class="center"><p id="bt_fn_cancel" class="btn btn-default" style="letter-spacing:1em;">取消</p></div>
         </div>

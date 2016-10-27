@@ -102,7 +102,40 @@ namespace CKWMS.Controllers
             ViewBag.id = id;
             return View();
         }
-
+        public JsonResult CheckOver()
+        {
+            int _userid = (int)Session["user_id"];
+            var _ckid = Request["ck"] ?? "";
+            if (string.IsNullOrEmpty(_ckid))
+                return Json(-1);
+            var _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_ckid));
+            if (_ckd == null)
+                return Json(-1);
+            if (_ckd.JihuaZT > 3)
+                return Json(-2);
+            _ckd.JihuaZT = 3;
+            if (!ServiceFactory.wms_chukudanservice.UpdateEntity(_ckd))
+                return Json(-1);
+            return Json(1);
+        }
+        public JsonResult CheckDelete()
+        {
+            int _userid = (int)Session["user_id"];
+            var _fh = Request["fh"] ?? "";
+            var _ckid = Request["ck"] ?? "";
+            if (string.IsNullOrEmpty(_ckid) || string.IsNullOrEmpty(_fh))
+                return Json(-1);
+            var _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_ckid));
+            if (_ckd.JihuaZT > 2)
+                return Json(-2);
+            var _check = ob_quan_chukufhservice.GetEntityById(p => p.ID == int.Parse(_fh) && p.IsDelete == false);
+            if (_check == null)
+                return Json(-1);
+            _check.IsDelete = true;
+            if (!ob_quan_chukufhservice.UpdateEntity(_check))
+                return Json(-1);
+            return Json(1);
+        }
         [HttpPost]
         [OutputCache(Duration = 30)]
         public ActionResult Index()

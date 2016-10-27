@@ -288,7 +288,42 @@ namespace CKWMS.Controllers
             ViewBag.userid = (int)Session["user_id"];
             return View();
         }
-
+        public JsonResult CheckOver()
+        {
+            int _userid = (int)Session["user_id"];
+            var _rkid = Request["rk"] ?? "";
+            if (string.IsNullOrEmpty(_rkid))
+                return Json(-1);
+            var _rkd = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_rkid));
+            if (_rkd == null)
+                return Json(-1);
+            if (_rkd.RukuZT > 3)
+                return Json(-2);
+            _rkd.RukuZT = 3;
+            if (!ServiceFactory.wms_rukudanservice.UpdateEntity(_rkd))
+                return Json(-1);
+            return Json(1);
+        }
+        public JsonResult CheckDelete()
+        {
+            int _userid = (int)Session["user_id"];
+            var _rkid = Request["rk"] ?? "";
+            var _ysid = Request["ys"] ?? "";
+            if (string.IsNullOrEmpty(_rkid) || string.IsNullOrEmpty(_ysid))
+                return Json(-1);
+            var _rkd = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_rkid));
+            if (_rkd == null)
+                return Json(-1);
+            if (_rkd.RukuZT > 3)
+                return Json(-2);
+            var _ys = ob_quan_rukuysservice.GetEntityById(p => p.ID == int.Parse(_ysid) && p.IsDelete == false);
+            if (_ys == null)
+                return Json(-1);
+            _ys.IsDelete = true;
+            if (!ob_quan_rukuysservice.UpdateEntity(_ys))
+                return Json(-1);
+            return Json(1);
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Save()

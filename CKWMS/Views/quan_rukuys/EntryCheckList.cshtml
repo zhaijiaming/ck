@@ -22,8 +22,47 @@
             window.open("/quan_rukuys/PrintYanShouJiLu?rkysid=" + rkysid);
             $("#pl_fun").hide();
         });
+        $("#bt_fn_over").click(function () {
+            var _isover = true;
+            $("#pl_fun").hide();
+            $("#mydatatable tbody tr").each(function () {
+                var _yssl=$(this).find('td').eq(13).html();
+                if(_yssl=="" || eval(_yssl)==0)
+                    isover = false;
+            });
+            if (!_isover) {
+                alert("还有需要验收的货品，不能完成！");
+                return;
+            } else {
+                $.post("/quan_rukuys/checkover",
+                    { rk: $("#rkysid").val() }, function (data) {
+                        if (data == -1)
+                            alert("验收完成操作失败，请重试！");
+                        if (data == -2)
+                            alert("入库验收已经完成，不能再次进行确认！");
+                        if (data == 1)
+                            window.close();
+                    });
+            }
+        });
+        $("#bt_fn_delete").click(function () {
+            $("#pl_fun").hide();
+            $.post("/quan_rukuys/checkdelete",
+                {
+                    rk: $("#rkysid").val(),
+                    ys:$("#ysid").val()
+                }, function (data) {
+                    if (data == -1)
+                        alert("验收记录删除失败，请重试！");
+                    if (data == -2)
+                        alert("入库验收已经完成，不能再删除记录！");
+                    if (data == 1)
+                        location.reload();
+                });
+        });
         $("#pl_fun").draggable({ containment: "parent" });
         $("#mydatatable tbody").on("dblclick", "tr", function () {
+            $("#ysid").val($(this).find("input").data("ys"));
             $("#pl_fun").show();
         });
         $("#pl_fn_cancel").click(function () {
@@ -61,6 +100,7 @@
                 return;
             _selrow.addClass("blue");
             $("#shmx").val(_selrow.find("input").val());
+            $("#ysid").val(_selrow.find("input").data("ys"));
             $("#YanshouSL").val(_onum);
             $("#Yanshou").val(0);
             $("#Oknum").val(0);
@@ -230,6 +270,7 @@
     <input type="hidden" id="username" value="@ViewBag.username" />
     <input type="hidden" id="userid" value="@ViewBag.userid" />
     <input type="hidden" id="rkysid" value="@ViewBag.rkysid" />
+    <input type="hidden" id="ysid" />
     <div class="row">
         <table class="table table-condensed" id="mydatatable">
             <caption></caption>
@@ -260,7 +301,7 @@
                 {
                     <tr>
                         <td>
-                            <label><input type="checkbox" value="@item.ID"></label>
+                            <label><input type="checkbox" value="@item.ID" data-ys="@item.ysid"></label>
                         </td>
                         <td><i class="icon-youtube-play"></i></td>
                         <td>@item.ShangpinMC</td>
@@ -348,6 +389,10 @@
             <div class="center"><p id="bt_fn_JLprint" class="btn btn-default">验收记录</p></div>
             <br />
             <div class="center"><p id="bt_fn_print" class="btn btn-default">验收报告</p></div>
+            <br />
+            <div class="center"><p id="bt_fn_over" class="btn btn-default">验收完成</p></div>
+            <br />
+            <div class="center"><p id="bt_fn_delete" class="btn btn-default">删除选中</p></div>
             <br />
             <div class="center"><p id="pl_fn_cancel" class="btn btn-default" style="letter-spacing:1em;">取消</p></div>
         </div>
