@@ -320,16 +320,7 @@ namespace CKWMS.App_Code
         {
             return SelectList_Auto(html, showName, className, itemName, 0);
         }
-
-        /// <summary>
-        /// 常量下拉框
-        /// </summary>
-        /// <param name="html">htmlhepler</param>
-        /// <param name="showName">项目显示名称</param>
-        /// <param name="itemName">项目名称</param>
-        /// <param name="selectedValue">选择值</param>
-        /// <returns>页面选择框</returns>
-        public static MvcHtmlString SelectList_Common(this HtmlHelper html, string showName, string itemName, long selectedValue)
+        public static string SelectItem_Common(string showName, string itemName, long selectedValue)
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat("<select name=\"{0}\" id=\"{1}\" class=\"width-100\" >", showName, showName);
@@ -412,7 +403,19 @@ namespace CKWMS.App_Code
                     break;
             }
             sb.Append("</select>");
-            return MvcHtmlString.Create(sb.ToString());
+            return sb.ToString();
+        }
+        /// <summary>
+        /// 常量下拉框
+        /// </summary>
+        /// <param name="html">htmlhepler</param>
+        /// <param name="showName">项目显示名称</param>
+        /// <param name="itemName">项目名称</param>
+        /// <param name="selectedValue">选择值</param>
+        /// <returns>页面选择框</returns>
+        public static MvcHtmlString SelectList_Common(this HtmlHelper html, string showName, string itemName, long selectedValue)
+        {
+            return MvcHtmlString.Create(SelectItem_Common(showName,itemName,selectedValue));
         }
         private static string GetCommonSelect(long selectedvalue, Dictionary<int, string> commonselect)
         {
@@ -733,6 +736,16 @@ namespace CKWMS.App_Code
                                 svs = SelectItem_Auto(sc.ItemCode, myclassname, myclassitem, 0);
                             else
                                 svs = SelectItem_Auto(sc.ItemCode, myclassname, myclassitem, long.Parse(sc.ItemValue));
+                            break;
+                        case "医疗器械管理类别":
+                        case "首营状态":
+                        case "入库状态":
+                        case "出库状态":
+                        case "存货状态":
+                            if (sc.ItemValue == null)
+                                svs = SelectItem_Common(sc.ItemCode, myclassitem, 0);
+                            else
+                                svs = SelectItem_Common(sc.ItemCode, myclassitem, long.Parse(sc.ItemValue));
                             break;
                         default:
                             break;
