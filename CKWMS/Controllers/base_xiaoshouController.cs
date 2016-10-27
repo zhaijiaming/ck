@@ -34,32 +34,40 @@ namespace CKWMS.Controllers
                     string[] scld = scl.Split(',');
                     switch (scld[0])
                     {
-                        case "leibie":
-                            string leibie = scld[1];
-                            string leibieequal = scld[2];
-                            string leibieand = scld[3];
-                            if (!string.IsNullOrEmpty(leibie))
+                        case "shouquanid":
+                            string shouquanid = scld[1];
+                            string shouquanidequal = scld[2];
+                            string shouquanidand = scld[3];
+                            if (!string.IsNullOrEmpty(shouquanid))
                             {
-                                if (leibieequal.Equals("="))
+                                if (shouquanidequal.Equals("="))
                                 {
-                                    if (leibieand.Equals("and"))
-                                        where = where.And(base_xiaoshou => base_xiaoshou.Leibie == int.Parse(leibie));
+                                    if (shouquanidand.Equals("and"))
+                                        where = where.And(base_xiaoshou => base_xiaoshou.ShouquanID == int.Parse(shouquanid));
                                     else
-                                        where = where.Or(base_xiaoshou => base_xiaoshou.Leibie == int.Parse(leibie));
+                                        where = where.Or(base_xiaoshou => base_xiaoshou.ShouquanID == int.Parse(shouquanid));
                                 }
-                                if (leibieequal.Equals(">"))
+                            }
+                            break;
+                        case "xingming":
+                            string xingming = scld[1];
+                            string xingmingequal = scld[2];
+                            string xingmingand = scld[3];
+                            if (!string.IsNullOrEmpty(xingming))
+                            {
+                                if (xingmingequal.Equals("="))
                                 {
-                                    if (leibieand.Equals("and"))
-                                        where = where.And(base_xiaoshou => base_xiaoshou.Leibie > int.Parse(leibie));
+                                    if (xingmingand.Equals("and"))
+                                        where = where.And(base_xiaoshou => base_xiaoshou.Xingming == xingming);
                                     else
-                                        where = where.Or(base_xiaoshou => base_xiaoshou.Leibie > int.Parse(leibie));
+                                        where = where.Or(base_xiaoshou => base_xiaoshou.Xingming == xingming);
                                 }
-                                if (leibieequal.Equals("<"))
+                                if (xingmingequal.Equals("like"))
                                 {
-                                    if (leibieand.Equals("and"))
-                                        where = where.And(base_xiaoshou => base_xiaoshou.Leibie < int.Parse(leibie));
+                                    if (xingmingand.Equals("and"))
+                                        where = where.And(base_xiaoshou => base_xiaoshou.Xingming.Contains(xingming));
                                     else
-                                        where = where.Or(base_xiaoshou => base_xiaoshou.Leibie < int.Parse(leibie));
+                                        where = where.Or(base_xiaoshou => base_xiaoshou.Xingming.Contains(xingming));
                                 }
                             }
                             break;
@@ -134,27 +142,12 @@ namespace CKWMS.Controllers
                         else
                             where = where.Or(base_xiaoshou => base_xiaoshou.ShouquanID == int.Parse(shouquanid));
                     }
-                    if (shouquanidequal.Equals(">"))
-                    {
-                        if (shouquanidand.Equals("and"))
-                            where = where.And(base_xiaoshou => base_xiaoshou.ShouquanID > int.Parse(shouquanid));
-                        else
-                            where = where.Or(base_xiaoshou => base_xiaoshou.ShouquanID > int.Parse(shouquanid));
-                    }
-                    if (shouquanidequal.Equals("<"))
-                    {
-                        if (shouquanidand.Equals("and"))
-                            where = where.And(base_xiaoshou => base_xiaoshou.ShouquanID < int.Parse(shouquanid));
-                        else
-                            where = where.Or(base_xiaoshou => base_xiaoshou.ShouquanID < int.Parse(shouquanid));
-                    }
                 }
                 if (!string.IsNullOrEmpty(shouquanid))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouquanid", shouquanid, shouquanidequal, shouquanidand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouquanid", "", shouquanidequal, shouquanidand);
-
-
+                
                 if (!string.IsNullOrEmpty(xingming))
                 {
                     if (xingmingequal.Equals("="))
@@ -190,20 +183,6 @@ namespace CKWMS.Controllers
                             where = where.And(base_xiaoshou => base_xiaoshou.ShouquanID == int.Parse(shouquanid));
                         else
                             where = where.Or(base_xiaoshou => base_xiaoshou.ShouquanID == int.Parse(shouquanid));
-                    }
-                    if (shouquanidequal.Equals(">"))
-                    {
-                        if (shouquanidand.Equals("and"))
-                            where = where.And(base_xiaoshou => base_xiaoshou.ShouquanID > int.Parse(shouquanid));
-                        else
-                            where = where.Or(base_xiaoshou => base_xiaoshou.ShouquanID > int.Parse(shouquanid));
-                    }
-                    if (shouquanidequal.Equals("<"))
-                    {
-                        if (shouquanidand.Equals("and"))
-                            where = where.And(base_xiaoshou => base_xiaoshou.ShouquanID < int.Parse(shouquanid));
-                        else
-                            where = where.Or(base_xiaoshou => base_xiaoshou.ShouquanID < int.Parse(shouquanid));
                     }
                 }
                 if (!string.IsNullOrEmpty(shouquanid))

@@ -55,6 +55,28 @@ namespace CKWMS.Controllers
                                 }
                             }
                             break;
+                        case "mingcheng":
+                            string mingcheng = scld[1];
+                            string mingchengequal = scld[2];
+                            string mingchengand = scld[3];
+                            if (!string.IsNullOrEmpty(mingcheng))
+                            {
+                                if (mingchengequal.Equals("="))
+                                {
+                                    if (mingchengand.Equals("and"))
+                                        where = where.And(base_bumen => base_bumen.Mingcheng == mingcheng);
+                                    else
+                                        where = where.Or(base_bumen => base_bumen.Mingcheng == mingcheng);
+                                }
+                                if (mingchengequal.Equals("like"))
+                                {
+                                    if (mingchengand.Equals("and"))
+                                        where = where.And(base_bumen => base_bumen.Mingcheng.Contains(mingcheng));
+                                    else
+                                        where = where.Or(base_bumen => base_bumen.Mingcheng.Contains(mingcheng));
+                                }
+                            }
+                            break;
                         default:
                             break;
                     }

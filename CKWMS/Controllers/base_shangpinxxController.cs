@@ -47,19 +47,49 @@ namespace CKWMS.Controllers
                                     else
                                         where = where.Or(base_shangpin_v => base_shangpin_v.huozhuid == int.Parse(huozhuid));
                                 }
-                                if (huozhuidequal.Equals(">"))
+                            }
+                            break;
+                        case "daima":
+                            string daima = scld[1];
+                            string daimaequal = scld[2];
+                            string daimaand = scld[3];
+                            if (!string.IsNullOrEmpty(daima))
+                            {
+                                if (daimaequal.Equals("="))
                                 {
-                                    if (huozhuidand.Equals("and"))
-                                        where = where.And(base_shangpin_v => base_shangpin_v.huozhuid > int.Parse(huozhuid));
+                                    if (daimaand.Equals("and"))
+                                        where = where.And(base_shangpin_v => base_shangpin_v.daima == daima);
                                     else
-                                        where = where.Or(base_shangpin_v => base_shangpin_v.huozhuid > int.Parse(huozhuid));
+                                        where = where.Or(base_shangpin_v => base_shangpin_v.daima == daima);
                                 }
-                                if (huozhuidequal.Equals("<"))
+                                if (daimaequal.Equals("like"))
                                 {
-                                    if (huozhuidand.Equals("and"))
-                                        where = where.And(base_shangpin_v => base_shangpin_v.huozhuid < int.Parse(huozhuid));
+                                    if (daimaand.Equals("and"))
+                                        where = where.And(base_shangpin_v => base_shangpin_v.daima.Contains(daima));
                                     else
-                                        where = where.Or(base_shangpin_v => base_shangpin_v.huozhuid < int.Parse(huozhuid));
+                                        where = where.Or(base_shangpin_v => base_shangpin_v.daima.Contains(daima));
+                                }
+                            }
+                            break;
+                        case "mingcheng":
+                            string mingcheng = scld[1];
+                            string mingchengequal = scld[2];
+                            string mingchengand = scld[3];
+                            if (!string.IsNullOrEmpty(mingcheng))
+                            {
+                                if (mingchengequal.Equals("="))
+                                {
+                                    if (mingchengand.Equals("and"))
+                                        where = where.And(base_shangpin_v => base_shangpin_v.mingcheng == mingcheng);
+                                    else
+                                        where = where.Or(base_shangpin_v => base_shangpin_v.mingcheng == mingcheng);
+                                }
+                                if (mingchengequal.Equals("like"))
+                                {
+                                    if (mingchengand.Equals("and"))
+                                        where = where.And(base_shangpin_v => base_shangpin_v.mingcheng.Contains(mingcheng));
+                                    else
+                                        where = where.Or(base_shangpin_v => base_shangpin_v.mingcheng.Contains(mingcheng));
                                 }
                             }
                             break;
@@ -113,20 +143,6 @@ namespace CKWMS.Controllers
                             where = where.And(base_shangpin_v => base_shangpin_v.huozhuid == int.Parse(huozhuid));
                         else
                             where = where.Or(base_shangpin_v => base_shangpin_v.huozhuid == int.Parse(huozhuid));
-                    }
-                    if (huozhuidequal.Equals(">"))
-                    {
-                        if (huozhuidand.Equals("and"))
-                            where = where.And(base_shangpin_v => base_shangpin_v.huozhuid > int.Parse(huozhuid));
-                        else
-                            where = where.Or(base_shangpin_v => base_shangpin_v.huozhuid > int.Parse(huozhuid));
-                    }
-                    if (huozhuidequal.Equals("<"))
-                    {
-                        if (huozhuidand.Equals("and"))
-                            where = where.And(base_shangpin_v => base_shangpin_v.huozhuid < int.Parse(huozhuid));
-                        else
-                            where = where.Or(base_shangpin_v => base_shangpin_v.huozhuid < int.Parse(huozhuid));
                     }
                 }
                 if (!string.IsNullOrEmpty(huozhuid))
@@ -192,20 +208,6 @@ namespace CKWMS.Controllers
                             where = where.And(base_shangpin_v => base_shangpin_v.huozhuid == int.Parse(huozhuid));
                         else
                             where = where.Or(base_shangpin_v => base_shangpin_v.huozhuid == int.Parse(huozhuid));
-                    }
-                    if (huozhuidequal.Equals(">"))
-                    {
-                        if (huozhuidand.Equals("and"))
-                            where = where.And(base_shangpin_v => base_shangpin_v.huozhuid > int.Parse(huozhuid));
-                        else
-                            where = where.Or(base_shangpin_v => base_shangpin_v.huozhuid > int.Parse(huozhuid));
-                    }
-                    if (huozhuidequal.Equals("<"))
-                    {
-                        if (huozhuidand.Equals("and"))
-                            where = where.And(base_shangpin_v => base_shangpin_v.huozhuid < int.Parse(huozhuid));
-                        else
-                            where = where.Or(base_shangpin_v => base_shangpin_v.huozhuid < int.Parse(huozhuid));
                     }
                 }
                 if (!string.IsNullOrEmpty(huozhuid))

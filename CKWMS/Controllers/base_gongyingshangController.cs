@@ -20,7 +20,7 @@ namespace CKWMS.Controllers
 
         //private GongyingshangContext db = new GongyingshangContext();
         [OutputCache(Duration = 30)]
-        public ActionResult Index(/*string sortOrder,*/string page,string sortOrder)
+        public ActionResult Index(/*string sortOrder,*/string page, string sortOrder)
         {
             if (string.IsNullOrEmpty(page))
                 page = "1";
@@ -42,22 +42,44 @@ namespace CKWMS.Controllers
                             string daimaequal = scld[2];
                             string daimaand = scld[3];
                             if (!string.IsNullOrEmpty(daima))
-            {
-                if (daimaequal.Equals("="))
-                {
-                    if (daimaand.Equals("and"))
-                        where = where.And(base_gongyingshang => base_gongyingshang.Daima == daima);
-                    else
-                        where = where.Or(base_gongyingshang => base_gongyingshang.Daima == daima);
-                }
-                if (daimaequal.Equals("like"))
-                {
-                    if (daimaand.Equals("and"))
-                        where = where.And(base_gongyingshang => base_gongyingshang.Daima.Contains(daima));
-                    else
-                        where = where.Or(base_gongyingshang => base_gongyingshang.Daima.Contains(daima));
-                }
-            }
+                            {
+                                if (daimaequal.Equals("="))
+                                {
+                                    if (daimaand.Equals("and"))
+                                        where = where.And(base_gongyingshang => base_gongyingshang.Daima == daima);
+                                    else
+                                        where = where.Or(base_gongyingshang => base_gongyingshang.Daima == daima);
+                                }
+                                if (daimaequal.Equals("like"))
+                                {
+                                    if (daimaand.Equals("and"))
+                                        where = where.And(base_gongyingshang => base_gongyingshang.Daima.Contains(daima));
+                                    else
+                                        where = where.Or(base_gongyingshang => base_gongyingshang.Daima.Contains(daima));
+                                }
+                            }
+                            break;
+                        case "mingcheng":
+                            string mingcheng = scld[1];
+                            string mingchengequal = scld[2];
+                            string mingchengand = scld[3];
+                            if (!string.IsNullOrEmpty(mingcheng))
+                            {
+                                if (mingchengequal.Equals("="))
+                                {
+                                    if (mingchengand.Equals("and"))
+                                        where = where.And(base_gongyingshang => base_gongyingshang.Mingcheng == mingcheng);
+                                    else
+                                        where = where.Or(base_gongyingshang => base_gongyingshang.Mingcheng == mingcheng);
+                                }
+                                if (mingchengequal.Equals("like"))
+                                {
+                                    if (mingchengand.Equals("and"))
+                                        where = where.And(base_gongyingshang => base_gongyingshang.Mingcheng.Contains(mingcheng));
+                                    else
+                                        where = where.Or(base_gongyingshang => base_gongyingshang.Mingcheng.Contains(mingcheng));
+                                }
+                            }
                             break;
                         default:
                             break;
@@ -194,9 +216,6 @@ namespace CKWMS.Controllers
             string mingcheng = Request["mingcheng"] ?? "";
             string mingchengequal = Request["mingchengequal"] ?? "";
             string mingchengand = Request["mingchengand"] ?? "";
-            string shouying = Request["shouying"] ?? "";
-            string shouyingequal = Request["shouyingequal"] ?? "";
-            string shouyingand = Request["shouyingand"] ?? "";
             Expression<Func<base_gongyingshang, bool>> where = PredicateExtensionses.True<base_gongyingshang>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -204,6 +223,7 @@ namespace CKWMS.Controllers
                 sc = new searchcondition();
                 sc.UserID = userid;
                 sc.PageBrief = pagetag;
+                //daima
                 if (!string.IsNullOrEmpty(daima))
                 {
                     if (daimaequal.Equals("="))
@@ -225,8 +245,7 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "daima", daima, daimaequal, daimaand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "daima", "", daimaequal, daimaand);
-
-                //name
+                //mingcheng
                 if (!string.IsNullOrEmpty(mingcheng))
                 {
                     if (mingchengequal.Equals("="))
@@ -248,34 +267,13 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", mingcheng, mingchengequal, mingchengand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", "", mingchengequal, mingchengand);
-
-                if (!string.IsNullOrEmpty(shouying))
-                {
-                    if (shouyingequal.Equals("="))
-                    {
-                        if (shouyingand.Equals("and"))
-                            where = where.And(base_gongyingshang => MvcApplication.ShouYingZhuangTai[(int)base_gongyingshang.Shouying] == shouying);
-                        else
-                            where = where.Or(base_gongyingshang => MvcApplication.ShouYingZhuangTai[(int)base_gongyingshang.Shouying] == shouying);
-                    }
-                    if (shouyingequal.Equals("like"))
-                    {
-                        if (shouyingand.Equals("and"))
-                            where = where.And(base_gongyingshang => MvcApplication.ShouYingZhuangTai[(int)base_gongyingshang.Shouying].Contains(shouying));
-                        else
-                            where = where.Or(base_gongyingshang => MvcApplication.ShouYingZhuangTai[(int)base_gongyingshang.Shouying].Contains(shouying));
-                    }
-                }
-                if (!string.IsNullOrEmpty(shouying))
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouying", shouying, shouyingequal, shouyingand);
-                else
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouying", "", shouyingequal, shouyingand);
 
                 searchconditionService.GetInstance().AddEntity(sc);
             }
             else
             {
                 sc.ConditionInfo = "";
+                //daima
                 if (!string.IsNullOrEmpty(daima))
                 {
                     if (daimaequal.Equals("="))
@@ -297,8 +295,7 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "daima", daima, daimaequal, daimaand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "daima", "", daimaequal, daimaand);
-
-                //name
+                //mingcheng
                 if (!string.IsNullOrEmpty(mingcheng))
                 {
                     if (mingchengequal.Equals("="))
@@ -320,28 +317,6 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", mingcheng, mingchengequal, mingchengand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", "", mingchengequal, mingchengand);
-
-                if (!string.IsNullOrEmpty(shouying))
-                {
-                    if (shouyingequal.Equals("="))
-                    {
-                        if (shouyingand.Equals("and"))
-                            where = where.And(base_gongyingshang => MvcApplication.ShouYingZhuangTai[(int)base_gongyingshang.Shouying] == shouying);
-                        else
-                            where = where.Or(base_gongyingshang => MvcApplication.ShouYingZhuangTai[(int)base_gongyingshang.Shouying] == shouying);
-                    }
-                    if (shouyingequal.Equals("like"))
-                    {
-                        if (shouyingand.Equals("and"))
-                            where = where.And(base_gongyingshang => MvcApplication.ShouYingZhuangTai[(int)base_gongyingshang.Shouying].Contains(shouying));
-                        else
-                            where = where.Or(base_gongyingshang => MvcApplication.ShouYingZhuangTai[(int)base_gongyingshang.Shouying].Contains(shouying));
-                    }
-                }
-                if (!string.IsNullOrEmpty(shouying))
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouying", shouying, shouyingequal, shouyingand);
-                else
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouying", "", shouyingequal, shouyingand);
 
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
@@ -349,17 +324,13 @@ namespace CKWMS.Controllers
             where = where.And(base_gongyingshang => base_gongyingshang.IsDelete == false);
 
             var tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), false, base_gongyingshang => base_gongyingshang.ID).ToPagedList<base_gongyingshang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
-            
-
             ViewBag.base_gongyingshang = tempData;
-
-            
             return View(tempData);
         }
 
         public ActionResult Add(string page)
         {
-           
+
             ViewBag.userid = (int)Session["user_id"];
             return View();
         }
@@ -376,7 +347,7 @@ namespace CKWMS.Controllers
             string jingyingxukeyxq = Request["ob_base_gongyingshang_jingyingxukeyxq"] ?? "";
             string jingyingxuketp = Request["ob_base_gongyingshang_jingyingxuketp"] ?? "";
             string jingyingfanwei = Request["ob_base_gongyingshang_jingyingfanwei"] ?? "";
-            string jingyingfanweidm = Request["ob_base_gongyingshang_jingyingfanweidm"] ?? "";           
+            string jingyingfanweidm = Request["ob_base_gongyingshang_jingyingfanweidm"] ?? "";
             string shouying = Request["ob_base_gongyingshang_shouying"] ?? "";
             string makedate = Request["ob_base_gongyingshang_makedate"] ?? "";
             string makeman = Request["ob_base_gongyingshang_makeman"] ?? "";
@@ -428,7 +399,7 @@ namespace CKWMS.Controllers
                 {
                     flag = -2;
                 }
-                else { flag = 1; }             
+                else { flag = 1; }
             }
             catch (Exception ex)
             {
@@ -441,7 +412,7 @@ namespace CKWMS.Controllers
         }
         public ActionResult Edit(int id)
         {
-            
+
             base_gongyingshang tempData = ob_base_gongyingshangservice.GetEntityById(base_gongyingshang => base_gongyingshang.ID == id && base_gongyingshang.IsDelete == false);
             ViewBag.base_gongyingshang = tempData;
             return View();
@@ -479,7 +450,7 @@ namespace CKWMS.Controllers
 
         public ActionResult Update()
         {
-            
+
             string id = Request["ob_base_gongyingshang_id"] ?? "";
             string daima = Request["ob_base_gongyingshang_daima"] ?? "";
             string mingcheng = Request["ob_base_gongyingshang_mingcheng"] ?? "";
@@ -573,8 +544,8 @@ namespace CKWMS.Controllers
         }
     }
 
-    
 
-    
+
+
 }
 

@@ -55,6 +55,28 @@ namespace CKWMS.Controllers
                                 }
                             }
                             break;
+                        case "mingcheng":
+                            string mingcheng = scld[1];
+                            string mingchengequal = scld[2];
+                            string mingchengand = scld[3];
+                            if (!string.IsNullOrEmpty(mingcheng))
+                            {
+                                if (mingchengequal.Equals("="))
+                                {
+                                    if (mingchengand.Equals("and"))
+                                        where = where.And(base_huobi => base_huobi.Mingcheng == mingcheng);
+                                    else
+                                        where = where.Or(base_huobi => base_huobi.Mingcheng == mingcheng);
+                                }
+                                if (mingchengequal.Equals("like"))
+                                {
+                                    if (mingchengand.Equals("and"))
+                                        where = where.And(base_huobi => base_huobi.Mingcheng.Contains(mingcheng));
+                                    else
+                                        where = where.Or(base_huobi => base_huobi.Mingcheng.Contains(mingcheng));
+                                }
+                            }
+                            break;
                         default:
                             break;
                     }
@@ -76,9 +98,11 @@ namespace CKWMS.Controllers
             int userid = (int)Session["user_id"];
             string pagetag = "base_huobi_index";
             string page = "1";
+            //bianhao
             string bianhao = Request["bianhao"] ?? "";
             string bianhaoequal = Request["bianhaoequal"] ?? "";
             string bianhaoand = Request["bianhaoand"] ?? "";
+            //mingcheng
             string mingcheng = Request["mingcheng"] ?? "";
             string mingchengequal = Request["mingchengequal"] ?? "";
             string mingchengand = Request["mingchengand"] ?? "";
@@ -89,6 +113,7 @@ namespace CKWMS.Controllers
                 sc = new searchcondition();
                 sc.UserID = userid;
                 sc.PageBrief = pagetag;
+                //bianhao
                 if (!string.IsNullOrEmpty(bianhao))
                 {
                     if (bianhaoequal.Equals("="))
@@ -110,7 +135,7 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bianhao", bianhao, bianhaoequal, bianhaoand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bianhao", "", bianhaoequal, bianhaoand);
-
+                //mingcheng
                 if (!string.IsNullOrEmpty(mingcheng))
                 {
                     if (mingchengequal.Equals("="))
@@ -138,6 +163,7 @@ namespace CKWMS.Controllers
             else
             {
                 sc.ConditionInfo = "";
+                //bianhao
                 if (!string.IsNullOrEmpty(bianhao))
                 {
                     if (bianhaoequal.Equals("="))
@@ -159,7 +185,7 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bianhao", bianhao, bianhaoequal, bianhaoand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bianhao", "", bianhaoequal, bianhaoand);
-
+                //mingcheng
                 if (!string.IsNullOrEmpty(mingcheng))
                 {
                     if (mingchengequal.Equals("="))

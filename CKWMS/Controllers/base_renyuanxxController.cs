@@ -44,25 +44,47 @@ namespace CKWMS.Controllers
                     string[] scld = scl.Split(',');
                     switch (scld[0])
                     {
-                        case "bianhao":
-                            string bianhao = scld[1];
-                            string bianhaoequal = scld[2];
-                            string bianhaoand = scld[3];
-                            if (!string.IsNullOrEmpty(bianhao))
+                        case "mingcheng":
+                            string mingcheng = scld[1];
+                            string mingchengequal = scld[2];
+                            string mingchengand = scld[3];
+                            if (!string.IsNullOrEmpty(mingcheng))
                             {
-                                if (bianhaoequal.Equals("="))
+                                if (mingchengequal.Equals("="))
                                 {
-                                    if (bianhaoand.Equals("and"))
-                                        where = where.And(base_renyuanxx => base_renyuanxx.Bianhao == bianhao);
+                                    if (mingchengand.Equals("and"))
+                                        where = where.And(base_renyuanxx => base_renyuanxx.Mingcheng == mingcheng);
                                     else
-                                        where = where.Or(base_renyuanxx => base_renyuanxx.Bianhao == bianhao);
+                                        where = where.Or(base_renyuanxx => base_renyuanxx.Mingcheng == mingcheng);
                                 }
-                                if (bianhaoequal.Equals("like"))
+                                if (mingchengequal.Equals("like"))
                                 {
-                                    if (bianhaoand.Equals("and"))
-                                        where = where.And(base_renyuanxx => base_renyuanxx.Bianhao.Contains(bianhao));
+                                    if (mingchengand.Equals("and"))
+                                        where = where.And(base_renyuanxx => base_renyuanxx.Mingcheng.Contains(mingcheng));
                                     else
-                                        where = where.Or(base_renyuanxx => base_renyuanxx.Bianhao.Contains(bianhao));
+                                        where = where.Or(base_renyuanxx => base_renyuanxx.Mingcheng.Contains(mingcheng));
+                                }
+                            }
+                            break;
+                        case "bumen":
+                            string bumen = scld[1];
+                            string bumenequal = scld[2];
+                            string bumenand = scld[3];
+                            if (!string.IsNullOrEmpty(bumen))
+                            {
+                                if (bumenequal.Equals("="))
+                                {
+                                    if (bumenand.Equals("and"))
+                                        where = where.And(base_renyuanxx => base_renyuanxx.Bumen == bumen);
+                                    else
+                                        where = where.Or(base_renyuanxx => base_renyuanxx.Bumen == bumen);
+                                }
+                                if (bumenequal.Equals("like"))
+                                {
+                                    if (bumenand.Equals("and"))
+                                        where = where.And(base_renyuanxx => base_renyuanxx.Bumen.Contains(bumen));
+                                    else
+                                        where = where.Or(base_renyuanxx => base_renyuanxx.Bumen.Contains(bumen));
                                 }
                             }
                             break;
@@ -87,9 +109,6 @@ namespace CKWMS.Controllers
             int userid = (int)Session["user_id"];
             string pagetag = "base_renyuanxx_index";
             string page = "1";
-            string bianhao = Request["bianhao"] ?? "";
-            string bianhaoequal = Request["bianhaoequal"] ?? "";
-            string bianhaoand = Request["bianhaoand"] ?? "";
             //mingcheng
             string mingcheng = Request["mingcheng"] ?? "";
             string mingchengequal = Request["mingchengequal"] ?? "";
@@ -105,28 +124,6 @@ namespace CKWMS.Controllers
                 sc = new searchcondition();
                 sc.UserID = userid;
                 sc.PageBrief = pagetag;
-                //bianhao
-                if (!string.IsNullOrEmpty(bianhao))
-                {
-                    if (bianhaoequal.Equals("="))
-                    {
-                        if (bianhaoand.Equals("and"))
-                            where = where.And(base_renyuanxx => base_renyuanxx.Bianhao == bianhao);
-                        else
-                            where = where.Or(base_renyuanxx => base_renyuanxx.Bianhao == bianhao);
-                    }
-                    if (bianhaoequal.Equals("like"))
-                    {
-                        if (bianhaoand.Equals("and"))
-                            where = where.And(base_renyuanxx => base_renyuanxx.Bianhao.Contains(bianhao));
-                        else
-                            where = where.Or(base_renyuanxx => base_renyuanxx.Bianhao.Contains(bianhao));
-                    }
-                }
-                if (!string.IsNullOrEmpty(bianhao))
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bianhao", bianhao, bianhaoequal, bianhaoand);
-                else
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bianhao", "", bianhaoequal, bianhaoand);
                 //mingcheng
                 if (!string.IsNullOrEmpty(mingcheng))
                 {
@@ -176,28 +173,6 @@ namespace CKWMS.Controllers
             else
             {
                 sc.ConditionInfo = "";
-                //bianhao
-                if (!string.IsNullOrEmpty(bianhao))
-                {
-                    if (bianhaoequal.Equals("="))
-                    {
-                        if (bianhaoand.Equals("and"))
-                            where = where.And(base_renyuanxx => base_renyuanxx.Bianhao == bianhao);
-                        else
-                            where = where.Or(base_renyuanxx => base_renyuanxx.Bianhao == bianhao);
-                    }
-                    if (bianhaoequal.Equals("like"))
-                    {
-                        if (bianhaoand.Equals("and"))
-                            where = where.And(base_renyuanxx => base_renyuanxx.Bianhao.Contains(bianhao));
-                        else
-                            where = where.Or(base_renyuanxx => base_renyuanxx.Bianhao.Contains(bianhao));
-                    }
-                }
-                if (!string.IsNullOrEmpty(bianhao))
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bianhao", bianhao, bianhaoequal, bianhaoand);
-                else
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bianhao", "", bianhaoequal, bianhaoand);
                 //mingcheng
                 if (!string.IsNullOrEmpty(mingcheng))
                 {

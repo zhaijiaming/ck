@@ -84,9 +84,18 @@ namespace CKWMS.Controllers
             int userid = (int)Session["user_id"];
             string pagetag = "base_qixiemulu_index";
             string page = "1";
+            //bianhao
             string bianhao = Request["bianhao"] ?? "";
             string bianhaoequal = Request["bianhaoequal"] ?? "";
             string bianhaoand = Request["bianhaoand"] ?? "";
+            //mingcheng
+            string mingcheng = Request["mingcheng"] ?? "";
+            string mingchengequal = Request["mingchengequal"] ?? "";
+            string mingchengand = Request["mingchengand"] ?? "";
+            //guanlifl
+            string guanlifl = Request["guanlifl"] ?? "";
+            string guanliflequal = Request["guanliflequal"] ?? "";
+            string guanlifland = Request["guanlifland"] ?? "";
             Expression<Func<base_qixiemulu, bool>> where = PredicateExtensionses.True<base_qixiemulu>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -94,6 +103,7 @@ namespace CKWMS.Controllers
                 sc = new searchcondition();
                 sc.UserID = userid;
                 sc.PageBrief = pagetag;
+                //bianhao
                 if (!string.IsNullOrEmpty(bianhao))
                 {
                     if (bianhaoequal.Equals("="))
@@ -115,6 +125,44 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bianhao", bianhao, bianhaoequal, bianhaoand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bianhao", "", bianhaoequal, bianhaoand);
+                //mingcheng
+                if (!string.IsNullOrEmpty(mingcheng))
+                {
+                    if (mingchengequal.Equals("="))
+                    {
+                        if (mingchengand.Equals("and"))
+                            where = where.And(base_qixiemulu => base_qixiemulu.Mingcheng == mingcheng);
+                        else
+                            where = where.Or(base_qixiemulu => base_qixiemulu.Mingcheng == mingcheng);
+                    }
+                    if (mingchengequal.Equals("like"))
+                    {
+                        if (mingchengand.Equals("and"))
+                            where = where.And(base_qixiemulu => base_qixiemulu.Mingcheng.Contains(mingcheng));
+                        else
+                            where = where.Or(base_qixiemulu => base_qixiemulu.Mingcheng.Contains(mingcheng));
+                    }
+                }
+                if (!string.IsNullOrEmpty(mingcheng))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", mingcheng, mingchengequal, mingchengand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", "", mingchengequal, mingchengand);
+                //guanlifl
+                if (!string.IsNullOrEmpty(guanlifl))
+                {
+                    if (guanliflequal.Equals("="))
+                    {
+                        if (guanlifland.Equals("and"))
+                            where = where.And(base_qixiemulu => base_qixiemulu.GuanliFL == int.Parse(guanlifl));
+                        else
+                            where = where.Or(base_qixiemulu => base_qixiemulu.GuanliFL == int.Parse(guanlifl));
+                    }
+                }
+                if (!string.IsNullOrEmpty(guanlifl))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "guanlifl", guanlifl, guanliflequal, guanlifland);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "guanlifl", "", guanliflequal, guanlifland);
+
                 searchconditionService.GetInstance().AddEntity(sc);
             }
             else

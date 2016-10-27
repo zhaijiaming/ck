@@ -56,19 +56,27 @@ namespace CKWMS.Controllers
                                     else
                                         where = where.Or(base_chanpinxian => base_chanpinxian.Huozhuxuhao == int.Parse(huozhuxuhao));
                                 }
-                                if (huozhuxuhaoequal.Equals(">"))
+                            }
+                            break;
+                        case "mingcheng":
+                            string mingcheng = scld[1];
+                            string mingchengequal = scld[2];
+                            string mingchengand = scld[3];
+                            if (!string.IsNullOrEmpty(mingcheng))
+                            {
+                                if (mingchengequal.Equals("="))
                                 {
-                                    if (huozhuxuhaoand.Equals("and"))
-                                        where = where.And(base_chanpinxian => base_chanpinxian.Huozhuxuhao > int.Parse(huozhuxuhao));
+                                    if (mingchengand.Equals("and"))
+                                        where = where.And(base_chanpinxian => base_chanpinxian.Mingcheng == mingcheng);
                                     else
-                                        where = where.Or(base_chanpinxian => base_chanpinxian.Huozhuxuhao > int.Parse(huozhuxuhao));
+                                        where = where.Or(base_chanpinxian => base_chanpinxian.Mingcheng == mingcheng);
                                 }
-                                if (huozhuxuhaoequal.Equals("<"))
+                                if (mingchengequal.Equals("like"))
                                 {
-                                    if (huozhuxuhaoand.Equals("and"))
-                                        where = where.And(base_chanpinxian => base_chanpinxian.Huozhuxuhao < int.Parse(huozhuxuhao));
+                                    if (mingchengand.Equals("and"))
+                                        where = where.And(base_chanpinxian => base_chanpinxian.Mingcheng.Contains(mingcheng));
                                     else
-                                        where = where.Or(base_chanpinxian => base_chanpinxian.Huozhuxuhao < int.Parse(huozhuxuhao));
+                                        where = where.Or(base_chanpinxian => base_chanpinxian.Mingcheng.Contains(mingcheng));
                                 }
                             }
                             break;
@@ -92,17 +100,14 @@ namespace CKWMS.Controllers
             int userid = (int)Session["user_id"];
             string pagetag = "base_chanpinxian_index";
             string page = "1";
-
             //huozhuxuhao
             string huozhuxuhao = Request["huozhuxuhao"] ?? "";
             string huozhuxuhaoequal = Request["huozhuxuhaoequal"] ?? "";
             string huozhuxuhaoand = Request["huozhuxuhaoand"] ?? "";
-
             //mingcheng
             string mingcheng = Request["mingcheng"] ?? "";
             string mingchengequal = Request["mingchengequal"] ?? "";
             string mingchengand = Request["mingchengand"] ?? "";
-
             Expression<Func<base_chanpinxian, bool>> where = PredicateExtensionses.True<base_chanpinxian>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -120,26 +125,11 @@ namespace CKWMS.Controllers
                         else
                             where = where.Or(base_chanpinxian => base_chanpinxian.Huozhuxuhao == int.Parse(huozhuxuhao));
                     }
-                    if (huozhuxuhaoequal.Equals(">"))
-                    {
-                        if (huozhuxuhaoand.Equals("and"))
-                            where = where.And(base_chanpinxian => base_chanpinxian.Huozhuxuhao > int.Parse(huozhuxuhao));
-                        else
-                            where = where.Or(base_chanpinxian => base_chanpinxian.Huozhuxuhao > int.Parse(huozhuxuhao));
-                    }
-                    if (huozhuxuhaoequal.Equals("<"))
-                    {
-                        if (huozhuxuhaoand.Equals("and"))
-                            where = where.And(base_chanpinxian => base_chanpinxian.Huozhuxuhao < int.Parse(huozhuxuhao));
-                        else
-                            where = where.Or(base_chanpinxian => base_chanpinxian.Huozhuxuhao < int.Parse(huozhuxuhao));
-                    }
                 }
                 if (!string.IsNullOrEmpty(huozhuxuhao))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuxuhao", huozhuxuhao, huozhuxuhaoequal, huozhuxuhaoand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuxuhao", "", huozhuxuhaoequal, huozhuxuhaoand);
-
                 //mingcheng
                 if (!string.IsNullOrEmpty(mingcheng))
                 {
@@ -177,26 +167,11 @@ namespace CKWMS.Controllers
                         else
                             where = where.Or(base_chanpinxian => base_chanpinxian.Huozhuxuhao == int.Parse(huozhuxuhao));
                     }
-                    if (huozhuxuhaoequal.Equals(">"))
-                    {
-                        if (huozhuxuhaoand.Equals("and"))
-                            where = where.And(base_chanpinxian => base_chanpinxian.Huozhuxuhao > int.Parse(huozhuxuhao));
-                        else
-                            where = where.Or(base_chanpinxian => base_chanpinxian.Huozhuxuhao > int.Parse(huozhuxuhao));
-                    }
-                    if (huozhuxuhaoequal.Equals("<"))
-                    {
-                        if (huozhuxuhaoand.Equals("and"))
-                            where = where.And(base_chanpinxian => base_chanpinxian.Huozhuxuhao < int.Parse(huozhuxuhao));
-                        else
-                            where = where.Or(base_chanpinxian => base_chanpinxian.Huozhuxuhao < int.Parse(huozhuxuhao));
-                    }
                 }
                 if (!string.IsNullOrEmpty(huozhuxuhao))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuxuhao", huozhuxuhao, huozhuxuhaoequal, huozhuxuhaoand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuxuhao", "", huozhuxuhaoequal, huozhuxuhaoand);
-
                 //mingcheng
                 if (!string.IsNullOrEmpty(mingcheng))
                 {

@@ -47,6 +47,7 @@
         scm.ItemType = "System.String";
         scms.Add(scm);
 
+        scm = new SearchConditionModel();
         scm.ItemCode = "Mingcheng";
         scm.ItemTitle = "名称";
         scm.ItemType = "System.String";
@@ -73,7 +74,6 @@
             scm.ItemCode = "Mingcheng";
             scm.ItemTitle = "名称";
             scm.ItemType = "System.String";
-
             if (scs.Length > 1)
             {
                 scm.ItemValue = scs[1].Split(',')[1];

@@ -62,6 +62,28 @@ namespace CKWMS.Controllers
                                 }
                             }
                             break;
+                        case "miaoshu":
+                            string miaoshu = scld[1];
+                            string miaoshuequal = scld[2];
+                            string miaoshuand = scld[3];
+                            if (!string.IsNullOrEmpty(miaoshu))
+                            {
+                                if (miaoshuequal.Equals("="))
+                                {
+                                    if (miaoshuand.Equals("and"))
+                                        where = where.And(base_quyu => base_quyu.Miaoshu == miaoshu);
+                                    else
+                                        where = where.Or(base_quyu => base_quyu.Miaoshu == miaoshu);
+                                }
+                                if (miaoshuequal.Equals("like"))
+                                {
+                                    if (miaoshuand.Equals("and"))
+                                        where = where.And(base_quyu => base_quyu.Miaoshu.Contains(miaoshu));
+                                    else
+                                        where = where.Or(base_quyu => base_quyu.Miaoshu.Contains(miaoshu));
+                                }
+                            }
+                            break;
                         default:
                             break;
                     }
@@ -117,7 +139,7 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bianhao", bianhao, bianhaoequal, bianhaoand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "bianhao", "", bianhaoequal, bianhaoand);
-
+                //miaoshu
                 if (!string.IsNullOrEmpty(miaoshu))
                 {
                     if (miaoshuequal.Equals("="))
