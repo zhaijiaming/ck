@@ -105,10 +105,17 @@
                 return;
             }
             if (confirm("确定要删除这条拣货记录吗？")) {
-                $.post("/wms_jianhuo/delpick", { del: _pkid }, function (data) {
+                $.post("/wms_jianhuo/delpick",
+                    {
+                        del: _pkid,
+                        ck:$("#ckd").val()
+                    },
+                    function (data) {
                     if (data == -1)
                         alert("删除失败！");
-                    else
+                    if (data == -2)
+                        alert("拣货已经被完成，不能删除拣货记录！");
+                    if(data==1)
                         location.reload();
                 });
             }

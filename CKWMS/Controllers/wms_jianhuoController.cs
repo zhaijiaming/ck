@@ -397,8 +397,14 @@ namespace CKWMS.Controllers
         {
             int _userid = (int)Session["user_id"];
             var _delid = Request["del"] ?? "";
-            if (_delid == "")
+            var _ckid = Request["ck"] ?? "";
+            if (string.IsNullOrEmpty(_delid) || string.IsNullOrEmpty(_ckid))
                 return Json(-1);
+            wms_chukudan _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_ckid));
+            if (_ckd == null)
+                return Json(-1);
+            if (_ckd.JihuaZT > 2)
+                return Json(-2);
             wms_jianhuo _jh = ob_wms_jianhuoservice.GetEntityById(p => p.ID == int.Parse(_delid));
             if (_jh == null)
                 return Json(-1);
