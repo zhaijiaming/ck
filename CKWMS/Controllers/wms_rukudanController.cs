@@ -418,8 +418,11 @@ namespace CKWMS.Controllers
                 wms_rukudan _rkd = ob_wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_rkid));
                 if (_rkd != null)
                 {
-                    _rkd.RukuZT = 5;
-                    ob_wms_rukudanservice.UpdateEntity(_rkd);
+                    if (!(_rkd.YanshouSF && _rkd.RukuZT < 3))
+                    {
+                        _rkd.RukuZT = 5;
+                        ob_wms_rukudanservice.UpdateEntity(_rkd);
+                    }
                 }
             }
             return Json(1);
@@ -503,7 +506,7 @@ namespace CKWMS.Controllers
                 ob_wms_rukudan.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
                 ob_wms_rukudan.RukudanBH = rukudanbh.Trim();
                 ob_wms_rukudan.ZhijieSH = zhijiesh == "" ? false : Boolean.Parse(zhijiesh);
-                ob_wms_rukudan.CangkuID=cangkuid ==""?0:int.Parse(cangkuid);
+                ob_wms_rukudan.CangkuID = cangkuid == "" ? 0 : int.Parse(cangkuid);
                 ob_wms_rukudan = ob_wms_rukudanservice.AddEntity(ob_wms_rukudan);
                 id = ob_wms_rukudan.ID.ToString();
                 ViewBag.wms_rukudan = ob_wms_rukudan;
@@ -633,7 +636,7 @@ namespace CKWMS.Controllers
                 p.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
                 p.RukudanBH = rukudanbh.Trim();
                 p.CangkuID = cangkuid == "" ? 0 : int.Parse(cangkuid);
-                p.ZhijieSH= zhijiesh == "" ? false : Boolean.Parse(zhijiesh);
+                p.ZhijieSH = zhijiesh == "" ? false : Boolean.Parse(zhijiesh);
                 ob_wms_rukudanservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;
             }
@@ -670,7 +673,8 @@ namespace CKWMS.Controllers
             string viewHtml = ExportNow.RenderPartialViewToString(this, "Export");
             return File(System.Text.Encoding.UTF8.GetBytes(viewHtml), "application/ms-excel", string.Format("rdk_{0}.xls", DateTime.Now.ToShortDateString()));
         }
-        public ActionResult PrintRuKuXiangDan(){
+        public ActionResult PrintRuKuXiangDan()
+        {
             var rkxdid = Request["rkxdid"] ?? "";
             ViewBag.rkxdid = rkxdid;
             return View();

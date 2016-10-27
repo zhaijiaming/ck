@@ -386,7 +386,7 @@ namespace CKWMS.Controllers
         {
             int userid = (int)Session["user_id"];
             string page = Request["page"] ?? "1";
-            var tempData = ob_wms_chukudanservice.LoadSortEntities(wms_chukudan => wms_chukudan.IsDelete == false && wms_chukudan.JihuaZT<5, false, wms_chukudan => wms_chukudan.ID).ToPagedList<wms_chukudan>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            var tempData = ob_wms_chukudanservice.LoadSortEntities(wms_chukudan => wms_chukudan.IsDelete == false && wms_chukudan.JihuaZT < 5, false, wms_chukudan => wms_chukudan.ID).ToPagedList<wms_chukudan>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.wms_chukudan = tempData;
             return View(tempData);
         }
@@ -466,7 +466,7 @@ namespace CKWMS.Controllers
                 ob_wms_chukudan.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 ob_wms_chukudan.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
                 ob_wms_chukudan.ChukudanBH = chukudanbh.Trim();
-                ob_wms_chukudan.CKID= ckid == "" ? 0 : int.Parse(ckid);
+                ob_wms_chukudan.CKID = ckid == "" ? 0 : int.Parse(ckid);
                 ob_wms_chukudan = ob_wms_chukudanservice.AddEntity(ob_wms_chukudan);
                 ViewBag.wms_chukudan = ob_wms_chukudan;
             }
@@ -531,16 +531,21 @@ namespace CKWMS.Controllers
                 wms_chukudan _ckd = ob_wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_ckid));
                 if (_ckd != null)
                 {
-                    var _ckmx = ServiceFactory.wms_chukumxservice.LoadEntities(p => p.ChukuID == _ckd.ID && p.IsDelete==false).ToList<wms_chukumx>();
                     var _ng = false;
-                    if (_ckmx.Count == 0)
+                    if (_ckd.FuheSF && _ckd.JihuaZT < 3)
                         _ng = true;
-                    foreach (wms_chukumx mx in _ckmx)
+                    else
                     {
-                        if (mx.ChukuSL != mx.JianhuoSL)
-                        {
+                        var _ckmx = ServiceFactory.wms_chukumxservice.LoadEntities(p => p.ChukuID == _ckd.ID && p.IsDelete == false).ToList<wms_chukumx>();
+                        if (_ckmx.Count == 0)
                             _ng = true;
-                            break;
+                        foreach (wms_chukumx mx in _ckmx)
+                        {
+                            if (mx.ChukuSL != mx.JianhuoSL)
+                            {
+                                _ng = true;
+                                break;
+                            }
                         }
                     }
                     if (!_ng)

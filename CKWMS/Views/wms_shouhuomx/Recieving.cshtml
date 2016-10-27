@@ -57,7 +57,7 @@
                     });
             }
         });
-        $("#pl_fun").draggable({ containment: "parent" });
+        $("#pl_fun").draggable();
         //$("#dt_sh tbody").on("dblclick", "tr", function () {
         //    $("#pl_fun").show();
         //});
@@ -554,7 +554,7 @@
         </div>
     </div>
 </div>
-<div id="pl_fun" class="panel panel-info" style="display:none;position:fixed;top:200px;left:300px;width:200px;height:260px;overflow:auto;">
+<div id="pl_fun" class="panel panel-info" style="display:none;position:fixed;top:200px;left:300px;width:200px;overflow:auto;">
     <div class="panel-heading">
         <h3 class="panel-title">功能菜单<button id="pl_fn_close" class="pull-right">X</button></h3>
     </div>

@@ -29,7 +29,7 @@
             $("#pl_picklist").hide();
         });
         $("#pl_picklist").draggable({ handle: ".panel-heading" });
-        $("#pl_fun").draggable({ handle: '.tuodong' }, { containment: "parent" });
+        $("#pl_fun").draggable();
         $("#mydatatable tbody").on("dblclick", "tr", function () {
             $("#pl_fun").show();
         });
@@ -432,7 +432,7 @@
         </div>
     </div>
 </div>
-<div id="pl_fun" class="panel panel-info" style="display:none;position:fixed;top:200px;left:300px;width:200px;height:250px;overflow:auto;">
+<div id="pl_fun" class="panel panel-info" style="display:none;position:fixed;top:200px;left:300px;width:200px;overflow:auto;">
     <div class="panel-heading tuodong">
         <h3 class="panel-title">拣货<button id="pl_fn_close" class="pull-right">X</button></h3>
     </div>
