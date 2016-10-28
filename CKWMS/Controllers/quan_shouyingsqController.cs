@@ -410,13 +410,17 @@ namespace CKWMS.Controllers
         /// </summary>
         /// <returns>1 成功，0 不正常操作，-1 报错</returns>
         [HttpPost]
-        public int AuthorCheck(bool allow)
+        public int AuthorTopCheck()
         {
             try
             {
+                bool allow = false;
                 int _userid = (int)Session["user_id"];
                 string _username = (string)Session["user_name"];
                 string _authorval = Request["authorval"] ?? "";
+                var _allow = Request["allow"] ?? "";
+                if (_allow == "1")
+                    allow = true;
                 int _sq = 0;
                 string _shwords = "";
                 bool _ok = false;
@@ -521,13 +525,17 @@ namespace CKWMS.Controllers
         /// </summary>
         /// <returns>1 成功，-1 出错，0 不正常操作</returns>
         [HttpPost]
-        public int TopCheck(bool allow)
+        public int TopLowCheck()
         {
             try
             {
+                bool allow = false;
                 int _userid = (int)Session["user_id"];
                 string _username = (string)Session["user_name"];
                 string _topval = Request["topval"] ?? "";
+                var _allow = Request["allow"] ?? "";
+                if (_allow == "1")
+                    allow = true;
                 int _sq = 0;
                 string _shwords = "";
                 bool _ok = false;
@@ -555,7 +563,7 @@ namespace CKWMS.Controllers
                                 _shouyingsq.Fuzeren = _username;
                                 if (_ok)
                                 {
-                                    if (!allow)
+                                    if (allow)
                                         _shouyingsq.Zhuangtai = 4;
                                     else
                                         _shouyingsq.Zhuangtai = 5;
