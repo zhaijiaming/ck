@@ -119,6 +119,7 @@
                 alert("收货数量错误，请重新输入！");
                 return;
             }
+            $("#pl_Shouhuo").hide();
             $.post(
                 "/wms_shouhuomx/addbyrukumx",
                 {
@@ -138,7 +139,7 @@
                 },
                 function (data) {
                     if (data == -1)
-                        alert("收货信息保存失败！");
+                        alert("收货信息保存失败，请重试！");
                     else {
                         $("#dt_rk tr input[type=checkbox]").each(function () {
                             if ($(this).val() == $("#selrk").val()) {
@@ -160,7 +161,6 @@
                         ShouhuoList($("#rkd").val());
                     }
                 });
-            $("#pl_Shouhuo").hide();
         });
         $("#shcancel").click(function () {
             $("#pl_Shouhuo").hide();

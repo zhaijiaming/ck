@@ -35,7 +35,12 @@
             var u_id = _selrow.find('input');
             if (confirm("确实要删除此上架记录吗？") == true) {
                 var _sjid = u_id.data("sid");
-                $.post("/wms_cunhuo/delete", { del: _sjid }, function (data) { location.reload(); });
+                $.post("/wms_cunhuo/updelete", { del: _sjid }, function (data) {
+                    if (data == -1)
+                        alert("删除失败，请重试！");
+                    if (data == 1)
+                        location.reload();
+                });
             }
         });
         $(".icon-columns").click(function () {
@@ -79,6 +84,7 @@
                 alert("请输入正确的库位代码！");
                 return;
             }
+            $("#pl_yanshou").hide();
             var hege = true;
             if (eval($("#cargostate").val()) == 3)
                 hege = false;
@@ -116,7 +122,7 @@
             var _ssl = $("#sjSL").val();
             var _orn = $("#orinum").val();
             var _ml = $("#maxupload").val();
-            if (eval(_ssl) > eval(_ml) || eval(_ssl)<=0) {
+            if (eval(_ssl) > eval(_ml) || eval(_ssl) <= 0) {
                 alert("上架数量不对，请更正！");
                 return;
             }
@@ -291,7 +297,7 @@
         </div>
     </div>
 </div>
-<div id="pl_fun" class="panel panel-info" style="display:none;position:fixed;top:200px;left:300px;width:200px;height:250px;overflow:auto;">
+<div id="pl_fun" class="panel panel-info" style="display:none;position:fixed;top:200px;left:300px;width:200px;overflow:auto;">
     <div class="panel-heading">
         <h3 class="panel-title">功能菜单<button id="pl_fn_close" class="pull-right">X</button></h3>
     </div>

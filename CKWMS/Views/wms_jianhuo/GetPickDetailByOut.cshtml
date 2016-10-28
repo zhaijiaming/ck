@@ -75,6 +75,7 @@
                     _pkval = _pkval + $("#selmx").val() + "," + _cksl.val() + "," + _cksm.val() + "," + _ch.val() + ";";
                 }
             });
+            $("#pl_pk").hide();
             $.post("/wms_jianhuo/addpickgoods", { pickgd: _pkval }, function (data) {
                 if (data == -1)
                     alert("拣货失败，请重试！");
@@ -93,7 +94,6 @@
                         }
                     });
                     PaintTable();
-                    $("#pl_pk").hide();
                 }
             });
         });

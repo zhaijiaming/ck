@@ -24,7 +24,6 @@
         });
         $("#bt_fn_over").click(function () {
             var _isover = true;
-            $("#pl_fun").hide();
             $("#mydatatable tbody tr").each(function () {
                 var _yssl=$(this).find('td').eq(13).html();
                 if(_yssl=="" || eval(_yssl)==0)
@@ -34,6 +33,7 @@
                 alert("还有需要验收的货品，不能完成！");
                 return;
             } else {
+                $("#pl_fun").hide();
                 $.post("/quan_rukuys/checkover",
                     { rk: $("#rkysid").val() }, function (data) {
                         if (data == -1)
@@ -60,7 +60,7 @@
                         location.reload();
                 });
         });
-        $("#pl_fun").draggable({ containment: "parent" });
+        $("#pl_fun").draggable();
         $("#mydatatable tbody").on("dblclick", "tr", function () {
             $("#ysid").val($(this).find("input").data("ys"));
             $("#pl_fun").show();

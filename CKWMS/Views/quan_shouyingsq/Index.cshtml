@@ -12,6 +12,8 @@
         var _topok = false;
         $("#authorpanel").hide();
         $("#toppanel").hide();
+        $("#authorpanel").draggable({ handle: ".panel-heading" });
+        $("#toppanel").draggable({ handle: ".panel-heading" });
         $("tr").bind("dblclick", function () {
             var url_go = "";
             var u_id = $(this).find('td').eq(0).find('input').val();

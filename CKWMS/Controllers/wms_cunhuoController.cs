@@ -1015,6 +1015,20 @@ namespace CKWMS.Controllers
             }
             return RedirectToAction("Index");
         }
+        public JsonResult UpDelete()
+        {
+            int _userid = (int)Session["user_id"];
+            var _upid = Request["up"] ?? "";
+            if (string.IsNullOrEmpty(_upid))
+                return Json(-1);
+            wms_cunhuo _up = ob_wms_cunhuoservice.GetEntityById(p => p.ID == int.Parse(_upid));
+            if (_up == null)
+                return Json(-1);
+            _up.IsDelete = true;
+            if (!ob_wms_cunhuoservice.UpdateEntity(_up))
+                return Json(-1);
+            return Json(1);
+        }
         public ActionResult PrintShouHuoList()
         {
             var _sjdid = Request["sjdid"] ?? "";
