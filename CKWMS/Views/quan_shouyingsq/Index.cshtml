@@ -46,14 +46,14 @@
                         $("#topmsg").text("质量部还未做审核，需要直接完成吗？");
                     if (eval(sqs) >= 3) {
                         alert("已经审批完成的申请，不能再审批！");
-                        checkshow=false;
+                        checkshow = false;
                     }
                 }
             });
             if (seltime > 1)
                 $("#aumsg").text("同时审核多条申请吗？");
-            if (findcheck){
-                if(checkshow)
+            if (findcheck) {
+                if (checkshow)
                     $("#authorpanel").show();
             }
             else
@@ -71,7 +71,7 @@
                     sqs = $(this).data("sqs");
                     if (eval(sqs) < 3)
                         $("#topmsg").text("质量部还未做审核，需要直接完成吗？");
-                    if (eval(sqs) >=4) {
+                    if (eval(sqs) >= 4) {
                         alert("已经审批完成的申请，不能再审批！");
                         checkshow = false;
                     }
@@ -117,14 +117,37 @@
                         _auval.push(JSON.parse('{"sq":"' + $(this).val() + '","msg":"' + $("#authortext").val() + '","ok":"false"}'));
                 }
             });
-            $.post("/quan_shouyingsq/authorcheck", { authorval: JSON.stringify(_auval) }, function (data, status) {
-                if (data == 1) {
-                    window.location.reload();
+            //$.post("/quan_shouyingsq/authorcheck", { authorval: JSON.stringify(_auval) }, function (data, status) {
+            //    if (data == 1) {
+            //        window.location.reload();
 
-                } else {
-                    alert("审核失败，请重新审核！");
+            //    } else {
+            //        alert("审核失败，请重新审核！");
+            //    }
+            //});
+            $.ajax({
+                async: true,
+                beforeSend: function () {
+                    ShowWait();
+                },
+                complete: function () {
+                    HiddenWait();
+                },
+                type: "POST",
+                url: "/quan_shouyingsq/authorcheck",
+                data: {
+                    authorval: JSON.stringify(_auval)
+                },
+                success: function (data) {
+                    if (data == 1) {
+                        window.location.reload();
+
+                    } else {
+                        alert("审核失败，请重新审核！");
+                    }
                 }
             });
+
         });
         $("#topok").click(function () {
             if (this.checked) {
@@ -144,18 +167,39 @@
             var _topval = [];
             $("#mydatatable tr input[type=checkbox]").each(function () {
                 if (this.checked) {
-                    if (_topok) 
+                    if (_topok)
                         _topval.push(JSON.parse('{"sq":"' + $(this).val() + '","msg":"' + $("#toptext").val() + '","ok":"true"}'));
                     else
                         _topval.push(JSON.parse('{"sq":"' + $(this).val() + '","msg":"' + $("#toptext").val() + '","ok":"false"}'));
                 }
             });
-            $.post("/quan_shouyingsq/topcheck", { topval: JSON.stringify(_topval) }, function (data, status) {
-                if (data == 1)
-                    window.location.reload();
-                else
-                    alert("审核失败，请重新审核！");
+            //$.post("/quan_shouyingsq/topcheck", { topval: JSON.stringify(_topval) }, function (data, status) {
+            //    if (data == 1)
+            //        window.location.reload();
+            //    else
+            //        alert("审核失败，请重新审核！");
+            //});
+            $.ajax({
+                async: true,
+                beforeSend: function () {
+                    ShowWait();
+                },
+                complete: function () {
+                    HiddenWait();
+                },
+                type: "POST",
+                url: "/quan_shouyingsq/topcheck",
+                data: {
+                    topval: JSON.stringify(_topval)
+                },
+                success: function (data) {
+                    if (data == 1)
+                        window.location.reload();
+                    else
+                        alert("审核失败，请重新审核！");
+                }
             });
+
         });
     });
     function AddInfo() {
@@ -260,7 +304,7 @@
         </div>
     </div>
 </div>
-
+<div id="loading"><img src="~/Imgs/wait.gif" alt="" />...系统正在加载数据,请耐心等待...</div>
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
@@ -279,8 +323,8 @@
         <p>
             <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
             @*<button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
-            <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
-            <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>*@
+                <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
+                <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>*@
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
             <button type="button" class="btn btn-default " id="bt_quancheck"><i class="icon-remove"></i>质量部审核</button>
             <button type="button" class="btn btn-default " id="bt_topcheck"><i class="icon-refresh"></i>质量负责人审核</button>

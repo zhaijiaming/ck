@@ -223,7 +223,7 @@
     }
     function getCpx(huozhuid) {
         var _huozhuid = huozhuid;
-        var filltable = "";
+        var filltable = '<option value="0"></option>';
         $.post(
             "/base_chanpinxian/getdetail",
             {
@@ -449,7 +449,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.Volchang, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-8">
-                    @Html.TextBoxFor(m => m.Volchang, new { @class = "form-control" })
+                    @Html.TextBoxFor(m => m.Volchang , new { @class = "form-control" })
                 </div>
                 <div class="col-sm-2">
                     <label class="form-control">米(M)</label>
