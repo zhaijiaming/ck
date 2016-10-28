@@ -21,21 +21,21 @@
     if (_searchcondition == null || _searchcondition == "")
     {
         SearchConditionModel scm = new SearchConditionModel();
-        scm.ItemCode = "HuozhuID";
-        scm.ItemShowName = "huozhuid";
-        scm.ItemTitle = "货主";
-        scm.ItemType = "货主.简称";
-        scms.Add(scm);
-
-        scm = new SearchConditionModel();
-        scm.ItemCode = "Daima";
-        scm.ItemTitle = "商品代码";
+        scm.ItemCode = "kehumingcheng";
+        scm.ItemShowName = "kehumingcheng";
+        scm.ItemTitle = "委托方";
         scm.ItemType = "System.String";
         scms.Add(scm);
 
         scm = new SearchConditionModel();
-        scm.ItemCode = "Mingcheng";
-        scm.ItemTitle = "商品名称";
+        scm.ItemCode = "mingcheng";
+        scm.ItemTitle = "货品名称";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "guige";
+        scm.ItemTitle = "规格";
         scm.ItemType = "System.String";
         scms.Add(scm);
     }
@@ -45,45 +45,41 @@
         if (scs.Length > 0)
         {
             SearchConditionModel scm = new SearchConditionModel();
-            scm.ItemCode = "HuozhuID";
-            scm.ItemShowName = "huozhuid";
-            scm.ItemTitle = "货主";
-            scm.ItemType = "货主.简称";
+            scm.ItemCode = "kehumingcheng";
+            scm.ItemShowName = "kehumingcheng";
+            scm.ItemTitle = "委托方";
+            scm.ItemType = "System.String";
             if (scs.Length > 1)
             {
                 scm.ItemValue = scs[0].Split(',')[1];
-                if (scm.ItemValue.Length == 0)
-                {
-                    scm.ItemValue = "0";
-                }
                 scm.ItemOpValue = scs[0].Split(',')[2];
                 scm.ItemJion = scs[0].Split(',')[3];
             }
             scms.Add(scm);
 
             scm = new SearchConditionModel();
-            scm.ItemCode = "Daima";
-            scm.ItemTitle = "商品代码";
+            scm.ItemCode = "mingcheng";
+            scm.ItemTitle = "货品名称";
             scm.ItemType = "System.String";
-            scms.Add(scm);
             if (scs.Length > 1)
             {
                 scm.ItemValue = scs[1].Split(',')[1];
                 scm.ItemOpValue = scs[1].Split(',')[2];
                 scm.ItemJion = scs[1].Split(',')[3];
             }
+            scms.Add(scm);
 
             scm = new SearchConditionModel();
-            scm.ItemCode = "Mingcheng";
-            scm.ItemTitle = "商品名称";
+            scm.ItemCode = "guige";
+            scm.ItemTitle = "规格";
             scm.ItemType = "System.String";
-            scms.Add(scm);
             if (scs.Length > 1)
             {
                 scm.ItemValue = scs[2].Split(',')[1];
                 scm.ItemOpValue = scs[2].Split(',')[2];
                 scm.ItemJion = scs[2].Split(',')[3];
             }
+            scms.Add(scm);
         }
     }
 }

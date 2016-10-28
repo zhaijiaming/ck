@@ -15,15 +15,33 @@
         });
     });
 </script>
-    @{
+@{
     List<SearchConditionModel> scms = new List<SearchConditionModel>();
     if (_searchcondition == null || _searchcondition == "")
     {
         SearchConditionModel scm = new SearchConditionModel();
         scm.ItemCode = "HuozhuID";
         scm.ItemShowName = "huozhuid";
-        scm.ItemTitle = "货主";
+        scm.ItemTitle = "委托方";
         scm.ItemType = "货主.简称";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "ShangpinMC";
+        scm.ItemTitle = "产品名称";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "Guige";
+        scm.ItemTitle = "规格";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "Pihao";
+        scm.ItemTitle = "批号";
+        scm.ItemType = "System.String";
         scms.Add(scm);
     }
     else
@@ -34,7 +52,7 @@
             SearchConditionModel scm = new SearchConditionModel();
             scm.ItemCode = "HuozhuID";
             scm.ItemShowName = "huozhuid";
-            scm.ItemTitle = "货主";
+            scm.ItemTitle = "委托方";
             scm.ItemType = "货主.简称";
             if (scs.Length > 1)
             {
@@ -47,10 +65,46 @@
                 scm.ItemJion = scs[0].Split(',')[3];
             }
             scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "ShangpinMC";
+            scm.ItemTitle = "产品名称";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[1].Split(',')[1];
+                scm.ItemOpValue = scs[1].Split(',')[2];
+                scm.ItemJion = scs[1].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "Guige";
+            scm.ItemTitle = "规格";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[2].Split(',')[1];
+                scm.ItemOpValue = scs[2].Split(',')[2];
+                scm.ItemJion = scs[2].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "Pihao";
+            scm.ItemTitle = "批号";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[3].Split(',')[1];
+                scm.ItemOpValue = scs[3].Split(',')[2];
+                scm.ItemJion = scs[3].Split(',')[3];
+            }
+            scms.Add(scm);
         }
     }
 }
-    <div class="breadcrumbs" id="breadcrumbs">
+<div class="breadcrumbs" id="breadcrumbs">
         <script type="text/javascript">
             try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
 </script>
