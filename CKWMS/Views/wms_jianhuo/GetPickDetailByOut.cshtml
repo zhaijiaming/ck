@@ -76,26 +76,61 @@
                 }
             });
             $("#pl_pk").hide();
-            $.post("/wms_jianhuo/addpickgoods", { pickgd: _pkval }, function (data) {
-                if (data == -1)
-                    alert("拣货失败，请重试！");
-                else {
-                    $("#mydatatable tr").each(function () {
-                        var _sv = $(this).find("input").val();
-                        if ($("#selmx").val() == _sv) {
-                            var _ssj = 0;
-                            var _son = $(this).find("td").eq(11).html();
-                            var _snn = $(this).find("td").eq(12).html();
-                            if (_snn == "") 
-                                _ssj = _pkct;
-                            else 
-                                _ssj = eval(_snn) + _pkct;
-                            $(this).find("td").eq(12).html(_ssj);
-                        }
-                    });
-                    PaintTable();
+            //$.post("/wms_jianhuo/addpickgoods", { pickgd: _pkval }, function (data) {
+            //    if (data == -1)
+            //        alert("拣货失败，请重试！");
+            //    else {
+            //        $("#mydatatable tr").each(function () {
+            //            var _sv = $(this).find("input").val();
+            //            if ($("#selmx").val() == _sv) {
+            //                var _ssj = 0;
+            //                var _son = $(this).find("td").eq(11).html();
+            //                var _snn = $(this).find("td").eq(12).html();
+            //                if (_snn == "")
+            //                    _ssj = _pkct;
+            //                else
+            //                    _ssj = eval(_snn) + _pkct;
+            //                $(this).find("td").eq(12).html(_ssj);
+            //            }
+            //        });
+            //        PaintTable();
+            //    }
+            //});
+            $.ajax({
+                async: true,
+                beforeSend: function () {
+                    ShowWait();
+                },
+                complete: function () {
+                    HiddenWait();
+                },
+                type: "POST",
+                url: "/wms_jianhuo/addpickgoods",
+                data: {
+                    pickgd: _pkval
+                },
+                success: function (data) {
+                    if (data == -1)
+                        alert("拣货失败，请重试！");
+                    else {
+                        $("#mydatatable tr").each(function () {
+                            var _sv = $(this).find("input").val();
+                            if ($("#selmx").val() == _sv) {
+                                var _ssj = 0;
+                                var _son = $(this).find("td").eq(11).html();
+                                var _snn = $(this).find("td").eq(12).html();
+                                if (_snn == "")
+                                    _ssj = _pkct;
+                                else
+                                    _ssj = eval(_snn) + _pkct;
+                                $(this).find("td").eq(12).html(_ssj);
+                            }
+                        });
+                        PaintTable();
+                    }
                 }
             });
+
         });
         $("#dt_pick tbody").on("dblclick", "tr", function () {
             var _pkid = $(this).find("input").val();
@@ -105,19 +140,43 @@
                 return;
             }
             if (confirm("确定要删除这条拣货记录吗？")) {
-                $.post("/wms_jianhuo/delpick",
-                    {
-                        del: _pkid,
-                        ck:$("#ckd").val()
+                //$.post("/wms_jianhuo/delpick",
+                //    {
+                //        del: _pkid,
+                //        ck:$("#ckd").val()
+                //    },
+                //    function (data) {
+                //    if (data == -1)
+                //        alert("删除失败！");
+                //    if (data == -2)
+                //        alert("拣货已经被完成，不能删除拣货记录！");
+                //    if(data==1)
+                //        location.reload();
+                //    });
+                $.ajax({
+                    async: true,
+                    beforeSend: function () {
+                        ShowWait();
                     },
-                    function (data) {
-                    if (data == -1)
-                        alert("删除失败！");
-                    if (data == -2)
-                        alert("拣货已经被完成，不能删除拣货记录！");
-                    if(data==1)
-                        location.reload();
+                    complete: function () {
+                        HiddenWait();
+                    },
+                    type: "POST",
+                    url: "/wms_jianhuo/delpick",
+                    data: {
+                        del: _pkid,
+                        ck: $("#ckd").val()
+                    },
+                    success: function (data) {
+                        if (data == -1)
+                            alert("删除失败！");
+                        if (data == -2)
+                            alert("拣货已经被完成，不能删除拣货记录！");
+                        if (data == 1)
+                            location.reload();
+                    }
                 });
+
             }
         });
         $("#dt_ch tbody").on("blur", "input", function () {
@@ -163,7 +222,7 @@
             if (_cksl > _djsl && _djsl > 0)
                 $(this).addClass("blue");
         });
-}
+    }
     function GetInvetoryCargo(_ck) {
         if (_ck != null) {
             var filltable = "";
@@ -278,7 +337,7 @@
         location.href = url_go;
     }
 </script>
-
+<div id="loading"><img src="~/Imgs/wait.gif" alt="" />...系统正在加载数据,请耐心等待...</div>
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }

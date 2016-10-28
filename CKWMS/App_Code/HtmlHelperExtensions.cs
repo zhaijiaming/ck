@@ -24,6 +24,15 @@ namespace CKWMS.App_Code
                 }
             }
         }
+        public static MvcHtmlString WaitForm(this HtmlHelper html)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<div id=\"loading\">");
+            sb.Append("<img src=\"~/Imgs/wait.gif\" alt=\"\"/>");
+            sb.Append("...系统正在加载数据,请耐心等待......");
+            sb.Append("</div>");
+            return MvcHtmlString.Create(sb.ToString());
+        }
         #region 下拉列表
         /// <summary>
         /// 用户信息下拉列表框,选中指定的项

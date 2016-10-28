@@ -545,6 +545,7 @@
     <Content Include="assets\js\x-editable\bootstrap-editable.min.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\FrameworkList.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="cssview\ace.css" />
     <Content Include="cssview\fontawesome.css" />
@@ -558,6 +559,7 @@
     <Content Include="Imgs\ck1.jpg" />
     <Content Include="Imgs\ckflow.jpg" />
     <Content Include="Imgs\page1_pic4.jpg" />
+    <Content Include="Imgs\wait.gif" />
     <Content Include="reports\ReportNow.aspx" />
     <Content Include="reports\ReportZY.aspx" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />

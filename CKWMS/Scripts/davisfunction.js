@@ -31,6 +31,14 @@ String.prototype.toDate = function () {
     //实例化一个新的日期格式，使用1970 年 1 月 1 日至今的毫秒数为参数
     return new Date(parseInt(dateMilliseconds));
 }
+//显示加载等待
+function ShowWait() {
+    $("#loading").show();
+}
+//隐藏加载等待
+function HiddenWait() {
+    $("#loading").hide();
+}
 //将check的值写入隐含变量，选种为1,不选种为0
 function CheckToHidden(oCheck, oHidden) {
     oCheck = eval("document.all." + oCheck);

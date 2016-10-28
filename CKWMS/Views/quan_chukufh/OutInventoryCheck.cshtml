@@ -35,32 +35,79 @@
             });
             if (!_isover)
                 alert("还有货品需要复核，不能完成！");
-            else 
-                $.post("/quan_chukufh/checkover",
-                    { ck: $("#outid").val() },
-                    function (data) {
+            else
+                //$.post("/quan_chukufh/checkover",
+                //    { ck: $("#outid").val() },
+                //    function (data) {
+                //        if (data == -1)
+                //            alert("复核完成操作失败，请重试！");
+                //        if (data == -2)
+                //            alert("已经完成复核，不能再次确认完成！");
+                //        if (data == 1)
+                //            window.close();
+                //    });
+                $.ajax({
+                    async: true,
+                    beforeSend: function () {
+                        ShowWait();
+                    },
+                    complete: function () {
+                        HiddenWait();
+                    },
+                    type: "POST",
+                    url: "/quan_chukufh/checkover",
+                    data: {
+                        ck: $("#outid").val()
+                    },
+                    success: function (data) {
                         if (data == -1)
                             alert("复核完成操作失败，请重试！");
                         if (data == -2)
                             alert("已经完成复核，不能再次确认完成！");
                         if (data == 1)
                             window.close();
-                    });
+                    }
+                });
+
         });
         $("#bt_fn_delete").click(function () {
             $("#pl_fun").hide();
-            $.post("/quan_chukufh/checkdelete",
-                {
+            //$.post("/quan_chukufh/checkdelete",
+            //    {
+            //        ck: $("#outid").val(),
+            //        fh: $("#fhid").val()
+            //    }, function (data) {
+            //        if (data == -1)
+            //            alert("删除复核记录失败，请重试！");
+            //        if (data == -2)
+            //            alert("复核已经完成，记录已被锁定，不能删除！");
+            //        if (data == 1)
+            //            location.reload();
+            //    });
+            $.ajax({
+                async: true,
+                beforeSend: function () {
+                    ShowWait();
+                },
+                complete: function () {
+                    HiddenWait();
+                },
+                type: "POST",
+                url: "/quan_chukufh/checkdelete",
+                data: {
                     ck: $("#outid").val(),
                     fh: $("#fhid").val()
-                }, function (data) {
+                },
+                success: function (data) {
                     if (data == -1)
                         alert("删除复核记录失败，请重试！");
                     if (data == -2)
                         alert("复核已经完成，记录已被锁定，不能删除！");
                     if (data == 1)
                         location.reload();
-                });
+                }
+            });
+
         });
         $("#pl_fun").draggable({ handle: ".panel-heading" });
         $("#mydatatable tbody").on("dblclick", "tr", function () {
@@ -152,28 +199,73 @@
             else {
                 $("#pl_yanshou").hide();
                 if (eval(_ysresult) == 3) {
-                    $.post("/wms_jianhuo/ngpick", { mx: $("#shmx").val() }, function (data) {
-                        if (data == -1)
-                            alert("标识不合格商品失败！");
-                        else
-                            $("#pl_yanshou").hide();
+                    //$.post("/wms_jianhuo/ngpick", { mx: $("#shmx").val() }, function (data) {
+                    //    if (data == -1)
+                    //        alert("标识不合格商品失败！");
+                    //    else
+                    //        $("#pl_yanshou").hide();
+                    //});
+                    $.ajax({
+                        async: true,
+                        beforeSend: function () {
+                            ShowWait();
+                        },
+                        complete: function () {
+                            HiddenWait();
+                        },
+                        type: "POST",
+                        url: "/wms_jianhuo/ngpick",
+                        data: {
+                            mx: $("#shmx").val()
+                        },
+                        success: function (data) {
+                            if (data == -1)
+                                alert("标识不合格商品失败！");
+                        }
                     });
+
                     alert("产品不合格，需要重新拣货！");
                 }
                 else
-                    $.post("/quan_chukufh/addcheck", {
-                        shmx: $("#shmx").val(),
-                        sl: _ysnum,
-                        ys: _ysresult,
-                        ysr: $("#Yanshouren").val(),
-                        yssm: $("#YanshouSM").val()
-                    }, function (data) {
-                        if (data == -1)
-                            alert("验收数据保存失败，请重新验收！");
-                        else {
-                            ShowCheck();
+                    //$.post("/quan_chukufh/addcheck", {
+                    //    shmx: $("#shmx").val(),
+                    //    sl: _ysnum,
+                    //    ys: _ysresult,
+                    //    ysr: $("#Yanshouren").val(),
+                    //    yssm: $("#YanshouSM").val()
+                    //}, function (data) {
+                    //    if (data == -1)
+                    //        alert("验收数据保存失败，请重新验收！");
+                    //    else {
+                    //        ShowCheck();
+                    //    }
+                    //});
+                    $.ajax({
+                        async: true,
+                        beforeSend: function () {
+                            ShowWait();
+                        },
+                        complete: function () {
+                            HiddenWait();
+                        },
+                        type: "POST",
+                        url: "/quan_chukufh/addcheck",
+                        data: {
+                            shmx: $("#shmx").val(),
+                            sl: _ysnum,
+                            ys: _ysresult,
+                            ysr: $("#Yanshouren").val(),
+                            yssm: $("#YanshouSM").val()
+                        },
+                        success: function (data) {
+                            if (data == -1)
+                                alert("验收数据保存失败，请重新验收！");
+                            else {
+                                ShowCheck();
+                            }
                         }
                     });
+
             }
         });
         $("#mydatatable tbody tr").each(function () {
@@ -302,7 +394,7 @@
         }
     }
 </script>
-
+<div id="loading"><img src="~/Imgs/wait.gif" alt="" />系统正在加载数据,请耐心等待...</div>
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
@@ -376,7 +468,7 @@
         </table>
     </div>
     @*<div class="pager">
-            @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
         </div>*@
 </div>
 <div id="pl_yanshou" class="panel panel-info" style="display:none;position:fixed;top:100px;left:200px;width:600px;height:360px;z-index:999;">

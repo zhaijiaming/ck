@@ -18,6 +18,7 @@
         $("#pl_fun").draggable({ containment: "parent" });
         $("#mydatatable tbody").on("dblclick", "tr", function () {
             _selrow = $(this);
+            $("#upid").val($(this).find("input").data("sid"));
             $("#pl_fun").show();
         });
         $("#pl_fn_cancel").click(function () {
@@ -35,12 +36,34 @@
             var u_id = _selrow.find('input');
             if (confirm("确实要删除此上架记录吗？") == true) {
                 var _sjid = u_id.data("sid");
-                $.post("/wms_cunhuo/updelete", { del: _sjid }, function (data) {
-                    if (data == -1)
-                        alert("删除失败，请重试！");
-                    if (data == 1)
-                        location.reload();
+                //var _sjid = $("#upid").val();
+                //$.post("/wms_cunhuo/updelete", { del: _sjid }, function (data) {
+                //    if (data == -1)
+                //        alert("删除失败，请重试！");
+                //    if (data == 1)
+                //        location.reload();
+                //});
+                $.ajax({
+                    async: true,
+                    beforeSend: function () {
+                        ShowWait();
+                    },
+                    complete: function () {
+                        HiddenWait();
+                    },
+                    type: "POST",
+                    url: "/wms_cunhuo/updelete",
+                    data: {
+                        up: _sjid
+                    },
+                    success: function (data) {
+                        if (data == -1)
+                            alert("删除失败，请重试！");
+                        if (data == 1)
+                            location.reload();
+                    }
                 });
+
             }
         });
         $(".icon-columns").click(function () {
@@ -84,26 +107,70 @@
                 alert("请输入正确的库位代码！");
                 return;
             }
-            $("#pl_yanshou").hide();
-            var hege = true;
-            if (eval($("#cargostate").val()) == 3)
-                hege = false;
-            $.post("/wms_cunhuo/addupload", {
-                shmx: $("#shmx").val(),
-                hg: hege,
-                sl: $("#sjSL").val(),
-                kw: $("#kuwei").val(),
-                kid: $("#kid").val(),
-                sjr: $("#sjren").val(),
-                zl: $("#sjzl").val(),
-                jz: $("#sjjz").val(),
-                tj: $("#sjtj").val(),
-                sm: $("#sjSM").val()
-            }, function (data) {
-                if (data == -1)
-                    alert("货品上架失败，请重新操作！");
-                else
-                    location.reload();
+            var _locvalid = true;
+            $.post("/wms_kuwei/validlocation", { loc: $("#kuwei").val() }, function (data) {
+                if (data == -1) {
+                    alert($("#kuwei").val() + "，该库位不存在或不可用，请重新选择！");
+                    $("#kuwei").val("");
+                    $("#kid").val(0);
+                    _locvalid = false;
+                    return;
+                }
+                else {
+                    $("#kid").val(data);
+                    if (_locvalid) {
+                        $("#pl_yanshou").hide();
+                        var hege = true;
+                        if (eval($("#cargostate").val()) == 3)
+                            hege = false;
+                        //$.post("/wms_cunhuo/addupload", {
+                        //    shmx: $("#shmx").val(),
+                        //    hg: hege,
+                        //    sl: $("#sjSL").val(),
+                        //    kw: $("#kuwei").val(),
+                        //    kid: $("#kid").val(),
+                        //    sjr: $("#sjren").val(),
+                        //    zl: $("#sjzl").val(),
+                        //    jz: $("#sjjz").val(),
+                        //    tj: $("#sjtj").val(),
+                        //    sm: $("#sjSM").val()
+                        //}, function (data) {
+                        //    if (data == -1)
+                        //        alert("货品上架失败，请重新操作！");
+                        //    else
+                        //        location.reload();
+                        //});
+                        $.ajax({
+                            async: true,
+                            beforeSend: function () {
+                                ShowWait();
+                            },
+                            complete: function () {
+                                HiddenWait();
+                            },
+                            type: "POST",
+                            url: "/wms_cunhuo/addupload",
+                            data: {
+                                shmx: $("#shmx").val(),
+                                hg: hege,
+                                sl: $("#sjSL").val(),
+                                kw: $("#kuwei").val(),
+                                kid: $("#kid").val(),
+                                sjr: $("#sjren").val(),
+                                zl: $("#sjzl").val(),
+                                jz: $("#sjjz").val(),
+                                tj: $("#sjtj").val(),
+                                sm: $("#sjSM").val()
+                            },
+                            success: function (data) {
+                                if (data == -1)
+                                    alert("货品上架失败，请重新操作！");
+                                else
+                                    location.reload();
+                            }
+                        });
+                    }
+                }
             });
         });
         $("#kuwei").blur(function () {
@@ -153,8 +220,11 @@
             }
         });
     });
-</script>
+    function ShelfLoad() {
 
+    }
+</script>
+<div id="loading"><img src="~/Imgs/wait.gif" alt="" />...系统正在加载数据,请耐心等待...</div>
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
@@ -176,6 +246,7 @@
     <input type="hidden" id="cargostate" />
     <input type="hidden" id="kid" value="0" />
     <input type="hidden" id="sjdid" value="@ViewBag.sjdid" />
+    <input type="hidden" id="upid" />
     <div class="row">
         <table class="table table-condensed" id="mydatatable">
             <caption></caption>

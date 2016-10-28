@@ -25,8 +25,8 @@
         $("#bt_fn_over").click(function () {
             var _isover = true;
             $("#mydatatable tbody tr").each(function () {
-                var _yssl=$(this).find('td').eq(13).html();
-                if(_yssl=="" || eval(_yssl)==0)
+                var _yssl = $(this).find('td').eq(13).html();
+                if (_yssl == "" || eval(_yssl) == 0)
                     isover = false;
             });
             if (!_isover) {
@@ -50,7 +50,7 @@
             $.post("/quan_rukuys/checkdelete",
                 {
                     rk: $("#rkysid").val(),
-                    ys:$("#ysid").val()
+                    ys: $("#ysid").val()
                 }, function (data) {
                     if (data == -1)
                         alert("验收记录删除失败，请重试！");
@@ -150,31 +150,82 @@
             }
             $("#pl_yanshou").hide();
             if (eval(_ysresult) == 2)
-                $.post("/quan_rukuys/addcheckpart", {
-                    shmx: $("#shmx").val(),
-                    oknum: _oknum,
-                    ngnum: _ngnum,
-                    ys: _ysresult,
-                    ysr: $("#Yanshouren").val(),
-                    yssm: $("#YanshouSM").val(),
-                }, function (data) {
-                    if (data == -1)
-                        alert("验收数据保存失败，请重新验收！");
-                    else
-                        location.reload();
+                //$.post("/quan_rukuys/addcheckpart", {
+                //    shmx: $("#shmx").val(),
+                //    oknum: _oknum,
+                //    ngnum: _ngnum,
+                //    ys: _ysresult,
+                //    ysr: $("#Yanshouren").val(),
+                //    yssm: $("#YanshouSM").val(),
+                //}, function (data) {
+                //    if (data == -1)
+                //        alert("验收数据保存失败，请重新验收！");
+                //    else
+                //        location.reload();
+                //});
+                $.ajax({
+                    async: true,
+                    beforeSend: function () {
+                        ShowWait();
+                    },
+                    complete: function () {
+                        HiddenWait();
+                    },
+                    type: "POST",
+                    url: "/quan_rukuys/addcheckpart",
+                    data: {
+                        shmx: $("#shmx").val(),
+                        oknum: _oknum,
+                        ngnum: _ngnum,
+                        ys: _ysresult,
+                        ysr: $("#Yanshouren").val(),
+                        yssm: $("#YanshouSM").val(),
+                    },
+                    success: function (data) {
+                        if (data == -1)
+                            alert("验收数据保存失败，请重新验收！");
+                        else
+                            location.reload();
+                    }
                 });
+
             else
-                $.post("/quan_rukuys/addcheck", {
-                    shmx: $("#shmx").val(),
-                    sl: _ysnum,
-                    ys: _ysresult,
-                    ysr: $("#Yanshouren").val(),
-                    yssm: $("#YanshouSM").val(),
-                }, function (data) {
-                    if (data == -1)
-                        alert("验收数据保存失败，请重新验收！");
-                    else {
-                        ShowCheck();
+                //$.post("/quan_rukuys/addcheck", {
+                //    shmx: $("#shmx").val(),
+                //    sl: _ysnum,
+                //    ys: _ysresult,
+                //    ysr: $("#Yanshouren").val(),
+                //    yssm: $("#YanshouSM").val(),
+                //}, function (data) {
+                //    if (data == -1)
+                //        alert("验收数据保存失败，请重新验收！");
+                //    else {
+                //        ShowCheck();
+                //    }
+                //});
+                $.ajax({
+                    async: true,
+                    beforeSend: function () {
+                        ShowWait();
+                    },
+                    complete: function () {
+                        HiddenWait();
+                    },
+                    type: "POST",
+                    url: "/quan_rukuys/addcheck",
+                    data: {
+                        shmx: $("#shmx").val(),
+                        sl: _ysnum,
+                        ys: _ysresult,
+                        ysr: $("#Yanshouren").val(),
+                        yssm: $("#YanshouSM").val(),
+                    },
+                    success: function (data) {
+                        if (data == -1)
+                            alert("验收数据保存失败，请重新验收！");
+                        else {
+                            ShowCheck();
+                        }
                     }
                 });
         });
@@ -242,7 +293,7 @@
         }
     }
 }
-
+<div id="loading"><img src="~/Imgs/wait.gif" alt="" />...系统正在加载数据,请耐心等待...</div>
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
@@ -316,7 +367,7 @@
                         <td>@item.Changjia</td>
                         <td>@item.Chandi</td>
                         <td>@item.YanshouSL</td>
-                        <td>@Html.GetCommonValue_ID("验收结果",(int)(item.ysresult==null?0:item.ysresult))</td>
+                        <td>@Html.GetCommonValue_ID("验收结果", (int)(item.ysresult == null ? 0 : item.ysresult))</td>
                         <td>@item.Yanshouren</td>
                         <td>@item.YanshouSM</td>
                         <td>@item.ystime</td>

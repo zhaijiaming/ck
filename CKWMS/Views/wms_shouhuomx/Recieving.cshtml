@@ -120,9 +120,58 @@
                 return;
             }
             $("#pl_Shouhuo").hide();
-            $.post(
-                "/wms_shouhuomx/addbyrukumx",
-                {
+            //$.post(
+            //    "/wms_shouhuomx/addbyrukumx",
+            //    {
+            //        rk: $("#selrk").val(),
+            //        zcz: $("#Zhucezheng").val(),
+            //        ph: $("#Pihao").val(),
+            //        ph1: $("#Pihao1").val(),
+            //        xlm: $("#Xuliema").val(),
+            //        scrq: $("#ShengchanRQ").val(),
+            //        sxrq: $("#ShixiaoRQ").val(),
+            //        sl: $("#YishouSL").val(),
+            //        zl: $("#Zhongliang").val(),
+            //        jz: $("#Jingzhong").val(),
+            //        tj: $("#Tiji").val(),
+            //        jfd: $("#Jifeidun").val(),
+            //        bz: $("#Beizhu").val()
+            //    },
+            //    function (data) {
+            //        if (data == -1)
+            //            alert("收货信息保存失败，请重试！");
+            //        else {
+            //            $("#dt_rk tr input[type=checkbox]").each(function () {
+            //                if ($(this).val() == $("#selrk").val()) {
+            //                    var _seltr = $(this).parent().parent().parent().parent();
+            //                    var _num = $("#YishouSL").val();
+            //                    var _ornum = _seltr.find('td').eq(11).html();
+            //                    var _orys = _seltr.find('td').eq(12).html();
+            //                    _seltr.find('td').eq(12).html(eval(_num) + eval(_orys));
+            //                    if (eval(_ornum) == eval(_num)) {
+            //                        if (_seltr.hasClass("blue"))
+            //                            _seltr.removeClass("blue");
+            //                        _seltr.addClass("green");
+            //                    }
+            //                    if (eval(_ornum) > eval(_num) && eval(_num) > 0) {
+            //                        _seltr.addClass("blue");
+            //                    }
+            //                }
+            //            });
+            //            ShouhuoList($("#rkd").val());
+            //        }
+            //    });
+            $.ajax({
+                async: true,
+                beforeSend: function () {
+                    ShowWait();
+                },
+                complete: function () {
+                    HiddenWait();
+                },
+                type: "POST",
+                url: "/wms_shouhuomx/addbyrukumx",
+                data: {
                     rk: $("#selrk").val(),
                     zcz: $("#Zhucezheng").val(),
                     ph: $("#Pihao").val(),
@@ -137,7 +186,7 @@
                     jfd: $("#Jifeidun").val(),
                     bz: $("#Beizhu").val()
                 },
-                function (data) {
+                success: function (data) {
                     if (data == -1)
                         alert("收货信息保存失败，请重试！");
                     else {
@@ -160,7 +209,9 @@
                         });
                         ShouhuoList($("#rkd").val());
                     }
-                });
+                }
+            });
+
         });
         $("#shcancel").click(function () {
             $("#pl_Shouhuo").hide();
@@ -328,7 +379,7 @@
         location.href = url_go;
     }
 </script>
-
+<div id="loading"><img src="~/Imgs/wait.gif" alt="" />...系统正在加载数据,请耐心等待...</div>
 <div class="breadcrumbs" id="breadcrumbs">
     <ul class="breadcrumb">
         <li>
