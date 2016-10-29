@@ -391,8 +391,7 @@ namespace CKWMS.Controllers
                     _shangpin.Chanpinxian = 0;
                     _shangpin.Muluxuhao = 0;
                     _shangpin.Guanlifenlei = 0;
-                    //_shangpin.MakeMan = _userid;
-                    _shangpin.MakeMan = 16;
+                    _shangpin.MakeMan = _userid;
                     _shangpin.ZhucezhengBH = _zcz;
                     if (!string.IsNullOrEmpty(_zcz))
                     {

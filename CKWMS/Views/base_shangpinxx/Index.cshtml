@@ -191,8 +191,8 @@
             <button type="button" class="btn btn-default " id="bt_import"><i class="icon-inbox"></i>导入</button>
         </p>
     </div>
-    <div id="splist" style="overflow:auto;max-height:480px;">
-        <div class="table-responsive">
+    <div id="splist">
+        <div class="table-responsive" style="overflow:auto;max-height:480px;">
             <table class="table" id="mydatatable"  style="white-space: nowrap;">
                 <caption></caption>
                 <thead>
@@ -253,7 +253,7 @@
         </div>
     </div>
 </div>
-<div id="pl_imp" class="panel panel-info" style="display:none;position:fixed;top:100px;left:200px;width:820px;overflow:auto;">
+<div id="pl_imp" class="panel panel-info" style="display:none;position:fixed;top:100px;left:200px;width:810px;overflow:auto;">
     <div class="panel-heading">
         <h3 class="panel-title">商品资料导入<button id="pl_pk_close" class="pull-right">X</button></h3>
     </div>
@@ -275,7 +275,8 @@
             </div>
         </div>
         <div class="row">
-            <textarea id="tximp" style="width:800px;height:420px;overflow:auto"></textarea>
+            <p><i class="icon-leaf red"></i>注意：导入的格式（注册证编号#商品名称#规格），其中#为分隔符，导入的信息中不能含有符号#，否则会有意想不到的错误！</p>
+            <textarea id="tximp" style="width:800px;height:360px;overflow:auto"></textarea>
         </div>
     </div>
 </div>
