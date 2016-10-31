@@ -186,7 +186,8 @@
                     if (data != 1)
                         alert("添加出库货品失败，请重新选择!");
                     else
-                        $("#pl_xz").hide();
+                        alert("出库商品添加成功！");
+                        //$("#pl_xz").hide();
                 });
         }
     }
@@ -488,7 +489,7 @@
             <div class="col-sm-1"><label>规格</label></div>
             <div class="col-sm-1"><input type="text" id="gg" size="12" /></div>
             <div class="col-sm-3"><p class="btn default" id="pl_search"><i class="icon-search"></i>查询</p></div>
-            <div class="col-sm-3"><p class="btn default" id="pl_ok"><i class="icon-ok"></i>确定</p></div>
+            <div class="col-sm-3"><p class="btn default" id="pl_ok"><i class="icon-ok"></i>添加</p></div>
 
         </div>
         <div class="row" style="width:1190px;height:500px;overflow:auto">
