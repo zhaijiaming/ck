@@ -18,6 +18,18 @@
         //验证
         $("#huozhuid").attr('required', 'required'); 
         $("#Mingcheng").attr('required', 'required');
+        $("#Mingcheng").blur(function () {
+            $.post("/base_shouhuodanwei/checkcode",
+                {
+                    sh: $("#Mingcheng").val(),
+                    hz: $("#huozhuid").val()
+                }, function (data) {
+                if (data == -1)
+                    alert("收货单位：" + $("#Mingcheng").val() + "，已经存在！");
+                if (data == -2)
+                    alert("收货单位必须选择货主！");
+            });
+        });
         //经营范围
         //$("#pl_Fanwei").hide();
         $("#pl_Fanwei").draggable({ handle: '.tuodong' });

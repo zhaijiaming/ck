@@ -201,7 +201,20 @@ namespace CKWMS.Controllers
             ViewBag.userid = (int)Session["user_id"];
             return View();
         }
-
+        public JsonResult CheckCode()
+        {
+            int _userid = (int)Session["user_id"];
+            var _sh = Request["sh"] ?? "";
+            var _hz = Request["hz"] ?? "";
+            if (string.IsNullOrEmpty(_sh))
+                return Json(1);
+            if (string.IsNullOrEmpty(_hz))
+                return Json(-2);
+            var _shdw = ob_base_shouhuodanweiservice.GetEntityById(p => p.Mingcheng == _sh && p.HuozhuID==int.Parse(_hz) && p.IsDelete == false);
+            if (_shdw == null)
+                return Json(1);
+            return Json(-1);
+        }
         public ActionResult Save()
         {
             string id = Request["id"] ?? "";
