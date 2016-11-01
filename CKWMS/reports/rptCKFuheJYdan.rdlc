@@ -9,7 +9,7 @@
               <Width>2.99668cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.48897cm</Width>
+              <Width>2.7741cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.26382cm</Width>
@@ -24,10 +24,10 @@
               <Width>1.80212cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.77682cm</Width>
+              <Width>1.30351cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.79383cm</Width>
+              <Width>1.3279cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.83373cm</Width>
@@ -39,7 +39,7 @@
               <Width>1.79229cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.44104cm</Width>
+              <Width>1.04416cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.48229cm</Width>
@@ -48,10 +48,10 @@
               <Width>1.15504cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.68893cm</Width>
+              <Width>2.0858cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.74501cm</Width>
+              <Width>1.39913cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -1642,6 +1642,7 @@
           <TablixMembers>
             <TablixMember>
               <KeepWithGroup>After</KeepWithGroup>
+              <RepeatOnNewPage>true</RepeatOnNewPage>
             </TablixMember>
             <TablixMember>
               <Group Name="详细信息" />
@@ -1651,7 +1652,7 @@
         <DataSetName>DataSet1</DataSetName>
         <Top>0.08351cm</Top>
         <Height>1.67156cm</Height>
-        <Width>27.05813cm</Width>
+        <Width>27.05814cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2087,6 +2088,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox25</rd:DefaultName>
+          <Top>0cm</Top>
           <Left>0.54559cm</Left>
           <Height>0.6cm</Height>
           <Width>7.77813cm</Width>

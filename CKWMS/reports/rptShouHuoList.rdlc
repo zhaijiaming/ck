@@ -6,10 +6,10 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>3.31687cm</Width>
+              <Width>3.59323cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.15604cm</Width>
+              <Width>3.21975cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.60408cm</Width>
@@ -18,25 +18,25 @@
               <Width>1.62446cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.30938cm</Width>
+              <Width>1.48987cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.49458cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.78514cm</Width>
+              <Width>1.40248cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.70673cm</Width>
+              <Width>1.23724cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>4.06439cm</Width>
+              <Width>3.45585cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.78563cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.96542cm</Width>
+              <Width>0.9125cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.97083cm</Width>
@@ -1637,6 +1637,7 @@
           <TablixMembers>
             <TablixMember>
               <KeepWithGroup>After</KeepWithGroup>
+              <RepeatOnNewPage>true</RepeatOnNewPage>
             </TablixMember>
             <TablixMember>
               <Group Name="详细信息" />
@@ -1646,7 +1647,7 @@
         <DataSetName>DataSet1</DataSetName>
         <Top>0.10583cm</Top>
         <Height>1.2cm</Height>
-        <Width>27.09022cm</Width>
+        <Width>27.09717cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1657,7 +1658,7 @@
     <Height>0.54167in</Height>
     <Style />
   </Body>
-  <Width>10.66544in</Width>
+  <Width>10.66818in</Width>
   <Page>
     <PageHeader>
       <Height>2.03729cm</Height>

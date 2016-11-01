@@ -6,43 +6,43 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>2.51567cm</Width>
+              <Width>3.13915cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.53043cm</Width>
+              <Width>2.37428cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.41157cm</Width>
+              <Width>2.8048cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.98743cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.48003cm</Width>
+              <Width>1.05439cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.22735cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.69331cm</Width>
+              <Width>0.92689cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.6468cm</Width>
+              <Width>0.90199cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.65641cm</Width>
+              <Width>0.9663cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.5916cm</Width>
+              <Width>3.07242cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.99188cm</Width>
+              <Width>0.88605cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.99631cm</Width>
+              <Width>0.8111cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.20355cm</Width>
+              <Width>0.78023cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.96542cm</Width>
@@ -65,7 +65,7 @@
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.6cm</Height>
+              <Height>0.75875cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -2280,6 +2280,7 @@
           <TablixMembers>
             <TablixMember>
               <KeepWithGroup>After</KeepWithGroup>
+              <RepeatOnNewPage>true</RepeatOnNewPage>
             </TablixMember>
             <TablixMember>
               <Group Name="详细信息" />
@@ -2288,8 +2289,8 @@
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
         <Top>0.16756cm</Top>
-        <Height>1.40546cm</Height>
-        <Width>27.10791cm</Width>
+        <Height>1.56421cm</Height>
+        <Width>27.10795cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2297,10 +2298,10 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>0.6875in</Height>
+    <Height>0.72917in</Height>
     <Style />
   </Body>
-  <Width>10.67241in</Width>
+  <Width>10.67242in</Width>
   <Page>
     <PageHeader>
       <Height>2.11667cm</Height>

@@ -6,10 +6,10 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>3.70284cm</Width>
+              <Width>3.25777cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.43679cm</Width>
+              <Width>3.02728cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>2.43708cm</Width>
@@ -33,7 +33,7 @@
               <Width>1.865cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.60356cm</Width>
+              <Width>3.45814cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.84667cm</Width>
@@ -1637,6 +1637,7 @@
           <TablixMembers>
             <TablixMember>
               <KeepWithGroup>After</KeepWithGroup>
+              <RepeatOnNewPage>true</RepeatOnNewPage>
             </TablixMember>
             <TablixMember>
               <Group Name="详细信息" />

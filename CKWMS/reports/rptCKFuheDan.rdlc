@@ -6,10 +6,10 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>2.91618cm</Width>
+              <Width>3.71535cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.15909cm</Width>
+              <Width>3.14674cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.21328cm</Width>
@@ -24,10 +24,10 @@
               <Width>1.79484cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.77682cm</Width>
+              <Width>1.26638cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.79383cm</Width>
+              <Width>1.25069cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.83373cm</Width>
@@ -39,7 +39,7 @@
               <Width>1.8244cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.61939cm</Width>
+              <Width>1.09022cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.48229cm</Width>
@@ -48,10 +48,10 @@
               <Width>1.30937cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.43727cm</Width>
+              <Width>1.82715cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.74501cm</Width>
+              <Width>1.16293cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -1547,6 +1547,7 @@
           <TablixMembers>
             <TablixMember>
               <KeepWithGroup>After</KeepWithGroup>
+              <RepeatOnNewPage>true</RepeatOnNewPage>
             </TablixMember>
             <TablixMember>
               <Group Name="详细信息" />
@@ -1556,7 +1557,7 @@
         <DataSetName>DataSet1</DataSetName>
         <Top>0.08352cm</Top>
         <Height>1.67156cm</Height>
-        <Width>27.08293cm</Width>
+        <Width>27.0948cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1567,7 +1568,7 @@
     <Height>0.76042in</Height>
     <Style />
   </Body>
-  <Width>10.66471in</Width>
+  <Width>10.66724in</Width>
   <Page>
     <PageHeader>
       <Height>2.86164cm</Height>
@@ -1992,6 +1993,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox25</rd:DefaultName>
+          <Top>0cm</Top>
           <Left>1.06166cm</Left>
           <Height>0.6cm</Height>
           <Width>7.92211cm</Width>
