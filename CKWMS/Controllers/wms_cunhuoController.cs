@@ -402,6 +402,10 @@ namespace CKWMS.Controllers
             string shangpinmc = Request["shangpinmc"] ?? "";
             string shangpinmcequal = Request["shangpinmcequal"] ?? "";
             string shangpinmcand = Request["shangpinmcand"] ?? "";
+            //pihao
+            string pihao = Request["pihao"] ?? "";
+            string pihaoequal = Request["pihaoequal"] ?? "";
+            string pihaoand = Request["pihaoand"] ?? "";
             Expression<Func<wms_storage_v, bool>> where = PredicateExtensionses.True<wms_storage_v>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -526,6 +530,28 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpinmc", shangpinmc, shangpinmcequal, shangpinmcand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpinmc", "", shangpinmcequal, shangpinmcand);
+                //pihao
+                if (!string.IsNullOrEmpty(pihao))
+                {
+                    if (pihaoequal.Equals("="))
+                    {
+                        if (pihaoand.Equals("and"))
+                            where = where.And(p => p.Pihao == pihao);
+                        else
+                            where = where.Or(p => p.Pihao == pihao);
+                    }
+                    if (pihaoequal.Equals("like"))
+                    {
+                        if (pihaoand.Equals("and"))
+                            where = where.And(p => p.Pihao.Contains(pihao));
+                        else
+                            where = where.Or(p => p.Pihao.Contains(pihao));
+                    }
+                }
+                if (!string.IsNullOrEmpty(pihao))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pihao", pihao, pihaoequal, pihaoand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pihao", "", pihaoequal, pihaoand);
 
                 searchconditionService.GetInstance().AddEntity(sc);
             }
@@ -649,6 +675,28 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpinmc", shangpinmc, shangpinmcequal, shangpinmcand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpinmc", "", shangpinmcequal, shangpinmcand);
+                //pihao
+                if (!string.IsNullOrEmpty(pihao))
+                {
+                    if (pihaoequal.Equals("="))
+                    {
+                        if (pihaoand.Equals("and"))
+                            where = where.And(p => p.Pihao == pihao);
+                        else
+                            where = where.Or(p => p.Pihao == pihao);
+                    }
+                    if (pihaoequal.Equals("like"))
+                    {
+                        if (pihaoand.Equals("and"))
+                            where = where.And(p => p.Pihao.Contains(pihao));
+                        else
+                            where = where.Or(p => p.Pihao.Contains(pihao));
+                    }
+                }
+                if (!string.IsNullOrEmpty(pihao))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pihao", pihao, pihaoequal, pihaoand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pihao", "", pihaoequal, pihaoand);
 
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
@@ -789,6 +837,28 @@ namespace CKWMS.Controllers
                                         where = where.And(wms_storage_v => wms_storage_v.ShangpinMC.Contains(shangpinmc));
                                     else
                                         where = where.Or(wms_storage_v => wms_storage_v.ShangpinMC.Contains(shangpinmc));
+                                }
+                            }
+                            break;
+                        case "pihao":
+                            string pihao = scld[1];
+                            string pihaoequal = scld[2];
+                            string pihaoand = scld[3];
+                            if (!string.IsNullOrEmpty(pihao))
+                            {
+                                if (pihaoequal.Equals("="))
+                                {
+                                    if (pihaoand.Equals("and"))
+                                        where = where.And(p => p.Pihao == pihao);
+                                    else
+                                        where = where.Or(p => p.Pihao == pihao);
+                                }
+                                if (pihaoequal.Equals("like"))
+                                {
+                                    if (pihaoand.Equals("and"))
+                                        where = where.And(p => p.Pihao.Contains(pihao));
+                                    else
+                                        where = where.Or(p => p.Pihao.Contains(pihao));
                                 }
                             }
                             break;
