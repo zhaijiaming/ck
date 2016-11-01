@@ -12,6 +12,15 @@
         //验证
         $("#Bianhao").attr('required', 'required');
         $("#Mingcheng").attr('required', 'required');
+        $("#Bianhao").blur(function () {
+            $.post("/base_shangpinzcz/checklicensecode", { lc: $("#Bianhao").val() }, function (data) {
+                if(data==-1)
+                {
+                    alert("此编号已经存在，请勿重复输入！");
+                    $("#Bianhao").val("");
+                }
+            });
+        });
     });
 </script>
 <div class="breadcrumbs" id="breadcrumbs">

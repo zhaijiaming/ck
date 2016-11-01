@@ -602,7 +602,7 @@ namespace CKWMS.Controllers
                 case 1:
                     base_shangpinxx _spxx = ServiceFactory.base_shangpinxxservice.GetEntityById(p => p.ID == valid);
                     if (_spxx != null)
-                        _sqcontent = string.Format("商品首营申请：名称，{0}；注册证编号：{1}；厂家：{2}；", _spxx.Mingcheng, _spxx.ZhucezhengBH, _spxx.Qiyemingcheng);
+                        _sqcontent = string.Format("商品首营申请：名称，{0}；规格：{3}；注册证编号：{1}；厂家：{2}；", _spxx.Mingcheng, _spxx.ZhucezhengBH, _spxx.Qiyemingcheng,_spxx.Guige);
                     break;
                 case 2:
                     Ibase_weituokehuService _wtservice = ServiceFactory.base_weituokehuservice;

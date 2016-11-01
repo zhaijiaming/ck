@@ -380,7 +380,17 @@ namespace CKWMS.Controllers
             }
             return Json(_zczxxs);
         }
-
+        public JsonResult CheckLicenseCode()
+        {
+            int _userid = (int)Session["user_id"];
+            var _lc = Request["lc"] ?? "";
+            if (string.IsNullOrEmpty(_lc))
+                return Json(1);
+            var _license = ob_base_shangpinzczservice.GetEntityById(p => p.Bianhao == _lc && p.IsDelete == false);
+            if (_license == null)
+                return Json(1);
+            return Json(-1);
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Update()
