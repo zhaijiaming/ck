@@ -36,7 +36,7 @@
             "/wms_chukumx/getcargodetail",
             { ckd: ckd },
             function (data) {
-                if (data!=-1) {
+                if (data != -1) {
                     for (var i in data) {
                         rkdetail = rkdetail + '<tr><td><label><input type="checkbox" value="';
                         rkdetail = rkdetail + data[i].ID;
@@ -60,9 +60,11 @@
                         rkdetail = rkdetail + '</td><td>';
                         rkdetail = rkdetail + data[i].Xuliema;
                         rkdetail = rkdetail + '</td><td>';
-                        rkdetail = rkdetail + data[i].ShengchanRQ.toDate().Format("yyyy-MM-dd");
+                        if (data[i].ShengchanRQ != null)
+                            rkdetail = rkdetail + data[i].ShengchanRQ.toDate().Format("yyyy-MM-dd");
                         rkdetail = rkdetail + '</td><td>';
-                        rkdetail = rkdetail + data[i].ShixiaoRQ.toDate().Format("yyyy-MM-dd");
+                        if (data[i].ShixiaoRQ != null)
+                            rkdetail = rkdetail + data[i].ShixiaoRQ.toDate().Format("yyyy-MM-dd");
                         rkdetail = rkdetail + '</td><td>';
                         rkdetail = rkdetail + data[i].JibenDW;
                         rkdetail = rkdetail + '</td><td>';
@@ -108,14 +110,14 @@
     }
     function EditInfo() {
         $("#mydatatable tr input[type=checkbox]").each(function () {
-            if (this.checked && eval($(this).data("zt"))<5)
+            if (this.checked && eval($(this).data("zt")) < 5)
                 location.href = "/wms_chukudan/Edit/" + $(this).val();
         });
     }
     function DelInfo() {
         var sDel = "";
         $("#mydatatable tr input[type=checkbox]").each(function () {
-            if (this.checked && eval($(this).data("zt")) ==1)
+            if (this.checked && eval($(this).data("zt")) == 1)
                 sDel = sDel + ", " + $(this).val()
         });
         if (sDel.length < 2)
@@ -169,7 +171,7 @@
                 scm.ItemJion = scs[1].Split(',')[3];
             }
             scms.Add(scm);
-            
+
             scm = new SearchConditionModel();
             scm.ItemCode = "HuozhuID";
             scm.ItemTitle = "货主";
@@ -231,8 +233,8 @@
         <p>
             <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
             @*<button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
-            <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
-            <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>*@
+                <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
+                <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>*@
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
         </p>
     </div>
@@ -266,21 +268,21 @@
                 {
                     <tr>
                         <td>
-                                <label><i class="icon-list-alt"></i><input type="hidden" value="@item.ID" data-zt="@item.JihuaZT"></label>
+                            <label><i class="icon-list-alt"></i><input type="hidden" value="@item.ID" data-zt="@item.JihuaZT"></label>
                         </td>
                         <td>@item.ChukudanBH</td>
                         <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
                         <td>@item.KehuMC</td>
                         <td>@item.Yunsongdizhi</td>
-                        <td>@string.Format("{0:yyyy-MM-dd}",item.ChukuRQ)</td>
-                        <td>@Html.GetCommonValue_ID("出库类型",(int)item.YewuLX)</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ChukuRQ)</td>
+                        <td>@Html.GetCommonValue_ID("出库类型", (int)item.YewuLX)</td>
                         <td>@item.ChunyunYQ</td>
-                        <td>@string.Format("{0}",item.JianguanSF==true?"是":"否")</td>
+                        <td>@string.Format("{0}", item.JianguanSF == true ? "是" : "否")</td>
                         <td>@item.KehuDH</td>
-                        <td>@Html.GetDataValue_ID("userinfo","全名",(int)item.KefuID)</td>
+                        <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.KefuID)</td>
                         <td>@item.Lianxiren</td>
                         <td>@item.LianxiDH</td>
-                        <td>@Html.GetCommonValue_ID("出库状态",(int)item.JihuaZT)</td>
+                        <td>@Html.GetCommonValue_ID("出库状态", (int)item.JihuaZT)</td>
                         <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.Jianhuoren)</td>
                         <td>@item.Beizhu</td>
                         <td>@string.Format("{0:yyyy-MM-dd}", item.MakeDate)</td>
@@ -299,10 +301,10 @@
         <h3 class="panel-title">货品列表<button id="pl_cargo_close" class="pull-right">X</button></h3>
     </div>
     <div class="panel-body">
-        <div class="row">
+        <div class="row" style="display:block;width:1190px;height:530px;overflow:auto">
             <table class="table table-condensed table-hover" id="dt_cargo">
                 <caption></caption>
-                <thead style="display:block">
+                <thead>
                     <tr>
                         <td></td>
                         <td>商品代码</td>
@@ -328,8 +330,7 @@
                         <td>货品状态</td>
                     </tr>
                 </thead>
-                <tbody style="display:block;width:1180px;height:580px;overflow:auto">
-                </tbody>
+                <tbody></tbody>
             </table>
         </div>
     </div>

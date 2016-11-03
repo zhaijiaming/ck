@@ -247,13 +247,14 @@ namespace CKWMS.Controllers
                 return Json(-1);
             if (_rkd.GongyingshangID != 2)
                 return Json(-2);
+            int _hzid =(int)_rkd.HuozhuID;
             json_delivery _del = ServiceFactory.json_deliveryservice.GetEntityById(p => p.DELIVERY_NUMBER == _bh && p.IsDelete == false);
             if (_del == null)
                 return Json(-3);
             json_import _imp = ServiceFactory.json_importservice.GetEntityById(p => p.BillNum == _del.DELIVERY_NUMBER && p.PlanID == _rkd.ID && p.IsDelete == false);
             if (_imp != null)
                 return Json(-4);
-            int _i = ServiceFactory.json_batchservice.ImportBatch(_del.DELIVERY_NUMBER, _rkd.KehuDH, _rkd.ID, _del.ID, _userid);
+            int _i = ServiceFactory.json_batchservice.ImportBatch(_del.DELIVERY_NUMBER, _rkd.KehuDH, _rkd.ID, _del.ID, _userid,_hzid);
             return Json(_i);
         }
         [HttpPost]
