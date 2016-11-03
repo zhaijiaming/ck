@@ -375,7 +375,7 @@ namespace CKWMS.Controllers
                         _zczxxs.Shengchanqiye = _scqy.Qiyemingcheng;
                     else
                         _zczxxs.Shengchanqiye = "";
-                    _zczxxs.Guige = ServiceFactory.base_zhucezhengggservice.LoadSortEntities(p => p.ZCZID == _zczxxs.ID, true, s => s.Guige).ToList<base_zhucezhenggg>() ;
+                    _zczxxs.Guige = ServiceFactory.base_zhucezhengggservice.LoadSortEntities(p => p.ZCZID == _zczxxs.ID && p.IsDelete == false, true, s => s.Guige).ToList<base_zhucezhenggg>() ;
                 }
             }
             return Json(_zczxxs);
