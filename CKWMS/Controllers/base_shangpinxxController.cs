@@ -467,40 +467,44 @@ namespace CKWMS.Controllers
                 jingyinsf = "false";
             try
             {
-                base_shangpinxx ob_base_shangpinxx = new base_shangpinxx();
-                ob_base_shangpinxx.HuozhuID = huozhuid == "" ? 0 : int.Parse(huozhuid);
-                ob_base_shangpinxx.HuozhuSQID = huozhusqid == "" ? 0 : int.Parse(huozhusqid);
-                ob_base_shangpinxx.Daima = daima.Trim();
-                ob_base_shangpinxx.Mingcheng = mingcheng.Trim();
-                ob_base_shangpinxx.ZhucezhengID = zhucezhengid == "" ? 0 : int.Parse(zhucezhengid);
-                ob_base_shangpinxx.ZhucezhengBH = zhucezhengbh.Trim();
-                ob_base_shangpinxx.Guige = guige.Trim();
-                ob_base_shangpinxx.Xinghao = xinghao.Trim();
-                ob_base_shangpinxx.Danwei = danwei.Trim();
-                ob_base_shangpinxx.Huansuanlv = huansuanlv == "" ? 0 : float.Parse(huansuanlv);
-                ob_base_shangpinxx.Volchang = volchang == "" ? 0 : float.Parse(volchang);
-                ob_base_shangpinxx.Volkuan = volkuan == "" ? 0 : float.Parse(volkuan);
-                ob_base_shangpinxx.Volgao = volgao == "" ? 0 : float.Parse(volgao);
-                ob_base_shangpinxx.Chanpinxian = chanpinxian == "" ? 0 : int.Parse(chanpinxian);
-                ob_base_shangpinxx.Muluxuhao = muluxuhao == "" ? 0 : int.Parse(muluxuhao);
-                ob_base_shangpinxx.Guanlifenlei = guanlifenlei == "" ? 0 : int.Parse(guanlifenlei);
-                ob_base_shangpinxx.Baozhuangyaoqiu = baozhuangyaoqiu.Trim();
-                ob_base_shangpinxx.Cunchutiaojian = cunchutiaojian.Trim();
-                ob_base_shangpinxx.QiyeID = qiyeid == "" ? 0 : int.Parse(qiyeid);
-                ob_base_shangpinxx.Qiyemingcheng = qiyemingcheng.Trim();
-                ob_base_shangpinxx.GongyingID = gongyingid == "" ? 0 : int.Parse(gongyingid);
-                ob_base_shangpinxx.GongyingSQID = gongyingsqid == "" ? 0 : int.Parse(gongyingsqid);
-                ob_base_shangpinxx.GongyingXSID = gongyingxsid == "" ? 0 : int.Parse(gongyingxsid);
-                ob_base_shangpinxx.Shouying = shouying == "" ? 0 : int.Parse(shouying);
-                ob_base_shangpinxx.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
-                ob_base_shangpinxx.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
-                ob_base_shangpinxx.ShenchaSF = shenchasf == "" ? false : Boolean.Parse(shenchasf);
-                ob_base_shangpinxx.JingyinSF = jingyinsf == "" ? false : Boolean.Parse(jingyinsf);
-                ob_base_shangpinxx.BaozhuangDW = baozhuangdw.Trim();
-                ob_base_shangpinxx.ShangpinTM = shangpintm.Trim();
-                ob_base_shangpinxx.Chandi = chandi.Trim();
+                base_shangpinxx ob_base_shangpinxx = ob_base_shangpinxxservice.GetEntityById(p => p.HuozhuID == int.Parse(huozhuid) && p.Guige == guige.Trim() && p.Mingcheng == mingcheng.Trim() && p.IsDelete == false);
+                if (ob_base_shangpinxx == null)
+                {
+                    ob_base_shangpinxx = new base_shangpinxx();
+                    ob_base_shangpinxx.HuozhuID = huozhuid == "" ? 0 : int.Parse(huozhuid);
+                    ob_base_shangpinxx.HuozhuSQID = huozhusqid == "" ? 0 : int.Parse(huozhusqid);
+                    ob_base_shangpinxx.Daima = daima.Trim();
+                    ob_base_shangpinxx.Mingcheng = mingcheng.Trim();
+                    ob_base_shangpinxx.ZhucezhengID = zhucezhengid == "" ? 0 : int.Parse(zhucezhengid);
+                    ob_base_shangpinxx.ZhucezhengBH = zhucezhengbh.Trim();
+                    ob_base_shangpinxx.Guige = guige.Trim();
+                    ob_base_shangpinxx.Xinghao = xinghao.Trim();
+                    ob_base_shangpinxx.Danwei = danwei.Trim();
+                    ob_base_shangpinxx.Huansuanlv = huansuanlv == "" ? 0 : float.Parse(huansuanlv);
+                    ob_base_shangpinxx.Volchang = volchang == "" ? 0 : float.Parse(volchang);
+                    ob_base_shangpinxx.Volkuan = volkuan == "" ? 0 : float.Parse(volkuan);
+                    ob_base_shangpinxx.Volgao = volgao == "" ? 0 : float.Parse(volgao);
+                    ob_base_shangpinxx.Chanpinxian = chanpinxian == "" ? 0 : int.Parse(chanpinxian);
+                    ob_base_shangpinxx.Muluxuhao = muluxuhao == "" ? 0 : int.Parse(muluxuhao);
+                    ob_base_shangpinxx.Guanlifenlei = guanlifenlei == "" ? 0 : int.Parse(guanlifenlei);
+                    ob_base_shangpinxx.Baozhuangyaoqiu = baozhuangyaoqiu.Trim();
+                    ob_base_shangpinxx.Cunchutiaojian = cunchutiaojian.Trim();
+                    ob_base_shangpinxx.QiyeID = qiyeid == "" ? 0 : int.Parse(qiyeid);
+                    ob_base_shangpinxx.Qiyemingcheng = qiyemingcheng.Trim();
+                    ob_base_shangpinxx.GongyingID = gongyingid == "" ? 0 : int.Parse(gongyingid);
+                    ob_base_shangpinxx.GongyingSQID = gongyingsqid == "" ? 0 : int.Parse(gongyingsqid);
+                    ob_base_shangpinxx.GongyingXSID = gongyingxsid == "" ? 0 : int.Parse(gongyingxsid);
+                    ob_base_shangpinxx.Shouying = shouying == "" ? 0 : int.Parse(shouying);
+                    ob_base_shangpinxx.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
+                    ob_base_shangpinxx.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
+                    ob_base_shangpinxx.ShenchaSF = shenchasf == "" ? false : Boolean.Parse(shenchasf);
+                    ob_base_shangpinxx.JingyinSF = jingyinsf == "" ? false : Boolean.Parse(jingyinsf);
+                    ob_base_shangpinxx.BaozhuangDW = baozhuangdw.Trim();
+                    ob_base_shangpinxx.ShangpinTM = shangpintm.Trim();
+                    ob_base_shangpinxx.Chandi = chandi.Trim();
 
-                ob_base_shangpinxx = ob_base_shangpinxxservice.AddEntity(ob_base_shangpinxx);
+                    ob_base_shangpinxx = ob_base_shangpinxxservice.AddEntity(ob_base_shangpinxx);
+                }
                 ViewBag.base_shangpinxx = ob_base_shangpinxx;
             }
             catch (Exception ex)

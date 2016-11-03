@@ -194,7 +194,7 @@ namespace CKWMS.Controllers
         }
         public ActionResult GetCargos(int id)
         {
-            var _mxtmp = ob_wms_rukumxservice.LoadSortEntities(p => p.RukuID == id && p.IsDelete == false, true, s => s.ShangpinMC);
+            var _mxtmp = ob_wms_rukumxservice.LoadSortEntities(p => p.RukuID == id && p.IsDelete == false, true, s => s.Pihao);
             ViewBag.wms_rukumx = _mxtmp;
             ViewBag.rkid = id;
             return View("CargoIndex", _mxtmp);
