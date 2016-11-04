@@ -854,6 +854,7 @@
     <Content Include="Views\json_package\Index.cshtml" />
     <Content Include="Views\wms_cunhuo\CurrentStorageExport.cshtml" />
     <Content Include="Views\wms_rukumx\PrintRuKuMX.cshtml" />
+    <Content Include="Views\wms_chukuxlm\SerialExport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

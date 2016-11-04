@@ -221,7 +221,66 @@ namespace CKWMS.Controllers
             }
             return RedirectToAction("Index");
         }
+        [OutputCache(Duration = 30)]
+        public ActionResult SerialExport()
+        {
+            int userid = (int)Session["user_id"];
+            string pagetag = "wms_chukuxlm_index";
+            Expression<Func<wms_chukuxlm, bool>> where = PredicateExtensionses.True<wms_chukuxlm>();
+            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            if (sc != null && sc.ConditionInfo != null)
+            {
+                string[] sclist = sc.ConditionInfo.Split(';');
+                foreach (string scl in sclist)
+                {
+                    string[] scld = scl.Split(',');
+                    switch (scld[0])
+                    {
+                        case "chukuid":
+                            string chukuid = scld[1];
+                            string chukuidequal = scld[2];
+                            string chukuidand = scld[3];
+                            if (!string.IsNullOrEmpty(chukuid))
+                            {
+                                if (chukuidequal.Equals("="))
+                                {
+                                    if (chukuidand.Equals("and"))
+                                        where = where.And(wms_chukuxlm => wms_chukuxlm.ChukuID == int.Parse(chukuid));
+                                    else
+                                        where = where.Or(wms_chukuxlm => wms_chukuxlm.ChukuID == int.Parse(chukuid));
+                                }
+                                if (chukuidequal.Equals(">"))
+                                {
+                                    if (chukuidand.Equals("and"))
+                                        where = where.And(wms_chukuxlm => wms_chukuxlm.ChukuID > int.Parse(chukuid));
+                                    else
+                                        where = where.Or(wms_chukuxlm => wms_chukuxlm.ChukuID > int.Parse(chukuid));
+                                }
+                                if (chukuidequal.Equals("<"))
+                                {
+                                    if (chukuidand.Equals("and"))
+                                        where = where.And(wms_chukuxlm => wms_chukuxlm.ChukuID < int.Parse(chukuid));
+                                    else
+                                        where = where.Or(wms_chukuxlm => wms_chukuxlm.ChukuID < int.Parse(chukuid));
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                ViewBag.SearchCondition = sc.ConditionInfo;
+            }
 
+            where = where.And(wms_chukuxlm => wms_chukuxlm.IsDelete == false);
+
+            var tempData = ob_wms_chukuxlmservice.LoadSortEntities(where.Compile(), false, wms_chukuxlm => wms_chukuxlm.ID);
+            ViewBag.wms_chukuxlm = tempData;
+            ViewData.Model = tempData;
+            string viewHtml = ExportNow.RenderPartialViewToString(this, "SerialExport");
+            return File(System.Text.Encoding.UTF8.GetBytes(viewHtml), "application/ms-excel", string.Format("SerialNumber_{0}.xls", DateTime.Now.ToShortDateString()));
+
+        }
         [OutputCache(Duration = 10)]
         public ActionResult Edit(int id)
         {

@@ -18,6 +18,9 @@
         var url_go = "/wms_chukuxlm/Delete/?del=" + sDel;
         location.href = url_go;
     }
+    function ExportFile() {
+        window.open("/wms_chukuxlm/serialexport", "_blank");
+    }
 </script>
 @{
     List<SearchConditionModel> scms = new List<SearchConditionModel>();
@@ -68,6 +71,7 @@
             <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
             <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
+            <button type="button" class="btn btn-default " id="bt_export" onclick="ExportFile()"><i class="icon-inbox"></i>导出</button>
         </p>
     </div>
     <div class="row">
@@ -90,7 +94,7 @@
                         <td>
                                 <label><input type="checkbox" value="@item.ID"></label>
                         </td>
-                        <td>@Html.GetOtherValue_ID("出库单客户名称", (int)item.Chukudan)</td>
+                        <td>@Html.GetOtherValue_ID("出库单客户名称", (int)item.ChukuID)</td>
                         <td>@item.Chukudan</td>
                         <td>@item.Xuliema</td>
                         <td>@string.Format("{0:yyyy-MM-dd}",item.MakeDate)</td>

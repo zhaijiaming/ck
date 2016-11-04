@@ -170,7 +170,7 @@ namespace CKWMS.Controllers
                 return Json("");
             else
             {
-                var _mxtmp = ob_wms_rukumxservice.LoadSortEntities(p => p.RukuID == int.Parse(_rkuid) && p.IsDelete == false, true, s => s.ShangpinMC).ToList<wms_rukumx>();
+                var _mxtmp = ob_wms_rukumxservice.LoadSortEntities(p => p.RukuID == int.Parse(_rkuid) && p.IsDelete == false, true, s => s.Pihao).ToList<wms_rukumx>();
                 return Json(_mxtmp);
             }
         }

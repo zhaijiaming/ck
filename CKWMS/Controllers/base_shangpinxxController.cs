@@ -363,60 +363,67 @@ namespace CKWMS.Controllers
                 return Json(-1);
             if (string.IsNullOrEmpty(_hz))
                 return Json(-1);
-            foreach (var sp in _splist.Split())
+            if (string.IsNullOrEmpty(_splist))
+                return Json(-1);
+            var _sps = _splist.Replace(" ", "$$");
+            foreach (var sp in _sps.Split())
             {
                 if (sp.Length > 3)
                 {
-                    string[] _sp = sp.Split('#');
+                    var spp = sp.Replace("$$", " ");
+                    string[] _sp = spp.Split('#');
                     var _zcz = _sp[0];
                     var _spmc = _sp[1];
                     var _gg = _sp[2];
-                    base_shangpinxx _shangpin = new base_shangpinxx();
-                    _shangpin.HuozhuID = int.Parse(_hz);
-                    _shangpin.HuozhuSQID = 0;
-                    _shangpin.GongyingID = int.Parse(_gys);
-                    _shangpin.GongyingSQID = 0;
-                    _shangpin.GongyingXSID = 0;
-                    _shangpin.Mingcheng = _spmc;
-                    _shangpin.Guige = _gg;
-                    _shangpin.Daima = _gg;
-                    _shangpin.Xinghao = _gg;
-                    _shangpin.JingyinSF = true;
-                    _shangpin.ShenchaSF = true;
-                    _shangpin.Huansuanlv = 1;
-                    _shangpin.Shouying = 1;
-                    _shangpin.Volchang = 0;
-                    _shangpin.Volgao = 0;
-                    _shangpin.Volkuan = 0;
-                    _shangpin.Chanpinxian = 0;
-                    _shangpin.Muluxuhao = 0;
-                    _shangpin.Guanlifenlei = 0;
-                    _shangpin.MakeMan = _userid;
-                    _shangpin.ZhucezhengBH = _zcz;
-                    if (!string.IsNullOrEmpty(_zcz))
+                    base_shangpinxx _shangpin = ob_base_shangpinxxservice.GetEntityById(p => p.HuozhuID == int.Parse(_hz) && p.Guige == _gg.Trim() && p.Mingcheng ==_spmc.Trim() && p.IsDelete == false);
+                    if (_shangpin == null)
                     {
-                        base_shangpinzcz _spzcz = ServiceFactory.base_shangpinzczservice.GetEntityById(p => p.Bianhao == _zcz && p.IsDelete == false);
-                        if (_spzcz != null)
+                        _shangpin = new base_shangpinxx();
+                        _shangpin.HuozhuID = int.Parse(_hz);
+                        _shangpin.HuozhuSQID = 0;
+                        _shangpin.GongyingID = int.Parse(_gys);
+                        _shangpin.GongyingSQID = 0;
+                        _shangpin.GongyingXSID = 0;
+                        _shangpin.Mingcheng = _spmc;
+                        _shangpin.Guige = _gg;
+                        _shangpin.Daima = _gg;
+                        _shangpin.Xinghao = _gg;
+                        _shangpin.JingyinSF = true;
+                        _shangpin.ShenchaSF = true;
+                        _shangpin.Huansuanlv = 1;
+                        _shangpin.Shouying = 1;
+                        _shangpin.Volchang = 0;
+                        _shangpin.Volgao = 0;
+                        _shangpin.Volkuan = 0;
+                        _shangpin.Chanpinxian = 0;
+                        _shangpin.Muluxuhao = 0;
+                        _shangpin.Guanlifenlei = 0;
+                        _shangpin.MakeMan = _userid;
+                        _shangpin.ZhucezhengBH = _zcz;
+                        if (!string.IsNullOrEmpty(_zcz))
                         {
-                            _shangpin.ZhucezhengID = _spzcz.ID;
-                            _shangpin.QiyeID = _spzcz.ShengchanqiyeID;
-                            base_shengchanqiye _qy = ServiceFactory.base_shengchanqiyeservice.GetEntityById(p => p.ID == _spzcz.ShengchanqiyeID);
-                            _shangpin.Qiyemingcheng = _qy.Qiyemingcheng;
-                            _shangpin.Chandi = _spzcz.Chandi;
+                            base_shangpinzcz _spzcz = ServiceFactory.base_shangpinzczservice.GetEntityById(p => p.Bianhao == _zcz && p.IsDelete == false);
+                            if (_spzcz != null)
+                            {
+                                _shangpin.ZhucezhengID = _spzcz.ID;
+                                _shangpin.QiyeID = _spzcz.ShengchanqiyeID;
+                                base_shengchanqiye _qy = ServiceFactory.base_shengchanqiyeservice.GetEntityById(p => p.ID == _spzcz.ShengchanqiyeID);
+                                _shangpin.Qiyemingcheng = _qy.Qiyemingcheng;
+                                _shangpin.Chandi = _spzcz.Chandi;
+                            }
+                            else
+                            {
+                                _shangpin.ZhucezhengID = 0;
+                                _shangpin.QiyeID = 0;
+                            }
                         }
                         else
                         {
                             _shangpin.ZhucezhengID = 0;
                             _shangpin.QiyeID = 0;
                         }
+                        _shangpin = ob_base_shangpinxxservice.AddEntity(_shangpin);
                     }
-                    else
-                    {
-                        _shangpin.ZhucezhengID = 0;
-                        _shangpin.QiyeID = 0;
-                    }
-                    _shangpin = ob_base_shangpinxxservice.AddEntity(_shangpin);
-
                 }
             }
             return Json(1);

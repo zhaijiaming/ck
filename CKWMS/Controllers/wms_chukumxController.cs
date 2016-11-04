@@ -376,10 +376,10 @@ namespace CKWMS.Controllers
             string page = Request["page"] ?? "";
             if (page.Length < 1)
                 page = "1";
-            var tempdt = ob_wms_chukumxservice.LoadSortEntities(p => p.ChukuID == id && p.IsDelete == false, false, s => s.Guige).ToList<wms_chukumx>();
+            var tempdt = ob_wms_chukumxservice.LoadSortEntities(p => p.ChukuID == id && p.IsDelete == false, false, s => s.Pihao).ToList<wms_chukumx>();
             ViewBag.linecount = tempdt.Count;
             ViewBag.totalproduct = tempdt.Sum(p => p.ChukuSL);
-            var tempData = ob_wms_chukumxservice.LoadSortEntities(p => p.ChukuID == id && p.IsDelete == false, false, s => s.Guige).ToPagedList<wms_chukumx>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            var tempData = ob_wms_chukumxservice.LoadSortEntities(p => p.ChukuID == id && p.IsDelete == false, false, s => s.Pihao).ToPagedList<wms_chukumx>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.wms_chukumx = tempData;
             return View(tempData);
         }
@@ -464,7 +464,7 @@ namespace CKWMS.Controllers
             var _ckid = Request["ckd"] ?? "";
             if (string.IsNullOrEmpty(_ckid))
                 return Json(-1);
-            var _cargos = ob_wms_chukumxservice.LoadSortEntities(p => p.ChukuID == int.Parse(_ckid), true, s => s.Guige);
+            var _cargos = ob_wms_chukumxservice.LoadSortEntities(p => p.ChukuID == int.Parse(_ckid), true, s => s.Pihao);
             if (_cargos == null)
                 return Json(-1);
             return Json(_cargos.ToList<wms_chukumx>());

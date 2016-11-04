@@ -1,0 +1,37 @@
+﻿@using CKWMS.App_Code
+@using CKWMS.Models
+@{
+    ViewBag.Title = "出库序列码清单";
+}
+<div class="page-content">
+    <div class="row">
+        <table class="table" id="mydatatable">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>客户</td>
+                    <td>出库单</td>
+                    <td>序列码</td>
+                    <td>制单日期</td>
+                    <td>制单人</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.wms_chukuxlm)
+                {
+                    <tr>
+                        <td>
+                            <label><input type="checkbox" value="@item.ID"></label>
+                        </td>
+                        <td>@Html.GetOtherValue_ID("出库单客户名称", (int)item.ChukuID)</td>
+                        <td>@item.Chukudan</td>
+                        <td>@item.Xuliema</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.MakeDate)</td>
+                        <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

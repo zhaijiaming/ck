@@ -366,7 +366,7 @@ namespace CKWMS.Controllers
             if (rkdid.Length == 0)
                 rkdid = "0";
             //var tempData = ServiceFactory.wms_rukumxservice.LoadSortEntities(p => p.RukuID == int.Parse(rkdid) && p.IsDelete==false && (p.DaohuoSL-p.YishouSL>0), true, s => s.ShangpinMC).ToPagedList<wms_rukumx>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
-            var tempData = ServiceFactory.wms_rukumxservice.LoadSortEntities(p => p.RukuID == int.Parse(rkdid) && p.IsDelete == false && (p.DaohuoSL - p.YishouSL > 0), true, s => s.ShangpinMC);
+            var tempData = ServiceFactory.wms_rukumxservice.LoadSortEntities(p => p.RukuID == int.Parse(rkdid) && p.IsDelete == false && (p.DaohuoSL - p.YishouSL > 0), true, s => s.Pihao);
             ViewBag.wms_rukumx = tempData;
             ViewBag.rkdid = rkdid;
             return View(tempData);
