@@ -20,6 +20,113 @@ namespace CKWMS.Controllers
         {
             return View();
         }
+        public ActionResult InventoryExport()
+        {
+            int userid = (int)Session["user_id"];
+            string pagetag = "cfda_cangku_inventory";
+            Expression<Func<cfda_storage_v, bool>> where = PredicateExtensionses.True<cfda_storage_v>();
+            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            if (sc != null)
+            {
+                string[] sclist = sc.ConditionInfo.Split(';');
+                foreach (string scl in sclist)
+                {
+                    string[] scld = scl.Split(',');
+                    switch (scld[0])
+                    {
+                        case "huozhuid":
+                            string huozhuid = scld[1];
+                            string huozhuidequal = scld[2];
+                            string huozhuidand = scld[3];
+                            if (!string.IsNullOrEmpty(huozhuid))
+                            {
+                                if (huozhuidequal.Equals("="))
+                                {
+                                    if (huozhuidand.Equals("and"))
+                                        where = where.And(p => p.HuozhuID == int.Parse(huozhuid));
+                                    else
+                                        where = where.Or(p => p.HuozhuID == int.Parse(huozhuid));
+                                }
+                            }
+                            break;
+                        case "shangpinmc":
+                            string shangpinmc = scld[1];
+                            string shangpinmcequal = scld[2];
+                            string shangpinmcand = scld[3];
+                            if (!string.IsNullOrEmpty(shangpinmc))
+                            {
+                                if (shangpinmcequal.Equals("="))
+                                {
+                                    if (shangpinmcand.Equals("and"))
+                                        where = where.And(p => p.ShangpinMC == shangpinmc);
+                                    else
+                                        where = where.Or(p => p.ShangpinMC == shangpinmc);
+                                }
+                                if (shangpinmcequal.Equals("like"))
+                                {
+                                    if (shangpinmcand.Equals("and"))
+                                        where = where.And(p => p.ShangpinMC.Contains(shangpinmc));
+                                    else
+                                        where = where.Or(p => p.ShangpinMC.Contains(shangpinmc));
+                                }
+                            }
+                            break;
+                        case "guige":
+                            string guige = scld[1];
+                            string guigeequal = scld[2];
+                            string guigeand = scld[3];
+                            if (!string.IsNullOrEmpty(guige))
+                            {
+                                if (guigeequal.Equals("="))
+                                {
+                                    if (guigeand.Equals("and"))
+                                        where = where.And(p => p.Guige == guige);
+                                    else
+                                        where = where.Or(p => p.Guige == guige);
+                                }
+                                if (guigeequal.Equals("like"))
+                                {
+                                    if (guigeand.Equals("and"))
+                                        where = where.And(p => p.Guige.Contains(guige));
+                                    else
+                                        where = where.Or(p => p.Guige.Contains(guige));
+                                }
+                            }
+                            break;
+                        case "pihao":
+                            string pihao = scld[1];
+                            string pihaoequal = scld[2];
+                            string pihaoand = scld[3];
+                            if (!string.IsNullOrEmpty(pihao))
+                            {
+                                if (pihaoequal.Equals("="))
+                                {
+                                    if (pihaoand.Equals("and"))
+                                        where = where.And(p => p.Pihao == pihao);
+                                    else
+                                        where = where.Or(p => p.Pihao == pihao);
+                                }
+                                if (pihaoequal.Equals("like"))
+                                {
+                                    if (pihaoand.Equals("and"))
+                                        where = where.And(p => p.Pihao.Contains(pihao));
+                                    else
+                                        where = where.Or(p => p.Pihao.Contains(pihao));
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                ViewBag.SearchCondition = sc.ConditionInfo;
+            }
+            var tempData = ServiceFactory.wms_cunhuoservice.CfdaStorage(where.Compile());
+            ViewBag.inventory = tempData;
+            ViewData.Model = tempData;
+            string viewHtml = ExportNow.RenderPartialViewToString(this, "InventoryExport");
+            return File(System.Text.Encoding.UTF8.GetBytes(viewHtml), "application/ms-excel", string.Format("cfda_inventory_{0}.xls", DateTime.Now.ToShortDateString()));
+        }
         public ActionResult GetInventory(string page)
         {
             if (string.IsNullOrEmpty(page))
@@ -335,6 +442,113 @@ namespace CKWMS.Controllers
             ViewBag.inventory = tempData;
             return View(tempData);
         }
+        public ActionResult EntryrecExport()
+        {
+            int userid = (int)Session["user_id"];
+            string pagetag = "cfda_cangku_entryrec";
+            Expression<Func<cfda_entryrec_v, bool>> where = PredicateExtensionses.True<cfda_entryrec_v>();
+            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            if (sc != null)
+            {
+                string[] sclist = sc.ConditionInfo.Split(';');
+                foreach (string scl in sclist)
+                {
+                    string[] scld = scl.Split(',');
+                    switch (scld[0])
+                    {
+                        case "huozhuid":
+                            string huozhuid = scld[1];
+                            string huozhuidequal = scld[2];
+                            string huozhuidand = scld[3];
+                            if (!string.IsNullOrEmpty(huozhuid))
+                            {
+                                if (huozhuidequal.Equals("="))
+                                {
+                                    if (huozhuidand.Equals("and"))
+                                        where = where.And(cfda_entryrec_v => cfda_entryrec_v.HuozhuID == int.Parse(huozhuid));
+                                    else
+                                        where = where.Or(cfda_entryrec_v => cfda_entryrec_v.HuozhuID == int.Parse(huozhuid));
+                                }
+                            }
+                            break;
+                        case "shangpinmc":
+                            string shangpinmc = scld[1];
+                            string shangpinmcequal = scld[2];
+                            string shangpinmcand = scld[3];
+                            if (!string.IsNullOrEmpty(shangpinmc))
+                            {
+                                if (shangpinmcequal.Equals("="))
+                                {
+                                    if (shangpinmcand.Equals("and"))
+                                        where = where.And(cfda_entryrec_v => cfda_entryrec_v.ShangpinMC == shangpinmc);
+                                    else
+                                        where = where.Or(cfda_entryrec_v => cfda_entryrec_v.ShangpinMC == shangpinmc);
+                                }
+                                if (shangpinmcequal.Equals("like"))
+                                {
+                                    if (shangpinmcand.Equals("and"))
+                                        where = where.And(cfda_entryrec_v => cfda_entryrec_v.ShangpinMC.Contains(shangpinmc));
+                                    else
+                                        where = where.Or(cfda_entryrec_v => cfda_entryrec_v.ShangpinMC.Contains(shangpinmc));
+                                }
+                            }
+                            break;
+                        case "guige":
+                            string guige = scld[1];
+                            string guigeequal = scld[2];
+                            string guigeand = scld[3];
+                            if (!string.IsNullOrEmpty(guige))
+                            {
+                                if (guigeequal.Equals("="))
+                                {
+                                    if (guigeand.Equals("and"))
+                                        where = where.And(cfda_entryrec_v => cfda_entryrec_v.Guige == guige);
+                                    else
+                                        where = where.Or(cfda_entryrec_v => cfda_entryrec_v.Guige == guige);
+                                }
+                                if (guigeequal.Equals("like"))
+                                {
+                                    if (guigeand.Equals("and"))
+                                        where = where.And(cfda_entryrec_v => cfda_entryrec_v.Guige.Contains(guige));
+                                    else
+                                        where = where.Or(cfda_entryrec_v => cfda_entryrec_v.Guige.Contains(guige));
+                                }
+                            }
+                            break;
+                        case "pihao":
+                            string pihao = scld[1];
+                            string pihaoequal = scld[2];
+                            string pihaoand = scld[3];
+                            if (!string.IsNullOrEmpty(pihao))
+                            {
+                                if (pihaoequal.Equals("="))
+                                {
+                                    if (pihaoand.Equals("and"))
+                                        where = where.And(p => p.Pihao == pihao);
+                                    else
+                                        where = where.Or(p => p.Pihao == pihao);
+                                }
+                                if (pihaoequal.Equals("like"))
+                                {
+                                    if (pihaoand.Equals("and"))
+                                        where = where.And(p => p.Pihao.Contains(pihao));
+                                    else
+                                        where = where.Or(p => p.Pihao.Contains(pihao));
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                ViewBag.SearchCondition = sc.ConditionInfo;
+            }
+            var tempData = ServiceFactory.wms_rukudanservice.CfdaEntryrec(where.Compile());
+            ViewBag.entryrec = tempData;
+            ViewData.Model = tempData;
+            string viewHtml = ExportNow.RenderPartialViewToString(this, "EntryrecExport");
+            return File(System.Text.Encoding.UTF8.GetBytes(viewHtml), "application/ms-excel", string.Format("cfda_entryrec_{0}.xls", DateTime.Now.ToShortDateString()));
+        }
         public ActionResult GetEntryrec(string page)
         {
             if (string.IsNullOrEmpty(page))
@@ -648,6 +862,135 @@ namespace CKWMS.Controllers
             var tempData = ServiceFactory.wms_rukudanservice.CfdaEntryrec(where.Compile()).ToPagedList<cfda_entryrec_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.entryrec = tempData;
             return View(tempData);
+        }
+        public ActionResult OutrecExport()
+        {
+            int userid = (int)Session["user_id"];
+            string pagetag = "cfda_cangku_outrec";
+            Expression<Func<cfda_outrec_v, bool>> where = PredicateExtensionses.True<cfda_outrec_v>();
+            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            if (sc != null && sc.ConditionInfo != null)
+            {
+                string[] sclist = sc.ConditionInfo.Split(';');
+                foreach (string scl in sclist)
+                {
+                    string[] scld = scl.Split(',');
+                    switch (scld[0])
+                    {
+                        case "huozhuid":
+                            string huozhuid = scld[1];
+                            string huozhuidequal = scld[2];
+                            string huozhuidand = scld[3];
+                            if (!string.IsNullOrEmpty(huozhuid))
+                            {
+                                if (huozhuidequal.Equals("="))
+                                {
+                                    if (huozhuidand.Equals("and"))
+                                        where = where.And(p => p.HuozhuID == int.Parse(huozhuid));
+                                    else
+                                        where = where.Or(p => p.HuozhuID == int.Parse(huozhuid));
+                                }
+                            }
+                            break;
+                        case "shangpinmc":
+                            string shangpinmc = scld[1];
+                            string shangpinmcequal = scld[2];
+                            string shangpinmcand = scld[3];
+                            if (!string.IsNullOrEmpty(shangpinmc))
+                            {
+                                if (shangpinmcequal.Equals("="))
+                                {
+                                    if (shangpinmcand.Equals("and"))
+                                        where = where.And(p => p.ShangpinMC == shangpinmc);
+                                    else
+                                        where = where.Or(p => p.ShangpinMC == shangpinmc);
+                                }
+                                if (shangpinmcequal.Equals("like"))
+                                {
+                                    if (shangpinmcand.Equals("and"))
+                                        where = where.And(p => p.ShangpinMC.Contains(shangpinmc));
+                                    else
+                                        where = where.Or(p => p.ShangpinMC.Contains(shangpinmc));
+                                }
+                            }
+                            break;
+                        case "guige":
+                            string guige = scld[1];
+                            string guigeequal = scld[2];
+                            string guigeand = scld[3];
+                            if (!string.IsNullOrEmpty(guige))
+                            {
+                                if (guigeequal.Equals("="))
+                                {
+                                    if (guigeand.Equals("and"))
+                                        where = where.And(p => p.Guige == guige);
+                                    else
+                                        where = where.Or(p => p.Guige == guige);
+                                }
+                                if (guigeequal.Equals("like"))
+                                {
+                                    if (guigeand.Equals("and"))
+                                        where = where.And(p => p.Guige.Contains(guige));
+                                    else
+                                        where = where.Or(p => p.Guige.Contains(guige));
+                                }
+                            }
+                            break;
+                        case "pihao":
+                            string pihao = scld[1];
+                            string pihaoequal = scld[2];
+                            string pihaoand = scld[3];
+                            if (!string.IsNullOrEmpty(pihao))
+                            {
+                                if (pihaoequal.Equals("="))
+                                {
+                                    if (pihaoand.Equals("and"))
+                                        where = where.And(p => p.Pihao == pihao);
+                                    else
+                                        where = where.Or(p => p.Pihao == pihao);
+                                }
+                                if (pihaoequal.Equals("like"))
+                                {
+                                    if (pihaoand.Equals("and"))
+                                        where = where.And(p => p.Pihao.Contains(pihao));
+                                    else
+                                        where = where.Or(p => p.Pihao.Contains(pihao));
+                                }
+                            }
+                            break;
+                        case "kehumc":
+                            string kehumc = scld[1];
+                            string kehumcequal = scld[2];
+                            string kehumcand = scld[3];
+                            if (!string.IsNullOrEmpty(kehumc))
+                            {
+                                if (kehumcequal.Equals("="))
+                                {
+                                    if (kehumcand.Equals("and"))
+                                        where = where.And(p => p.KehuMC == kehumc);
+                                    else
+                                        where = where.Or(p => p.KehuMC == kehumc);
+                                }
+                                if (kehumcequal.Equals("like"))
+                                {
+                                    if (kehumcand.Equals("and"))
+                                        where = where.And(p => p.KehuMC.Contains(kehumc));
+                                    else
+                                        where = where.Or(p => p.KehuMC.Contains(kehumc));
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                ViewBag.SearchCondition = sc.ConditionInfo;
+            }
+            var tempData = ServiceFactory.wms_chukudanservice.CfdaOutrec(where.Compile());
+            ViewBag.outrec = tempData;
+            ViewData.Model = tempData;
+            string viewHtml = ExportNow.RenderPartialViewToString(this, "OutrecExport");
+            return File(System.Text.Encoding.UTF8.GetBytes(viewHtml), "application/ms-excel", string.Format("cfda_outrec_{0}.xls", DateTime.Now.ToShortDateString()));
         }
         public ActionResult GetOutrec(string page)
         {

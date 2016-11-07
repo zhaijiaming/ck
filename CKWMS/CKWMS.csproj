@@ -855,6 +855,10 @@
     <Content Include="Views\wms_cunhuo\CurrentStorageExport.cshtml" />
     <Content Include="Views\wms_rukumx\PrintRuKuMX.cshtml" />
     <Content Include="Views\wms_chukuxlm\SerialExport.cshtml" />
+    <Content Include="Views\cfda_cangku\InventoryExport.cshtml" />
+    <Content Include="Views\cfda_cangku\EntryrecExport.cshtml" />
+    <Content Include="Views\cfda_cangku\OutrecExport.cshtml" />
+    <Content Include="Views\cfda_zizhi\CargoExport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

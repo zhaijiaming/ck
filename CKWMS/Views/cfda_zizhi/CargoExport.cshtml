@@ -1,0 +1,60 @@
+﻿@using CKWMS.App_Code
+@using CKWMS.Models
+@{
+    ViewBag.Title = "委托产品信息";
+    string _searchcondition = ViewBag.SearchCondition;
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var i = 0;
+        $("#mydatatable tbody tr").each(function () {
+            i = i + 1;
+            $(this).find("td").eq(0).html(i);
+        });
+    });
+</script>
+
+<div class="page-content">
+    <div id="splist" class="row">
+        <div style="overflow:auto;">
+            <table class="table table-condensed table-hover" style="overflow: hidden;text-overflow:ellipsis;white-space: nowrap;" id="mydatatable">
+                <caption></caption>
+                <thead>
+                    <tr>
+                        <td>序号</td>
+                        <td>委托方企业名称</td>
+                        <td>委托方货品名称</td>
+                        <td>规格（型号）</td>
+                        <td>产品注册证号/备案凭证号</td>
+                        <td>批准日期</td>
+                        <td>有效期</td>
+                        <td>生产企业</td>
+                        <td>生产企业许可证号/备案凭证号</td>
+                        <td>单位</td>
+                        <td>存储条件</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in ViewBag.cfda_cargo)
+                    {
+
+                        <tr>
+                            <td></td>
+                            <td>@item.Kehumingcheng</td>
+                            <td>@item.Mingcheng</td>
+                            <td>@item.guige</td>
+                            <td>@item.ZhucezhengBH </td>
+                            <td>@string.Format("{0:yyyy-MM-dd}", item.PizhunRQ)</td>
+                            <td>@string.Format("{0:yyyy-MM-dd}", item.ZhucezhengYXQ)</td>
+                            <td>@item.Qiyemingcheng</td>
+                            <td>@item.ShengchanxukeBH/@item.BeianBH</td>
+                            <td>@item.danwei</td>
+                            <td>@item.Cunchutiaojian</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
