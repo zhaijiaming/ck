@@ -650,7 +650,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!ShengchanRQ.Value</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>宋体</FontFamily>
                               </Style>
@@ -1444,14 +1444,14 @@
                   <Value>入库单编号：</Value>
                   <Style>
                     <FontFamily>宋体</FontFamily>
-                    <FontSize>8pt</FontSize>
+                    <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
                 <TextRun>
                   <Value>=First(Fields!RukudanBH.Value, "DataSet2")</Value>
                   <Style>
                     <FontFamily>宋体</FontFamily>
-                    <FontSize>8pt</FontSize>
+                    <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1487,14 +1487,14 @@
                   <Value>货主名称：</Value>
                   <Style>
                     <FontFamily>宋体</FontFamily>
-                    <FontSize>8pt</FontSize>
+                    <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
                 <TextRun>
                   <Value>=First(Fields!HuozhuID.Value, "DataSet2")</Value>
                   <Style>
                     <FontFamily>宋体</FontFamily>
-                    <FontSize>8pt</FontSize>
+                    <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1530,14 +1530,14 @@
                   <Value>入库日期：</Value>
                   <Style>
                     <FontFamily>宋体</FontFamily>
-                    <FontSize>8pt</FontSize>
+                    <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
                 <TextRun>
                   <Value>=First(Fields!RukuRQ.Value, "DataSet2")</Value>
                   <Style>
                     <FontFamily>宋体</FontFamily>
-                    <FontSize>8pt</FontSize>
+                    <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1573,14 +1573,14 @@
                   <Value>储存要求：</Value>
                   <Style>
                     <FontFamily>宋体</FontFamily>
-                    <FontSize>8pt</FontSize>
+                    <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
                 <TextRun>
                   <Value>=First(Fields!ChunyunYQ.Value, "DataSet2")</Value>
                   <Style>
                     <FontFamily>宋体</FontFamily>
-                    <FontSize>8pt</FontSize>
+                    <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1616,14 +1616,14 @@
                   <Value>仓 库 名：</Value>
                   <Style>
                     <FontFamily>宋体</FontFamily>
-                    <FontSize>8pt</FontSize>
+                    <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
                 <TextRun>
                   <Value>=First(Fields!CangkuID.Value, "DataSet2")</Value>
                   <Style>
                     <FontFamily>宋体</FontFamily>
-                    <FontSize>8pt</FontSize>
+                    <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1659,14 +1659,14 @@
                   <Value>供 应 商：</Value>
                   <Style>
                     <FontFamily>宋体</FontFamily>
-                    <FontSize>8pt</FontSize>
+                    <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
                 <TextRun>
                   <Value>=First(Fields!GongyingshangID.Value, "DataSet2")</Value>
                   <Style>
                     <FontFamily>宋体</FontFamily>
-                    <FontSize>8pt</FontSize>
+                    <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1925,7 +1925,7 @@
                   <Value>收 货 人：</Value>
                   <Style>
                     <FontFamily>宋体</FontFamily>
-                    <FontSize>8pt</FontSize>
+                    <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1938,7 +1938,7 @@
           <Top>0.3175cm</Top>
           <Left>1.21396cm</Left>
           <Height>0.6cm</Height>
-          <Width>4.80182cm</Width>
+          <Width>6.07182cm</Width>
           <ZIndex>6</ZIndex>
           <Style>
             <Border>
@@ -1961,7 +1961,7 @@
                   <Value>上 架 人：</Value>
                   <Style>
                     <FontFamily>宋体</FontFamily>
-                    <FontSize>8pt</FontSize>
+                    <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1974,7 +1974,7 @@
           <Top>0.3175cm</Top>
           <Left>19.69414cm</Left>
           <Height>0.6cm</Height>
-          <Width>5.44979cm</Width>
+          <Width>5.47167cm</Width>
           <ZIndex>7</ZIndex>
           <Style>
             <Border>
@@ -1988,8 +1988,8 @@
           </Style>
         </Textbox>
         <Line Name="Line1">
-          <Top>0.9175cm</Top>
-          <Left>2.64266cm</Left>
+          <Top>0.95278cm</Top>
+          <Left>2.76845cm</Left>
           <Height>0cm</Height>
           <Width>3.37312cm</Width>
           <ZIndex>8</ZIndex>
@@ -2000,8 +2000,8 @@
           </Style>
         </Line>
         <Line Name="Line2">
-          <Top>0.9175cm</Top>
-          <Left>21.05186cm</Left>
+          <Top>0.95278cm</Top>
+          <Left>21.26353cm</Left>
           <Height>0cm</Height>
           <Width>3.37312cm</Width>
           <ZIndex>9</ZIndex>

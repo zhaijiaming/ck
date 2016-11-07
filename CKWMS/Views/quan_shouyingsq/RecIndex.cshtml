@@ -33,9 +33,21 @@
     if (_searchcondition == null || _searchcondition == "")
     {
         SearchConditionModel scm = new SearchConditionModel();
-        scm.ItemCode = "Leibie";
-        scm.ItemTitle = "类别";
-        scm.ItemType = "System.Int32";
+        scm.ItemCode = "Neirong";
+        scm.ItemTitle = "内容";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "SQren";
+        scm.ItemTitle = "申请人";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "Shenheren";
+        scm.ItemTitle = "审核人";
+        scm.ItemType = "System.String";
         scms.Add(scm);
     }
     else
@@ -44,14 +56,38 @@
         if (scs.Length > 0)
         {
             SearchConditionModel scm = new SearchConditionModel();
-            scm.ItemCode = "Leibie";
-            scm.ItemTitle = "类别";
-            scm.ItemType = "System.Int32";
+            scm.ItemCode = "Neirong";
+            scm.ItemTitle = "内容";
+            scm.ItemType = "System.String";
             if (scs.Length > 1)
             {
                 scm.ItemValue = scs[0].Split(',')[1];
                 scm.ItemOpValue = scs[0].Split(',')[2];
                 scm.ItemJion = scs[0].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "SQren";
+            scm.ItemTitle = "申请人";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[1].Split(',')[1];
+                scm.ItemOpValue = scs[1].Split(',')[2];
+                scm.ItemJion = scs[1].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "Shenheren";
+            scm.ItemTitle = "审核人";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[2].Split(',')[1];
+                scm.ItemOpValue = scs[2].Split(',')[2];
+                scm.ItemJion = scs[2].Split(',')[3];
             }
             scms.Add(scm);
         }
@@ -70,7 +106,7 @@
     </ul>
 </div>
 <div class="page-content">
-    @Html.Search_Condition((int)Session["user_id"], "首营申请_条件组合查询", "/quan_shouyingsq/index", "quan_shouyingsqindex", scms)
+    @Html.Search_Condition((int)Session["user_id"], "首营申请_条件组合查询", "/quan_shouyingsq/RecIndex", "quan_shouyingsqRecIndex", scms)
     <div class="page-header">
         <p>
             <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>

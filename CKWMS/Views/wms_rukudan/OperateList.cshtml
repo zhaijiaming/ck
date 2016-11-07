@@ -31,7 +31,7 @@
                     location.reload();
             });
         });
-        //入库详单打印
+        //收货清单打印
         $("#mydatatable").on("click", ".operatelistid", function () {
             var operatelistid = $(this).find(".input_operatelistid").val();
             window.open("/wms_rukudan/PrintRuKuXiangDan?rkxdid=" + operatelistid);

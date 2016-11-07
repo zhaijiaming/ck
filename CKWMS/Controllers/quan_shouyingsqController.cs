@@ -84,9 +84,18 @@ namespace CKWMS.Controllers
             int userid = (int)Session["user_id"];
             string pagetag = "quan_shouyingsq_index";
             string page = "1";
-            string leibie = Request["leibie"] ?? "";
-            string leibieequal = Request["leibieequal"] ?? "";
-            string leibieand = Request["leibieand"] ?? "";
+            //neirong
+            string neirong = Request["neirong"] ?? "";
+            string neirongequal = Request["neirongequal"] ?? "";
+            string neirongand = Request["neirongand"] ?? "";
+            //sqren
+            string sqren = Request["sqren"] ?? "";
+            string sqrenequal = Request["sqrenequal"] ?? "";
+            string sqrenand = Request["sqrenand"] ?? "";
+            //shenheren
+            string shenheren = Request["shenheren"] ?? "";
+            string shenherenequal = Request["shenherenequal"] ?? "";
+            string shenherenand = Request["shenherenand"] ?? "";
             Expression<Func<quan_shouyingsq, bool>> where = PredicateExtensionses.True<quan_shouyingsq>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -94,68 +103,144 @@ namespace CKWMS.Controllers
                 sc = new searchcondition();
                 sc.UserID = userid;
                 sc.PageBrief = pagetag;
-                if (!string.IsNullOrEmpty(leibie))
+                //neirong
+                if (!string.IsNullOrEmpty(neirong))
                 {
-                    if (leibieequal.Equals("="))
+                    if (neirongequal.Equals("="))
                     {
-                        if (leibieand.Equals("and"))
-                            where = where.And(quan_shouyingsq => quan_shouyingsq.Leibie == int.Parse(leibie));
+                        if (neirongand.Equals("and"))
+                            where = where.And(p => p.Neirong == neirong);
                         else
-                            where = where.Or(quan_shouyingsq => quan_shouyingsq.Leibie == int.Parse(leibie));
+                            where = where.Or(p => p.Neirong == neirong);
                     }
-                    if (leibieequal.Equals(">"))
+                    if (neirongequal.Equals("like"))
                     {
-                        if (leibieand.Equals("and"))
-                            where = where.And(quan_shouyingsq => quan_shouyingsq.Leibie > int.Parse(leibie));
+                        if (neirongand.Equals("and"))
+                            where = where.And(p => p.Neirong.Contains(neirong));
                         else
-                            where = where.Or(quan_shouyingsq => quan_shouyingsq.Leibie > int.Parse(leibie));
-                    }
-                    if (leibieequal.Equals("<"))
-                    {
-                        if (leibieand.Equals("and"))
-                            where = where.And(quan_shouyingsq => quan_shouyingsq.Leibie < int.Parse(leibie));
-                        else
-                            where = where.Or(quan_shouyingsq => quan_shouyingsq.Leibie < int.Parse(leibie));
+                            where = where.Or(p => p.Neirong.Contains(neirong));
                     }
                 }
-                if (!string.IsNullOrEmpty(leibie))
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "leibie", leibie, leibieequal, leibieand);
+                if (!string.IsNullOrEmpty(neirong))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "neirong", neirong, neirongequal, neirongand);
                 else
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "leibie", "", leibieequal, leibieand);
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "neirong", "", neirongequal, neirongand);
+                //sqren
+                if (!string.IsNullOrEmpty(sqren))
+                {
+                    if (sqrenequal.Equals("="))
+                    {
+                        if (sqrenand.Equals("and"))
+                            where = where.And(p => p.SQren == sqren);
+                        else
+                            where = where.Or(p => p.SQren == sqren);
+                    }
+                    if (sqrenequal.Equals("like"))
+                    {
+                        if (sqrenand.Equals("and"))
+                            where = where.And(p => p.SQren.Contains(sqren));
+                        else
+                            where = where.Or(p => p.SQren.Contains(sqren));
+                    }
+                }
+                if (!string.IsNullOrEmpty(sqren))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "sqren", sqren, sqrenequal, sqrenand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "sqren", "", sqrenequal, sqrenand);
+                //shenheren
+                if (!string.IsNullOrEmpty(shenheren))
+                {
+                    if (shenherenequal.Equals("="))
+                    {
+                        if (shenherenand.Equals("and"))
+                            where = where.And(p => p.Shenheren == shenheren);
+                        else
+                            where = where.Or(p => p.Shenheren == shenheren);
+                    }
+                    if (shenherenequal.Equals("like"))
+                    {
+                        if (shenherenand.Equals("and"))
+                            where = where.And(p => p.Shenheren.Contains(shenheren));
+                        else
+                            where = where.Or(p => p.Shenheren.Contains(shenheren));
+                    }
+                }
+                if (!string.IsNullOrEmpty(shenheren))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shenheren", shenheren, shenherenequal, shenherenand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shenheren", "", shenherenequal, shenherenand);
 
                 searchconditionService.GetInstance().AddEntity(sc);
             }
             else
             {
                 sc.ConditionInfo = "";
-                if (!string.IsNullOrEmpty(leibie))
+                //neirong
+                if (!string.IsNullOrEmpty(neirong))
                 {
-                    if (leibieequal.Equals("="))
+                    if (neirongequal.Equals("="))
                     {
-                        if (leibieand.Equals("and"))
-                            where = where.And(quan_shouyingsq => quan_shouyingsq.Leibie == int.Parse(leibie));
+                        if (neirongand.Equals("and"))
+                            where = where.And(p => p.Neirong == neirong);
                         else
-                            where = where.Or(quan_shouyingsq => quan_shouyingsq.Leibie == int.Parse(leibie));
+                            where = where.Or(p => p.Neirong == neirong);
                     }
-                    if (leibieequal.Equals(">"))
+                    if (neirongequal.Equals("like"))
                     {
-                        if (leibieand.Equals("and"))
-                            where = where.And(quan_shouyingsq => quan_shouyingsq.Leibie > int.Parse(leibie));
+                        if (neirongand.Equals("and"))
+                            where = where.And(p => p.Neirong.Contains(neirong));
                         else
-                            where = where.Or(quan_shouyingsq => quan_shouyingsq.Leibie > int.Parse(leibie));
-                    }
-                    if (leibieequal.Equals("<"))
-                    {
-                        if (leibieand.Equals("and"))
-                            where = where.And(quan_shouyingsq => quan_shouyingsq.Leibie < int.Parse(leibie));
-                        else
-                            where = where.Or(quan_shouyingsq => quan_shouyingsq.Leibie < int.Parse(leibie));
+                            where = where.Or(p => p.Neirong.Contains(neirong));
                     }
                 }
-                if (!string.IsNullOrEmpty(leibie))
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "leibie", leibie, leibieequal, leibieand);
+                if (!string.IsNullOrEmpty(neirong))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "neirong", neirong, neirongequal, neirongand);
                 else
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "leibie", "", leibieequal, leibieand);
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "neirong", "", neirongequal, neirongand);
+                //sqren
+                if (!string.IsNullOrEmpty(sqren))
+                {
+                    if (sqrenequal.Equals("="))
+                    {
+                        if (sqrenand.Equals("and"))
+                            where = where.And(p => p.SQren == sqren);
+                        else
+                            where = where.Or(p => p.SQren == sqren);
+                    }
+                    if (sqrenequal.Equals("like"))
+                    {
+                        if (sqrenand.Equals("and"))
+                            where = where.And(p => p.SQren.Contains(sqren));
+                        else
+                            where = where.Or(p => p.SQren.Contains(sqren));
+                    }
+                }
+                if (!string.IsNullOrEmpty(sqren))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "sqren", sqren, sqrenequal, sqrenand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "sqren", "", sqrenequal, sqrenand);
+                //shenheren
+                if (!string.IsNullOrEmpty(shenheren))
+                {
+                    if (shenherenequal.Equals("="))
+                    {
+                        if (shenherenand.Equals("and"))
+                            where = where.And(p => p.Shenheren == shenheren);
+                        else
+                            where = where.Or(p => p.Shenheren == shenheren);
+                    }
+                    if (shenherenequal.Equals("like"))
+                    {
+                        if (shenherenand.Equals("and"))
+                            where = where.And(p => p.Shenheren.Contains(shenheren));
+                        else
+                            where = where.Or(p => p.Shenheren.Contains(shenheren));
+                    }
+                }
+                if (!string.IsNullOrEmpty(shenheren))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shenheren", shenheren, shenherenequal, shenherenand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shenheren", "", shenherenequal, shenherenand);
 
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
@@ -231,9 +316,18 @@ namespace CKWMS.Controllers
             int userid = (int)Session["user_id"];
             string pagetag = "quan_shouyingsq_recindex";
             string page = "1";
-            string leibie = Request["leibie"] ?? "";
-            string leibieequal = Request["leibieequal"] ?? "";
-            string leibieand = Request["leibieand"] ?? "";
+            //neirong
+            string neirong = Request["neirong"] ?? "";
+            string neirongequal = Request["neirongequal"] ?? "";
+            string neirongand = Request["neirongand"] ?? "";
+            //sqren
+            string sqren = Request["sqren"] ?? "";
+            string sqrenequal = Request["sqrenequal"] ?? "";
+            string sqrenand = Request["sqrenand"] ?? "";
+            //shenheren
+            string shenheren = Request["shenheren"] ?? "";
+            string shenherenequal = Request["shenherenequal"] ?? "";
+            string shenherenand = Request["shenherenand"] ?? "";
             Expression<Func<quan_shouyingsq, bool>> where = PredicateExtensionses.True<quan_shouyingsq>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -241,68 +335,144 @@ namespace CKWMS.Controllers
                 sc = new searchcondition();
                 sc.UserID = userid;
                 sc.PageBrief = pagetag;
-                if (!string.IsNullOrEmpty(leibie))
+                //neirong
+                if (!string.IsNullOrEmpty(neirong))
                 {
-                    if (leibieequal.Equals("="))
+                    if (neirongequal.Equals("="))
                     {
-                        if (leibieand.Equals("and"))
-                            where = where.And(quan_shouyingsq => quan_shouyingsq.Leibie == int.Parse(leibie));
+                        if (neirongand.Equals("and"))
+                            where = where.And(p => p.Neirong == neirong);
                         else
-                            where = where.Or(quan_shouyingsq => quan_shouyingsq.Leibie == int.Parse(leibie));
+                            where = where.Or(p => p.Neirong == neirong);
                     }
-                    if (leibieequal.Equals(">"))
+                    if (neirongequal.Equals("like"))
                     {
-                        if (leibieand.Equals("and"))
-                            where = where.And(quan_shouyingsq => quan_shouyingsq.Leibie > int.Parse(leibie));
+                        if (neirongand.Equals("and"))
+                            where = where.And(p => p.Neirong.Contains(neirong));
                         else
-                            where = where.Or(quan_shouyingsq => quan_shouyingsq.Leibie > int.Parse(leibie));
-                    }
-                    if (leibieequal.Equals("<"))
-                    {
-                        if (leibieand.Equals("and"))
-                            where = where.And(quan_shouyingsq => quan_shouyingsq.Leibie < int.Parse(leibie));
-                        else
-                            where = where.Or(quan_shouyingsq => quan_shouyingsq.Leibie < int.Parse(leibie));
+                            where = where.Or(p => p.Neirong.Contains(neirong));
                     }
                 }
-                if (!string.IsNullOrEmpty(leibie))
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "leibie", leibie, leibieequal, leibieand);
+                if (!string.IsNullOrEmpty(neirong))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "neirong", neirong, neirongequal, neirongand);
                 else
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "leibie", "", leibieequal, leibieand);
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "neirong", "", neirongequal, neirongand);
+                //sqren
+                if (!string.IsNullOrEmpty(sqren))
+                {
+                    if (sqrenequal.Equals("="))
+                    {
+                        if (sqrenand.Equals("and"))
+                            where = where.And(p => p.SQren == sqren);
+                        else
+                            where = where.Or(p => p.SQren == sqren);
+                    }
+                    if (sqrenequal.Equals("like"))
+                    {
+                        if (sqrenand.Equals("and"))
+                            where = where.And(p => p.SQren.Contains(sqren));
+                        else
+                            where = where.Or(p => p.SQren.Contains(sqren));
+                    }
+                }
+                if (!string.IsNullOrEmpty(sqren))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "sqren", sqren, sqrenequal, sqrenand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "sqren", "", sqrenequal, sqrenand);
+                //shenheren
+                if (!string.IsNullOrEmpty(shenheren))
+                {
+                    if (shenherenequal.Equals("="))
+                    {
+                        if (shenherenand.Equals("and"))
+                            where = where.And(p => p.Shenheren == shenheren);
+                        else
+                            where = where.Or(p => p.Shenheren == shenheren);
+                    }
+                    if (shenherenequal.Equals("like"))
+                    {
+                        if (shenherenand.Equals("and"))
+                            where = where.And(p => p.Shenheren.Contains(shenheren));
+                        else
+                            where = where.Or(p => p.Shenheren.Contains(shenheren));
+                    }
+                }
+                if (!string.IsNullOrEmpty(shenheren))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shenheren", shenheren, shenherenequal, shenherenand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shenheren", "", shenherenequal, shenherenand);
 
                 searchconditionService.GetInstance().AddEntity(sc);
             }
             else
             {
                 sc.ConditionInfo = "";
-                if (!string.IsNullOrEmpty(leibie))
+                //neirong
+                if (!string.IsNullOrEmpty(neirong))
                 {
-                    if (leibieequal.Equals("="))
+                    if (neirongequal.Equals("="))
                     {
-                        if (leibieand.Equals("and"))
-                            where = where.And(quan_shouyingsq => quan_shouyingsq.Leibie == int.Parse(leibie));
+                        if (neirongand.Equals("and"))
+                            where = where.And(p => p.Neirong == neirong);
                         else
-                            where = where.Or(quan_shouyingsq => quan_shouyingsq.Leibie == int.Parse(leibie));
+                            where = where.Or(p => p.Neirong == neirong);
                     }
-                    if (leibieequal.Equals(">"))
+                    if (neirongequal.Equals("like"))
                     {
-                        if (leibieand.Equals("and"))
-                            where = where.And(quan_shouyingsq => quan_shouyingsq.Leibie > int.Parse(leibie));
+                        if (neirongand.Equals("and"))
+                            where = where.And(p => p.Neirong.Contains(neirong));
                         else
-                            where = where.Or(quan_shouyingsq => quan_shouyingsq.Leibie > int.Parse(leibie));
-                    }
-                    if (leibieequal.Equals("<"))
-                    {
-                        if (leibieand.Equals("and"))
-                            where = where.And(quan_shouyingsq => quan_shouyingsq.Leibie < int.Parse(leibie));
-                        else
-                            where = where.Or(quan_shouyingsq => quan_shouyingsq.Leibie < int.Parse(leibie));
+                            where = where.Or(p => p.Neirong.Contains(neirong));
                     }
                 }
-                if (!string.IsNullOrEmpty(leibie))
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "leibie", leibie, leibieequal, leibieand);
+                if (!string.IsNullOrEmpty(neirong))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "neirong", neirong, neirongequal, neirongand);
                 else
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "leibie", "", leibieequal, leibieand);
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "neirong", "", neirongequal, neirongand);
+                //sqren
+                if (!string.IsNullOrEmpty(sqren))
+                {
+                    if (sqrenequal.Equals("="))
+                    {
+                        if (sqrenand.Equals("and"))
+                            where = where.And(p => p.SQren == sqren);
+                        else
+                            where = where.Or(p => p.SQren == sqren);
+                    }
+                    if (sqrenequal.Equals("like"))
+                    {
+                        if (sqrenand.Equals("and"))
+                            where = where.And(p => p.SQren.Contains(sqren));
+                        else
+                            where = where.Or(p => p.SQren.Contains(sqren));
+                    }
+                }
+                if (!string.IsNullOrEmpty(sqren))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "sqren", sqren, sqrenequal, sqrenand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "sqren", "", sqrenequal, sqrenand);
+                //shenheren
+                if (!string.IsNullOrEmpty(shenheren))
+                {
+                    if (shenherenequal.Equals("="))
+                    {
+                        if (shenherenand.Equals("and"))
+                            where = where.And(p => p.Shenheren == shenheren);
+                        else
+                            where = where.Or(p => p.Shenheren == shenheren);
+                    }
+                    if (shenherenequal.Equals("like"))
+                    {
+                        if (shenherenand.Equals("and"))
+                            where = where.And(p => p.Shenheren.Contains(shenheren));
+                        else
+                            where = where.Or(p => p.Shenheren.Contains(shenheren));
+                    }
+                }
+                if (!string.IsNullOrEmpty(shenheren))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shenheren", shenheren, shenherenequal, shenherenand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shenheren", "", shenherenequal, shenherenand);
 
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }

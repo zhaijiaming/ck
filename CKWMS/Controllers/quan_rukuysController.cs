@@ -33,32 +33,25 @@ namespace CKWMS.Controllers
                     string[] scld = scl.Split(',');
                     switch (scld[0])
                     {
-                        case "mingxiid":
-                            string mingxiid = scld[1];
-                            string mingxiidequal = scld[2];
-                            string mingxiidand = scld[3];
-                            if (!string.IsNullOrEmpty(mingxiid))
+                        case "rukudanbh":
+                            string rukudanbh = scld[1];
+                            string rukudanbhequal = scld[2];
+                            string rukudanbhand = scld[3];
+                            if (!string.IsNullOrEmpty(rukudanbh))
                             {
-                                if (mingxiidequal.Equals("="))
+                                if (rukudanbhequal.Equals("="))
                                 {
-                                    if (mingxiidand.Equals("and"))
-                                        where = where.And(quan_inrec_v => quan_inrec_v.ID == int.Parse(mingxiid));
+                                    if (rukudanbhand.Equals("and"))
+                                        where = where.And(p => p.RukudanBH == rukudanbh);
                                     else
-                                        where = where.Or(quan_inrec_v => quan_inrec_v.ID == int.Parse(mingxiid));
+                                        where = where.Or(p => p.RukudanBH == rukudanbh);
                                 }
-                                if (mingxiidequal.Equals(">"))
+                                if (rukudanbhequal.Equals("like"))
                                 {
-                                    if (mingxiidand.Equals("and"))
-                                        where = where.And(quan_inrec_v => quan_inrec_v.ID > int.Parse(mingxiid));
+                                    if (rukudanbhand.Equals("and"))
+                                        where = where.And(p => p.RukudanBH.Contains(rukudanbh));
                                     else
-                                        where = where.Or(quan_inrec_v => quan_inrec_v.ID > int.Parse(mingxiid));
-                                }
-                                if (mingxiidequal.Equals("<"))
-                                {
-                                    if (mingxiidand.Equals("and"))
-                                        where = where.And(quan_inrec_v => quan_inrec_v.ID < int.Parse(mingxiid));
-                                    else
-                                        where = where.Or(quan_inrec_v => quan_inrec_v.ID < int.Parse(mingxiid));
+                                        where = where.Or(p => p.RukudanBH.Contains(rukudanbh));
                                 }
                             }
                             break;
@@ -81,9 +74,10 @@ namespace CKWMS.Controllers
             int userid = (int)Session["user_id"];
             string pagetag = "quan_rukuys_index";
             string page = "1";
-            string mingxiid = Request["mingxiid"] ?? "";
-            string mingxiidequal = Request["mingxiidequal"] ?? "";
-            string mingxiidand = Request["mingxiidand"] ?? "";
+            //rukudanbh
+            string rukudanbh = Request["rukudanbh"] ?? "";
+            string rukudanbhequal = Request["rukudanbhequal"] ?? "";
+            string rukudanbhand = Request["rukudanbhand"] ?? "";
             Expression<Func<quan_inrec_v, bool>> where = PredicateExtensionses.True<quan_inrec_v>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -91,67 +85,54 @@ namespace CKWMS.Controllers
                 sc = new searchcondition();
                 sc.UserID = userid;
                 sc.PageBrief = pagetag;
-                if (!string.IsNullOrEmpty(mingxiid))
+                if (!string.IsNullOrEmpty(rukudanbh))
                 {
-                    if (mingxiidequal.Equals("="))
+                    if (rukudanbhequal.Equals("="))
                     {
-                        if (mingxiidand.Equals("and"))
-                            where = where.And(quan_inrec_v => quan_inrec_v.ID == int.Parse(mingxiid));
+                        if (rukudanbhand.Equals("and"))
+                            where = where.And(p => p.RukudanBH == rukudanbh);
                         else
-                            where = where.Or(quan_inrec_v => quan_inrec_v.ID == int.Parse(mingxiid));
+                            where = where.Or(p => p.RukudanBH == rukudanbh);
                     }
-                    if (mingxiidequal.Equals(">"))
+                    if (rukudanbhequal.Equals("like"))
                     {
-                        if (mingxiidand.Equals("and"))
-                            where = where.And(quan_inrec_v => quan_inrec_v.ID > int.Parse(mingxiid));
+                        if (rukudanbhand.Equals("and"))
+                            where = where.And(p => p.RukudanBH.Contains(rukudanbh));
                         else
-                            where = where.Or(quan_inrec_v => quan_inrec_v.ID > int.Parse(mingxiid));
-                    }
-                    if (mingxiidequal.Equals("<"))
-                    {
-                        if (mingxiidand.Equals("and"))
-                            where = where.And(quan_inrec_v => quan_inrec_v.ID < int.Parse(mingxiid));
-                        else
-                            where = where.Or(quan_inrec_v => quan_inrec_v.ID < int.Parse(mingxiid));
+                            where = where.Or(p => p.RukudanBH.Contains(rukudanbh));
                     }
                 }
-                if (!string.IsNullOrEmpty(mingxiid))
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingxiid", mingxiid, mingxiidequal, mingxiidand);
+                if (!string.IsNullOrEmpty(rukudanbh))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukudanbh", rukudanbh, rukudanbhequal, rukudanbhand);
                 else
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingxiid", "", mingxiidequal, mingxiidand);
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukudanbh", "", rukudanbhequal, rukudanbhand);
+
                 searchconditionService.GetInstance().AddEntity(sc);
             }
             else
             {
                 sc.ConditionInfo = "";
-                if (!string.IsNullOrEmpty(mingxiid))
+                if (!string.IsNullOrEmpty(rukudanbh))
                 {
-                    if (mingxiidequal.Equals("="))
+                    if (rukudanbhequal.Equals("="))
                     {
-                        if (mingxiidand.Equals("and"))
-                            where = where.And(quan_inrec_v => quan_inrec_v.ID == int.Parse(mingxiid));
+                        if (rukudanbhand.Equals("and"))
+                            where = where.And(p => p.RukudanBH == rukudanbh);
                         else
-                            where = where.Or(quan_inrec_v => quan_inrec_v.ID == int.Parse(mingxiid));
+                            where = where.Or(p => p.RukudanBH == rukudanbh);
                     }
-                    if (mingxiidequal.Equals(">"))
+                    if (rukudanbhequal.Equals("like"))
                     {
-                        if (mingxiidand.Equals("and"))
-                            where = where.And(quan_inrec_v => quan_inrec_v.ID > int.Parse(mingxiid));
+                        if (rukudanbhand.Equals("and"))
+                            where = where.And(p => p.RukudanBH.Contains(rukudanbh));
                         else
-                            where = where.Or(quan_inrec_v => quan_inrec_v.ID > int.Parse(mingxiid));
-                    }
-                    if (mingxiidequal.Equals("<"))
-                    {
-                        if (mingxiidand.Equals("and"))
-                            where = where.And(quan_inrec_v => quan_inrec_v.ID < int.Parse(mingxiid));
-                        else
-                            where = where.Or(quan_inrec_v => quan_inrec_v.ID < int.Parse(mingxiid));
+                            where = where.Or(p => p.RukudanBH.Contains(rukudanbh));
                     }
                 }
-                if (!string.IsNullOrEmpty(mingxiid))
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingxiid", mingxiid, mingxiidequal, mingxiidand);
+                if (!string.IsNullOrEmpty(rukudanbh))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukudanbh", rukudanbh, rukudanbhequal, rukudanbhand);
                 else
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingxiid", "", mingxiidequal, mingxiidand);
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukudanbh", "", rukudanbhequal, rukudanbhand);
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;
@@ -458,6 +439,12 @@ namespace CKWMS.Controllers
         {
             var rkysid = Request["rkysid"] ?? "";
             ViewBag.rkysid = rkysid;
+            return View();
+        }
+        public ActionResult PrintRukuYS()
+        {
+            var zlgl_rkysid = Request["zlgl_rkysid"] ?? "";
+            ViewBag.zlgl_rkysid = zlgl_rkysid;
             return View();
         }
 
