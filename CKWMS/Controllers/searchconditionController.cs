@@ -35,32 +35,25 @@ namespace CKWMS.Controllers
                     string[] scld = scl.Split(',');
                     switch (scld[0])
                     {
-                        case "userid":
-                            string userid = scld[1];
-                            string useridequal = scld[2];
-                            string useridand = scld[3];
-                            if (!string.IsNullOrEmpty(userid))
+                        case "pagebrief":
+                            string pagebrief = scld[1];
+                            string pagebriefequal = scld[2];
+                            string pagebriefand = scld[3];
+                            if (!string.IsNullOrEmpty(pagebrief))
                             {
-                                if (useridequal.Equals("="))
+                                if (pagebriefequal.Equals("="))
                                 {
-                                    if (useridand.Equals("and"))
-                                        where = where.And(searchcondition => searchcondition.UserID == int.Parse(userid));
+                                    if (pagebriefand.Equals("and"))
+                                        where = where.And(p => p.PageBrief == pagebrief);
                                     else
-                                        where = where.Or(searchcondition => searchcondition.UserID == int.Parse(userid));
+                                        where = where.Or(p => p.PageBrief == pagebrief);
                                 }
-                                if (useridequal.Equals(">"))
+                                if (pagebriefequal.Equals("like"))
                                 {
-                                    if (useridand.Equals("and"))
-                                        where = where.And(searchcondition => searchcondition.UserID > int.Parse(userid));
+                                    if (pagebriefand.Equals("and"))
+                                        where = where.And(p => p.PageBrief.Contains(pagebrief));
                                     else
-                                        where = where.Or(searchcondition => searchcondition.UserID > int.Parse(userid));
-                                }
-                                if (useridequal.Equals("<"))
-                                {
-                                    if (useridand.Equals("and"))
-                                        where = where.And(searchcondition => searchcondition.UserID < int.Parse(userid));
-                                    else
-                                        where = where.Or(searchcondition => searchcondition.UserID < int.Parse(userid));
+                                        where = where.Or(p => p.PageBrief.Contains(pagebrief));
                                 }
                             }
                             break;
@@ -85,9 +78,10 @@ namespace CKWMS.Controllers
             int _userid = (int)Session["user_id"];
             string pagetag = "searchcondition_index";
             string page = "1";
-            string userid = Request["userid"] ?? "";
-            string useridequal = Request["useridequal"] ?? "";
-            string useridand = Request["useridand"] ?? "";
+            //pagebrief
+            string pagebrief = Request["pagebrief"] ?? "";
+            string pagebriefequal = Request["pagebriefequal"] ?? "";
+            string pagebriefand = Request["pagebriefand"] ?? "";
             Expression<Func<searchcondition, bool>> where = PredicateExtensionses.True<searchcondition>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == _userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -95,66 +89,56 @@ namespace CKWMS.Controllers
                 sc = new searchcondition();
                 sc.UserID = _userid;
                 sc.PageBrief = pagetag;
-                if (!string.IsNullOrEmpty(userid))
+                //pagebrief
+                if (!string.IsNullOrEmpty(pagebrief))
                 {
-                    if (useridequal.Equals("="))
+                    if (pagebriefequal.Equals("="))
                     {
-                        if (useridand.Equals("and"))
-                            where = where.And(searchcondition => searchcondition.UserID == int.Parse(userid));
+                        if (pagebriefand.Equals("and"))
+                            where = where.And(p => p.PageBrief == pagebrief);
                         else
-                            where = where.Or(searchcondition => searchcondition.UserID == int.Parse(userid));
+                            where = where.Or(p => p.PageBrief == pagebrief);
                     }
-                    if (useridequal.Equals(">"))
+                    if (pagebriefequal.Equals("like"))
                     {
-                        if (useridand.Equals("and"))
-                            where = where.And(searchcondition => searchcondition.UserID > int.Parse(userid));
+                        if (pagebriefand.Equals("and"))
+                            where = where.And(p => p.PageBrief.Contains(pagebrief));
                         else
-                            where = where.Or(searchcondition => searchcondition.UserID > int.Parse(userid));
-                    }
-                    if (useridequal.Equals("<"))
-                    {
-                        if (useridand.Equals("and"))
-                            where = where.And(searchcondition => searchcondition.UserID < int.Parse(userid));
-                        else
-                            where = where.Or(searchcondition => searchcondition.UserID < int.Parse(userid));
+                            where = where.Or(p => p.PageBrief.Contains(pagebrief));
                     }
                 }
-                if (!string.IsNullOrEmpty(userid))
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "userid", userid, useridequal, useridand);
+                if (!string.IsNullOrEmpty(pagebrief))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pagebrief", pagebrief, pagebriefequal, pagebriefand);
                 else
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "userid", "", useridequal, useridand);
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pagebrief", "", pagebriefequal, pagebriefand);
 
                 searchconditionService.GetInstance().AddEntity(sc);
             }
             else
             {
                 sc.ConditionInfo = "";
-                if (!string.IsNullOrEmpty(userid))
+                //pagebrief
+                if (!string.IsNullOrEmpty(pagebrief))
                 {
-                    if (useridequal.Equals("="))
+                    if (pagebriefequal.Equals("="))
                     {
-                        if (useridand.Equals("and"))
-                            where = where.And(searchcondition => searchcondition.UserID == int.Parse(userid));
+                        if (pagebriefand.Equals("and"))
+                            where = where.And(p => p.PageBrief == pagebrief);
                         else
-                            where = where.Or(searchcondition => searchcondition.UserID == int.Parse(userid));
+                            where = where.Or(p => p.PageBrief == pagebrief);
                     }
-                    if (useridequal.Equals(">"))
+                    if (pagebriefequal.Equals("like"))
                     {
-                        if (useridand.Equals("and"))
-                            where = where.And(searchcondition => searchcondition.UserID > int.Parse(userid));
+                        if (pagebriefand.Equals("and"))
+                            where = where.And(p => p.PageBrief.Contains(pagebrief));
                         else
-                            where = where.Or(searchcondition => searchcondition.UserID > int.Parse(userid));
-                    }
-                    if (useridequal.Equals("<"))
-                    {
-                        if (useridand.Equals("and"))
-                            where = where.And(searchcondition => searchcondition.UserID < int.Parse(userid));
-                        else
-                            where = where.Or(searchcondition => searchcondition.UserID < int.Parse(userid));
+                            where = where.Or(p => p.PageBrief.Contains(pagebrief));
                     }
                 }
-                if (!string.IsNullOrEmpty(userid))
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "userid", userid, useridequal, useridand);
+                if (!string.IsNullOrEmpty(pagebrief))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pagebrief", pagebrief, pagebriefequal, pagebriefand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pagebrief", "", pagebriefequal, pagebriefand);
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition0 = sc.ConditionInfo;

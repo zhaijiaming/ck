@@ -116,6 +116,18 @@
         scm.ItemTitle = "商品名称";
         scm.ItemType = "System.String";
         scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "Shouying";
+        scm.ItemTitle = "首营状态";
+        scm.ItemType = "首营状态.首营状态";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "ZhucezhengBH";
+        scm.ItemTitle = "注册证";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
     }
     else
     {
@@ -162,6 +174,30 @@
                 scm.ItemOpValue = scs[2].Split(',')[2];
                 scm.ItemJion = scs[2].Split(',')[3];
             }
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "Shouying";
+            scm.ItemTitle = "首营状态";
+            scm.ItemType = "首营状态.首营状态";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[3].Split(',')[1];
+                scm.ItemOpValue = scs[3].Split(',')[2];
+                scm.ItemJion = scs[3].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "ZhucezhengBH";
+            scm.ItemTitle = "注册证";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[4].Split(',')[1];
+                scm.ItemOpValue = scs[4].Split(',')[2];
+                scm.ItemJion = scs[4].Split(',')[3];
+            }
+            scms.Add(scm);
         }
     }
 }
