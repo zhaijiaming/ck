@@ -307,6 +307,9 @@
     <Compile Include="Controllers\wms_jianhuoController.cs" />
     <Compile Include="Controllers\wms_kehukwController.cs" />
     <Compile Include="Controllers\wms_kuweiController.cs" />
+    <Compile Include="Controllers\wms_scanhomeController.cs" />
+    <Compile Include="Controllers\wms_scaninController.cs" />
+    <Compile Include="Controllers\wms_scanoutController.cs" />
     <Compile Include="Models\auth_gongsiViewModel.cs" />
     <Compile Include="Models\base_bumenViewModel.cs" />
     <Compile Include="Models\base_feiyongxmViewModel.cs" />
@@ -859,6 +862,9 @@
     <Content Include="Views\cfda_cangku\EntryrecExport.cshtml" />
     <Content Include="Views\cfda_cangku\OutrecExport.cshtml" />
     <Content Include="Views\cfda_zizhi\CargoExport.cshtml" />
+    <Content Include="Views\wms_scanin\Index.cshtml" />
+    <Content Include="Views\wms_scanhome\Index.cshtml" />
+    <Content Include="Views\wms_scanout\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

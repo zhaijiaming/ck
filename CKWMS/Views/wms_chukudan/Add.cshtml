@@ -2,9 +2,7 @@
 @using CKWMS.Models
 @model wms_chukudanViewModel
 @{ViewBag.Title = "出库单添加";}
-
-<div class="breadcrumbs" id="breadcrumbs">
-    <script type="text/javascript">
+<script type="text/javascript">
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
         $(document).ready(function () {
             $("#pl_cy_close").click(function () {
@@ -149,7 +147,8 @@
                     });
             }
         }
-    </script>
+</script>
+<div class="breadcrumbs" id="breadcrumbs">
     <ul class="breadcrumb">
         <li>
             <i class="icon-home home-icon"></i>
