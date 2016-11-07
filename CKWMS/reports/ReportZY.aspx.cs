@@ -554,7 +554,7 @@ namespace CKWMS.reports
                             }
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["zlgl_RKYSBG"]));
 
-                            DataTable dtzlgl_bg_others = _rds.Tables["RKYanshouDanTitle"];
+                            DataTable dtzlgl_bg_others = _rds.Tables["zlgl_RKYSBG_Title"];
                             DataRow drzlgl_bg_others = dtzlgl_bg_others.NewRow();
                             //得到第一个货主ID
                             quan_inrec_v zlgl_huozhiid_first = _zlgl_rkyss.FirstOrDefault();
@@ -562,12 +562,14 @@ namespace CKWMS.reports
                             drzlgl_bg_others["HuozhuID"] = zlgl_wtkh.Kehumingcheng;
                             userinfo zlgl_man = ServiceFactory.userinfoservice.GetEntityById(p => p.ID == (int)Session["user_id"]);
                             drzlgl_bg_others["MakeMan"] = zlgl_man.FullName;
+                            wms_rukudan zlgl_rkd = ServiceFactory.wms_rukudanservice.GetEntityById(p=>p.RukudanBH == _zlgl_rkysid);
+                            drzlgl_bg_others["RukuRQ"] = string.Format("{0:yyyy/MM/dd}", zlgl_rkd.RukuRQ);
                             drzlgl_bg_others["rkysbgSLs"] = zlgl_bg_Shuliang;
                             drzlgl_bg_others["rkysbgYs"] = zlgl_bg_YanshouHGSL;
                             drzlgl_bg_others["rkysbgNs"] = zlgl_bg_YanshouBHGSL;
 
                             dtzlgl_bg_others.Rows.Add(drzlgl_bg_others);
-                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["RKYanshouDanTitle"]));
+                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["zlgl_RKYSBG_Title"]));
                             break;
                         case "zlgl_CukuFuheBaogao":
                             rptView.Reset();

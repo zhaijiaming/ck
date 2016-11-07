@@ -865,6 +865,7 @@
     <Content Include="Views\wms_scanin\Index.cshtml" />
     <Content Include="Views\wms_scanhome\Index.cshtml" />
     <Content Include="Views\wms_scanout\Index.cshtml" />
+    <Content Include="Views\quan_rukuys\PrintRukuYS.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -895,6 +896,7 @@
     <EmbeddedResource Include="reports\rptShangJiaList.rdlc" />
     <EmbeddedResource Include="reports\rptShouHuoList.rdlc" />
     <EmbeddedResource Include="reports\rptTongxing.rdlc" />
+    <EmbeddedResource Include="reports\rptZlgl_RKBG.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

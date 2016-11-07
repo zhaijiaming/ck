@@ -19,9 +19,13 @@
         });
         $("#Yes_print").click(function () {
             var zlgl_rkysid = $("#zlgl_rkysid").val();
-            window.open("/quan_rukuys/PrintRukuYS?zlgl_rkysid=" + zlgl_rkysid);
-            $("#pl_fun").hide();
-        })
+            if (zlgl_rkysid.length > 0) {
+                window.open("/quan_rukuys/PrintRukuYS?zlgl_rkysid=" + zlgl_rkysid);
+                $("#pl_fun").hide();
+            } else {
+                alert("请输入入库编号！");
+            }
+        });
         $("#pl_fn_close").click(function () {
             $("#pl_fun").hide();
         });
