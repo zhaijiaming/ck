@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "出库复核报告";
+    Layout = "~/Views/Shared/EmptyView.cshtml";
+}
+<script type="text/javascript">
+    $(window).load(function () {
+        var zlgl_ckfhid = $("#zlgl_ckfhid").val();
+        document.getElementById("myReport").src = "../../reports/ReportZY.aspx?pid=zlgl_CukuFuheBaogao&zlgl_ckfhid=" + zlgl_ckfhid;
+        $("#autoUpdate").show();
+    });
+</script>
+<div id="autoUpdate" style="display:none; overflow-y: auto;background-color:white">
+    <input type="hidden" id="zlgl_ckfhid" value="@ViewBag.zlgl_ckfhid" />
+    <table style="height:100%;width:100%">
+        <tr>
+
+            <td></td>
+        </tr>
+        <tr><td class="center"><iframe id="myReport" style="width:1200px;height:800px;"></iframe></td></tr>
+    </table>
+</div>
+
+
+
+
+
+

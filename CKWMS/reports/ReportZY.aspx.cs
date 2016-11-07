@@ -622,23 +622,28 @@ namespace CKWMS.reports
                             }
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["zlgl_CKFHBG"]));
 
-                            DataTable dtzlgl_ckfhbg_others = _rds.Tables["ChuKuDan"];
+                            DataTable dtzlgl_ckfhbg_others = _rds.Tables["zlgl_CKFHBG_Title"];
                             DataRow drzlgl_ckfhbg_others = dtzlgl_ckfhbg_others.NewRow();
                             drzlgl_ckfhbg_others["ChukudanBH"] = _zlgl_ckfhid;
                             //得到第一个ID
                             quan_outrec_v zlgl_first = _zlgl_ckfhs.FirstOrDefault();
                             drzlgl_ckfhbg_others["KehuMC"] = zlgl_first.KehuMC;
-
+                            wms_chukudan zlgl_ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ChukudanBH == _zlgl_ckfhid);
+                            drzlgl_ckfhbg_others["Yunsongdizhi"] = zlgl_ckd.Yunsongdizhi;
+                            drzlgl_ckfhbg_others["Beizhu"] = zlgl_ckd.Beizhu;
+                            drzlgl_ckfhbg_others["Lianxiren"] = zlgl_ckd.Lianxiren;
+                            drzlgl_ckfhbg_others["LianxiDH"] = zlgl_ckd.LianxiDH;
                             base_weituokehu zlgl_ckfh_wtkh = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == zlgl_first.HuozhuID);
                             drzlgl_ckfhbg_others["HuozhuID"] = zlgl_ckfh_wtkh.Kehumingcheng;
+                            drzlgl_ckfhbg_others["ChukuRQ"] = string.Format("{0:yyyy/MM/dd}", zlgl_first.ChukuRQ);
+                            //统计
                             drzlgl_ckfhbg_others["ckfhbgSLs"] = zlgl_ckfhbg_Shuliang;
                             drzlgl_ckfhbg_others["ckfhbgYs"] = zlgl_ckfhbg_YanshouHGSL;
                             drzlgl_ckfhbg_others["ckfhbgNs"] = zlgl_ckfhbg_YanshouBHGSL; 
                             drzlgl_ckfhbg_others["ckfhbgFHSLs"] = zlgl_ckfhbg_FuheSL;
-                            drzlgl_ckfhbg_others["ChukuRQ"] = string.Format("{0:yyyy/MM/dd}", zlgl_first.ChukuRQ);
 
                             dtzlgl_ckfhbg_others.Rows.Add(drzlgl_ckfhbg_others);
-                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["ChuKuDan"]));
+                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["zlgl_CKFHBG_Title"]));
                             break;
                         default:
                             break;

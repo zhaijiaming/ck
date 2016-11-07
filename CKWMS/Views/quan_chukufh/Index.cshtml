@@ -19,9 +19,13 @@
         });
         $("#Yes_print").click(function () {
             var zlgl_ckfhid = $("#zlgl_ckfhid").val();
-            window.open("/quan_chukufh/PrintCukuFH?zlgl_ckfhid=" + zlgl_ckfhid);
-            $("#pl_fun").hide();
-        })
+            if (zlgl_ckfhid.length > 0) {
+                window.open("/quan_chukufh/PrintCukuFH?zlgl_ckfhid=" + zlgl_ckfhid);
+                $("#pl_fun").hide();
+            } else {
+                alert("请输入出库编号^_^！");
+            }
+        });
         $("#pl_fn_close").click(function () {
             $("#pl_fun").hide();
         });
