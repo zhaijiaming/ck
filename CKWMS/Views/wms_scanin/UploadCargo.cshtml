@@ -1,0 +1,130 @@
+﻿@using CKWMS.App_Code
+@using CKWMS.Models
+@{
+    ViewBag.Title = "货品上架";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#bt_bup").click(function () {
+            $("#pl_kw").hide();
+            $("#pl_ph").show();
+        });
+        $("#bt_sup").click(function () {
+            $("#pl_kw").hide();
+            $("#pl_xl").show();
+        });
+        $("#bt_kw").click(function () {
+            $("#pl_kw").show();
+            $("#pl_xl").hide();
+            $("#pl_ph").hide();
+        });
+    });
+</script>
+@*<h2>上架</h2>*@
+<div style="width:360px;height:300px;overflow:auto">
+    <div class="page-content">
+        @using (Html.BeginForm("saveupload", "wms_scanin", FormMethod.Post, new { @role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="rkid" value="@ViewBag.rkd" />
+            <div class="page-header">
+                <p>入库编号：@ViewBag.rkbh</p>
+                <p>
+                    <button type="submit" class="btn btn-default"><i class="icon-save"></i>保存</button>
+                    <button type="button" class="btn btn-default" onclick="javascript:location.href='/wms_scanin/index'; "><i class="icon-hand-left"></i>返回</button>
+                    <button type="button" id="bt_kw" class="btn btn-default"><i class="icon-location-arrow"></i>库位</button>
+                </p>
+            </div>
+            <div class="container">
+                <div id="pl_kw">
+                    <div class="form-group">
+                        <label class="col-sm-4">库位</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" name="kuwei" value="" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <p id="bt_bup" class="btn btn-default"><icon class="icon-paper-clip"></icon>批号上架</p>
+                        <p id="bt_sup" class="btn btn-default"><icon class="icon-signal"></icon>序列码上架</p>
+                    </div>
+                </div>
+                <div id="pl_ph" style="display:none;">
+                    <div class="form-group">
+                        <label class="col-sm-4">批号-1</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" name="pihao1" value="" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">数量-1</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" name="phnum1" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">批号-2</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" name="pihao2" value="" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">数量-2</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" name="phnum2" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">批号-3</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" name="pihao3" value="" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">数量-3</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" name="phnum3" />
+                        </div>
+                    </div>
+                </div>
+                <div id="pl_xl" style="display:none;">
+                    <div class="form-group">
+                        <label class="col-sm-4">序列-1</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" name="xlm1" value="" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">数量-1</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" name="xlnum1" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">序列-2</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" name="xlm2" value="" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">数量-2</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" name="xlnum2" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">序列-3</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" name="xlm3" value="" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">数量-3</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" name="xlnum3" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

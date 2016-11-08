@@ -1,16 +1,41 @@
-﻿
+﻿@using CKWMS.App_Code
+@using CKWMS.Models
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "扫描入库列表";
 }
-
 <h2>扫描入库</h2>
-<div style="width:360px;height:300px;overflow:hidden">
-    <table>
-        <tr>
-            <td>入库编号</td>
-            <td>收货</td>
-            <td>上架</td>
-        </tr>
-    </table>
+<div style="width:360px;height:300px;overflow:auto">
+    <div class="row">
+        <table class="table table-condensed table-hover" id="mydatatable">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>入库编号</td>
+                    <td>货主</td>
+                    <td>入库日期</td>
+                    <td>收货</td>
+                    <td>验收</td>
+                    <td>上架</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.wms_rukudan)
+                {
+                    <tr>
+                        <td>
+                            <label><input type="checkbox" value="@item.ID"></label>
+                        </td>
+                        <td>@item.RukudanBH</td>
+                        <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
+                        <td>@string.Format("{0:d}", item.RukuRQ)</td>
+                        <td><a href="/wms_scanin/recieving/?rkd=@item.ID"><i class="icon-hand-up"></i></a></td>
+                        <td><a href="/wms_scanin/entrycheck/?rkd=@item.ID"><i class="icon-check"></i></a></td>
+                        <td><a href="/wms_scanin/uploadcargo/?rkd=@item.ID"><i class="icon-shopping-cart"></i></a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
 

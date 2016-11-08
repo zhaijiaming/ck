@@ -867,6 +867,8 @@
     <Content Include="Views\wms_scanout\Index.cshtml" />
     <Content Include="Views\quan_rukuys\PrintRukuYS.cshtml" />
     <Content Include="Views\quan_chukufh\PrintCukuFH.cshtml" />
+    <Content Include="Views\wms_scanin\Recieving.cshtml" />
+    <Content Include="Views\wms_scanin\UploadCargo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
