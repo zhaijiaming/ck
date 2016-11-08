@@ -2,11 +2,12 @@
 @using CKWMS.Models
 
 <div class="row">
-    <table class="table table-condensed table-hover" id="mydatatable">
+    <table class="table" id="mydatatable">
         <caption></caption>
         <thead>
             <tr>
-                <td>入库单</td>
+                <td>入库编号</td>
+                <td>货主</td>
                 <td>库位</td>
                 <td>入库日期</td>
                 <td>商品代码</td>
@@ -29,6 +30,7 @@
             {
                 <tr>
                     <td>@item.RukudanBH</td>
+                    <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
                     <td>@item.Kuwei</td>
                     <td>@string.Format("{0:yyyy-MM-dd}", item.RukuRQ == null ? "" : item.RukuRQ)</td>
                     <td>@item.ShangpinDM</td>

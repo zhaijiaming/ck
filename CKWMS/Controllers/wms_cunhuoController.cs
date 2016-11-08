@@ -369,7 +369,7 @@ namespace CKWMS.Controllers
                 ViewBag.SearchCondition = sc.ConditionInfo;
             }
 
-            var tempData = ob_wms_cunhuoservice.GetInventory(where.Compile());
+            var tempData = ob_wms_cunhuoservice.GetInventory(where.Compile()).ToList<wms_storage_v>();
             ViewBag.wms_storage_v = tempData;
             ViewData.Model = tempData;
             string viewHtml = ExportNow.RenderPartialViewToString(this, "CurrentStorageExport");

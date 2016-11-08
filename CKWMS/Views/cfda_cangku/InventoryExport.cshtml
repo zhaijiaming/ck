@@ -3,24 +3,13 @@
 @{
     ViewBag.Title = "库存信息";
 }
-<script type="text/javascript">
-    $(document).ready(function () {
-        var i = 0;
-        $("#mydatatable tbody tr").each(function () {
-            i = i + 1;
-            $(this).find("td").eq(0).html(i);
-        });
-    });
-</script>
-
 <div class="page-content">
     <div class="row" style="overflow:auto;">
         <table class="table" id="mydatatable">
             <caption></caption>
             <thead>
                 <tr>
-                    @*<td>序号</td>
-                    <td>委托方企业名称</td>*@
+                    <td>委托方企业名称</td>
                     <td>入库日期</td>
                     <td>产品名称</td>
                     <td>规格(型号)</td>
@@ -40,8 +29,7 @@
                 @foreach (var item in ViewBag.inventory)
                 {
                     <tr>
-                        @*<td></td>
-                        <td>@Html.GetDataValue_ID("货主", "名称", (int)item.HuozhuID)</td>*@
+                        <td>@Html.GetDataValue_ID("货主", "名称", (int)item.HuozhuID)</td>
                         <td>@item.RukuRQ</td>
                         <td>@item.ShangpinMC</td>
                         <td>@item.Guige</td>

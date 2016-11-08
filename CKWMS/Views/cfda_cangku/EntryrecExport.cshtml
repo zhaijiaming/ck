@@ -1,28 +1,15 @@
 ﻿@using CKWMS.App_Code
 @using CKWMS.Models
-@using X.PagedList
-@using X.PagedList.Mvc
 @{
     ViewBag.Title = "入库信息";
-    string _searchcondition = ViewBag.SearchCondition;
 }
-<script type="text/javascript">
-    $(document).ready(function () {
-        var i = 0;
-        $("#mydatatable tbody tr").each(function () {
-            i = i + 1;
-            $(this).find("td").eq(0).html(i);
-        });
-    });
-</script>
 <div class="page-content">
-    <div class="row" style="overflow:auto;">
-        <table class="table table-condensed table-hover" id="mydatatable" style="overflow: hidden;text-overflow:ellipsis;white-space: nowrap;">
+    <div class="row">
+        <table class="table" id="mydatatable">
             <caption></caption>
             <thead>
                 <tr>
-                    @*<td>序号</td>
-                    <td>委托方企业名称</td>*@
+                    <td>委托方企业名称</td>
                     <td>入库日期</td>
                     <td>入库类型</td>
                     <td>产品名称</td>
@@ -39,12 +26,11 @@
                     <td>备注</td>
                 </tr>
             </thead>
-            <tbody style="overflow:auto;">
+            <tbody>
                 @foreach (var item in ViewBag.entryrec)
                 {
                     <tr>
-                        @*<td></td>
-                        <td>@Html.GetDataValue_ID("货主", "名称", (int)item.HuozhuID)</td>*@
+                        <td>@Html.GetDataValue_ID("货主", "名称", (int)item.HuozhuID)</td>
                         <td>@string.Format("{0:yyyy-MM-dd}", item.RukuRQ == null ? "" : item.RukuRQ)</td>
                         <td>@Html.GetCommonValue_ID("入库类型", (int)item.YewuLX)</td>
                         <td>@item.ShangpinMC</td>

@@ -121,7 +121,7 @@ namespace CKWMS.Controllers
                 }
                 ViewBag.SearchCondition = sc.ConditionInfo;
             }
-            var tempData = ServiceFactory.wms_cunhuoservice.CfdaStorage(where.Compile());
+            var tempData = ServiceFactory.wms_cunhuoservice.CfdaStorage(where.Compile()).ToList<cfda_storage_v>();
             ViewBag.inventory = tempData;
             ViewData.Model = tempData;
             string viewHtml = ExportNow.RenderPartialViewToString(this, "InventoryExport");
@@ -543,7 +543,7 @@ namespace CKWMS.Controllers
                 }
                 ViewBag.SearchCondition = sc.ConditionInfo;
             }
-            var tempData = ServiceFactory.wms_rukudanservice.CfdaEntryrec(where.Compile());
+            var tempData = ServiceFactory.wms_rukudanservice.CfdaEntryrec(where.Compile()).ToList<cfda_entryrec_v>();
             ViewBag.entryrec = tempData;
             ViewData.Model = tempData;
             string viewHtml = ExportNow.RenderPartialViewToString(this, "EntryrecExport");
@@ -986,7 +986,7 @@ namespace CKWMS.Controllers
                 }
                 ViewBag.SearchCondition = sc.ConditionInfo;
             }
-            var tempData = ServiceFactory.wms_chukudanservice.CfdaOutrec(where.Compile());
+            var tempData = ServiceFactory.wms_chukudanservice.CfdaOutrec(where.Compile()).ToList<cfda_outrec_v>();
             ViewBag.outrec = tempData;
             ViewData.Model = tempData;
             string viewHtml = ExportNow.RenderPartialViewToString(this, "OutrecExport");

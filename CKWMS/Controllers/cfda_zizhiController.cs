@@ -412,7 +412,7 @@ namespace CKWMS.Controllers
                 ViewBag.SearchCondition = sc.ConditionInfo;
             }
 
-            var tempData = ServiceFactory.base_shangpinxxservice.CFDALoadCargos(int.Parse(custid)).Where(where.Compile());
+            var tempData = ServiceFactory.base_shangpinxxservice.CFDALoadCargos(int.Parse(custid)).Where(where.Compile()).ToList<cfda_cargos_v>();
             ViewBag.cfda_cargo = tempData;
             ViewData.Model = tempData;
             string viewHtml = ExportNow.RenderPartialViewToString(this, "CargoExport");

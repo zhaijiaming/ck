@@ -274,7 +274,7 @@ namespace CKWMS.Controllers
 
             where = where.And(wms_chukuxlm => wms_chukuxlm.IsDelete == false);
 
-            var tempData = ob_wms_chukuxlmservice.LoadSortEntities(where.Compile(), false, wms_chukuxlm => wms_chukuxlm.ID);
+            var tempData = ob_wms_chukuxlmservice.LoadSortEntities(where.Compile(), false, wms_chukuxlm => wms_chukuxlm.ID).ToList<wms_chukuxlm>();
             ViewBag.wms_chukuxlm = tempData;
             ViewData.Model = tempData;
             string viewHtml = ExportNow.RenderPartialViewToString(this, "SerialExport");

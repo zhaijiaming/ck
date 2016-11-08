@@ -2,26 +2,14 @@
 @using CKWMS.Models
 @{
     ViewBag.Title = "委托产品信息";
-    string _searchcondition = ViewBag.SearchCondition;
 }
-<script type="text/javascript">
-    $(document).ready(function () {
-        var i = 0;
-        $("#mydatatable tbody tr").each(function () {
-            i = i + 1;
-            $(this).find("td").eq(0).html(i);
-        });
-    });
-</script>
-
 <div class="page-content">
-    <div id="splist" class="row">
+    <div class="row">
         <div style="overflow:auto;">
-            <table class="table table-condensed table-hover" style="overflow: hidden;text-overflow:ellipsis;white-space: nowrap;" id="mydatatable">
+            <table class="table">
                 <caption></caption>
                 <thead>
                     <tr>
-                        <td>序号</td>
                         <td>委托方企业名称</td>
                         <td>委托方货品名称</td>
                         <td>规格（型号）</td>
@@ -37,9 +25,7 @@
                 <tbody>
                     @foreach (var item in ViewBag.cfda_cargo)
                     {
-
                         <tr>
-                            <td></td>
                             <td>@item.Kehumingcheng</td>
                             <td>@item.Mingcheng</td>
                             <td>@item.guige</td>
