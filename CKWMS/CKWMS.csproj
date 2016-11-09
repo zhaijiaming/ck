@@ -834,7 +834,6 @@
     <Content Include="Views\cfda_cangku\GetInventory.cshtml" />
     <Content Include="Views\cfda_cangku\GetOutrec.cshtml" />
     <Content Include="Views\cfda_cangku\GetEntryrec.cshtml" />
-    <Content Include="Views\wms_rukudan\Export.cshtml" />
     <Content Include="Views\wms_jianhuo\PrintJianhuodan.cshtml" />
     <Content Include="Views\wms_chukudan\PrintTongxing.cshtml" />
     <Content Include="Views\quan_chukufh\PrintFuheDan.cshtml" />
@@ -869,6 +868,13 @@
     <Content Include="Views\quan_chukufh\PrintCukuFH.cshtml" />
     <Content Include="Views\wms_scanin\Recieving.cshtml" />
     <Content Include="Views\wms_scanin\UploadCargo.cshtml" />
+    <Content Include="Views\base_shangpinzcz\RegistrationExport.cshtml" />
+    <Content Include="Views\base_gongyingshang\SupplierExport.cshtml" />
+    <Content Include="Views\base_shangpinxx\CommodityExport.cshtml" />
+    <Content Include="Views\wms_rukudan\HistoryOfInExport.cshtml" />
+    <Content Include="Views\wms_shouhuomx\CommodityOfInExport.cshtml" />
+    <Content Include="Views\wms_chukudan\HistoryOfOutExport.cshtml" />
+    <Content Include="Views\wms_chukumx\CommodityOfOutExport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

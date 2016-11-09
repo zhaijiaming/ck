@@ -542,10 +542,78 @@ namespace CKWMS.Controllers
             }
             return RedirectToAction("Index");
         }
+        public ActionResult SupplierExport()
+        {
+            int userid = (int)Session["user_id"];
+            string pagetag = "base_gongyingshang_index";
+            Expression<Func<base_gongyingshang, bool>> where = PredicateExtensionses.True<base_gongyingshang>();
+            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            if (sc != null)
+            {
+                string[] sclist = sc.ConditionInfo.Split(';');
+                foreach (string scl in sclist)
+                {
+                    string[] scld = scl.Split(',');
+                    switch (scld[0])
+                    {
+                        case "daima":
+                            string daima = scld[1];
+                            string daimaequal = scld[2];
+                            string daimaand = scld[3];
+                            if (!string.IsNullOrEmpty(daima))
+                            {
+                                if (daimaequal.Equals("="))
+                                {
+                                    if (daimaand.Equals("and"))
+                                        where = where.And(base_gongyingshang => base_gongyingshang.Daima == daima);
+                                    else
+                                        where = where.Or(base_gongyingshang => base_gongyingshang.Daima == daima);
+                                }
+                                if (daimaequal.Equals("like"))
+                                {
+                                    if (daimaand.Equals("and"))
+                                        where = where.And(base_gongyingshang => base_gongyingshang.Daima.Contains(daima));
+                                    else
+                                        where = where.Or(base_gongyingshang => base_gongyingshang.Daima.Contains(daima));
+                                }
+                            }
+                            break;
+                        case "mingcheng":
+                            string mingcheng = scld[1];
+                            string mingchengequal = scld[2];
+                            string mingchengand = scld[3];
+                            if (!string.IsNullOrEmpty(mingcheng))
+                            {
+                                if (mingchengequal.Equals("="))
+                                {
+                                    if (mingchengand.Equals("and"))
+                                        where = where.And(base_gongyingshang => base_gongyingshang.Mingcheng == mingcheng);
+                                    else
+                                        where = where.Or(base_gongyingshang => base_gongyingshang.Mingcheng == mingcheng);
+                                }
+                                if (mingchengequal.Equals("like"))
+                                {
+                                    if (mingchengand.Equals("and"))
+                                        where = where.And(base_gongyingshang => base_gongyingshang.Mingcheng.Contains(mingcheng));
+                                    else
+                                        where = where.Or(base_gongyingshang => base_gongyingshang.Mingcheng.Contains(mingcheng));
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                ViewBag.SearchCondition = sc.ConditionInfo;
+            }
+
+            where = where.And(base_gongyingshang => base_gongyingshang.IsDelete == false);
+            var tempData = ob_base_gongyingshangservice.LoadSortEntities(where.Compile(), false, base_gongyingshang => base_gongyingshang.ID);
+            ViewBag.supplier = tempData;
+            ViewData.Model = tempData;
+            string viewHtml = ExportNow.RenderPartialViewToString(this, "SupplierExport");
+            return File(System.Text.Encoding.UTF8.GetBytes(viewHtml), "application/ms-excel", string.Format("SupplierInformation_{0}.xls", DateTime.Now.ToShortDateString()));
+        }
     }
-
-
-
-
 }
 

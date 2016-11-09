@@ -664,14 +664,137 @@ namespace CKWMS.Controllers
             }
             return RedirectToAction("Index");
         }
-        public ActionResult Export()
+        public ActionResult HistoryOfInExport()
         {
-            var resultList = ob_wms_rukudanservice.LoadEntities(p => p.IsDelete == false);
+            int userid = (int)Session["user_id"];
+            string pagetag = "wms_rukudan_index";
+            Expression<Func<wms_rukudan, bool>> where = PredicateExtensionses.True<wms_rukudan>();
+            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            if (sc != null && sc.ConditionInfo != null)
+            {
+                string[] sclist = sc.ConditionInfo.Split(';');
+                foreach (string scl in sclist)
+                {
+                    string[] scld = scl.Split(',');
+                    switch (scld[0])
+                    {
+                        case "huozhuid":
+                            string huozhuid = scld[1];
+                            string huozhuidequal = scld[2];
+                            string huozhuidand = scld[3];
+                            if (!string.IsNullOrEmpty(huozhuid))
+                            {
+                                if (huozhuidequal.Equals("="))
+                                {
+                                    if (huozhuidand.Equals("and"))
+                                        where = where.And(wms_rukudan => wms_rukudan.HuozhuID == int.Parse(huozhuid));
+                                    else
+                                        where = where.Or(wms_rukudan => wms_rukudan.HuozhuID == int.Parse(huozhuid));
+                                }
+                                if (huozhuidequal.Equals(">"))
+                                {
+                                    if (huozhuidand.Equals("and"))
+                                        where = where.And(wms_rukudan => wms_rukudan.HuozhuID > int.Parse(huozhuid));
+                                    else
+                                        where = where.Or(wms_rukudan => wms_rukudan.HuozhuID > int.Parse(huozhuid));
+                                }
+                                if (huozhuidequal.Equals("<"))
+                                {
+                                    if (huozhuidand.Equals("and"))
+                                        where = where.And(wms_rukudan => wms_rukudan.HuozhuID < int.Parse(huozhuid));
+                                    else
+                                        where = where.Or(wms_rukudan => wms_rukudan.HuozhuID < int.Parse(huozhuid));
+                                }
+                            }
+                            break;
+                        case "rukudanbh":
+                            string rukudanbh = scld[1];
+                            string rukudanbhequal = scld[2];
+                            string rukudanbhand = scld[3];
+                            if (!string.IsNullOrEmpty(rukudanbh))
+                            {
+                                if (rukudanbhequal.Equals("="))
+                                {
+                                    if (rukudanbhand.Equals("and"))
+                                        where = where.And(wms_rukudan => wms_rukudan.RukudanBH == rukudanbh);
+                                    else
+                                        where = where.Or(wms_rukudan => wms_rukudan.RukudanBH == rukudanbh);
+                                }
+                                if (rukudanbhequal.Equals("like"))
+                                {
+                                    if (rukudanbhand.Equals("and"))
+                                        where = where.And(wms_rukudan => wms_rukudan.RukudanBH.Contains(rukudanbh));
+                                    else
+                                        where = where.Or(wms_rukudan => wms_rukudan.RukudanBH.Contains(rukudanbh));
+                                }
+                            }
+                            break;
+                        case "gongyingshangid":
+                            string gongyingshangid = scld[1];
+                            string gongyingshangidequal = scld[2];
+                            string gongyingshangidand = scld[3];
+                            if (!string.IsNullOrEmpty(gongyingshangid))
+                            {
+                                if (gongyingshangidequal.Equals("="))
+                                {
+                                    if (gongyingshangidand.Equals("and"))
+                                        where = where.And(wms_rukudan => wms_rukudan.GongyingshangID == int.Parse(gongyingshangid));
+                                    else
+                                        where = where.Or(wms_rukudan => wms_rukudan.GongyingshangID == int.Parse(gongyingshangid));
+                                }
+                                if (gongyingshangidequal.Equals(">"))
+                                {
+                                    if (gongyingshangidand.Equals("and"))
+                                        where = where.And(wms_rukudan => wms_rukudan.GongyingshangID > int.Parse(gongyingshangid));
+                                    else
+                                        where = where.Or(wms_rukudan => wms_rukudan.GongyingshangID > int.Parse(gongyingshangid));
+                                }
+                                if (gongyingshangidequal.Equals("<"))
+                                {
+                                    if (gongyingshangidand.Equals("and"))
+                                        where = where.And(wms_rukudan => wms_rukudan.GongyingshangID < int.Parse(gongyingshangid));
+                                    else
+                                        where = where.Or(wms_rukudan => wms_rukudan.GongyingshangID < int.Parse(gongyingshangid));
+                                }
+                            }
+                            break;
+                        case "fahuodizhi":
+                            string fahuodizhi = scld[1];
+                            string fahuodizhiequal = scld[2];
+                            string fahuodizhiand = scld[3];
+                            if (!string.IsNullOrEmpty(fahuodizhi))
+                            {
+                                if (fahuodizhiequal.Equals("="))
+                                {
+                                    if (fahuodizhiand.Equals("and"))
+                                        where = where.And(wms_rukudan => wms_rukudan.Fahuodizhi == fahuodizhi);
+                                    else
+                                        where = where.Or(wms_rukudan => wms_rukudan.Fahuodizhi == fahuodizhi);
+                                }
+                                if (fahuodizhiequal.Equals("like"))
+                                {
+                                    if (fahuodizhiand.Equals("and"))
+                                        where = where.And(wms_rukudan => wms_rukudan.Fahuodizhi.Contains(fahuodizhi));
+                                    else
+                                        where = where.Or(wms_rukudan => wms_rukudan.Fahuodizhi.Contains(fahuodizhi));
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                ViewBag.SearchCondition = sc.ConditionInfo;
+            }
+
+            where = where.And(wms_rukudan => wms_rukudan.IsDelete == false && wms_rukudan.RukuZT > 4);
+
+            var tempData = ob_wms_rukudanservice.LoadSortEntities(where.Compile(), false, wms_rukudan => wms_rukudan.ID);
             ViewBag.NoPaging = true;
-            ViewBag.wms_rukudan = resultList;
-            ViewData.Model = resultList;
-            string viewHtml = ExportNow.RenderPartialViewToString(this, "Export");
-            return File(System.Text.Encoding.UTF8.GetBytes(viewHtml), "application/ms-excel", string.Format("rdk_{0}.xls", DateTime.Now.ToShortDateString()));
+            ViewBag.HistoryOfIn = tempData;
+            ViewData.Model = tempData;
+            string viewHtml = ExportNow.RenderPartialViewToString(this, "HistoryOfInExport");
+            return File(System.Text.Encoding.UTF8.GetBytes(viewHtml), "application/ms-excel", string.Format("HistoryOfIn_{0}.xls", DateTime.Now.ToShortDateString()));
         }
         public ActionResult PrintRuKuXiangDan()
         {

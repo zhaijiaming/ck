@@ -822,6 +822,142 @@ namespace CKWMS.Controllers
             }
             return RedirectToAction("Index");
         }
+        public ActionResult CommodityExport()
+        {
+            int userid = (int)Session["user_id"];
+            string pagetag = "base_shangpinxx_index";
+            Expression<Func<base_shangpin_v, bool>> where = PredicateExtensionses.True<base_shangpin_v>();
+            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            if (sc != null)
+            {
+                string[] sclist = sc.ConditionInfo.Split(';');
+                foreach (string scl in sclist)
+                {
+                    string[] scld = scl.Split(',');
+                    switch (scld[0])
+                    {
+                        case "huozhuid":
+                            string huozhuid = scld[1];
+                            string huozhuidequal = scld[2];
+                            string huozhuidand = scld[3];
+                            if (!string.IsNullOrEmpty(huozhuid))
+                            {
+                                if (huozhuidequal.Equals("="))
+                                {
+                                    if (huozhuidand.Equals("and"))
+                                        where = where.And(base_shangpin_v => base_shangpin_v.huozhuid == int.Parse(huozhuid));
+                                    else
+                                        where = where.Or(base_shangpin_v => base_shangpin_v.huozhuid == int.Parse(huozhuid));
+                                }
+                            }
+                            break;
+                        case "daima":
+                            string daima = scld[1];
+                            string daimaequal = scld[2];
+                            string daimaand = scld[3];
+                            if (!string.IsNullOrEmpty(daima))
+                            {
+                                if (daimaequal.Equals("="))
+                                {
+                                    if (daimaand.Equals("and"))
+                                        where = where.And(base_shangpin_v => base_shangpin_v.daima == daima);
+                                    else
+                                        where = where.Or(base_shangpin_v => base_shangpin_v.daima == daima);
+                                }
+                                if (daimaequal.Equals("like"))
+                                {
+                                    if (daimaand.Equals("and"))
+                                        where = where.And(base_shangpin_v => base_shangpin_v.daima.Contains(daima));
+                                    else
+                                        where = where.Or(base_shangpin_v => base_shangpin_v.daima.Contains(daima));
+                                }
+                            }
+                            break;
+                        case "mingcheng":
+                            string mingcheng = scld[1];
+                            string mingchengequal = scld[2];
+                            string mingchengand = scld[3];
+                            if (!string.IsNullOrEmpty(mingcheng))
+                            {
+                                if (mingchengequal.Equals("="))
+                                {
+                                    if (mingchengand.Equals("and"))
+                                        where = where.And(base_shangpin_v => base_shangpin_v.mingcheng == mingcheng);
+                                    else
+                                        where = where.Or(base_shangpin_v => base_shangpin_v.mingcheng == mingcheng);
+                                }
+                                if (mingchengequal.Equals("like"))
+                                {
+                                    if (mingchengand.Equals("and"))
+                                        where = where.And(base_shangpin_v => base_shangpin_v.mingcheng.Contains(mingcheng));
+                                    else
+                                        where = where.Or(base_shangpin_v => base_shangpin_v.mingcheng.Contains(mingcheng));
+                                }
+                            }
+                            break;
+                        case "shouying":
+                            string shouying = scld[1];
+                            string shouyingequal = scld[2];
+                            string shouyingand = scld[3];
+                            if (!string.IsNullOrEmpty(shouying))
+                            {
+                                if (shouying == "0")
+                                {
+                                    if (shouyingequal.Equals("="))
+                                    {
+                                        where = where.Or(p => p.Shouying == int.Parse(shouying));
+                                    }
+                                }
+                                else
+                                {
+                                    if (shouyingequal.Equals("="))
+                                    {
+                                        if (shouyingand.Equals("and"))
+                                            where = where.And(p => p.Shouying == int.Parse(shouying));
+                                        else
+                                            where = where.Or(p => p.Shouying == int.Parse(shouying));
+                                    }
+                                }
+                            }
+                            break;
+                        case "zhucezhengbh":
+                            string zhucezhengbh = scld[1];
+                            string zhucezhengbhequal = scld[2];
+                            string zhucezhengbhand = scld[3];
+                            //zhucezhengbh
+                            if (!string.IsNullOrEmpty(zhucezhengbh))
+                            {
+                                if (zhucezhengbhequal.Equals("="))
+                                {
+                                    if (zhucezhengbhand.Equals("and"))
+                                        where = where.And(p => p.ZhucezhengBH == zhucezhengbh);
+                                    else
+                                        where = where.Or(p => p.ZhucezhengBH == zhucezhengbh);
+                                }
+                                if (zhucezhengbhequal.Equals("like"))
+                                {
+                                    if (zhucezhengbhand.Equals("and"))
+                                        where = where.And(p => p.ZhucezhengBH.Contains(zhucezhengbh));
+                                    else
+                                        where = where.Or(p => p.ZhucezhengBH.Contains(zhucezhengbh));
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                ViewBag.SearchCondition = sc.ConditionInfo;
+            }
+
+            where = where.And(base_shangpin_v => base_shangpin_v.IsDelete == false);
+            var tempData = ob_base_shangpinxxservice.LoadShangpinAll(where.Compile());
+            ViewBag.commodity = tempData;
+            ViewData.Model = tempData;
+            string viewHtml = ExportNow.RenderPartialViewToString(this, "CommodityExport");
+            return File(System.Text.Encoding.UTF8.GetBytes(viewHtml), "application/ms-excel", string.Format("CommodityInformation_{0}.xls", DateTime.Now.ToShortDateString()));
+        }
+
     }
 }
 

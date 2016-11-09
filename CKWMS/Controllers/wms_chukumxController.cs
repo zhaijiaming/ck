@@ -612,6 +612,101 @@ namespace CKWMS.Controllers
             }
             return RedirectToAction("GetOutDetail",new { id=_ckid});
         }
+        public ActionResult CommodityOfOutExport()
+        {
+            int userid = (int)Session["user_id"];
+            string pagetag = "wms_chukumx_index";
+            Expression<Func<wms_chukumx, bool>> where = PredicateExtensionses.True<wms_chukumx>();
+            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            if (sc != null && sc.ConditionInfo != null)
+            {
+                string[] sclist = sc.ConditionInfo.Split(';');
+                foreach (string scl in sclist)
+                {
+                    string[] scld = scl.Split(',');
+                    switch (scld[0])
+                    {
+                        case "shangpindm":
+                            string shangpindm = scld[1];
+                            string shangpindmequal = scld[2];
+                            string shangpindmand = scld[3];
+                            if (!string.IsNullOrEmpty(shangpindm))
+                            {
+                                if (shangpindmequal.Equals("="))
+                                {
+                                    if (shangpindmand.Equals("and"))
+                                        where = where.And(wms_chukumx => wms_chukumx.ShangpinDM == shangpindm);
+                                    else
+                                        where = where.Or(wms_chukumx => wms_chukumx.ShangpinDM == shangpindm);
+                                }
+                                if (shangpindmequal.Equals("like"))
+                                {
+                                    if (shangpindmand.Equals("and"))
+                                        where = where.And(wms_chukumx => wms_chukumx.ShangpinDM.Contains(shangpindm));
+                                    else
+                                        where = where.Or(wms_chukumx => wms_chukumx.ShangpinDM.Contains(shangpindm));
+                                }
+                            }
+                            break;
+                        case "shangpinmc":
+                            string shangpinmc = scld[1];
+                            string shangpinmcequal = scld[2];
+                            string shangpinmcand = scld[3];
+                            if (!string.IsNullOrEmpty(shangpinmc))
+                            {
+                                if (shangpinmcequal.Equals("="))
+                                {
+                                    if (shangpinmcand.Equals("and"))
+                                        where = where.And(wms_chukumx => wms_chukumx.ShangpinMC == shangpinmc);
+                                    else
+                                        where = where.Or(wms_chukumx => wms_chukumx.ShangpinMC == shangpinmc);
+                                }
+                                if (shangpinmcequal.Equals("like"))
+                                {
+                                    if (shangpinmcand.Equals("and"))
+                                        where = where.And(wms_chukumx => wms_chukumx.ShangpinMC.Contains(shangpinmc));
+                                    else
+                                        where = where.Or(wms_chukumx => wms_chukumx.ShangpinMC.Contains(shangpinmc));
+                                }
+                            }
+                            break;
+                        case "guige":
+                            string guige = scld[1];
+                            string guigeequal = scld[2];
+                            string guigeand = scld[3];
+                            if (!string.IsNullOrEmpty(guige))
+                            {
+                                if (guigeequal.Equals("="))
+                                {
+                                    if (guigeand.Equals("and"))
+                                        where = where.And(wms_chukumx => wms_chukumx.Guige == guige);
+                                    else
+                                        where = where.Or(wms_chukumx => wms_chukumx.Guige == guige);
+                                }
+                                if (guigeequal.Equals("like"))
+                                {
+                                    if (guigeand.Equals("and"))
+                                        where = where.And(wms_chukumx => wms_chukumx.Guige.Contains(guige));
+                                    else
+                                        where = where.Or(wms_chukumx => wms_chukumx.Guige.Contains(guige));
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                ViewBag.SearchCondition = sc.ConditionInfo;
+            }
+
+            where = where.And(wms_chukumx => wms_chukumx.IsDelete == false);
+
+            var tempData = ob_wms_chukumxservice.LoadSortEntities(where.Compile(), false, wms_chukumx => wms_chukumx.ID);
+            ViewBag.CommodityOfOut = tempData;
+            ViewData.Model = tempData;
+            string viewHtml = ExportNow.RenderPartialViewToString(this, "CommodityOfOutExport");
+            return File(System.Text.Encoding.UTF8.GetBytes(viewHtml), "application/ms-excel", string.Format("CommodityOfOutInformation_{0}.xls", DateTime.Now.ToShortDateString()));
+        }
     }
 }
 

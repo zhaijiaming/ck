@@ -1,0 +1,70 @@
+﻿@using CKWMS.App_Code
+@using CKWMS.Models
+@using X.PagedList
+@using X.PagedList.Mvc
+@{
+    ViewBag.Title = "出库明细清单";
+}
+<div class="page-content">
+    <div class="row">
+        <table class="table table-condensed table-hover" id="mydatatable">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <td>商品代码</td>
+                    <td>商品名称</td>
+                    <td>注册证</td>
+                    <td>规格型号</td>
+                    <td>批号</td>
+                    <td>次批号</td>
+                    <td>序列码</td>
+                    <td>生产日期</td>
+                    <td>失效日期</td>
+                    <td>出库数量</td>
+                    <td>基本单位</td>
+                    <td>包装单位</td>
+                    <td>换算率</td>
+                    <td>厂家</td>
+                    <td>产地</td>
+                    <td>重量</td>
+                    <td>净重</td>
+                    <td>体积</td>
+                    <td>计费吨</td>
+                    <td>备注</td>
+                    <td>货品状态</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.CommodityOfOut)
+                {
+                    <tr>
+                        <td>@item.ShangpinDM</td>
+                        <td>@item.ShangpinMC</td>
+                        <td>@item.Zhucezheng</td>
+                        <td>@item.Guige</td>
+                        <td>@item.Pihao</td>
+                        <td>@item.Pihao1</td>
+                        <td>@item.Xuliema</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ)</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ)</td>
+                        <td>@item.ChukuSL</td>
+                        <td>@item.JibenDW</td>
+                        <td>@item.BaozhuangDW</td>
+                        <td>@item.Huansuanlv</td>
+                        <td>@item.Changjia</td>
+                        <td>@item.Chandi</td>
+                        <td>@item.Zhongliang</td>
+                        <td>@item.Jingzhong</td>
+                        <td>@item.Tiji</td>
+                        <td>@item.Jifeidun</td>
+                        <td>@item.Beizhu</td>
+                        <td>@Html.GetCommonValue_ID("存货状态", (int)item.HuopinZT)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+

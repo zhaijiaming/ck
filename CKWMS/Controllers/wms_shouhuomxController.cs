@@ -704,6 +704,123 @@ namespace CKWMS.Controllers
             }
             return Json(1);
         }
+        public ActionResult CommodityOfInExport()
+        {
+            int userid = (int)Session["user_id"];
+            string pagetag = "wms_shouhuomx_index";
+            Expression<Func<wms_shouhuomx, bool>> where = PredicateExtensionses.True<wms_shouhuomx>();
+            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            if (sc != null && sc.ConditionInfo != null)
+            {
+                string[] sclist = sc.ConditionInfo.Split(';');
+                foreach (string scl in sclist)
+                {
+                    string[] scld = scl.Split(',');
+                    switch (scld[0])
+                    {
+                        case "shangpinmc":
+                            string shangpinmc = scld[1];
+                            string shangpinmcequal = scld[2];
+                            string shangpinmcand = scld[3];
+                            if (!string.IsNullOrEmpty(shangpinmc))
+                            {
+                                if (shangpinmcequal.Equals("="))
+                                {
+                                    if (shangpinmcand.Equals("and"))
+                                        where = where.And(wms_shouhuomx => wms_shouhuomx.ShangpinMC == shangpinmc);
+                                    else
+                                        where = where.Or(wms_shouhuomx => wms_shouhuomx.ShangpinMC == shangpinmc);
+                                }
+                                if (shangpinmcequal.Equals("like"))
+                                {
+                                    if (shangpinmcand.Equals("and"))
+                                        where = where.And(wms_shouhuomx => wms_shouhuomx.ShangpinMC.Contains(shangpinmc));
+                                    else
+                                        where = where.Or(wms_shouhuomx => wms_shouhuomx.ShangpinMC.Contains(shangpinmc));
+                                }
+                            }
+                            break;
+                        case "zhucezheng":
+                            string zhucezheng = scld[1];
+                            string zhucezhengequal = scld[2];
+                            string zhucezhengand = scld[3];
+                            if (!string.IsNullOrEmpty(zhucezheng))
+                            {
+                                if (zhucezhengequal.Equals("="))
+                                {
+                                    if (zhucezhengand.Equals("and"))
+                                        where = where.And(wms_shouhuomx => wms_shouhuomx.Zhucezheng == zhucezheng);
+                                    else
+                                        where = where.Or(wms_shouhuomx => wms_shouhuomx.Zhucezheng == zhucezheng);
+                                }
+                                if (zhucezhengequal.Equals("like"))
+                                {
+                                    if (zhucezhengand.Equals("and"))
+                                        where = where.And(wms_shouhuomx => wms_shouhuomx.Zhucezheng.Contains(zhucezheng));
+                                    else
+                                        where = where.Or(wms_shouhuomx => wms_shouhuomx.Zhucezheng.Contains(zhucezheng));
+                                }
+                            }
+                            break;
+                        case "guige":
+                            string guige = scld[1];
+                            string guigeequal = scld[2];
+                            string guigeand = scld[3];
+                            if (!string.IsNullOrEmpty(guige))
+                            {
+                                if (guigeequal.Equals("="))
+                                {
+                                    if (guigeand.Equals("and"))
+                                        where = where.And(wms_shouhuomx => wms_shouhuomx.Guige == guige);
+                                    else
+                                        where = where.Or(wms_shouhuomx => wms_shouhuomx.Guige == guige);
+                                }
+                                if (guigeequal.Equals("like"))
+                                {
+                                    if (guigeand.Equals("and"))
+                                        where = where.And(wms_shouhuomx => wms_shouhuomx.Guige.Contains(guige));
+                                    else
+                                        where = where.Or(wms_shouhuomx => wms_shouhuomx.Guige.Contains(guige));
+                                }
+                            }
+                            break;
+                        case "pihao":
+                            string pihao = scld[1];
+                            string pihaoequal = scld[2];
+                            string pihaoand = scld[3];
+                            if (!string.IsNullOrEmpty(pihao))
+                            {
+                                if (pihaoequal.Equals("="))
+                                {
+                                    if (pihaoand.Equals("and"))
+                                        where = where.And(wms_shouhuomx => wms_shouhuomx.Pihao == pihao);
+                                    else
+                                        where = where.Or(wms_shouhuomx => wms_shouhuomx.Pihao == pihao);
+                                }
+                                if (pihaoequal.Equals("like"))
+                                {
+                                    if (pihaoand.Equals("and"))
+                                        where = where.And(wms_shouhuomx => wms_shouhuomx.Pihao.Contains(pihao));
+                                    else
+                                        where = where.Or(wms_shouhuomx => wms_shouhuomx.Pihao.Contains(pihao));
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                ViewBag.SearchCondition = sc.ConditionInfo;
+            }
+
+            where = where.And(wms_shouhuomx => wms_shouhuomx.IsDelete == false);
+
+            var tempData = ob_wms_shouhuomxservice.LoadSortEntities(where.Compile(), false, wms_shouhuomx => wms_shouhuomx.ID);
+            ViewBag.CommodityOfIn = tempData;
+            ViewData.Model = tempData;
+            string viewHtml = ExportNow.RenderPartialViewToString(this, "CommodityOfInExport");
+            return File(System.Text.Encoding.UTF8.GetBytes(viewHtml), "application/ms-excel", string.Format("CommodityOfIn_{0}.xls", DateTime.Now.ToShortDateString()));
+        }
     }
 }
 
