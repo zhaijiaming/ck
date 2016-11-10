@@ -957,7 +957,12 @@ namespace CKWMS.Controllers
             string viewHtml = ExportNow.RenderPartialViewToString(this, "CommodityExport");
             return File(System.Text.Encoding.UTF8.GetBytes(viewHtml), "application/ms-excel", string.Format("CommodityInformation_{0}.xls", DateTime.Now.ToShortDateString()));
         }
-
+        public ActionResult PrintSpxx()
+        {
+            var spxx_huozhuid = Request["spxx_huozhuid"] ?? "";
+            ViewBag.spxx_huozhuid = spxx_huozhuid;
+            return View();
+        }
     }
 }
 

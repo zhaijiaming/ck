@@ -15,6 +15,7 @@
                 location.href = url_go;
             }
         });
+        $("#pl_fun").draggable({ handle: '.tuodong' }, { containment: "parent" });
         $("#pl_imp").draggable({ handle: ".panel-heading" });
         $("#bt_cancel").click(function () {
             $("#pl_imp").hide();
@@ -71,6 +72,25 @@
         });
         $("#bt_import").click(function () {
             $("#pl_imp").show();
+        });
+        //‘首营品种审批记录’报表打印
+        $("#bt_print").click(function () {
+            $("#pl_fun").show();
+            $("#spxx_huozhuid").val("");
+        });
+        $("#spxx_huozhuid").change(function () {
+            var spxx_huozhuid = $("#spxx_huozhuid").val();
+            $("#Yes_print").click(function () {
+                if (spxx_huozhuid.length > 0) {
+                    window.open("/base_shangpinxx/PrintSpxx?spxx_huozhuid=" + spxx_huozhuid);
+                    $("#pl_fun").hide();
+                } else {
+                    alert("请选择货主^_^！");
+                }
+            });
+        });
+        $("#pl_fn_close").click(function () {
+            $("#pl_fun").hide();
         });
     });
     function AddInfo() {
@@ -226,6 +246,7 @@
             <button type="button" class="btn btn-default " id="bt_sendcheck"><i class="icon-check-sign"></i>送审</button>
             <button type="button" class="btn btn-default " id="bt_import"><i class="icon-inbox"></i>导入</button>
             <button type="button" class="btn btn-default " id="bt_export" onclick="javascript: window.open('/base_shangpinxx/commodityexport')"><i class="icon-inbox"></i>导出</button>
+            <button type="button" class="btn btn-default " id="bt_print"><i class="icon-print"></i>打印</button>
         </p>
     </div>
     <div id="splist">
@@ -314,6 +335,23 @@
         <div class="row">
             <p><i class="icon-leaf red"></i>注意：导入的格式（注册证编号#商品名称#规格），其中#为分隔符，导入的信息中不能含有符号#，否则会有意想不到的错误！</p>
             <textarea id="tximp" style="width:800px;height:360px;overflow:auto"></textarea>
+        </div>
+    </div>
+</div>
+<div id="pl_fun" class="panel panel-primary" style="display:none;position:fixed;top:200px;left:300px;overflow:auto;">
+    <div class="panel-heading tuodong">
+        <h3 class="panel-title">打印选项<button id="pl_fn_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="form-group">
+                <div class="col-sm-8">
+                    @Html.SelectList_Auto("spxx_huozhuid", "货主", "名称")
+                </div>
+                <div class="col-sm-4">
+                    <input type="button" class="form-control btn btn-default" id="Yes_print" value="打印" />
+                </div>
+            </div>
         </div>
     </div>
 </div>
