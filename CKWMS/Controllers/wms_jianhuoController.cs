@@ -405,7 +405,7 @@ namespace CKWMS.Controllers
                 return Json(-1);
             if (_ckd.JihuaZT > 2)
                 return Json(-2);
-            wms_jianhuo _jh = ob_wms_jianhuoservice.GetEntityById(p => p.ID == int.Parse(_delid));
+            wms_jianhuo _jh = ob_wms_jianhuoservice.GetEntityById(p => p.ID == int.Parse(_delid) && p.IsDelete==false);
             if (_jh == null)
                 return Json(-1);
             var b = ob_wms_jianhuoservice.DeleteEntity(_jh);

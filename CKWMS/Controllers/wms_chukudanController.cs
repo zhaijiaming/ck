@@ -592,6 +592,12 @@ namespace CKWMS.Controllers
             string chukudanbh = Request["chukudanbh"] ?? "";
             string ckid = Request["ckid"] ?? "";
             int uid = int.Parse(id);
+            if (baoshuisf.IndexOf("true") >= 0)
+                baoshuisf = "true";
+            if (fuhesf.IndexOf("true") >= 0)
+                fuhesf = "true";
+            if (jianguansf.IndexOf("true") >= 0)
+                jianguansf = "true";
             try
             {
                 wms_chukudan p = ob_wms_chukudanservice.GetEntityById(wms_chukudan => wms_chukudan.ID == uid);
