@@ -875,6 +875,7 @@
     <Content Include="Views\wms_shouhuomx\CommodityOfInExport.cshtml" />
     <Content Include="Views\wms_chukudan\HistoryOfOutExport.cshtml" />
     <Content Include="Views\wms_chukumx\CommodityOfOutExport.cshtml" />
+    <Content Include="Views\base_shangpinxx\PrintSpxx.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -904,8 +905,13 @@
     <EmbeddedResource Include="reports\rptRuKumingxi.rdlc" />
     <EmbeddedResource Include="reports\rptShangJiaList.rdlc" />
     <EmbeddedResource Include="reports\rptShouHuoList.rdlc" />
+    <EmbeddedResource Include="reports\rptSpxx_shouying.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="reports\rptTongxing.rdlc" />
-    <EmbeddedResource Include="reports\rptZlgl_CKBG.rdlc" />
+    <EmbeddedResource Include="reports\rptZlgl_CKBG.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="reports\rptZlgl_RKBG.rdlc" />
   </ItemGroup>
   <PropertyGroup>
