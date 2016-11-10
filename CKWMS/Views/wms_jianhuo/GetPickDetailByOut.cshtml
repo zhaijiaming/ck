@@ -22,6 +22,7 @@
         });
         $("#bt_fn_show").click(function () {
             $("#pl_fun").hide();
+            $("#dt_pick tbody").html("");
             $("#pl_picklist").show();
             GetPickList($("#ckd").val());
         });
@@ -52,6 +53,7 @@
                 $("#picknum").val(eval(_sn));
             else
                 $("#picknum").val(eval(_sn) - eval(_sj));
+            $("#dt_ch tbody").html("");
             GetInvetoryCargo($("#selmx").val());
             $("#pl_pk").show();
             _sr.addClass("brown");
@@ -226,9 +228,18 @@
     function GetInvetoryCargo(_ck) {
         if (_ck != null) {
             var filltable = "";
-            $.post("/wms_jianhuo/getstorecargo/",
-                { mx: _ck },
-                function (data) {
+            $.ajax({
+                async: true,
+                beforeSend: function () {
+                    ShowWait();
+                },
+                complete: function () {
+                    HiddenWait();
+                },
+                type: "POST",
+                url: "/wms_jianhuo/getstorecargo/",
+                data:{ mx: _ck },
+                success: function (data) {
                     if (data != -1) {
                         for (var i in data) {
                             filltable = filltable + '<tr><td><input type="checkbox" value="';
@@ -272,15 +283,72 @@
                         }
                     }
                     $("#dt_ch tbody").html(filltable);
-                });
+                }
+            });
+            //$.post("/wms_jianhuo/getstorecargo/",
+            //    { mx: _ck },
+            //    function (data) {
+            //        if (data != -1) {
+            //            for (var i in data) {
+            //                filltable = filltable + '<tr><td><input type="checkbox" value="';
+            //                filltable = filltable + data[i].sid;
+            //                filltable = filltable + '" data-kw="';
+            //                filltable = filltable + data[i].KuweiID;
+            //                filltable = filltable + '"/></td><td>';
+            //                filltable = filltable + '<input type="text" size="5" value=""/>';
+            //                filltable = filltable + '</td><td>';
+            //                filltable = filltable + '<input type="text" size="10" value=""/>';
+            //                filltable = filltable + '</td><td>';
+            //                filltable = filltable + data[i].Kuwei;
+            //                filltable = filltable + '</td><td>';
+            //                filltable = filltable + data[i].sshuliang;
+            //                filltable = filltable + '</td><td>';
+            //                filltable = filltable + data[i].DaijianSL;
+            //                filltable = filltable + '</td><td>';
+            //                filltable = filltable + data[i].Guige;
+            //                filltable = filltable + '</td><td>';
+            //                filltable = filltable + data[i].Zhucezheng;
+            //                filltable = filltable + '</td><td>';
+            //                filltable = filltable + data[i].ShengchanRQ.toDate().Format("yyyy-MM-dd");
+            //                filltable = filltable + '</td><td>';
+            //                filltable = filltable + data[i].ShixiaoRQ.toDate().Format("yyyy-MM-dd");
+            //                filltable = filltable + '</td><td>';
+            //                if (eval(data[i].CunhuoZT) == 0)
+            //                    filltable = filltable + '';
+            //                if (eval(data[i].CunhuoZT) == 1)
+            //                    filltable = filltable + '正常';
+            //                if (eval(data[i].CunhuoZT) == 2)
+            //                    filltable = filltable + '破损';
+            //                if (eval(data[i].CunhuoZT) == 3)
+            //                    filltable = filltable + '污染';
+            //                if (eval(data[i].CunhuoZT) == 4)
+            //                    filltable = filltable + '渗漏';
+            //                if (eval(data[i].CunhuoZT) == 5)
+            //                    filltable = filltable + '其它';
+            //                filltable = filltable + '</td><td>';
+            //                filltable = filltable + data[i].CunhuoSM;
+            //                filltable = filltable + '</td></tr>';
+            //            }
+            //        }
+            //        $("#dt_ch tbody").html(filltable);
+            //    });
         }
     }
     function GetPickList(_ck) {
         if (_ck != null) {
             var filltable = "";
-            $.post("/wms_jianhuo/getpickbyout/",
-                { out: _ck },
-                function (data) {
+            $.ajax({
+                async: true,
+                beforeSend: function () {
+                    ShowWait();
+                },
+                complete: function () {
+                    HiddenWait();
+                },
+                type: "POST",
+                url: "/wms_jianhuo/getpickbyout/",
+                data: { out: _ck },
+                success: function (data) {
                     if (data != -1) {
                         for (var i in data) {
                             filltable = filltable + '<tr><td><input type="checkbox" value="';
@@ -313,7 +381,45 @@
                         }
                     }
                     $("#dt_pick tbody").html(filltable);
-                });
+                }
+            });
+
+            //$.post("/wms_jianhuo/getpickbyout/",
+            //    { out: _ck },
+            //    function (data) {
+            //        if (data != -1) {
+            //            for (var i in data) {
+            //                filltable = filltable + '<tr><td><input type="checkbox" value="';
+            //                filltable = filltable + data[i].pickid;
+            //                filltable = filltable + '"/></td><td>';
+            //                filltable = filltable + data[i].ShangpinMC;
+            //                filltable = filltable + '</td><td>';
+            //                filltable = filltable + data[i].Guige;
+            //                filltable = filltable + '</td><td>';
+            //                filltable = filltable + data[i].Pihao;
+            //                filltable = filltable + '</td><td>';
+            //                filltable = filltable + data[i].Kuwei;
+            //                filltable = filltable + '</td><td>';
+            //                filltable = filltable + data[i].DaijianSL;
+            //                filltable = filltable + '</td><td>';
+            //                filltable = filltable + data[i].Zhongliang;
+            //                filltable = filltable + '</td><td>';
+            //                filltable = filltable + data[i].Jingzhong;
+            //                filltable = filltable + '</td><td>';
+            //                filltable = filltable + data[i].Tiji;
+            //                filltable = filltable + '</td><td>';
+            //                filltable = filltable + data[i].Jifeidun;
+            //                filltable = filltable + '</td><td>';
+            //                filltable = filltable + data[i].ShijianSL;
+            //                filltable = filltable + '</td><td>';
+            //                filltable = filltable + data[i].JianhuoSM;
+            //                filltable = filltable + '</td><td>';
+            //                filltable = filltable + data[i].JianhuoRQ.toDate().Format("yyyy-MM-dd");
+            //                filltable = filltable + '</td></tr>';
+            //            }
+            //        }
+            //        $("#dt_pick tbody").html(filltable);
+            //    });
         }
     }
     function AddInfo() {
