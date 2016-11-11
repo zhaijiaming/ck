@@ -876,6 +876,7 @@
     <Content Include="Views\wms_chukudan\HistoryOfOutExport.cshtml" />
     <Content Include="Views\wms_chukumx\CommodityOfOutExport.cshtml" />
     <Content Include="Views\base_shangpinxx\PrintSpxx.cshtml" />
+    <Content Include="Views\base_shouhuodanwei\RecipientEntityExport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

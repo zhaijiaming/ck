@@ -10,7 +10,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var _zczid = $("#zczbh").val();
-        $("#pl_guige").draggable({ handle: '.tuodong' }, { containment: "parent" });
+        $("#pl_guige").draggable({ handle: '.tuodong' }, { containment: [-1000, 50, 1300, 600] });
         $(".guige").click(function () {
             _zczid=$(this).parent().parent().find("input[type=checkbox]").val();
             getGuiGe(_zczid);

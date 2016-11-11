@@ -108,16 +108,16 @@ namespace CKWMS.Controllers
                                 if (pihaoequal.Equals("="))
                                 {
                                     if (pihaoand.Equals("and"))
-                                        where = where.And(wms_shouhuomx => wms_shouhuomx.Pihao == pihao);
+                                        where = where.And(p => p.Pihao == pihao);
                                     else
-                                        where = where.Or(wms_shouhuomx => wms_shouhuomx.Pihao == pihao);
+                                        where = where.Or(p => p.Pihao == pihao);
                                 }
                                 if (pihaoequal.Equals("like"))
                                 {
                                     if (pihaoand.Equals("and"))
-                                        where = where.And(wms_shouhuomx => wms_shouhuomx.Pihao.Contains(pihao));
+                                        where = where.And(p => p.Pihao.Contains(pihao));
                                     else
-                                        where = where.Or(wms_shouhuomx => wms_shouhuomx.Pihao.Contains(pihao));
+                                        where = where.Or(p => p.Pihao.Contains(pihao));
                                 }
                             }
                             break;
@@ -237,16 +237,16 @@ namespace CKWMS.Controllers
                     if (pihaoequal.Equals("="))
                     {
                         if (pihaoand.Equals("and"))
-                            where = where.And(wms_shouhuomx => wms_shouhuomx.Pihao == pihao);
+                            where = where.And(p => p.Pihao == pihao);
                         else
-                            where = where.Or(wms_shouhuomx => wms_shouhuomx.Pihao == pihao);
+                            where = where.Or(p => p.Pihao == pihao);
                     }
                     if (pihaoequal.Equals("like"))
                     {
                         if (pihaoand.Equals("and"))
-                            where = where.And(wms_shouhuomx => wms_shouhuomx.Pihao.Contains(pihao));
+                            where = where.And(p => p.Pihao.Contains(pihao));
                         else
-                            where = where.Or(wms_shouhuomx => wms_shouhuomx.Pihao.Contains(pihao));
+                            where = where.Or(p => p.Pihao.Contains(pihao));
                     }
                 }
                 if (!string.IsNullOrEmpty(pihao))
@@ -331,16 +331,16 @@ namespace CKWMS.Controllers
                     if (pihaoequal.Equals("="))
                     {
                         if (pihaoand.Equals("and"))
-                            where = where.And(wms_shouhuomx => wms_shouhuomx.Pihao == pihao);
+                            where = where.And(p => p.Pihao == pihao);
                         else
-                            where = where.Or(wms_shouhuomx => wms_shouhuomx.Pihao == pihao);
+                            where = where.Or(p => p.Pihao == pihao);
                     }
                     if (pihaoequal.Equals("like"))
                     {
                         if (pihaoand.Equals("and"))
-                            where = where.And(wms_shouhuomx => wms_shouhuomx.Pihao.Contains(pihao));
+                            where = where.And(p => p.Pihao.Contains(pihao));
                         else
-                            where = where.Or(wms_shouhuomx => wms_shouhuomx.Pihao.Contains(pihao));
+                            where = where.Or(p => p.Pihao.Contains(pihao));
                     }
                 }
                 if (!string.IsNullOrEmpty(pihao))

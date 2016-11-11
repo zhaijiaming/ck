@@ -58,6 +58,12 @@
         scm.ItemTitle = "规格";
         scm.ItemType = "System.String";
         scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "Pihao";
+        scm.ItemTitle = "批号";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
     }
     else
     {
@@ -97,6 +103,18 @@
                 scm.ItemValue = scs[2].Split(',')[1];
                 scm.ItemOpValue = scs[2].Split(',')[2];
                 scm.ItemJion = scs[2].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "Pihao";
+            scm.ItemTitle = "批号";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[3].Split(',')[1];
+                scm.ItemOpValue = scs[3].Split(',')[2];
+                scm.ItemJion = scs[3].Split(',')[3];
             }
             scms.Add(scm);
         }

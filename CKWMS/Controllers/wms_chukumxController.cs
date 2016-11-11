@@ -99,6 +99,28 @@ namespace CKWMS.Controllers
                                 }
                             }
                             break;
+                        case "pihao":
+                            string pihao = scld[1];
+                            string pihaoequal = scld[2];
+                            string pihaoand = scld[3];
+                            if (!string.IsNullOrEmpty(pihao))
+                            {
+                                if (pihaoequal.Equals("="))
+                                {
+                                    if (pihaoand.Equals("and"))
+                                        where = where.And(p => p.Pihao == pihao);
+                                    else
+                                        where = where.Or(p => p.Pihao == pihao);
+                                }
+                                if (pihaoequal.Equals("like"))
+                                {
+                                    if (pihaoand.Equals("and"))
+                                        where = where.And(p => p.Pihao.Contains(pihao));
+                                    else
+                                        where = where.Or(p => p.Pihao.Contains(pihao));
+                                }
+                            }
+                            break;
                         default:
                             break;
                     }
@@ -132,6 +154,10 @@ namespace CKWMS.Controllers
             string guige = Request["guige"] ?? "";
             string guigeequal = Request["guigeequal"] ?? "";
             string guigeand = Request["guigeand"] ?? "";
+            //pihao
+            string pihao = Request["pihao"] ?? "";
+            string pihaoequal = Request["pihaoequal"] ?? "";
+            string pihaoand = Request["pihaoand"] ?? "";
             Expression<Func<wms_chukumx, bool>> where = PredicateExtensionses.True<wms_chukumx>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -205,6 +231,28 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "guige", guige, guigeequal, guigeand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "guige", "", guigeequal, guigeand);
+                //pihao
+                if (!string.IsNullOrEmpty(pihao))
+                {
+                    if (pihaoequal.Equals("="))
+                    {
+                        if (pihaoand.Equals("and"))
+                            where = where.And(p => p.Pihao == pihao);
+                        else
+                            where = where.Or(p => p.Pihao == pihao);
+                    }
+                    if (pihaoequal.Equals("like"))
+                    {
+                        if (pihaoand.Equals("and"))
+                            where = where.And(p => p.Pihao.Contains(pihao));
+                        else
+                            where = where.Or(p => p.Pihao.Contains(pihao));
+                    }
+                }
+                if (!string.IsNullOrEmpty(pihao))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pihao", pihao, pihaoequal, pihaoand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pihao", "", pihaoequal, pihaoand);
 
                 searchconditionService.GetInstance().AddEntity(sc);
             }
@@ -277,6 +325,29 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "guige", guige, guigeequal, guigeand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "guige", "", guigeequal, guigeand);
+                //pihao
+                if (!string.IsNullOrEmpty(pihao))
+                {
+                    if (pihaoequal.Equals("="))
+                    {
+                        if (pihaoand.Equals("and"))
+                            where = where.And(p => p.Pihao == pihao);
+                        else
+                            where = where.Or(p => p.Pihao == pihao);
+                    }
+                    if (pihaoequal.Equals("like"))
+                    {
+                        if (pihaoand.Equals("and"))
+                            where = where.And(p => p.Pihao.Contains(pihao));
+                        else
+                            where = where.Or(p => p.Pihao.Contains(pihao));
+                    }
+                }
+                if (!string.IsNullOrEmpty(pihao))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pihao", pihao, pihaoequal, pihaoand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pihao", "", pihaoequal, pihaoand);
+
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;
