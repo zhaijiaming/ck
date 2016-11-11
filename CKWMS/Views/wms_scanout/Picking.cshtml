@@ -1,0 +1,46 @@
+﻿@using CKWMS.App_Code
+@using CKWMS.Models
+
+@{
+    ViewBag.Title = "拣货库位";
+}
+
+@*<h2>Picking</h2>*@
+<div style="width:360px;height:300px;overflow:hidden">
+    <input type="hidden" id="ckid" name="ckid" value="@ViewBag.ckid" />
+    <div class="page-header">
+        <p>出库编号：@ViewBag.ckbh</p>
+        <p>
+            <button type="button" id="bt_save" class="btn btn-default"><i class="icon-save"></i>保存</button>
+            <button type="button" id="bt_ok" class="btn btn-default"><i class="icon-ok"></i>完成</button>
+            <button type="button" class="btn btn-default" onclick="javascript:location.href='/wms_scanin/index'; "><i class="icon-hand-left"></i>返回</button>
+        </p>
+    </div>
+    <div class="row">
+        <table class="table table-condensed table-hover" id="mydatatable">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>库位</td>
+                    <td>待拣</td>
+                    <td>下架</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.pickloc)
+                {
+                    <tr>
+                        <td>
+                            <label><input type="checkbox" value="@item.kw"></label>
+                        </td>
+                        <td>@item.kw</td>
+                        <td>@item.sl</td>
+                        <td>@item.jh</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

@@ -1,16 +1,41 @@
-﻿
+﻿@using CKWMS.App_Code
+@using CKWMS.Models
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "扫描出库列表";
 }
-
 <h2>扫描出库</h2>
 <div style="width:360px;height:300px;overflow:hidden">
-    <table>
-        <tr>
-            <td>出库编号</td>
-            <td>拣货</td>
-            <td>出库日期</td>
-        </tr>
-    </table>
+    <div class="row">
+        <table class="table table-condensed table-hover" id="mydatatable">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>出库编号</td>
+                    <td>货主</td>
+                    <td>客户</td>
+                    <td>出库日期</td>
+                    <td>拣货</td>
+                    <td>复核</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.wms_chukudan)
+                {
+                    <tr>
+                        <td>
+                            <label><input type="checkbox" value="@item.ID"></label>
+                        </td>
+                        <td>@item.ChukudanBH</td>
+                        <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
+                        <td>@item.KehuMC</td>
+                        <td>@string.Format("{0:d}", item.ChukuRQ)</td>
+                        <td><a href="/wms_scanout/picking/?ckd=@item.ID"><i class="icon-certificate"></i></a></td>
+                        <td><a href="/wms_scanout/outcheck/?ckd=@item.ID"><i class="icon-check"></i></a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
 

@@ -140,6 +140,8 @@ namespace CKWMS.Controllers
         {
             if (rkmx == null)
                 return null;
+            if (rkmx.YishouSL + recnum > rkmx.DaohuoSL)
+                return null;
             wms_shouhuomx _sh = new wms_shouhuomx();
             _sh.RukuID = rkmx.RukuID;
             _sh.RKMXID = rkmx.ID;
@@ -167,6 +169,7 @@ namespace CKWMS.Controllers
             _sh.Tiji = (recnum / rkmx.DaohuoSL) * rkmx.Tiji;
             _sh.Jifeidun = (recnum / rkmx.DaohuoSL) * rkmx.Jifeidun;
             _sh = ServiceFactory.wms_shouhuomxservice.AddEntity(_sh);
+
             return _sh;
         }
         public ActionResult EntryCheck()
@@ -190,6 +193,7 @@ namespace CKWMS.Controllers
         public JsonResult SaveUpload()
         {
             int _userid = (int)Session["user_id"];
+            string _username = (string)Session["user_name"];
             var _rkid = Request["rkd"] ?? "";
             var _kuwei = Request["kw"] ?? "";
             var _kwid = Request["kwid"] ?? "";
@@ -207,12 +211,16 @@ namespace CKWMS.Controllers
             var _xlnum3 = Request["xlnum3"] ?? "";
             if (string.IsNullOrEmpty(_rkid) || string.IsNullOrEmpty(_kuwei))
                 return Json(-1);
+            wms_kuwei _kw = ServiceFactory.wms_kuweiservice.GetEntityById(p => p.Mingcheng == _kuwei.Trim() && p.IsDelete == false);
+            if (_kw == null)
+                return Json(-3);
+            _kwid = _kw.ID.ToString();
             if (!string.IsNullOrEmpty(_ph1))
             {
                 var _sh = ServiceFactory.wms_shouhuomxservice.LoadEntities(p => p.Pihao == _ph1 && p.IsDelete == false).ToList<wms_shouhuomx>();
                 if (_sh.Count == 1 && int.Parse(_phnum1)>0)
                 {
-                    wms_cunhuo _ch = AddUpload(_sh[0], int.Parse(_phnum1), _kuwei, int.Parse(_kwid), _userid);
+                    wms_cunhuo _ch = AddUpload(_sh[0], int.Parse(_phnum1), _kuwei, int.Parse(_kwid), _userid,_username);
                     if (_ch == null)
                         return Json(-2);
                 }
@@ -222,7 +230,7 @@ namespace CKWMS.Controllers
                 var _sh = ServiceFactory.wms_shouhuomxservice.LoadEntities(p => p.Pihao == _ph2 && p.IsDelete == false).ToList<wms_shouhuomx>();
                 if (_sh.Count == 1 && int.Parse(_phnum2) > 0)
                 {
-                    wms_cunhuo _ch = AddUpload(_sh[0], int.Parse(_phnum2), _kuwei, int.Parse(_kwid), _userid);
+                    wms_cunhuo _ch = AddUpload(_sh[0], int.Parse(_phnum2), _kuwei, int.Parse(_kwid), _userid, _username);
                     if (_ch == null)
                         return Json(-2);
                 }
@@ -232,7 +240,7 @@ namespace CKWMS.Controllers
                 var _sh = ServiceFactory.wms_shouhuomxservice.LoadEntities(p => p.Pihao == _ph3 && p.IsDelete == false).ToList<wms_shouhuomx>();
                 if (_sh.Count == 1 && int.Parse(_phnum3) > 0)
                 {
-                    wms_cunhuo _ch = AddUpload(_sh[0], int.Parse(_phnum3), _kuwei, int.Parse(_kwid), _userid);
+                    wms_cunhuo _ch = AddUpload(_sh[0], int.Parse(_phnum3), _kuwei, int.Parse(_kwid), _userid, _username);
                     if (_ch == null)
                         return Json(-2);
                 }
@@ -242,7 +250,7 @@ namespace CKWMS.Controllers
                 var _sh = ServiceFactory.wms_shouhuomxservice.LoadEntities(p => p.Xuliema==_xlm1 && p.IsDelete == false).ToList<wms_shouhuomx>();
                 if (_sh.Count == 1 && int.Parse(_xlnum1) > 0)
                 {
-                    wms_cunhuo _ch = AddUpload(_sh[0], int.Parse(_xlnum1), _kuwei, int.Parse(_kwid), _userid);
+                    wms_cunhuo _ch = AddUpload(_sh[0], int.Parse(_xlnum1), _kuwei, int.Parse(_kwid), _userid, _username);
                     if (_ch == null)
                         return Json(-2);
                 }
@@ -252,7 +260,7 @@ namespace CKWMS.Controllers
                 var _sh = ServiceFactory.wms_shouhuomxservice.LoadEntities(p => p.Xuliema == _xlm2 && p.IsDelete == false).ToList<wms_shouhuomx>();
                 if (_sh.Count == 1 && int.Parse(_xlnum2) > 0)
                 {
-                    wms_cunhuo _ch = AddUpload(_sh[0], int.Parse(_xlnum2), _kuwei, int.Parse(_kwid), _userid);
+                    wms_cunhuo _ch = AddUpload(_sh[0], int.Parse(_xlnum2), _kuwei, int.Parse(_kwid), _userid, _username);
                     if (_ch == null)
                         return Json(-2);
                 }
@@ -262,23 +270,89 @@ namespace CKWMS.Controllers
                 var _sh = ServiceFactory.wms_shouhuomxservice.LoadEntities(p => p.Xuliema == _xlm3 && p.IsDelete == false).ToList<wms_shouhuomx>();
                 if (_sh.Count == 1 && int.Parse(_xlnum3) > 0)
                 {
-                    wms_cunhuo _ch = AddUpload(_sh[0], int.Parse(_xlnum3), _kuwei, int.Parse(_kwid), _userid);
+                    wms_cunhuo _ch = AddUpload(_sh[0], int.Parse(_xlnum3), _kuwei, int.Parse(_kwid), _userid, _username);
                     if (_ch == null)
                         return Json(-2);
                 }
             }
             return Json(1);
         }
-        private wms_cunhuo AddUpload(wms_shouhuomx shmx,int upnum,string kuwei,int kwid,int userid)
+        private wms_cunhuo AddUpload(wms_shouhuomx shmx,int upnum,string kuwei,int kwid,int userid,string username)
         {
             wms_cunhuo _ch = new wms_cunhuo();
             _ch.RKMXID = shmx.ID;
             _ch.Kuwei = kuwei;
             _ch.KuweiID = kwid;
+            _ch.HegeSF = shmx.Yanshou;
+            _ch.RenSJ = username;
+            _ch.SuodingSF = false;
+            _ch.JiahuoSF = true;
+            _ch.CunhuoSM = "";
+            _ch.MakeMan = userid;
+            _ch.MakeDate = DateTime.Now;
             _ch.Shuliang = upnum;
-            _ch.HegeSF = shmx.Yanshou ;
+            _ch.Tiji = (upnum / shmx.Shuliang) * shmx.Tiji;
+            _ch.Zhongliang = (upnum / shmx.Shuliang) * shmx.Zhongliang;
+            _ch.Jingzhong = (upnum / shmx.Shuliang) * shmx.Jingzhong;
+            _ch.Jifeidun = (upnum / shmx.Shuliang) * shmx.Jifeidun;
             _ch = ServiceFactory.wms_cunhuoservice.AddEntity(_ch);
+            
             return _ch;
+        }
+        public JsonResult UploadOK()
+        {
+            int _userid = (int)Session["user_id"];
+            var _rkid = Request["rk"] ?? "";
+            if (string.IsNullOrEmpty(_rkid))
+                return Json(-2);
+            var _shlist = ServiceFactory.wms_shouhuomxservice.LoadEntities(p => p.IsDelete == false && p.RukuID == int.Parse(_rkid)).ToList<wms_shouhuomx>();
+            if (_shlist == null)
+                return Json(-2);
+            bool _finish = true;
+            foreach(var sh in _shlist)
+            {
+                if (sh.Shuliang != sh.ShangjiaSL)
+                {
+                    _finish = false;
+                    break;
+                }
+            }
+            if (!_finish)
+                return Json(-1);
+            var _rkd = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_rkid));
+            if (_rkd == null)
+                return Json(-2);
+            _rkd.RukuZT = 4;
+            if (!ServiceFactory.wms_rukudanservice.UpdateEntity(_rkd))
+                return Json(-2);
+            return Json(1);
+        }
+        public JsonResult RecieveOK()
+        {
+            int _userid = (int)Session["user_id"];
+            var _rkid = Request["rk"] ?? "";
+            if (string.IsNullOrEmpty(_rkid))
+                return Json(-2);
+            var _rkmx = ServiceFactory.wms_rukumxservice.LoadEntities(p => p.RukuID == int.Parse(_rkid) && p.IsDelete == false).ToList<wms_rukumx>();
+            if (_rkmx == null)
+                return Json(-2);
+            bool _finish = true;
+            foreach(var mx in _rkmx)
+            {
+                if(mx.DaohuoSL!=mx.YishouSL)
+                {
+                    _finish = false;
+                    break;
+                }
+            }
+            if (!_finish)
+                return Json(-1);
+            var _rkd = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_rkid));
+            if (_rkd == null)
+                return Json(-2);
+            if (!ServiceFactory.wms_rukudanservice.UpdateEntity(_rkd))
+                return Json(-2);
+            return Json(1);
         }
     }
 }

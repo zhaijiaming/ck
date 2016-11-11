@@ -8,6 +8,7 @@
 }
 <script type="text/javascript">
     $(document).ready(function () {
+        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
         $("tr").bind("dblclick", function () {
             var u_id = $(this).find('td').eq(0).find('input').val();
             if (u_id != null) {
@@ -15,15 +16,8 @@
                 location.href = url_go;
             }
         });
-        $("#bt_johnson").click(function () {
-            //var _back = "";
-            //$.get("https://test.clsdata.cn/api/OBDs?datepoint=20160101",
-            //    {
-            //        Host: "test.clsdata.cn",
-            //        Authorization: "Basic dGVzdDp0ZXN0",
-            //    }, function (data) {
-            //        alert(data);
-            //});
+        $("#bt_printperson").click(function () {
+            window.open("/auth_quanxian/personrightlist");
         });
     });
     function AddInfo() {
@@ -78,14 +72,6 @@
 }
 
 <div class="breadcrumbs" id="breadcrumbs">
-    <script type="text/javascript">
-        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
-        $(document).ready(function () {
-            $("#bt_printperson").click(function () {
-                window.open("/auth_quanxian/personrightlist");
-            });
-        });
-    </script>
     <ul class="breadcrumb">
         <li>
             <i class="icon-home home-icon"></i>
@@ -104,7 +90,6 @@
             <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
             <button type="button" class="btn btn-default " id="bt_printperson"><i class="icon-print"></i>打印</button>
-            <button type="button" class="btn btn-default " id="bt_johnson"><i class="icon-print"></i>johnson</button>
         </p>
     </div>
     <div class="row">

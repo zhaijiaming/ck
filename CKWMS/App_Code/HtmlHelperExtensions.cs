@@ -895,6 +895,30 @@ namespace CKWMS.App_Code
             string returnvalue = "";
             switch (className)
             {
+                case "入库单":
+                    wms_rukudan _rkd = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == dataValue);
+                    if (_rkd == null)
+                        returnvalue = "";
+                    else
+                    {
+                        if (itemName == "入库编号")
+                            returnvalue = _rkd.RukudanBH;
+                        if (itemName == "入库日期")
+                            returnvalue =string.Format("{0:d}",_rkd.RukuRQ);
+                    }
+                    break;
+                case "出库单":
+                    wms_chukudan _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == dataValue);
+                    if (_ckd == null)
+                        returnvalue = "";
+                    else
+                    {
+                        if (itemName == "出库编号")
+                            returnvalue = _ckd.ChukudanBH;
+                        if (itemName == "出库日期")
+                            returnvalue = string.Format("{0:d}", _ckd.ChukuRQ);
+                    }
+                    break;
                 case "功能":
                     Iauth_gongnengService gnservice = ServiceFactory.auth_gongnengservice;
                     auth_gongneng gongneng = gnservice.GetEntityById(auth_gongneng => auth_gongneng.ID == dataValue);

@@ -13,6 +13,7 @@
                     <td></td>
                     <td>入库编号</td>
                     <td>货主</td>
+                    <td>供应商</td>
                     <td>入库日期</td>
                     <td>收货</td>
                     <td>验收</td>
@@ -28,6 +29,7 @@
                         </td>
                         <td>@item.RukudanBH</td>
                         <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
+                        <td>@Html.GetDataValue_ID("供应商","",(int)item.GongyingshangID)</td>
                         <td>@string.Format("{0:d}", item.RukuRQ)</td>
                         <td><a href="/wms_scanin/recieving/?rkd=@item.ID"><i class="icon-hand-up"></i></a></td>
                         <td><a href="/wms_scanin/entrycheck/?rkd=@item.ID"><i class="icon-check"></i></a></td>

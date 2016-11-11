@@ -84,8 +84,8 @@
     <div class="page-header">
         <p>
             <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
-            <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
-            <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
+            @*<button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
+            <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>*@
             <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
         </p>
@@ -96,11 +96,11 @@
             <thead>
                 <tr>
                     <td></td>
-                    <td>用户序号</td>
+                    <td>用户</td>
                     <td>条件信息</td>
                     <td>页面简码</td>
                     <td>修改日期</td>
-                    <td>查询标题</td>
+                    @*<td>查询标题</td>*@
                 </tr>
             </thead>
             <tbody>
@@ -112,11 +112,11 @@
                                 <label><input type="checkbox" value="@item.ID"></label>
                             </div>
                         </td>
-                        <td>@item.UserID</td>
+                        <td>@Html.GetDataValue_ID("userinfo","全名",(int)item.UserID)</td>
                         <td>@item.ConditionInfo</td>
                         <td>@item.PageBrief</td>
                         <td>@item.ModifyDate</td>
-                        <td>@item.ConditionTitle</td>
+                        @*<td>@item.ConditionTitle</td>*@
                     </tr>
                 }
             </tbody>
