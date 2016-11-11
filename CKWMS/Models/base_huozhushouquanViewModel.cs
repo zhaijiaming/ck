@@ -8,7 +8,7 @@ namespace CKWMS.Models
     {
         [Display(Name = "序号")]
         public int ID { get; set; }
-        [Display(Name = "货主编号")]
+        [Display(Name = "货主")]
         public int HuozhuID { get; set; }
         [Display(Name = "类别")]
         public int Leibie { get; set; }

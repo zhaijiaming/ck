@@ -5,10 +5,10 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#pl_jldw").draggable({ handle: '.tuodong' }, { containment: "parent" });
-        $("#pl_Fanwei").draggable({ handle: '.tuodong' }, { containment: "parent" });
-        $("#pl_Cunchu").draggable({ handle: '.tuodong' }, { containment: "parent" });
-        $("#pl_zcz").draggable({ handle: ".panel-heading" }, { containment: "parent" });
+        $("#pl_jldw").draggable({ handle: '.tuodong' }, { containment: [-1000, 50, 1300, 600] });
+        $("#pl_Fanwei").draggable({ handle: '.tuodong' }, { containment: [-1000, 50, 1300, 600] });
+        $("#pl_Cunchu").draggable({ handle: '.tuodong' }, { containment: [-1000, 50, 1300, 600] });
+        $("#pl_zcz").draggable({ handle: ".panel-heading" }, { containment: [-1000, 50, 1300, 600] });
         $("#pl_zcz_close").click(function () {
             $("#pl_zcz").hide();
         });
@@ -25,9 +25,12 @@
             $("#pl_gg").html('<select name="guige" id="select_gg" style="width:100%;"></select>');
             getZCZ($("#zhucezhengid").val());
             $("#pl_zcz").hide();
+            $("#Daima").attr("placeholder", "请选择规格");
+            $("#ShangpinTM").attr("placeholder", "请选择规格");
             $("#select_gg").change(function () {
                 var guige = $("#select_gg").find("option:selected").text();
                 $("#Daima").val(guige);
+                $("#ShangpinTM").val(guige);
             });
         });
         var _ispack = false;
@@ -45,14 +48,6 @@
         $("#makedate").datepicker();//时间
         $("#shouying").val("1");//默认首营状态为"新建"
         $("#huozhuid").attr('required', 'required');
-        //$("#shangpinxx_save").validate({
-        //    rules: {
-        //        huozhuid: "required",
-        //    },
-        //    messages: {
-        //        huozhuid: "请输入您的名字",
-        //    }
-        //});
         GetJldw();
         GetFanwei();
         //分类目录
@@ -240,6 +235,15 @@
                 }
             }
         });
+        //验证
+        $("#huozhuid").attr('required', 'required');
+        $("#Daima").attr('required', 'required');
+        $("#gongyingid").attr('required', 'required');
+        //保存提交
+        var form = $("#spxx_form");
+        $("#btn_save").click(function () {
+            form.submit();
+        });
     });
     function GetZCZNow() {
         var filltable = "";
@@ -421,7 +425,7 @@
     </ul>
 </div>
 <div class="page-content">
-    @using (Html.BeginForm("Save", "base_shangpinxx", FormMethod.Post, new { @role = "form" }))
+    @using (Html.BeginForm("Save", "base_shangpinxx", FormMethod.Post, new { @role = "form", id = "spxx_form" }))
     {
         @Html.AntiForgeryToken()
         <input type="hidden" name="id" />
@@ -434,7 +438,7 @@
         <input type="hidden" id="MakeMan" name="MakeMan" value=@Session["user_id"] />
         <div class="page-header">
             <p>
-                <button type="submit" id="shangpinxx_save" class="btn btn-default"><i class="icon-save"></i>保存</button>
+                <button type="button" id="btn_save" class="btn btn-default"><i class="icon-save"></i>保存</button>
                 <button type="button" class="btn btn-default" onclick="javascript:history.back(-1); "><i class="icon-hand-left"></i>返回</button>
             </p>
         </div>
@@ -448,7 +452,7 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>代码</label>
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Daima, new { @class = "form-control", @placeholder = "请选择注册证" })
+                    @Html.TextBoxFor(m => m.Daima, new { @class = "form-control" })
                 </div>
             </div>
             @*注册证*@
@@ -462,7 +466,7 @@
                     <input type="button" id="selzcz" value="选择" class="form-control" />
                 </div>
             </div>
-            @*名称*@
+            @*商品名称*@
             <div class="form-group">
                 @Html.LabelFor(m => m.Mingcheng, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
@@ -470,11 +474,25 @@
                     @Html.TextBoxFor(m => m.Mingcheng, new { @class = "form-control" })
                 </div>
             </div>
+            @*商品描述*@
+            <div class="form-group">
+                @Html.LabelFor(m => m.ShangpinMS, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.ShangpinMS, new { @class = "form-control" })
+                </div>
+            </div>
             <div class="form-group">
                 <label for="name" class="col-sm-2">规格</label>
                 <div id="pl_gg" class="col-sm-10">
                     <input type="text" name="guige" id="guige" class="form-control" />
                     @*<select name="guige" id="select_gg" style="width:100%;"></select>*@
+                </div>
+            </div>
+            @*供应商*@
+            <div class="form-group">
+                @Html.LabelFor(m => m.GongyingID, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.SelectList_Auto("gongyingid", "供应商", "")
                 </div>
             </div>
             @*生产企业*@
@@ -492,10 +510,18 @@
                     @Html.TextBoxFor(m => m.Chandi, new { @class = "form-control" })
                 </div>
             </div>
+            @*型号*@
             <div class="form-group">
                 @Html.LabelFor(m => m.Xinghao, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.Xinghao, new { @class = "form-control" })
+                </div>
+            </div>
+            @*商品条码*@
+            <div class="form-group">
+                <label for="name" class="col-sm-2">商品条码</label>
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.ShangpinTM, new { @class = "form-control" })
                 </div>
             </div>
             @*计量单位*@
@@ -592,12 +618,6 @@
                     <input id="btn_cctj" type="button" value="存储条件" class="form-control" />
                 </div>
             </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.GongyingID, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.SelectList_Auto("gongyingid", "供应商", "")
-                </div>
-            </div>
             @*是否审查*@
             <div class="form-group">
                 @Html.LabelFor(m => m.ShenchaSF, new { @class = "control-label col-sm-2" })
@@ -610,13 +630,6 @@
                 @Html.LabelFor(m => m.JingyinSF, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     @Html.CheckBoxFor(m => m.JingyinSF, new { @class = "form-control" })
-                </div>
-            </div>
-            @*商品条码*@
-            <div class="form-group">
-                <label for="name" class="col-sm-2">商品条码</label>
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.ShangpinTM, new { @class = "form-control" })
                 </div>
             </div>
             @*首营状态*@

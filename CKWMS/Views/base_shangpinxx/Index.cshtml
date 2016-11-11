@@ -15,8 +15,8 @@
                 location.href = url_go;
             }
         });
-        $("#pl_fun").draggable({ handle: '.tuodong' }, { containment: "parent" });
-        $("#pl_imp").draggable({ handle: ".panel-heading" });
+        $("#pl_fun").draggable({ handle: '.tuodong' }, { containment: [-1000, 50, 1300, 600] });
+        $("#pl_imp").draggable({ handle: ".panel-heading" },{ containment: [-1000, 50, 1300, 600] });
         $("#bt_cancel").click(function () {
             $("#pl_imp").hide();
         });
@@ -175,25 +175,25 @@
             scm.ItemCode = "Daima";
             scm.ItemTitle = "商品代码";
             scm.ItemType = "System.String";
-            scms.Add(scm);
             if (scs.Length > 1)
             {
                 scm.ItemValue = scs[1].Split(',')[1];
                 scm.ItemOpValue = scs[1].Split(',')[2];
                 scm.ItemJion = scs[1].Split(',')[3];
             }
+            scms.Add(scm);
 
             scm = new SearchConditionModel();
             scm.ItemCode = "Mingcheng";
             scm.ItemTitle = "商品名称";
             scm.ItemType = "System.String";
-            scms.Add(scm);
             if (scs.Length > 1)
             {
                 scm.ItemValue = scs[2].Split(',')[1];
                 scm.ItemOpValue = scs[2].Split(',')[2];
                 scm.ItemJion = scs[2].Split(',')[3];
             }
+            scms.Add(scm);
 
             scm = new SearchConditionModel();
             scm.ItemCode = "ZhucezhengBH";
@@ -214,6 +214,10 @@
             if (scs.Length > 1)
             {
                 scm.ItemValue = scs[3].Split(',')[1];
+                if (scm.ItemValue.Length == 0)
+                {
+                    scm.ItemValue = "0";
+                }
                 scm.ItemOpValue = scs[3].Split(',')[2];
                 scm.ItemJion = scs[3].Split(',')[3];
             }
@@ -250,10 +254,10 @@
         </p>
     </div>
     <div id="splist">
-        <div class="table-responsive" style="overflow:auto;max-height:480px;">
-            <table class="table" id="mydatatable"  style="white-space: nowrap;">
+        <div class="table-responsive" style="overflow:auto;height:370px;">
+            <table class="table" id="mydatatable">
                 <caption></caption>
-                <thead>
+                <thead style="white-space: nowrap;">
                     <tr>
                         <td></td>
                         <td>首营状态</td>
@@ -261,6 +265,7 @@
                         <td>商品代码</td>
                         <td>注册证</td>
                         <td>商品名称</td>
+                        <td>商品描述</td>
                         <td>规格</td>
                         <td>型号</td>
                         <td>产品线</td>
@@ -288,6 +293,7 @@
                             @*<td>@Html.GetDataValue_ID("注册证", "编号", (int)item.ZhucezhengID)</td>*@
                             <td>@item.ZhucezhengBH </td>
                             <td>@item.mingcheng</td>
+                            <td>@item.ShangpinMS</td>
                             <td>@item.Guige</td>
                             <td>@item.Xinghao</td>
                             @*<td>@Html.GetDataValue_ID("产品线","",(int)item.Chanpinxian)</td>*@
@@ -311,7 +317,7 @@
         </div>
     </div>
 </div>
-<div id="pl_imp" class="panel panel-info" style="display:none;position:fixed;top:100px;left:200px;width:810px;overflow:auto;">
+<div id="pl_imp" class="panel panel-info" style="display:none;position:fixed;top:100px;left:200px;width:810px;overflow:auto;z-index:999;">
     <div class="panel-heading">
         <h3 class="panel-title">商品资料导入<button id="pl_pk_close" class="pull-right">X</button></h3>
     </div>
@@ -338,7 +344,7 @@
         </div>
     </div>
 </div>
-<div id="pl_fun" class="panel panel-primary" style="display:none;position:fixed;top:200px;left:300px;overflow:auto;">
+<div id="pl_fun" class="panel panel-primary" style="display:none;position:fixed;top:200px;left:300px;overflow:auto;z-index:999;">
     <div class="panel-heading tuodong">
         <h3 class="panel-title">打印选项<button id="pl_fn_close" class="pull-right">X</button></h3>
     </div>

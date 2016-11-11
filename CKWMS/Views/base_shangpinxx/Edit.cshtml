@@ -6,9 +6,9 @@
 }
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#pl_jldw").draggable({ handle: '.tuodong' }, { containment: "parent" });
-        $("#pl_Fanwei").draggable({ handle: '.tuodong' }, { containment: "parent" });
-        $("#pl_Cunchu").draggable({ handle: '.tuodong' }, { containment: "parent" });
+    $("#pl_jldw").draggable({ handle: '.tuodong' }, { containment: [-1000, 50, 1300, 600]  });
+    $("#pl_Fanwei").draggable({ handle: '.tuodong' }, { containment: [-1000, 50, 1300, 600]  });
+    $("#pl_Cunchu").draggable({ handle: '.tuodong' }, { containment: [-1000, 50, 1300, 600]  });
         var _ispack = false;
         getCpx(@Model.HuozhuID);
         //getZczgg(Model.ZhucezhengID);
@@ -372,7 +372,7 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>代码</label>
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Daima, new { @class = "form-control", @placeholder = "请选择注册证" })
+                    @Html.TextBoxFor(m => m.Daima, new { @class = "form-control"})
                 </div>
             </div>
             @*注册证*@
@@ -390,12 +390,26 @@
                     @Html.TextBoxFor(m => m.Mingcheng, new { @class = "form-control" })
                 </div>
             </div>
+            @*商品描述*@
+            <div class="form-group">
+                @Html.LabelFor(m => m.ShangpinMS, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.ShangpinMS, new { @class = "form-control" })
+                </div>
+            </div>
             @*规格*@
             <div class="form-group">
                 <label for="name" class="col-sm-2">规格</label>
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.Guige, new { @class = "form-control",@readonly="true"})
                     @*<select name="guige" id="select_gg" style="width:100%;"></select>*@
+                </div>
+            </div>
+            @*供应商*@
+            <div class="form-group">
+                @Html.LabelFor(m => m.GongyingID, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.SelectList_Auto("gongyingid", "供应商", "", (long)ViewData.Model.GongyingID)
                 </div>
             </div>
             @*生产企业*@
@@ -418,6 +432,13 @@
                 @Html.LabelFor(m => m.Xinghao, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.Xinghao, new { @class = "form-control" })
+                </div>
+            </div>
+            @*商品条码*@
+            <div class="form-group">
+                <label for="name" class="col-sm-2">商品条码</label>
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.ShangpinTM, new { @class = "form-control" })
                 </div>
             </div>
             @*计量单位*@
@@ -515,13 +536,6 @@
                     <input id="btn_cctj" type="button" value="存储条件" class="form-control" />
                 </div>
             </div>
-            @*供应商序号*@
-            <div class="form-group">
-                @Html.LabelFor(m => m.GongyingID, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.SelectList_Auto("gongyingid", "供应商", "", (long)ViewData.Model.GongyingID)
-                </div>
-            </div>
             @*是否审查*@
             <div class="form-group">
                 @Html.LabelFor(m => m.ShenchaSF, new { @class = "control-label col-sm-2" })
@@ -534,13 +548,6 @@
                 @Html.LabelFor(m => m.JingyinSF, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     @Html.CheckBoxFor(m => m.JingyinSF, new { @class = "form-control" })
-                </div>
-            </div>
-            @*商品条码*@
-            <div class="form-group">
-                <label for="name" class="col-sm-2">商品条码</label>
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.ShangpinTM, new { @class = "form-control" })
                 </div>
             </div>
             @*首营状态*@

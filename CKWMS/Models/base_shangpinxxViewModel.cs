@@ -13,7 +13,6 @@ namespace CKWMS.Models
         [Display(Name = "货主的授权序号")]
         public int? HuozhuSQID { get; set; }
         [Display(Name = "商品代码")]
-        [Required]
         public string Daima { get; set; }
         [Display(Name = "商品名称")]
         public string Mingcheng { get; set; }
@@ -49,7 +48,7 @@ namespace CKWMS.Models
         public int? QiyeID { get; set; }
         [Display(Name = "生产企业名称")]
         public string Qiyemingcheng { get; set; }
-        [Display(Name = "供应商序号")]
+        [Display(Name = "供应商")]
         public int? GongyingID { get; set; }
         [Display(Name = "供应商的授权序号")]
         public int? GongyingSQID { get; set; }

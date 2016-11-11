@@ -93,6 +93,28 @@ namespace CKWMS.Controllers
                                 }
                             }
                             break;
+                        case "zhucezhengbh":
+                            string zhucezhengbh = scld[1];
+                            string zhucezhengbhequal = scld[2];
+                            string zhucezhengbhand = scld[3];
+                            if (!string.IsNullOrEmpty(zhucezhengbh))
+                            {
+                                if (zhucezhengbhequal.Equals("="))
+                                {
+                                    if (zhucezhengbhand.Equals("and"))
+                                        where = where.And(p => p.ZhucezhengBH == zhucezhengbh);
+                                    else
+                                        where = where.Or(p => p.ZhucezhengBH == zhucezhengbh);
+                                }
+                                if (zhucezhengbhequal.Equals("like"))
+                                {
+                                    if (zhucezhengbhand.Equals("and"))
+                                        where = where.And(p => p.ZhucezhengBH.Contains(zhucezhengbh));
+                                    else
+                                        where = where.Or(p => p.ZhucezhengBH.Contains(zhucezhengbh));
+                                }
+                            }
+                            break;
                         case "shouying":
                             string shouying = scld[1];
                             string shouyingequal = scld[2];
@@ -115,29 +137,6 @@ namespace CKWMS.Controllers
                                         else
                                             where = where.Or(p => p.Shouying == int.Parse(shouying));
                                     }
-                                }
-                            }
-                            break;
-                        case "zhucezhengbh":
-                            string zhucezhengbh = scld[1];
-                            string zhucezhengbhequal = scld[2];
-                            string zhucezhengbhand = scld[3];
-                            //zhucezhengbh
-                            if (!string.IsNullOrEmpty(zhucezhengbh))
-                            {
-                                if (zhucezhengbhequal.Equals("="))
-                                {
-                                    if (zhucezhengbhand.Equals("and"))
-                                        where = where.And(p => p.ZhucezhengBH == zhucezhengbh);
-                                    else
-                                        where = where.Or(p => p.ZhucezhengBH == zhucezhengbh);
-                                }
-                                if (zhucezhengbhequal.Equals("like"))
-                                {
-                                    if (zhucezhengbhand.Equals("and"))
-                                        where = where.And(p => p.ZhucezhengBH.Contains(zhucezhengbh));
-                                    else
-                                        where = where.Or(p => p.ZhucezhengBH.Contains(zhucezhengbh));
                                 }
                             }
                             break;
@@ -614,6 +613,7 @@ namespace CKWMS.Controllers
             string baozhuangdw = Request["baozhuangdw"] ?? "";
             string shangpintm = Request["shangpintm"] ?? "";
             string chandi = Request["chandi"] ?? "";
+            string ShangpinMS = Request["ShangpinMS"] ?? "";
             if (shenchasf.IndexOf("true") > -1)
                 shenchasf = "true";
             else
@@ -659,6 +659,7 @@ namespace CKWMS.Controllers
                     ob_base_shangpinxx.BaozhuangDW = baozhuangdw.Trim();
                     ob_base_shangpinxx.ShangpinTM = shangpintm.Trim();
                     ob_base_shangpinxx.Chandi = chandi.Trim();
+                    ob_base_shangpinxx.ShangpinMS = ShangpinMS.Trim();
 
                     ob_base_shangpinxx = ob_base_shangpinxxservice.AddEntity(ob_base_shangpinxx);
                 }
@@ -713,6 +714,7 @@ namespace CKWMS.Controllers
                 base_shangpinxxviewmodel.BaozhuangDW = tempData.BaozhuangDW;
                 base_shangpinxxviewmodel.ShangpinTM = tempData.ShangpinTM;
                 base_shangpinxxviewmodel.Chandi = tempData.Chandi;
+                base_shangpinxxviewmodel.ShangpinMS = tempData.ShangpinMS;
                 return View(base_shangpinxxviewmodel);
             }
         }
@@ -753,7 +755,7 @@ namespace CKWMS.Controllers
             string baozhuangdw = Request["baozhuangdw"] ?? "";
             string shangpintm = Request["shangpintm"] ?? "";
             string chandi = Request["chandi"] ?? "";
-
+            string ShangpinMS = Request["ShangpinMS"] ?? "";
             if (shenchasf.IndexOf("true") > -1)
                 shenchasf = "true";
             if (jingyinsf.IndexOf("true") > -1)
@@ -794,6 +796,7 @@ namespace CKWMS.Controllers
                 p.BaozhuangDW = baozhuangdw.Trim();
                 p.ShangpinTM = shangpintm.Trim();
                 p.Chandi = chandi.Trim();
+                p.ShangpinMS = ShangpinMS.Trim();
 
                 ob_base_shangpinxxservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;

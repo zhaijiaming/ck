@@ -7,6 +7,7 @@ using CKWMS.EFModels;
 using CKWMS.IBSL;
 using CKWMS.BSL;
 using CKWMS.Common;
+using CKWMS.Models;
 
 namespace CKWMS.Controllers
 {
@@ -169,6 +170,7 @@ namespace CKWMS.Controllers
 
         public ActionResult Add()
         {
+            ViewBag.userid = (int)Session["user_id"];
             return View();
         }
 
@@ -178,7 +180,6 @@ namespace CKWMS.Controllers
             string huozhuid = Request["huozhuid"] ?? "";
             string leibie = Request["leibie"] ?? "";
             string shouquanid = Request["shouquanid"] ?? "";
-            string shouquanmingcheng = Request["shouquanmingcheng"] ?? "";
             string shouquanshuyxq = Request["shouquanshuyxq"] ?? "";
             string shouquanshutp = Request["shouquanshutp"] ?? "";
             string makedate = Request["makedate"] ?? "";
@@ -189,7 +190,6 @@ namespace CKWMS.Controllers
                 ob_base_huozhushouquan.HuozhuID = huozhuid == "" ? 0 : int.Parse(huozhuid);
                 ob_base_huozhushouquan.Leibie = leibie == "" ? 0 : int.Parse(leibie);
                 ob_base_huozhushouquan.ShouquanID = shouquanid == "" ? 0 : int.Parse(shouquanid);
-                ob_base_huozhushouquan.Shouquanmingcheng = shouquanmingcheng.Trim();
                 ob_base_huozhushouquan.ShouquanshuYXQ = shouquanshuyxq == "" ? DateTime.Now : DateTime.Parse(shouquanshuyxq);
                 ob_base_huozhushouquan.ShouquanshuTP = shouquanshutp.Trim();
                 ob_base_huozhushouquan.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
@@ -208,7 +208,22 @@ namespace CKWMS.Controllers
         {
             base_huozhushouquan tempData = ob_base_huozhushouquanservice.GetEntityById(base_huozhushouquan => base_huozhushouquan.ID == id && base_huozhushouquan.IsDelete == false);
             ViewBag.base_huozhushouquan = tempData;
-            return View();
+            if (tempData == null)
+                return View();
+            else
+            {
+                base_huozhushouquanViewModel base_huozhushouquanviewmodel = new base_huozhushouquanViewModel();
+                base_huozhushouquanviewmodel.ID = tempData.ID;
+                base_huozhushouquanviewmodel.HuozhuID = tempData.HuozhuID;
+                base_huozhushouquanviewmodel.Leibie = (int)tempData.Leibie;
+                base_huozhushouquanviewmodel.ShouquanID = (int)tempData.ShouquanID;
+                base_huozhushouquanviewmodel.ShouquanshuYXQ = (DateTime)tempData.ShouquanshuYXQ;
+                base_huozhushouquanviewmodel.ShouquanshuTP = tempData.ShouquanshuTP;
+                base_huozhushouquanviewmodel.MakeDate = tempData.MakeDate;
+                base_huozhushouquanviewmodel.MakeMan = tempData.MakeMan;
+                
+                return View(base_huozhushouquanviewmodel);
+            }
         }
 
         public ActionResult Update()
@@ -217,10 +232,9 @@ namespace CKWMS.Controllers
             string huozhuid = Request["huozhuid"] ?? "";
             string leibie = Request["leibie"] ?? "";
             string shouquanid = Request["shouquanid"] ?? "";
-            string shouquanmingcheng = Request["shouquanmingcheng"] ?? "";
             string shouquanshuyxq = Request["shouquanshuyxq"] ?? "";
             string shouquanshutp = Request["shouquanshutp"] ?? "";
-            string makedate = Request["omakedate"] ?? "";
+            string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
             int uid = int.Parse(id);
             try
@@ -229,7 +243,6 @@ namespace CKWMS.Controllers
                 p.HuozhuID = huozhuid == "" ? 0 : int.Parse(huozhuid);
                 p.Leibie = leibie == "" ? 0 : int.Parse(leibie);
                 p.ShouquanID = shouquanid == "" ? 0 : int.Parse(shouquanid);
-                p.Shouquanmingcheng = shouquanmingcheng.Trim();
                 p.ShouquanshuYXQ = shouquanshuyxq == "" ? DateTime.Now : DateTime.Parse(shouquanshuyxq);
                 p.ShouquanshuTP = shouquanshutp.Trim();
                 p.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
@@ -242,7 +255,7 @@ namespace CKWMS.Controllers
                 Console.WriteLine(ex.Message);
                 ViewBag.saveok = ViewAddTag.ModifyNo;
             }
-            return RedirectToAction("Edit", new { id = uid });
+            return RedirectToAction("Index");
         }
         public ActionResult Delete()
         {
