@@ -25,6 +25,8 @@
                     <td>存储条件</td>
                     <td>生产企业</td>
                     <td>供应商</td>
+                    <td>是否审查</td>
+                    <td>是否经营</td>
                     <td>商品条码</td>
                 </tr>
             </thead>
@@ -47,6 +49,8 @@
                         <td>@item.Cunchutiaojian</td>
                         <td>@item.Qiyemingcheng</td>
                         <td>@item.gysmingcheng</td>
+                        <td>@string.Format("{0}", item.ShenchaSF == true ? "是" : "否")</td>
+                        <td>@string.Format("{0}", item.jingyinsf == true ? "是" : "否")</td>
                         <td>@item.shangpintm</td>
                     </tr>
                 }

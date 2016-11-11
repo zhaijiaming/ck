@@ -419,6 +419,71 @@ namespace CKWMS.Controllers
             }
             return RedirectToAction("Index");
         }
+        public ActionResult RecipientEntityExport()
+        {
+            int userid = (int)Session["user_id"];
+            string pagetag = "base_shouhuodanwei_index";
+            Expression<Func<base_shouhuodanwei, bool>> where = PredicateExtensionses.True<base_shouhuodanwei>();
+            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            if (sc != null)
+            {
+                string[] sclist = sc.ConditionInfo.Split(';');
+                foreach (string scl in sclist)
+                {
+                    string[] scld = scl.Split(',');
+                    switch (scld[0])
+                    {
+                        case "huozhuid":
+                            string huozhuid = scld[1];
+                            string huozhuidequal = scld[2];
+                            string huozhuidand = scld[3];
+                            if (!string.IsNullOrEmpty(huozhuid))
+                            {
+                                if (huozhuidequal.Equals("="))
+                                {
+                                    if (huozhuidand.Equals("and"))
+                                        where = where.And(base_shouhuodanwei => base_shouhuodanwei.HuozhuID == int.Parse(huozhuid));
+                                    else
+                                        where = where.Or(base_shouhuodanwei => base_shouhuodanwei.HuozhuID == int.Parse(huozhuid));
+                                }
+                            }
+                            break;
+                        case "mingcheng":
+                            string mingcheng = scld[1];
+                            string mingchengequal = scld[2];
+                            string mingchengand = scld[3];
+                            if (!string.IsNullOrEmpty(mingcheng))
+                            {
+                                if (mingchengequal.Equals("="))
+                                {
+                                    if (mingchengand.Equals("and"))
+                                        where = where.And(base_shouhuodanwei => base_shouhuodanwei.Mingcheng == mingcheng);
+                                    else
+                                        where = where.Or(base_shouhuodanwei => base_shouhuodanwei.Mingcheng == mingcheng);
+                                }
+                                if (mingchengequal.Equals("like"))
+                                {
+                                    if (mingchengand.Equals("and"))
+                                        where = where.And(base_shouhuodanwei => base_shouhuodanwei.Mingcheng.Contains(mingcheng));
+                                    else
+                                        where = where.Or(base_shouhuodanwei => base_shouhuodanwei.Mingcheng.Contains(mingcheng));
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                ViewBag.SearchCondition = sc.ConditionInfo;
+            }
+
+            where = where.And(base_shouhuodanwei => base_shouhuodanwei.IsDelete == false);
+            var tempData = ob_base_shouhuodanweiservice.LoadSortEntities(where.Compile(), false, base_shouhuodanwei => base_shouhuodanwei.ID);
+            ViewBag.RecipientEntity = tempData;
+            ViewData.Model = tempData;
+            string viewHtml = ExportNow.RenderPartialViewToString(this, "RecipientEntityExport");
+            return File(System.Text.Encoding.UTF8.GetBytes(viewHtml), "application/ms-excel", string.Format("RecipientEntity_{0}.xls", DateTime.Now.ToShortDateString()));
+        }
     }
 }
 
