@@ -17,8 +17,9 @@
             <button type="button" class="btn btn-default" onclick="javascript:location.href='/wms_scanin/index'; "><i class="icon-hand-left"></i>返回</button>
         </p>
     </div>
-    <div class="row">
-        <table class="table table-condensed table-hover" id="mydatatable">
+    <div id="pl_loc" class="row">
+        <p><input type="text" id="txkuwei"/></p>
+        <table class="table table-condensed table-hover" id="dt_loc">
             <caption></caption>
             <thead>
                 <tr>
@@ -42,6 +43,28 @@
                 }
             </tbody>
         </table>
+    </div>
+    <div id="pl_cargo" class="row" style="width:360px;height:260px;overflow:auto;display:none;">
+        <table class="table" id="dt_cargo">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <td>规格</td>
+                    <td>批号</td>
+                    <td>序列号</td>
+                    <td>待拣</td>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+            </tbody>
+        </table>
+
     </div>
 </div>
 

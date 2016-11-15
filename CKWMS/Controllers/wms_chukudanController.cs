@@ -553,6 +553,8 @@ namespace CKWMS.Controllers
                         _ckd.JihuaZT = 5;
                         ob_wms_chukudanservice.UpdateEntity(_ckd);
                     }
+                    else
+                        return Json(-1);
                 }
             }
             return Json(1);

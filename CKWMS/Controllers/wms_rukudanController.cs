@@ -418,11 +418,30 @@ namespace CKWMS.Controllers
                 wms_rukudan _rkd = ob_wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_rkid));
                 if (_rkd != null)
                 {
-                    if (!(_rkd.YanshouSF && _rkd.RukuZT < 3))
+                    var _ng = false;
+                    if (_rkd.YanshouSF && _rkd.RukuZT < 3)
+                        _ng = true;
+                    else
+                    {
+                        var _shmx = ServiceFactory.wms_shouhuomxservice.LoadEntities(p => p.RukuID == _rkd.ID && p.IsDelete == false).ToList<wms_shouhuomx>();
+                        if (_shmx.Count == 0)
+                            _ng = true;
+                        foreach(var mx in _shmx)
+                        {
+                            if (mx.Shuliang != mx.ShangjiaSL)
+                            {
+                                _ng = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (!_ng)
                     {
                         _rkd.RukuZT = 5;
                         ob_wms_rukudanservice.UpdateEntity(_rkd);
                     }
+                    else
+                        return Json(-1);
                 }
             }
             return Json(1);
