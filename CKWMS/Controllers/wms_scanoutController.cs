@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using CKWMS.EFModels;
 using CKWMS.BSL;
-
+using CKWMS.Models;
 namespace CKWMS.Controllers
 {
     public class wms_scanoutController : Controller
@@ -40,7 +40,16 @@ namespace CKWMS.Controllers
                                sl = tb.Sum(p => p.DaijianSL),
                                jh = tb.Sum(p => p.ShijianSL)
                            };
-            ViewBag.pickloc = _loclist.ToList();
+            List<wms_scanpickViewModel> _pickloc = new List<wms_scanpickViewModel>();
+            foreach(var loc in _loclist)
+            {
+                wms_scanpickViewModel _sp = new wms_scanpickViewModel();
+                _sp.KuWei = loc.kw;
+                _sp.DaijianSL = (float)loc.sl;
+                _sp.JianhuoSL = (float)loc.jh;
+                _pickloc.Add(_sp);
+            }
+            ViewBag.pickloc = _pickloc;
             ViewBag.ckid = _ckid;
             ViewBag.ckbh = _ckd.ChukudanBH;
             return View();

@@ -329,6 +329,7 @@
     <Compile Include="Models\wms_jianhuoViewModel.cs" />
     <Compile Include="Models\wms_kehukwViewModel.cs" />
     <Compile Include="Models\wms_kuweiViewModel.cs" />
+    <Compile Include="Models\wms_scanpickViewModel.cs" />
     <Compile Include="reports\ReportDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

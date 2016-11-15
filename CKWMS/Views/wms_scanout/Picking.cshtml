@@ -1,5 +1,6 @@
 ﻿@using CKWMS.App_Code
 @using CKWMS.Models
+@model wms_scanpickViewModel
 
 @{
     ViewBag.Title = "拣货库位";
@@ -32,11 +33,11 @@
                 {
                     <tr>
                         <td>
-                            <label><input type="checkbox" value="@item.kw"></label>
+                            <label><input type="checkbox" value="@item.KuWei"></label>
                         </td>
-                        <td>@item.kw</td>
-                        <td>@item.sl</td>
-                        <td>@item.jh</td>
+                        <td>@item.KuWei</td>
+                        <td>@item.DaijianSL</td>
+                        <td>@item.JianhuoSL</td>
                     </tr>
                 }
             </tbody>
