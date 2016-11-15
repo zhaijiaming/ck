@@ -24,11 +24,31 @@
             });
             if (sDel.length < 2)
                 return;
-            $.post("/wms_rukudan/entryfinish", { rk: sDel }, function (data) {
-                if (data == -1)
-                    alert("操作失败，请联系管理员！");
-                else
-                    location.reload();
+            //$.post("/wms_rukudan/entryfinish", { rk: sDel }, function (data) {
+            //    if (data == -1)
+            //        alert("操作失败，请联系管理员！");
+            //    else
+            //        location.reload();
+            //});
+            $.ajax({
+                async: true,
+                beforeSend: function () {
+                    ShowWait();
+                },
+                complete: function () {
+                    HiddenWait();
+                },
+                type: "POST",
+                url: "/wms_rukudan/entryfinish",
+                data: {
+                    rk: sDel
+                },
+                success: function (data) {
+                    if (data == -1)
+                        alert("操作失败，请联系管理员！");
+                    else
+                        location.reload();
+                }
             });
         });
         //收货清单打印
@@ -100,6 +120,7 @@
         <li class="active">入库操作</li>
     </ul>
 </div>
+<div id="loading"><img src="~/Imgs/wait.gif" alt="" />...系统正在加载数据,请耐心等待...</div>
 <div class="page-content">
     @*@Html.Search_Condition((int)Session["user_id"], "入库单_条件组合查询", "/wms_rukudan/operatelist", "wms_rukudanoperatelist", scms)*@
     <div class="page-header">

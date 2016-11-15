@@ -25,12 +25,33 @@
             });
             if (sDel.length < 2)
                 return;
-            $.post("/wms_chukudan/outfinish", { ck: sDel }, function (data) {
-                if (data == -1)
-                    alert("操作失败，请联系管理员！");
-                else
-                    location.reload();
+            //$.post("/wms_chukudan/outfinish", { ck: sDel }, function (data) {
+            //    if (data == -1)
+            //        alert("操作失败，请联系管理员！");
+            //    else
+            //        location.reload();
+            //});
+            $.ajax({
+                async: true,
+                beforeSend: function () {
+                    ShowWait();
+                },
+                complete: function () {
+                    HiddenWait();
+                },
+                type: "POST",
+                url: "/wms_chukudan/outfinish",
+                data: {
+                    ck: sDel
+                },
+                success: function (data) {
+                    if (data == -1)
+                        alert("操作失败，请联系管理员！");
+                    else
+                        location.reload();
+                }
             });
+
         });
         //随货同行单打印
         $("#mydatatable").on("click", ".outOperateid", function () {
@@ -43,10 +64,12 @@
             $("#ck").val(_selv.val());
             $("#hz").val(_hz);
             $("#kh").val(_selv.data("kh"));
+            $("#dt_xz tbody").html("");
             GetCustStore(_hz);
             $("#pl_xz").show();
         });
         $("#pl_search").click(function () {
+            $("#dt_xz tbody").html("");
             GetCustStore($("#hz").val());
         });
         $("#pl_xz_close").click(function () {
@@ -95,17 +118,39 @@
             //getCount();
         });
         $("#pl_xlm_ok").click(function () {
-            alert($("#xlm").val());
-            $.post("/wms_chukuxlm/addxlm",
-                {
+            //alert($("#xlm").val());
+            //$.post("/wms_chukuxlm/addxlm",
+            //    {
+            //        xlm: $("#xlm").val(),
+            //        ckd: $("#ckd").val(),
+            //        ck: $("#ck").val()
+            //    }, function (data) {
+            //        if (data == -1)
+            //            alert("导入序列码失败，请与管理员联系！");
+            //        $("#pl_xlm").hide();
+            //    });
+            $("#pl_xlm").hide();
+            $.ajax({
+                async: true,
+                beforeSend: function () {
+                    ShowWait();
+                },
+                complete: function () {
+                    HiddenWait();
+                },
+                type: "POST",
+                url: "/wms_chukuxlm/addxlm",
+                data: {
                     xlm: $("#xlm").val(),
                     ckd: $("#ckd").val(),
                     ck: $("#ck").val()
-                }, function (data) {
+                },
+                success: function (data) {
                     if (data == -1)
                         alert("导入序列码失败，请与管理员联系！");
-                    $("#pl_xlm").hide();
-                });
+                }
+            });
+
         });
         $("#pl_xlm_clear").click(function () {
             $("#xlm").val("");
@@ -177,18 +222,40 @@
     }
     function AddCargo(_cargo) {
         if (_cargo != null) {
-            $.post("/wms_chukumx/addcargos",
-                {
+            //$.post("/wms_chukumx/addcargos",
+            //    {
+            //        cargos: _cargo,
+            //        ck: $("#ck").val()
+            //    },
+            //    function (data) {
+            //        if (data != 1)
+            //            alert("添加出库货品失败，请重新选择!");
+            //        else
+            //            alert("出库商品添加成功！");
+            //            //$("#pl_xz").hide();
+            //    });
+            $.ajax({
+                async: true,
+                beforeSend: function () {
+                    ShowWait();
+                },
+                complete: function () {
+                    HiddenWait();
+                },
+                type: "POST",
+                url: "/wms_chukumx/addcargos",
+                data: {
                     cargos: _cargo,
                     ck: $("#ck").val()
                 },
-                function (data) {
+                success: function (data) {
                     if (data != 1)
                         alert("添加出库货品失败，请重新选择!");
                     else
                         alert("出库商品添加成功！");
-                        //$("#pl_xz").hide();
-                });
+                }
+            });
+
         }
     }
     function EditInfo() {
@@ -215,67 +282,25 @@
         var filltable = "";
         if (_cust == null)
             return;
-        $.post("/wms_cunhuo/getcuststoregood",
-            {
+        $.ajax({
+            async: true,
+            beforeSend: function () {
+                ShowWait();
+            },
+            complete: function () {
+                HiddenWait();
+            },
+            type: "POST",
+            url: "/wms_cunhuo/getcuststoregood",
+            data: {
                 cust: _cust,
                 mc: $("#mc").val(),
                 gg: $("#gg").val(),
                 ph: $("#ph").val()
             },
-            function (data) {
+            success: function (data) {
                 if (data != -1) {
                     for (var i in data) {
-                        //filltable = filltable + '<tr><td><input type="number" size="5" value="0" data-sp="';
-                        //filltable = filltable + data[i].ShangpinID;
-                        //filltable = filltable + '"/></td><td>';
-                        //filltable = filltable + data[i].Kuwei;
-                        //filltable = filltable + '</td><td>';
-                        //filltable = filltable + data[i].RukuRQ.toDate().Format("yyyy-MM-dd");
-                        //filltable = filltable + '</td><td>';
-                        //filltable = filltable + data[i].sshuliang;
-                        //filltable = filltable + '</td><td>';
-                        //if (data[i].DaijianSL != null)
-                        //    filltable = filltable + data[i].DaijianSL;
-                        //else
-                        //    filltable = filltable + '0';
-                        //filltable = filltable + '</td><td>';
-                        //filltable = filltable + data[i].ShangpinMC;
-                        //filltable = filltable + '</td><td>';
-                        //filltable = filltable + data[i].Guige;
-                        //filltable = filltable + '</td><td>';
-                        //filltable = filltable + data[i].Zhucezheng;
-                        //filltable = filltable + '</td><td>';
-                        //filltable = filltable + data[i].Pihao;
-                        //filltable = filltable + '</td><td>';
-                        //filltable = filltable + data[i].ShengchanRQ.toDate().Format("yyyy-MM-dd");
-                        //filltable = filltable + '</td><td>';
-                        //filltable = filltable + data[i].ShixiaoRQ.toDate().Format("yyyy-MM-dd");
-                        //filltable = filltable + '</td><td>';
-                        //filltable = filltable + data[i].Xuliema;
-                        //filltable = filltable + '</td><td>';
-                        //filltable = filltable + data[i].JibenDW;
-                        //filltable = filltable + '</td><td>';
-                        //if (eval(data[i].HegeSF) == true)
-                        //    filltable = filltable + '合格';
-                        //if (eval(data[i].HegeSF) == false)
-                        //    filltable = filltable + '不合格';
-                        //filltable = filltable + '</td><td>';
-                        //if (eval(data[i].CunhuoZT) == 0)
-                        //    filltable = filltable + '';
-                        //if (eval(data[i].CunhuoZT) == 1)
-                        //    filltable = filltable + '正常';
-                        //if (eval(data[i].CunhuoZT) == 2)
-                        //    filltable = filltable + '破损';
-                        //if (eval(data[i].CunhuoZT) == 3)
-                        //    filltable = filltable + '污染';
-                        //if (eval(data[i].CunhuoZT) == 4)
-                        //    filltable = filltable + '渗漏';
-                        //if (eval(data[i].CunhuoZT) == 5)
-                        //    filltable = filltable + '其它';
-                        //filltable = filltable + '</td><td>';
-                        //filltable = filltable + data[i].CunhuoSM;
-                        //filltable = filltable + '</td></tr>';
-
                         filltable = filltable + '<tr><td><input type="number" size="5" value="0" data-sp="';
                         filltable = filltable + data[i].ShangpinID;
                         filltable = filltable + '" data-zt="';
@@ -340,7 +365,83 @@
                     }
                 }
                 $("#dt_xz tbody").html(filltable);
-            });
+            }
+        });
+        //$.post("/wms_cunhuo/getcuststoregood",
+        //    {
+        //        cust: _cust,
+        //        mc: $("#mc").val(),
+        //        gg: $("#gg").val(),
+        //        ph: $("#ph").val()
+        //    },
+        //    function (data) {
+        //        if (data != -1) {
+        //            for (var i in data) {
+        //                filltable = filltable + '<tr><td><input type="number" size="5" value="0" data-sp="';
+        //                filltable = filltable + data[i].ShangpinID;
+        //                filltable = filltable + '" data-zt="';
+        //                filltable = filltable + data[i].CunhuoZT;
+        //                filltable = filltable + '" data-zl="';
+        //                filltable = filltable + data[i].zl;
+        //                filltable = filltable + '" data-jz="';
+        //                filltable = filltable + data[i].jz;
+        //                filltable = filltable + '" data-tj="';
+        //                filltable = filltable + data[i].tj;
+        //                filltable = filltable + '" data-jf="';
+        //                filltable = filltable + data[i].jfd;
+        //                filltable = filltable + '"/></td><td>';
+        //                filltable = filltable + data[i].ShangpinDM;
+        //                filltable = filltable + '</td><td>';
+        //                filltable = filltable + data[i].ShangpinMC;
+        //                filltable = filltable + '</td><td>';
+        //                filltable = filltable + data[i].chsl;
+        //                filltable = filltable + '</td><td>';
+        //                if (data[i].sdsl != null)
+        //                    filltable = filltable + data[i].sdsl;
+        //                else
+        //                    filltable = filltable + '0';
+        //                filltable = filltable + '</td><td>';
+        //                filltable = filltable + data[i].JibenDW;
+        //                filltable = filltable + '</td><td>';
+        //                filltable = filltable + data[i].Guige;
+        //                filltable = filltable + '</td><td>';
+        //                filltable = filltable + data[i].Zhucezheng;
+        //                filltable = filltable + '</td><td>';
+        //                filltable = filltable + data[i].Pihao;
+        //                filltable = filltable + '</td><td>';
+        //                filltable = filltable + data[i].ShengchanRQ.toDate().Format("yyyy-MM-dd");
+        //                filltable = filltable + '</td><td>';
+        //                filltable = filltable + data[i].ShixiaoRQ.toDate().Format("yyyy-MM-dd");
+        //                filltable = filltable + '</td><td>';
+        //                filltable = filltable + data[i].Xuliema;
+        //                filltable = filltable + '</td><td>';
+        //                filltable = filltable + data[i].BaozhuangDW;
+        //                filltable = filltable + '</td><td>';
+        //                filltable = filltable + data[i].Huansuanlv;
+        //                filltable = filltable + '</td><td>';
+        //                filltable = filltable + data[i].Changjia;
+        //                filltable = filltable + '</td><td>';
+        //                filltable = filltable + data[i].Chandi;
+        //                filltable = filltable + '</td><td>';
+        //                filltable = filltable + data[i].ShangpinTM;
+        //                filltable = filltable + '</td><td>';
+        //                if (eval(data[i].CunhuoZT) == 0)
+        //                    filltable = filltable + '';
+        //                if (eval(data[i].CunhuoZT) == 1)
+        //                    filltable = filltable + '正常';
+        //                if (eval(data[i].CunhuoZT) == 2)
+        //                    filltable = filltable + '破损';
+        //                if (eval(data[i].CunhuoZT) == 3)
+        //                    filltable = filltable + '污染';
+        //                if (eval(data[i].CunhuoZT) == 4)
+        //                    filltable = filltable + '渗漏';
+        //                if (eval(data[i].CunhuoZT) == 5)
+        //                    filltable = filltable + '其它';
+        //                filltable = filltable + '</td></tr>';
+        //            }
+        //        }
+        //        $("#dt_xz tbody").html(filltable);
+        //    });
     }
     function DelInfo() {
         var sDel = "";
@@ -396,6 +497,7 @@
         <li class="active">出库操作</li>
     </ul>
 </div>
+<div id="loading"><img src="~/Imgs/wait.gif" alt="" />...系统正在加载数据,请耐心等待...</div>
 <div class="page-content">
     @Html.Search_Condition((int)Session["user_id"], "出库单_条件组合查询", "/wms_chukudan/index", "wms_chukudanindex", scms)
     <div class="page-header">
