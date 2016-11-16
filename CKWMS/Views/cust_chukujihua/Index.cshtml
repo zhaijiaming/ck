@@ -1,0 +1,154 @@
+﻿@using CKWMS.App_Code
+@using CKWMS.Models
+@using X.PagedList
+@using X.PagedList.Mvc
+@{
+    ViewBag.Title = "出库计划清单";
+    string _searchcondition = ViewBag.SearchCondition;
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("tr").bind("dblclick", function () {
+            var u_id = $(this).find('td').eq(0).find('input').val();
+            if (u_id != null) {
+                var url_go = "/cust_chukujihua/Edit/" + u_id;
+                location.href = url_go;
+            }
+        });
+    });
+    function AddInfo() {
+        location.href = "/cust_chukujihua/Add";
+    }
+    function EditInfo() {
+        $("#mydatatable tr input[type=checkbox]").each(function () {
+            if (this.checked)
+                location.href = "/cust_chukujihua/Edit/" + $(this).val();
+        });
+    }
+    function DelInfo() {
+        var sDel = "";
+        $("#mydatatable tr input[type=checkbox]").each(function () {
+            if (this.checked)
+                sDel = sDel + ", " + $(this).val()
+        });
+        if (sDel.length < 2)
+            return;
+        var url_go = "/cust_chukujihua/Delete/?del=" + sDel;
+        location.href = url_go;
+    }
+</script>
+@{
+    List<SearchConditionModel> scms = new List<SearchConditionModel>();
+    if (_searchcondition == null || _searchcondition == "")
+    {
+        SearchConditionModel scm = new SearchConditionModel();
+        scm.ItemCode = "HuozhuID";
+        scm.ItemTitle = "货主序号";
+        scm.ItemType = "System.Int32";
+        scms.Add(scm);
+    }
+    else
+    {
+        string[] scs = _searchcondition.Split(';');
+        if (scs.Length > 0)
+        {
+            SearchConditionModel scm = new SearchConditionModel();
+            scm.ItemCode = "HuozhuID";
+            scm.ItemTitle = "货主序号";
+            scm.ItemType = "System.Int32";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[0].Split(',')[1];
+                scm.ItemOpValue = scs[0].Split(',')[2];
+                scm.ItemJion = scs[0].Split(',')[3];
+            }
+            scms.Add(scm);
+        }
+    }
+}
+
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    </script>
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="/Home">首页</a>
+        </li>
+        <li class="active">出库计划</li>
+    </ul>
+</div>
+<div class="page-content">
+    @Html.Search_Condition((int)Session["user_id"], "出库计划_条件组合查询", "/cust_chukujihua/index", "cust_chukujihua_index", scms)
+    <div class="page-header">
+        <p>
+            <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
+            <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
+            <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
+            <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
+            <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
+        </p>
+    </div>
+    <div class="row">
+        <table class="table" id="mydatatable">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>货主序号</td>
+                    <td>客户序号</td>
+                    <td>客户名称</td>
+                    <td>发货地址</td>
+                    <td>送货地址</td>
+                    <td>出库日期</td>
+                    <td>业务类型</td>
+                    <td>是否保税</td>
+                    <td>储运要求</td>
+                    <td>是否监管</td>
+                    <td>客户单号</td>
+                    <td>客服序号</td>
+                    <td>联系人</td>
+                    <td>联系电话</td>
+                    <td>计划状态</td>
+                    <td>出库单数量</td>
+                    <td>备注</td>
+                    <td>制单日期</td>
+                    <td>制单人</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.cust_chukujihua)
+                {
+                    <tr>
+                        <td>
+                            <label><input type="checkbox" value="@item.ID"></label>
+                        </td>
+                        <td>@item.HuozhuID</td>
+                        <td>@item.KehuID</td>
+                        <td>@item.KehuMC</td>
+                        <td>@item.Fahuodizhi</td>
+                        <td>@item.Yunsongdizhi</td>
+                        <td>@item.ChukuRQ</td>
+                        <td>@item.YewuLX</td>
+                        <td>@item.BaoshuiSF</td>
+                        <td>@item.ChunyunYQ</td>
+                        <td>@item.JianguanSF</td>
+                        <td>@item.KehuDH</td>
+                        <td>@item.KefuID</td>
+                        <td>@item.Lianxiren</td>
+                        <td>@item.LianxiDH</td>
+                        <td>@item.JihuaZT</td>
+                        <td>@item.ChukudanSL</td>
+                        <td>@item.Beizhu</td>
+                        <td>@item.MakeDate</td>
+                        <td>@item.MakeMan</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="pager">
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+    </div>
+</div>
