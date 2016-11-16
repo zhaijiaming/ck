@@ -151,6 +151,7 @@
             <thead>
                 <tr>
                     <td></td>
+                    <td>出库编号</td>
                     <td>商品代码</td>
                     <td>商品名称</td>
                     <td>注册证</td>
@@ -183,6 +184,7 @@
                                 <label><input type="checkbox" value="@item.ID"></label>
                             </div>
                         </td>
+                        <td>@Html.GetDataValue_ID("出库单","出库编号",(int)item.ChukuID)</td>
                         <td>@item.ShangpinDM</td>
                         <td>@item.ShangpinMC</td>
                         <td>@item.Zhucezheng</td>
