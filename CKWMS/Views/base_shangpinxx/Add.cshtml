@@ -239,12 +239,64 @@
         $("#huozhuid").attr('required', 'required');
         $("#Daima").attr('required', 'required');
         $("#gongyingid").attr('required', 'required');
+        //'审查'绑定值
+        $("#shenchasf").val("false");//默认赋值
+        $("#shenchasf").change(function () {
+            if ($("#shenchasf").is(":checked")) {
+                $("#shenchasf").val("true");//选中=true
+            } else {
+                $("#shenchasf").val("false");//不选中=false
+            }
+        });
         //保存提交
         var form = $("#spxx_form");
         $("#btn_save").click(function () {
-            form.submit();
+            var muluxuhao = $("#muluxuhao").val();
+            var mlc_huozhuid = $("#huozhuid").val();
+            if ($("#shenchasf").is(":checked") == true) {//审查=true
+                if (muluxuhao == null || muluxuhao == "") {//分类目录=null
+                    alert("您已经选择审查，分类目录不可为空！");
+                    return false;
+                } else {//分类目录 != null
+                    check_ajax(form, muluxuhao, mlc_huozhuid);
+                }
+            } else {//审查=false
+                if (muluxuhao == null || muluxuhao == "") {//分类目录=空
+                    form.submit();
+                } else {//分类目录 != null
+                    check_ajax(form, muluxuhao, mlc_huozhuid);
+                }
+            }
         });
     });
+    function check_ajax(form, muluxuhao, mlc_huozhuid) {
+        var form = form;
+        var muluxuhao = muluxuhao;
+        var mlc_huozhuid = mlc_huozhuid;
+        $.ajax({
+            async: true,
+            beforeSend: function () {
+                ShowWait();
+            },
+            complete: function () {
+                HiddenWait();
+            },
+            type: "POST",
+            url: "/base_shangpinxx/mulucheck",
+            data: {
+                mlc_huozhuid: mlc_huozhuid,
+                muluxuhao: muluxuhao
+            },
+            success: function (data) {
+                if (data == 1) {
+                    //保存成功
+                    form.submit();
+                } else if (data == -1) {
+                    alert("该分类目录不存在");
+                }
+            }
+        });
+    }
     function GetZCZNow() {
         var filltable = "";
         $.post(
@@ -409,6 +461,7 @@
         }
     }
 </script>
+<div id="loading"><img src="~/Imgs/wait.gif" alt="" />...系统正在加载数据,请耐心等待...</div>
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
@@ -622,14 +675,15 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.ShenchaSF, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.CheckBoxFor(m => m.ShenchaSF, new { @class = "form-control" })
+                    <input type="checkbox" id="shenchasf" name="shenchasf" class="form-control"/>
+                    @*@Html.CheckBoxFor(m => m.ShenchaSF, new { @class = "form-control" })*@
                 </div>
             </div>
             @*是否经营*@
             <div class="form-group">
                 @Html.LabelFor(m => m.JingyinSF, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.CheckBoxFor(m => m.JingyinSF, new { @class = "form-control" })
+                    @Html.CheckBoxFor(m => m.JingyinSF, new { @class = "form-control checkBox" })
                 </div>
             </div>
             @*首营状态*@
@@ -769,10 +823,10 @@
                 <button type="button" class="btn btn-default" id="pl_zcz_search"><i class="icon-search"></i>查询</button>
             </div>
         </div>
-        <div>
+        <div style="overflow:auto;height:500px;">
             <table class="table table-condensed" id="dt_zcz">
                 <caption></caption>
-                <thead>
+                <thead style="white-space: nowrap;">
                     <tr>
                         <td></td>
                         <td>编号</td>

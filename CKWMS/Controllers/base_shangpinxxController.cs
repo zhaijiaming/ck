@@ -966,6 +966,28 @@ namespace CKWMS.Controllers
             ViewBag.spxx_huozhuid = spxx_huozhuid;
             return View();
         }
+        public JsonResult MuluCheck()
+        {
+            int flag = 0;
+            string mlc_huozhuid = Request["mlc_huozhuid"] ?? "";
+            string muluxuhao = Request["muluxuhao"] ?? "";
+            var spxx_wtkh = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == int.Parse(mlc_huozhuid) && p.IsDelete == false);
+            var wtkh_mulu = spxx_wtkh.JingyingfanweiDM;
+            var wtkh_mulus = wtkh_mulu.Split(';');
+            foreach (string i in wtkh_mulus)
+            {
+                if (muluxuhao == i)
+                {
+                    flag = 1;
+                    break;
+                }
+                else
+                {
+                    flag = -1;
+                }
+            }
+            return Json(flag);
+        }
     }
 }
 

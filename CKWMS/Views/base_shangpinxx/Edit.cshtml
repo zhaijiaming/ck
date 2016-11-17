@@ -6,9 +6,9 @@
 }
 <script type="text/javascript">
     $(document).ready(function () {
-    $("#pl_jldw").draggable({ handle: '.tuodong' }, { containment: [-1000, 50, 1300, 600]  });
-    $("#pl_Fanwei").draggable({ handle: '.tuodong' }, { containment: [-1000, 50, 1300, 600]  });
-    $("#pl_Cunchu").draggable({ handle: '.tuodong' }, { containment: [-1000, 50, 1300, 600]  });
+        $("#pl_jldw").draggable({ handle: '.tuodong' }, { containment: [-1000, 50, 1300, 600] });
+        $("#pl_Fanwei").draggable({ handle: '.tuodong' }, { containment: [-1000, 50, 1300, 600] });
+        $("#pl_Cunchu").draggable({ handle: '.tuodong' }, { containment: [-1000, 50, 1300, 600] });
         var _ispack = false;
         getCpx(@Model.HuozhuID);
         //getZczgg(Model.ZhucezhengID);
@@ -198,6 +198,32 @@
                 }
             }
         });
+        //'审查'绑定值
+        $("#shenchasf").change(function () {
+            if ($("#shenchasf").is(":checked")) {
+                var muluxuhao = $("#muluxuhao").val();
+                if (muluxuhao == "0") {
+                    alert("分类目录为空，不能选择审查！");
+                    $("#shenchasf").attr("checked", false);
+                } else {
+                    $("#shenchasf").val("true");//选中=true
+                }
+            } else {
+                $("#shenchasf").val("false");//不选中=false
+            }
+        });
+        //'审查'赋值
+        var shenchasf = "@Model.ShenchaSF";
+        if (shenchasf == "True") {
+            $("#shenchasf").prop("checked", "true");
+        } else {
+            $("#shenchasf").val("false");
+        }
+        //更新提交
+        var form = $("#spxx_form");
+        $("#btn_update").click(function () {
+            form.submit();
+        });
     });
     function GetFanwei() {
         var filltable = "";
@@ -230,11 +256,11 @@
                 cpxid: _huozhuid
             },
             function (data) {
-                var selval=$("#ocpx").val();
+                var selval = $("#ocpx").val();
                 for (var i in data) {
                     filltable = filltable + '<option value="';
                     filltable = filltable + data[i].ID;
-                    if(data[i].ID==selval)
+                    if (data[i].ID == selval)
                         filltable = filltable + '" selected="selected">';
                     else
                         filltable = filltable + '">';
@@ -286,11 +312,11 @@
                 zczbh: _zczid
             },
             function (data) {
-                var selval=$("#ogg").val();
+                var selval = $("#ogg").val();
                 for (var i in data) {
                     filltable = filltable + '<option value="';
                     filltable = filltable + data[i].Guige;
-                    if(data[i].Guige==selval)
+                    if (data[i].Guige == selval)
                         filltable = filltable + '" selected="selected">';
                     else
                         filltable = filltable + '">';
@@ -339,7 +365,7 @@
     </ul>
 </div>
 <div class="page-content">
-    @using (Html.BeginForm("Update", "base_shangpinxx", FormMethod.Post, new { @role = "form" }))
+    @using (Html.BeginForm("Update", "base_shangpinxx", FormMethod.Post, new { @role = "form", id = "spxx_form" }))
     {
         @Html.AntiForgeryToken()
         <input type="hidden" name="id" id="spid" value="@Model.ID" />
@@ -353,9 +379,10 @@
         <input type="hidden" name="Shouying" id="Shouying" value="@ViewData.Model.Shouying" />
         <input type="hidden" id="MakeMan" name="MakeMan" value=@Session["user_id"] />
         <input type="hidden" name="MakeDate" value=@string.Format("{0:yyyy-MM-dd}",DateTime.Now) />
+        <input type="hidden" name="huozhuid" value="@Model.HuozhuID" />
         <div class="page-header">
             <p>
-                <button type="submit" class="btn btn-default"><i class="icon-save"></i>更新</button>
+                <button type="button" id="btn_update" class="btn btn-default"><i class="icon-save"></i>更新</button>
                 <button type="button" class="btn btn-default" onclick="javascript: history.back(-1); "><i class="icon-hand-left"></i>返回</button>
             </p>
         </div>
@@ -364,15 +391,15 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>货主</label>
                 <div class="col-sm-10">
-                    @Html.SelectList_Auto("huozhuid", "货主", "名称", (long)Model.HuozhuID)
+                    <input type="text" readonly class="form-control" value="@Html.GetDataValue_ID("货主", "简称", (int)Model.HuozhuID)" />
+                    @*@Html.SelectList_Auto("huozhuid", "货主", "名称", (long)Model.HuozhuID)*@
                 </div>
-                @*<label class="col-sm-10 blue">@Html.GetDataValue_ID("货主", "名称", (int)@Model.HuozhuID)</label>*@
             </div>
             @*代码*@
             <div class="form-group">
                 <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>代码</label>
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Daima, new { @class = "form-control"})
+                    @Html.TextBoxFor(m => m.Daima, new { @class = "form-control" })
                 </div>
             </div>
             @*注册证*@
@@ -380,7 +407,7 @@
                 <label for="name" class="col-sm-2">注册证</label>
                 <div class="col-sm-10">
                     @*@Html.SelectList_Auto("zhucezhengid", "注册证", "编号", (long)ViewData.Model.ZhucezhengID)*@
-                <input type="text" class="form-control" value="@Model.ZhucezhengBH" readonly />
+                    <input type="text" class="form-control" value="@Model.ZhucezhengBH" readonly />
                 </div>
             </div>
             @*商品名称*@
@@ -401,7 +428,7 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2">规格</label>
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Guige, new { @class = "form-control",@readonly="true"})
+                    @Html.TextBoxFor(m => m.Guige, new { @class = "form-control", @readonly = "true" })
                     @*<select name="guige" id="select_gg" style="width:100%;"></select>*@
                 </div>
             </div>
@@ -470,7 +497,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.Volchang, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-8">
-                    @Html.TextBoxFor(m => m.Volchang , new { @class = "form-control" })
+                    @Html.TextBoxFor(m => m.Volchang, new { @class = "form-control" })
                 </div>
                 <div class="col-sm-2">
                     <label class="form-control">米(M)</label>
@@ -540,7 +567,8 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.ShenchaSF, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.CheckBoxFor(m => m.ShenchaSF, new { @class = "form-control" })
+                    <input type="checkbox" id="shenchasf" name="shenchasf" class="form-control" />
+                    @*@Html.CheckBoxFor(m => m.ShenchaSF, new { @class = "form-control" })*@
                 </div>
             </div>
             @*是否经营*@
