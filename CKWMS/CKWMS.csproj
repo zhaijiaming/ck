@@ -293,6 +293,10 @@
     <Compile Include="Controllers\base_quyuController.cs" />
     <Compile Include="Controllers\cfda_cangkuController.cs" />
     <Compile Include="Controllers\cfda_zizhiController.cs" />
+    <Compile Include="Controllers\cust_chukujihuaController.cs" />
+    <Compile Include="Controllers\cust_chukujihuamxController.cs" />
+    <Compile Include="Controllers\cust_rukujihuaController.cs" />
+    <Compile Include="Controllers\cust_rukujihuamxController.cs" />
     <Compile Include="Controllers\json_batchController.cs" />
     <Compile Include="Controllers\json_deliveryController.cs" />
     <Compile Include="Controllers\json_importController.cs" />
@@ -310,12 +314,17 @@
     <Compile Include="Controllers\wms_scanhomeController.cs" />
     <Compile Include="Controllers\wms_scaninController.cs" />
     <Compile Include="Controllers\wms_scanoutController.cs" />
+    <Compile Include="Controllers\wms_yiweiController.cs" />
     <Compile Include="Models\auth_gongsiViewModel.cs" />
     <Compile Include="Models\base_bumenViewModel.cs" />
     <Compile Include="Models\base_feiyongxmViewModel.cs" />
     <Compile Include="Models\base_huobiViewModel.cs" />
     <Compile Include="Models\base_kaipiaoxxViewModel.cs" />
     <Compile Include="Models\base_quyuViewModel.cs" />
+    <Compile Include="Models\cust_chukujihuamxViewModel.cs" />
+    <Compile Include="Models\cust_chukujihuaViewModel.cs" />
+    <Compile Include="Models\cust_rukujihuamxViewModel.cs" />
+    <Compile Include="Models\cust_rukujihuaViewModel.cs" />
     <Compile Include="Models\json_batchViewModel.cs" />
     <Compile Include="Models\json_deliveryViewModel.cs" />
     <Compile Include="Models\json_importViewModel.cs" />
@@ -330,6 +339,7 @@
     <Compile Include="Models\wms_kehukwViewModel.cs" />
     <Compile Include="Models\wms_kuweiViewModel.cs" />
     <Compile Include="Models\wms_scanpickViewModel.cs" />
+    <Compile Include="Models\wms_yiweiViewModel.cs" />
     <Compile Include="reports\ReportDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -878,6 +888,21 @@
     <Content Include="Views\wms_chukumx\CommodityOfOutExport.cshtml" />
     <Content Include="Views\base_shangpinxx\PrintSpxx.cshtml" />
     <Content Include="Views\wms_scanout\Picking.cshtml" />
+    <Content Include="Views\cust_chukujihua\Add.cshtml" />
+    <Content Include="Views\cust_chukujihua\Edit.cshtml" />
+    <Content Include="Views\cust_chukujihua\Index.cshtml" />
+    <Content Include="Views\cust_chukujihuamx\Add.cshtml" />
+    <Content Include="Views\cust_chukujihuamx\Edit.cshtml" />
+    <Content Include="Views\cust_chukujihuamx\Index.cshtml" />
+    <Content Include="Views\cust_rukujihua\Add.cshtml" />
+    <Content Include="Views\cust_rukujihua\Edit.cshtml" />
+    <Content Include="Views\cust_rukujihua\Index.cshtml" />
+    <Content Include="Views\cust_rukujihuamx\Add.cshtml" />
+    <Content Include="Views\cust_rukujihuamx\Edit.cshtml" />
+    <Content Include="Views\cust_rukujihuamx\Index.cshtml" />
+    <Content Include="Views\wms_yiwei\Add.cshtml" />
+    <Content Include="Views\wms_yiwei\Edit.cshtml" />
+    <Content Include="Views\wms_yiwei\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
