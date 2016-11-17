@@ -254,10 +254,10 @@
         </p>
     </div>
     <div id="splist">
-        <div class="table-responsive" style="overflow:auto;height:370px;">
-            <table class="table" id="mydatatable">
+        <div class="table-responsive" style="overflow:auto;height:445px;">
+            <table class="table" id="mydatatable" style="white-space: nowrap;">
                 <caption></caption>
-                <thead style="white-space: nowrap;">
+                <thead>
                     <tr>
                         <td></td>
                         <td>首营状态</td>
@@ -312,7 +312,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="pager">
+        <div class="pager" style="height:0px;">
             @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
         </div>
     </div>
