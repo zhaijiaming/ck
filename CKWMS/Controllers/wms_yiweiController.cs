@@ -163,6 +163,8 @@ namespace CKWMS.Controllers
             ViewBag.wms_yiwei = tempData;
             return View(tempData);
         }
+        [HttpPost]
+        [OutputCache(Duration = 30)]
         public ActionResult StorageLocationMove()
         {
             int userid = (int)Session["user_id"];
