@@ -904,6 +904,7 @@
     <Content Include="Views\wms_yiwei\Edit.cshtml" />
     <Content Include="Views\wms_yiwei\Index.cshtml" />
     <Content Include="Views\wms_yiwei\StorageLocationMove.cshtml" />
+    <Content Include="Views\base_shouhuodanwei\RecipientEntityExport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
