@@ -240,10 +240,10 @@ namespace CKWMS.Controllers
             if (_mx.HuopinZT != null)
                 where = where.And(p => p.CunhuoZT == _mx.HuopinZT);
             where = where.And(p => p.sshuliang > 0);
-            var tempData = ServiceFactory.wms_cunhuoservice.GetStorageList(_custid, where.Compile()).OrderBy(s=>s.ShixiaoRQ).ThenBy(s=>s.RukuRQ);
+            var tempData = ServiceFactory.wms_cunhuoservice.GetStorageList(_custid, where.Compile()).ToList<wms_storage_v>();//.OrderBy(s=>s.ShixiaoRQ).ThenBy(s=>s.RukuRQ);
             if (tempData == null)
                 return Json(-1);
-            return Json(tempData.ToList<wms_storage_v>());
+            return Json(tempData);
         }
         public JsonResult AddPickGoods()
         {

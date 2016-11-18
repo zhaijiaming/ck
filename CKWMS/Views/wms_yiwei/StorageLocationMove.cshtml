@@ -1,0 +1,337 @@
+﻿@using CKWMS.App_Code
+@using CKWMS.Models
+@using X.PagedList
+@using X.PagedList.Mvc
+@{
+    ViewBag.Title = "存货移位";
+    string _searchcondition = ViewBag.SearchCondition;
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#pl_loc").draggable({ handle: ".panel-heading" });
+        $("#mydatatable tbody tr").each(function () {
+            if ($(this).find("td").eq(14).html() == "不合格")
+                $(this).addClass("red");
+            if ($(this).find("td").eq(15).html() != "正常")
+                $(this).add("blue");
+        });
+        $(".icon-move").click(function () {
+            var _selrow = $(this).parent().parent();
+            var _selcb = _selrow.find("input");
+            var _oloc = _selrow.find("td").eq(4).html();
+            var _chsl = eval(_selrow.find("td").eq(5).html());
+            var _djsl = _selrow.find("td").eq(6).html();
+            var _msl = 0;
+            if (_djsl == "") {
+                _djsl = "0";
+            }
+            if (eval(_djsl) < 0) {
+                alert("库存异常，请联系管理员！")
+                return;
+            }
+            _msl = _chsl - _djsl;
+            $("#selid").val(_selcb.val());
+            _selcb.data("oloc", _oloc);
+            $("#msl").val(_msl);
+            $("#sl").val(_msl);
+            $("#pl_loc").show();
+        });
+        $("#bt_fn_move").click(function () {
+            if (eval($("#sl").val()) > eval($("#msl").val())) {
+                alert("移位的数量不能超出存货数量，请重新输入！");
+                return;
+            }
+            $.ajax({
+                async: true,
+                beforeSend: function () {
+                    ShowWait();
+                },
+                complete: function () {
+                    HiddenWait();
+                },
+                type: "POST",
+                url: "/wms_yiwei/cargomove",
+                data: {
+                    ch: $("#selid").val(),
+                    loc: $("#nloc").val(),
+                    sl: $("#sl").val()
+                },
+                success: function (data) {
+                    if (data == -1)
+                        alert("移位操作，传送参数出错！");
+                    if (data == -2)
+                        alert("库存已被清空！");
+                    if (data == -3)
+                        alert("新库位不存在！");
+                    if (data == -4)
+                        alert("移位时，库存数量不够！");
+                    if (data == -5)
+                        alert("系统出错，请联系管理员！");
+                    if (data == 1) {
+                        $("#mydatatable tbody tr").each(function () {
+                            var _cb = $(this).find("input");
+                            if (_cb.val() == $("#selid").val()) {
+                                _cb.data("nloc", $("#nloc").val());
+                                _cb.data("mn", $("#sl").val());
+                                $(this).find("td").eq(17).html($("#nloc").val());
+                                $(this).find("td").eq(18).html($("#sl").val());
+                            }
+                        });
+                        loc_close();
+                    }
+                }
+            });
+        });
+        $("#pl_fn_close").click(function () {
+            loc_close();
+        });
+        $("#bt_fn_cancel").click(function () {
+            loc_close();
+        });
+
+    });
+    function loc_close() {
+        $("#msl").val("0");
+        $("#sl").val("0");
+        $("#nloc").val("");
+        $("#pl_loc").hide();
+    }
+</script>
+@{
+    List<SearchConditionModel> scms = new List<SearchConditionModel>();
+    if (_searchcondition == null || _searchcondition == "")
+    {
+        SearchConditionModel scm = new SearchConditionModel();
+        scm.ItemCode = "HuozhuID";
+        scm.ItemTitle = "货主";
+        scm.ItemType = "货主.名称";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "RukudanBH";
+        scm.ItemTitle = "入库单";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "Kuwei";
+        scm.ItemTitle = "库位";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "ShangpinDM";
+        scm.ItemTitle = "商品代码";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "ShangpinMC";
+        scm.ItemTitle = "商品名称";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "Pihao";
+        scm.ItemTitle = "批号";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+    }
+    else
+    {
+        string[] scs = _searchcondition.Split(';');
+        if (scs.Length > 0)
+        {
+            SearchConditionModel scm = new SearchConditionModel();
+            scm.ItemCode = "HuozhuID";
+            scm.ItemTitle = "货主";
+            scm.ItemType = "货主.名称";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[0].Split(',')[1];
+                if (scm.ItemValue.Length == 0)
+                {
+                    scm.ItemValue = "0";
+                }
+                scm.ItemOpValue = scs[0].Split(',')[2];
+                scm.ItemJion = scs[0].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "RukudanBH";
+            scm.ItemTitle = "入库编号";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[1].Split(',')[1];
+                scm.ItemOpValue = scs[1].Split(',')[2];
+                scm.ItemJion = scs[1].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "Kuwei";
+            scm.ItemTitle = "库位";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[2].Split(',')[1];
+                scm.ItemOpValue = scs[2].Split(',')[2];
+                scm.ItemJion = scs[2].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "ShangpinDM";
+            scm.ItemTitle = "商品代码";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[3].Split(',')[1];
+                scm.ItemOpValue = scs[3].Split(',')[2];
+                scm.ItemJion = scs[3].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "ShangpinMC";
+            scm.ItemTitle = "商品名称";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[4].Split(',')[1];
+                scm.ItemOpValue = scs[4].Split(',')[2];
+                scm.ItemJion = scs[4].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "Pihao";
+            scm.ItemTitle = "批号";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[5].Split(',')[1];
+                scm.ItemOpValue = scs[5].Split(',')[2];
+                scm.ItemJion = scs[5].Split(',')[3];
+            }
+            scms.Add(scm);
+        }
+    }
+}
+<div id="loading"><img src="~/Imgs/wait.gif" alt="" />...系统正在加载数据,请耐心等待...</div>
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    </script>
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="/Home">首页</a>
+        </li>
+        <li><a href="/wms_yiwei">库内移位</a></li>
+        <li class="active">存货移位</li>
+    </ul>
+</div>
+<div class="page-content">
+    @Html.Search_Condition((int)Session["user_id"], "存货移位_条件组合查询", "/wms_yiwei/storagelocationmove", "wms_yiwei_storagelocationmove", scms)
+    <input type="hidden" id="selid" />
+    <div class="page-header">
+        <p>
+            <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
+            <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
+        </p>
+    </div>
+    <div class="row">
+        <table class="table table-condensed table-hover" id="mydatatable">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>移位</td>
+                    <td>货主</td>
+                    <td>入库单</td>
+                    <td>存货库位</td>
+                    <td>数量</td>
+                    <td>锁定</td>
+                    <td>入库日期</td>
+                    <td>商品代码</td>
+                    <td>商品名称</td>
+                    <td>规格</td>
+                    <td>注册证</td>
+                    <td>批号</td>
+                    <td>生产日期</td>
+                    <td>失效日期</td>
+                    <td>序列码</td>
+                    <td>单位</td>
+                    <td>目标库位</td>
+                    <td>移动数量</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.wms_storage_v)
+                {
+                    <tr>
+                        <td>
+                            <label><input type="checkbox" value="@item.sid" data-oloc="" data-nloc="" data-mn=""></label>
+                        </td>
+                        <td><i class="icon-move"></i></td>
+                        <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
+                        <td>@item.RukudanBH</td>
+                        <td>@item.Kuwei</td>
+                        <td>@item.sshuliang</td>
+                        <td>@item.DaijianSL</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.RukuRQ == null ? "" : item.RukuRQ)</td>
+                        <td>@item.ShangpinDM</td>
+                        <td>@item.ShangpinMC</td>
+                        <td>@item.Guige</td>
+                        <td>@item.Zhucezheng</td>
+                        <td>@item.Pihao</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ == null ? "" : item.ShengchanRQ)</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ == null ? "" : item.ShixiaoRQ)</td>
+                        <td>@item.Xuliema</td>
+                        <td>@item.JibenDW</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="pager">
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("CurrentStorage", new { page }))
+    </div>
+</div>
+<div id="pl_loc" class="panel panel-info" style="display:none;position:fixed;top:200px;left:200px;width:390px;overflow:auto;">
+    <div class="panel-heading">
+        <h3 class="panel-title">移位设置<button id="pl_fn_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="center">
+                <p id="bt_fn_move" class="btn btn-default">确定</p>
+                <p id="bt_fn_cancel" class="btn btn-default">取消</p>
+            </div>
+            <br />
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="sl">最大数量</label>
+                <div class="col-sm-8">
+                    <input class="form-control" id="msl" readonly type="text" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="sl">移位数量</label>
+                <div class="col-sm-8">
+                    <input class="form-control" id="sl" name="ls" type="text" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="xkw">目标库位</label>
+                <div class="col-sm-8">
+                    <input class="form-control" id="nloc" name="nloc" type="text" value="" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

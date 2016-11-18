@@ -163,13 +163,328 @@ namespace CKWMS.Controllers
             ViewBag.wms_yiwei = tempData;
             return View(tempData);
         }
+        public ActionResult StorageLocationMove()
+        {
+            string page = "";
+            if (string.IsNullOrEmpty(page))
+                page = "1";
+            int userid = (int)Session["user_id"];
+            string pagetag = "wms_yiwei_storagelocationmove";
+            Expression<Func<wms_storage_v, bool>> where = PredicateExtensionses.True<wms_storage_v>();
+            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            if (sc != null && sc.ConditionInfo != null)
+            {
+                string[] sclist = sc.ConditionInfo.Split(';');
+                foreach (string scl in sclist)
+                {
+                    string[] scld = scl.Split(',');
+                    switch (scld[0])
+                    {
+                        case "huozhuid":
+                            string huozhuid = scld[1];
+                            string huozhuidequal = scld[2];
+                            string huozhuidand = scld[3];
+                            if (!string.IsNullOrEmpty(huozhuid))
+                            {
+                                if (huozhuidequal.Equals("="))
+                                {
+                                    if (huozhuidand.Equals("and"))
+                                        where = where.And(wms_storage_v => wms_storage_v.HuozhuID == int.Parse(huozhuid));
+                                    else
+                                        where = where.Or(wms_storage_v => wms_storage_v.HuozhuID == int.Parse(huozhuid));
+                                }
+                                if (huozhuidequal.Equals(">"))
+                                {
+                                    if (huozhuidand.Equals("and"))
+                                        where = where.And(wms_storage_v => wms_storage_v.HuozhuID > int.Parse(huozhuid));
+                                    else
+                                        where = where.Or(wms_storage_v => wms_storage_v.HuozhuID > int.Parse(huozhuid));
+                                }
+                                if (huozhuidequal.Equals("<"))
+                                {
+                                    if (huozhuidand.Equals("and"))
+                                        where = where.And(wms_storage_v => wms_storage_v.HuozhuID < int.Parse(huozhuid));
+                                    else
+                                        where = where.Or(wms_storage_v => wms_storage_v.HuozhuID < int.Parse(huozhuid));
+                                }
+                            }
+                            break;
+                        case "rukudanbh":
+                            string rukudanbh = scld[1];
+                            string rukudanbhequal = scld[2];
+                            string rukudanbhand = scld[3];
+                            if (!string.IsNullOrEmpty(rukudanbh))
+                            {
+                                if (rukudanbhequal.Equals("="))
+                                {
+                                    if (rukudanbhand.Equals("and"))
+                                        where = where.And(wms_storage_v => wms_storage_v.RukudanBH == rukudanbh);
+                                    else
+                                        where = where.Or(wms_storage_v => wms_storage_v.RukudanBH == rukudanbh);
+                                }
+                                if (rukudanbhequal.Equals("like"))
+                                {
+                                    if (rukudanbhand.Equals("and"))
+                                        where = where.And(wms_storage_v => wms_storage_v.RukudanBH.Contains(rukudanbh));
+                                    else
+                                        where = where.Or(wms_storage_v => wms_storage_v.RukudanBH.Contains(rukudanbh));
+                                }
+                            }
+                            break;
+                        case "kuwei":
+                            string kuwei = scld[1];
+                            string kuweiequal = scld[2];
+                            string kuweiand = scld[3];
+                            if (!string.IsNullOrEmpty(kuwei))
+                            {
+                                if (kuweiequal.Equals("="))
+                                {
+                                    if (kuweiand.Equals("and"))
+                                        where = where.And(wms_storage_v => wms_storage_v.Kuwei == kuwei);
+                                    else
+                                        where = where.Or(wms_storage_v => wms_storage_v.Kuwei == kuwei);
+                                }
+                                if (kuweiequal.Equals("like"))
+                                {
+                                    if (kuweiand.Equals("and"))
+                                        where = where.And(wms_storage_v => wms_storage_v.Kuwei.Contains(kuwei));
+                                    else
+                                        where = where.Or(wms_storage_v => wms_storage_v.Kuwei.Contains(kuwei));
+                                }
+                            }
+                            break;
+                        case "shangpindm":
+                            string shangpindm = scld[1];
+                            string shangpindmequal = scld[2];
+                            string shangpindmand = scld[3];
+                            if (!string.IsNullOrEmpty(shangpindm))
+                            {
+                                if (shangpindmequal.Equals("="))
+                                {
+                                    if (shangpindmand.Equals("and"))
+                                        where = where.And(wms_storage_v => wms_storage_v.ShangpinDM == shangpindm);
+                                    else
+                                        where = where.Or(wms_storage_v => wms_storage_v.ShangpinDM == shangpindm);
+                                }
+                                if (shangpindmequal.Equals("like"))
+                                {
+                                    if (shangpindmand.Equals("and"))
+                                        where = where.And(wms_storage_v => wms_storage_v.ShangpinDM.Contains(shangpindm));
+                                    else
+                                        where = where.Or(wms_storage_v => wms_storage_v.ShangpinDM.Contains(shangpindm));
+                                }
+                            }
+                            break;
+                        case "shangpinmc":
+                            string shangpinmc = scld[1];
+                            string shangpinmcequal = scld[2];
+                            string shangpinmcand = scld[3];
+                            if (!string.IsNullOrEmpty(shangpinmc))
+                            {
+                                if (shangpinmcequal.Equals("="))
+                                {
+                                    if (shangpinmcand.Equals("and"))
+                                        where = where.And(wms_storage_v => wms_storage_v.ShangpinMC == shangpinmc);
+                                    else
+                                        where = where.Or(wms_storage_v => wms_storage_v.ShangpinMC == shangpinmc);
+                                }
+                                if (shangpinmcequal.Equals("like"))
+                                {
+                                    if (shangpinmcand.Equals("and"))
+                                        where = where.And(wms_storage_v => wms_storage_v.ShangpinMC.Contains(shangpinmc));
+                                    else
+                                        where = where.Or(wms_storage_v => wms_storage_v.ShangpinMC.Contains(shangpinmc));
+                                }
+                            }
+                            break;
+                        case "pihao":
+                            string pihao = scld[1];
+                            string pihaoequal = scld[2];
+                            string pihaoand = scld[3];
+                            if (!string.IsNullOrEmpty(pihao))
+                            {
+                                if (pihaoequal.Equals("="))
+                                {
+                                    if (pihaoand.Equals("and"))
+                                        where = where.And(p => p.Pihao == pihao);
+                                    else
+                                        where = where.Or(p => p.Pihao == pihao);
+                                }
+                                if (pihaoequal.Equals("like"))
+                                {
+                                    if (pihaoand.Equals("and"))
+                                        where = where.And(p => p.Pihao.Contains(pihao));
+                                    else
+                                        where = where.Or(p => p.Pihao.Contains(pihao));
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                ViewBag.SearchCondition = sc.ConditionInfo;
+            }
 
+            var tempData = ServiceFactory.wms_cunhuoservice.GetInventory(where.Compile()).ToPagedList<wms_storage_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            ViewBag.wms_storage_v = tempData;
+            return View(tempData);
+        }
         public ActionResult Add()
         {
             ViewBag.userid = (int)Session["user_id"];
             return View();
         }
-
+        public JsonResult CargoMove()
+        {
+            int _userid = (int)Session["user_id"];
+            var _ochid = Request["ch"] ?? "";
+            var _nloc = Request["loc"] ?? "";
+            var _sl = Request["sl"] ?? "";
+            if (string.IsNullOrEmpty(_ochid) || string.IsNullOrEmpty(_nloc) || string.IsNullOrEmpty(_sl))
+                return Json(-1);
+            var _ch = ServiceFactory.wms_cunhuoservice.GetEntityById(p => p.ID == int.Parse(_ochid) && p.IsDelete == false);
+            if (_ch == null)
+                return Json(-2);
+            var _kw = ServiceFactory.wms_kuweiservice.GetEntityById(p => p.Mingcheng == _nloc.Trim() && p.IsDelete == false);
+            if (_kw == null)
+                return Json(-3);
+            if (_ch.Kuwei == _kw.Mingcheng)
+                return Json(-1);
+            if (_ch.DaijianSL < 0)
+                return Json(-4);
+            if (_ch.Shuliang - _ch.DaijianSL < float.Parse(_sl))
+                return Json(-4);
+            wms_cunhuo _nch = new wms_cunhuo();
+            _nch.Kuwei = _kw.Mingcheng;
+            _nch.KuweiID = _kw.ID;
+            _nch.Shuliang = float.Parse(_sl);
+            _nch.RKMXID = _ch.RKMXID;
+            _nch.DaijianSL = 0;
+            _nch.CunhuoZT = _ch.CunhuoZT;
+            _nch.CunhuoSM = _ch.CunhuoSM;
+            _nch.HegeSF = _ch.HegeSF;
+            _nch.JiahuoSF = _ch.JiahuoSF;
+            _nch.MakeDate = DateTime.Now;
+            _nch.MakeMan = _ch.MakeMan;
+            _nch.RenSJ = _ch.RenSJ;
+            _nch.SuodingSF = _ch.SuodingSF;
+            _nch.Jifeidun = _ch.Jifeidun * (float.Parse(_sl) / _ch.Shuliang);
+            _nch.Jingzhong = _ch.Jingzhong * (float.Parse(_sl) / _ch.Shuliang);
+            _nch.Tiji = _ch.Tiji * (float.Parse(_sl) / _ch.Shuliang);
+            _nch.Zhongliang = _ch.Zhongliang * (float.Parse(_sl) / _ch.Shuliang);
+            _nch = ServiceFactory.wms_cunhuoservice.MoveAddEntity(_nch);
+            if (_nch != null)
+            {
+                wms_yiwei _yw = new wms_yiwei();
+                _yw.KCID = _ch.ID;
+                _yw.KWBH = _ch.Kuwei;
+                _yw.KWID = _ch.KuweiID;
+                _yw.SHID = _ch.RKMXID;
+                _yw.Shuliang = (int)_nch.Shuliang;
+                _yw.XKCID = _nch.ID;
+                _yw.XKWBH = _nch.Kuwei;
+                _yw.XKWID = _nch.KuweiID;
+                _yw.MakeDate = DateTime.Now;
+                _yw.MakeMan = _userid;
+                _yw = ob_wms_yiweiservice.AddEntity(_yw);
+                if (_yw != null)
+                {
+                    _ch.Tiji = _ch.Tiji * ((_ch.Shuliang - int.Parse(_sl)) / _ch.Shuliang);
+                    _ch.Zhongliang = _ch.Zhongliang * ((_ch.Shuliang - int.Parse(_sl)) / _ch.Shuliang);
+                    _ch.Jingzhong = _ch.Jingzhong * ((_ch.Shuliang - int.Parse(_sl)) / _ch.Shuliang);
+                    _ch.Jifeidun = _ch.Jifeidun * ((_ch.Shuliang - int.Parse(_sl)) / _ch.Shuliang);
+                    _ch.Shuliang = _ch.Shuliang - int.Parse(_sl);
+                    ServiceFactory.wms_cunhuoservice.UpdateEntity(_ch);
+                }
+                else
+                {
+                    ServiceFactory.wms_cunhuoservice.DeleteEntity(_nch);
+                    return Json(-5);
+                }
+            }
+            else
+                return Json(-5);
+            return Json(1);
+        }
+        public JsonResult LocationChange()
+        {
+            int _userid = (int)Session["user_id"];
+            var _oloc = Request["oloc"] ?? "";
+            var _nloc = Request["nloc"] ?? "";
+            if (string.IsNullOrEmpty(_oloc) || string.IsNullOrEmpty(_nloc))
+                return Json(-1);
+            var _ch = ServiceFactory.wms_cunhuoservice.LoadEntities(p => p.Kuwei == _oloc.Trim() && p.IsDelete == false).ToList<wms_cunhuo>();
+            if (_ch == null)
+                return Json(-2);
+            var _kw = ServiceFactory.wms_kuweiservice.GetEntityById(p => p.Mingcheng == _nloc.Trim() && p.IsDelete == false);
+            if (_kw == null)
+                return Json(-3);
+            bool canmove = true;
+            foreach (var ch in _ch)
+            {
+                if (ch.DaijianSL != null)
+                {
+                    if (ch.DaijianSL != 0)
+                    {
+                        canmove = false;
+                        break;
+                    }
+                }
+            }
+            if (!canmove)
+                return Json(-4);
+            foreach (var ch in _ch)
+            {
+                wms_cunhuo _nch = new wms_cunhuo();
+                _nch.Kuwei = _kw.Mingcheng;
+                _nch.KuweiID = _kw.ID;
+                _nch.Shuliang = ch.Shuliang;
+                _nch.RKMXID = ch.RKMXID;
+                _nch.DaijianSL = ch.DaijianSL;
+                _nch.CunhuoZT = ch.CunhuoZT;
+                _nch.CunhuoSM = ch.CunhuoSM;
+                _nch.HegeSF = ch.HegeSF;
+                _nch.JiahuoSF = ch.JiahuoSF;
+                _nch.Jifeidun = ch.Jifeidun;
+                _nch.Jingzhong = ch.Jingzhong;
+                _nch.MakeDate = DateTime.Now;
+                _nch.MakeMan = ch.MakeMan;
+                _nch.RenSJ = ch.RenSJ;
+                _nch.SuodingSF = ch.SuodingSF;
+                _nch.Tiji = ch.Tiji;
+                _nch.Zhongliang = ch.Zhongliang;
+                _nch = ServiceFactory.wms_cunhuoservice.MoveAddEntity(_nch);
+                if (_nch != null)
+                {
+                    wms_yiwei _yw = new wms_yiwei();
+                    _yw.KCID = ch.ID;
+                    _yw.KWBH = ch.Kuwei;
+                    _yw.KWID = ch.KuweiID;
+                    _yw.SHID = ch.RKMXID;
+                    _yw.Shuliang = (int)ch.Shuliang;
+                    _yw.XKCID = _nch.ID;
+                    _yw.XKWBH = _nch.Kuwei;
+                    _yw.XKWID = _nch.KuweiID;
+                    _yw.MakeDate = DateTime.Now;
+                    _yw.MakeMan = _userid;
+                    _yw = ob_wms_yiweiservice.AddEntity(_yw);
+                    if (_yw != null)
+                    {
+                        ch.Shuliang = 0;
+                        ch.DaijianSL = 0;
+                        ch.Tiji = 0;
+                        ch.Zhongliang = 0;
+                        ch.Jingzhong = 0;
+                        ch.Jifeidun = 0;
+                        ServiceFactory.wms_cunhuoservice.UpdateEntity(ch);
+                    }
+                    else
+                        ServiceFactory.wms_cunhuoservice.DeleteEntity(_nch);
+                }
+            }
+            return Json(1);
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Save()

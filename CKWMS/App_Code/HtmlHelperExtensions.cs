@@ -895,6 +895,42 @@ namespace CKWMS.App_Code
             string returnvalue = "";
             switch (className)
             {
+                case "收货":
+                    wms_shouhuomx _shmx = ServiceFactory.wms_shouhuomxservice.GetEntityById(p => p.ID == dataValue);
+                    if (_shmx == null)
+                        returnvalue = "";
+                    else
+                    {
+                        if (itemName == "商品")
+                            returnvalue = _shmx.ShangpinMC;
+                        if (itemName == "批号")
+                            returnvalue = _shmx.Pihao;
+                        if (itemName == "序列码")
+                            returnvalue = _shmx.Xuliema;
+                        if (itemName == "规格")
+                            returnvalue = _shmx.Guige;
+                        if (itemName == "全部")
+                            returnvalue = _shmx.ShangpinMC + "," + _shmx.Guige + "," + _shmx.Pihao + "," + _shmx.Xuliema;
+                    }
+                    break;
+                case "拣货":
+                    wms_chukumx _ckmx = ServiceFactory.wms_chukumxservice.GetEntityById(p => p.ID == dataValue);
+                    if (_ckmx == null)
+                        returnvalue = "";
+                    else
+                    {
+                        if (itemName == "商品")
+                            returnvalue = _ckmx.ShangpinMC;
+                        if (itemName == "批号")
+                            returnvalue = _ckmx.Pihao;
+                        if (itemName == "序列码")
+                            returnvalue = _ckmx.Xuliema;
+                        if (itemName == "规格")
+                            returnvalue = _ckmx.Guige;
+                        if (itemName == "全部")
+                            returnvalue = _ckmx.ShangpinMC + "," + _ckmx.Guige + "," + _ckmx.Pihao + "," + _ckmx.Xuliema;
+                    }
+                    break;
                 case "入库单":
                     wms_rukudan _rkd = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == dataValue);
                     if (_rkd == null)
