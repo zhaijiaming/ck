@@ -165,7 +165,336 @@ namespace CKWMS.Controllers
         }
         public ActionResult StorageLocationMove()
         {
-            string page = "";
+            int userid = (int)Session["user_id"];
+            string pagetag = "wms_yiwei_storagelocationmove";
+            string page = "1";
+            //huozhuid
+            string huozhuid = Request["huozhuid"] ?? "";
+            string huozhuidequal = Request["huozhuidequal"] ?? "";
+            string huozhuidand = Request["huozhuidand"] ?? "";
+            //rukudanbh
+            string rukudanbh = Request["rukudanbh"] ?? "";
+            string rukudanbhequal = Request["rukudanbhequal"] ?? "";
+            string rukudanbhand = Request["rukudanbhand"] ?? "";
+            //kuwei
+            string kuwei = Request["kuwei"] ?? "";
+            string kuweiequal = Request["kuweiequal"] ?? "";
+            string kuweiand = Request["kuweiand"] ?? "";
+            //shangpindm
+            string shangpindm = Request["shangpindm"] ?? "";
+            string shangpindmequal = Request["shangpindmequal"] ?? "";
+            string shangpindmand = Request["shangpindmand"] ?? "";
+            //shangpinmc
+            string shangpinmc = Request["shangpinmc"] ?? "";
+            string shangpinmcequal = Request["shangpinmcequal"] ?? "";
+            string shangpinmcand = Request["shangpinmcand"] ?? "";
+            //pihao
+            string pihao = Request["pihao"] ?? "";
+            string pihaoequal = Request["pihaoequal"] ?? "";
+            string pihaoand = Request["pihaoand"] ?? "";
+            Expression<Func<wms_storage_v, bool>> where = PredicateExtensionses.True<wms_storage_v>();
+            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            if (sc == null)
+            {
+                sc = new searchcondition();
+                sc.UserID = userid;
+                sc.PageBrief = pagetag;
+                //huozhuid
+                if (!string.IsNullOrEmpty(huozhuid))
+                {
+                    if (huozhuidequal.Equals("="))
+                    {
+                        if (huozhuidand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.HuozhuID == int.Parse(huozhuid));
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.HuozhuID == int.Parse(huozhuid));
+                    }
+                    if (huozhuidequal.Equals(">"))
+                    {
+                        if (huozhuidand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.HuozhuID > int.Parse(huozhuid));
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.HuozhuID > int.Parse(huozhuid));
+                    }
+                    if (huozhuidequal.Equals("<"))
+                    {
+                        if (huozhuidand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.HuozhuID < int.Parse(huozhuid));
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.HuozhuID < int.Parse(huozhuid));
+                    }
+                }
+                if (!string.IsNullOrEmpty(huozhuid))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", huozhuid, huozhuidequal, huozhuidand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", "", huozhuidequal, huozhuidand);
+                //rukudanbh
+                if (!string.IsNullOrEmpty(rukudanbh))
+                {
+                    if (rukudanbhequal.Equals("="))
+                    {
+                        if (rukudanbhand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.RukudanBH == rukudanbh);
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.RukudanBH == rukudanbh);
+                    }
+                    if (rukudanbhequal.Equals("like"))
+                    {
+                        if (rukudanbhand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.RukudanBH.Contains(rukudanbh));
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.RukudanBH.Contains(rukudanbh));
+                    }
+                }
+                if (!string.IsNullOrEmpty(rukudanbh))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukudanbh", rukudanbh, rukudanbhequal, rukudanbhand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukudanbh", "", rukudanbhequal, rukudanbhand);
+                //kuwei
+                if (!string.IsNullOrEmpty(kuwei))
+                {
+                    if (kuweiequal.Equals("="))
+                    {
+                        if (kuweiand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.Kuwei == kuwei);
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.Kuwei == kuwei);
+                    }
+                    if (kuweiequal.Equals("like"))
+                    {
+                        if (kuweiand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.Kuwei.Contains(kuwei));
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.Kuwei.Contains(kuwei));
+                    }
+                }
+                if (!string.IsNullOrEmpty(kuwei))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "kuwei", kuwei, kuweiequal, kuweiand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "kuwei", "", kuweiequal, kuweiand);
+                //shangpindm
+                if (!string.IsNullOrEmpty(shangpindm))
+                {
+                    if (shangpindmequal.Equals("="))
+                    {
+                        if (shangpindmand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.ShangpinDM == shangpindm);
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.ShangpinDM == shangpindm);
+                    }
+                    if (shangpindmequal.Equals("like"))
+                    {
+                        if (shangpindmand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.ShangpinDM.Contains(shangpindm));
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.ShangpinDM.Contains(shangpindm));
+                    }
+                }
+                if (!string.IsNullOrEmpty(shangpindm))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpindm", shangpindm, shangpindmequal, shangpindmand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpindm", "", shangpindmequal, shangpindmand);
+                //shangpinmc
+                if (!string.IsNullOrEmpty(shangpinmc))
+                {
+                    if (shangpinmcequal.Equals("="))
+                    {
+                        if (shangpinmcand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.ShangpinMC == shangpinmc);
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.ShangpinMC == shangpinmc);
+                    }
+                    if (shangpinmcequal.Equals("like"))
+                    {
+                        if (shangpinmcand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.ShangpinMC.Contains(shangpinmc));
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.ShangpinMC.Contains(shangpinmc));
+                    }
+                }
+                if (!string.IsNullOrEmpty(shangpinmc))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpinmc", shangpinmc, shangpinmcequal, shangpinmcand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpinmc", "", shangpinmcequal, shangpinmcand);
+                //pihao
+                if (!string.IsNullOrEmpty(pihao))
+                {
+                    if (pihaoequal.Equals("="))
+                    {
+                        if (pihaoand.Equals("and"))
+                            where = where.And(p => p.Pihao == pihao);
+                        else
+                            where = where.Or(p => p.Pihao == pihao);
+                    }
+                    if (pihaoequal.Equals("like"))
+                    {
+                        if (pihaoand.Equals("and"))
+                            where = where.And(p => p.Pihao.Contains(pihao));
+                        else
+                            where = where.Or(p => p.Pihao.Contains(pihao));
+                    }
+                }
+                if (!string.IsNullOrEmpty(pihao))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pihao", pihao, pihaoequal, pihaoand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pihao", "", pihaoequal, pihaoand);
+
+                searchconditionService.GetInstance().AddEntity(sc);
+            }
+            else
+            {
+                sc.ConditionInfo = "";
+                //huozhuid
+                if (!string.IsNullOrEmpty(huozhuid))
+                {
+                    if (huozhuidequal.Equals("="))
+                    {
+                        if (huozhuidand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.HuozhuID == int.Parse(huozhuid));
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.HuozhuID == int.Parse(huozhuid));
+                    }
+                    if (huozhuidequal.Equals(">"))
+                    {
+                        if (huozhuidand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.HuozhuID > int.Parse(huozhuid));
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.HuozhuID > int.Parse(huozhuid));
+                    }
+                    if (huozhuidequal.Equals("<"))
+                    {
+                        if (huozhuidand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.HuozhuID < int.Parse(huozhuid));
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.HuozhuID < int.Parse(huozhuid));
+                    }
+                }
+                if (!string.IsNullOrEmpty(huozhuid))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", huozhuid, huozhuidequal, huozhuidand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", "", huozhuidequal, huozhuidand);
+                //rukudanbh
+                if (!string.IsNullOrEmpty(rukudanbh))
+                {
+                    if (rukudanbhequal.Equals("="))
+                    {
+                        if (rukudanbhand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.RukudanBH == rukudanbh);
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.RukudanBH == rukudanbh);
+                    }
+                    if (rukudanbhequal.Equals("like"))
+                    {
+                        if (rukudanbhand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.RukudanBH.Contains(rukudanbh));
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.RukudanBH.Contains(rukudanbh));
+                    }
+                }
+                if (!string.IsNullOrEmpty(rukudanbh))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukudanbh", rukudanbh, rukudanbhequal, rukudanbhand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukudanbh", "", rukudanbhequal, rukudanbhand);
+                //kuwei
+                if (!string.IsNullOrEmpty(kuwei))
+                {
+                    if (kuweiequal.Equals("="))
+                    {
+                        if (kuweiand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.Kuwei == kuwei);
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.Kuwei == kuwei);
+                    }
+                    if (kuweiequal.Equals("like"))
+                    {
+                        if (kuweiand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.Kuwei.Contains(kuwei));
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.Kuwei.Contains(kuwei));
+                    }
+                }
+                if (!string.IsNullOrEmpty(kuwei))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "kuwei", kuwei, kuweiequal, kuweiand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "kuwei", "", kuweiequal, kuweiand);
+                //shangpindm
+                if (!string.IsNullOrEmpty(shangpindm))
+                {
+                    if (shangpindmequal.Equals("="))
+                    {
+                        if (shangpindmand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.ShangpinDM == shangpindm);
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.ShangpinDM == shangpindm);
+                    }
+                    if (shangpindmequal.Equals("like"))
+                    {
+                        if (shangpindmand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.ShangpinDM.Contains(shangpindm));
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.ShangpinDM.Contains(shangpindm));
+                    }
+                }
+                if (!string.IsNullOrEmpty(shangpindm))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpindm", shangpindm, shangpindmequal, shangpindmand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpindm", "", shangpindmequal, shangpindmand);
+                //shangpinmc
+                if (!string.IsNullOrEmpty(shangpinmc))
+                {
+                    if (shangpinmcequal.Equals("="))
+                    {
+                        if (shangpinmcand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.ShangpinMC == shangpinmc);
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.ShangpinMC == shangpinmc);
+                    }
+                    if (shangpinmcequal.Equals("like"))
+                    {
+                        if (shangpinmcand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.ShangpinMC.Contains(shangpinmc));
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.ShangpinMC.Contains(shangpinmc));
+                    }
+                }
+                if (!string.IsNullOrEmpty(shangpinmc))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpinmc", shangpinmc, shangpinmcequal, shangpinmcand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpinmc", "", shangpinmcequal, shangpinmcand);
+                //pihao
+                if (!string.IsNullOrEmpty(pihao))
+                {
+                    if (pihaoequal.Equals("="))
+                    {
+                        if (pihaoand.Equals("and"))
+                            where = where.And(p => p.Pihao == pihao);
+                        else
+                            where = where.Or(p => p.Pihao == pihao);
+                    }
+                    if (pihaoequal.Equals("like"))
+                    {
+                        if (pihaoand.Equals("and"))
+                            where = where.And(p => p.Pihao.Contains(pihao));
+                        else
+                            where = where.Or(p => p.Pihao.Contains(pihao));
+                    }
+                }
+                if (!string.IsNullOrEmpty(pihao))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pihao", pihao, pihaoequal, pihaoand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pihao", "", pihaoequal, pihaoand);
+
+                searchconditionService.GetInstance().UpdateEntity(sc);
+            }
+            ViewBag.SearchCondition = sc.ConditionInfo;
+
+            var tempData = ServiceFactory.wms_cunhuoservice.GetInventory(where.Compile()).ToPagedList<wms_storage_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            ViewBag.wms_storage_v = tempData;
+            return View(tempData);
+        }
+        [OutputCache(Duration =30)]
+        public ActionResult StorageLocationMove(string page)
+        {
             if (string.IsNullOrEmpty(page))
                 page = "1";
             int userid = (int)Session["user_id"];
