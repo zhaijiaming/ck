@@ -11,6 +11,8 @@ using CKWMS.BSL;
 using CKWMS.IBSL;
 using CKWMS.App_Code;
 using System.Web.Mvc;
+using CKWMS.Common;
+using System.Linq.Expressions;
 
 namespace CKWMS.reports
 {
@@ -686,6 +688,93 @@ namespace CKWMS.reports
 
                             dtspxx_others.Rows.Add(drspxx_others);
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["Spxx_shouying_Title"]));
+                            break;
+                        case "YiweiInfo":
+                            int userid = (int)Session["user_id"];
+                            string pagetag = "wms_yiwei_index";
+                            Expression<Func<wms_yiwei, bool>> where = PredicateExtensionses.True<wms_yiwei>();
+                            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+                            if (sc != null && sc.ConditionInfo != null)
+                            {
+                                string[] sclist = sc.ConditionInfo.Split(';');
+                                foreach (string scl in sclist)
+                                {
+                                    string[] scld = scl.Split(',');
+                                    switch (scld[0])
+                                    {
+                                        case "kwbh":
+                                            string kwbh = scld[1];
+                                            string kwbhequal = scld[2];
+                                            string kwbhand = scld[3];
+                                            if (!string.IsNullOrEmpty(kwbh))
+                                            {
+                                                if (kwbhequal.Equals("="))
+                                                {
+                                                    if (kwbhand.Equals("and"))
+                                                        where = where.And(p => p.KWBH == kwbh);
+                                                    else
+                                                        where = where.Or(p => p.KWBH == kwbh);
+                                                }
+                                                if (kwbhequal.Equals("like"))
+                                                {
+                                                    if (kwbhand.Equals("and"))
+                                                        where = where.And(p => p.KWBH.Contains(kwbh));
+                                                    else
+                                                        where = where.Or(p => p.KWBH.Contains(kwbh));
+                                                }
+                                            }
+                                            break;
+                                        case "xkwbh":
+                                            string xkwbh = scld[1];
+                                            string xkwbhequal = scld[2];
+                                            string xkwbhand = scld[3];
+                                            if (!string.IsNullOrEmpty(xkwbh))
+                                            {
+                                                if (xkwbhequal.Equals("="))
+                                                {
+                                                    if (xkwbhand.Equals("and"))
+                                                        where = where.And(p => p.XKWBH == xkwbh);
+                                                    else
+                                                        where = where.Or(p => p.XKWBH == xkwbh);
+                                                }
+                                                if (xkwbhequal.Equals("like"))
+                                                {
+                                                    if (xkwbhand.Equals("and"))
+                                                        where = where.And(p => p.XKWBH.Contains(xkwbh));
+                                                    else
+                                                        where = where.Or(p => p.XKWBH.Contains(xkwbh));
+                                                }
+                                            }
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                            }
+
+                            where = where.And(wms_yiwei => wms_yiwei.IsDelete == false);
+
+                            var rptYiweiInfos = ServiceFactory.wms_yiweiservice.LoadSortEntities(where.Compile(), false, wms_yiwei => wms_yiwei.ID);
+                            rptView.Reset();
+                            rptView.LocalReport.ReportPath = "reports/rptYiweiInfo.rdlc";
+                            rptView.LocalReport.DataSources.Clear();
+                            DataTable dtYiweiInfo = _rds.Tables["YiweiInfo"];
+                            DataRow drYiweiInfo;
+                            foreach (wms_yiwei _pr in rptYiweiInfos)
+                            {
+                                drYiweiInfo = dtYiweiInfo.NewRow();
+                                wms_shouhuomx YiweiInfo_shmx = ServiceFactory.wms_shouhuomxservice.GetEntityById(p => p.ID == _pr.SHID);
+                                drYiweiInfo["SHID"] = YiweiInfo_shmx.ShangpinMC + "," + YiweiInfo_shmx.Pihao + "," + YiweiInfo_shmx.Xuliema + "," + YiweiInfo_shmx.Guige;
+                                //drYiweiInfo["SHID"] = HtmlHelperExtensions.GetDataValue_ID("收货", "全部", (int)_pr.SHID);
+                                drYiweiInfo["KWBH"] = _pr.KWBH;
+                                drYiweiInfo["Shuliang"] = _pr.Shuliang;
+                                drYiweiInfo["XKWBH"] = _pr.XKWBH;
+                                drYiweiInfo["MakeDate"] = string.Format("{0:d}", _pr.MakeDate);
+                                userinfo YiweiInfo_man = ServiceFactory.userinfoservice.GetEntityById(p => p.ID == _pr.MakeMan);
+                                drYiweiInfo["MakeMan"] = YiweiInfo_man.FullName;
+                                dtYiweiInfo.Rows.Add(drYiweiInfo);
+                            }
+                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["YiweiInfo"]));
                             break;
                         default:
                             break;

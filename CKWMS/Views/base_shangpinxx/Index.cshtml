@@ -77,11 +77,9 @@
         $("#bt_print").click(function () {
             $("#pl_fun").show();
             $("#spxx_huozhuid").val("");
-        });
-        $("#spxx_huozhuid").change(function () {
-            var spxx_huozhuid = $("#spxx_huozhuid").val();
             $("#Yes_print").click(function () {
-                if (spxx_huozhuid.length > 0) {
+                var spxx_huozhuid = $("#spxx_huozhuid").val();
+                if (spxx_huozhuid != null && spxx_huozhuid !="") {
                     window.open("/base_shangpinxx/PrintSpxx?spxx_huozhuid=" + spxx_huozhuid);
                     $("#pl_fun").hide();
                 } else {

@@ -905,6 +905,7 @@
     <Content Include="Views\wms_yiwei\Index.cshtml" />
     <Content Include="Views\wms_yiwei\StorageLocationMove.cshtml" />
     <Content Include="Views\base_shouhuodanwei\RecipientEntityExport.cshtml" />
+    <Content Include="Views\wms_yiwei\PrintYiwei.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -938,6 +939,9 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="reports\rptTongxing.rdlc" />
+    <EmbeddedResource Include="reports\rptYiweiInfo.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="reports\rptZlgl_CKBG.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>

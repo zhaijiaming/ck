@@ -33,32 +33,47 @@ namespace CKWMS.Controllers
                     string[] scld = scl.Split(',');
                     switch (scld[0])
                     {
-                        case "shid":
-                            string shid = scld[1];
-                            string shidequal = scld[2];
-                            string shidand = scld[3];
-                            if (!string.IsNullOrEmpty(shid))
+                        case "kwbh":
+                            string kwbh = scld[1];
+                            string kwbhequal = scld[2];
+                            string kwbhand = scld[3];
+                            if (!string.IsNullOrEmpty(kwbh))
                             {
-                                if (shidequal.Equals("="))
+                                if (kwbhequal.Equals("="))
                                 {
-                                    if (shidand.Equals("and"))
-                                        where = where.And(wms_yiwei => wms_yiwei.SHID == int.Parse(shid));
+                                    if (kwbhand.Equals("and"))
+                                        where = where.And(p => p.KWBH == kwbh);
                                     else
-                                        where = where.Or(wms_yiwei => wms_yiwei.SHID == int.Parse(shid));
+                                        where = where.Or(p => p.KWBH == kwbh);
                                 }
-                                if (shidequal.Equals(">"))
+                                if (kwbhequal.Equals("like"))
                                 {
-                                    if (shidand.Equals("and"))
-                                        where = where.And(wms_yiwei => wms_yiwei.SHID > int.Parse(shid));
+                                    if (kwbhand.Equals("and"))
+                                        where = where.And(p => p.KWBH.Contains(kwbh));
                                     else
-                                        where = where.Or(wms_yiwei => wms_yiwei.SHID > int.Parse(shid));
+                                        where = where.Or(p => p.KWBH.Contains(kwbh));
                                 }
-                                if (shidequal.Equals("<"))
+                            }
+                            break;
+                        case "xkwbh":
+                            string xkwbh = scld[1];
+                            string xkwbhequal = scld[2];
+                            string xkwbhand = scld[3];
+                            if (!string.IsNullOrEmpty(xkwbh))
+                            {
+                                if (xkwbhequal.Equals("="))
                                 {
-                                    if (shidand.Equals("and"))
-                                        where = where.And(wms_yiwei => wms_yiwei.SHID < int.Parse(shid));
+                                    if (xkwbhand.Equals("and"))
+                                        where = where.And(p => p.XKWBH == xkwbh);
                                     else
-                                        where = where.Or(wms_yiwei => wms_yiwei.SHID < int.Parse(shid));
+                                        where = where.Or(p => p.XKWBH == xkwbh);
+                                }
+                                if (xkwbhequal.Equals("like"))
+                                {
+                                    if (xkwbhand.Equals("and"))
+                                        where = where.And(p => p.XKWBH.Contains(xkwbh));
+                                    else
+                                        where = where.Or(p => p.XKWBH.Contains(xkwbh));
                                 }
                             }
                             break;
@@ -83,9 +98,14 @@ namespace CKWMS.Controllers
             int userid = (int)Session["user_id"];
             string pagetag = "wms_yiwei_index";
             string page = "1";
-            string shid = Request["shid"] ?? "";
-            string shidequal = Request["shidequal"] ?? "";
-            string shidand = Request["shidand"] ?? "";
+            //kwbh
+            string kwbh = Request["kwbh"] ?? "";
+            string kwbhequal = Request["kwbhequal"] ?? "";
+            string kwbhand = Request["kwbhand"] ?? "";
+            //xkwbh
+            string xkwbh = Request["xkwbh"] ?? "";
+            string xkwbhequal = Request["xkwbhequal"] ?? "";
+            string xkwbhand = Request["xkwbhand"] ?? "";
             Expression<Func<wms_yiwei, bool>> where = PredicateExtensionses.True<wms_yiwei>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -93,67 +113,99 @@ namespace CKWMS.Controllers
                 sc = new searchcondition();
                 sc.UserID = userid;
                 sc.PageBrief = pagetag;
-                if (!string.IsNullOrEmpty(shid))
+                //kwbh
+                if (!string.IsNullOrEmpty(kwbh))
                 {
-                    if (shidequal.Equals("="))
+                    if (kwbhequal.Equals("="))
                     {
-                        if (shidand.Equals("and"))
-                            where = where.And(wms_yiwei => wms_yiwei.SHID == int.Parse(shid));
+                        if (kwbhand.Equals("and"))
+                            where = where.And(p => p.KWBH == kwbh);
                         else
-                            where = where.Or(wms_yiwei => wms_yiwei.SHID == int.Parse(shid));
+                            where = where.Or(p => p.KWBH == kwbh);
                     }
-                    if (shidequal.Equals(">"))
+                    if (kwbhequal.Equals("like"))
                     {
-                        if (shidand.Equals("and"))
-                            where = where.And(wms_yiwei => wms_yiwei.SHID > int.Parse(shid));
+                        if (kwbhand.Equals("and"))
+                            where = where.And(p => p.KWBH.Contains(kwbh));
                         else
-                            where = where.Or(wms_yiwei => wms_yiwei.SHID > int.Parse(shid));
-                    }
-                    if (shidequal.Equals("<"))
-                    {
-                        if (shidand.Equals("and"))
-                            where = where.And(wms_yiwei => wms_yiwei.SHID < int.Parse(shid));
-                        else
-                            where = where.Or(wms_yiwei => wms_yiwei.SHID < int.Parse(shid));
+                            where = where.Or(p => p.KWBH.Contains(kwbh));
                     }
                 }
-                if (!string.IsNullOrEmpty(shid))
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shid", shid, shidequal, shidand);
+                if (!string.IsNullOrEmpty(kwbh))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "kwbh", kwbh, kwbhequal, kwbhand);
                 else
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shid", "", shidequal, shidand);
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "kwbh", "", kwbhequal, kwbhand);
+                //xkwbh
+                if (!string.IsNullOrEmpty(xkwbh))
+                {
+                    if (xkwbhequal.Equals("="))
+                    {
+                        if (xkwbhand.Equals("and"))
+                            where = where.And(p => p.XKWBH == xkwbh);
+                        else
+                            where = where.Or(p => p.XKWBH == xkwbh);
+                    }
+                    if (xkwbhequal.Equals("like"))
+                    {
+                        if (xkwbhand.Equals("and"))
+                            where = where.And(p => p.XKWBH.Contains(xkwbh));
+                        else
+                            where = where.Or(p => p.XKWBH.Contains(xkwbh));
+                    }
+                }
+                if (!string.IsNullOrEmpty(xkwbh))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "xkwbh", xkwbh, xkwbhequal, xkwbhand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "xkwbh", "", xkwbhequal, xkwbhand);
                 searchconditionService.GetInstance().AddEntity(sc);
             }
             else
             {
                 sc.ConditionInfo = "";
-                if (!string.IsNullOrEmpty(shid))
+                //kwbh
+                if (!string.IsNullOrEmpty(kwbh))
                 {
-                    if (shidequal.Equals("="))
+                    if (kwbhequal.Equals("="))
                     {
-                        if (shidand.Equals("and"))
-                            where = where.And(wms_yiwei => wms_yiwei.SHID == int.Parse(shid));
+                        if (kwbhand.Equals("and"))
+                            where = where.And(p => p.KWBH == kwbh);
                         else
-                            where = where.Or(wms_yiwei => wms_yiwei.SHID == int.Parse(shid));
+                            where = where.Or(p => p.KWBH == kwbh);
                     }
-                    if (shidequal.Equals(">"))
+                    if (kwbhequal.Equals("like"))
                     {
-                        if (shidand.Equals("and"))
-                            where = where.And(wms_yiwei => wms_yiwei.SHID > int.Parse(shid));
+                        if (kwbhand.Equals("and"))
+                            where = where.And(p => p.KWBH.Contains(kwbh));
                         else
-                            where = where.Or(wms_yiwei => wms_yiwei.SHID > int.Parse(shid));
-                    }
-                    if (shidequal.Equals("<"))
-                    {
-                        if (shidand.Equals("and"))
-                            where = where.And(wms_yiwei => wms_yiwei.SHID < int.Parse(shid));
-                        else
-                            where = where.Or(wms_yiwei => wms_yiwei.SHID < int.Parse(shid));
+                            where = where.Or(p => p.KWBH.Contains(kwbh));
                     }
                 }
-                if (!string.IsNullOrEmpty(shid))
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shid", shid, shidequal, shidand);
+                if (!string.IsNullOrEmpty(kwbh))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "kwbh", kwbh, kwbhequal, kwbhand);
                 else
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shid", "", shidequal, shidand);
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "kwbh", "", kwbhequal, kwbhand);
+                //xkwbh
+                if (!string.IsNullOrEmpty(xkwbh))
+                {
+                    if (xkwbhequal.Equals("="))
+                    {
+                        if (xkwbhand.Equals("and"))
+                            where = where.And(p => p.XKWBH == xkwbh);
+                        else
+                            where = where.Or(p => p.XKWBH == xkwbh);
+                    }
+                    if (xkwbhequal.Equals("like"))
+                    {
+                        if (xkwbhand.Equals("and"))
+                            where = where.And(p => p.XKWBH.Contains(xkwbh));
+                        else
+                            where = where.Or(p => p.XKWBH.Contains(xkwbh));
+                    }
+                }
+                if (!string.IsNullOrEmpty(xkwbh))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "xkwbh", xkwbh, xkwbhequal, xkwbhand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "xkwbh", "", xkwbhequal, xkwbhand);
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;
@@ -934,6 +986,10 @@ namespace CKWMS.Controllers
                 }
             }
             return RedirectToAction("Index");
+        }
+        public ActionResult PrintYiwei()
+        {
+            return View();
         }
     }
 }

@@ -53,6 +53,10 @@
                 }
             });
         });
+        $("#bt_print").click(function () {
+            window.open("/wms_yiwei/PrintYiwei");
+        });
+
         $("#bt_fn_cancel").click(function () {
             LocClose();
         });
@@ -91,9 +95,15 @@
     if (_searchcondition == null || _searchcondition == "")
     {
         SearchConditionModel scm = new SearchConditionModel();
-        scm.ItemCode = "SHID";
-        scm.ItemTitle = "收货序号";
-        scm.ItemType = "System.Int32";
+        scm.ItemCode = "KWBH";
+        scm.ItemTitle = "历史库位";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "XKWBH";
+        scm.ItemTitle = "现库位";
+        scm.ItemType = "System.String";
         scms.Add(scm);
     }
     else
@@ -102,14 +112,26 @@
         if (scs.Length > 0)
         {
             SearchConditionModel scm = new SearchConditionModel();
-            scm.ItemCode = "SHID";
-            scm.ItemTitle = "收货序号";
-            scm.ItemType = "System.Int32";
+            scm.ItemCode = "KWBH";
+            scm.ItemTitle = "历史库位";
+            scm.ItemType = "System.String";
             if (scs.Length > 1)
             {
                 scm.ItemValue = scs[0].Split(',')[1];
                 scm.ItemOpValue = scs[0].Split(',')[2];
                 scm.ItemJion = scs[0].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "XKWBH";
+            scm.ItemTitle = "现库位";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[1].Split(',')[1];
+                scm.ItemOpValue = scs[1].Split(',')[2];
+                scm.ItemJion = scs[1].Split(',')[3];
             }
             scms.Add(scm);
         }
@@ -139,6 +161,7 @@
             <button type="button" class="btn btn-default " id="bt_locmove"><i class="icon-bookmark"></i>库位调整</button>
             <button type="button" class="btn btn-default " id="bt_stomove"><i class="icon-move"></i>存货移位</button>
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
+            <button type="button" class="btn btn-default " id="bt_print"><i class="icon-print"></i>打印</button>
         </p>
     </div>
     <div class="row">

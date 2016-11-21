@@ -60,10 +60,12 @@
         scms.Add(scm);
 
         scm = new SearchConditionModel();
-        scm.ItemCode = "Pihao";
-        scm.ItemTitle = "批号";
-        scm.ItemType = "System.String";
+        scm.ItemCode = "ShixiaoRQ";
+        scm.ItemTitle = "近效期";
+        scm.ItemType = "System.Int32";
         scms.Add(scm);
+
+
     }
     else
     {
@@ -143,6 +145,18 @@
                 scm.ItemValue = scs[5].Split(',')[1];
                 scm.ItemOpValue = scs[5].Split(',')[2];
                 scm.ItemJion = scs[5].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "ShixiaoRQ";
+            scm.ItemTitle = "近效期";
+            scm.ItemType = "System.Int32";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[6].Split(',')[1];
+                scm.ItemOpValue = scs[6].Split(',')[2];
+                scm.ItemJion = scs[6].Split(',')[3];
             }
             scms.Add(scm);
         }

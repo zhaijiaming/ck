@@ -428,6 +428,10 @@ namespace CKWMS.Controllers
             string pihao = Request["pihao"] ?? "";
             string pihaoequal = Request["pihaoequal"] ?? "";
             string pihaoand = Request["pihaoand"] ?? "";
+            //shixiaorq
+            string shixiaorq = Request["shixiaorq"] ?? "";
+            string shixiaorqequal = Request["shixiaorqequal"] ?? "";
+            string shixiaorqand = Request["shixiaorqand"] ?? "";
             Expression<Func<wms_storage_v, bool>> where = PredicateExtensionses.True<wms_storage_v>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -574,6 +578,35 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pihao", pihao, pihaoequal, pihaoand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pihao", "", pihaoequal, pihaoand);
+                //shixiaorq
+                if (!string.IsNullOrEmpty(shixiaorq))
+                {
+                    if (shixiaorqequal.Equals("="))
+                    {
+                        if (shixiaorqand.Equals("and"))
+                            where = where.And(p => p.ShixiaoRQ ==(DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1*int.Parse(shixiaorq)));// DateTime.Parse());
+                        else
+                            where = where.Or(p => p.ShixiaoRQ == (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));
+                    }
+                    if (shixiaorqequal.Equals(">"))
+                    {
+                        if (shixiaorqand.Equals("and"))
+                            where = where.And(p => p.ShixiaoRQ > (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));
+                        else
+                            where = where.Or(p => p.ShixiaoRQ > (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));
+                    }
+                    if (shixiaorqequal.Equals("<"))
+                    {
+                        if (shixiaorqand.Equals("and"))
+                            where = where.And(p => p.ShixiaoRQ < (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));
+                        else
+                            where = where.Or(p => p.ShixiaoRQ < (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));
+                    }
+                }
+                if (!string.IsNullOrEmpty(huozhuid))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shixiaorq", shixiaorq, shixiaorqequal, shixiaorqand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shixiaorq", "", shixiaorqequal, shixiaorqand);
 
                 searchconditionService.GetInstance().AddEntity(sc);
             }
@@ -719,6 +752,35 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pihao", pihao, pihaoequal, pihaoand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pihao", "", pihaoequal, pihaoand);
+                //shixiaorq
+                if (!string.IsNullOrEmpty(shixiaorq))
+                {
+                    if (shixiaorqequal.Equals("="))
+                    {
+                        if (shixiaorqand.Equals("and"))
+                            where = where.And(p => p.ShixiaoRQ == (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));// DateTime.Parse());
+                        else
+                            where = where.Or(p => p.ShixiaoRQ == (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));
+                    }
+                    if (shixiaorqequal.Equals(">"))
+                    {
+                        if (shixiaorqand.Equals("and"))
+                            where = where.And(p => p.ShixiaoRQ > (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));
+                        else
+                            where = where.Or(p => p.ShixiaoRQ > (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));
+                    }
+                    if (shixiaorqequal.Equals("<"))
+                    {
+                        if (shixiaorqand.Equals("and"))
+                            where = where.And(p => p.ShixiaoRQ < (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));
+                        else
+                            where = where.Or(p => p.ShixiaoRQ < (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));
+                    }
+                }
+                if (!string.IsNullOrEmpty(huozhuid))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shixiaorq", shixiaorq, shixiaorqequal, shixiaorqand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shixiaorq", "", shixiaorqequal, shixiaorqand);
 
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
@@ -881,6 +943,35 @@ namespace CKWMS.Controllers
                                         where = where.And(p => p.Pihao.Contains(pihao));
                                     else
                                         where = where.Or(p => p.Pihao.Contains(pihao));
+                                }
+                            }
+                            break;
+                        case "shixiaorq":
+                            string shixiaorq = scld[1];
+                            string shixiaorqequal = scld[2];
+                            string shixiaorqand = scld[3];
+                            if (!string.IsNullOrEmpty(shixiaorq))
+                            {
+                                if (shixiaorqequal.Equals("="))
+                                {
+                                    if (shixiaorqand.Equals("and"))
+                                        where = where.And(p => p.ShixiaoRQ == (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));// DateTime.Parse());
+                                    else
+                                        where = where.Or(p => p.ShixiaoRQ == (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));
+                                }
+                                if (shixiaorqequal.Equals(">"))
+                                {
+                                    if (shixiaorqand.Equals("and"))
+                                        where = where.And(p => p.ShixiaoRQ > (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));
+                                    else
+                                        where = where.Or(p => p.ShixiaoRQ > (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));
+                                }
+                                if (shixiaorqequal.Equals("<"))
+                                {
+                                    if (shixiaorqand.Equals("and"))
+                                        where = where.And(p => p.ShixiaoRQ < (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));
+                                    else
+                                        where = where.Or(p => p.ShixiaoRQ < (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));
                                 }
                             }
                             break;
