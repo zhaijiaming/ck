@@ -584,26 +584,26 @@ namespace CKWMS.Controllers
                     if (shixiaorqequal.Equals("="))
                     {
                         if (shixiaorqand.Equals("and"))
-                            where = where.And(p => p.ShixiaoRQ ==(DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1*int.Parse(shixiaorq)));// DateTime.Parse());
+                            where = where.And(p => p.ShixiaoRQ == DateTime.Now.AddDays(int.Parse(shixiaorq)));// DateTime.Parse());
                         else
-                            where = where.Or(p => p.ShixiaoRQ == (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));
+                            where = where.Or(p => p.ShixiaoRQ == DateTime.Now.AddDays(int.Parse(shixiaorq)));
                     }
                     if (shixiaorqequal.Equals(">"))
                     {
                         if (shixiaorqand.Equals("and"))
-                            where = where.And(p => p.ShixiaoRQ > (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));
+                            where = where.And(p => p.ShixiaoRQ > DateTime.Now.AddDays(int.Parse(shixiaorq)));
                         else
-                            where = where.Or(p => p.ShixiaoRQ > (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));
+                            where = where.Or(p => p.ShixiaoRQ > DateTime.Now.AddDays(int.Parse(shixiaorq)));
                     }
                     if (shixiaorqequal.Equals("<"))
                     {
                         if (shixiaorqand.Equals("and"))
-                            where = where.And(p => p.ShixiaoRQ < (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));
+                            where = where.And(p => p.ShixiaoRQ < DateTime.Now.AddDays(int.Parse(shixiaorq)));
                         else
-                            where = where.Or(p => p.ShixiaoRQ < (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));
+                            where = where.Or(p => p.ShixiaoRQ < DateTime.Now.AddDays(int.Parse(shixiaorq)));
                     }
                 }
-                if (!string.IsNullOrEmpty(huozhuid))
+                if (!string.IsNullOrEmpty(shixiaorq))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shixiaorq", shixiaorq, shixiaorqequal, shixiaorqand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shixiaorq", "", shixiaorqequal, shixiaorqand);
@@ -758,26 +758,26 @@ namespace CKWMS.Controllers
                     if (shixiaorqequal.Equals("="))
                     {
                         if (shixiaorqand.Equals("and"))
-                            where = where.And(p => p.ShixiaoRQ == (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));// DateTime.Parse());
+                            where = where.And(p => p.ShixiaoRQ == DateTime.Now.AddDays(int.Parse(shixiaorq)));// DateTime.Parse());
                         else
-                            where = where.Or(p => p.ShixiaoRQ == (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));
+                            where = where.Or(p => p.ShixiaoRQ == DateTime.Now.AddDays(int.Parse(shixiaorq)));
                     }
                     if (shixiaorqequal.Equals(">"))
                     {
                         if (shixiaorqand.Equals("and"))
-                            where = where.And(p => p.ShixiaoRQ > (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));
+                            where = where.And(p => p.ShixiaoRQ > DateTime.Now.AddDays(int.Parse(shixiaorq)));
                         else
-                            where = where.Or(p => p.ShixiaoRQ > (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));
+                            where = where.Or(p => p.ShixiaoRQ > DateTime.Now.AddDays(int.Parse(shixiaorq)));
                     }
                     if (shixiaorqequal.Equals("<"))
                     {
                         if (shixiaorqand.Equals("and"))
-                            where = where.And(p => p.ShixiaoRQ < (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));
+                            where = where.And(p => p.ShixiaoRQ < DateTime.Now.AddDays(int.Parse(shixiaorq)));
                         else
-                            where = where.Or(p => p.ShixiaoRQ < (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));
+                            where = where.Or(p => p.ShixiaoRQ < DateTime.Now.AddDays(int.Parse(shixiaorq)));
                     }
                 }
-                if (!string.IsNullOrEmpty(huozhuid))
+                if (!string.IsNullOrEmpty(shixiaorq))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shixiaorq", shixiaorq, shixiaorqequal, shixiaorqand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shixiaorq", "", shixiaorqequal, shixiaorqand);
@@ -955,23 +955,23 @@ namespace CKWMS.Controllers
                                 if (shixiaorqequal.Equals("="))
                                 {
                                     if (shixiaorqand.Equals("and"))
-                                        where = where.And(p => p.ShixiaoRQ == (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));// DateTime.Parse());
+                                        where = where.And(p => p.ShixiaoRQ ==DateTime.Now.AddDays(int.Parse(shixiaorq)));// DateTime.Parse());
                                     else
-                                        where = where.Or(p => p.ShixiaoRQ == (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));
+                                        where = where.Or(p => p.ShixiaoRQ == DateTime.Now.AddDays(int.Parse(shixiaorq)));
                                 }
                                 if (shixiaorqequal.Equals(">"))
                                 {
                                     if (shixiaorqand.Equals("and"))
-                                        where = where.And(p => p.ShixiaoRQ > (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));
+                                        where = where.And(p => p.ShixiaoRQ > DateTime.Now.AddDays(int.Parse(shixiaorq)));
                                     else
-                                        where = where.Or(p => p.ShixiaoRQ > (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));
+                                        where = where.Or(p => p.ShixiaoRQ > DateTime.Now.AddDays(int.Parse(shixiaorq)));
                                 }
                                 if (shixiaorqequal.Equals("<"))
                                 {
                                     if (shixiaorqand.Equals("and"))
-                                        where = where.And(p => p.ShixiaoRQ < (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));
+                                        where = where.And(p => p.ShixiaoRQ < DateTime.Now.AddDays(-1 * int.Parse(shixiaorq)));
                                     else
-                                        where = where.Or(p => p.ShixiaoRQ < (DateTime.Parse(p.ShixiaoRQ.ToString())).AddDays(-1 * int.Parse(shixiaorq)));
+                                        where = where.Or(p => p.ShixiaoRQ < DateTime.Now.AddDays(-1 * int.Parse(shixiaorq)));
                                 }
                             }
                             break;
