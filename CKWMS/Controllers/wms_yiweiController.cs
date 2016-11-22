@@ -991,6 +991,78 @@ namespace CKWMS.Controllers
         {
             return View();
         }
+        public ActionResult DisplaceExport()
+        {
+            int userid = (int)Session["user_id"];
+            string pagetag = "wms_yiwei_index";
+            Expression<Func<wms_yiwei, bool>> where = PredicateExtensionses.True<wms_yiwei>();
+            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            if (sc != null && sc.ConditionInfo != null)
+            {
+                string[] sclist = sc.ConditionInfo.Split(';');
+                foreach (string scl in sclist)
+                {
+                    string[] scld = scl.Split(',');
+                    switch (scld[0])
+                    {
+                        case "kwbh":
+                            string kwbh = scld[1];
+                            string kwbhequal = scld[2];
+                            string kwbhand = scld[3];
+                            if (!string.IsNullOrEmpty(kwbh))
+                            {
+                                if (kwbhequal.Equals("="))
+                                {
+                                    if (kwbhand.Equals("and"))
+                                        where = where.And(p => p.KWBH == kwbh);
+                                    else
+                                        where = where.Or(p => p.KWBH == kwbh);
+                                }
+                                if (kwbhequal.Equals("like"))
+                                {
+                                    if (kwbhand.Equals("and"))
+                                        where = where.And(p => p.KWBH.Contains(kwbh));
+                                    else
+                                        where = where.Or(p => p.KWBH.Contains(kwbh));
+                                }
+                            }
+                            break;
+                        case "xkwbh":
+                            string xkwbh = scld[1];
+                            string xkwbhequal = scld[2];
+                            string xkwbhand = scld[3];
+                            if (!string.IsNullOrEmpty(xkwbh))
+                            {
+                                if (xkwbhequal.Equals("="))
+                                {
+                                    if (xkwbhand.Equals("and"))
+                                        where = where.And(p => p.XKWBH == xkwbh);
+                                    else
+                                        where = where.Or(p => p.XKWBH == xkwbh);
+                                }
+                                if (xkwbhequal.Equals("like"))
+                                {
+                                    if (xkwbhand.Equals("and"))
+                                        where = where.And(p => p.XKWBH.Contains(xkwbh));
+                                    else
+                                        where = where.Or(p => p.XKWBH.Contains(xkwbh));
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                ViewBag.SearchCondition = sc.ConditionInfo;
+            }
+
+            where = where.And(wms_yiwei => wms_yiwei.IsDelete == false);
+
+            var tempData = ob_wms_yiweiservice.LoadSortEntities(where.Compile(), false, wms_yiwei => wms_yiwei.ID);
+            ViewBag.wms_yiwei = tempData;
+            string viewHtml = ExportNow.RenderPartialViewToString(this, "DisplaceExport");
+            return File(System.Text.Encoding.UTF8.GetBytes(viewHtml), "application/ms-excel", string.Format("DisplaceInformation_{0}.xls", DateTime.Now.ToShortDateString()));
+        }
     }
 }
 
