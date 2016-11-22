@@ -746,6 +746,7 @@ namespace CKWMS.App_Code
                             else
                                 svs = SelectItem_Auto(sc.ItemCode, myclassname, myclassitem, long.Parse(sc.ItemValue));
                             break;
+                        case "是否":
                         case "医疗器械管理类别":
                         case "首营状态":
                         case "入库状态":

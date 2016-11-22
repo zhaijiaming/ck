@@ -109,9 +109,9 @@ namespace CKWMS
             
             //是或否
             YesOrNo = new Dictionary<int, string>();
-            YesOrNo.Add(0, "");
+            YesOrNo.Add(-1, "");
             YesOrNo.Add(1, "是");
-            YesOrNo.Add(2, "否");
+            YesOrNo.Add(0, "否");
             //性别
             Sex = new Dictionary<int, string>();
             Sex.Add(0, "");
