@@ -6,19 +6,19 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>3.13915cm</Width>
+              <Width>2.8058cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>2.37428cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.99001cm</Width>
+              <Width>2.38609cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.98743cm</Width>
+              <Width>1.32078cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.05439cm</Width>
+              <Width>1.16611cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.22735cm</Width>
@@ -42,7 +42,7 @@
               <Width>0.8111cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.78023cm</Width>
+              <Width>1.27243cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.78021cm</Width>
@@ -3412,8 +3412,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox2</rd:DefaultName>
-          <Top>0.88222cm</Top>
-          <Left>0.36724cm</Left>
+          <Top>0.90784cm</Top>
+          <Left>0.92286cm</Left>
           <Height>0.6cm</Height>
           <Width>5.52448cm</Width>
           <ZIndex>1</ZIndex>
@@ -3453,8 +3453,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox2</rd:DefaultName>
-          <Top>1.48222cm</Top>
-          <Left>0.36724cm</Left>
+          <Top>1.50784cm</Top>
+          <Left>0.92286cm</Left>
           <Height>0.6cm</Height>
           <Width>7.83927cm</Width>
           <ZIndex>2</ZIndex>
@@ -3488,7 +3488,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox2</rd:DefaultName>
           <Top>0.88222cm</Top>
-          <Left>20.45357cm</Left>
+          <Left>21.40051cm</Left>
           <Height>0.6cm</Height>
           <Width>2.24833cm</Width>
           <ZIndex>3</ZIndex>
@@ -3522,7 +3522,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox14</rd:DefaultName>
           <Top>1.50784cm</Top>
-          <Left>20.45357cm</Left>
+          <Left>21.40051cm</Left>
           <Height>0.6cm</Height>
           <Width>2.00611cm</Width>
           <ZIndex>4</ZIndex>
@@ -3858,8 +3858,8 @@
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>ReportDataSetZY</rd:DataSetName>
-        <rd:SchemaPath>E:\lawliet\vs2015\git\CKWMS\CKWMS\reports\ReportDataSetZY.xsd</rd:SchemaPath>
-        <rd:TableName>RKYanshouDan</rd:TableName>
+        <rd:SchemaPath>C:\Users\lawli\Source\Repos\CKWMS\CKWMS\reports\ReportDataSetZY.xsd</rd:SchemaPath>
+        <rd:TableName>RKYanshouJilu</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
         <rd:TableAdapterName />
@@ -3875,22 +3875,6 @@
           <DataField>HuozhuID</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="RukuRQ">
-          <DataField>RukuRQ</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Yanshouren">
-          <DataField>Yanshouren</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MakeDate">
-          <DataField>MakeDate</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MakeMan">
-          <DataField>MakeMan</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="rkysjlSLs">
           <DataField>rkysjlSLs</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -3899,7 +3883,7 @@
       <rd:DataSetInfo>
         <rd:DataSetName>ReportDataSetZY</rd:DataSetName>
         <rd:SchemaPath>C:\Users\lawli\Source\Repos\CKWMS\CKWMS\reports\ReportDataSetZY.xsd</rd:SchemaPath>
-        <rd:TableName>RKYanshouDanTitle</rd:TableName>
+        <rd:TableName>RKYanshouJilu_Title</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
         <rd:TableAdapterName />

@@ -2062,10 +2062,6 @@
           <DataField>ShangpinMC</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Zhucezheng">
-          <DataField>Zhucezheng</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="Guige">
           <DataField>Guige</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -2080,22 +2076,6 @@
         </Field>
         <Field Name="Xuliema">
           <DataField>Xuliema</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ShengchanRQ">
-          <DataField>ShengchanRQ</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ShixiaoRQ">
-          <DataField>ShixiaoRQ</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Changjia">
-          <DataField>Changjia</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Chandi">
-          <DataField>Chandi</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Shuliang">
@@ -2118,7 +2098,7 @@
       <rd:DataSetInfo>
         <rd:DataSetName>ReportDataSetZY</rd:DataSetName>
         <rd:SchemaPath>C:\Users\lawli\Source\Repos\CKWMS\CKWMS\reports\ReportDataSetZY.xsd</rd:SchemaPath>
-        <rd:TableName>ShouHuoList</rd:TableName>
+        <rd:TableName>ShangJiaList</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
         <rd:TableAdapterName />
@@ -2146,18 +2126,6 @@
           <DataField>ChunyunYQ</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="GongyingshangID">
-          <DataField>GongyingshangID</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="CangkuID">
-          <DataField>CangkuID</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="rkmxdhSLs">
-          <DataField>rkmxdhSLs</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="sjlSLs">
           <DataField>sjlSLs</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -2166,7 +2134,7 @@
       <rd:DataSetInfo>
         <rd:DataSetName>ReportDataSetZY</rd:DataSetName>
         <rd:SchemaPath>C:\Users\lawli\Source\Repos\CKWMS\CKWMS\reports\ReportDataSetZY.xsd</rd:SchemaPath>
-        <rd:TableName>ShouHuoListTitle</rd:TableName>
+        <rd:TableName>ShangJiaList_Title</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
         <rd:TableAdapterName />
