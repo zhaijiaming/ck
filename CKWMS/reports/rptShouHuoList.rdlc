@@ -2968,7 +2968,7 @@
       <rd:DataSetInfo>
         <rd:DataSetName>ReportDataSetZY</rd:DataSetName>
         <rd:SchemaPath>C:\Users\lawli\Source\Repos\CKWMS\CKWMS\reports\ReportDataSetZY.xsd</rd:SchemaPath>
-        <rd:TableName>ShouHuoList</rd:TableName>
+        <rd:TableName>RuKuXiangDan</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
         <rd:TableAdapterName />
@@ -2996,22 +2996,6 @@
           <DataField>ChunyunYQ</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="GongyingshangID">
-          <DataField>GongyingshangID</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="CangkuID">
-          <DataField>CangkuID</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="rkmxdhSLs">
-          <DataField>rkmxdhSLs</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="sjlSLs">
-          <DataField>sjlSLs</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="rkxdSLs">
           <DataField>rkxdSLs</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -3020,7 +3004,7 @@
       <rd:DataSetInfo>
         <rd:DataSetName>ReportDataSetZY</rd:DataSetName>
         <rd:SchemaPath>C:\Users\lawli\Source\Repos\CKWMS\CKWMS\reports\ReportDataSetZY.xsd</rd:SchemaPath>
-        <rd:TableName>ShouHuoListTitle</rd:TableName>
+        <rd:TableName>RuKuXiangDan_Title</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
         <rd:TableAdapterName />
