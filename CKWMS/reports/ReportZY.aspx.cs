@@ -482,10 +482,10 @@ namespace CKWMS.reports
                             {
                                 drRuKuMX = dtRuKuMX.NewRow();
                                 //drRuKuMX["ShangpinMC"] = _pr.ShangpinMC;
-                                drRuKuMX["Zhucezheng"] = _pr.Zhucezheng;
                                 drRuKuMX["Guige"] = _pr.Guige;
                                 drRuKuMX["Pihao"] = _pr.Pihao;
-                                drRuKuMX["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShengchanRQ);
+                                drRuKuMX["Zhucezheng"] = _pr.Zhucezheng;
+                                //drRuKuMX["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShengchanRQ);
                                 drRuKuMX["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShixiaoRQ);
                                 drRuKuMX["DaohuoSL"] = _pr.DaohuoSL;
                                 //drRuKuMX["Chandi"] = _pr.Chandi;
@@ -495,7 +495,7 @@ namespace CKWMS.reports
                             }
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["RuKumingxi"]));
 
-                            DataTable dtRuKuMX_others = _rds.Tables["ShouHuoListTitle"];
+                            DataTable dtRuKuMX_others = _rds.Tables["RuKumingxi_Title"];
                             DataRow drRuKuMX_others = dtRuKuMX_others.NewRow();
                             wms_rukudan RuKuMX_others = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_rkmxid));
                             base_weituokehu wtkhRuKuMX_others = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == RuKuMX_others.HuozhuID);
@@ -510,7 +510,7 @@ namespace CKWMS.reports
                             drRuKuMX_others["rkmxdhSLs"] = rkmx_DaohuoSLs;
 
                             dtRuKuMX_others.Rows.Add(drRuKuMX_others);
-                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["ShouHuoListTitle"]));
+                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["RuKumingxi_Title"]));
                             break;
                         case "zlgl_RukuYanshouBaogao":
                             rptView.Reset();

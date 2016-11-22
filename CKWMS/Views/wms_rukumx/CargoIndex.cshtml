@@ -17,6 +17,7 @@
                 location.href = url_go;
             }
         });
+        //收货记录单打印
         $("#bt_print").click(function () {
             var rkmxid = $("#rkid").val();
             window.open("/wms_rukumx/PrintRuKuMX?rkmxid=" + rkmxid);

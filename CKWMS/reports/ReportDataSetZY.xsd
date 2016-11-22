@@ -307,6 +307,19 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="RuKumingxi_Title" msprop:Generator_TableClassName="RuKumingxi_TitleDataTable" msprop:Generator_TableVarName="tableRuKumingxi_Title" msprop:Generator_RowChangedName="RuKumingxi_TitleRowChanged" msprop:Generator_TablePropName="RuKumingxi_Title" msprop:Generator_RowDeletingName="RuKumingxi_TitleRowDeleting" msprop:Generator_RowChangingName="RuKumingxi_TitleRowChanging" msprop:Generator_RowEvHandlerName="RuKumingxi_TitleRowChangeEventHandler" msprop:Generator_RowDeletedName="RuKumingxi_TitleRowDeleted" msprop:Generator_RowClassName="RuKumingxi_TitleRow" msprop:Generator_UserTableName="RuKumingxi_Title" msprop:Generator_RowEvArgName="RuKumingxi_TitleRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="RukudanBH" msprop:Generator_ColumnVarNameInTable="columnRukudanBH" msprop:Generator_ColumnPropNameInRow="RukudanBH" msprop:Generator_ColumnPropNameInTable="RukudanBHColumn" msprop:Generator_UserColumnName="RukudanBH" type="xs:string" minOccurs="0" />
+              <xs:element name="HuozhuID" msprop:Generator_ColumnVarNameInTable="columnHuozhuID" msprop:Generator_ColumnPropNameInRow="HuozhuID" msprop:Generator_ColumnPropNameInTable="HuozhuIDColumn" msprop:Generator_UserColumnName="HuozhuID" type="xs:string" minOccurs="0" />
+              <xs:element name="RukuRQ" msprop:Generator_ColumnVarNameInTable="columnRukuRQ" msprop:Generator_ColumnPropNameInRow="RukuRQ" msprop:Generator_ColumnPropNameInTable="RukuRQColumn" msprop:Generator_UserColumnName="RukuRQ" type="xs:string" minOccurs="0" />
+              <xs:element name="ChunyunYQ" msprop:Generator_ColumnVarNameInTable="columnChunyunYQ" msprop:Generator_ColumnPropNameInRow="ChunyunYQ" msprop:Generator_ColumnPropNameInTable="ChunyunYQColumn" msprop:Generator_UserColumnName="ChunyunYQ" type="xs:string" minOccurs="0" />
+              <xs:element name="GongyingshangID" msprop:Generator_ColumnVarNameInTable="columnGongyingshangID" msprop:Generator_ColumnPropNameInRow="GongyingshangID" msprop:Generator_ColumnPropNameInTable="GongyingshangIDColumn" msprop:Generator_UserColumnName="GongyingshangID" type="xs:string" minOccurs="0" />
+              <xs:element name="CangkuID" msprop:Generator_ColumnVarNameInTable="columnCangkuID" msprop:Generator_ColumnPropNameInRow="CangkuID" msprop:Generator_ColumnPropNameInTable="CangkuIDColumn" msprop:Generator_UserColumnName="CangkuID" type="xs:string" minOccurs="0" />
+              <xs:element name="rkmxdhSLs" msprop:Generator_ColumnVarNameInTable="columnrkmxdhSLs" msprop:Generator_ColumnPropNameInRow="rkmxdhSLs" msprop:Generator_ColumnPropNameInTable="rkmxdhSLsColumn" msprop:Generator_UserColumnName="rkmxdhSLs" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
       </xs:choice>
     </xs:complexType>
   </xs:element>

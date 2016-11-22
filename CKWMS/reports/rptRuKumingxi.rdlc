@@ -1462,7 +1462,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox60</rd:DefaultName>
           <Top>0.91667cm</Top>
-          <Left>0.92291cm</Left>
+          <Left>0.92292cm</Left>
           <Height>0.6cm</Height>
           <Width>8.215cm</Width>
           <ZIndex>1</ZIndex>
@@ -1580,7 +1580,7 @@
                   <Value>=First(Fields!ChunyunYQ.Value, "DataSet2")</Value>
                   <Style>
                     <FontFamily>宋体</FontFamily>
-                    <FontSize>9pt</FontSize>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1636,7 +1636,7 @@
           <Top>1.56076cm</Top>
           <Left>20.2375cm</Left>
           <Height>0.6cm</Height>
-          <Width>5.96604cm</Width>
+          <Width>6.68042cm</Width>
           <ZIndex>5</ZIndex>
           <Style>
             <Border>
@@ -2136,7 +2136,7 @@
       <rd:DataSetInfo>
         <rd:DataSetName>ReportDataSetZY</rd:DataSetName>
         <rd:SchemaPath>C:\Users\lawli\Source\Repos\CKWMS\CKWMS\reports\ReportDataSetZY.xsd</rd:SchemaPath>
-        <rd:TableName>ShouHuoListTitle</rd:TableName>
+        <rd:TableName>RuKumingxi_Title</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
         <rd:TableAdapterName />
