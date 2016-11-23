@@ -123,6 +123,7 @@ namespace CKWMS.reports
                             {
                                 drtx = dttx.NewRow();
                                 drtx["Guige"] = _mx.Guige;
+                                drtx["Changjia"] = _mx.Changjia;
                                 drtx["ShangpinMC"] = _mx.ShangpinMC;
                                 drtx["Pihao"] = _mx.Pihao;
                                 drtx["Xuliema"] = _mx.Xuliema;
@@ -130,12 +131,12 @@ namespace CKWMS.reports
                                 drtx["Zhucezheng"] = _mx.Zhucezheng;
                                 drtx["ChukuSL"] = _mx.ChukuSL;
                                 drtx["JibenDW"] = _mx.JibenDW;
-                                drtx["Changjia"] = _mx.Changjia;
+                                wms_chukudan _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid));
+                                drtx["ChunyunYQ"] = _ckd.ChunyunYQ;
                                 base_shengchanqiye _scqy = ServiceFactory.base_shengchanqiyeservice.GetEntityById(p => p.Qiyemingcheng == _mx.Changjia);
                                 drtx["ShengchanxukeBH"] = _scqy.ShengchanxukeBH;
                                 drtx["BeianBH"] = _scqy.BeianBH;
-                                wms_chukudan _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid));
-                                drtx["ChunyunYQ"] = _ckd.ChunyunYQ;
+                                drtx["Beizhu"] = _ckd.Beizhu;
                                 tx_ChukuSL += (long)_mx.ChukuSL;
                                 dttx.Rows.Add(drtx);
                             }

@@ -3155,22 +3155,6 @@
           <DataField>KehuMC</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="jhddjSLs">
-          <DataField>jhddjSLs</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ckfhbgjhSLs">
-          <DataField>ckfhbgjhSLs</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ckfhbgfhSLs">
-          <DataField>ckfhbgfhSLs</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ckfhjyjhSLs">
-          <DataField>ckfhjyjhSLs</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="txckSLs">
           <DataField>txckSLs</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -3179,7 +3163,7 @@
       <rd:DataSetInfo>
         <rd:DataSetName>ReportDataSetZY</rd:DataSetName>
         <rd:SchemaPath>C:\Users\lawli\Source\Repos\CKWMS\CKWMS\reports\ReportDataSetZY.xsd</rd:SchemaPath>
-        <rd:TableName>ChuKuDan</rd:TableName>
+        <rd:TableName>TongXingDan_Title</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
         <rd:TableAdapterName />
