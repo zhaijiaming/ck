@@ -80,36 +80,35 @@ namespace CKWMS.reports
                             {
                                 drjhd = dtjhd.NewRow();
                                 drjhd["Mingcheng"] = _pv.ShangpinMC;
-                                drjhd["Shuliang"] = _pv.DaijianSL;
+                                drjhd["DaijianSL"] = _pv.DaijianSL;
+                                drjhd["Huansuanlv"] = _pv.Huansuanlv;
                                 drjhd["ShixiaoRQ"] = string.Format("{0:yyyy-MM-dd}", _pv.ShixiaoRQ);
                                 drjhd["Guige"] = _pv.Guige;
                                 drjhd["Pihao"] = _pv.Pihao;
                                 drjhd["Kuwei"] = _pv.Kuwei;
-                                drjhd["ShijianSL"] = _pv.ShijianSL;
-                                drjhd["Fuhe"] = _pv.Fuhe;
                                 drjhd["Zhucezheng"] = _pv.Zhucezheng;
-                                drjhd["ShengchanRQ"] = string.Format("{0:yyyy-MM-dd}", _pv.ShengchanRQ);
-                                drjhd["Changjia"] = _pv.Changjia;
                                 jhd_DaijianSLs += (long)_pv.DaijianSL;
+
                                 dtjhd.Rows.Add(drjhd);
                             }
                             drjhd = dtjhd.NewRow();
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["JianHuoDan"]));
 
                             wms_chukudan tempdata = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid));
-                            DataTable dtjhdt = _rds.Tables["ChuKuDan"];
+                            DataTable dtjhdt = _rds.Tables["JianHuoDan_Title"];
                             DataRow drjhdt = dtjhdt.NewRow();
                             drjhdt["Yunsongdizhi"] = tempdata.Yunsongdizhi;
                             drjhdt["ChukuRQ"] = string.Format("{0:yyyy-MM-dd}", tempdata.ChukuRQ);
                             drjhdt["ChukudanBH"] = tempdata.ChukudanBH;
                             drjhdt["Lianxiren"] = tempdata.Lianxiren;
                             drjhdt["LianxiDH"] = tempdata.LianxiDH;
+                            drjhdt["Beizhu"] = tempdata.Beizhu;
                             drjhdt["jhddjSLs"] = jhd_DaijianSLs;
                             base_weituokehu wtkhdata = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == tempdata.HuozhuID);
                             drjhdt["HuozhuID"] = wtkhdata.Kehumingcheng;
                             drjhdt["KehuMC"] = tempdata.KehuMC;
                             dtjhdt.Rows.Add(drjhdt);
-                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["ChuKuDan"]));
+                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["JianHuoDan_Title"]));
                             break;
                         case "tongxingdan":
                             rptView.Reset();
