@@ -2,8 +2,9 @@
 @using CKWMS.Models
 @{
     ViewBag.Title = "扫描入库列表";
+    Layout = "~/Views/Shared/EmptyView.cshtml";
 }
-<h2>扫描入库</h2>
+<h2>扫描入库<a href="/wms_scanhome"><i class="icon-home pull-right"></i></a></h2>
 <div style="width:360px;height:300px;overflow:auto">
     <div class="row">
         <table class="table table-condensed table-hover" id="mydatatable">

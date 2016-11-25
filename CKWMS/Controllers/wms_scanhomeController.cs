@@ -13,5 +13,9 @@ namespace CKWMS.Controllers
         {
             return View();
         }
+        public ActionResult LocMov()
+        {
+            return View();
+        }
     }
 }

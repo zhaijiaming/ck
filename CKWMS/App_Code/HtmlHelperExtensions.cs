@@ -541,6 +541,12 @@ namespace CKWMS.App_Code
                 case "帐表查询":
                     icon = "icon-book";
                     break;
+                case "强生对接":
+                    icon = "icon-gears";
+                    break;
+                case "仓库扫描":
+                    icon = "icon-barcode";
+                    break;
                 case "系统管理":
                     icon = "icon-magic";
                     break;

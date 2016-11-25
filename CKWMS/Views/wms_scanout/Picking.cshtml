@@ -4,21 +4,101 @@
 
 @{
     ViewBag.Title = "拣货库位";
+    Layout = "~/Views/Shared/EmptyView.cshtml";
 }
+<script type="text/javascript">
+    $(document).ready(function () {
+        //$("#dt_cargo tbody").on("click", "tr", function () {
+        //    $("#pl_cargo").hide();
+        //    $("#pl_info").show();
+        //});
+        $("#dt_loc tbody").on("click", "tr", function () {
+            var _kw = $(this).find("input");
+            $("#pl_loc").hide();
+            $("#pl_cargo").show();
+            $("#txkuwei").val(_kw.val());
+            GetLocCargo();
+        });
+        $("#bt_kw").click(function () {
+            $("#pl_cargo").hide();
+            $("#pl_loc").show();
+        });
+        $("#bt_pick").click(function () {
+            if($("#xlm").val()=="" && $("#pihao").val()=="")
+            {
+                alert("必须先扫描货品，再下架");
+                return;
+            }
+            $.post("/wms_scanout/pickdown",
+                {
+                    ck:$("#ckid").val(),
+                    loc:$("#txkuwei").val(),
+                    ph:$("#pihao").val(),
+                    xl:$("#xlm").val(),
+                    sl:$("#num").val()
+                }
+            , function (data) {
+                if (data == -1)
+                    alert("拣货数据传送失败！");
+                else
+                    GetLocCargo();
+            });
+        });
+        $("#bt_gokw").click(function () {
+            $("#pl_loc").hide();
+            $("#pl_cargo").show();
+            GetLocCargo();
+        });
+    });
+    function GetLocCargo() {
+        $.post("/wms_scanout/getlocationcargo",
+            {
+                ck: $("#ckid").val(),
+                loc: $("#txkuwei").val()
+            }, function (data) {
+                var filltable = "";
+                if (data == -1)
+                    alert("数据参数传输错误！");
+                else {
+                    for (var i in data) {
+                        filltable = filltable + '<tr><td><input type="hidden" value="';
+                        filltable = filltable + data[i].ID;
+                        filltable = filltable + '"/>';
+                        filltable = filltable + data[i].Guige;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].Pihao;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].Xuliema;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].DaijianSL;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].ShijianSL;
+                        filltable = filltable + '</td></tr>';
+                    }
+                }
+                $("#dt_cargo tbody").html(filltable);
+            });
+
+    }
+</script>
 
 @*<h2>Picking</h2>*@
-<div style="width:360px;height:300px;overflow:hidden">
+<div style="width:360px;height:300px;overflow:auto;">
     <input type="hidden" id="ckid" name="ckid" value="@ViewBag.ckid" />
     <div class="page-header">
         <p>出库编号：@ViewBag.ckbh</p>
         <p>
             <button type="button" id="bt_save" class="btn btn-default"><i class="icon-save"></i>保存</button>
             <button type="button" id="bt_ok" class="btn btn-default"><i class="icon-ok"></i>完成</button>
-            <button type="button" class="btn btn-default" onclick="javascript:location.href='/wms_scanin/index'; "><i class="icon-hand-left"></i>返回</button>
+            <button type="button" id="bt_kw" class="btn btn-default"><i class="icon-location-arrow"></i>库位</button>
+            <button type="button" class="btn btn-default" onclick="javascript:location.href='/wms_scanout'; "><i class="icon-hand-left"></i>返回</button>
         </p>
     </div>
-    <div id="pl_loc" class="row">
-        <p><input type="text" id="txkuwei"/></p>
+    <div id="pl_loc" class="page-content">
+        <p>
+            <input type="text" id="txkuwei"/>
+            <button type="button" id="bt_gokw"><icon class="icon-eye-open"></icon>查看</button>
+        </p>
         <table class="table table-condensed table-hover" id="dt_loc">
             <caption></caption>
             <thead>
@@ -44,8 +124,29 @@
             </tbody>
         </table>
     </div>
-    <div id="pl_cargo" class="row" style="width:360px;height:260px;overflow:auto;display:none;">
-        <table class="table" id="dt_cargo">
+    <div id="pl_cargo" class="page-content" style="display:none;">
+        <div class="row">
+            <div class="form-group">
+                <label class="col-sm-4">批号</label>
+                <div class="col-sm-8">
+                    <input class="form-control" type="text" name="pihao" id="pihao" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4">序列</label>
+                <div class="col-sm-8">
+                    <input class="form-control" type="text" name="xlm" id="xlm" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4">数量</label>
+                <div class="col-sm-8">
+                    <input class="form-control" type="text" name="num" id="num" />
+                </div>
+            </div>
+            <p class="btn" id="bt_pick"><i class="icon-caret-down"></i>下架</p>
+        </div>
+        <table class="table table-condensed table-hover" id="dt_cargo">
             <caption></caption>
             <thead>
                 <tr>
@@ -53,17 +154,21 @@
                     <td>批号</td>
                     <td>序列号</td>
                     <td>待拣</td>
+                    <td>下架</td>
                 </tr>
             </thead>
             <tbody>
                     <tr>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
             </tbody>
         </table>
+    </div>
+    <div id="pl_info" class="row" style="overflow:auto;display:none;">
 
     </div>
 </div>

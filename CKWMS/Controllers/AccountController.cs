@@ -74,7 +74,7 @@ namespace CKWMS.Controllers
             {
                 return View(model);
             }
-
+            var smallscreen = Request["smallscreen"] ?? "";
             // 这不会计入到为执行帐户锁定而统计的登录失败次数中
             // 若要在多次输入错误密码的情况下触发帐户锁定，请更改为 shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
@@ -94,7 +94,10 @@ namespace CKWMS.Controllers
                         Session["user_id"] = ui.ID;
                         Session["user_name"] = ui.FullName;
                         log4net.LogManager.GetLogger(ui.ID.ToString()).Info(string.Format("{0} login at {1}!", ui.FullName, DateTime.Now.ToString()));
-                        return RedirectToLocal(returnUrl);
+                        if (smallscreen == "1")
+                            return RedirectToLocal("/wms_scanhome");
+                        else
+                            return RedirectToLocal(returnUrl);
                     }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
