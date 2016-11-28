@@ -82,16 +82,18 @@
     }
 </script>
 
+<div style="width:300px;overflow:auto">
 @*<h2>Picking</h2>*@
-<div style="width:360px;height:300px;overflow:auto;">
     <input type="hidden" id="ckid" name="ckid" value="@ViewBag.ckid" />
     <div class="page-header">
         <p>出库编号：@ViewBag.ckbh</p>
         <p>
-            <button type="button" id="bt_save" class="btn btn-default"><i class="icon-save"></i>保存</button>
             <button type="button" id="bt_ok" class="btn btn-default"><i class="icon-ok"></i>完成</button>
-            <button type="button" id="bt_kw" class="btn btn-default"><i class="icon-location-arrow"></i>库位</button>
             <button type="button" class="btn btn-default" onclick="javascript:location.href='/wms_scanout'; "><i class="icon-hand-left"></i>返回</button>
+        </p>
+        <p>
+            <button type="button" id="bt_save" class="btn btn-default"><i class="icon-save"></i>保存</button>
+            <button type="button" id="bt_kw" class="btn btn-default"><i class="icon-location-arrow"></i>库位</button>
         </p>
     </div>
     <div id="pl_loc" class="page-content">
