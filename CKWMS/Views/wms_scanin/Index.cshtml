@@ -2,10 +2,10 @@
 @using CKWMS.Models
 @{
     ViewBag.Title = "扫描入库列表";
-    Layout = "~/Views/Shared/EmptyView.cshtml";
+    Layout = "~/Views/Shared/WinCEView.cshtml";
 }
-<div style="width:300px;overflow:auto">
-    <h2>扫描入库<a href="/wms_scanhome"><i class="icon-home pull-right"></i></a></h2>
+<div>
+    <h2>扫描入库<a href="/wms_scanhome">Home</a></h2>
     <div class="row">
         <table class="table table-condensed table-hover" id="mydatatable">
             <caption></caption>
@@ -32,9 +32,9 @@
                         <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
                         <td>@Html.GetDataValue_ID("供应商","",(int)item.GongyingshangID)</td>
                         <td>@string.Format("{0:d}", item.RukuRQ)</td>
-                        <td><a href="/wms_scanin/recieving/?rkd=@item.ID"><i class="icon-hand-up"></i></a></td>
-                        <td><a href="/wms_scanin/entrycheck/?rkd=@item.ID"><i class="icon-check"></i></a></td>
-                        <td><a href="/wms_scanin/uploadcargo/?rkd=@item.ID"><i class="icon-shopping-cart"></i></a></td>
+                        <td><a href="/wms_scanin/recieving/?rkd=@item.ID">收</a></td>
+                        <td><a href="/wms_scanin/entrycheck/?rkd=@item.ID">验</a></td>
+                        <td><a href="/wms_scanin/uploadcargo/?rkd=@item.ID">架</a></td>
                     </tr>
                 }
             </tbody>

@@ -908,6 +908,7 @@
     <Content Include="Views\wms_yiwei\PrintYiwei.cshtml" />
     <Content Include="Views\wms_yiwei\DisplaceExport.cshtml" />
     <Content Include="Views\wms_scanhome\LocMov.cshtml" />
+    <Content Include="Views\Shared\WinCEView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

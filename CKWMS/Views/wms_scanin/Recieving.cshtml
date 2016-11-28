@@ -2,7 +2,7 @@
 @using CKWMS.Models
 @{
     ViewBag.Title = "收货";
-    Layout = "~/Views/Shared/EmptyView.cshtml";
+    Layout = "~/Views/Shared/WinCEView.cshtml";
 }
 <script type="text/javascript">
     $(document).ready(function () {
@@ -18,7 +18,7 @@
         });
     });
 </script>
-<div style="width:300px;overflow:auto">
+<div>
 @*<h2>收货</h2>*@
     <div class="page-content">
         @using (Html.BeginForm("SaveRecieve", "wms_scanin", FormMethod.Post, new { @role = "form" }))
