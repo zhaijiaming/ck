@@ -643,23 +643,169 @@ namespace CKWMS.reports
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["zlgl_CKFHBG_Title"]));
                             break;
                         case "shangpinxx_shouying":
+                            int userid = (int)Session["user_id"];
+                            string pagetag = "base_shangpinxx_index";
+                            Expression<Func<base_shangpin_v, bool>> where = PredicateExtensionses.True<base_shangpin_v>();
+                            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+                            if (sc != null)
+                            {
+                                string[] sclist = sc.ConditionInfo.Split(';');
+                                foreach (string scl in sclist)
+                                {
+                                    string[] scld = scl.Split(',');
+                                    switch (scld[0])
+                                    {
+                                        case "huozhuid":
+                                            string huozhuid = scld[1];
+                                            string huozhuidequal = scld[2];
+                                            string huozhuidand = scld[3];
+                                            if (!string.IsNullOrEmpty(huozhuid))
+                                            {
+                                                if (huozhuidequal.Equals("="))
+                                                {
+                                                    if (huozhuidand.Equals("and"))
+                                                        where = where.And(base_shangpin_v => base_shangpin_v.huozhuid == int.Parse(huozhuid));
+                                                    else
+                                                        where = where.Or(base_shangpin_v => base_shangpin_v.huozhuid == int.Parse(huozhuid));
+                                                }
+                                            }
+                                            break;
+                                        case "daima":
+                                            string daima = scld[1];
+                                            string daimaequal = scld[2];
+                                            string daimaand = scld[3];
+                                            if (!string.IsNullOrEmpty(daima))
+                                            {
+                                                if (daimaequal.Equals("="))
+                                                {
+                                                    if (daimaand.Equals("and"))
+                                                        where = where.And(base_shangpin_v => base_shangpin_v.daima == daima);
+                                                    else
+                                                        where = where.Or(base_shangpin_v => base_shangpin_v.daima == daima);
+                                                }
+                                                if (daimaequal.Equals("like"))
+                                                {
+                                                    if (daimaand.Equals("and"))
+                                                        where = where.And(base_shangpin_v => base_shangpin_v.daima.Contains(daima));
+                                                    else
+                                                        where = where.Or(base_shangpin_v => base_shangpin_v.daima.Contains(daima));
+                                                }
+                                            }
+                                            break;
+                                        case "mingcheng":
+                                            string mingcheng = scld[1];
+                                            string mingchengequal = scld[2];
+                                            string mingchengand = scld[3];
+                                            if (!string.IsNullOrEmpty(mingcheng))
+                                            {
+                                                if (mingchengequal.Equals("="))
+                                                {
+                                                    if (mingchengand.Equals("and"))
+                                                        where = where.And(base_shangpin_v => base_shangpin_v.mingcheng == mingcheng);
+                                                    else
+                                                        where = where.Or(base_shangpin_v => base_shangpin_v.mingcheng == mingcheng);
+                                                }
+                                                if (mingchengequal.Equals("like"))
+                                                {
+                                                    if (mingchengand.Equals("and"))
+                                                        where = where.And(base_shangpin_v => base_shangpin_v.mingcheng.Contains(mingcheng));
+                                                    else
+                                                        where = where.Or(base_shangpin_v => base_shangpin_v.mingcheng.Contains(mingcheng));
+                                                }
+                                            }
+                                            break;
+                                        case "zhucezhengbh":
+                                            string zhucezhengbh = scld[1];
+                                            string zhucezhengbhequal = scld[2];
+                                            string zhucezhengbhand = scld[3];
+                                            if (!string.IsNullOrEmpty(zhucezhengbh))
+                                            {
+                                                if (zhucezhengbhequal.Equals("="))
+                                                {
+                                                    if (zhucezhengbhand.Equals("and"))
+                                                        where = where.And(p => p.ZhucezhengBH == zhucezhengbh);
+                                                    else
+                                                        where = where.Or(p => p.ZhucezhengBH == zhucezhengbh);
+                                                }
+                                                if (zhucezhengbhequal.Equals("like"))
+                                                {
+                                                    if (zhucezhengbhand.Equals("and"))
+                                                        where = where.And(p => p.ZhucezhengBH.Contains(zhucezhengbh));
+                                                    else
+                                                        where = where.Or(p => p.ZhucezhengBH.Contains(zhucezhengbh));
+                                                }
+                                            }
+                                            break;
+                                        case "shouying":
+                                            string shouying = scld[1];
+                                            string shouyingequal = scld[2];
+                                            string shouyingand = scld[3];
+                                            if (shouying == "0")
+                                            {
+                                                shouying = "";
+                                            }
+                                            if (!string.IsNullOrEmpty(shouying))
+                                            {
+                                                if (shouyingequal.Equals("="))
+                                                {
+                                                    if (shouyingand.Equals("and"))
+                                                        where = where.And(p => p.Shouying == int.Parse(shouying));
+                                                    else
+                                                        where = where.Or(p => p.Shouying == int.Parse(shouying));
+                                                }
+                                            }
+                                            break;
+                                        case "shenchasf":
+                                            string shenchasf = scld[1];
+                                            string shenchasfequal = scld[2];
+                                            string shenchasfand = scld[3];
+                                            if (shenchasf == "1")
+                                            {
+                                                shenchasf = "true";
+                                            }
+                                            else if (shenchasf == "0")
+                                            {
+                                                shenchasf = "false";
+                                            }
+                                            else if (shenchasf == "-1")
+                                            {
+                                                shenchasf = "";
+                                            }
+                                            if (!string.IsNullOrEmpty(shenchasf))
+                                            {
+                                                if (shenchasfequal.Equals("="))
+                                                {
+                                                    if (shenchasfand.Equals("and"))
+                                                        where = where.And(p => p.ShenchaSF == bool.Parse(shenchasf));
+                                                    else
+                                                        where = where.Or(p => p.ShenchaSF == bool.Parse(shenchasf));
+                                                }
+                                            }
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                            }
+                            where = where.And(base_shangpin_v => base_shangpin_v.IsDelete == false);
+                            var _spxxs = ServiceFactory.base_shangpinxxservice.LoadShangpinAll(where.Compile()).ToList<base_shangpin_v>();
+
                             rptView.Reset();
                             rptView.LocalReport.ReportPath = "reports/rptSpxx_shouying.rdlc";
                             rptView.LocalReport.DataSources.Clear();
                             DataTable dtspxx = _rds.Tables["Spxx_shouying"];
                             DataRow drspxx;
-                            var _spxxs = ServiceFactory.base_shangpinxxservice.LoadSortEntities(p => p.HuozhuID == int.Parse(_spxx_huozhuid) && p.IsDelete == false && p.Shouying == 5, false, p => p.HuozhuID);
-                            foreach (base_shangpinxx _pr in _spxxs)
+                            foreach (base_shangpin_v _pr in _spxxs)
                             {
                                 drspxx = dtspxx.NewRow();
                                 //base_shangpinxx
                                 drspxx["ZhucezhengBH"] = _pr.ZhucezhengBH;
-                                drspxx["Daima"] = _pr.Daima;
+                                drspxx["Daima"] = _pr.daima;
                                 drspxx["Guige"] = _pr.Guige;
-                                drspxx["Chandi"] = _pr.Chandi;
+                                drspxx["Chandi"] = _pr.chandi;
+                                drspxx["Mingcheng"] = _pr.mingcheng;
                                 //base_shangpinzcz
                                 var _spzczs = ServiceFactory.base_shangpinzczservice.GetEntityById(p => p.Bianhao == _pr.ZhucezhengBH && p.IsDelete == false);
-                                drspxx["Mingcheng"] = _spzczs.Mingcheng;
                                 drspxx["ZhucezhengYXQ"] = string.Format("{0:yyyy-MM-dd}", _spzczs.ZhucezhengYXQ);
                                 dtspxx.Rows.Add(drspxx);
                             }
@@ -667,8 +813,9 @@ namespace CKWMS.reports
 
                             DataTable dtspxx_others = _rds.Tables["Spxx_shouying_Title"];
                             DataRow drspxx_others = dtspxx_others.NewRow();
+                            var first_spxx = _spxxs.FirstOrDefault();
                             //base_gongyingshang
-                            var spxx_wtkh = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == int.Parse(_spxx_huozhuid) && p.IsDelete == false);
+                            var spxx_wtkh = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == first_spxx.huozhuid && p.IsDelete == false);
                             drspxx_others["Kehumingcheng"] = spxx_wtkh.Kehumingcheng;
                             drspxx_others["YingyezhizhaoBH"] = spxx_wtkh.YingyezhizhaoBH;
                             drspxx_others["YingyezhizhaoYXQ"] = string.Format("{0:yyyy-MM-dd}", spxx_wtkh.YingyezhizhaoYXQ);
@@ -683,13 +830,13 @@ namespace CKWMS.reports
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["Spxx_shouying_Title"]));
                             break;
                         case "YiweiInfo":
-                            int userid = (int)Session["user_id"];
-                            string pagetag = "wms_yiwei_index";
-                            Expression<Func<wms_yiwei, bool>> where = PredicateExtensionses.True<wms_yiwei>();
-                            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
-                            if (sc != null && sc.ConditionInfo != null)
+                            int yw_userid = (int)Session["user_id"];
+                            string yw_pagetag = "wms_yiwei_index";
+                            Expression<Func<wms_yiwei, bool>> yw_where = PredicateExtensionses.True<wms_yiwei>();
+                            searchcondition yw_sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == yw_userid && searchcondition.PageBrief == yw_pagetag);
+                            if (yw_sc != null && yw_sc.ConditionInfo != null)
                             {
-                                string[] sclist = sc.ConditionInfo.Split(';');
+                                string[] sclist = yw_sc.ConditionInfo.Split(';');
                                 foreach (string scl in sclist)
                                 {
                                     string[] scld = scl.Split(',');
@@ -704,16 +851,16 @@ namespace CKWMS.reports
                                                 if (kwbhequal.Equals("="))
                                                 {
                                                     if (kwbhand.Equals("and"))
-                                                        where = where.And(p => p.KWBH == kwbh);
+                                                        yw_where = yw_where.And(p => p.KWBH == kwbh);
                                                     else
-                                                        where = where.Or(p => p.KWBH == kwbh);
+                                                        yw_where = yw_where.Or(p => p.KWBH == kwbh);
                                                 }
                                                 if (kwbhequal.Equals("like"))
                                                 {
                                                     if (kwbhand.Equals("and"))
-                                                        where = where.And(p => p.KWBH.Contains(kwbh));
+                                                        yw_where = yw_where.And(p => p.KWBH.Contains(kwbh));
                                                     else
-                                                        where = where.Or(p => p.KWBH.Contains(kwbh));
+                                                        yw_where = yw_where.Or(p => p.KWBH.Contains(kwbh));
                                                 }
                                             }
                                             break;
@@ -726,16 +873,16 @@ namespace CKWMS.reports
                                                 if (xkwbhequal.Equals("="))
                                                 {
                                                     if (xkwbhand.Equals("and"))
-                                                        where = where.And(p => p.XKWBH == xkwbh);
+                                                        yw_where = yw_where.And(p => p.XKWBH == xkwbh);
                                                     else
-                                                        where = where.Or(p => p.XKWBH == xkwbh);
+                                                        yw_where = yw_where.Or(p => p.XKWBH == xkwbh);
                                                 }
                                                 if (xkwbhequal.Equals("like"))
                                                 {
                                                     if (xkwbhand.Equals("and"))
-                                                        where = where.And(p => p.XKWBH.Contains(xkwbh));
+                                                        yw_where = yw_where.And(p => p.XKWBH.Contains(xkwbh));
                                                     else
-                                                        where = where.Or(p => p.XKWBH.Contains(xkwbh));
+                                                        yw_where = yw_where.Or(p => p.XKWBH.Contains(xkwbh));
                                                 }
                                             }
                                             break;
@@ -745,9 +892,9 @@ namespace CKWMS.reports
                                 }
                             }
 
-                            where = where.And(wms_yiwei => wms_yiwei.IsDelete == false);
+                            yw_where = yw_where.And(wms_yiwei => wms_yiwei.IsDelete == false);
 
-                            var rptYiweiInfos = ServiceFactory.wms_yiweiservice.LoadSortEntities(where.Compile(), false, wms_yiwei => wms_yiwei.ID);
+                            var rptYiweiInfos = ServiceFactory.wms_yiweiservice.LoadSortEntities(yw_where.Compile(), false, wms_yiwei => wms_yiwei.ID);
                             rptView.Reset();
                             rptView.LocalReport.ReportPath = "reports/rptYiweiInfo.rdlc";
                             rptView.LocalReport.DataSources.Clear();

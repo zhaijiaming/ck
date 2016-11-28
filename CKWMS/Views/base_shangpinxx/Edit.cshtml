@@ -215,8 +215,10 @@
         //'审查'赋值
         var shenchasf = "@Model.ShenchaSF";
         if (shenchasf == "True") {
-            $("#shenchasf").prop("checked", "true");
+            $("#shenchasf").attr("checked", true);
+            $("#shenchasf").val("true");
         } else {
+            $("#shenchasf").attr("checked", false);
             $("#shenchasf").val("false");
         }
         //更新提交

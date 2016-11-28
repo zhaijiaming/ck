@@ -16,7 +16,7 @@
             }
         });
         $("#pl_fun").draggable({ handle: '.tuodong' }, { containment: [-1000, 50, 1300, 600] });
-        $("#pl_imp").draggable({ handle: ".panel-heading" },{ containment: [-1000, 50, 1300, 600] });
+        $("#pl_imp").draggable({ handle: ".panel-heading" }, { containment: [-1000, 50, 1300, 600] });
         $("#bt_cancel").click(function () {
             $("#pl_imp").hide();
         });
@@ -26,7 +26,7 @@
         $("#bt_ok").click(function () {
             var _info = $("#tximp").val();
             var _hz = $("#huozhuid").val();
-            var _gys=$("#gongyingid").val();
+            var _gys = $("#gongyingid").val();
             if (_info == "")
                 alert("导入数据为空，不能导入！");
             else {
@@ -42,8 +42,8 @@
                     url: "/base_shangpinxx/briefimport",
                     data: {
                         hz: _hz,
-                        gys:_gys,
-                        sp:_info
+                        gys: _gys,
+                        sp: _info
                     },
                     success: function (data) {
                         if (data == -1)
@@ -75,17 +75,29 @@
         });
         //‘首营品种审批记录’报表打印
         $("#bt_print").click(function () {
-            $("#pl_fun").show();
-            $("#spxx_huozhuid").val("");
-            $("#Yes_print").click(function () {
-                var spxx_huozhuid = $("#spxx_huozhuid").val();
-                if (spxx_huozhuid != null && spxx_huozhuid !="") {
-                    window.open("/base_shangpinxx/PrintSpxx?spxx_huozhuid=" + spxx_huozhuid);
-                    $("#pl_fun").hide();
-                } else {
-                    alert("请选择货主^_^！");
-                }
-            });
+            var search_huozhuid = $(".modal-content #HuozhuID option:selected").text();
+            var search_shouying = $(".modal-content #Shouying option:selected").text();
+            var search_shenchasf = $(".modal-content #ShenchaSF option:selected").text();
+            if (search_huozhuid != "" && search_shouying != "" && search_shenchasf != "") {
+                window.open("/base_shangpinxx/PrintSpxx");
+            } else if (search_huozhuid == "") {
+                alert("请选择货主！");
+            } else if (search_shouying == "") {
+                alert("请选择首营状态！");
+            } else if (search_shenchasf == "") {
+                alert("请选择是否审查！");
+            }
+            //$("#pl_fun").show();
+            //$("#spxx_huozhuid").val("");
+            //$("#Yes_print").click(function () {
+            //    var spxx_huozhuid = $("#spxx_huozhuid").val();
+            //    if (spxx_huozhuid != null && spxx_huozhuid !="") {
+            //window.open("/base_shangpinxx/PrintSpxx");
+            //    $("#pl_fun").hide();
+            //} else {
+            //    alert("请选择货主^_^！");
+            //}
+            //});
         });
         $("#pl_fn_close").click(function () {
             $("#pl_fun").hide();
@@ -145,6 +157,13 @@
         scm.ItemCode = "Shouying";
         scm.ItemTitle = "首营状态";
         scm.ItemType = "首营状态.首营状态";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "ShenchaSF";
+        scm.ItemShowName = "shenchasf";
+        scm.ItemTitle = "是否审查";
+        scm.ItemType = "是否.是否";
         scms.Add(scm);
     }
     else
@@ -218,6 +237,31 @@
                 }
                 scm.ItemOpValue = scs[3].Split(',')[2];
                 scm.ItemJion = scs[3].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "ShenchaSF";
+            scm.ItemShowName = "shenchasf";
+            scm.ItemTitle = "是否审查";
+            scm.ItemType = "是否.是否";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[5].Split(',')[1];
+                if (scm.ItemValue.Length == 0)
+                {
+                    scm.ItemValue = "-1";
+                }
+                if (scm.ItemValue == "false")
+                {
+                    scm.ItemValue = "0";
+                }
+                if (scm.ItemValue == "true")
+                {
+                    scm.ItemValue = "1";
+                }
+                scm.ItemOpValue = scs[5].Split(',')[2];
+                scm.ItemJion = scs[5].Split(',')[3];
             }
             scms.Add(scm);
         }
@@ -298,7 +342,7 @@
                             <td>@item.cpxmingcheng</td>
                             @*<td>@Html.GetDataValue_ID("分类目录","",(int)item.Muluxuhao)</td>*@
                             <td>@item.mlmingcheng</td>
-                            <td>@Html.GetCommonValue_ID("医疗器械管理类别", (int)(item.guanlifenlei==null?0:item.guanlifenlei))</td>
+                            <td>@Html.GetCommonValue_ID("医疗器械管理类别", (int)(item.guanlifenlei == null ? 0 : item.guanlifenlei))</td>
                             <td>@item.baozhuangyaoqiu</td>
                             <td>@item.Cunchutiaojian</td>
                             <td>@item.Qiyemingcheng</td>
@@ -342,20 +386,20 @@
         </div>
     </div>
 </div>
-<div id="pl_fun" class="panel panel-primary" style="display:none;position:fixed;top:200px;left:300px;overflow:auto;z-index:999;">
-    <div class="panel-heading tuodong">
-        <h3 class="panel-title">打印选项<button id="pl_fn_close" class="pull-right">X</button></h3>
-    </div>
-    <div class="panel-body">
-        <div class="row">
-            <div class="form-group">
-                <div class="col-sm-8">
-                    @Html.SelectList_Auto("spxx_huozhuid", "货主", "名称")
-                </div>
-                <div class="col-sm-4">
-                    <input type="button" class="form-control btn btn-default" id="Yes_print" value="打印" />
+@*<div id="pl_fun" class="panel panel-primary" style="display:none;position:fixed;top:200px;left:300px;overflow:auto;z-index:999;">
+        <div class="panel-heading tuodong">
+            <h3 class="panel-title">打印选项<button id="pl_fn_close" class="pull-right">X</button></h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-sm-8">
+                        @Html.SelectList_Auto("spxx_huozhuid", "货主", "名称")
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="button" class="form-control btn btn-default" id="Yes_print" value="打印" />
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </div>*@

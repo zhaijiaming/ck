@@ -119,24 +119,45 @@ namespace CKWMS.Controllers
                             string shouying = scld[1];
                             string shouyingequal = scld[2];
                             string shouyingand = scld[3];
+                            if (shouying == "0")
+                            {
+                                shouying = "";
+                            }
                             if (!string.IsNullOrEmpty(shouying))
                             {
-                                if (shouying == "0")
+                                if (shouyingequal.Equals("="))
                                 {
-                                    if (shouyingequal.Equals("="))
-                                    {
+                                    if (shouyingand.Equals("and"))
+                                        where = where.And(p => p.Shouying == int.Parse(shouying));
+                                    else
                                         where = where.Or(p => p.Shouying == int.Parse(shouying));
-                                    }
                                 }
-                                else
+                            }
+                            break;
+                        case "shenchasf":
+                            string shenchasf = scld[1];
+                            string shenchasfequal = scld[2];
+                            string shenchasfand = scld[3];
+                            if (shenchasf == "1")
+                            {
+                                shenchasf = "true";
+                            }
+                            else if (shenchasf == "0")
+                            {
+                                shenchasf = "false";
+                            }
+                            else if (shenchasf == "-1")
+                            {
+                                shenchasf = "";
+                            }
+                            if (!string.IsNullOrEmpty(shenchasf))
+                            {
+                                if (shenchasfequal.Equals("="))
                                 {
-                                    if (shouyingequal.Equals("="))
-                                    {
-                                        if (shouyingand.Equals("and"))
-                                            where = where.And(p => p.Shouying == int.Parse(shouying));
-                                        else
-                                            where = where.Or(p => p.Shouying == int.Parse(shouying));
-                                    }
+                                    if (shenchasfand.Equals("and"))
+                                        where = where.And(p => p.ShenchaSF == bool.Parse(shenchasf));
+                                    else
+                                        where = where.Or(p => p.ShenchaSF == bool.Parse(shenchasf));
                                 }
                             }
                             break;
@@ -161,15 +182,15 @@ namespace CKWMS.Controllers
             int userid = (int)Session["user_id"];
             string pagetag = "base_shangpinxx_index";
             string page = "1";
-            //货主
+            //huozhuid
             string huozhuid = Request["huozhuid"] ?? "";
             string huozhuidequal = Request["huozhuidequal"] ?? "";
             string huozhuidand = Request["huozhuidand"] ?? "";
-            //商品代码
+            //daima
             string daima = Request["daima"] ?? "";
             string daimaequal = Request["daimaequal"] ?? "";
             string daimaand = Request["daimaand"] ?? "";
-            //商品名称
+            //mingcheng
             string mingcheng = Request["mingcheng"] ?? "";
             string mingchengequal = Request["mingchengequal"] ?? "";
             string mingchengand = Request["mingchengand"] ?? "";
@@ -177,11 +198,30 @@ namespace CKWMS.Controllers
             string shouying = Request["shouying"] ?? "";
             string shouyingequal = Request["shouyingequal"] ?? "";
             string shouyingand = Request["shouyingand"] ?? "";
+            if (shouying == "0")
+            {
+                shouying = "";
+            }
             //zhucezhengbh
             string zhucezhengbh = Request["zhucezhengbh"] ?? "";
             string zhucezhengbhequal = Request["zhucezhengbhequal"] ?? "";
             string zhucezhengbhand = Request["zhucezhengbhand"] ?? "";
-
+            //shenchasf
+            string shenchasf = Request["shenchasf"] ?? "";
+            string shenchasfequal = Request["shenchasfequal"] ?? "";
+            string shenchasfand = Request["shenchasfand"] ?? "";
+            if (shenchasf == "1")
+            {
+                shenchasf = "true";
+            }
+            else if (shenchasf == "0")
+            {
+                shenchasf = "false";
+            }
+            else if (shenchasf == "-1")
+            {
+                shenchasf = "";
+            }
             Expression<Func<base_shangpin_v, bool>> where = PredicateExtensionses.True<base_shangpin_v>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -189,7 +229,7 @@ namespace CKWMS.Controllers
                 sc = new searchcondition();
                 sc.UserID = userid;
                 sc.PageBrief = pagetag;
-                //货主
+                //huozhuid
                 if (!string.IsNullOrEmpty(huozhuid))
                 {
                     if (huozhuidequal.Equals("="))
@@ -204,7 +244,7 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", huozhuid, huozhuidequal, huozhuidand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", "", huozhuidequal, huozhuidand);
-                //商品代码
+                //daima
                 if (!string.IsNullOrEmpty(daima))
                 {
                     if (daimaequal.Equals("="))
@@ -226,7 +266,7 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "daima", daima, daimaequal, daimaand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "daima", "", daimaequal, daimaand);
-                //商品名称
+                //mingcheng
                 if (!string.IsNullOrEmpty(mingcheng))
                 {
                     if (mingchengequal.Equals("="))
@@ -251,22 +291,12 @@ namespace CKWMS.Controllers
                 //shouying
                 if (!string.IsNullOrEmpty(shouying))
                 {
-                    if (shouying=="0")
+                    if (shouyingequal.Equals("="))
                     {
-                        if (shouyingequal.Equals("="))
-                        {
-                          where = where.Or(p => p.Shouying == int.Parse(shouying));
-                        }
-                    }
-                    else
-                    {
-                        if (shouyingequal.Equals("="))
-                        {
-                            if (shouyingand.Equals("and"))
-                                where = where.And(p => p.Shouying == int.Parse(shouying));
-                            else
-                                where = where.Or(p => p.Shouying == int.Parse(shouying));
-                        }
+                        if (shouyingand.Equals("and"))
+                            where = where.And(p => p.Shouying == int.Parse(shouying));
+                        else
+                            where = where.Or(p => p.Shouying == int.Parse(shouying));
                     }
                 }
                 if (!string.IsNullOrEmpty(shouying))
@@ -295,13 +325,17 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "zhucezhengbh", zhucezhengbh, zhucezhengbhequal, zhucezhengbhand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "zhucezhengbh", "", zhucezhengbhequal, zhucezhengbhand);
-
+                //shenchasf
+                if (!string.IsNullOrEmpty(shenchasf))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shenchasf", shenchasf, shenchasfequal, shenchasfand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shenchasf", "", shenchasfequal, shenchasfand);
                 searchconditionService.GetInstance().AddEntity(sc);
             }
             else
             {
                 sc.ConditionInfo = "";
-                //货主
+                //huozhuid
                 if (!string.IsNullOrEmpty(huozhuid))
                 {
                     if (huozhuidequal.Equals("="))
@@ -316,7 +350,7 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", huozhuid, huozhuidequal, huozhuidand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", "", huozhuidequal, huozhuidand);
-                //商品代码
+                //daima
                 if (!string.IsNullOrEmpty(daima))
                 {
                     if (daimaequal.Equals("="))
@@ -338,7 +372,7 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "daima", daima, daimaequal, daimaand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "daima", "", daimaequal, daimaand);
-                //商品名称
+                //mingcheng
                 if (!string.IsNullOrEmpty(mingcheng))
                 {
                     if (mingchengequal.Equals("="))
@@ -363,22 +397,12 @@ namespace CKWMS.Controllers
                 //shouying
                 if (!string.IsNullOrEmpty(shouying))
                 {
-                    if (shouying == "0")
+                    if (shouyingequal.Equals("="))
                     {
-                        if (shouyingequal.Equals("="))
-                        {
+                        if (shouyingand.Equals("and"))
+                            where = where.And(p => p.Shouying == int.Parse(shouying));
+                        else
                             where = where.Or(p => p.Shouying == int.Parse(shouying));
-                        }
-                    }
-                    else
-                    {
-                        if (shouyingequal.Equals("="))
-                        {
-                            if (shouyingand.Equals("and"))
-                                where = where.And(p => p.Shouying == int.Parse(shouying));
-                            else
-                                where = where.Or(p => p.Shouying == int.Parse(shouying));
-                        }
                     }
                 }
                 if (!string.IsNullOrEmpty(shouying))
@@ -407,9 +431,39 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "zhucezhengbh", zhucezhengbh, zhucezhengbhequal, zhucezhengbhand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "zhucezhengbh", "", zhucezhengbhequal, zhucezhengbhand);
-
+                //shenchasf
+                if (!string.IsNullOrEmpty(shenchasf))
+                {
+                    if (shenchasfequal.Equals("="))
+                    {
+                        if (shenchasfand.Equals("and"))
+                            where = where.And(p => p.ShenchaSF == bool.Parse(shenchasf));
+                        else
+                            where = where.Or(p => p.ShenchaSF == bool.Parse(shenchasf));
+                    }
+                }
+                if (!string.IsNullOrEmpty(shenchasf))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shenchasf", shenchasf, shenchasfequal, shenchasfand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shenchasf", "", shenchasfequal, shenchasfand);
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
+            //var _scinfo = sc.ConditionInfo;
+            //var _schead = _scinfo.Substring(0, _scinfo.IndexOf("shenchasf"));
+            //var _sctail = _scinfo.Substring(_scinfo.IndexOf("shenchasf"));
+            //string _boolhead = "";
+            //string _booltail = "";
+            //if (_sctail.IndexOf("true") > 0)
+            //{
+            //    _boolhead = _sctail.Substring(0, _sctail.IndexOf("true"));
+            //    _booltail = "1" + _sctail.Substring(_sctail.IndexOf("true") + 4);
+            //}
+            //if (_sctail.IndexOf("false") > 0)
+            //{
+            //    _boolhead = _sctail.Substring(0, _sctail.IndexOf("false"));
+            //    _booltail = "0" + _sctail.Substring(_sctail.IndexOf("false") + 5);
+            //}
+            //var _newscinfo = _schead + _boolhead + _booltail;
             ViewBag.SearchCondition = sc.ConditionInfo;
             where = where.And(base_shangpin_v => base_shangpin_v.IsDelete == false);
 
@@ -524,7 +578,7 @@ namespace CKWMS.Controllers
                     var _zcz = _sp[0];
                     var _spmc = _sp[1];
                     var _gg = _sp[2];
-                    base_shangpinxx _shangpin = ob_base_shangpinxxservice.GetEntityById(p => p.HuozhuID == int.Parse(_hz) && p.Guige == _gg.Trim() && p.Mingcheng ==_spmc.Trim() && p.IsDelete == false);
+                    base_shangpinxx _shangpin = ob_base_shangpinxxservice.GetEntityById(p => p.HuozhuID == int.Parse(_hz) && p.Guige == _gg.Trim() && p.Mingcheng == _spmc.Trim() && p.IsDelete == false);
                     if (_shangpin == null)
                     {
                         _shangpin = new base_shangpinxx();
@@ -758,9 +812,12 @@ namespace CKWMS.Controllers
             string ShangpinMS = Request["ShangpinMS"] ?? "";
             if (shenchasf.IndexOf("true") > -1)
                 shenchasf = "true";
+            else
+                shenchasf = "false";
             if (jingyinsf.IndexOf("true") > -1)
                 jingyinsf = "true";
-
+            else
+                jingyinsf = "false";
             int uid = int.Parse(id);
             try
             {
@@ -962,8 +1019,8 @@ namespace CKWMS.Controllers
         }
         public ActionResult PrintSpxx()
         {
-            var spxx_huozhuid = Request["spxx_huozhuid"] ?? "";
-            ViewBag.spxx_huozhuid = spxx_huozhuid;
+            //var spxx_huozhuid = Request["spxx_huozhuid"] ?? "";
+            //ViewBag.spxx_huozhuid = spxx_huozhuid;
             return View();
         }
         public JsonResult MuluCheck()

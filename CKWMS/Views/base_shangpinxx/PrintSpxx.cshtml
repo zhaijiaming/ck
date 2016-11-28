@@ -4,13 +4,12 @@
 }
 <script type="text/javascript">
     $(window).load(function () {
-        var spxx_huozhuid = $("#spxx_huozhuid").val();
-        document.getElementById("myReport").src = "../../reports/ReportZY.aspx?pid=shangpinxx_shouying&spxx_huozhuid=" + spxx_huozhuid;
+        document.getElementById("myReport").src = "../../reports/ReportZY.aspx?pid=shangpinxx_shouying";
         $("#autoUpdate").show();
     });
 </script>
 <div id="autoUpdate" style="display:none; overflow-y: auto;background-color:white">
-    <input type="hidden" id="spxx_huozhuid" value="@ViewBag.spxx_huozhuid" />
+    @*<input type="hidden" id="spxx_huozhuid" value="@ViewBag.spxx_huozhuid" />*@
     <table style="height:100%;width:100%">
         <tr>
             <td></td>
@@ -18,6 +17,3 @@
         <tr><td class="center"><iframe id="myReport" style="width:740px;height:800px;"></iframe></td></tr>
     </table>
 </div>
-
-
-
