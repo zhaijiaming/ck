@@ -5,15 +5,15 @@
     Layout = "~/Views/Shared/EmptyView.cshtml";
 }
 <script type="text/javascript">
-    $(document).ready(function () {
-        var thisOS = navigator.platform;
-        var os = new Array("iPhone", "iPod", "iPad", "android", "Nokia", "SymbianOS", "Symbian", "Windows Phone", "Phone", "Linux armv71", "MAUI", "UNTRUSTED/1.0", "Windows CE", "BlackBerry", "IEMobile");
-        for (var i = 0; i < os.length; i++) {
-            if (thisOS.match(os[i])) {
-                $("#smallscreen").val("1");
-            }
-        }
-    });
+    //$(document).ready(function () {
+    //    var thisOS = navigator.platform;
+    //    var os = new Array("iPhone", "iPod", "iPad", "android", "Nokia", "SymbianOS", "Symbian", "Windows Phone", "Phone", "Linux armv71", "MAUI", "UNTRUSTED/1.0", "Windows CE", "BlackBerry", "IEMobile");
+    //    for (var i = 0; i < os.length; i++) {
+    //        if (thisOS.match(os[i])) {
+    //            $("#smallscreen").val("1");
+    //        }
+    //    }
+    //});
 </script>
 <div class="row">
     <div class="col-sm-1"></div>
@@ -30,7 +30,7 @@
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                 @Html.AntiForgeryToken()
-                <input type="hidden" name="smallscreen" id="smallscreen" value="0"/>
+                @*<input type="hidden" name="smallscreen" id="smallscreen" value="0"/>*@
                 @*<h4>使用本地帐户登录。</h4>*@
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">

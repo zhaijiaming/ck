@@ -81,18 +81,20 @@
         });
     });
 </script>
+<div style="width:300px;overflow:auto">
 @*<h2>上架</h2>*@
-<div style="width:360px;height:300px;overflow:auto">
     <div class="page-content">
         <input type="hidden" name="rkid" value="@ViewBag.rkd" />
         <input type="hidden" name="rkzt" value="@ViewBag.rkzt" />
         <div class="page-header">
             <p>入库编号：@ViewBag.rkbh</p>
             <p>
-                <button type="button" id="bt_save" class="btn btn-default"><i class="icon-save"></i>保存</button>
-                <button type="button" class="btn btn-default" onclick="javascript:location.href='/wms_scanin/index'; "><i class="icon-hand-left"></i>返回</button>
-                <button type="button" id="bt_kw" class="btn btn-default"><i class="icon-location-arrow"></i>库位</button>
                 <button type="button" id="bt_ok" class="btn btn-default"><i class="icon-ok"></i>完成</button>
+                <button type="button" class="btn btn-default" onclick="javascript:location.href='/wms_scanin/index'; "><i class="icon-hand-left"></i>返回</button>
+            </p>
+            <p>
+                <button type="button" id="bt_save" class="btn btn-default"><i class="icon-save"></i>保存</button>
+                <button type="button" id="bt_kw" class="btn btn-default"><i class="icon-location-arrow"></i>库位</button>
             </p>
         </div>
         <div class="container">
