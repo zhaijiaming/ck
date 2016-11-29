@@ -18,10 +18,10 @@
               <Width>2.3809cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.6852cm</Width>
+              <Width>2.42062cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.32588cm</Width>
+              <Width>1.59047cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>3.53507cm</Width>
@@ -326,7 +326,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>总数量</Value>
+                              <Value>上架数量</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
                                 <FontSize>8pt</FontSize>

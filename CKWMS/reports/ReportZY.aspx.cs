@@ -401,11 +401,13 @@ namespace CKWMS.reports
                                 drshlist["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _sh.ShixiaoRQ);
                                 drshlist["Changjia"] = _sh.Changjia;
                                 drshlist["Chandi"] = _sh.Chandi;
-                                drshlist["Shuliang"] = _sh.Shuliang;
+                                if (_sh.sshuliang == null)
+                                    _sh.sshuliang = 0;
+                                drshlist["Shuliang"] = _sh.sshuliang;
                                 drshlist["Kuwei"] = _sh.Kuwei;
                                 drshlist["CunhuoSM"] = _sh.CunhuoSM;
                                 drshlist["MakeDate"] = string.Format("{0:yyyy/MM/dd}", _sh.MakeDate);
-                                rkxd_Shuliangs += (long)_sh.Shuliang;
+                                rkxd_Shuliangs += (long)_sh.sshuliang;
 
                                 dtshlist.Rows.Add(drshlist);
                             }
@@ -440,11 +442,13 @@ namespace CKWMS.reports
                                 drsjlist["Pihao"] = _sh.Pihao;
                                 drsjlist["Pihao1"] = _sh.Pihao1;
                                 drsjlist["Xuliema"] = _sh.Xuliema;
-                                drsjlist["Shuliang"] = _sh.Shuliang;
+                                if (_sh.sshuliang == null)
+                                    _sh.sshuliang = 0;
+                                drsjlist["Shuliang"] = _sh.sshuliang;
                                 drsjlist["Kuwei"] = _sh.Kuwei;
                                 drsjlist["CunhuoSM"] = _sh.CunhuoSM;
                                 drsjlist["MakeDate"] = string.Format("{0:yyyy/MM/dd}", _sh.MakeDate);
-                                sjl_sshuliangs += (long)_sh.Shuliang;
+                                sjl_sshuliangs += (long)_sh.sshuliang;
 
                                 dtsjlist.Rows.Add(drsjlist);
                             }
