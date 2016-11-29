@@ -142,7 +142,7 @@ namespace CKWMS.Controllers
                             {
                                 shenchasf = "true";
                             }
-                            else if (shenchasf == "0")
+                            else if (shenchasf == "2")
                             {
                                 shenchasf = "false";
                             }
@@ -214,7 +214,7 @@ namespace CKWMS.Controllers
             {
                 shenchasf = "true";
             }
-            else if (shenchasf == "0")
+            else if (shenchasf == "2")
             {
                 shenchasf = "false";
             }
@@ -461,7 +461,12 @@ namespace CKWMS.Controllers
             //if (_sctail.IndexOf("false") > 0)
             //{
             //    _boolhead = _sctail.Substring(0, _sctail.IndexOf("false"));
-            //    _booltail = "0" + _sctail.Substring(_sctail.IndexOf("false") + 5);
+            //    _booltail = "2" + _sctail.Substring(_sctail.IndexOf("false") + 5);
+            //}
+            //if (_sctail.IndexOf("")+1 > 0)
+            //{
+            //    _boolhead = _sctail.Substring(0, (_sctail.IndexOf("shenchasf") +10));
+            //    _booltail = "-1" + _sctail.Substring(_sctail.IndexOf("shenchasf")+10);
             //}
             //var _newscinfo = _schead + _boolhead + _booltail;
             ViewBag.SearchCondition = sc.ConditionInfo;
