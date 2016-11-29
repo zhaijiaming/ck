@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using CKWMS.EFModels;
 using CKWMS.BSL;
 using CKWMS.Models;
+using CKWMS.Common;
 namespace CKWMS.Controllers
 {
     public class wms_scanoutController : Controller
@@ -17,6 +18,37 @@ namespace CKWMS.Controllers
             var tempData = ServiceFactory.wms_chukudanservice.LoadSortEntities(p => p.IsDelete == false && p.JihuaZT < 5, false, s => s.ChukuRQ);
             ViewBag.wms_chukudan = tempData;
             return View(tempData);
+        }
+        public JsonResult PickFinish()
+        {
+            int _userid = (int)Session["user_id"];
+            var _ckid = Request["ck"] ?? "";
+            if (string.IsNullOrEmpty(_ckid))
+                return Json(-2);
+            bool pickok = true;
+            var _jhmx = ServiceFactory.wms_jianhuoservice.GetPickDetail(int.Parse(_ckid)).ToList<wms_pick_v>();
+            if (_jhmx != null)
+            {
+                foreach(var jh in _jhmx)
+                {
+                    if(jh.DaijianSL!=jh.ShijianSL)
+                    {
+                        pickok = false;
+                        break;
+                    }
+                }
+                if (!pickok)
+                    return Json(-1);
+            }
+            else
+                return Json(-2);
+            var _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_ckid));
+            if (_ckd == null)
+                return Json(-2);
+            _ckd.JihuaZT = 2;
+            if (!ServiceFactory.wms_chukudanservice.UpdateEntity(_ckd))
+                return Json(-2);
+            return Json(1);
         }
         public JsonResult PickDown()
         {
@@ -45,10 +77,12 @@ namespace CKWMS.Controllers
             List<wms_pick_v> _cargo = null;
             if (!string.IsNullOrEmpty(_ph))
             {
+                _ph =BarcodeRead.BatchCode(_ph.Trim());
                 _cargo = _cargoloc.Where(p => p.Pihao == _ph.Trim()).ToList<wms_pick_v>();
             }
             if (!string.IsNullOrEmpty(_xl))
             {
+                _xl = BarcodeRead.SerialNumber(_xl.Trim());
                 _cargo = _cargoloc.Where(p => p.Xuliema == _xl.Trim()).ToList<wms_pick_v>();
             }
             if (_cargo == null)

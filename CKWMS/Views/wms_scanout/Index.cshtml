@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/WinCEView.cshtml";
 }
 <div>
-    <h2>扫描出库<a href="/wms_scanhome">Home</a></h2>
+    <h2><a href="/wms_scanhome">Home</a>/扫描出库</h2>
     <div class="row">
         <table class="table table-condensed table-hover" id="mydatatable">
             <caption></caption>
@@ -17,7 +17,6 @@
                     <td>客户</td>
                     <td>出库日期</td>
                     <td>拣货</td>
-                    <td>复核</td>
                 </tr>
             </thead>
             <tbody>
@@ -32,7 +31,6 @@
                         <td>@item.KehuMC</td>
                         <td>@string.Format("{0:d}", item.ChukuRQ)</td>
                         <td><a href="/wms_scanout/picking/?ckd=@item.ID">拣</a></td>
-                        <td><a href="/wms_scanout/outcheck/?ckd=@item.ID">核</a></td>
                     </tr>
                 }
             </tbody>

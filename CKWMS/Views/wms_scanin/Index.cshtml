@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/WinCEView.cshtml";
 }
 <div>
-    <h2>扫描入库<a href="/wms_scanhome">Home</a></h2>
+    <h2><a href="/wms_scanhome">Home</a>/扫描入库</h2>
     <div class="row">
         <table class="table table-condensed table-hover" id="mydatatable">
             <caption></caption>
@@ -17,7 +17,6 @@
                     <td>供应商</td>
                     <td>入库日期</td>
                     <td>收货</td>
-                    <td>验收</td>
                     <td>上架</td>
                 </tr>
             </thead>
@@ -33,7 +32,6 @@
                         <td>@Html.GetDataValue_ID("供应商","",(int)item.GongyingshangID)</td>
                         <td>@string.Format("{0:d}", item.RukuRQ)</td>
                         <td><a href="/wms_scanin/recieving/?rkd=@item.ID">收</a></td>
-                        <td><a href="/wms_scanin/entrycheck/?rkd=@item.ID">验</a></td>
                         <td><a href="/wms_scanin/uploadcargo/?rkd=@item.ID">架</a></td>
                     </tr>
                 }

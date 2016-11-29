@@ -21,7 +21,7 @@
         });
         $("#bt_ok").click(function () {
             $.post("/wms_scanin/uploadok", {
-                rk: $("rkid").val()
+                rk: $("#rkid").val()
             }, function (data) {
                 if (data == -1)
                     alert("所有货品完成上架后，才能结束入库上架！");
@@ -55,9 +55,6 @@
                     xlm3: $("#xlm3").val(),
                     xlnum3: $("#xlnum3").val(),
                 }, function (data) {
-                    if (data == 1) {
-                        alert("上架成功！");
-                    }
                     if (data == -1)
                         alert("空库位不能上架，请重新操作！");
                     if (data == -2)
@@ -77,6 +74,10 @@
                     $("#xlnum2").val("");
                     $("#xlm3").val("");
                     $("#xlnum3").val("");
+                    $("#pl_kw").show();
+                    $("#pl_xl").hide();
+                    $("#pl_ph").hide();
+
                 });
         });
     });
@@ -84,15 +85,13 @@
 <div>
 @*<h2>上架</h2>*@
     <div class="page-content">
-        <input type="hidden" name="rkid" value="@ViewBag.rkd" />
-        <input type="hidden" name="rkzt" value="@ViewBag.rkzt" />
+        <input type="hidden" name="rkid" id="rkid" value="@ViewBag.rkd" />
+        <input type="hidden" name="rkzt" id="rkzt" value="@ViewBag.rkzt" />
         <div class="page-header">
             <p>入库编号：@ViewBag.rkbh</p>
             <p>
                 <button type="button" id="bt_ok" class="btn btn-default"><i class="icon-ok"></i>完成</button>
                 <button type="button" class="btn btn-default" onclick="javascript:location.href='/wms_scanin/index'; "><i class="icon-hand-left"></i>返回</button>
-            </p>
-            <p>
                 <button type="button" id="bt_save" class="btn btn-default"><i class="icon-save"></i>保存</button>
                 <button type="button" id="bt_kw" class="btn btn-default"><i class="icon-location-arrow"></i>库位</button>
             </p>
@@ -102,7 +101,7 @@
                 <div class="form-group">
                     <label class="col-sm-4">库位</label>
                     <div class="col-sm-8">
-                        <input class="form-control" type="text" name="kuwei" value="" />
+                        <input class="form-control" type="text" name="kuwei" id="kuwei" value="" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -114,37 +113,37 @@
                 <div class="form-group">
                     <label class="col-sm-4">批号-1</label>
                     <div class="col-sm-8">
-                        <input class="form-control" type="text" name="pihao1" value="" />
+                        <input class="form-control" type="text" name="pihao1" id="pihao1" value="" />
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4">数量-1</label>
                     <div class="col-sm-8">
-                        <input class="form-control" type="text" name="phnum1" />
+                        <input class="form-control" type="text" name="phnum1" id="phnum1"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4">批号-2</label>
                     <div class="col-sm-8">
-                        <input class="form-control" type="text" name="pihao2" value="" />
+                        <input class="form-control" type="text" name="pihao2" id="pihao2" value="" />
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4">数量-2</label>
                     <div class="col-sm-8">
-                        <input class="form-control" type="text" name="phnum2" />
+                        <input class="form-control" type="text" name="phnum2" id="phnum2" />
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4">批号-3</label>
                     <div class="col-sm-8">
-                        <input class="form-control" type="text" name="pihao3" value="" />
+                        <input class="form-control" type="text" name="pihao3" id="pihao3" value="" />
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4">数量-3</label>
                     <div class="col-sm-8">
-                        <input class="form-control" type="text" name="phnum3" />
+                        <input class="form-control" type="text" name="phnum3" id="phnum3" />
                     </div>
                 </div>
             </div>
@@ -152,37 +151,37 @@
                 <div class="form-group">
                     <label class="col-sm-4">序列-1</label>
                     <div class="col-sm-8">
-                        <input class="form-control" type="text" name="xlm1" value="" />
+                        <input class="form-control" type="text" name="xlm1" id="xlm1" value="" />
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4">数量-1</label>
                     <div class="col-sm-8">
-                        <input class="form-control" type="text" name="xlnum1" />
+                        <input class="form-control" type="text" name="xlnum1" id="xlnum1" />
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4">序列-2</label>
                     <div class="col-sm-8">
-                        <input class="form-control" type="text" name="xlm2" value="" />
+                        <input class="form-control" type="text" name="xlm2" id="xlm2" value="" />
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4">数量-2</label>
                     <div class="col-sm-8">
-                        <input class="form-control" type="text" name="xlnum2" />
+                        <input class="form-control" type="text" name="xlnum2" id="xlnum2" />
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4">序列-3</label>
                     <div class="col-sm-8">
-                        <input class="form-control" type="text" name="xlm3" value="" />
+                        <input class="form-control" type="text" name="xlm3" id="xlm3" value="" />
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4">数量-3</label>
                     <div class="col-sm-8">
-                        <input class="form-control" type="text" name="xlnum3" />
+                        <input class="form-control" type="text" name="xlnum3" id="xlnum3" />
                     </div>
                 </div>
             </div>
