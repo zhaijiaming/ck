@@ -142,7 +142,7 @@ namespace CKWMS.reports
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["TongXingDan"]));
 
                             wms_chukudan ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid));
-                            DataTable dtckd = _rds.Tables["ChuKuDan"];
+                            DataTable dtckd = _rds.Tables["TongXingDan_Title"];
                             DataRow drckd = dtckd.NewRow();
                             drckd["ChukudanBH"] = ckd.ChukudanBH;
                             drckd["KehuMC"] = ckd.KehuMC;
@@ -155,7 +155,7 @@ namespace CKWMS.reports
                             drckd["HuozhuID"] = wtkhdata1.Kehumingcheng;
 
                             dtckd.Rows.Add(drckd);
-                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["ChuKuDan"]));
+                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["TongXingDan_Title"]));
                             break;
                         case "CKFuheBaoGaoDan":
                             rptView.Reset();
@@ -208,7 +208,7 @@ namespace CKWMS.reports
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["CKFuheBaoGao"]));
 
                             wms_chukudan _ckfhds = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid));
-                            DataTable dtckfh = _rds.Tables["ChuKuDan"];
+                            DataTable dtckfh = _rds.Tables["CKFuheBaoGao_Title"];
                             DataRow drckfh = dtckfh.NewRow();
                             drckfh["ChukudanBH"] = _ckfhds.ChukudanBH;
                             drckfh["Yunsongdizhi"] = _ckfhds.Yunsongdizhi;
@@ -222,7 +222,7 @@ namespace CKWMS.reports
                             drckfh["ckfhbgjhSLs"] = ckfhbg_JianhuoSLs;
                             drckfh["ckfhbgfhSLs"] = ckfhbg_FuheSLs;
                             dtckfh.Rows.Add(drckfh);
-                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["ChuKuDan"]));
+                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["CKFuheBaoGao_Title"]));
                             break;
                         case "CKFuhejianyan":
                             rptView.Reset();

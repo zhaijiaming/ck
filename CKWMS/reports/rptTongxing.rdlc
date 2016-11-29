@@ -3127,10 +3127,6 @@
           <DataField>Yunsongdizhi</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Beizhu">
-          <DataField>Beizhu</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="ChukuRQ">
           <DataField>ChukuRQ</DataField>
           <rd:TypeName>System.String</rd:TypeName>
