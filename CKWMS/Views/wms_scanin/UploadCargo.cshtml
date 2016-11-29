@@ -2,7 +2,7 @@
 @using CKWMS.Models
 @{
     ViewBag.Title = "货品上架";
-    Layout = "~/Views/Shared/EmptyView.cshtml";
+    Layout = "~/Views/Shared/WinCEView.cshtml";
 }
 <script type="text/javascript">
     $(document).ready(function () {
@@ -81,7 +81,7 @@
         });
     });
 </script>
-<div style="width:300px;overflow:auto">
+<div>
 @*<h2>上架</h2>*@
     <div class="page-content">
         <input type="hidden" name="rkid" value="@ViewBag.rkd" />

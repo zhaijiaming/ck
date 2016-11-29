@@ -2,10 +2,10 @@
 @using CKWMS.Models
 @{
     ViewBag.Title = "扫描出库列表";
-    Layout = "~/Views/Shared/EmptyView.cshtml";
+    Layout = "~/Views/Shared/WinCEView.cshtml";
 }
-<div style="width:300px;overflow:auto">
-    <h2>扫描出库<a href="/wms_scanhome"><i class="icon-home pull-right"></i></a></h2>
+<div>
+    <h2>扫描出库<a href="/wms_scanhome">Home</a></h2>
     <div class="row">
         <table class="table table-condensed table-hover" id="mydatatable">
             <caption></caption>
@@ -31,8 +31,8 @@
                         <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
                         <td>@item.KehuMC</td>
                         <td>@string.Format("{0:d}", item.ChukuRQ)</td>
-                        <td><a href="/wms_scanout/picking/?ckd=@item.ID"><i class="icon-certificate"></i></a></td>
-                        <td><a href="/wms_scanout/outcheck/?ckd=@item.ID"><i class="icon-check"></i></a></td>
+                        <td><a href="/wms_scanout/picking/?ckd=@item.ID">拣</a></td>
+                        <td><a href="/wms_scanout/outcheck/?ckd=@item.ID">核</a></td>
                     </tr>
                 }
             </tbody>
