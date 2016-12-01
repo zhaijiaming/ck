@@ -179,6 +179,9 @@
               <xs:element name="Mingcheng" msprop:Generator_ColumnVarNameInTable="columnMingcheng" msprop:Generator_ColumnPropNameInRow="Mingcheng" msprop:Generator_ColumnPropNameInTable="MingchengColumn" msprop:Generator_UserColumnName="Mingcheng" type="xs:string" minOccurs="0" />
               <xs:element name="ZhucezhengYXQ" msprop:Generator_ColumnVarNameInTable="columnZhucezhengYXQ" msprop:Generator_ColumnPropNameInRow="ZhucezhengYXQ" msprop:Generator_ColumnPropNameInTable="ZhucezhengYXQColumn" msprop:Generator_UserColumnName="ZhucezhengYXQ" type="xs:string" minOccurs="0" />
               <xs:element name="Daima" msprop:Generator_ColumnVarNameInTable="columnDaima" msprop:Generator_ColumnPropNameInRow="Daima" msprop:Generator_ColumnPropNameInTable="DaimaColumn" msprop:Generator_UserColumnName="Daima" type="xs:string" minOccurs="0" />
+              <xs:element name="Shenheshuoming" msprop:Generator_ColumnVarNameInTable="columnShenheshuoming" msprop:Generator_ColumnPropNameInRow="Shenheshuoming" msprop:Generator_ColumnPropNameInTable="ShenheshuomingColumn" msprop:Generator_UserColumnName="Shenheshuoming" type="xs:string" minOccurs="0" />
+              <xs:element name="FuzerenSM" msprop:Generator_ColumnVarNameInTable="columnFuzerenSM" msprop:Generator_ColumnPropNameInRow="FuzerenSM" msprop:Generator_ColumnPropNameInTable="FuzerenSMColumn" msprop:Generator_UserColumnName="FuzerenSM" type="xs:string" minOccurs="0" />
+              <xs:element name="SQshijian" msprop:Generator_ColumnVarNameInTable="columnSQshijian" msprop:Generator_ColumnPropNameInRow="SQshijian" msprop:Generator_ColumnPropNameInTable="SQshijianColumn" msprop:Generator_UserColumnName="SQshijian" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
