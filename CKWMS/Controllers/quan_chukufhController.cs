@@ -376,6 +376,18 @@ namespace CKWMS.Controllers
             ViewBag.zlgl_ckfhid = zlgl_ckfhid;
             return View();
         }
+        public JsonResult Check_ckfhid()
+        {
+            var zlgl_ckfhbh = Request["zlgl_ckfhid"] ?? "";
+            var flag = 0;
+            var tempdata = ServiceFactory.quan_chukufhservice.GetOutrec(p => p.ChukudanBH == zlgl_ckfhbh);
+            var firstdata = tempdata.FirstOrDefault();
+            if (firstdata != null)
+            {
+                flag = 1;
+            }
+            return Json(flag);
+        }
     }
 }
 

@@ -18,12 +18,24 @@
             $("#zlgl_rkysid").val("");
         });
         $("#Yes_print").click(function () {
-            var zlgl_rkysid = $("#zlgl_rkysid").val();
+            var zlgl_rkysid = $("#zlgl_rkysid").val().trim();//获取入库单编号，去掉空格。
             if (zlgl_rkysid.length > 0) {
-                window.open("/quan_rukuys/PrintRukuYS?zlgl_rkysid=" + zlgl_rkysid);
-                $("#pl_fun").hide();
+                $.post(
+                "/quan_rukuys/Check_rkysid",
+                {
+                    zlgl_rkysid: zlgl_rkysid
+                },
+                function (data) {
+                    if (data == 1) {
+                        window.open("/quan_rukuys/PrintRukuYS?zlgl_rkysid=" + zlgl_rkysid);
+                        $("#pl_fun").hide();
+                    } else {
+                        alert("请输入正确的入库单编号。");
+                        $("#zlgl_rkysid").val("");
+                    }
+                });
             } else {
-                alert("请输入入库编号^_^！");
+                alert("请输入入库编号!");
             }
         });
         $("#pl_fn_close").click(function () {

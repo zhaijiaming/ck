@@ -18,12 +18,24 @@
             $("#zlgl_ckfhid").val("");
         });
         $("#Yes_print").click(function () {
-            var zlgl_ckfhid = $("#zlgl_ckfhid").val();
+            var zlgl_ckfhid = $("#zlgl_ckfhid").val().trim();//获取出库单编号，去掉空格。
             if (zlgl_ckfhid.length > 0) {
-                window.open("/quan_chukufh/PrintCukuFH?zlgl_ckfhid=" + zlgl_ckfhid);
-                $("#pl_fun").hide();
+                $.post(
+                "/quan_chukufh/Check_ckfhid",
+                {
+                    zlgl_ckfhid: zlgl_ckfhid
+                },
+                function (data) {
+                    if (data == 1) {
+                        window.open("/quan_chukufh/PrintCukuFH?zlgl_ckfhid=" + zlgl_ckfhid);
+                        $("#pl_fun").hide();
+                    } else {
+                        alert("请输入正确的出库单编号。");
+                        $("#zlgl_ckfhid").val("");
+                    }
+                });
             } else {
-                alert("请输入出库编号^_^！");
+                alert("请输入出库编号。");
             }
         });
         $("#pl_fn_close").click(function () {

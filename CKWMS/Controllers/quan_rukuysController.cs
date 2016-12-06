@@ -447,6 +447,18 @@ namespace CKWMS.Controllers
             ViewBag.zlgl_rkysid = zlgl_rkysid;
             return View();
         }
+        public JsonResult Check_rkysid()
+        {
+            var zlgl_rkysbh = Request["zlgl_rkysid"] ?? "";
+            var flag = 0;
+            var tempdata = ServiceFactory.quan_rukuysservice.GetInrec(p => p.RukudanBH == zlgl_rkysbh && p.IsDelete == false);
+            var firstdata = tempdata.FirstOrDefault();
+            if(firstdata != null)
+            {
+                flag = 1;
+            }
+            return Json(flag);
+        }
 
     }
 }
