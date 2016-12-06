@@ -1008,6 +1008,7 @@
                               <Value>=First(Fields!jhddjSLs.Value, "DataSet2")</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
+                                <FontSize>12pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -1150,7 +1151,7 @@
   <Width>10.52027in</Width>
   <Page>
     <PageHeader>
-      <Height>2.68112cm</Height>
+      <Height>2.70758cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1261,7 +1262,7 @@
           <Top>2.04584cm</Top>
           <Left>0.76875cm</Left>
           <Height>0.6cm</Height>
-          <Width>4.97353cm</Width>
+          <Width>10.99767cm</Width>
           <ZIndex>2</ZIndex>
           <Style>
             <Border>

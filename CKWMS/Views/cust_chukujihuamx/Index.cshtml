@@ -90,14 +90,15 @@
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
         </p>
     </div>
-    <div class="row">
-        <table class="table" id="mydatatable">
+    <div class="row" style="overflow:auto;height:445px;">
+        <table class="table" id="mydatatable" style="white-space: nowrap;">
             <caption></caption>
             <thead>
                 <tr>
                     <td></td>
                     <td>计划序号</td>
                     <td>商品序号</td>
+                    <td>商品代码</td>
                     <td>商品名称</td>
                     <td>注册证</td>
                     <td>规格</td>
@@ -116,7 +117,6 @@
                     <td>备注</td>
                     <td>制单日期</td>
                     <td>制单人</td>
-                    <td>商品代码</td>
                 </tr>
             </thead>
             <tbody>
@@ -128,14 +128,15 @@
                         </td>
                         <td>@item.JihuaID</td>
                         <td>@item.ShangpinID</td>
+                        <td>@item.ShangpinDM</td>
                         <td>@item.ShangpinMC</td>
                         <td>@item.Zhucezheng</td>
                         <td>@item.Guige</td>
                         <td>@item.Pihao</td>
                         <td>@item.Pihao1</td>
                         <td>@item.Xuliema</td>
-                        <td>@item.ShengchanRQ</td>
-                        <td>@item.ShiXiaoRQ</td>
+                        <td>@string.Format("{0:d}", item.ShengchanRQ == null ? "" : item.ShengchanRQ)</td>
+                        <td>@string.Format("{0:d}", item.ShiXiaoRQ == null ? "" : item.ShiXiaoRQ)</td>
                         <td>@item.JihuaSL</td>
                         <td>@item.ChukuSL</td>
                         <td>@item.JibenDW</td>
@@ -144,15 +145,14 @@
                         <td>@item.Changjia</td>
                         <td>@item.Chandi</td>
                         <td>@item.Beizhu</td>
-                        <td>@item.MakeDate</td>
-                        <td>@item.MakeMan</td>
-                        <td>@item.ShangpinDM</td>
+                        <td>@string.Format("{0:d}", item.MakeDate == null ? "" : item.MakeDate)</td>
+                        <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
-    <div class="pager">
+    <div class="pager" style="height:0px;">
         @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
     </div>
 </div>

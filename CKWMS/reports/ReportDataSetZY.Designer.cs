@@ -4744,6 +4744,10 @@ namespace CKWMS.reports {
             
             private global::System.Data.DataColumn columnSQshijian;
             
+            private global::System.Data.DataColumn columnShenheren;
+            
+            private global::System.Data.DataColumn columnFuzeren;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public Spxx_shouyingDataTable() {
@@ -4851,6 +4855,22 @@ namespace CKWMS.reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ShenherenColumn {
+                get {
+                    return this.columnShenheren;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn FuzerenColumn {
+                get {
+                    return this.columnFuzeren;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -4886,7 +4906,7 @@ namespace CKWMS.reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public Spxx_shouyingRow AddSpxx_shouyingRow(string ZhucezhengBH, string Guige, string Chandi, string Mingcheng, string ZhucezhengYXQ, string Daima, string Shenheshuoming, string FuzerenSM, string SQshijian) {
+            public Spxx_shouyingRow AddSpxx_shouyingRow(string ZhucezhengBH, string Guige, string Chandi, string Mingcheng, string ZhucezhengYXQ, string Daima, string Shenheshuoming, string FuzerenSM, string SQshijian, string Shenheren, string Fuzeren) {
                 Spxx_shouyingRow rowSpxx_shouyingRow = ((Spxx_shouyingRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         ZhucezhengBH,
@@ -4897,7 +4917,9 @@ namespace CKWMS.reports {
                         Daima,
                         Shenheshuoming,
                         FuzerenSM,
-                        SQshijian};
+                        SQshijian,
+                        Shenheren,
+                        Fuzeren};
                 rowSpxx_shouyingRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowSpxx_shouyingRow);
                 return rowSpxx_shouyingRow;
@@ -4929,6 +4951,8 @@ namespace CKWMS.reports {
                 this.columnShenheshuoming = base.Columns["Shenheshuoming"];
                 this.columnFuzerenSM = base.Columns["FuzerenSM"];
                 this.columnSQshijian = base.Columns["SQshijian"];
+                this.columnShenheren = base.Columns["Shenheren"];
+                this.columnFuzeren = base.Columns["Fuzeren"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4952,6 +4976,10 @@ namespace CKWMS.reports {
                 base.Columns.Add(this.columnFuzerenSM);
                 this.columnSQshijian = new global::System.Data.DataColumn("SQshijian", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnSQshijian);
+                this.columnShenheren = new global::System.Data.DataColumn("Shenheren", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnShenheren);
+                this.columnFuzeren = new global::System.Data.DataColumn("Fuzeren", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFuzeren);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -14003,6 +14031,38 @@ namespace CKWMS.reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Shenheren {
+                get {
+                    try {
+                        return ((string)(this[this.tableSpxx_shouying.ShenherenColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("表“Spxx_shouying”中列“Shenheren”的值为 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableSpxx_shouying.ShenherenColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Fuzeren {
+                get {
+                    try {
+                        return ((string)(this[this.tableSpxx_shouying.FuzerenColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("表“Spxx_shouying”中列“Fuzeren”的值为 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableSpxx_shouying.FuzerenColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsZhucezhengBHNull() {
                 return this.IsNull(this.tableSpxx_shouying.ZhucezhengBHColumn);
             }
@@ -14107,6 +14167,30 @@ namespace CKWMS.reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetSQshijianNull() {
                 this[this.tableSpxx_shouying.SQshijianColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsShenherenNull() {
+                return this.IsNull(this.tableSpxx_shouying.ShenherenColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetShenherenNull() {
+                this[this.tableSpxx_shouying.ShenherenColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsFuzerenNull() {
+                return this.IsNull(this.tableSpxx_shouying.FuzerenColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetFuzerenNull() {
+                this[this.tableSpxx_shouying.FuzerenColumn] = global::System.Convert.DBNull;
             }
         }
         

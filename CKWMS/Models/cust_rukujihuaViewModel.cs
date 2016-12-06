@@ -8,11 +8,11 @@ namespace CKWMS.Models
     {
         [Display(Name = "序号")]
         public int? ID { get; set; }
-        [Display(Name = "货主序号")]
+        [Display(Name = "货主")]
         public int? HuozhuID { get; set; }
         [Display(Name = "合同编号")]
         public string HetongBH { get; set; }
-        [Display(Name = "供应商序号")]
+        [Display(Name = "供应商")]
         public int? GongyingshangID { get; set; }
         [Display(Name = "发货地址")]
         public string Fahuodizhi { get; set; }

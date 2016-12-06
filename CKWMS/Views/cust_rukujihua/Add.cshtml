@@ -2,11 +2,29 @@
 @using CKWMS.Models
 @model cust_rukujihuaViewModel
 @{ViewBag.Title = "入库计划添加";}
-
+<script type="text/javascript">
+    try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    $(document).ready(function () {
+        $("#RukuRQ").datepicker(); 
+        $("#MakeDate").datepicker();
+        //'BaoshuiSF'&'JianguanSF'绑定值
+        $("#checkbox_BaoshuiSF").change(function () {
+            if ($("#checkbox_BaoshuiSF").is(":checked")) {
+                $("#BaoshuiSF").val("true");//选中=true
+            } else {
+                $("#BaoshuiSF").val("false");//不选中=false
+            }
+        });
+        $("#checkbox_JianguanSF").change(function () {
+            if ($("#checkbox_JianguanSF").is(":checked")) {
+                $("#JianguanSF").val("true");//选中=true
+            } else {
+                $("#JianguanSF").val("false");//不选中=false
+            }
+        });
+    });
+</script>
 <div class="breadcrumbs" id="breadcrumbs">
-    <script type="text/javascript">
-        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
-    </script>
     <ul class="breadcrumb">
         <li>
             <i class="icon-home home-icon"></i>
@@ -24,6 +42,9 @@
     {
         @Html.AntiForgeryToken()
         <input type="hidden" name="id" />
+        <input type="hidden" id="MakeMan" name="MakeMan" value=@Session["user_id"] />
+        <input type="hidden" id="BaoshuiSF" name="BaoshuiSF" value="false" />
+        <input type="hidden" id="JianguanSF" name="JianguanSF" value="false" />
         <div class="page-header">
             <p>
                 <button type="submit" class="btn btn-default"><i class="icon-save"></i>保存</button>
@@ -34,7 +55,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.HuozhuID, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.HuozhuID, new { @class = "form-control" })
+                    @Html.SelectList_Auto("huozhuid", "货主", "名称")
                 </div>
             </div>
             <div class="form-group">
@@ -46,7 +67,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.GongyingshangID, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.GongyingshangID, new { @class = "form-control" })
+                    @Html.SelectList_Auto("GongyingshangID", "供应商", "")
                 </div>
             </div>
             <div class="form-group">
@@ -70,13 +91,13 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.YewuLX, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.YewuLX, new { @class = "form-control" })
+                    @Html.SelectList_Common("YewuLX", "入库类型")
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.BaoshuiSF, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.BaoshuiSF, new { @class = "form-control" })
+                    <input type="checkbox" id="checkbox_BaoshuiSF" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
@@ -88,7 +109,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.JianguanSF, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.JianguanSF, new { @class = "form-control" })
+                    <input type="checkbox" id="checkbox_JianguanSF" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
@@ -154,13 +175,13 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.MakeDate, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    <input id="MakeDate" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="MakeDate">
+                    <input type="text" readonly class="form-control" name="makedate" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.MakeMan, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.SelectList_Auto("MakeMan", "userinfo", "fullname")
+                    <input type="text" class="form-control" readonly value="@Html.GetDataValue_ID("userinfo", "全名", (int)ViewBag.userid)" />
                 </div>
             </div>
         </div>

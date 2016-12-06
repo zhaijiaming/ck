@@ -4,11 +4,46 @@
 @{
     ViewBag.Title = "入库计划修改";
 }
-
+<script type="text/javascript">
+    try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    $(document).ready(function () {
+        $("#RukuRQ").datepicker();
+        $("#MakeDate").datepicker();
+        //'BaoshuiSF'&'JianguanSF'赋值
+        var BaoshuiSF = "@ViewData.Model.BaoshuiSF";
+        if (BaoshuiSF == "True") {
+            $("#checkbox_BaoshuiSF").attr("checked", true);
+            $("#BaoshuiSF").val(BaoshuiSF);
+        } else {
+            $("#checkbox_BaoshuiSF").attr("checked", false);
+            $("#BaoshuiSF").val(BaoshuiSF);
+        }
+        var JianguanSF = "@ViewData.Model.JianguanSF";
+        if (JianguanSF == "True") {
+            $("#checkbox_JianguanSF").attr("checked", true);
+            $("#JianguanSF").val(JianguanSF);
+        } else {
+            $("#checkbox_JianguanSF").attr("checked", false);
+            $("#JianguanSF").val(JianguanSF);
+        }
+        //'BaoshuiSF'&'JianguanSF'绑定值
+        $("#checkbox_BaoshuiSF").change(function () {
+            if ($("#checkbox_BaoshuiSF").is(":checked")) {
+                $("#BaoshuiSF").val("true");//选中=true
+            } else {
+                $("#BaoshuiSF").val("false");//不选中=false
+            }
+        });
+        $("#checkbox_JianguanSF").change(function () {
+            if ($("#checkbox_JianguanSF").is(":checked")) {
+                $("#JianguanSF").val("true");//选中=true
+            } else {
+                $("#JianguanSF").val("false");//不选中=false
+            }
+        });
+    });
+</script>
 <div class="breadcrumbs" id="breadcrumbs">
-    <script type="text/javascript">
-        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
-    </script>
     <ul class="breadcrumb">
         <li>
             <i class="icon-home home-icon"></i>
@@ -26,6 +61,10 @@
     {
         @Html.AntiForgeryToken()
         <input type="hidden" name="id" value="@ViewData.Model.ID" />
+        <input type="hidden" id="MakeMan" name="MakeMan" value=@Session["user_id"] />
+        <input type="hidden" name="MakeDate" value=@string.Format("{0:yyyy-MM-dd}",DateTime.Now) />
+        <input type="hidden" id="BaoshuiSF" name="BaoshuiSF" value="" />
+        <input type="hidden" id="JianguanSF" name="JianguanSF" value="" />
         <div class="page-header">
             <p>
                 <button type="submit" class="btn btn-default"><i class="icon-save"></i>更新</button>
@@ -36,7 +75,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.HuozhuID, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.HuozhuID, new { @class = "form-control" })
+                    @Html.SelectList_Auto("huozhuid", "货主", "名称", (long)Model.HuozhuID)
                 </div>
             </div>
             <div class="form-group">
@@ -48,7 +87,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.GongyingshangID, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.GongyingshangID, new { @class = "form-control" })
+                    @Html.SelectList_Auto("GongyingshangID", "供应商", "", (long)ViewData.Model.GongyingshangID)
                 </div>
             </div>
             <div class="form-group">
@@ -72,13 +111,13 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.YewuLX, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.YewuLX, new { @class = "form-control" })
+                    @Html.SelectList_Common("YewuLX", "入库类型", (long)Model.YewuLX)
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.BaoshuiSF, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.BaoshuiSF, new { @class = "form-control" })
+                    <input type="checkbox" id="checkbox_BaoshuiSF" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
@@ -90,7 +129,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.JianguanSF, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.JianguanSF, new { @class = "form-control" })
+                    <input type="checkbox" id="checkbox_JianguanSF" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
@@ -102,7 +141,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.KefuID, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.KefuID, new { @class = "form-control" })
+                    @Html.TextBoxFor(m => m.KefuID, new  { @class = "form-control" })
                 </div>
             </div>
             <div class="form-group">
@@ -156,13 +195,13 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.MakeDate, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    <input id="MakeDate" type="date" class="form-control" name="MakeDate" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.MakeDate)">
+                    <input type="text" readonly class="form-control" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.MakeDate)" />
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.MakeMan, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.SelectList_Auto("MakeMan", "userinfo", "fullname", (long)ViewData.Model.MakeMan)
+                    <input type="text" class="form-control" readonly value="@Html.GetDataValue_ID("userinfo", "全名", (int)ViewData.Model.MakeMan)" />
                 </div>
             </div>
         </div>

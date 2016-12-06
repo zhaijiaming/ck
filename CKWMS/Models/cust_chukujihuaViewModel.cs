@@ -8,7 +8,7 @@ namespace CKWMS.Models
     {
         [Display(Name = "序号")]
         public int? ID { get; set; }
-        [Display(Name = "货主序号")]
+        [Display(Name = "货主")]
         public int? HuozhuID { get; set; }
         [Display(Name = "客户序号")]
         public int? KehuID { get; set; }
@@ -37,7 +37,7 @@ namespace CKWMS.Models
         public string Lianxiren { get; set; }
         [Display(Name = "联系电话")]
         public string LianxiDH { get; set; }
-        [Display(Name = "计划状态")]
+        [Display(Name = "状态")]
         public int? JihuaZT { get; set; }
         [Display(Name = "出库单数量")]
         public int? ChukudanSL { get; set; }
