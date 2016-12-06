@@ -399,15 +399,15 @@ namespace CKWMS.App_Code
                 case "存货状态":
                     sb.Append(GetCommonSelect(selectedValue, MvcApplication.CargoState));
                     break;
-                //case "":
-                //    sb.Append(GetCommonSelect(selectedValue, MvcApplication));
-                //    break;
-                //case "":
-                //    sb.Append(GetCommonSelect(selectedValue, MvcApplication));
-                //    break;
-                //case "":
-                //    sb.Append(GetCommonSelect(selectedValue, MvcApplication));
-                //    break;
+                case "运输公司类型":
+                    sb.Append(GetCommonSelect(selectedValue, MvcApplication.TransferType));
+                    break;
+                case "结算方式":
+                    sb.Append(GetCommonSelect(selectedValue, MvcApplication.SettlingType));
+                    break;
+                case "快递公司":
+                    sb.Append(GetCommonSelect(selectedValue, MvcApplication.ExpressCompany));
+                    break;
                 default:
                     break;
             }
@@ -1242,6 +1242,18 @@ namespace CKWMS.App_Code
                 case "存货状态":
                     if (MvcApplication.CargoState.ContainsKey(dataValue))
                         returnvalue = MvcApplication.CargoState[dataValue];
+                    break;
+                case "快递公司":
+                    if (MvcApplication.ExpressCompany.ContainsKey(dataValue))
+                        returnvalue = MvcApplication.ExpressCompany[dataValue];
+                    break;
+                case "运输公司类型":
+                    if (MvcApplication.TransferType.ContainsKey(dataValue))
+                        returnvalue = MvcApplication.TransferType[dataValue];
+                    break;
+                case "结算方式":
+                    if (MvcApplication.SettlingType.ContainsKey(dataValue))
+                        returnvalue = MvcApplication.SettlingType[dataValue];
                     break;
                 default:
                     break;

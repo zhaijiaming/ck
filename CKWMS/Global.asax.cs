@@ -91,6 +91,18 @@ namespace CKWMS
         /// 仓库区域类型
         /// </summary>
         public static Dictionary<int, string> AreaType;
+        /// <summary>
+        /// 快递公司
+        /// </summary>
+        public static Dictionary<int, string> ExpressCompany;
+        /// <summary>
+        /// 运输公司类型
+        /// </summary>
+        public static Dictionary<int, string> TransferType;
+        /// <summary>
+        /// 结算方式
+        /// </summary>
+        public static Dictionary<int, string> SettlingType;
 
         protected void Application_Start()
         {
@@ -156,7 +168,7 @@ namespace CKWMS
             AreaType = new Dictionary<int, string>();
             AreaType.Add(0, "");
             AreaType.Add(1, "常温");
-            AreaType.Add(2, "阴凉（30℃以下)");
+            AreaType.Add(2, "阴凉");
             AreaType.Add(3, "冷藏");
             AreaType.Add(4, "冷冻");
 
@@ -269,6 +281,29 @@ namespace CKWMS
             OutState.Add(3, "复核");
             OutState.Add(4, "装箱");
             OutState.Add(5, "完成");
+
+            ExpressCompany = new Dictionary<int, string>();
+            ExpressCompany.Add(0, "");
+            ExpressCompany.Add(1, "顺风");
+            ExpressCompany.Add(2, "德邦");
+            ExpressCompany.Add(3, "申通");
+            ExpressCompany.Add(4, "圆通");
+            ExpressCompany.Add(5, "韵达");
+
+            TransferType = new Dictionary<int, string>();
+            TransferType.Add(0, "");
+            TransferType.Add(1, "快递");
+            TransferType.Add(2, "车队");
+            TransferType.Add(3, "货代");
+            TransferType.Add(4, "报关");
+
+            SettlingType = new Dictionary<int, string>();
+            SettlingType.Add(0, "");
+            SettlingType.Add(1, "月结");
+            SettlingType.Add(2, "到付");
+            SettlingType.Add(3, "30天");
+            SettlingType.Add(4, "60天");
+            SettlingType.Add(5, "90天");
         }
     }
 }

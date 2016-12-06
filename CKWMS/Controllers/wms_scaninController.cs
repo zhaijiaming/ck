@@ -157,8 +157,14 @@ namespace CKWMS.Controllers
             _sh.ShangpinDM = rkmx.ShangpinDM;
             _sh.ShangpinMC = rkmx.ShangpinMC;
             _sh.ShangpinTM = rkmx.ShangpinTM;
-            _sh.ShengchanRQ = rkmx.ShengchanRQ;
-            _sh.ShixiaoRQ = rkmx.ShixiaoRQ;
+            if (rkmx.ShengchanRQ == null)
+                _sh.ShengchanRQ = DateTime.Now;
+            else
+                _sh.ShengchanRQ = rkmx.ShengchanRQ;
+            if (rkmx.ShixiaoRQ == null)
+                _sh.ShixiaoRQ = DateTime.Now;
+            else
+                _sh.ShixiaoRQ = rkmx.ShixiaoRQ;
             _sh.Zhucezheng = rkmx.Zhucezheng;
             _sh.Guige = rkmx.Guige;
             _sh.Xuliema = rkmx.Xuliema;
@@ -172,10 +178,22 @@ namespace CKWMS.Controllers
             _sh.MakeMan = op;
             _sh.MakeDate = DateTime.Now;
             _sh.Shuliang = recnum;
-            _sh.Zhongliang = (recnum / rkmx.DaohuoSL) * rkmx.Zhongliang;
-            _sh.Jingzhong = (recnum / rkmx.DaohuoSL) * rkmx.Jingzhong;
-            _sh.Tiji = (recnum / rkmx.DaohuoSL) * rkmx.Tiji;
-            _sh.Jifeidun = (recnum / rkmx.DaohuoSL) * rkmx.Jifeidun;
+            if (rkmx.Zhongliang == null)
+                _sh.Zhongliang = 0;
+            else
+                _sh.Zhongliang = (recnum / rkmx.DaohuoSL) * rkmx.Zhongliang;
+            if (rkmx.Jingzhong == null)
+                _sh.Jingzhong = 0;
+            else
+                _sh.Jingzhong = (recnum / rkmx.DaohuoSL) * rkmx.Jingzhong;
+            if (rkmx.Tiji == null)
+                _sh.Tiji = 0;
+            else
+                _sh.Tiji = (recnum / rkmx.DaohuoSL) * rkmx.Tiji;
+            if (rkmx.Jifeidun == null)
+                _sh.Jifeidun = 0;
+            else
+                _sh.Jifeidun = (recnum / rkmx.DaohuoSL) * rkmx.Jifeidun;
             _sh = ServiceFactory.wms_shouhuomxservice.AddEntity(_sh);
 
             return _sh;
@@ -230,7 +248,7 @@ namespace CKWMS.Controllers
                 if (string.IsNullOrEmpty(_phnum1))
                     _phnum1 = "1";
                 var _sh = ServiceFactory.wms_shouhuomxservice.LoadEntities(p => p.Pihao == _ph1 && p.IsDelete == false).ToList<wms_shouhuomx>();
-                if (_sh.Count==1)
+                if (_sh.Count == 1)
                 {
                     wms_cunhuo _ch = AddUpload(_sh[0], int.Parse(_phnum1), _kuwei, int.Parse(_kwid), _userid, _username);
                     if (_ch == null)

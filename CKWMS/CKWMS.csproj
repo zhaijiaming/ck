@@ -292,6 +292,7 @@
     <Compile Include="Controllers\base_feiyongxmController.cs" />
     <Compile Include="Controllers\base_huobiController.cs" />
     <Compile Include="Controllers\base_quyuController.cs" />
+    <Compile Include="Controllers\base_yunshugsController.cs" />
     <Compile Include="Controllers\cfda_cangkuController.cs" />
     <Compile Include="Controllers\cfda_zizhiController.cs" />
     <Compile Include="Controllers\cust_chukujihuaController.cs" />
@@ -322,6 +323,7 @@
     <Compile Include="Models\base_huobiViewModel.cs" />
     <Compile Include="Models\base_kaipiaoxxViewModel.cs" />
     <Compile Include="Models\base_quyuViewModel.cs" />
+    <Compile Include="Models\base_yunshugsViewModel.cs" />
     <Compile Include="Models\cust_chukujihuamxViewModel.cs" />
     <Compile Include="Models\cust_chukujihuaViewModel.cs" />
     <Compile Include="Models\cust_rukujihuamxViewModel.cs" />
@@ -910,6 +912,9 @@
     <Content Include="Views\wms_yiwei\DisplaceExport.cshtml" />
     <Content Include="Views\wms_scanhome\LocMov.cshtml" />
     <Content Include="Views\Shared\WinCEView.cshtml" />
+    <Content Include="Views\base_yunshugs\Add.cshtml" />
+    <Content Include="Views\base_yunshugs\Edit.cshtml" />
+    <Content Include="Views\base_yunshugs\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
