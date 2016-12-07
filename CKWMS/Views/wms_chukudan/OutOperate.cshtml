@@ -119,6 +119,15 @@
                         //alert("添加快递单成功！");
                         $("#pl_kd").hide();
                         //location.reload();
+                        $("#mydatatable tbody tr input[type=checkbox]").each(function () {
+                            if ($(this).val()==$("#ck").val()) {
+                                $(this).data("dh", $("#ydhm").val());
+                                $(this).data("js", $("#JiesuanFS").val());
+                                $(this).data("ys", $("#YunsongFS").val());
+                                $(this).data("kd", $("#Kuaidi").val());
+                            }
+                        });
+
                     }
                 }
             });

@@ -47,15 +47,21 @@
                 var _selval = $(this).find("input").val();
                 var _seltxt = $(this).find("td").eq(1).html();
                 var _seladdr = $(this).find("td").eq(2).html();
+                var _sellxr = $(this).find("td").eq(3).html();
+                var _seldh = $(this).find("td").eq(4).html();
                 if (eval(_selval) == 0) {
                     $("#kehuid").val(0);
                     $("#khmc").val("");
                     $("#Yunsongdizhi").val("");
+                    $("#Lianxiren").val("");
+                    $("#LianxiDH").val("");
                     return;
                 }
                 $("#kehuid").val(_selval);
                 $("#khmc").val(_seltxt);
                 $("#Yunsongdizhi").val(_seladdr);
+                $("#Lianxiren").va(_sellxr);
+                $("#LianxiDH").val(_seldh);
                 GetCustAddr(_selval);
                 $("#pl_cust").hide();
             });
@@ -123,6 +129,10 @@
                                 _dz = _dz + data[i].Mingcheng;
                                 _dz = _dz + '</td><td>';
                                 _dz = _dz + data[i].SonghuoDZ;
+                                _dz = _dz + '</td><td>';
+                                _dz = _dz + data[i].Lianxiren;
+                                _dz = _dz + '</td><td>';
+                                _dz = _dz + data[i].LianxiDH;
                                 _dz = _dz + '</td><td>';
                                 _dz = _dz + data[i].Jingyinfanwei;
                                 _dz = _dz + '</td></tr>';
@@ -385,12 +395,14 @@
         <div class="row">
             <table class="table table-condensed" id="dt_cust">
                 <caption></caption>
-                <thead style="display:block;">
+                <thead>
                     <tr>
-                        <td style="width:22px;"></td>
-                        <td style="width:125px;text-align:center;">名称</td>
-                        <td style="width:200px;text-align:center;">地址</td>
-                        <td style="width:445px;text-align:center;">经营范围</td>
+                        <td></td>
+                        <td>名称</td>
+                        <td>地址</td>
+                        <td>联系人</td>
+                        <td>电话</td>
+                        <td>经营范围</td>
                     </tr>
                 </thead>
                 <tbody style="display:block;height:400px;overflow:auto;"></tbody>

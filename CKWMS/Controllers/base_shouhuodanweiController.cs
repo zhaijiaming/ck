@@ -303,7 +303,7 @@ namespace CKWMS.Controllers
             var tempData = ob_base_shouhuodanweiservice.LoadSortEntities(p => p.IsDelete == false && p.HuozhuID == int.Parse(_hzid) && p.HezuoSF == true,true,s=>s.Mingcheng);
             if (tempData == null)
                 return Json(-1);
-            return Json(tempData.ToList<base_shouhuodanwei>(),JsonRequestBehavior.AllowGet);
+            return Json(tempData.ToList<base_shouhuodanwei>());
         }
         public ActionResult Update()
         {
