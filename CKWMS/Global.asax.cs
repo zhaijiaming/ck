@@ -103,6 +103,10 @@ namespace CKWMS
         /// 结算方式
         /// </summary>
         public static Dictionary<int, string> SettlingType;
+        /// <summary>
+        ///运送方式 
+        /// </summary>
+        public static Dictionary<int, string> DeliveryType;
 
         protected void Application_Start()
         {
@@ -304,6 +308,14 @@ namespace CKWMS
             SettlingType.Add(3, "30天");
             SettlingType.Add(4, "60天");
             SettlingType.Add(5, "90天");
+
+            DeliveryType = new Dictionary<int, string>();
+            DeliveryType.Add(0, "");
+            DeliveryType.Add(1, "快递");
+            DeliveryType.Add(2, "空运");
+            DeliveryType.Add(3, "海运");
+            DeliveryType.Add(4, "公路");
+            DeliveryType.Add(5, "铁路");
         }
     }
 }

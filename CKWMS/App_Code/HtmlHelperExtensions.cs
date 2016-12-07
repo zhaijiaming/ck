@@ -118,6 +118,28 @@ namespace CKWMS.App_Code
                         }
                     }
                     break;
+                case "运输公司":
+                    var _yunshugs = ServiceFactory.base_yunshugsservice.LoadSortEntities(p => p.IsDelete == false, true, s => s.Jiancheng);
+                    foreach (var i in _yunshugs)
+                    {
+                        switch (itemname)
+                        {
+                            case "简称":
+                                if (i.ID == selectedvalue && selectedvalue != 0)
+                                    sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.ID, i.Jiancheng);
+                                else
+                                    sb.AppendFormat("<option value=\"{0}\">{1}</option>", i.ID, i.Jiancheng);
+                                break;
+                            case "名称":
+                            default:
+                                if (i.ID == selectedvalue && selectedvalue != 0)
+                                    sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.ID, i.Mingcheng);
+                                else
+                                    sb.AppendFormat("<option value=\"{0}\">{1}</option>", i.ID, i.Mingcheng);
+                                break;
+                        }
+                    }
+                    break;
                 case "仓库":
                     var _cangku = ServiceFactory.wms_cangkuservice.LoadSortEntities(p => p.IsDelete == false, true, s => s.Mingcheng);
                     foreach (var i in _cangku)
@@ -408,6 +430,9 @@ namespace CKWMS.App_Code
                 case "快递公司":
                     sb.Append(GetCommonSelect(selectedValue, MvcApplication.ExpressCompany));
                     break;
+                case "运送方式":
+                    sb.Append(GetCommonSelect(selectedValue, MvcApplication.DeliveryType));
+                    break;
                 default:
                     break;
             }
@@ -424,7 +449,7 @@ namespace CKWMS.App_Code
         /// <returns>页面选择框</returns>
         public static MvcHtmlString SelectList_Common(this HtmlHelper html, string showName, string itemName, long selectedValue)
         {
-            return MvcHtmlString.Create(SelectItem_Common(showName,itemName,selectedValue));
+            return MvcHtmlString.Create(SelectItem_Common(showName, itemName, selectedValue));
         }
         private static string GetCommonSelect(long selectedvalue, Dictionary<int, string> commonselect)
         {
@@ -902,6 +927,26 @@ namespace CKWMS.App_Code
             string returnvalue = "";
             switch (className)
             {
+                case "入库计划":
+                    cust_rukujihua _custrkjh = ServiceFactory.cust_rukujihuaservice.GetEntityById(p => p.ID == dataValue);
+                    if (_custrkjh == null)
+                        returnvalue = "";
+                    else
+                    {
+                        if (itemName == "客户单号")
+                            returnvalue = _custrkjh.KehuDH;
+                    }
+                    break;
+                case "出库计划":
+                    cust_chukujihua _custckjh = ServiceFactory.cust_chukujihuaservice.GetEntityById(p => p.ID == dataValue);
+                    if (_custckjh == null)
+                        returnvalue = "";
+                    else
+                    {
+                        if (itemName == "客户单号")
+                            returnvalue = _custckjh.KehuDH;
+                    }
+                    break;
                 case "收货":
                     wms_shouhuomx _shmx = ServiceFactory.wms_shouhuomxservice.GetEntityById(p => p.ID == dataValue);
                     if (_shmx == null)
@@ -947,7 +992,7 @@ namespace CKWMS.App_Code
                         if (itemName == "入库编号")
                             returnvalue = _rkd.RukudanBH;
                         if (itemName == "入库日期")
-                            returnvalue =string.Format("{0:d}",_rkd.RukuRQ);
+                            returnvalue = string.Format("{0:d}", _rkd.RukuRQ);
                     }
                     break;
                 case "出库单":
@@ -1106,6 +1151,20 @@ namespace CKWMS.App_Code
                     else
                         returnvalue = _cpx.Mingcheng;
                     break;
+                case "运输公司":
+                    base_yunshugs _ysgs = ServiceFactory.base_yunshugsservice.GetEntityById(p => p.ID == dataValue);
+                    if (_ysgs == null)
+                        returnvalue = "";
+                    else
+                    {
+                        if (itemName == "简称")
+                            returnvalue = _ysgs.Jiancheng;
+                        if (itemName == "名称")
+                            returnvalue = _ysgs.Mingcheng;
+                        if (itemName == "描述")
+                            returnvalue = _ysgs.Miaoshu;
+                    }
+                    break;
                 default:
                     break;
             }
@@ -1254,6 +1313,10 @@ namespace CKWMS.App_Code
                 case "结算方式":
                     if (MvcApplication.SettlingType.ContainsKey(dataValue))
                         returnvalue = MvcApplication.SettlingType[dataValue];
+                    break;
+                case "运送方式":
+                    if (MvcApplication.DeliveryType.ContainsKey(dataValue))
+                        returnvalue = MvcApplication.DeliveryType[dataValue];
                     break;
                 default:
                     break;

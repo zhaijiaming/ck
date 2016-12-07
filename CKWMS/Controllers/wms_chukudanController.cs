@@ -520,6 +520,26 @@ namespace CKWMS.Controllers
                 return View(wms_chukudanviewmodel);
             }
         }
+        public JsonResult ExpressAdd()
+        {
+            int _userid = (int)Session["user_id"];
+            var _kuaidi = Request["kd"] ?? "";
+            var _yunsong = Request["ys"] ?? "";
+            var _jiesuan = Request["js"] ?? "";
+            var _danhao = Request["dh"] ?? "";
+            var _ckid = Request["ck"] ?? "";
+            if (string.IsNullOrEmpty(_ckid) || string.IsNullOrEmpty(_kuaidi) || string.IsNullOrEmpty(_yunsong) || string.IsNullOrEmpty(_jiesuan) || string.IsNullOrEmpty(_danhao))
+                return Json(-1);
+            var _ckd = ob_wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_ckid));
+            if (_ckd == null)
+                return Json(-1);
+            _ckd.KDdanhao = _danhao;
+            _ckd.Kuaidi =int.Parse(_kuaidi);
+            _ckd.YunsongFS =int.Parse(_yunsong);
+            _ckd.JiesuanFS = int.Parse(_jiesuan);
+            ob_wms_chukudanservice.UpdateEntity(_ckd);
+            return Json(1);
+        }
         public JsonResult OutFinish()
         {
             var _ids = Request["ck"] ?? "";
