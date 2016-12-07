@@ -15,6 +15,17 @@
                 location.href = url_go;
             }
         });
+        //判断照片是否存在
+        var num = $("#mydatatable tr").length - 1;
+        for (var i = 0; i < num; i++) {
+            var val_zzTP = $(".val_zzTP").eq(i).val();
+            if (val_zzTP == "" || val_zzTP == null) {
+                $(".ZhizhaoTP").eq(i).removeAttr("href");
+                $(".ZhizhaoTP").eq(i).html("暂无");
+            } else {
+                $(".ZhizhaoTP").eq(i).html("浏览");
+            }
+        }
     });
     function AddInfo() {
         location.href = "/base_yunshugs/Add";
@@ -90,8 +101,8 @@
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
         </p>
     </div>
-    <div class="row">
-        <table class="table" id="mydatatable">
+    <div class="row" style="overflow:auto;height:445px;">
+        <table class="table" id="mydatatable" style="white-space: nowrap;">
             <caption></caption>
             <thead>
                 <tr>
@@ -128,15 +139,18 @@
                         <td>@item.FuzeDH</td>
                         <td>@item.JiezhangFS</td>
                         <td>@item.YingyeZZ</td>
-                        <td>@item.ZhizhaoTP</td>
-                        <td>@item.MakeDate</td>
-                        <td>@item.MakeMan</td>
+                        <td>
+                            <a href="/files/zhengzhao/@item.ZhizhaoTP" target="_blank" class="ZhizhaoTP"></a>
+                            <label><input type="hidden" class="val_zzTP" value="@item.ZhizhaoTP"></label>
+                        </td>
+                        <td>@string.Format("{0:d}", item.MakeDate == null ? "" : item.MakeDate)</td>
+                        <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
-    <div class="pager">
+    <div class="pager" style="height:0px;">
         @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
     </div>
 </div>

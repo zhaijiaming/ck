@@ -552,7 +552,7 @@ namespace CKWMS.reports
                                 {
                                     drzlgl_bg = dtzlgl_bg.NewRow();
                                     base_gongyingshang zlgl_gys = ServiceFactory.base_gongyingshangservice.GetEntityById(p => p.ID == _pr.GongyingshangID && p.IsDelete == false);
-                                    if(zlgl_gys != null)
+                                    if (zlgl_gys != null)
                                     {
                                         drzlgl_bg["GongyingshangID"] = zlgl_gys.Mingcheng;
                                     }
@@ -590,7 +590,7 @@ namespace CKWMS.reports
                             {
                                 Console.WriteLine(ex.Message);
                             }
-                            
+
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["zlgl_RKYSBG"]));
 
                             DataTable dtzlgl_bg_others = _rds.Tables["zlgl_RKYSBG_Title"];
@@ -600,7 +600,7 @@ namespace CKWMS.reports
                                 var _zlgl_rkyss = ServiceFactory.quan_rukuysservice.GetInrec(p => p.RukudanBH == _zlgl_rkysid && p.IsDelete == false).ToList<quan_inrec_v>();
                                 //得到第一个货主ID
                                 quan_inrec_v zlgl_huozhiid_first = _zlgl_rkyss.FirstOrDefault();
-                                if(zlgl_huozhiid_first != null)
+                                if (zlgl_huozhiid_first != null)
                                 {
                                     base_weituokehu zlgl_wtkh = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == zlgl_huozhiid_first.HuozhuID);
                                     if (zlgl_wtkh != null)
@@ -617,7 +617,7 @@ namespace CKWMS.reports
                                 if (zlgl_rkd != null)
                                 {
                                     drzlgl_bg_others["RukuRQ"] = string.Format("{0:yyyy/MM/dd}", zlgl_rkd.RukuRQ);
-                                    
+
                                 }
                                 drzlgl_bg_others["rkysbgSLs"] = zlgl_bg_Shuliang;
                                 drzlgl_bg_others["rkysbgYs"] = zlgl_bg_YanshouHGSL;
@@ -629,7 +629,7 @@ namespace CKWMS.reports
                             {
                                 Console.WriteLine(ex.Message);
                             }
-                            
+
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["zlgl_RKYSBG_Title"]));
                             break;
                         case "zlgl_CukuFuheBaogao":
@@ -703,7 +703,7 @@ namespace CKWMS.reports
                                     if (zlgl_first != null)
                                     {
                                         drzlgl_ckfhbg_others["KehuMC"] = zlgl_first.KehuMC;
-                                        drzlgl_ckfhbg_others["ChukuRQ"] = string.Format("{0:yyyy/MM/dd}", zlgl_first.ChukuRQ == null?"": ((DateTime)zlgl_first.ChukuRQ).ToString("yyyy/MM/dd"));
+                                        drzlgl_ckfhbg_others["ChukuRQ"] = string.Format("{0:yyyy/MM/dd}", zlgl_first.ChukuRQ == null ? "" : ((DateTime)zlgl_first.ChukuRQ).ToString("yyyy/MM/dd"));
                                         base_weituokehu zlgl_ckfh_wtkh = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == zlgl_first.HuozhuID);
                                         if (zlgl_ckfh_wtkh != null)
                                         {
@@ -879,61 +879,78 @@ namespace CKWMS.reports
                                 }
                             }
                             where = where.And(base_shangpin_v => base_shangpin_v.IsDelete == false);
-                            var _spxxs = ServiceFactory.base_shangpinxxservice.LoadShangpinAll(where.Compile()).ToList<base_shangpin_v>();
 
                             rptView.Reset();
                             rptView.LocalReport.ReportPath = "reports/rptSpxx_shouying.rdlc";
                             rptView.LocalReport.DataSources.Clear();
                             DataTable dtspxx = _rds.Tables["Spxx_shouying"];
                             DataRow drspxx;
-                            foreach (base_shangpin_v _pr in _spxxs)
+                            try
                             {
-                                drspxx = dtspxx.NewRow();
-                                //base_shangpinxx
-                                drspxx["ZhucezhengBH"] = _pr.ZhucezhengBH;
-                                drspxx["Daima"] = _pr.daima;
-                                drspxx["Guige"] = _pr.Guige;
-                                drspxx["Chandi"] = _pr.chandi;
-                                drspxx["Mingcheng"] = _pr.mingcheng;
-                                //base_shangpinzcz
-                                var _spzczs = ServiceFactory.base_shangpinzczservice.GetEntityById(p => p.ID == _pr.zhucezhengid && p.IsDelete == false);
-                                if (_spzczs != null)
+                                var _spxxs = ServiceFactory.base_shangpinxxservice.LoadShangpinAll(where.Compile()).ToList<base_shangpin_v>();
+                                foreach (base_shangpin_v _pr in _spxxs)
                                 {
-                                    drspxx["ZhucezhengYXQ"] = string.Format("{0:yyyy/MM/dd}", _spzczs.ZhucezhengYXQ == null ? "" : ((DateTime)_spzczs.ZhucezhengYXQ).ToString("yyyy/MM/dd"));
+                                    drspxx = dtspxx.NewRow();
+                                    //base_shangpinxx
+                                    drspxx["ZhucezhengBH"] = _pr.ZhucezhengBH;
+                                    drspxx["Daima"] = _pr.daima;
+                                    drspxx["Guige"] = _pr.Guige;
+                                    drspxx["Chandi"] = _pr.chandi;
+                                    drspxx["Mingcheng"] = _pr.mingcheng;
+                                    //base_shangpinzcz
+                                    var _spzczs = ServiceFactory.base_shangpinzczservice.GetEntityById(p => p.ID == _pr.zhucezhengid && p.IsDelete == false);
+                                    if (_spzczs != null)
+                                    {
+                                        drspxx["ZhucezhengYXQ"] = string.Format("{0:yyyy/MM/dd}", _spzczs.ZhucezhengYXQ == null ? "" : ((DateTime)_spzczs.ZhucezhengYXQ).ToString("yyyy/MM/dd"));
+                                    }
+                                    //quan_shouyingsq
+                                    var _sysqs = ServiceFactory.quan_shouyingsqservice.GetEntityById(p => p.ShenqingID == _pr.id && p.IsDelete == false && p.Zhuangtai == 5);
+                                    if (_sysqs != null)
+                                    {
+                                        drspxx["Shenheshuoming"] = _sysqs.Shenheshuoming;
+                                        drspxx["Shenheren"] = _sysqs.Shenheren;
+                                        drspxx["FuzerenSM"] = _sysqs.FuzerenSM;
+                                        drspxx["Fuzeren"] = _sysqs.Fuzeren;
+                                        drspxx["SQshijian"] = string.Format("{0:yyyy/MM/dd}", _sysqs.SQshijian == null ? "" : ((DateTime)_sysqs.SQshijian).ToString("yyyy/MM/dd"));
+                                    }
+                                    dtspxx.Rows.Add(drspxx);
                                 }
-                                //quan_shouyingsq
-                                var _sysqs = ServiceFactory.quan_shouyingsqservice.GetEntityById(p => p.ShenqingID == _pr.id && p.IsDelete == false);
-                                if (_sysqs != null)
-                                {
-                                    drspxx["Shenheshuoming"] = _sysqs.Shenheshuoming;
-                                    drspxx["Shenheren"] = _sysqs.Shenheren;
-                                    drspxx["FuzerenSM"] = _sysqs.FuzerenSM;
-                                    drspxx["Fuzeren"] = _sysqs.Fuzeren;
-                                    drspxx["SQshijian"] = string.Format("{0:yyyy/MM/dd}", _sysqs.SQshijian == null ? "" : ((DateTime)_sysqs.SQshijian).ToString("yyyy/MM/dd"));
-                                }
-                                dtspxx.Rows.Add(drspxx);
                             }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["Spxx_shouying"]));
 
                             DataTable dtspxx_others = _rds.Tables["Spxx_shouying_Title"];
                             DataRow drspxx_others = dtspxx_others.NewRow();
-                            var first_spxx = _spxxs.FirstOrDefault();
-                            //base_gongyingshang
-                            var spxx_wtkh = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == first_spxx.huozhuid && p.IsDelete == false);
-                            if (spxx_wtkh != null)
+                            try
                             {
-                                drspxx_others["Kehumingcheng"] = spxx_wtkh.Kehumingcheng;
-                                drspxx_others["YingyezhizhaoBH"] = spxx_wtkh.YingyezhizhaoBH;
-                                drspxx_others["YingyezhizhaoYXQ"] = string.Format("{0:yyyy/MM/dd}", spxx_wtkh.YingyezhizhaoYXQ == null ? "" : ((DateTime)spxx_wtkh.YingyezhizhaoYXQ).ToString("yyyy/MM/dd"));
-                                drspxx_others["JingyingxukeBH"] = spxx_wtkh.JingyingxukeBH;
-                                drspxx_others["JingyingxukeYXQ"] = string.Format("{0:yyyy/MM/dd}", spxx_wtkh.JingyingxukeYXQ == null ? "" : ((DateTime)spxx_wtkh.JingyingxukeYXQ).ToString("yyyy/MM/dd"));
-                                drspxx_others["Lianxiren"] = spxx_wtkh.Lianxiren;
-                                drspxx_others["Lianxidianhua"] = spxx_wtkh.Lianxidianhua;
-                                drspxx_others["BeianBH"] = spxx_wtkh.BeianBH;
-                                drspxx_others["BeianYXQ"] = string.Format("{0:yyyy/MM/dd}", spxx_wtkh.BeianYXQ == null ? "" : ((DateTime)spxx_wtkh.BeianYXQ).ToString("yyyy/MM/dd"));
+                                var _spxxs = ServiceFactory.base_shangpinxxservice.LoadShangpinAll(where.Compile()).ToList<base_shangpin_v>();
+                                var first_spxx = _spxxs.FirstOrDefault();
+                                //base_gongyingshang
+                                var spxx_wtkh = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == first_spxx.huozhuid && p.IsDelete == false);
+                                if (spxx_wtkh != null)
+                                {
+                                    drspxx_others["Kehumingcheng"] = spxx_wtkh.Kehumingcheng;
+                                    drspxx_others["YingyezhizhaoBH"] = spxx_wtkh.YingyezhizhaoBH;
+                                    drspxx_others["YingyezhizhaoYXQ"] = string.Format("{0:yyyy/MM/dd}", spxx_wtkh.YingyezhizhaoYXQ == null ? "" : ((DateTime)spxx_wtkh.YingyezhizhaoYXQ).ToString("yyyy/MM/dd"));
+                                    drspxx_others["JingyingxukeBH"] = spxx_wtkh.JingyingxukeBH;
+                                    drspxx_others["JingyingxukeYXQ"] = string.Format("{0:yyyy/MM/dd}", spxx_wtkh.JingyingxukeYXQ == null ? "" : ((DateTime)spxx_wtkh.JingyingxukeYXQ).ToString("yyyy/MM/dd"));
+                                    drspxx_others["Lianxiren"] = spxx_wtkh.Lianxiren;
+                                    drspxx_others["Lianxidianhua"] = spxx_wtkh.Lianxidianhua;
+                                    drspxx_others["BeianBH"] = spxx_wtkh.BeianBH;
+                                    drspxx_others["BeianYXQ"] = string.Format("{0:yyyy/MM/dd}", spxx_wtkh.BeianYXQ == null ? "" : ((DateTime)spxx_wtkh.BeianYXQ).ToString("yyyy/MM/dd"));
+                                }
+
+                                dtspxx_others.Rows.Add(drspxx_others);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
                             }
 
-                            dtspxx_others.Rows.Add(drspxx_others);
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["Spxx_shouying_Title"]));
                             break;
                         case "YiweiInfo":

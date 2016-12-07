@@ -78,14 +78,14 @@
             var search_huozhuid = $(".modal-content #HuozhuID option:selected").text();
             var search_shouying = $(".modal-content #Shouying option:selected").text();
             var search_shenchasf = $(".modal-content #ShenchaSF option:selected").text();
-            if (search_huozhuid != "" && search_shouying != "" && search_shenchasf != "") {
-                window.open("/base_shangpinxx/PrintSpxx");
-            } else if (search_huozhuid == "") {
+            if (search_huozhuid == "") {
                 alert("请选择货主！");
-            } else if (search_shouying == "") {
-                alert("请选择首营状态！");
-            } else if (search_shenchasf == "") {
-                alert("请选择是否审查！");
+            } else if (search_shouying != "已通过") {
+                alert("首营状态不为'已通过'，请重新选择！");
+            } else if (search_shenchasf != "是") {
+                alert("审查不为'是',请重新选择！");
+            } else {
+                window.open("/base_shangpinxx/PrintSpxx");
             }
             //$("#pl_fun").show();
             //$("#spxx_huozhuid").val("");
