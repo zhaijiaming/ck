@@ -601,6 +601,7 @@
                     <td>出库日期</td>
                     <td>储运要求</td>
                     <td>客户单号</td>
+                    <td>运单编号</td>
                     <td>状态</td>
                     <td>备注</td>
                     <td>录入</td>
@@ -640,6 +641,7 @@
                         <td>@string.Format("{0:yyyy-MM-dd}", item.ChukuRQ == null ? "" : item.ChukuRQ)</td>
                         <td>@item.ChunyunYQ</td>
                         <td>@item.KehuDH</td>
+                        <td>@item.KDdanhao</td>
                         <td>@Html.GetCommonValue_ID("出库状态", (int)item.JihuaZT)</td>
                         <td>@item.Beizhu</td>
                         <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
