@@ -147,9 +147,9 @@ namespace CKWMS
             //医疗器械管理类别
             ManageType = new Dictionary<int, string>();
             ManageType.Add(0, "");
-            ManageType.Add(1, "管理类别 Ⅰ");
-            ManageType.Add(2, "管理类别 Ⅱ");
-            ManageType.Add(3, "管理类别 Ⅲ");
+            ManageType.Add(1, "Ⅰ");
+            ManageType.Add(2, "Ⅱ");
+            ManageType.Add(3, "Ⅲ");
 
             //首营状态
             ShouYingZhuangTai = new Dictionary<int, string>();

@@ -141,6 +141,7 @@
                     <td>货主</td>
                     <td>业务类型</td>
                     <td>入库日期</td>
+                    <td>客户单号</td>
                     <td>储运条件</td>
                     <td>收货人</td>
                     <td>备注</td>
@@ -165,9 +166,10 @@
                         <td>@Html.GetDataValue_ID("货主","简称",(int)item.HuozhuID)</td>
                         <td>@Html.GetCommonValue_ID("入库类型",(int)item.YewuLX)</td>
                         <td>@string.Format("{0:d}", item.RukuRQ)</td>
+                        <td>@item.KehuDH</td>
                         <td>@item.ChunyunYQ</td>
                         <td>@Html.GetDataValue_ID("userinfo","全名",(int)item.Shouhuoren)</td>
-                        <td>@item.Beizhu</td>
+                        <td title="@item.Beizhu">@string.Format("{0:s}",item.Beizhu==null?"":item.Beizhu.Length>12?item.Beizhu.Substring(0,12):item.Beizhu)</td>
                         <td>@Html.GetDataValue_ID("userinfo","全名",(int)item.MakeMan )</td>
                         <td>@Html.GetCommonValue_ID("入库状态",(int)item.RukuZT)</td>
                         <td><a href="/wms_rukumx/getcargos/@item.ID" target="_blank"><i class="icon-list"></i></a></td>

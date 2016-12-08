@@ -643,7 +643,7 @@
                         <td>@item.KehuDH</td>
                         <td>@item.KDdanhao</td>
                         <td>@Html.GetCommonValue_ID("出库状态", (int)item.JihuaZT)</td>
-                        <td>@item.Beizhu</td>
+                        <td title="@item.Beizhu">@string.Format("{0:s}",item.Beizhu==null?"":item.Beizhu.Length>12?item.Beizhu.Substring(0,12):item.Beizhu)</td>
                         <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
                         <td><a href="/wms_chukumx/GetOutDetail/@item.ID" target="_blank"><i class="icon-list"></i></a></td>
                         <td><i class="icon-edit-sign"></i></td>
