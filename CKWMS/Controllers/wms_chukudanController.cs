@@ -803,6 +803,18 @@ namespace CKWMS.Controllers
             string viewHtml = ExportNow.RenderPartialViewToString(this, "HistoryOfOutExport");
             return File(System.Text.Encoding.UTF8.GetBytes(viewHtml), "application/ms-excel", string.Format("HistoryOfOut_{0}.xls", DateTime.Now.ToShortDateString()));
         }
+        public JsonResult Check_chukuBH()
+        {
+            var chukuBH = Request["chukuBH"] ?? "";
+            var flag = 0;
+            var tempdata = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ChukudanBH == chukuBH && p.IsDelete == false);
+            if (tempdata != null)
+            {
+                flag = 1;
+            }
+            return Json(flag);
+        }
+
     }
 }
 

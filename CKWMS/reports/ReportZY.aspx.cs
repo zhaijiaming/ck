@@ -122,9 +122,9 @@ namespace CKWMS.reports
                             rptView.LocalReport.ReportPath = "reports/rptTongxing.rdlc";
                             rptView.LocalReport.DataSources.Clear();
                             DataTable dttx = _rds.Tables["TongXingDan"];
-                            var _ckmxs = ob_wms_chukumxservice.LoadSortEntities(p => p.ChukuID == int.Parse(_outid) && p.IsDelete == false, false, p => p.Guige);
                             DataRow drtx;
                             long tx_ChukuSL = 0;
+                            var _ckmxs = ob_wms_chukumxservice.LoadSortEntities(p => p.ChukuID == int.Parse(_outid) && p.IsDelete == false, false, p => p.Guige);
                             foreach (wms_chukumx _mx in _ckmxs)
                             {
                                 drtx = dttx.NewRow();
@@ -499,41 +499,75 @@ namespace CKWMS.reports
                             rptView.LocalReport.ReportPath = "reports/rptRuKumingxi.rdlc";
                             rptView.LocalReport.DataSources.Clear();
                             DataTable dtRuKuMX = _rds.Tables["RuKumingxi"];
-                            var _RuKuMXs = ServiceFactory.wms_rukumxservice.LoadSortEntities(p => p.RukuID == int.Parse(_rkmxid) && p.IsDelete == false, true, s => s.ShangpinMC);
                             DataRow drRuKuMX;
                             long rkmx_DaohuoSLs = 0;
-                            foreach (wms_rukumx _pr in _RuKuMXs)
+                            try
                             {
-                                drRuKuMX = dtRuKuMX.NewRow();
-                                //drRuKuMX["ShangpinMC"] = _pr.ShangpinMC;
-                                drRuKuMX["Guige"] = _pr.Guige;
-                                drRuKuMX["Pihao"] = _pr.Pihao;
-                                drRuKuMX["Zhucezheng"] = _pr.Zhucezheng;
-                                //drRuKuMX["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShengchanRQ);
-                                drRuKuMX["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShixiaoRQ);
-                                drRuKuMX["DaohuoSL"] = _pr.DaohuoSL;
-                                //drRuKuMX["Chandi"] = _pr.Chandi;
-                                rkmx_DaohuoSLs += (long)_pr.DaohuoSL;
+                                //_RuKuMXs:'规格'&'批号'&'注册证'&'失效日期'&'到货数量'.
+                                var _RuKuMXs = ServiceFactory.wms_rukumxservice.LoadSortEntities(p => p.RukuID == int.Parse(_rkmxid) && p.IsDelete == false, true, s => s.ShangpinMC);
+                                foreach (wms_rukumx _pr in _RuKuMXs)
+                                {
+                                    drRuKuMX = dtRuKuMX.NewRow();
+                                    //drRuKuMX["ShangpinMC"] = _pr.ShangpinMC;
+                                    drRuKuMX["Guige"] = _pr.Guige;
+                                    drRuKuMX["Pihao"] = _pr.Pihao;
+                                    drRuKuMX["Zhucezheng"] = _pr.Zhucezheng;
+                                    //drRuKuMX["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShengchanRQ);
+                                    drRuKuMX["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShixiaoRQ == null ? "" : ((DateTime)_pr.ShixiaoRQ).ToString("yyyy/MM/dd"));
+                                    drRuKuMX["DaohuoSL"] = _pr.DaohuoSL;
+                                    //drRuKuMX["Chandi"] = _pr.Chandi;
+                                    rkmx_DaohuoSLs += (long)_pr.DaohuoSL;
 
-                                dtRuKuMX.Rows.Add(drRuKuMX);
+                                    dtRuKuMX.Rows.Add(drRuKuMX);
+                                }
                             }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["RuKumingxi"]));
 
                             DataTable dtRuKuMX_others = _rds.Tables["RuKumingxi_Title"];
                             DataRow drRuKuMX_others = dtRuKuMX_others.NewRow();
-                            wms_rukudan RuKuMX_others = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_rkmxid));
-                            base_weituokehu wtkhRuKuMX_others = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == RuKuMX_others.HuozhuID);
-                            drRuKuMX_others["RukudanBH"] = RuKuMX_others.RukudanBH;
-                            drRuKuMX_others["HuozhuID"] = wtkhRuKuMX_others.Kehumingcheng;
-                            drRuKuMX_others["RukuRQ"] = string.Format("{0:yyyy/MM/dd}", RuKuMX_others.RukuRQ);
-                            drRuKuMX_others["ChunyunYQ"] = RuKuMX_others.ChunyunYQ;
-                            base_gongyingshang RuKuMXgys = ServiceFactory.base_gongyingshangservice.GetEntityById(p => p.ID == RuKuMX_others.GongyingshangID);
-                            drRuKuMX_others["GongyingshangID"] = RuKuMXgys.Mingcheng;
-                            wms_cangku RuKuMX_ck = ServiceFactory.wms_cangkuservice.GetEntityById(p => p.ID == RuKuMX_others.CangkuID);
-                            drRuKuMX_others["CangkuID"] = RuKuMX_ck.Mingcheng;
-                            drRuKuMX_others["rkmxdhSLs"] = rkmx_DaohuoSLs;
+                            try
+                            {
+                                //wms_rukudan:'入库单编号'&'入库日期'&'储运要求'.
+                                wms_rukudan RuKuMX_others = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_rkmxid));
+                                if (RuKuMX_others != null)
+                                {
+                                    drRuKuMX_others["RukudanBH"] = RuKuMX_others.RukudanBH;
+                                    drRuKuMX_others["RukuRQ"] = string.Format("{0:yyyy/MM/dd}", RuKuMX_others.RukuRQ == null ? "" : ((DateTime)RuKuMX_others.RukuRQ).ToString("yyyy/MM/dd"));
+                                    drRuKuMX_others["ChunyunYQ"] = RuKuMX_others.ChunyunYQ;
+                                    //base_weituokehu:'货主'.
+                                    base_weituokehu wtkhRuKuMX_others = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == RuKuMX_others.HuozhuID);
+                                    if (wtkhRuKuMX_others != null)
+                                    {
+                                        drRuKuMX_others["HuozhuID"] = wtkhRuKuMX_others.Kehumingcheng;
+                                    }
+                                    //base_gongyingshang:'供应商'.
+                                    base_gongyingshang RuKuMXgys = ServiceFactory.base_gongyingshangservice.GetEntityById(p => p.ID == RuKuMX_others.GongyingshangID);
+                                    if (RuKuMXgys != null)
+                                    {
+                                        drRuKuMX_others["GongyingshangID"] = RuKuMXgys.Mingcheng;
+                                    }
+                                    //wms_cangku:'仓库名'
+                                    wms_cangku RuKuMX_ck = ServiceFactory.wms_cangkuservice.GetEntityById(p => p.ID == RuKuMX_others.CangkuID);
+                                    if (RuKuMX_ck != null)
+                                    {
+                                        drRuKuMX_others["CangkuID"] = RuKuMX_ck.Mingcheng;
+                                    }
+                                }
+                                //到货数量总计
+                                drRuKuMX_others["rkmxdhSLs"] = rkmx_DaohuoSLs;
 
-                            dtRuKuMX_others.Rows.Add(drRuKuMX_others);
+                                dtRuKuMX_others.Rows.Add(drRuKuMX_others);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["RuKumingxi_Title"]));
                             break;
                         case "zlgl_RukuYanshouBaogao":

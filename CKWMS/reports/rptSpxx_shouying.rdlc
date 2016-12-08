@@ -61,7 +61,7 @@
                               <Value>代码</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -117,7 +117,7 @@
                               <Value>商品名称</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -173,7 +173,7 @@
                               <Value>规格</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -229,7 +229,7 @@
                               <Value>注册证</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -285,7 +285,7 @@
                               <Value>注册证有效期</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -341,7 +341,7 @@
                               <Value>产地</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -397,7 +397,7 @@
                               <Value>质量部审核人</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -453,7 +453,7 @@
                               <Value>质量部审核说明</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -509,7 +509,7 @@
                               <Value>质量部负责人</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -565,7 +565,7 @@
                               <Value>质量负责人审核意见</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -621,7 +621,7 @@
                               <Value>是否在经营范围内</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -677,7 +677,7 @@
                               <Value>审核日期</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -733,7 +733,7 @@
                               <Value>供应商给委托方的授权有效期</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -794,7 +794,7 @@
                               <Value>=Fields!Daima.Value</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -849,7 +849,7 @@
                               <Value>=Fields!Mingcheng.Value</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -904,7 +904,7 @@
                               <Value>=Fields!Guige.Value</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -959,7 +959,7 @@
                               <Value>=Fields!ZhucezhengBH.Value</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1014,7 +1014,7 @@
                               <Value>=Fields!ZhucezhengYXQ.Value</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1069,7 +1069,7 @@
                               <Value>=Fields!Chandi.Value</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1124,7 +1124,7 @@
                               <Value>=Fields!Shenheren.Value</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1179,7 +1179,7 @@
                               <Value>=Fields!Shenheshuoming.Value</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1234,7 +1234,7 @@
                               <Value>=Fields!Fuzeren.Value</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1289,7 +1289,7 @@
                               <Value>=Fields!FuzerenSM.Value</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1344,7 +1344,7 @@
                               <Value>是</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1399,7 +1399,7 @@
                               <Value>=Fields!SQshijian.Value</Value>
                               <Style>
                                 <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1454,7 +1454,7 @@
                               <Value />
                               <Style>
                                 <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1546,7 +1546,7 @@
   <Width>10.79117in</Width>
   <Page>
     <PageHeader>
-      <Height>2.90807cm</Height>
+      <Height>3.0139cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1656,7 +1656,7 @@
           <Top>1.01451cm</Top>
           <Left>11.32668cm</Left>
           <Height>0.6cm</Height>
-          <Width>6.09833cm</Width>
+          <Width>8.00915cm</Width>
           <ZIndex>2</ZIndex>
           <Style>
             <Border />
@@ -1779,7 +1779,7 @@
           <Top>2.28746cm</Top>
           <Left>11.32668cm</Left>
           <Height>0.6cm</Height>
-          <Width>6.9379cm</Width>
+          <Width>8.00915cm</Width>
           <ZIndex>5</ZIndex>
           <Style>
             <Border />
@@ -1820,7 +1820,7 @@
           <Top>1.65219cm</Top>
           <Left>11.32668cm</Left>
           <Height>0.6cm</Height>
-          <Width>6.38228cm</Width>
+          <Width>8.00915cm</Width>
           <ZIndex>6</ZIndex>
           <Style>
             <Border />
@@ -1859,7 +1859,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox25</rd:DefaultName>
           <Top>2.24978cm</Top>
-          <Left>20.79751cm</Left>
+          <Left>20.03022cm</Left>
           <Height>0.6cm</Height>
           <Width>6.07187cm</Width>
           <ZIndex>7</ZIndex>
@@ -1900,9 +1900,9 @@
           </Paragraphs>
           <rd:DefaultName>Textbox25</rd:DefaultName>
           <Top>1.61451cm</Top>
-          <Left>20.79751cm</Left>
+          <Left>20.03022cm</Left>
           <Height>0.6cm</Height>
-          <Width>6.07187cm</Width>
+          <Width>6.97145cm</Width>
           <ZIndex>8</ZIndex>
           <Style>
             <Border />
@@ -1941,7 +1941,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox25</rd:DefaultName>
           <Top>1.01451cm</Top>
-          <Left>20.79751cm</Left>
+          <Left>20.03022cm</Left>
           <Height>0.6cm</Height>
           <Width>6.07187cm</Width>
           <ZIndex>9</ZIndex>
@@ -1962,11 +1962,11 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>2.55976cm</Height>
+      <Height>2.58622cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
-        <Textbox Name="Textbox20">
+        <Textbox Name="PageNumber">
           <CanGrow>true</CanGrow>
           <KeepTogether>true</KeepTogether>
           <Paragraphs>
@@ -1979,145 +1979,17 @@
                     <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
-              </TextRuns>
-              <Style>
-                <TextAlign>Center</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox18</rd:DefaultName>
-          <Top>2.1185cm</Top>
-          <Left>12.92535cm</Left>
-          <Height>0.44125cm</Height>
-          <Width>0.40979cm</Width>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <VerticalAlign>Middle</VerticalAlign>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="Textbox22">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>页</Value>
-                  <Style>
-                    <FontFamily>宋体</FontFamily>
-                    <FontSize>8pt</FontSize>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style>
-                <TextAlign>Center</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox18</rd:DefaultName>
-          <Top>2.1185cm</Top>
-          <Left>13.37042cm</Left>
-          <Height>0.44125cm</Height>
-          <Width>0.40979cm</Width>
-          <ZIndex>1</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <VerticalAlign>Middle</VerticalAlign>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="Textbox24">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>页</Value>
-                  <Style>
-                    <FontFamily>宋体</FontFamily>
-                    <FontSize>8pt</FontSize>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style>
-                <TextAlign>Center</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox18</rd:DefaultName>
-          <Top>2.1185cm</Top>
-          <Left>14.225cm</Left>
-          <Height>0.44125cm</Height>
-          <Width>0.40979cm</Width>
-          <ZIndex>2</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <VerticalAlign>Middle</VerticalAlign>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="Textbox35">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>共</Value>
-                  <Style>
-                    <FontFamily>宋体</FontFamily>
-                    <FontSize>8pt</FontSize>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style>
-                <TextAlign>Center</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox18</rd:DefaultName>
-          <Top>2.1185cm</Top>
-          <Left>13.77993cm</Left>
-          <Height>0.44125cm</Height>
-          <Width>0.40979cm</Width>
-          <ZIndex>3</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <VerticalAlign>Middle</VerticalAlign>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="PageNumber">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
                 <TextRun>
                   <Value>=Globals!PageNumber</Value>
                   <Style>
+                    <FontFamily>宋体</FontFamily>
+                    <FontSize>8pt</FontSize>
+                  </Style>
+                </TextRun>
+                <TextRun>
+                  <Value>页</Value>
+                  <Style>
+                    <FontFamily>宋体</FontFamily>
                     <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
@@ -2128,11 +2000,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>PageNumber</rd:DefaultName>
-          <Top>2.1185cm</Top>
-          <Left>12.92535cm</Left>
+          <Top>2.14497cm</Top>
+          <Left>12.54156cm</Left>
           <Height>0.44125cm</Height>
-          <Width>0.85486cm</Width>
-          <ZIndex>4</ZIndex>
+          <Width>1.01333cm</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -2151,8 +2022,23 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
+                  <Value>共</Value>
+                  <Style>
+                    <FontFamily>宋体</FontFamily>
+                    <FontSize>8pt</FontSize>
+                  </Style>
+                </TextRun>
+                <TextRun>
                   <Value>=Globals!OverallTotalPages</Value>
                   <Style>
+                    <FontFamily>宋体</FontFamily>
+                    <FontSize>8pt</FontSize>
+                  </Style>
+                </TextRun>
+                <TextRun>
+                  <Value>页</Value>
+                  <Style>
+                    <FontFamily>宋体</FontFamily>
                     <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
@@ -2163,11 +2049,11 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>OverallTotalPages</rd:DefaultName>
-          <Top>2.1185cm</Top>
-          <Left>13.77993cm</Left>
+          <Top>2.14497cm</Top>
+          <Left>13.59017cm</Left>
           <Height>0.44125cm</Height>
-          <Width>0.85486cm</Width>
-          <ZIndex>5</ZIndex>
+          <Width>1.01333cm</Width>
+          <ZIndex>1</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>

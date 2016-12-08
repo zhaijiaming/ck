@@ -78,6 +78,10 @@ namespace CKWMS.Models
         public string QiyeDZ { get; set; }
         [Display(Name = "送货地址")]
         public string SonghuoDZ { get; set; }
+        [Display(Name = "联系人")]
+        public string Lianxiren { get; set; }
+        [Display(Name = "联系电话")]
+        public string LianxiDH { get; set; }
     }
 }
 
