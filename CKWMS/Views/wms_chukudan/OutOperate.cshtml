@@ -120,7 +120,7 @@
                         $("#pl_kd").hide();
                         //location.reload();
                         $("#mydatatable tbody tr input[type=checkbox]").each(function () {
-                            if ($(this).val()==$("#ck").val()) {
+                            if ($(this).val() == $("#ck").val()) {
                                 $(this).data("dh", $("#ydhm").val());
                                 $(this).data("js", $("#JiesuanFS").val());
                                 $(this).data("ys", $("#YunsongFS").val());
@@ -190,7 +190,9 @@
         })
         $("#pl_xlm_cancel").click(function () {
             $("#pl_xlm").hide();
-            //getCount();
+        });
+        $("#pl_xlm_check").click(function () {
+            getCount();
         });
         $("#pl_xlm_ok").click(function () {
             //alert($("#xlm").val());
@@ -229,11 +231,14 @@
         });
         $("#pl_xlm_clear").click(function () {
             $("#xlm").val("");
+            $("#totalnum").html("0");
         });
         $(".icon-barcode").click(function () {
             var _sr = $(this).parent().parent();
             $("#ck").val(_sr.find("input[type=checkbox]").val());
             $("#ckd").val(_sr.find("td").eq(1).html());
+            $("#xlm").val("");
+            $("#totalnum").html("0");
             $("#pl_xlm").show();
         });
         $("#pl_ok").click(function () {
@@ -284,13 +289,21 @@
         });
     });
     function getCount() {
-        var range = document.getElementById("xlm");
-        var rect = range.getClientRects();
-        alert(rect.length);
-
         var p = $("#xlm").val();
-        alert(p);
-        alert((p.split()).length);
+        var pp = p.split("\n");
+        $("#totalnum").html(pp.length);
+        for (var k in pp) {
+            var ps = pp[k];
+            if (ps.length > 0) {
+                for (var j in pp) {
+                    if (j > k) {
+                        if (ps == pp[j])
+                            alert(ps);
+                    }
+                }
+            }
+        }
+        //alert((p.split()).length);
     }
     function AddInfo() {
         location.href = "/wms_chukudan/Add";
@@ -643,7 +656,7 @@
                         <td>@item.KehuDH</td>
                         <td>@item.KDdanhao</td>
                         <td>@Html.GetCommonValue_ID("出库状态", (int)item.JihuaZT)</td>
-                        <td title="@item.Beizhu">@string.Format("{0:s}",item.Beizhu==null?"":item.Beizhu.Length>12?item.Beizhu.Substring(0,12):item.Beizhu)</td>
+                        <td title="@item.Beizhu">@string.Format("{0:s}", item.Beizhu == null ? "" : item.Beizhu.Length > 12 ? item.Beizhu.Substring(0, 12) : item.Beizhu)</td>
                         <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
                         <td><a href="/wms_chukumx/GetOutDetail/@item.ID" target="_blank"><i class="icon-list"></i></a></td>
                         <td><i class="icon-edit-sign"></i></td>
@@ -712,8 +725,12 @@
         <h3 class="panel-title">登记出库单的序列码<button id="pl_xlm_close" class="pull-right">X</button></h3>
     </div>
     <div class="panel-body">
-        <div class="center">
-            <div class="col-sm-4"><p class="btn default" id="pl_xlm_clear"><i class="icon-ok"></i>清除</p></div>
+        <div>
+            <div class="col-sm-4"><p>总数：<label id="totalnum"></label></p></div>
+            <div class="col-sm-2">
+                <p class="btn default" id="pl_xlm_check"><i class="icon-check-minus"></i>复核</p>                
+            </div>
+            <div class="col-sm-2"><p class="btn default" id="pl_xlm_clear"><i class="icon-ok"></i>清除</p></div>
             <div class="col-sm-2"><p class="btn default" id="pl_xlm_ok"><i class="icon-ok"></i>确定</p></div>
             <div class="col-sm-2"><p class="btn default" id="pl_xlm_cancel"><i class="icon-search"></i>取消</p></div>
         </div>
