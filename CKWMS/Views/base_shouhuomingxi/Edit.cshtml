@@ -8,10 +8,11 @@
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
         $(document).ready(function () {
             $("#date_makedate").datepicker();
-
             //设置默认地址
             $("#Default_dizhi").click(function () {
                 var dizhi = $("#Dizhi").val();
+                var Lianxiren = $("#Lianxiren").val();
+                var Lianxidianhua = $("#Lianxidianhua").val();
                 var _id = $("#shouhuodanwei").val();
                 if (dizhi == "") {
                     alert("您的地址为空，请重新填写！");
@@ -21,6 +22,8 @@
                         "/base_shouhuodanwei/UpdateDz",
                         {
                             songhuodz: dizhi,
+                            Lianxiren: Lianxiren,
+                            Lianxidianhua: Lianxidianhua,
                             id: _id
                         },
                         function (data) {
@@ -33,8 +36,11 @@
             var biaoshi = $("#biaoshi").val();
             //alert(biaoshi);
             if (biaoshi == "1") {
+                $("#Default_dizhi").remove();
                 $("#submit_dizhi").click(function () {
                     var dizhi = $("#Dizhi").val();
+                    var Lianxiren = $("#Lianxiren").val();
+                    var Lianxidianhua = $("#Lianxidianhua").val();
                     var _id = $("#shouhuodanwei").val();
                     if (dizhi == "") {
                         alert("您的地址为空，请重新填写！");
@@ -44,6 +50,8 @@
                             "/base_shouhuodanwei/UpdateDz",
                             {
                                 songhuodz: dizhi,
+                                Lianxiren: Lianxiren,
+                                Lianxidianhua: Lianxidianhua,
                                 id: _id
                             },
                             function (data) {
@@ -106,6 +114,7 @@
         <input type="hidden" name="MakeDate" value=@string.Format("{0:yyyy-MM-dd}",DateTime.Now) />
         <input type="hidden" id="biaoshi" value="@ViewBag.biaoshi" />
         <input type="hidden" id="xsr" value="@ViewData.Model.Xiaoshouren" />
+        <input type="hidden" class="form-control" name="shouhuofangid" id="shouhuodanwei" value="@ViewData.Model.ShouhuofangID">
         <div class="page-header">
             <p>
                 <button type="submit" id="submit_dizhi" class="btn btn-default"><i class="icon-save"></i>更新</button>
@@ -116,9 +125,9 @@
         <div class="container">
             <div class="form-group">
                 <label for="name" class="col-sm-2">收货单位</label>
-                <div class="col-sm-10" style="height:34px;">
-                    <input type="hidden" class="form-control" name="shouhuofangid" id="shouhuodanwei" value="@ViewData.Model.ShouhuofangID">
-                    @Html.GetDataValue_ID("收货单位", "",ViewData.Model.ShouhuofangID)
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" readonly value="@Html.GetDataValue_ID("收货单位", "",ViewData.Model.ShouhuofangID)" />
+                    
                 </div>
             </div>
             @*销售人*@

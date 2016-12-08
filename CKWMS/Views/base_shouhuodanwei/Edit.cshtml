@@ -58,18 +58,19 @@
                 }
             });
         });
-
+        //默认地址删除
         $("#btn_shdwDel").click(function () {
             var _shmx = "";
             $("#shouhuomingxi_shdw tr input[type = checkbox]").each(function () {
                 if(this.checked){
                     _shmx = _shmx + $(this).val() + ",";
-
                     //默认地址删除
                     var mxdizhi = $(this).parent().parent().parent().siblings().find(".dizhi").text();
                     var dwdizhi = $("#songhuodz").val();
                     if (mxdizhi == dwdizhi) {
                         $("#songhuodz").val("");
+                        $("#Lianxiren").val("");
+                        $("#LianxiDH").val("");
                     }
                 }
                 
@@ -280,19 +281,30 @@
         });
         //默认地址
         $("#btn_Default").click(function () {
-            var num = $("input[type=checkbox]:checked").length;
+            var flag = 0;
+            var num = $("#shouhuomingxi_shdw input[type=checkbox]:checked").length;
             if (num > 1) {
                 alert("您只能选取一个地址做为默认地址！");
-            } else if (num == "") {
+            } else if (num == "0") {
                 alert("您没有选择的默认地址！");
             } else {
                 $("#shouhuomingxi_shdw tr input[type = checkbox]").each(function () {
                     if (this.checked) {
                         var mxdizhi = $(this).parent().parent().parent().siblings().find(".dizhi").text();
+                        var get_Lianxiren = $(this).parent().parent().parent().siblings().find(".get_Lianxiren").text();
+                        var get_Lianxidianhua = $(this).parent().parent().parent().siblings().find(".get_Lianxidianhua").text();
                         $("#songhuodz").val(mxdizhi);
+                        $("#Lianxiren").val(get_Lianxiren);
+                        $("#LianxiDH").val(get_Lianxidianhua);
+                        flag = 1;
                     };
                 });
-            }           
+                if (flag == 1) {
+                    alert("默认地址设置成功！");
+                } else {
+                    alert("默认地址设置失败！");
+                }
+            }
         });
     });
 
@@ -429,11 +441,11 @@
                            //shmxdata = shmxdata + data[i].ShouhuofangID;
                            //shmxdata = shmxdata + '</td><td>';
                            shmxdata = shmxdata + data[i].Dizhi;
-                           shmxdata = shmxdata + '</span></td><td>';
+                           shmxdata = shmxdata + '</span></td><td><span class="get_Lianxiren">';
                            shmxdata = shmxdata + data[i].Lianxiren;
-                           shmxdata = shmxdata + '</td><td>';
+                           shmxdata = shmxdata + '</span></td><td><span class="get_Lianxidianhua">';
                            shmxdata = shmxdata + data[i].Lianxidianhua;
-                           shmxdata = shmxdata + '</td><td>';
+                           shmxdata = shmxdata + '</span></td><td>';
                            //shmxdata = shmxdata + data[i].XiaoshouID;
                            //shmxdata = shmxdata + '</td><td>';
                            shmxdata = shmxdata + data[i].Xiaoshouren;
@@ -706,16 +718,18 @@
                     <input type="text" readonly class="form-control" id="songhuodz" name="songhuodz" value="@item.SonghuoDZ">
                 </div>
             </div>
+            @*LianxiDH*@
             <div class="form-group">
-                @Html.LabelFor(m => m.Lianxiren, new { @class = "control-label col-sm-2" })
+                <label class="col-sm-2">联系人</label>
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Lianxiren, new { @class = "form-control" })
+                    <input type="text" readonly id="Lianxiren" class="form-control" name="Lianxiren" value="@item.Lianxiren">
                 </div>
             </div>
+            @*联系电话*@
             <div class="form-group">
-                @Html.LabelFor(m => m.LianxiDH, new { @class = "control-label col-sm-2" })
+                <label class="col-sm-2">联系电话</label>
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.LianxiDH, new { @class = "form-control" })
+                    <input type="text" readonly id="LianxiDH" class="form-control" name="LianxiDH" value="@item.LianxiDH">
                 </div>
             </div>
             @*录入日期*@

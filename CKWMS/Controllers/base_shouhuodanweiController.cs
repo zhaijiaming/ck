@@ -337,6 +337,8 @@ namespace CKWMS.Controllers
                 shenchasf = "true";
             if (hezuosf.IndexOf("true") > -1)
                 hezuosf = "true";
+            string Lianxiren = Request["Lianxiren"] ?? "";
+            string LianxiDH = Request["LianxiDH"] ?? "";
 
             int uid = int.Parse(id);
             try
@@ -367,6 +369,8 @@ namespace CKWMS.Controllers
                 p.SonghuoDZ = songhuodz.Trim();
                 p.ShenchaSF = shenchasf == "" ? false : Boolean.Parse(shenchasf);
                 p.HezuoSF = hezuosf == "" ? false : Boolean.Parse(hezuosf);
+                p.Lianxiren = Lianxiren.Trim();
+                p.LianxiDH = LianxiDH.Trim();
 
                 ob_base_shouhuodanweiservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;
@@ -383,6 +387,8 @@ namespace CKWMS.Controllers
         {
             string id = Request["id"] ?? "";
             string songhuodz = Request["songhuodz"] ?? "";
+            string Lianxiren = Request["Lianxiren"] ?? "";
+            string Lianxidianhua = Request["Lianxidianhua"] ?? "";
 
             int uid = int.Parse(id);
             try
@@ -390,6 +396,8 @@ namespace CKWMS.Controllers
                 base_shouhuodanwei p = ob_base_shouhuodanweiservice.GetEntityById(base_shouhuodanwei => base_shouhuodanwei.ID == uid);
                 
                 p.SonghuoDZ = songhuodz.Trim();
+                p.Lianxiren = Lianxiren.Trim();
+                p.LianxiDH = Lianxidianhua.Trim();
                 ob_base_shouhuodanweiservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;
             }
