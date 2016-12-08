@@ -124,51 +124,71 @@ namespace CKWMS.reports
                             DataTable dttx = _rds.Tables["TongXingDan"];
                             DataRow drtx;
                             long tx_ChukuSL = 0;
-                            var _ckmxs = ob_wms_chukumxservice.LoadSortEntities(p => p.ChukuID == int.Parse(_outid) && p.IsDelete == false, false, p => p.Guige);
-                            foreach (wms_chukumx _mx in _ckmxs)
+                            try
                             {
-                                drtx = dttx.NewRow();
-                                drtx["Guige"] = _mx.Guige;
-                                drtx["Changjia"] = _mx.Changjia;
-                                drtx["ShangpinMC"] = _mx.ShangpinMC;
-                                drtx["Pihao"] = _mx.Pihao;
-                                drtx["Xuliema"] = _mx.Xuliema;
-                                drtx["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _mx.ShixiaoRQ);
-                                drtx["Zhucezheng"] = _mx.Zhucezheng;
-                                drtx["ChukuSL"] = _mx.ChukuSL;
-                                drtx["JibenDW"] = _mx.JibenDW;
-                                wms_chukudan _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid));
-                                if (_ckd != null)
+                                var _ckmxs = ob_wms_chukumxservice.LoadSortEntities(p => p.ChukuID == int.Parse(_outid) && p.IsDelete == false, false, p => p.Guige);
+                                foreach (wms_chukumx _mx in _ckmxs)
                                 {
-                                    drtx["ChunyunYQ"] = _ckd.ChunyunYQ;
-                                    drtx["Beizhu"] = _ckd.Beizhu;
-                                }
-                                base_shengchanqiye _scqy = ServiceFactory.base_shengchanqiyeservice.GetEntityById(p => p.Qiyemingcheng == _mx.Changjia);
-                                if (_scqy != null)
-                                {
-                                    drtx["ShengchanxukeBH"] = _scqy.ShengchanxukeBH;
-                                    drtx["BeianBH"] = _scqy.BeianBH;
-                                }
-                                tx_ChukuSL += (long)_mx.ChukuSL;
+                                    drtx = dttx.NewRow();
+                                    drtx["Guige"] = _mx.Guige;
+                                    drtx["Changjia"] = _mx.Changjia;
+                                    drtx["ShangpinMC"] = _mx.ShangpinMC;
+                                    drtx["Pihao"] = _mx.Pihao;
+                                    drtx["Xuliema"] = _mx.Xuliema;
+                                    drtx["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _mx.ShixiaoRQ == null ? "" : ((DateTime)_mx.ShixiaoRQ).ToString("yyyy/MM/dd"));
+                                    drtx["Zhucezheng"] = _mx.Zhucezheng;
+                                    drtx["ChukuSL"] = _mx.ChukuSL;
+                                    drtx["JibenDW"] = _mx.JibenDW;
+                                    wms_chukudan _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid) && p.IsDelete == false);
+                                    if (_ckd != null)
+                                    {
+                                        drtx["ChunyunYQ"] = _ckd.ChunyunYQ;
+                                        drtx["Beizhu"] = _ckd.Beizhu;
+                                    }
+                                    base_shengchanqiye _scqy = ServiceFactory.base_shengchanqiyeservice.GetEntityById(p => p.Qiyemingcheng == _mx.Changjia && p.IsDelete == false);
+                                    if (_scqy != null)
+                                    {
+                                        drtx["ShengchanxukeBH"] = _scqy.ShengchanxukeBH;
+                                        drtx["BeianBH"] = _scqy.BeianBH;
+                                    }
+                                    tx_ChukuSL += (long)_mx.ChukuSL;
 
-                                dttx.Rows.Add(drtx);
+                                    dttx.Rows.Add(drtx);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
                             }
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["TongXingDan"]));
-
-                            wms_chukudan ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid));
+                            
+                            //页眉&页脚
                             DataTable dtckd = _rds.Tables["TongXingDan_Title"];
                             DataRow drckd = dtckd.NewRow();
-                            drckd["ChukudanBH"] = ckd.ChukudanBH;
-                            drckd["KehuMC"] = ckd.KehuMC;
-                            drckd["Yunsongdizhi"] = ckd.Yunsongdizhi;
-                            drckd["ChukuRQ"] = string.Format("{0:yyyy/MM/dd}", ckd.ChukuRQ);
-                            drckd["Lianxiren"] = ckd.Lianxiren;
-                            drckd["LianxiDH"] = ckd.LianxiDH;
-                            drckd["txckSLs"] = tx_ChukuSL;
-                            base_weituokehu wtkhdata1 = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == ckd.HuozhuID);
-                            drckd["HuozhuID"] = wtkhdata1.Kehumingcheng;
-
-                            dtckd.Rows.Add(drckd);
+                            try
+                            {
+                                wms_chukudan ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid) && p.IsDelete == false);
+                                if (ckd != null)
+                                {
+                                    drckd["ChukudanBH"] = ckd.ChukudanBH;
+                                    drckd["KehuMC"] = ckd.KehuMC;
+                                    drckd["Yunsongdizhi"] = ckd.Yunsongdizhi;
+                                    drckd["ChukuRQ"] = string.Format("{0:yyyy/MM/dd}", ckd.ChukuRQ == null ? "" : ((DateTime)ckd.ChukuRQ).ToString("yyyy/MM/dd"));
+                                    drckd["Lianxiren"] = ckd.Lianxiren;
+                                    drckd["LianxiDH"] = ckd.LianxiDH;
+                                    base_weituokehu wtkhdata = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == ckd.HuozhuID && p.IsDelete == false);
+                                    if (wtkhdata != null)
+                                    {
+                                        drckd["HuozhuID"] = wtkhdata.Kehumingcheng;
+                                    }
+                                }
+                                drckd["txckSLs"] = tx_ChukuSL;
+                                dtckd.Rows.Add(drckd);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["TongXingDan_Title"]));
                             break;
                         case "CKFuheBaoGaoDan":

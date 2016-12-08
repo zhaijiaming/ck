@@ -31,17 +31,17 @@
         else {
             $(".HezuoSF").attr("checked", false);
         }
-        //获取收货信息
+        //获取收货明细信息
         var shdw_id = $("#shdw_id").val();
         var huozhuid = $("#huozhuid").val();
         if (shdw_id.length > 0) {
             GetShouhuomingxiData(shdw_id);
         };
-
+        //添加地址
         $("#btn_shdwAdd").click(function () {
             window.open("/base_shouhuomingxi/Add?getId=" + shdw_id + "&" + "huozhuid=" + huozhuid, "_self");
         });
-
+        //地址编辑
         $("#btn_shdwEdit").click(function () {
             $("#shouhuomingxi_shdw tr input[type=checkbox]").each(function () {
                 //对默认地址的操作
@@ -704,6 +704,18 @@
                 <div class="col-sm-10">
                     @*@Html.TextBoxFor(m => m.SonghuoDZ, new { @class = "form-control" })*@
                     <input type="text" readonly class="form-control" id="songhuodz" name="songhuodz" value="@item.SonghuoDZ">
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Lianxiren, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.Lianxiren, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.LianxiDH, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.LianxiDH, new { @class = "form-control" })
                 </div>
             </div>
             @*录入日期*@

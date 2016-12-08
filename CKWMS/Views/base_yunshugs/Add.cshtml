@@ -8,6 +8,18 @@
 <script type="text/javascript">
     try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
     $(document).ready(function () {
+        //提交验证
+        $("#bt_save").click(function () {
+            if ($("#Jiancheng").val() == null || $("#Jiancheng").val() == "") {
+                alert("请输入简称。");
+            } else if ($("#Mingcheng").val() == null || $("#Mingcheng").val() == "") {
+                alert("请输入名称。");
+            } else if ($("#Leixing").val() == null || $("#Leixing").val() == "") {
+                alert("请选择类别。");
+            } else {
+                $("#ysgs_form").submit();
+            }
+        });
     });
 </script>
 
@@ -25,40 +37,40 @@
 </div>
 
 <div class="page-content">
-    @using (Html.BeginForm("Save", "base_yunshugs", FormMethod.Post, new { @role = "form" }))
+    @using (Html.BeginForm("Save", "base_yunshugs", FormMethod.Post, new { @role = "form", id = "ysgs_form" }))
     {
         @Html.AntiForgeryToken()
         <input type="hidden" name="id" />
         <input type="hidden" id="MakeMan" name="MakeMan" value=@Session["user_id"] />
         <div class="page-header">
             <p>
-                <button type="submit" class="btn btn-default"><i class="icon-save"></i>保存</button>
+                <button type="button" id="bt_save" class="btn btn-default"><i class="icon-save"></i>保存</button>
                 <button type="button" class="btn btn-default" onclick="javascript:history.back(-1); "><i class="icon-hand-left"></i>返回</button>
             </p>
         </div>
         <div class="container">
             <div class="form-group">
-                @Html.LabelFor(m => m.Jiancheng, new { @class = "control-label col-sm-2" })
+                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>简称</label>
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.Jiancheng, new { @class = "form-control" })
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.Mingcheng, new { @class = "control-label col-sm-2" })
+                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>名称</label>
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.Mingcheng, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>类型</label>
+                <div class="col-sm-10">
+                    @Html.SelectList_Common("Leixing", "运输公司类型")
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.Miaoshu, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.Miaoshu, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Leixing, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Leixing, new { @class = "form-control" })
                 </div>
             </div>
             <div class="form-group">
@@ -111,19 +123,19 @@
                     </span>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="display:none;">
                 @Html.LabelFor(m => m.Col1, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.Col1, new { @class = "form-control" })
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="display:none;">
                 @Html.LabelFor(m => m.Col2, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.Col2, new { @class = "form-control" })
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="display:none;">
                 @Html.LabelFor(m => m.Col3, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.Col3, new { @class = "form-control" })
