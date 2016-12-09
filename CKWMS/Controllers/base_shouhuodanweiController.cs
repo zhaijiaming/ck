@@ -380,7 +380,7 @@ namespace CKWMS.Controllers
                 Console.WriteLine(ex.Message);
                 ViewBag.saveok = ViewAddTag.ModifyNo;
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Edit", new { id = int.Parse(id) });
         }
 
         public JsonResult UpdateDz()
