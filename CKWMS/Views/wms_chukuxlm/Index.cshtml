@@ -27,9 +27,15 @@
     if (_searchcondition == null || _searchcondition == "")
     {
         SearchConditionModel scm = new SearchConditionModel();
-        scm.ItemCode = "ChukuID";
+        scm.ItemCode = "Chukudan";
         scm.ItemTitle = "出库单";
-        scm.ItemType = "System.Int32";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "Xuliema";
+        scm.ItemTitle = "序列码";
+        scm.ItemType = "System.String";
         scms.Add(scm);
     }
     else
@@ -38,14 +44,26 @@
         if (scs.Length > 0)
         {
             SearchConditionModel scm = new SearchConditionModel();
-            scm.ItemCode = "ChukuID";
+            scm.ItemCode = "Chukudan";
             scm.ItemTitle = "出库单";
-            scm.ItemType = "System.Int32";
+            scm.ItemType = "System.String";
             if (scs.Length > 1)
             {
                 scm.ItemValue = scs[0].Split(',')[1];
                 scm.ItemOpValue = scs[0].Split(',')[2];
                 scm.ItemJion = scs[0].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "Xuliema";
+            scm.ItemTitle = "序列码";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[1].Split(',')[1];
+                scm.ItemOpValue = scs[1].Split(',')[2];
+                scm.ItemJion = scs[1].Split(',')[3];
             }
             scms.Add(scm);
         }
@@ -97,7 +115,7 @@
                         <td>@Html.GetOtherValue_ID("出库单客户名称", (int)item.ChukuID)</td>
                         <td>@item.Chukudan</td>
                         <td>@item.Xuliema</td>
-                        <td>@string.Format("{0:yyyy-MM-dd}",item.MakeDate)</td>
+                        <td>@string.Format("{0:yyyy/MM/dd}",item.MakeDate==null ? "" : ((DateTime)item.MakeDate).ToString("yyyy/MM/dd"))</td>
                         <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
                     </tr>
                 }

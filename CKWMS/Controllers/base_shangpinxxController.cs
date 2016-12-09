@@ -161,6 +161,21 @@ namespace CKWMS.Controllers
                                 }
                             }
                             break;
+                        case "gongyingid":
+                            string gongyingid = scld[1];
+                            string gongyingidequal = scld[2];
+                            string gongyingidand = scld[3];
+                            if (!string.IsNullOrEmpty(gongyingid))
+                            {
+                                if (gongyingidequal.Equals("="))
+                                {
+                                    if (gongyingidand.Equals("and"))
+                                        where = where.And(p => p.GongyingID == int.Parse(gongyingid));
+                                    else
+                                        where = where.Or(p => p.GongyingID == int.Parse(gongyingid));
+                                }
+                            }
+                            break;
                         default:
                             break;
                     }
@@ -194,6 +209,14 @@ namespace CKWMS.Controllers
             string mingcheng = Request["mingcheng"] ?? "";
             string mingchengequal = Request["mingchengequal"] ?? "";
             string mingchengand = Request["mingchengand"] ?? "";
+            //zhucezhengbh
+            string zhucezhengbh = Request["zhucezhengbh"] ?? "";
+            string zhucezhengbhequal = Request["zhucezhengbhequal"] ?? "";
+            string zhucezhengbhand = Request["zhucezhengbhand"] ?? "";
+            //gongyingid
+            string gongyingid = Request["gongyingid"] ?? "";
+            string gongyingidequal = Request["gongyingidequal"] ?? "";
+            string gongyingidand = Request["gongyingidand"] ?? "";
             //shouying
             string shouying = Request["shouying"] ?? "";
             string shouyingequal = Request["shouyingequal"] ?? "";
@@ -202,10 +225,6 @@ namespace CKWMS.Controllers
             {
                 shouying = "";
             }
-            //zhucezhengbh
-            string zhucezhengbh = Request["zhucezhengbh"] ?? "";
-            string zhucezhengbhequal = Request["zhucezhengbhequal"] ?? "";
-            string zhucezhengbhand = Request["zhucezhengbhand"] ?? "";
             //shenchasf
             string shenchasf = Request["shenchasf"] ?? "";
             string shenchasfequal = Request["shenchasfequal"] ?? "";
@@ -288,21 +307,6 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", mingcheng, mingchengequal, mingchengand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", "", mingchengequal, mingchengand);
-                //shouying
-                if (!string.IsNullOrEmpty(shouying))
-                {
-                    if (shouyingequal.Equals("="))
-                    {
-                        if (shouyingand.Equals("and"))
-                            where = where.And(p => p.Shouying == int.Parse(shouying));
-                        else
-                            where = where.Or(p => p.Shouying == int.Parse(shouying));
-                    }
-                }
-                if (!string.IsNullOrEmpty(shouying))
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouying", shouying, shouyingequal, shouyingand);
-                else
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouying", "", shouyingequal, shouyingand);
                 //zhucezhengbh
                 if (!string.IsNullOrEmpty(zhucezhengbh))
                 {
@@ -325,7 +329,47 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "zhucezhengbh", zhucezhengbh, zhucezhengbhequal, zhucezhengbhand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "zhucezhengbh", "", zhucezhengbhequal, zhucezhengbhand);
+                //gongyingid
+                if (!string.IsNullOrEmpty(gongyingid))
+                {
+                    if (gongyingidequal.Equals("="))
+                    {
+                        if (gongyingidand.Equals("and"))
+                            where = where.And(p => p.GongyingID == int.Parse(gongyingid));
+                        else
+                            where = where.Or(p => p.GongyingID == int.Parse(gongyingid));
+                    }
+                }
+                if (!string.IsNullOrEmpty(gongyingid))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "gongyingid", gongyingid, gongyingidequal, gongyingidand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "gongyingid", "", gongyingidequal, gongyingidand);
+                //shouying
+                if (!string.IsNullOrEmpty(shouying))
+                {
+                    if (shouyingequal.Equals("="))
+                    {
+                        if (shouyingand.Equals("and"))
+                            where = where.And(p => p.Shouying == int.Parse(shouying));
+                        else
+                            where = where.Or(p => p.Shouying == int.Parse(shouying));
+                    }
+                }
+                if (!string.IsNullOrEmpty(shouying))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouying", shouying, shouyingequal, shouyingand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouying", "", shouyingequal, shouyingand);
                 //shenchasf
+                if (!string.IsNullOrEmpty(shenchasf))
+                {
+                    if (shenchasfequal.Equals("="))
+                    {
+                        if (shenchasfand.Equals("and"))
+                            where = where.And(p => p.ShenchaSF == bool.Parse(shenchasf));
+                        else
+                            where = where.Or(p => p.ShenchaSF == bool.Parse(shenchasf));
+                    }
+                }
                 if (!string.IsNullOrEmpty(shenchasf))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shenchasf", shenchasf, shenchasfequal, shenchasfand);
                 else
@@ -394,21 +438,6 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", mingcheng, mingchengequal, mingchengand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", "", mingchengequal, mingchengand);
-                //shouying
-                if (!string.IsNullOrEmpty(shouying))
-                {
-                    if (shouyingequal.Equals("="))
-                    {
-                        if (shouyingand.Equals("and"))
-                            where = where.And(p => p.Shouying == int.Parse(shouying));
-                        else
-                            where = where.Or(p => p.Shouying == int.Parse(shouying));
-                    }
-                }
-                if (!string.IsNullOrEmpty(shouying))
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouying", shouying, shouyingequal, shouyingand);
-                else
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouying", "", shouyingequal, shouyingand);
                 //zhucezhengbh
                 if (!string.IsNullOrEmpty(zhucezhengbh))
                 {
@@ -431,6 +460,36 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "zhucezhengbh", zhucezhengbh, zhucezhengbhequal, zhucezhengbhand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "zhucezhengbh", "", zhucezhengbhequal, zhucezhengbhand);
+                //gongyingid
+                if (!string.IsNullOrEmpty(gongyingid))
+                {
+                    if (gongyingidequal.Equals("="))
+                    {
+                        if (gongyingidand.Equals("and"))
+                            where = where.And(p => p.GongyingID == int.Parse(gongyingid));
+                        else
+                            where = where.Or(p => p.GongyingID == int.Parse(gongyingid));
+                    }
+                }
+                if (!string.IsNullOrEmpty(gongyingid))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "gongyingid", gongyingid, gongyingidequal, gongyingidand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "gongyingid", "", gongyingidequal, gongyingidand);
+                //shouying
+                if (!string.IsNullOrEmpty(shouying))
+                {
+                    if (shouyingequal.Equals("="))
+                    {
+                        if (shouyingand.Equals("and"))
+                            where = where.And(p => p.Shouying == int.Parse(shouying));
+                        else
+                            where = where.Or(p => p.Shouying == int.Parse(shouying));
+                    }
+                }
+                if (!string.IsNullOrEmpty(shouying))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouying", shouying, shouyingequal, shouyingand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouying", "", shouyingequal, shouyingand);
                 //shenchasf
                 if (!string.IsNullOrEmpty(shenchasf))
                 {

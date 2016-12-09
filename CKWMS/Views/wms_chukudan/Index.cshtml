@@ -292,6 +292,8 @@
                     <td>货主</td>
                     <td>客户</td>
                     <td>送货地址</td>
+                    <td>快递单号</td>
+                    <td>快递公司</td>
                     <td>出库日期</td>
                     <td>业务类型</td>
                     <td>储运要求</td>
@@ -318,6 +320,8 @@
                         <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
                         <td>@item.KehuMC</td>
                         <td>@item.Yunsongdizhi</td>
+                        <td>@item.KDdanhao</td>
+                        <td>@Html.GetCommonValue_ID("快递公司", (item.Kuaidi == null ? 0 : (int)item.Kuaidi))</td>
                         <td>@string.Format("{0:yyyy-MM-dd}", item.ChukuRQ)</td>
                         <td>@Html.GetCommonValue_ID("出库类型", (int)item.YewuLX)</td>
                         <td>@item.ChunyunYQ</td>

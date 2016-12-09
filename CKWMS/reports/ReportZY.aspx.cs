@@ -143,7 +143,6 @@ namespace CKWMS.reports
                                     if (_ckd != null)
                                     {
                                         drtx["ChunyunYQ"] = _ckd.ChunyunYQ;
-                                        drtx["Beizhu"] = _ckd.Beizhu;
                                     }
                                     base_shengchanqiye _scqy = ServiceFactory.base_shengchanqiyeservice.GetEntityById(p => p.Qiyemingcheng == _mx.Changjia && p.IsDelete == false);
                                     if (_scqy != null)
@@ -176,6 +175,7 @@ namespace CKWMS.reports
                                     drckd["ChukuRQ"] = string.Format("{0:yyyy/MM/dd}", ckd.ChukuRQ == null ? "" : ((DateTime)ckd.ChukuRQ).ToString("yyyy/MM/dd"));
                                     drckd["Lianxiren"] = ckd.Lianxiren;
                                     drckd["LianxiDH"] = ckd.LianxiDH;
+                                    drckd["Beizhu"] = ckd.Beizhu;
                                     base_weituokehu wtkhdata = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == ckd.HuozhuID && p.IsDelete == false);
                                     if (wtkhdata != null)
                                     {
@@ -927,6 +927,21 @@ namespace CKWMS.reports
                                                 }
                                             }
                                             break;
+                                        case "gongyingid":
+                                            string gongyingid = scld[1];
+                                            string gongyingidequal = scld[2];
+                                            string gongyingidand = scld[3];
+                                            if (!string.IsNullOrEmpty(gongyingid))
+                                            {
+                                                if (gongyingidequal.Equals("="))
+                                                {
+                                                    if (gongyingidand.Equals("and"))
+                                                        where = where.And(p => p.GongyingID == int.Parse(gongyingid));
+                                                    else
+                                                        where = where.Or(p => p.GongyingID == int.Parse(gongyingid));
+                                                }
+                                            }
+                                            break;
                                         default:
                                             break;
                                     }
@@ -967,6 +982,13 @@ namespace CKWMS.reports
                                         drspxx["Fuzeren"] = _sysqs.Fuzeren;
                                         drspxx["SQshijian"] = string.Format("{0:yyyy/MM/dd}", _sysqs.SQshijian == null ? "" : ((DateTime)_sysqs.SQshijian).ToString("yyyy/MM/dd"));
                                     }
+                                    //base_huozhushouquan
+                                    var _hzsqs = ServiceFactory.base_huozhushouquanservice.GetEntityById(p => p.HuozhuID == _pr.huozhuid && p.ShouquanID == _pr.GongyingID && p.IsDelete == false);
+                                    if (_hzsqs != null)
+                                    {
+                                        drspxx["ShouquanshuYXQ"] = string.Format("{0:yyyy/MM/dd}", _hzsqs.ShouquanshuYXQ == null ? "" : ((DateTime)_hzsqs.ShouquanshuYXQ).ToString("yyyy/MM/dd"));
+                                    }
+
                                     dtspxx.Rows.Add(drspxx);
                                 }
                             }
@@ -976,29 +998,39 @@ namespace CKWMS.reports
                             }
 
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["Spxx_shouying"]));
-
+                            //页眉&页脚
                             DataTable dtspxx_others = _rds.Tables["Spxx_shouying_Title"];
                             DataRow drspxx_others = dtspxx_others.NewRow();
                             try
                             {
+                                int? first_huozhuid = -1;
                                 var _spxxs = ServiceFactory.base_shangpinxxservice.LoadShangpinAll(where.Compile()).ToList<base_shangpin_v>();
-                                var first_spxx = _spxxs.FirstOrDefault();
-                                //base_gongyingshang
-                                var spxx_wtkh = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == first_spxx.huozhuid && p.IsDelete == false);
-                                if (spxx_wtkh != null)
+                                foreach (base_shangpin_v _pr in _spxxs)
                                 {
-                                    drspxx_others["Kehumingcheng"] = spxx_wtkh.Kehumingcheng;
-                                    drspxx_others["YingyezhizhaoBH"] = spxx_wtkh.YingyezhizhaoBH;
-                                    drspxx_others["YingyezhizhaoYXQ"] = string.Format("{0:yyyy/MM/dd}", spxx_wtkh.YingyezhizhaoYXQ == null ? "" : ((DateTime)spxx_wtkh.YingyezhizhaoYXQ).ToString("yyyy/MM/dd"));
-                                    drspxx_others["JingyingxukeBH"] = spxx_wtkh.JingyingxukeBH;
-                                    drspxx_others["JingyingxukeYXQ"] = string.Format("{0:yyyy/MM/dd}", spxx_wtkh.JingyingxukeYXQ == null ? "" : ((DateTime)spxx_wtkh.JingyingxukeYXQ).ToString("yyyy/MM/dd"));
-                                    drspxx_others["Lianxiren"] = spxx_wtkh.Lianxiren;
-                                    drspxx_others["Lianxidianhua"] = spxx_wtkh.Lianxidianhua;
-                                    drspxx_others["BeianBH"] = spxx_wtkh.BeianBH;
-                                    drspxx_others["BeianYXQ"] = string.Format("{0:yyyy/MM/dd}", spxx_wtkh.BeianYXQ == null ? "" : ((DateTime)spxx_wtkh.BeianYXQ).ToString("yyyy/MM/dd"));
+                                    if (_pr.huozhuid != null)
+                                    {
+                                        first_huozhuid = _pr.huozhuid;
+                                        break;
+                                    }
                                 }
-
-                                dtspxx_others.Rows.Add(drspxx_others);
+                                //base_gongyingshang
+                                if (first_huozhuid >= 0)
+                                {
+                                    var spxx_wtkh = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == first_huozhuid && p.IsDelete == false);
+                                    if (spxx_wtkh != null)
+                                    {
+                                        drspxx_others["Kehumingcheng"] = spxx_wtkh.Kehumingcheng;
+                                        drspxx_others["YingyezhizhaoBH"] = spxx_wtkh.YingyezhizhaoBH;
+                                        drspxx_others["YingyezhizhaoYXQ"] = string.Format("{0:yyyy/MM/dd}", spxx_wtkh.YingyezhizhaoYXQ == null ? "" : ((DateTime)spxx_wtkh.YingyezhizhaoYXQ).ToString("yyyy/MM/dd"));
+                                        drspxx_others["JingyingxukeBH"] = spxx_wtkh.JingyingxukeBH;
+                                        drspxx_others["JingyingxukeYXQ"] = string.Format("{0:yyyy/MM/dd}", spxx_wtkh.JingyingxukeYXQ == null ? "" : ((DateTime)spxx_wtkh.JingyingxukeYXQ).ToString("yyyy/MM/dd"));
+                                        drspxx_others["Lianxiren"] = spxx_wtkh.Lianxiren;
+                                        drspxx_others["Lianxidianhua"] = spxx_wtkh.Lianxidianhua;
+                                        drspxx_others["BeianBH"] = spxx_wtkh.BeianBH;
+                                        drspxx_others["BeianYXQ"] = string.Format("{0:yyyy/MM/dd}", spxx_wtkh.BeianYXQ == null ? "" : ((DateTime)spxx_wtkh.BeianYXQ).ToString("yyyy/MM/dd"));
+                                        dtspxx_others.Rows.Add(drspxx_others);
+                                    }
+                                }
                             }
                             catch (Exception ex)
                             {

@@ -45,7 +45,7 @@
                             <TextRun>
                               <Value>规格</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -100,7 +100,7 @@
                             <TextRun>
                               <Value>批号</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -155,7 +155,7 @@
                             <TextRun>
                               <Value>注册证</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -210,7 +210,7 @@
                             <TextRun>
                               <Value>生产日期</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -265,7 +265,7 @@
                             <TextRun>
                               <Value>失效日期</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -320,7 +320,7 @@
                             <TextRun>
                               <Value>到货数量</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -375,7 +375,7 @@
                             <TextRun>
                               <Value>已收数量</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -430,7 +430,7 @@
                             <TextRun>
                               <Value>库位</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -490,7 +490,7 @@
                             <TextRun>
                               <Value>=Fields!Guige.Value</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -544,7 +544,7 @@
                             <TextRun>
                               <Value>=Fields!Pihao.Value</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -598,7 +598,7 @@
                             <TextRun>
                               <Value>=Fields!Zhucezheng.Value</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -652,7 +652,7 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -706,7 +706,7 @@
                             <TextRun>
                               <Value>=Fields!ShixiaoRQ.Value</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -760,7 +760,7 @@
                             <TextRun>
                               <Value>=Fields!DaohuoSL.Value</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>11pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -816,7 +816,7 @@
                             <TextRun>
                               <Value>=Fields!YishouSL.Value</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -870,7 +870,7 @@
                             <TextRun>
                               <Value>=Fields!Kuwei.Value</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -929,7 +929,7 @@
                             <TextRun>
                               <Value>总计：</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -983,7 +983,7 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1037,7 +1037,7 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1091,7 +1091,7 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1145,7 +1145,7 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1199,7 +1199,7 @@
                             <TextRun>
                               <Value>=First(Fields!rkmxdhSLs.Value, "DataSet2")</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>11pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -1255,7 +1255,7 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1309,7 +1309,7 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1399,7 +1399,7 @@
   <Width>10.71677in</Width>
   <Page>
     <PageHeader>
-      <Height>2.16076cm</Height>
+      <Height>3.35138cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1412,7 +1412,7 @@
                 <TextRun>
                   <Value>收货记录</Value>
                   <Style>
-                    <FontFamily>宋体</FontFamily>
+                    <FontFamily>微软雅黑</FontFamily>
                     <FontSize>16pt</FontSize>
                     <FontWeight>Bold</FontWeight>
                   </Style>
@@ -1425,7 +1425,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox29</rd:DefaultName>
           <Left>11.01486cm</Left>
-          <Height>0.70583cm</Height>
+          <Height>0.86458cm</Height>
           <Width>5.19088cm</Width>
           <Style>
             <Border>
@@ -1447,13 +1447,13 @@
                 <TextRun>
                   <Value>入库单编号：</Value>
                   <Style>
-                    <FontFamily>宋体</FontFamily>
+                    <FontFamily>微软雅黑</FontFamily>
                   </Style>
                 </TextRun>
                 <TextRun>
                   <Value>=First(Fields!RukudanBH.Value, "DataSet2")</Value>
                   <Style>
-                    <FontFamily>宋体</FontFamily>
+                    <FontFamily>微软雅黑</FontFamily>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1463,10 +1463,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox60</rd:DefaultName>
-          <Top>0.91667cm</Top>
+          <Top>1.49875cm</Top>
           <Left>0.92292cm</Left>
           <Height>0.6cm</Height>
-          <Width>8.215cm</Width>
+          <Width>8.55896cm</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>
@@ -1488,13 +1488,13 @@
                 <TextRun>
                   <Value>货主名称：</Value>
                   <Style>
-                    <FontFamily>宋体</FontFamily>
+                    <FontFamily>微软雅黑</FontFamily>
                   </Style>
                 </TextRun>
                 <TextRun>
                   <Value>=First(Fields!HuozhuID.Value, "DataSet2")</Value>
                   <Style>
-                    <FontFamily>宋体</FontFamily>
+                    <FontFamily>微软雅黑</FontFamily>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1504,10 +1504,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox60</rd:DefaultName>
-          <Top>1.55194cm</Top>
+          <Top>2.27514cm</Top>
           <Left>0.92292cm</Left>
           <Height>0.6cm</Height>
-          <Width>8.215cm</Width>
+          <Width>8.55896cm</Width>
           <ZIndex>2</ZIndex>
           <Style>
             <Border>
@@ -1529,13 +1529,13 @@
                 <TextRun>
                   <Value>入库日期：</Value>
                   <Style>
-                    <FontFamily>宋体</FontFamily>
+                    <FontFamily>微软雅黑</FontFamily>
                   </Style>
                 </TextRun>
                 <TextRun>
                   <Value>=First(Fields!RukuRQ.Value, "DataSet2")</Value>
                   <Style>
-                    <FontFamily>宋体</FontFamily>
+                    <FontFamily>微软雅黑</FontFamily>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1545,10 +1545,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox60</rd:DefaultName>
-          <Top>0.92549cm</Top>
-          <Left>10.42018cm</Left>
+          <Top>1.49875cm</Top>
+          <Left>10.1556cm</Left>
           <Height>0.6cm</Height>
-          <Width>6.81271cm</Width>
+          <Width>8.57128cm</Width>
           <ZIndex>3</ZIndex>
           <Style>
             <Border>
@@ -1570,13 +1570,13 @@
                 <TextRun>
                   <Value>储存要求：</Value>
                   <Style>
-                    <FontFamily>宋体</FontFamily>
+                    <FontFamily>微软雅黑</FontFamily>
                   </Style>
                 </TextRun>
                 <TextRun>
                   <Value>=First(Fields!ChunyunYQ.Value, "DataSet2")</Value>
                   <Style>
-                    <FontFamily>宋体</FontFamily>
+                    <FontFamily>微软雅黑</FontFamily>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1586,10 +1586,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox60</rd:DefaultName>
-          <Top>0.92549cm</Top>
-          <Left>19.69414cm</Left>
+          <Top>1.49875cm</Top>
+          <Left>19.42956cm</Left>
           <Height>0.6cm</Height>
-          <Width>6.68042cm</Width>
+          <Width>6.945cm</Width>
           <ZIndex>4</ZIndex>
           <Style>
             <Border>
@@ -1611,13 +1611,13 @@
                 <TextRun>
                   <Value>仓 库 名：</Value>
                   <Style>
-                    <FontFamily>宋体</FontFamily>
+                    <FontFamily>微软雅黑</FontFamily>
                   </Style>
                 </TextRun>
                 <TextRun>
                   <Value>=First(Fields!CangkuID.Value, "DataSet2")</Value>
                   <Style>
-                    <FontFamily>宋体</FontFamily>
+                    <FontFamily>微软雅黑</FontFamily>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1627,10 +1627,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox60</rd:DefaultName>
-          <Top>1.56076cm</Top>
-          <Left>19.69414cm</Left>
+          <Top>2.27513cm</Top>
+          <Left>19.42956cm</Left>
           <Height>0.6cm</Height>
-          <Width>7.13021cm</Width>
+          <Width>6.945cm</Width>
           <ZIndex>5</ZIndex>
           <Style>
             <Border>
@@ -1652,13 +1652,13 @@
                 <TextRun>
                   <Value>供 应 商：</Value>
                   <Style>
-                    <FontFamily>宋体</FontFamily>
+                    <FontFamily>微软雅黑</FontFamily>
                   </Style>
                 </TextRun>
                 <TextRun>
                   <Value>=First(Fields!GongyingshangID.Value, "DataSet2")</Value>
                   <Style>
-                    <FontFamily>宋体</FontFamily>
+                    <FontFamily>微软雅黑</FontFamily>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1666,8 +1666,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>GongyingshangID</rd:DefaultName>
-          <Top>1.56076cm</Top>
-          <Left>10.42018cm</Left>
+          <Top>2.27514cm</Top>
+          <Left>10.1556cm</Left>
           <Height>0.6cm</Height>
           <Width>8.59963cm</Width>
           <ZIndex>6</ZIndex>
@@ -1703,7 +1703,7 @@
                 <TextRun>
                   <Value>收 货 人：</Value>
                   <Style>
-                    <FontFamily>宋体</FontFamily>
+                    <FontFamily>微软雅黑</FontFamily>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1737,7 +1737,7 @@
                 <TextRun>
                   <Value>上 架 人：</Value>
                   <Style>
-                    <FontFamily>宋体</FontFamily>
+                    <FontFamily>微软雅黑</FontFamily>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1748,7 +1748,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox60</rd:DefaultName>
           <Top>0.3175cm</Top>
-          <Left>19.69414cm</Left>
+          <Left>19.42956cm</Left>
           <Height>0.6cm</Height>
           <Width>5.47167cm</Width>
           <ZIndex>1</ZIndex>
@@ -1777,7 +1777,7 @@
         </Line>
         <Line Name="Line2">
           <Top>0.95278cm</Top>
-          <Left>21.26353cm</Left>
+          <Left>20.99895cm</Left>
           <Height>0cm</Height>
           <Width>3.37312cm</Width>
           <ZIndex>3</ZIndex>
@@ -1796,21 +1796,21 @@
                 <TextRun>
                   <Value>第</Value>
                   <Style>
-                    <FontFamily>宋体</FontFamily>
+                    <FontFamily>微软雅黑</FontFamily>
                     <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
                 <TextRun>
                   <Value>=Globals!PageNumber</Value>
                   <Style>
-                    <FontFamily>宋体</FontFamily>
+                    <FontFamily>微软雅黑</FontFamily>
                     <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
                 <TextRun>
                   <Value>页</Value>
                   <Style>
-                    <FontFamily>宋体</FontFamily>
+                    <FontFamily>微软雅黑</FontFamily>
                     <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
@@ -1846,21 +1846,21 @@
                 <TextRun>
                   <Value>共</Value>
                   <Style>
-                    <FontFamily>宋体</FontFamily>
+                    <FontFamily>微软雅黑</FontFamily>
                     <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
                 <TextRun>
                   <Value>=Globals!OverallTotalPages</Value>
                   <Style>
-                    <FontFamily>宋体</FontFamily>
+                    <FontFamily>微软雅黑</FontFamily>
                     <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
                 <TextRun>
                   <Value>页</Value>
                   <Style>
-                    <FontFamily>宋体</FontFamily>
+                    <FontFamily>微软雅黑</FontFamily>
                     <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>

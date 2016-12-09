@@ -33,32 +33,47 @@ namespace CKWMS.Controllers
                     string[] scld = scl.Split(',');
                     switch (scld[0])
                     {
-                        case "chukuid":
-                            string chukuid = scld[1];
-                            string chukuidequal = scld[2];
-                            string chukuidand = scld[3];
-                            if (!string.IsNullOrEmpty(chukuid))
+                        case "Chukudan":
+                            string Chukudan = scld[1];
+                            string Chukudanequal = scld[2];
+                            string Chukudanand = scld[3];
+                            if (!string.IsNullOrEmpty(Chukudan))
                             {
-                                if (chukuidequal.Equals("="))
+                                if (Chukudanequal.Equals("="))
                                 {
-                                    if (chukuidand.Equals("and"))
-                                        where = where.And(wms_chukuxlm => wms_chukuxlm.ChukuID == int.Parse(chukuid));
+                                    if (Chukudanand.Equals("and"))
+                                        where = where.And(p => p.Chukudan == Chukudan);
                                     else
-                                        where = where.Or(wms_chukuxlm => wms_chukuxlm.ChukuID == int.Parse(chukuid));
+                                        where = where.Or(p => p.Chukudan == Chukudan);
                                 }
-                                if (chukuidequal.Equals(">"))
+                                if (Chukudanequal.Equals("like"))
                                 {
-                                    if (chukuidand.Equals("and"))
-                                        where = where.And(wms_chukuxlm => wms_chukuxlm.ChukuID > int.Parse(chukuid));
+                                    if (Chukudanand.Equals("and"))
+                                        where = where.And(p => p.Chukudan.Contains(Chukudan));
                                     else
-                                        where = where.Or(wms_chukuxlm => wms_chukuxlm.ChukuID > int.Parse(chukuid));
+                                        where = where.Or(p => p.Chukudan.Contains(Chukudan));
                                 }
-                                if (chukuidequal.Equals("<"))
+                            }
+                            break;
+                        case "Xuliema":
+                            string Xuliema = scld[1];
+                            string Xuliemaequal = scld[2];
+                            string Xuliemaand = scld[3];
+                            if (!string.IsNullOrEmpty(Xuliema))
+                            {
+                                if (Xuliemaequal.Equals("="))
                                 {
-                                    if (chukuidand.Equals("and"))
-                                        where = where.And(wms_chukuxlm => wms_chukuxlm.ChukuID < int.Parse(chukuid));
+                                    if (Xuliemaand.Equals("and"))
+                                        where = where.And(p => p.Xuliema == Xuliema);
                                     else
-                                        where = where.Or(wms_chukuxlm => wms_chukuxlm.ChukuID < int.Parse(chukuid));
+                                        where = where.Or(p => p.Xuliema == Xuliema);
+                                }
+                                if (Xuliemaequal.Equals("like"))
+                                {
+                                    if (Xuliemaand.Equals("and"))
+                                        where = where.And(p => p.Xuliema.Contains(Xuliema));
+                                    else
+                                        where = where.Or(p => p.Xuliema.Contains(Xuliema));
                                 }
                             }
                             break;
@@ -83,9 +98,14 @@ namespace CKWMS.Controllers
             int userid = (int)Session["user_id"];
             string pagetag = "wms_chukuxlm_index";
             string page = "1";
-            string chukuid = Request["chukuid"] ?? "";
-            string chukuidequal = Request["chukuidequal"] ?? "";
-            string chukuidand = Request["chukuidand"] ?? "";
+            //Chukudan
+            string Chukudan = Request["Chukudan"] ?? "";
+            string Chukudanequal = Request["Chukudanequal"] ?? "";
+            string Chukudanand = Request["Chukudanand"] ?? "";
+            //Xuliema
+            string Xuliema = Request["Xuliema"] ?? "";
+            string Xuliemaequal = Request["Xuliemaequal"] ?? "";
+            string Xuliemaand = Request["Xuliemaand"] ?? "";
             Expression<Func<wms_chukuxlm, bool>> where = PredicateExtensionses.True<wms_chukuxlm>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -93,67 +113,99 @@ namespace CKWMS.Controllers
                 sc = new searchcondition();
                 sc.UserID = userid;
                 sc.PageBrief = pagetag;
-                if (!string.IsNullOrEmpty(chukuid))
+                //Chukudan
+                if (!string.IsNullOrEmpty(Chukudan))
                 {
-                    if (chukuidequal.Equals("="))
+                    if (Chukudanequal.Equals("="))
                     {
-                        if (chukuidand.Equals("and"))
-                            where = where.And(wms_chukuxlm => wms_chukuxlm.ChukuID == int.Parse(chukuid));
+                        if (Chukudanand.Equals("and"))
+                            where = where.And(p => p.Chukudan == Chukudan);
                         else
-                            where = where.Or(wms_chukuxlm => wms_chukuxlm.ChukuID == int.Parse(chukuid));
+                            where = where.Or(p => p.Chukudan == Chukudan);
                     }
-                    if (chukuidequal.Equals(">"))
+                    if (Chukudanequal.Equals("like"))
                     {
-                        if (chukuidand.Equals("and"))
-                            where = where.And(wms_chukuxlm => wms_chukuxlm.ChukuID > int.Parse(chukuid));
+                        if (Chukudanand.Equals("and"))
+                            where = where.And(p => p.Chukudan.Contains(Chukudan));
                         else
-                            where = where.Or(wms_chukuxlm => wms_chukuxlm.ChukuID > int.Parse(chukuid));
-                    }
-                    if (chukuidequal.Equals("<"))
-                    {
-                        if (chukuidand.Equals("and"))
-                            where = where.And(wms_chukuxlm => wms_chukuxlm.ChukuID < int.Parse(chukuid));
-                        else
-                            where = where.Or(wms_chukuxlm => wms_chukuxlm.ChukuID < int.Parse(chukuid));
+                            where = where.Or(p => p.Chukudan.Contains(Chukudan));
                     }
                 }
-                if (!string.IsNullOrEmpty(chukuid))
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "chukuid", chukuid, chukuidequal, chukuidand);
+                if (!string.IsNullOrEmpty(Chukudan))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "Chukudan", Chukudan, Chukudanequal, Chukudanand);
                 else
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "chukuid", "", chukuidequal, chukuidand);
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "Chukudan", "", Chukudanequal, Chukudanand);
+                //Xuliema
+                if (!string.IsNullOrEmpty(Xuliema))
+                {
+                    if (Xuliemaequal.Equals("="))
+                    {
+                        if (Xuliemaand.Equals("and"))
+                            where = where.And(p => p.Xuliema == Xuliema);
+                        else
+                            where = where.Or(p => p.Xuliema == Xuliema);
+                    }
+                    if (Xuliemaequal.Equals("like"))
+                    {
+                        if (Xuliemaand.Equals("and"))
+                            where = where.And(p => p.Xuliema.Contains(Xuliema));
+                        else
+                            where = where.Or(p => p.Xuliema.Contains(Xuliema));
+                    }
+                }
+                if (!string.IsNullOrEmpty(Xuliema))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "Xuliema", Xuliema, Xuliemaequal, Xuliemaand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "Xuliema", "", Xuliemaequal, Xuliemaand);
                 searchconditionService.GetInstance().AddEntity(sc);
             }
             else
             {
                 sc.ConditionInfo = "";
-                if (!string.IsNullOrEmpty(chukuid))
+                //Chukudan
+                if (!string.IsNullOrEmpty(Chukudan))
                 {
-                    if (chukuidequal.Equals("="))
+                    if (Chukudanequal.Equals("="))
                     {
-                        if (chukuidand.Equals("and"))
-                            where = where.And(wms_chukuxlm => wms_chukuxlm.ChukuID == int.Parse(chukuid));
+                        if (Chukudanand.Equals("and"))
+                            where = where.And(p => p.Chukudan == Chukudan);
                         else
-                            where = where.Or(wms_chukuxlm => wms_chukuxlm.ChukuID == int.Parse(chukuid));
+                            where = where.Or(p => p.Chukudan == Chukudan);
                     }
-                    if (chukuidequal.Equals(">"))
+                    if (Chukudanequal.Equals("like"))
                     {
-                        if (chukuidand.Equals("and"))
-                            where = where.And(wms_chukuxlm => wms_chukuxlm.ChukuID > int.Parse(chukuid));
+                        if (Chukudanand.Equals("and"))
+                            where = where.And(p => p.Chukudan.Contains(Chukudan));
                         else
-                            where = where.Or(wms_chukuxlm => wms_chukuxlm.ChukuID > int.Parse(chukuid));
-                    }
-                    if (chukuidequal.Equals("<"))
-                    {
-                        if (chukuidand.Equals("and"))
-                            where = where.And(wms_chukuxlm => wms_chukuxlm.ChukuID < int.Parse(chukuid));
-                        else
-                            where = where.Or(wms_chukuxlm => wms_chukuxlm.ChukuID < int.Parse(chukuid));
+                            where = where.Or(p => p.Chukudan.Contains(Chukudan));
                     }
                 }
-                if (!string.IsNullOrEmpty(chukuid))
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "chukuid", chukuid, chukuidequal, chukuidand);
+                if (!string.IsNullOrEmpty(Chukudan))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "Chukudan", Chukudan, Chukudanequal, Chukudanand);
                 else
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "chukuid", "", chukuidequal, chukuidand);
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "Chukudan", "", Chukudanequal, Chukudanand);
+                //Xuliema
+                if (!string.IsNullOrEmpty(Xuliema))
+                {
+                    if (Xuliemaequal.Equals("="))
+                    {
+                        if (Xuliemaand.Equals("and"))
+                            where = where.And(p => p.Xuliema == Xuliema);
+                        else
+                            where = where.Or(p => p.Xuliema == Xuliema);
+                    }
+                    if (Xuliemaequal.Equals("like"))
+                    {
+                        if (Xuliemaand.Equals("and"))
+                            where = where.And(p => p.Xuliema.Contains(Xuliema));
+                        else
+                            where = where.Or(p => p.Xuliema.Contains(Xuliema));
+                    }
+                }
+                if (!string.IsNullOrEmpty(Xuliema))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "Xuliema", Xuliema, Xuliemaequal, Xuliemaand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "Xuliema", "", Xuliemaequal, Xuliemaand);
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;
