@@ -283,7 +283,7 @@ namespace CKWMS.reports
                                 drfhjy["Pihao1"] = _fh.Pihao1;
                                 drfhjy["Xuliema"] = _fh.Xuliema;
                                 drfhjy["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _fh.ShengchanRQ == null ? "" : ((DateTime)_fh.ShengchanRQ).ToString("yyyy/MM/dd"));
-                                drfhjy["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _fh.ShixiaoRQ);
+                                drfhjy["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _fh.ShixiaoRQ == null ? "" : ((DateTime)_fh.ShixiaoRQ).ToString("yyyy/MM/dd"));
                                 drfhjy["JianhuoSL"] = _fh.JianhuoSL;
                                 drfhjy["Changjia"] = _fh.Changjia;
                                 drfhjy["Chandi"] = _fh.Chandi;
