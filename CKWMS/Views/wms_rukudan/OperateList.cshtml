@@ -165,7 +165,7 @@
                         <td>@item.RukudanBH</td>
                         <td>@Html.GetDataValue_ID("货主","简称",(int)item.HuozhuID)</td>
                         <td>@Html.GetCommonValue_ID("入库类型",(int)item.YewuLX)</td>
-                        <td>@string.Format("{0:d}", item.RukuRQ)</td>
+                        <td>@string.Format("{0:d}", item.RukuRQ==null?"":item.RukuRQ)</td>
                         <td>@item.KehuDH</td>
                         <td>@item.ChunyunYQ</td>
                         <td>@Html.GetDataValue_ID("userinfo","全名",(int)item.Shouhuoren)</td>

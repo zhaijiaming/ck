@@ -534,8 +534,8 @@ namespace CKWMS.Controllers
             if (_ckd == null)
                 return Json(-1);
             _ckd.KDdanhao = _danhao;
-            _ckd.Kuaidi =int.Parse(_kuaidi);
-            _ckd.YunsongFS =int.Parse(_yunsong);
+            _ckd.Kuaidi = int.Parse(_kuaidi);
+            _ckd.YunsongFS = int.Parse(_yunsong);
             _ckd.JiesuanFS = int.Parse(_jiesuan);
             ob_wms_chukudanservice.UpdateEntity(_ckd);
             return Json(1);
@@ -814,7 +814,154 @@ namespace CKWMS.Controllers
             }
             return Json(flag);
         }
+        public JsonResult AddBySalesPlan()
+        {
+            int _userid = (int)Session["user_id"];
+            var _ckinfo = Request["ck"] ?? "";
+            if (string.IsNullOrEmpty(_ckinfo))
+                return Json(-1);
 
+            var _cks = _ckinfo.Split(',');
+            if (_cks.Count() == 0)
+                return Json(-1);
+            foreach (var ck in _cks)
+            {
+                if (ck.Length > 0)
+                {
+                    cust_chukujihua _ckjh = ServiceFactory.cust_chukujihuaservice.GetEntityById(p => p.ID == int.Parse(ck) && p.IsDelete == false);
+                    if (_ckjh != null)
+                    {
+                        wms_chukudan _ckd = new wms_chukudan();
+                        _ckd.BaifangQY = "";
+                        _ckd.BaoshuiSF = false;
+                        _ckd.ChunyunYQ = "";
+                        _ckd.CKID = 1;
+                        _ckd.FuheSF = false;
+                        _ckd.JianguanSF = true;
+                        _ckd.HuozhuID = _ckjh.HuozhuID;
+                        _ckd.Jianhuoren = 0;
+                        _ckd.JiesuanFS = 1;
+                        _ckd.JihuaZT = 1;
+                        _ckd.KDdanhao = "";
+                        _ckd.KefuID = 0;
+                        _ckd.Kuaidi = 1;
+                        _ckd.MakeDate = DateTime.Now;
+                        _ckd.MakeMan = _userid;
+                        _ckd.XinxiLY = 1;
+                        _ckd.YunsongFS = 1;
+
+                        _ckd.JihuaID = _ckjh.ID;
+                        _ckd.KehuDH = _ckjh.KehuDH;
+                        _ckd.Beizhu = _ckjh.Beizhu;
+                        _ckd.ChukuRQ = _ckjh.ChukuRQ;
+                        _ckd.Fahuodizhi = _ckjh.Fahuodizhi;
+                        _ckd.KehuID = _ckjh.KehuID;
+                        _ckd.KehuMC = _ckjh.KehuMC;
+                        _ckd.LianxiDH = _ckjh.LianxiDH;
+                        _ckd.Lianxiren = _ckjh.Lianxiren;
+                        _ckd.YewuLX = (int)_ckjh.YewuLX;
+                        _ckd.Yunsongdizhi = _ckjh.Yunsongdizhi;
+                        _ckd = ob_wms_chukudanservice.AddEntity(_ckd);
+
+                        if (_ckd != null)
+                        {
+                            _ckjh.JihuaZT = 2;
+                            if (_ckjh.ChukudanSL == null)
+                                _ckjh.ChukudanSL = 1;
+                            else
+                                _ckjh.ChukudanSL = _ckjh.ChukudanSL + 1;
+                            ServiceFactory.cust_chukujihuaservice.UpdateEntity(_ckjh);
+
+                            var _ckjhmx = ServiceFactory.cust_chukujihuamxservice.LoadEntities(p => p.JihuaID == _ckjh.ID && p.IsDelete == false).ToList<cust_chukujihuamx>();
+                            foreach (var ckjhmx in _ckjhmx)
+                            {
+                                var _ch = ServiceFactory.wms_cunhuoservice.GetInventoryGoodsByCust((int)_ckd.HuozhuID, p => p.Guige == ckjhmx.Guige).OrderBy(s => s.ShixiaoRQ).ToList<wms_invgoods_v>();
+                                if (_ch != null)
+                                {
+                                    var _fpsl = ckjhmx.JihuaSL;
+                                    foreach (var ch in _ch)
+                                    {
+                                        if (ch.sdsl == null)
+                                            ch.sdsl = 0;
+                                        if (ch.chsl >= ch.sdsl + _fpsl)
+                                        {
+                                            wms_chukumx _ckmx = new wms_chukumx();
+                                            _ckmx.ChukuID = _ckd.ID;
+                                            _ckmx.Beizhu = ckjhmx.Beizhu;
+                                            _ckmx.ChukuSL = _fpsl;
+                                            _ckmx.JianhuoSL = 0;
+                                            _ckmx.Jianhuo = false;
+                                            _ckmx.MakeDate = DateTime.Now;
+                                            _ckmx.MakeMan = _userid;
+
+                                            _ckmx.HuopinZT = ch.CunhuoZT;
+                                            _ckmx.BaozhuangDW = ch.BaozhuangDW;
+                                            _ckmx.Chandi = ch.Chandi;
+                                            _ckmx.Changjia = ch.Changjia;
+                                            _ckmx.Guige = ch.Guige;
+                                            _ckmx.Huansuanlv = ch.Huansuanlv;
+                                            _ckmx.JibenDW = ch.JibenDW;
+                                            _ckmx.Jifeidun = (_fpsl / ch.chsl) * ch.jfd;
+                                            _ckmx.Tiji = (_fpsl / ch.chsl) * ch.tj;
+                                            _ckmx.Zhongliang = (_fpsl / ch.chsl) * ch.zl;
+                                            _ckmx.Jingzhong = (_fpsl / ch.chsl) * ch.jz;
+                                            _ckmx.Pihao = ch.Pihao;
+                                            _ckmx.Pihao1 = ch.Pihao1;
+                                            _ckmx.ShangpinDM = ch.ShangpinDM;
+                                            _ckmx.ShangpinID = ch.ShangpinID;
+                                            _ckmx.ShangpinMC = ch.ShangpinMC;
+                                            _ckmx.ShengchanRQ = ch.ShengchanRQ;
+                                            _ckmx.ShixiaoRQ = ch.ShixiaoRQ;
+                                            _ckmx.Xuliema = ch.Xuliema;
+                                            _ckmx.Zhucezheng = ch.Zhucezheng;
+                                            _ckmx = ServiceFactory.wms_chukumxservice.AddEntity(_ckmx);
+                                            _fpsl = 0;
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            wms_chukumx _ckmx = new wms_chukumx();
+                                            _ckmx.ChukuID = _ckd.ID;
+                                            _ckmx.Beizhu = ckjhmx.Beizhu;
+                                            _ckmx.ChukuSL = ch.chsl - ch.sdsl;
+                                            _ckmx.JianhuoSL = 0;
+                                            _ckmx.Jianhuo = false;
+                                            _ckmx.MakeDate = DateTime.Now;
+                                            _ckmx.MakeMan = _userid;
+
+                                            _ckmx.HuopinZT = ch.CunhuoZT;
+                                            _ckmx.BaozhuangDW = ch.BaozhuangDW;
+                                            _ckmx.Chandi = ch.Chandi;
+                                            _ckmx.Changjia = ch.Changjia;
+                                            _ckmx.Guige = ch.Guige;
+                                            _ckmx.Huansuanlv = ch.Huansuanlv;
+                                            _ckmx.JibenDW = ch.JibenDW;
+                                            _ckmx.Jifeidun = (_fpsl / ch.chsl) * ch.jfd;
+                                            _ckmx.Tiji = (_fpsl / ch.chsl) * ch.tj;
+                                            _ckmx.Zhongliang = (_fpsl / ch.chsl) * ch.zl;
+                                            _ckmx.Jingzhong = (_fpsl / ch.chsl) * ch.jz;
+                                            _ckmx.Pihao = ch.Pihao;
+                                            _ckmx.Pihao1 = ch.Pihao1;
+                                            _ckmx.ShangpinDM = ch.ShangpinDM;
+                                            _ckmx.ShangpinID = ch.ShangpinID;
+                                            _ckmx.ShangpinMC = ch.ShangpinMC;
+                                            _ckmx.ShengchanRQ = ch.ShengchanRQ;
+                                            _ckmx.ShixiaoRQ = ch.ShixiaoRQ;
+                                            _ckmx.Xuliema = ch.Xuliema;
+                                            _ckmx.Zhucezheng = ch.Zhucezheng;
+                                            _ckmx = ServiceFactory.wms_chukumxservice.AddEntity(_ckmx);
+                                            if (_ckmx != null)
+                                                _fpsl = _fpsl - (float)(ch.chsl - ch.sdsl);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return Json(1);
+        }
     }
 }
 

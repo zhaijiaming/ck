@@ -230,7 +230,7 @@ namespace CKWMS.Controllers
                 }
                 ViewBag.SearchCondition = sc.ConditionInfo;
             }
-            var tempData = ServiceFactory.wms_cunhuoservice.CfdaStorage(where.Compile()).ToPagedList<cfda_storage_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            var tempData = ServiceFactory.wms_cunhuoservice.CfdaStorage(where.Compile()).OrderBy(s=>s.ShixiaoRQ).ToPagedList<cfda_storage_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.inventory = tempData;
             return View(tempData);
         }
@@ -438,7 +438,7 @@ namespace CKWMS.Controllers
             }
             ViewBag.SearchCondition = sc.ConditionInfo;
 
-            var tempData = ServiceFactory.wms_cunhuoservice.CfdaStorage(where.Compile()).ToPagedList<cfda_storage_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            var tempData = ServiceFactory.wms_cunhuoservice.CfdaStorage(where.Compile()).OrderBy(s=>s.ShixiaoRQ).ToPagedList<cfda_storage_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.inventory = tempData;
             return View(tempData);
         }
@@ -652,7 +652,7 @@ namespace CKWMS.Controllers
                 }
                 ViewBag.SearchCondition = sc.ConditionInfo;
             }
-            var tempData = ServiceFactory.wms_rukudanservice.CfdaEntryrec(where.Compile()).ToPagedList<cfda_entryrec_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            var tempData = ServiceFactory.wms_rukudanservice.CfdaEntryrec(where.Compile()).OrderByDescending(s=>s.RukuRQ).ToPagedList<cfda_entryrec_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.entryrec = tempData;
             return View(tempData);
         }
@@ -859,7 +859,7 @@ namespace CKWMS.Controllers
             }
             ViewBag.SearchCondition = sc.ConditionInfo;
 
-            var tempData = ServiceFactory.wms_rukudanservice.CfdaEntryrec(where.Compile()).ToPagedList<cfda_entryrec_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            var tempData = ServiceFactory.wms_rukudanservice.CfdaEntryrec(where.Compile()).OrderByDescending(s=>s.RukuRQ).ToPagedList<cfda_entryrec_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.entryrec = tempData;
             return View(tempData);
         }
@@ -1117,7 +1117,7 @@ namespace CKWMS.Controllers
                 }
                 ViewBag.SearchCondition = sc.ConditionInfo;
             }
-            var tempData = ServiceFactory.wms_chukudanservice.CfdaOutrec(where.Compile()).ToPagedList<cfda_outrec_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            var tempData = ServiceFactory.wms_chukudanservice.CfdaOutrec(where.Compile()).OrderByDescending(s=>s.ChukuRQ).ToPagedList<cfda_outrec_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.outrec = tempData;
             return View(tempData);
         }
@@ -1372,7 +1372,7 @@ namespace CKWMS.Controllers
             }
             ViewBag.SearchCondition = sc.ConditionInfo;
 
-            var tempData = ServiceFactory.wms_chukudanservice.CfdaOutrec(where.Compile()).ToPagedList<cfda_outrec_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            var tempData = ServiceFactory.wms_chukudanservice.CfdaOutrec(where.Compile()).OrderByDescending(s=>s.ChukuRQ).ToPagedList<cfda_outrec_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.outrec = tempData;
             return View(tempData);
         }

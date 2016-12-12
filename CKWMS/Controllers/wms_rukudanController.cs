@@ -821,5 +821,61 @@ namespace CKWMS.Controllers
             ViewBag.rkxdid = rkxdid;
             return View();
         }
+        public JsonResult AddByPurchasePlan()
+        {
+            int _userid = (int)Session["user_id"];
+            var _rkinfo = Request["rk"] ?? "";
+            if (string.IsNullOrEmpty(_rkinfo))
+                return Json(-1);
+            var _rks = _rkinfo.Split(',');
+            if (_rks.Count() == 0)
+                return Json(-1);
+            foreach(var rk in _rks)
+            {
+                if (rk.Length > 0)
+                {
+                    cust_rukujihua _rkjh = ServiceFactory.cust_rukujihuaservice.GetEntityById(p => p.ID == int.Parse(rk) && p.IsDelete==false);
+                    if (_rkjh != null)
+                    {
+                        wms_rukudan _rkd = new wms_rukudan();
+                        _rkd.BaoshuiSF = false;
+                        _rkd.JianguanSF = true;
+                        _rkd.KefuID = 0;
+                        _rkd.CangkuID = 1;
+                        _rkd.ChunyunYQ = "";
+                        _rkd.MakeDate = DateTime.Now;
+                        _rkd.MakeMan = _userid;
+                        _rkd.RukuZT = 1;
+                        _rkd.Shouhuoren = 0;
+                        _rkd.XinxiLY = 2;
+                        _rkd.YanshouSF = false;
+                        _rkd.ZhijieSH = false;
+                        _rkd.DuifangQY = "";
+
+                        _rkd.JihuaID = _rkjh.ID;
+                        _rkd.HuozhuID = _rkjh.HuozhuID;
+                        _rkd.KehuDH = _rkjh.KehuDH;
+                        _rkd.Fahuodizhi = _rkjh.Fahuodizhi;
+                        _rkd.GongyingshangID = _rkjh.GongyingshangID;
+                        _rkd.RukuRQ = _rkjh.RukuRQ;
+                        _rkd.LianxiDH = _rkjh.LianxiDH;
+                        _rkd.Lianxiren = _rkjh.Lianxiren;
+                        _rkd.YewuLX = _rkjh.YewuLX;
+                        _rkd.Yunsongdizhi = _rkjh.Yunsongdizhi;
+                        _rkd=ob_wms_rukudanservice.AddEntity(_rkd);
+                        if(_rkd!=null)
+                        {
+                            _rkjh.JihuaZT = 2;
+                            if (_rkjh.RukudanSL == null)
+                                _rkjh.RukudanSL = 1;
+                            else
+                                _rkjh.RukudanSL = _rkjh.RukudanSL + 1;
+                            ServiceFactory.cust_rukujihuaservice.UpdateEntity(_rkjh);
+                        }
+                    }
+                }
+            }
+            return Json(1);
+        }
     }
 }

@@ -15,6 +15,36 @@
                 location.href = url_go;
             }
         });
+        $("#bt_newout").click(function () {
+            var _selval = "";
+            $("#mydatatable tbody tr input[type=checkbox]").each(function () {
+                if (this.checked) {
+                    _selval =_selval+ $(this).val() + ",";
+                }
+            });
+            if (_selval != "") {
+                $.ajax({
+                    async: true,
+                    beforeSend: function () {
+                        ShowWait();
+                    },
+                    complete: function () {
+                        HiddenWait();
+                    },
+                    type: "POST",
+                    url: "/wms_chukudan/addbysalesplan",
+                    data: {
+                        ck: _selval
+                    },
+                    success: function (data) {
+                        if (data == -1)
+                            alert("操作失败，请联系管理员！");
+                        else
+                            location.reload();
+                    }
+                });
+            }
+        });
     });
     function AddInfo() {
         location.href = "/cust_chukujihua/Add";
@@ -79,6 +109,7 @@
         <li class="active">出库计划</li>
     </ul>
 </div>
+<div id="loading"><img src="~/Imgs/wait.gif" alt="" />...系统正在加载数据,请耐心等待...</div>
 <div class="page-content">
     @Html.Search_Condition((int)Session["user_id"], "出库计划_条件组合查询", "/cust_chukujihua/index", "cust_chukujihua_index", scms)
     <div class="page-header">
@@ -88,6 +119,7 @@
             <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
             <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
+            <button type="button" class="btn btn-default " id="bt_newout"><i class="icon-adn"></i>生成出库单</button>
         </p>
     </div>
     <div class="row" style="overflow:auto;height:445px;">
@@ -97,7 +129,6 @@
                 <tr>
                     <td></td>
                     <td>货主</td>
-                    <td>客户</td>
                     <td>客户名称</td>
                     <td>送货地址</td>
                     <td>出库日期</td>
@@ -120,7 +151,6 @@
                             <label><input type="checkbox" value="@item.ID"></label>
                         </td>
                         <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
-                        <td>@item.KehuID</td>
                         <td>@item.KehuMC</td>
                         <td>@item.Yunsongdizhi</td>
                         <td>@string.Format("{0:d}", item.ChukuRQ == null ? "" : item.ChukuRQ)</td>

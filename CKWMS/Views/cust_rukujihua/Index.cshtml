@@ -15,6 +15,36 @@
                 location.href = url_go;
             }
         });
+        $("#bt_newentry").click(function () {
+            var _selval = "";
+            $("#mydatatable tbody tr input[type=checkbox]").each(function () {
+                if (this.checked) {
+                    _selval =_selval+ $(this).val() + ",";
+                }
+            });
+            if (_selval != "") {
+                $.ajax({
+                    async: true,
+                    beforeSend: function () {
+                        ShowWait();
+                    },
+                    complete: function () {
+                        HiddenWait();
+                    },
+                    type: "POST",
+                    url: "/wms_rukudan/addbypurchaseplan",
+                    data: {
+                        rk: _selval
+                    },
+                    success: function (data) {
+                        if (data == -1)
+                            alert("操作失败，请联系管理员！");
+                        else
+                            location.reload();
+                    }
+                });
+            }
+        });
     });
     function AddInfo() {
         location.href = "/cust_rukujihua/Add";
@@ -79,6 +109,7 @@
         <li class="active">入库计划</li>
     </ul>
 </div>
+<div id="loading"><img src="~/Imgs/wait.gif" alt="" />...系统正在加载数据,请耐心等待...</div>
 <div class="page-content">
     @Html.Search_Condition((int)Session["user_id"], "入库计划_条件组合查询", "/cust_rukujihua/index", "cust_rukujihua_index", scms)
     <div class="page-header">
@@ -88,6 +119,7 @@
             <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
             <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
+            <button type="button" class="btn btn-default " id="bt_newentry"><i class="icon-adn"></i>生成入库单</button>
         </p>
     </div>
         <div class="row" style="overflow:auto;height:445px;">
