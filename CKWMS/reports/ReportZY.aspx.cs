@@ -73,48 +73,64 @@ namespace CKWMS.reports
                             rptView.LocalReport.ReportPath = "reports/rptJianHuoDan.rdlc";
                             rptView.LocalReport.DataSources.Clear();
                             DataTable dtjhd = _rds.Tables["JianHuoDan"];
-                            var _jhds = ob_wms_jianhuoservice.GetPickDetail(int.Parse(_outid), p => p.DaijianSL > 0).OrderBy(p => p.Kuwei).ThenBy(p => p.Pihao).ToList<wms_pick_v>();
                             DataRow drjhd;
                             long jhd_DaijianSLs = 0;
-                            foreach (wms_pick_v _pv in _jhds)
+                            try
                             {
-                                drjhd = dtjhd.NewRow();
-                                drjhd["Mingcheng"] = _pv.ShangpinMC;
-                                drjhd["DaijianSL"] = _pv.DaijianSL;
-                                drjhd["Huansuanlv"] = _pv.Huansuanlv;
-                                drjhd["ShixiaoRQ"] = string.Format("{0:yyyy-MM-dd}", _pv.ShixiaoRQ);
-                                drjhd["Guige"] = _pv.Guige;
-                                drjhd["Pihao"] = _pv.Pihao;
-                                drjhd["Kuwei"] = _pv.Kuwei;
-                                drjhd["Zhucezheng"] = _pv.Zhucezheng;
-                                drjhd["JianhuoSM"] = _pv.JianhuoSM;
-                                jhd_DaijianSLs += (long)_pv.DaijianSL;
+                                var _jhds = ob_wms_jianhuoservice.GetPickDetail(int.Parse(_outid), p => p.DaijianSL > 0).OrderBy(p => p.Kuwei).ThenBy(p => p.Pihao).ToList<wms_pick_v>();
+                                foreach (wms_pick_v _pv in _jhds)
+                                {
+                                    drjhd = dtjhd.NewRow();
+                                    drjhd["Mingcheng"] = _pv.ShangpinMC;
+                                    drjhd["DaijianSL"] = _pv.DaijianSL;
+                                    drjhd["Huansuanlv"] = _pv.Huansuanlv;
+                                    drjhd["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _pv.ShixiaoRQ == null ? "" : ((DateTime)_pv.ShixiaoRQ).ToString("yyyy/MM/dd"));
+                                    drjhd["Guige"] = _pv.Guige;
+                                    drjhd["Pihao"] = _pv.Pihao;
+                                    drjhd["Kuwei"] = _pv.Kuwei;
+                                    drjhd["Zhucezheng"] = _pv.Zhucezheng;
+                                    drjhd["JianhuoSM"] = _pv.JianhuoSM;
+                                    jhd_DaijianSLs += (long)_pv.DaijianSL;
 
-                                dtjhd.Rows.Add(drjhd);
+                                    dtjhd.Rows.Add(drjhd);
+                                }
+                                drjhd = dtjhd.NewRow();
                             }
-                            drjhd = dtjhd.NewRow();
+                            catch(Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+                            
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["JianHuoDan"]));
 
                             DataTable dtjhdt = _rds.Tables["JianHuoDan_Title"];
                             DataRow drjhdt = dtjhdt.NewRow();
-                            wms_chukudan tempdata = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid));
-                            if (tempdata != null)
+                            try
                             {
-                                drjhdt["Yunsongdizhi"] = tempdata.Yunsongdizhi;
-                                drjhdt["ChukuRQ"] = string.Format("{0:yyyy-MM-dd}", tempdata.ChukuRQ == null ? "" : ((DateTime)tempdata.ChukuRQ).ToString("yyyy-MM-dd"));
-                                drjhdt["ChukudanBH"] = tempdata.ChukudanBH;
-                                drjhdt["Lianxiren"] = tempdata.Lianxiren;
-                                drjhdt["LianxiDH"] = tempdata.LianxiDH;
-                                drjhdt["Beizhu"] = tempdata.Beizhu;
-                                drjhdt["jhddjSLs"] = jhd_DaijianSLs;
-                                drjhdt["KehuMC"] = tempdata.KehuMC;
-                                base_weituokehu wtkhdata = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == tempdata.HuozhuID);
-                                if (wtkhdata != null)
+                                wms_chukudan tempdata = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid) && p.IsDelete == false);
+                                if (tempdata != null)
                                 {
-                                    drjhdt["HuozhuID"] = wtkhdata.Kehumingcheng;
+                                    drjhdt["Yunsongdizhi"] = tempdata.Yunsongdizhi;
+                                    drjhdt["ChukuRQ"] = string.Format("{0:yyyy/MM/dd}", tempdata.ChukuRQ == null ? "" : ((DateTime)tempdata.ChukuRQ).ToString("yyyy/MM/dd"));
+                                    drjhdt["ChukudanBH"] = tempdata.ChukudanBH;
+                                    drjhdt["Lianxiren"] = tempdata.Lianxiren;
+                                    drjhdt["LianxiDH"] = tempdata.LianxiDH;
+                                    drjhdt["Beizhu"] = tempdata.Beizhu;
+                                    drjhdt["jhddjSLs"] = jhd_DaijianSLs;
+                                    drjhdt["KehuMC"] = tempdata.KehuMC;
+                                    base_weituokehu wtkhdata = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == tempdata.HuozhuID && p.IsDelete == false);
+                                    if (wtkhdata != null)
+                                    {
+                                        drjhdt["HuozhuID"] = wtkhdata.Kehumingcheng;
+                                    }
+                                    dtjhdt.Rows.Add(drjhdt);
                                 }
-                                dtjhdt.Rows.Add(drjhdt);
                             }
+                            catch(Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+                            
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["JianHuoDan_Title"]));
                             break;
                         case "tongxingdan":
@@ -196,54 +212,55 @@ namespace CKWMS.reports
                             rptView.LocalReport.ReportPath = "reports/rptCKFuheDan.rdlc";
                             rptView.LocalReport.DataSources.Clear();
                             DataTable dtfh = _rds.Tables["CKFuheBaoGao"];
-                            var _fhs = ServiceFactory.quan_chukufhservice.GetOutcheckByCK(int.Parse(_outid), p => p.JianhuoSL > 0).ToList<quan_outcheck_v>();
                             DataRow drfh;
                             long ckfhbg_JianhuoSLs = 0;
                             long ckfhbg_FuheSLs = 0;
-                            foreach (quan_outcheck_v _fh in _fhs)
+                            try
                             {
-                                drfh = dtfh.NewRow();
-                                drfh["ShangpinMC"] = _fh.ShangpinMC;
-                                drfh["Zhucezheng"] = _fh.Zhucezheng;
-                                drfh["Guige"] = _fh.Guige;
-                                drfh["Pihao"] = _fh.Pihao;
-                                drfh["Pihao1"] = _fh.Pihao1;
-                                drfh["Xuliema"] = _fh.Xuliema;
-                                drfh["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _fh.ShengchanRQ == null ? "" : ((DateTime)_fh.ShengchanRQ).ToString("yyyy/MM/dd"));
-                                drfh["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _fh.ShixiaoRQ == null ? "" : ((DateTime)_fh.ShixiaoRQ).ToString("yyyy/MM/dd"));
-                                drfh["JianhuoSL"] = _fh.JianhuoSL;
-                                drfh["Changjia"] = _fh.Changjia;
-                                drfh["Chandi"] = _fh.Chandi;
-                                drfh["FuheSL"] = _fh.FuheSL;
-                                if (_fh.Fuhe == null)
+                                var _fhs = ServiceFactory.quan_chukufhservice.GetOutcheckByCK(int.Parse(_outid), p => p.JianhuoSL > 0).ToList<quan_outcheck_v>();
+                                foreach (quan_outcheck_v _fh in _fhs)
                                 {
-                                    drfh["Fuhe"] = MvcApplication.CheckResult[0];
+                                    drfh = dtfh.NewRow();
+                                    drfh["ShangpinMC"] = _fh.ShangpinMC;
+                                    drfh["Zhucezheng"] = _fh.Zhucezheng;
+                                    drfh["Guige"] = _fh.Guige;
+                                    drfh["Pihao"] = _fh.Pihao;
+                                    drfh["Pihao1"] = _fh.Pihao1;
+                                    drfh["Xuliema"] = _fh.Xuliema;
+                                    drfh["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _fh.ShengchanRQ == null ? "" : ((DateTime)_fh.ShengchanRQ).ToString("yyyy/MM/dd"));
+                                    drfh["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _fh.ShixiaoRQ == null ? "" : ((DateTime)_fh.ShixiaoRQ).ToString("yyyy/MM/dd"));
+                                    drfh["JianhuoSL"] = _fh.JianhuoSL;
+                                    drfh["Changjia"] = _fh.Changjia;
+                                    drfh["Chandi"] = _fh.Chandi;
+                                    drfh["FuheSL"] = _fh.FuheSL == null ? float.Parse("0") : _fh.FuheSL;
+                                    if (_fh.Fuhe == null)
+                                    {
+                                        drfh["Fuhe"] = "未复核";
+                                    }
+                                    else
+                                    {
+                                        drfh["Fuhe"] = MvcApplication.CheckResult[(int)_fh.Fuhe];
+                                    }
+                                    drfh["Fuheren"] = _fh.Fuheren == null ? "" : _fh.Fuheren;
+                                    drfh["FuheSM"] = _fh.FuheSM == null ? "" : _fh.FuheSM;
+                                    drfh["MakeDate"] = string.Format("{0:yyyy/MM/dd}", _fh.MakeDate == null ? "" : ((DateTime)_fh.MakeDate).ToString("yyyy/MM/dd"));
+                                    ckfhbg_JianhuoSLs += (long)_fh.JianhuoSL;
+                                    if (_fh.FuheSL != null)
+                                        ckfhbg_FuheSLs += (long)_fh.FuheSL;
+
+                                    dtfh.Rows.Add(drfh);
                                 }
-                                else
-                                {
-                                    drfh["Fuhe"] = MvcApplication.CheckResult[(int)_fh.Fuhe];
-                                }
-                                if (_fh.Fuheren != null)
-                                {
-                                    drfh["Fuheren"] = _fh.Fuheren;
-                                }
-                                if (_fh.FuheSM != null)
-                                {
-                                    drfh["FuheSM"] = _fh.FuheSM;
-                                }
-                                drfh["MakeDate"] = string.Format("{0:yyyy/MM/dd}", _fh.MakeDate == null ? "" : ((DateTime)_fh.MakeDate).ToString("yyyy/MM/dd"));
-                                ckfhbg_JianhuoSLs += (long)_fh.JianhuoSL;
-                                if (_fh.FuheSL != null)
-                                {
-                                    ckfhbg_FuheSLs += (long)_fh.FuheSL;
-                                }
-                                dtfh.Rows.Add(drfh);
                             }
+                            catch(Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+                            
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["CKFuheBaoGao"]));
 
                             DataTable dtckfh = _rds.Tables["CKFuheBaoGao_Title"];
                             DataRow drckfh = dtckfh.NewRow();
-                            wms_chukudan _ckfhds = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid));
+                            wms_chukudan _ckfhds = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid) && p.IsDelete == false);
                             if (_ckfhds != null)
                             {
                                 drckfh["ChukudanBH"] = _ckfhds.ChukudanBH;
@@ -253,13 +270,13 @@ namespace CKWMS.reports
                                 drckfh["ChukuRQ"] = string.Format("{0:yyyy/MM/dd}", _ckfhds.ChukuRQ == null ? "" : ((DateTime)_ckfhds.ChukuRQ).ToString("yyyy/MM/dd"));
                                 drckfh["Lianxiren"] = _ckfhds.Lianxiren;
                                 drckfh["LianxiDH"] = _ckfhds.LianxiDH;
-                                base_weituokehu fh_wtkhdata = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == _ckfhds.HuozhuID);
+                                base_weituokehu fh_wtkhdata = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == _ckfhds.HuozhuID && p.IsDelete == false);
                                 if (fh_wtkhdata != null)
                                 {
                                     drckfh["HuozhuID"] = fh_wtkhdata.Kehumingcheng;
-                                    drckfh["ckfhbgjhSLs"] = ckfhbg_JianhuoSLs;
-                                    drckfh["ckfhbgfhSLs"] = ckfhbg_FuheSLs;
                                 }
+                                drckfh["ckfhbgjhSLs"] = ckfhbg_JianhuoSLs;
+                                drckfh["ckfhbgfhSLs"] = ckfhbg_FuheSLs;
                                 dtckfh.Rows.Add(drckfh);
                             }
 
@@ -270,48 +287,63 @@ namespace CKWMS.reports
                             rptView.LocalReport.ReportPath = "reports/rptCKFuheJYdan.rdlc";
                             rptView.LocalReport.DataSources.Clear();
                             DataTable dtfhjy = _rds.Tables["CKFuheJilu"];
-                            var _fhjys = ServiceFactory.quan_chukufhservice.GetOutcheckByCK(int.Parse(_outid), p => p.JianhuoSL > 0).ToList<quan_outcheck_v>();
                             DataRow drfhjy;
                             long ckfujy_JianhuoSLs = 0;
-                            foreach (quan_outcheck_v _fh in _fhjys)
+                            try
                             {
-                                drfhjy = dtfhjy.NewRow();
-                                drfhjy["ShangpinMC"] = _fh.ShangpinMC;
-                                drfhjy["Zhucezheng"] = _fh.Zhucezheng;
-                                drfhjy["Guige"] = _fh.Guige;
-                                drfhjy["Pihao"] = _fh.Pihao;
-                                drfhjy["Pihao1"] = _fh.Pihao1;
-                                drfhjy["Xuliema"] = _fh.Xuliema;
-                                drfhjy["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _fh.ShengchanRQ == null ? "" : ((DateTime)_fh.ShengchanRQ).ToString("yyyy/MM/dd"));
-                                drfhjy["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _fh.ShixiaoRQ == null ? "" : ((DateTime)_fh.ShixiaoRQ).ToString("yyyy/MM/dd"));
-                                drfhjy["JianhuoSL"] = _fh.JianhuoSL;
-                                drfhjy["Changjia"] = _fh.Changjia;
-                                drfhjy["Chandi"] = _fh.Chandi;
-                                ckfujy_JianhuoSLs += (long)_fh.JianhuoSL;
-                                dtfhjy.Rows.Add(drfhjy);
+                                var _fhjys = ServiceFactory.quan_chukufhservice.GetOutcheckByCK(int.Parse(_outid), p => p.JianhuoSL > 0).ToList<quan_outcheck_v>();
+                                foreach (quan_outcheck_v _fh in _fhjys)
+                                {
+                                    drfhjy = dtfhjy.NewRow();
+                                    drfhjy["ShangpinMC"] = _fh.ShangpinMC;
+                                    drfhjy["Zhucezheng"] = _fh.Zhucezheng;
+                                    drfhjy["Guige"] = _fh.Guige;
+                                    drfhjy["Pihao"] = _fh.Pihao;
+                                    drfhjy["Pihao1"] = _fh.Pihao1;
+                                    drfhjy["Xuliema"] = _fh.Xuliema;
+                                    drfhjy["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _fh.ShengchanRQ == null ? "" : ((DateTime)_fh.ShengchanRQ).ToString("yyyy/MM/dd"));
+                                    drfhjy["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _fh.ShixiaoRQ == null ? "" : ((DateTime)_fh.ShixiaoRQ).ToString("yyyy/MM/dd"));
+                                    drfhjy["JianhuoSL"] = _fh.JianhuoSL;
+                                    drfhjy["Changjia"] = _fh.Changjia;
+                                    drfhjy["Chandi"] = _fh.Chandi;
+                                    ckfujy_JianhuoSLs += (long)_fh.JianhuoSL;
+                                    dtfhjy.Rows.Add(drfhjy);
+                                }
                             }
+                            catch(Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+                            
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["CKFuheJilu"]));
 
                             DataTable dtckfhjy = _rds.Tables["CKFuheJilu_Title"];
                             DataRow drckfhjy = dtckfhjy.NewRow();
-                            wms_chukudan _ckfhjys = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid) && p.IsDelete == false);
-                            if (_ckfhjys != null)
+                            try
                             {
-                                drckfhjy["ChukudanBH"] = _ckfhjys.ChukudanBH;
-                                drckfhjy["Yunsongdizhi"] = _ckfhjys.Yunsongdizhi;
-                                drckfhjy["Beizhu"] = _ckfhjys.Beizhu;
-                                drckfhjy["KehuMC"] = _ckfhjys.KehuMC;
-                                drckfhjy["ChukuRQ"] = string.Format("{0:yyyy/MM/dd}", _ckfhjys.ChukuRQ == null ? "" : ((DateTime)_ckfhjys.ChukuRQ).ToString("yyyy/MM/dd"));
-                                drckfhjy["Lianxiren"] = _ckfhjys.Lianxiren;
-                                drckfhjy["LianxiDH"] = _ckfhjys.LianxiDH;
-                            }
-                            base_weituokehu fhjy_wtkhdata = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == _ckfhjys.HuozhuID && p.IsDelete == false);
-                            if (fhjy_wtkhdata != null)
-                            {
-                                drckfhjy["HuozhuID"] = fhjy_wtkhdata.Kehumingcheng;
+                                wms_chukudan _ckfhjys = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid) && p.IsDelete == false);
+                                if (_ckfhjys != null)
+                                {
+                                    drckfhjy["ChukudanBH"] = _ckfhjys.ChukudanBH;
+                                    drckfhjy["Yunsongdizhi"] = _ckfhjys.Yunsongdizhi;
+                                    drckfhjy["Beizhu"] = _ckfhjys.Beizhu;
+                                    drckfhjy["KehuMC"] = _ckfhjys.KehuMC;
+                                    drckfhjy["ChukuRQ"] = string.Format("{0:yyyy/MM/dd}", _ckfhjys.ChukuRQ == null ? "" : ((DateTime)_ckfhjys.ChukuRQ).ToString("yyyy/MM/dd"));
+                                    drckfhjy["Lianxiren"] = _ckfhjys.Lianxiren;
+                                    drckfhjy["LianxiDH"] = _ckfhjys.LianxiDH;
+                                }
+                                base_weituokehu fhjy_wtkhdata = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == _ckfhjys.HuozhuID && p.IsDelete == false);
+                                if (fhjy_wtkhdata != null)
+                                {
+                                    drckfhjy["HuozhuID"] = fhjy_wtkhdata.Kehumingcheng;
+                                }
                                 drckfhjy["ckfhjyjhSLs"] = ckfujy_JianhuoSLs;
+                                dtckfhjy.Rows.Add(drckfhjy);
                             }
-                            dtckfhjy.Rows.Add(drckfhjy);
+                            catch(Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["CKFuheJilu_Title"]));
                             break;
                         case "YanShouBaoGao":
@@ -319,70 +351,107 @@ namespace CKWMS.reports
                             rptView.LocalReport.ReportPath = "reports/rptRKyanshouBGdan.rdlc";
                             rptView.LocalReport.DataSources.Clear();
                             DataTable dtzlysbg = _rds.Tables["RKYanshouBaoGao"];
-                            var _zlysbgs = ServiceFactory.quan_rukuysservice.GetEntrycheckByRK(int.Parse(_rkysid)).ToList<quan_entrycheck_v>();
                             DataRow drzlysbg;
                             long rkysbg_Shuliangs = 0;
                             long rkysbg_YanshouSL_Y = 0;
                             long rkysbg_YanshouSL_N = 0;
-                            foreach (quan_entrycheck_v _pr in _zlysbgs)
+                            try
                             {
-                                drzlysbg = dtzlysbg.NewRow();
-                                //供应商
-                                wms_rukudan rkd = ServiceFactory.wms_rukudanservice.GetEntityById(s => s.ID == int.Parse(_rkysid));
-                                base_gongyingshang gys = ServiceFactory.base_gongyingshangservice.GetEntityById(p => p.ID == rkd.GongyingshangID);
-                                drzlysbg["GYSMingcheng"] = gys.Mingcheng;
-                                drzlysbg["Changjia"] = _pr.Changjia;
-                                drzlysbg["ShangpinMC"] = _pr.ShangpinMC;
-                                drzlysbg["Guige"] = _pr.Guige;
-                                drzlysbg["Pihao"] = _pr.Pihao;
-                                drzlysbg["Xuliema"] = _pr.Xuliema;
-                                drzlysbg["ystime"] = string.Format("{0:yyyy/MM/dd}", rkd.RukuRQ);
-                                drzlysbg["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShengchanRQ);
-                                drzlysbg["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShixiaoRQ);
-                                drzlysbg["Zhucezheng"] = _pr.Zhucezheng;
-                                drzlysbg["Shuliang"] = _pr.Shuliang;
-                                drzlysbg["ChunyunYQ"] = rkd.ChunyunYQ;
-                                rkysbg_Shuliangs += (long)_pr.Shuliang;
-                                //验收结果
-                                if (_pr.ysresult == null)
+                                var _zlysbgs = ServiceFactory.quan_rukuysservice.GetEntrycheckByRK(int.Parse(_rkysid)).ToList<quan_entrycheck_v>();
+                                foreach (quan_entrycheck_v _pr in _zlysbgs)
                                 {
-                                    drzlysbg["ysresult"] = MvcApplication.CheckResult[0];
-                                }
-                                else
-                                {
-                                    drzlysbg["ysresult"] = MvcApplication.CheckResult[(int)_pr.ysresult];
-                                    var ysresult = MvcApplication.CheckResult[(int)_pr.ysresult];
-                                    if (ysresult == "合格")
+                                    drzlysbg = dtzlysbg.NewRow();
+                                    //供应商
+                                    wms_rukudan rkd = ServiceFactory.wms_rukudanservice.GetEntityById(s => s.ID == int.Parse(_rkysid));
+                                    if (rkd != null)
                                     {
-                                        drzlysbg["YanshouHGSL"] = _pr.YanshouSL;
-                                        drzlysbg["YanshouBHGSL"] = "";
-                                        rkysbg_YanshouSL_Y += (long)_pr.YanshouSL;
+                                        base_gongyingshang gys = ServiceFactory.base_gongyingshangservice.GetEntityById(p => p.ID == rkd.GongyingshangID && p.IsDelete == false);
+                                        if (gys != null)
+                                        {
+                                            drzlysbg["GYSMingcheng"] = gys.Mingcheng;
+                                        }
+                                        drzlysbg["ystime"] = string.Format("{0:yyyy/MM/dd}", rkd.RukuRQ == null ? "" : ((DateTime)rkd.RukuRQ).ToString("yyyy/MM/dd"));
+                                        drzlysbg["ChunyunYQ"] = rkd.ChunyunYQ;
                                     }
-                                    if (ysresult == "不合格")
+                                    drzlysbg["Changjia"] = _pr.Changjia;
+                                    drzlysbg["ShangpinMC"] = _pr.ShangpinMC;
+                                    drzlysbg["Guige"] = _pr.Guige;
+                                    drzlysbg["Pihao"] = _pr.Pihao;
+                                    drzlysbg["Xuliema"] = _pr.Xuliema;
+                                    drzlysbg["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShengchanRQ == null ? "" : ((DateTime)_pr.ShengchanRQ).ToString("yyyy/MM/dd"));
+                                    drzlysbg["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShixiaoRQ == null ? "" : ((DateTime)_pr.ShixiaoRQ).ToString("yyyy/MM/dd"));
+                                    drzlysbg["Zhucezheng"] = _pr.Zhucezheng;
+                                    drzlysbg["Shuliang"] = _pr.Shuliang;
+                                    rkysbg_Shuliangs += (long)_pr.Shuliang;
+                                    //验收结果
+                                    if (_pr.ysresult == null)
                                     {
-                                        drzlysbg["YanshouHGSL"] = "";
-                                        drzlysbg["YanshouBHGSL"] = _pr.YanshouSL;
-                                        rkysbg_YanshouSL_N += (long)_pr.YanshouSL;
+                                        drzlysbg["ysresult"] = "未验收";
+                                        drzlysbg["YanshouHGSL"] = "0";
+                                        drzlysbg["YanshouBHGSL"] = "0";
                                     }
+                                    else
+                                    {
+                                        drzlysbg["ysresult"] = MvcApplication.CheckResult[(int)_pr.ysresult];
+                                        var ysresult = MvcApplication.CheckResult[(int)_pr.ysresult];
+                                        if (ysresult == "合格")
+                                        {
+                                            drzlysbg["YanshouHGSL"] = _pr.YanshouSL;
+                                            drzlysbg["YanshouBHGSL"] = "0";
+                                            rkysbg_YanshouSL_Y += (long)_pr.YanshouSL;
+                                        }
+                                        if (ysresult == "不合格")
+                                        {
+                                            drzlysbg["YanshouHGSL"] = "0";
+                                            drzlysbg["YanshouBHGSL"] = _pr.YanshouSL;
+                                            rkysbg_YanshouSL_N += (long)_pr.YanshouSL;
+                                        }
+                                    }
+                                    dtzlysbg.Rows.Add(drzlysbg);
                                 }
-                                dtzlysbg.Rows.Add(drzlysbg);
                             }
+                            catch(Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+                            
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["RKYanshouBaoGao"]));
 
                             DataTable dtrkfhjy = _rds.Tables["RKYanshouBaoGao_Title"];
                             DataRow drrkfhjy = dtrkfhjy.NewRow();
-                            wms_rukudan rkd_others = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_rkysid));
-                            base_weituokehu wtkh_others = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == rkd_others.HuozhuID);
-                            var _ysbgs = ServiceFactory.quan_rukuysservice.GetEntrycheckByRK(int.Parse(_rkysid)).ToList<quan_entrycheck_v>();
-                            drrkfhjy["HuozhuID"] = wtkh_others.Kehumingcheng;
-                            drrkfhjy["MakeDate"] = string.Format("{0:yyyy/MM/dd}", _ysbgs.FirstOrDefault().ystime);
-                            userinfo man = ServiceFactory.userinfoservice.GetEntityById(p => p.ID == (int)Session["user_id"]);
-                            drrkfhjy["MakeMan"] = man.FullName;
-                            drrkfhjy["rkysbgSLs"] = rkysbg_Shuliangs;
-                            drrkfhjy["rkysbgYs"] = rkysbg_YanshouSL_Y;
-                            drrkfhjy["rkysbgNs"] = rkysbg_YanshouSL_N;
+                            try
+                            {
+                                wms_rukudan rkd_others = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_rkysid) && p.IsDelete == false);
+                                if (rkd_others != null)
+                                {
+                                    base_weituokehu wtkh_others = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == rkd_others.HuozhuID);
+                                    drrkfhjy["HuozhuID"] = wtkh_others.Kehumingcheng;
+                                }
+                                var _ysbgs = ServiceFactory.quan_rukuysservice.GetEntrycheckByRK(int.Parse(_rkysid)).ToList<quan_entrycheck_v>();
+                                foreach(var _date in _ysbgs)
+                                {
+                                    var ystime = _date.ystime;
+                                    if (ystime != null)
+                                        drrkfhjy["MakeDate"] = string.Format("{0:yyyy/MM/dd}", ystime == null ? "": ((DateTime)ystime).ToString("yyyy/MM/dd"));
+                                    break;
+                                }
+                                userinfo man = ServiceFactory.userinfoservice.GetEntityById(p => p.ID == (int)Session["user_id"] && p.IsDelete == false);
+                                if (man != null)
+                                {
+                                    drrkfhjy["MakeMan"] = man.FullName;
+                                }
+                                
+                                drrkfhjy["rkysbgSLs"] = rkysbg_Shuliangs;
+                                drrkfhjy["rkysbgYs"] = rkysbg_YanshouSL_Y;
+                                drrkfhjy["rkysbgNs"] = rkysbg_YanshouSL_N;
 
-                            dtrkfhjy.Rows.Add(drrkfhjy);
+                                dtrkfhjy.Rows.Add(drrkfhjy);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+                            
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["RKYanshouBaoGao_Title"]));
                             break;
                         case "YanShouJiLu":
@@ -390,41 +459,69 @@ namespace CKWMS.reports
                             rptView.LocalReport.ReportPath = "reports/rptRKYanShouJiLu.rdlc";
                             rptView.LocalReport.DataSources.Clear();
                             DataTable dtrkysjl = _rds.Tables["RKYanshouJilu"];
-                            var _rkysjls = ServiceFactory.quan_rukuysservice.GetEntrycheckByRK(int.Parse(_rkysid)).ToList<quan_entrycheck_v>();
                             DataRow drrkysjl;
                             long ysjl_Shuliangs = 0;
-                            foreach (quan_entrycheck_v _pr in _rkysjls)
+                            try
                             {
-                                drrkysjl = dtrkysjl.NewRow();
-                                //供应商
-                                wms_rukudan rkd = ServiceFactory.wms_rukudanservice.GetEntityById(s => s.ID == int.Parse(_rkysid));
-                                base_gongyingshang gys = ServiceFactory.base_gongyingshangservice.GetEntityById(p => p.ID == rkd.GongyingshangID);
-                                drrkysjl["GYSMingcheng"] = gys.Mingcheng;
-                                drrkysjl["Changjia"] = _pr.Changjia;
-                                drrkysjl["ShangpinMC"] = _pr.ShangpinMC;
-                                drrkysjl["Guige"] = _pr.Guige;
-                                drrkysjl["Pihao"] = _pr.Pihao;
-                                drrkysjl["Xuliema"] = _pr.Xuliema;
-                                drrkysjl["ystime"] = string.Format("{0:yyyy/MM/dd}", rkd.RukuRQ);
-                                drrkysjl["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShengchanRQ);
-                                drrkysjl["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShixiaoRQ);
-                                drrkysjl["Zhucezheng"] = _pr.Zhucezheng;
-                                drrkysjl["Shuliang"] = _pr.Shuliang;
-                                drrkysjl["ChunyunYQ"] = rkd.ChunyunYQ;
-                                ysjl_Shuliangs += (long)_pr.Shuliang;
+                                var _rkysjls = ServiceFactory.quan_rukuysservice.GetEntrycheckByRK(int.Parse(_rkysid)).ToList<quan_entrycheck_v>();
+                                foreach (quan_entrycheck_v _pr in _rkysjls)
+                                {
+                                    drrkysjl = dtrkysjl.NewRow();
+                                    //供应商
+                                    wms_rukudan rkd = ServiceFactory.wms_rukudanservice.GetEntityById(s => s.ID == int.Parse(_rkysid));
+                                    if (rkd != null)
+                                    {
+                                        base_gongyingshang gys = ServiceFactory.base_gongyingshangservice.GetEntityById(p => p.ID == rkd.GongyingshangID && p.IsDelete == false);
+                                        if (gys != null)
+                                        {
+                                            drrkysjl["GYSMingcheng"] = gys.Mingcheng;
+                                        }
+                                    }
+                                    drrkysjl["Changjia"] = _pr.Changjia;
+                                    drrkysjl["ShangpinMC"] = _pr.ShangpinMC;
+                                    drrkysjl["Guige"] = _pr.Guige;
+                                    drrkysjl["Pihao"] = _pr.Pihao;
+                                    drrkysjl["Xuliema"] = _pr.Xuliema;
+                                    drrkysjl["ystime"] = string.Format("{0:yyyy/MM/dd}", rkd.RukuRQ == null ? "" : ((DateTime)rkd.RukuRQ).ToString("yyyy/MM/dd"));
+                                    drrkysjl["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShengchanRQ == null ? "" : ((DateTime)_pr.ShengchanRQ).ToString("yyyy/MM/dd"));
+                                    drrkysjl["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShixiaoRQ == null ? "" : ((DateTime)_pr.ShixiaoRQ).ToString("yyyy/MM/dd"));
+                                    drrkysjl["Zhucezheng"] = _pr.Zhucezheng;
+                                    drrkysjl["Shuliang"] = _pr.Shuliang;
+                                    drrkysjl["ChunyunYQ"] = rkd.ChunyunYQ;
 
-                                dtrkysjl.Rows.Add(drrkysjl);
+                                    ysjl_Shuliangs += (long)_pr.Shuliang;
+
+                                    dtrkysjl.Rows.Add(drrkysjl);
+                                }
                             }
+                            catch(Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+                            
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["RKYanshouJilu"]));
 
                             DataTable dtysjl = _rds.Tables["RKYanshouJilu_Title"];
                             DataRow drysjl = dtysjl.NewRow();
-                            wms_rukudan rkjl_others = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_rkysid));
-                            base_weituokehu wtkhjl_others = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == rkjl_others.HuozhuID);
-                            drysjl["HuozhuID"] = wtkhjl_others.Kehumingcheng;
-                            drysjl["rkysjlSLs"] = ysjl_Shuliangs;
-
-                            dtysjl.Rows.Add(drysjl);
+                            try
+                            {
+                                wms_rukudan rkjl_others = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_rkysid) && p.IsDelete == false);
+                                if (rkjl_others != null)
+                                {
+                                    base_weituokehu wtkhjl_others = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == rkjl_others.HuozhuID && p.IsDelete == false);
+                                    if (wtkhjl_others != null)
+                                    {
+                                        drysjl["HuozhuID"] = wtkhjl_others.Kehumingcheng;
+                                    }
+                                }
+                                drysjl["rkysjlSLs"] = ysjl_Shuliangs;
+                                dtysjl.Rows.Add(drysjl);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+                            
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["RKYanshouJilu_Title"]));
                             break;
                         case "RuKuXiangDan":
@@ -432,45 +529,68 @@ namespace CKWMS.reports
                             rptView.LocalReport.ReportPath = "reports/rptShouHuoList.rdlc";
                             rptView.LocalReport.DataSources.Clear();
                             DataTable dtshlist = _rds.Tables["RuKuXiangDan"];
-                            var _shlist = ServiceFactory.wms_cunhuoservice.GetUploadList(int.Parse(_rkxdid));
                             DataRow drshlist;
                             long rkxd_Shuliangs = 0;
-                            foreach (wms_upload_v _sh in _shlist)
+                            try
                             {
-                                drshlist = dtshlist.NewRow();
-                                drshlist["ShangpinMC"] = _sh.ShangpinMC;
-                                drshlist["Zhucezheng"] = _sh.Zhucezheng;
-                                drshlist["Guige"] = _sh.Guige;
-                                drshlist["Pihao"] = _sh.Pihao;
-                                drshlist["Pihao1"] = _sh.Pihao1;
-                                drshlist["Xuliema"] = _sh.Xuliema;
-                                drshlist["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _sh.ShengchanRQ);
-                                drshlist["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _sh.ShixiaoRQ);
-                                drshlist["Changjia"] = _sh.Changjia;
-                                drshlist["Chandi"] = _sh.Chandi;
-                                if (_sh.sshuliang == null)
-                                    _sh.sshuliang = 0;
-                                drshlist["Shuliang"] = _sh.sshuliang;
-                                drshlist["Kuwei"] = _sh.Kuwei;
-                                drshlist["CunhuoSM"] = _sh.CunhuoSM;
-                                drshlist["MakeDate"] = string.Format("{0:yyyy/MM/dd}", _sh.MakeDate);
-                                rkxd_Shuliangs += (long)_sh.sshuliang;
+                                var _shlist = ServiceFactory.wms_cunhuoservice.GetUploadList(int.Parse(_rkxdid)).ToList<wms_upload_v>();
+                                foreach (wms_upload_v _sh in _shlist)
+                                {
+                                    drshlist = dtshlist.NewRow();
+                                    drshlist["ShangpinMC"] = _sh.ShangpinMC;
+                                    drshlist["Zhucezheng"] = _sh.Zhucezheng;
+                                    drshlist["Guige"] = _sh.Guige;
+                                    drshlist["Pihao"] = _sh.Pihao;
+                                    drshlist["Pihao1"] = _sh.Pihao1;
+                                    drshlist["Xuliema"] = _sh.Xuliema;
+                                    drshlist["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _sh.ShengchanRQ == null ? "" : ((DateTime)_sh.ShengchanRQ).ToString("yyyy/MM/dd"));
+                                    drshlist["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _sh.ShixiaoRQ == null ? "" : ((DateTime)_sh.ShixiaoRQ).ToString("yyyy/MM/dd"));
+                                    drshlist["Changjia"] = _sh.Changjia;
+                                    drshlist["Chandi"] = _sh.Chandi;
+                                    if (_sh.sshuliang == null)
+                                        _sh.sshuliang = 0;
+                                    drshlist["Shuliang"] = _sh.sshuliang;
+                                    drshlist["Kuwei"] = _sh.Kuwei;
+                                    drshlist["CunhuoSM"] = _sh.CunhuoSM;
+                                    drshlist["MakeDate"] = string.Format("{0:yyyy/MM/dd}", _sh.MakeDate == null ? "" : ((DateTime)_sh.MakeDate).ToString("yyyy/MM/dd"));
+                                    rkxd_Shuliangs += (long)_sh.sshuliang;
 
-                                dtshlist.Rows.Add(drshlist);
+                                    dtshlist.Rows.Add(drshlist);
+                                }
                             }
+                            catch(Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+
+                            
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["RuKuXiangDan"]));
 
                             DataTable dtshlist_others = _rds.Tables["RuKuXiangDan_Title"];
                             DataRow drshlist_others = dtshlist_others.NewRow();
-                            wms_rukudan rkshlist_others = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_rkxdid));
-                            base_weituokehu wtkhshlist_others = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == rkshlist_others.HuozhuID);
-                            drshlist_others["RukudanBH"] = rkshlist_others.RukudanBH;
-                            drshlist_others["HuozhuID"] = wtkhshlist_others.Kehumingcheng;
-                            drshlist_others["RukuRQ"] = string.Format("{0:yyyy/MM/dd}", rkshlist_others.RukuRQ);
-                            drshlist_others["ChunyunYQ"] = rkshlist_others.ChunyunYQ;
-                            drshlist_others["rkxdSLs"] = rkxd_Shuliangs;
+                            try
+                            {
+                                wms_rukudan rkshlist_others = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_rkxdid) && p.IsDelete == false);
+                                if (rkshlist_others != null)
+                                {
+                                    drshlist_others["RukudanBH"] = rkshlist_others.RukudanBH;
+                                    drshlist_others["RukuRQ"] = string.Format("{0:yyyy/MM/dd}", rkshlist_others.RukuRQ == null ? "" : ((DateTime)rkshlist_others.RukuRQ).ToString("yyyy/MM/dd"));
+                                    drshlist_others["ChunyunYQ"] = rkshlist_others.ChunyunYQ;
+                                    base_weituokehu wtkhshlist_others = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == rkshlist_others.HuozhuID && p.IsDelete == false);
+                                    if (wtkhshlist_others != null)
+                                    {
+                                        drshlist_others["HuozhuID"] = wtkhshlist_others.Kehumingcheng;
+                                    }
+                                }
+                                drshlist_others["rkxdSLs"] = rkxd_Shuliangs;
 
-                            dtshlist_others.Rows.Add(drshlist_others);
+                                dtshlist_others.Rows.Add(drshlist_others);
+                            }
+                            catch(Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+                            
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["RuKuXiangDan_Title"]));
                             break;
                         case "ShangJiaList":
@@ -478,40 +598,61 @@ namespace CKWMS.reports
                             rptView.LocalReport.ReportPath = "reports/rptShangJiaList.rdlc";
                             rptView.LocalReport.DataSources.Clear();
                             DataTable dtsjlist = _rds.Tables["ShangJiaList"];
-                            var _sjlist = ServiceFactory.wms_cunhuoservice.GetUploadList(int.Parse(_sjdid));
                             DataRow drsjlist;
                             long sjl_sshuliangs = 0;
-                            foreach (wms_upload_v _sh in _sjlist)
+                            try
                             {
-                                drsjlist = dtsjlist.NewRow();
-                                drsjlist["ShangpinMC"] = _sh.ShangpinMC;
-                                drsjlist["Guige"] = _sh.Guige;
-                                drsjlist["Pihao"] = _sh.Pihao;
-                                drsjlist["Pihao1"] = _sh.Pihao1;
-                                drsjlist["Xuliema"] = _sh.Xuliema;
-                                if (_sh.sshuliang == null)
-                                    _sh.sshuliang = 0;
-                                drsjlist["Shuliang"] = _sh.sshuliang;
-                                drsjlist["Kuwei"] = _sh.Kuwei;
-                                drsjlist["CunhuoSM"] = _sh.CunhuoSM;
-                                drsjlist["MakeDate"] = string.Format("{0:yyyy/MM/dd}", _sh.MakeDate);
-                                sjl_sshuliangs += (long)_sh.sshuliang;
+                                var _sjlist = ServiceFactory.wms_cunhuoservice.GetUploadList(int.Parse(_sjdid)).ToList<wms_upload_v>();
+                                foreach (wms_upload_v _sh in _sjlist)
+                                {
+                                    drsjlist = dtsjlist.NewRow();
+                                    drsjlist["ShangpinMC"] = _sh.ShangpinMC;
+                                    drsjlist["Guige"] = _sh.Guige;
+                                    drsjlist["Pihao"] = _sh.Pihao;
+                                    drsjlist["Pihao1"] = _sh.Pihao1;
+                                    drsjlist["Xuliema"] = _sh.Xuliema;
+                                    drsjlist["Shuliang"] = _sh.sshuliang == null ? float.Parse("0") : _sh.sshuliang;
+                                    drsjlist["Kuwei"] = _sh.Kuwei;
+                                    drsjlist["CunhuoSM"] = _sh.CunhuoSM;
+                                    drsjlist["MakeDate"] = string.Format("{0:yyyy/MM/dd}", _sh.MakeDate == null ? "" : ((DateTime)_sh.MakeDate).ToString("yyyy/MM/dd"));
+                                    if(_sh.sshuliang!=null)
+                                        sjl_sshuliangs += (long)_sh.sshuliang;
 
-                                dtsjlist.Rows.Add(drsjlist);
+                                    dtsjlist.Rows.Add(drsjlist);
+                                }
                             }
+                            catch(Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+                            
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["ShangJiaList"]));
 
                             DataTable dtsjlist_others = _rds.Tables["ShangJiaList_Title"];
                             DataRow drsjlist_others = dtsjlist_others.NewRow();
-                            wms_rukudan rksjlist_others = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_sjdid));
-                            base_weituokehu wtkhsjlist_others = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == rksjlist_others.HuozhuID);
-                            drsjlist_others["RukudanBH"] = rksjlist_others.RukudanBH;
-                            drsjlist_others["HuozhuID"] = wtkhsjlist_others.Kehumingcheng;
-                            drsjlist_others["RukuRQ"] = string.Format("{0:yyyy/MM/dd}", rksjlist_others.RukuRQ);
-                            drsjlist_others["ChunyunYQ"] = rksjlist_others.ChunyunYQ;
-                            drsjlist_others["sjlSLs"] = sjl_sshuliangs;
+                            try
+                            {
+                                wms_rukudan rksjlist_others = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_sjdid) && p.IsDelete == false);
+                                if (rksjlist_others != null)
+                                {
+                                    base_weituokehu wtkhsjlist_others = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == rksjlist_others.HuozhuID);
+                                    if (wtkhsjlist_others != null)
+                                    {
+                                        drsjlist_others["HuozhuID"] = wtkhsjlist_others.Kehumingcheng;
+                                    }
+                                    drsjlist_others["RukudanBH"] = rksjlist_others.RukudanBH;
+                                    drsjlist_others["RukuRQ"] = string.Format("{0:yyyy/MM/dd}", rksjlist_others.RukuRQ==null?"": ((DateTime)rksjlist_others.RukuRQ).ToString("yyyy/MM/dd"));
+                                    drsjlist_others["ChunyunYQ"] = rksjlist_others.ChunyunYQ;
+                                }
+                                drsjlist_others["sjlSLs"] = sjl_sshuliangs;
 
-                            dtsjlist_others.Rows.Add(drsjlist_others);
+                                dtsjlist_others.Rows.Add(drsjlist_others);
+                            }
+                            catch(Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+                            
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["ShangJiaList_Title"]));
                             break;
                         case "RuKuMX":
