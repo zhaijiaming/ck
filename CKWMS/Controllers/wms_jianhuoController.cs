@@ -171,6 +171,12 @@ namespace CKWMS.Controllers
             ViewBag.id = id;
             return View();
         }
+        public ActionResult PrintCKfuhejianyan()
+        {
+            var ckjy_id = Request["id"] ?? "";
+            ViewBag.id = ckjy_id;
+            return View();
+        }
         public ActionResult GetPickDetailByOut()
         {
             int _userid = (int)Session["user_id"];

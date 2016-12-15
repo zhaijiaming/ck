@@ -915,6 +915,7 @@
     <Content Include="Views\base_yunshugs\Add.cshtml" />
     <Content Include="Views\base_yunshugs\Edit.cshtml" />
     <Content Include="Views\base_yunshugs\Index.cshtml" />
+    <Content Include="Views\wms_jianhuo\PrintCKfuhejianyan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -937,6 +938,7 @@
     <EmbeddedResource Include="reports\daviskw.rdlc" />
     <EmbeddedResource Include="reports\rptCKFuheDan.rdlc" />
     <EmbeddedResource Include="reports\rptCKFuheJYdan.rdlc" />
+    <EmbeddedResource Include="reports\rptJH_CKFuhejianyan.rdlc" />
     <EmbeddedResource Include="reports\rptJianHuoDan.rdlc" />
     <EmbeddedResource Include="reports\rptRKYanShouJiLu.rdlc" />
     <EmbeddedResource Include="reports\rptQuanxian.rdlc" />

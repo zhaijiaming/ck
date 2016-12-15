@@ -16,10 +16,18 @@
             //}
         });
         //拣货单打印
-        var chukuid = $("#ckd").val();
         $("#bt_fn_print").click(function () {
+            var chukuid = $("#ckd").val();
             window.open("/wms_jianhuo/PrintJianhuodan?id=" + chukuid);
             $("#pl_fun").hide();
+        });
+        //出库复核检验单打印
+        $("#bt_fn_printJY").click(function () {
+            var chukuid = $("#ckd").val();
+            if (chukuid.length > 0) {
+                window.open("/wms_jianhuo/PrintCKfuhejianyan?id=" + chukuid);
+                $("#pl_fun").hide();
+            }
         });
         $("#bt_fn_show").click(function () {
             $("#pl_fun").hide();
@@ -620,6 +628,8 @@
             <div class="center"><p id="bt_fn_show" class="btn btn-default">清单</p></div>
             <br />
             <div class="center"><p id="bt_fn_print" class="btn btn-default">打印</p></div>
+            <br />
+            <div class="center"><p id="bt_fn_printJY" class="btn btn-default">检验</p></div>
             <br />
             <div class="center"><p id="pl_fn_cancel" class="btn btn-default">取消</p></div>
         </div>

@@ -42,23 +42,46 @@ namespace CKWMS.Controllers
                                 if (huozhuidequal.Equals("="))
                                 {
                                     if (huozhuidand.Equals("and"))
-                                        where = where.And(cust_rukujihua => cust_rukujihua.HuozhuID == int.Parse(huozhuid));
+                                        where = where.And(p => p.HuozhuID == int.Parse(huozhuid));
                                     else
-                                        where = where.Or(cust_rukujihua => cust_rukujihua.HuozhuID == int.Parse(huozhuid));
+                                        where = where.Or(p => p.HuozhuID == int.Parse(huozhuid));
                                 }
-                                if (huozhuidequal.Equals(">"))
+                            }
+                            break;
+                        case "gongyingid":
+                            string gongyingid = scld[1];
+                            string gongyingidequal = scld[2];
+                            string gongyingidand = scld[3];
+                            if (!string.IsNullOrEmpty(gongyingid))
+                            {
+                                if (gongyingidequal.Equals("="))
                                 {
-                                    if (huozhuidand.Equals("and"))
-                                        where = where.And(cust_rukujihua => cust_rukujihua.HuozhuID > int.Parse(huozhuid));
+                                    if (gongyingidand.Equals("and"))
+                                        where = where.And(p => p.GongyingshangID == int.Parse(gongyingid));
                                     else
-                                        where = where.Or(cust_rukujihua => cust_rukujihua.HuozhuID > int.Parse(huozhuid));
+                                        where = where.Or(p => p.GongyingshangID == int.Parse(gongyingid));
                                 }
-                                if (huozhuidequal.Equals("<"))
+                            }
+                            break;
+                        case "KehuDH":
+                            string KehuDH = scld[1];
+                            string KehuDHequal = scld[2];
+                            string KehuDHand = scld[3];
+                            if (!string.IsNullOrEmpty(KehuDH))
+                            {
+                                if (KehuDHequal.Equals("="))
                                 {
-                                    if (huozhuidand.Equals("and"))
-                                        where = where.And(cust_rukujihua => cust_rukujihua.HuozhuID < int.Parse(huozhuid));
+                                    if (KehuDHand.Equals("and"))
+                                        where = where.And(p => p.KehuDH == KehuDH);
                                     else
-                                        where = where.Or(cust_rukujihua => cust_rukujihua.HuozhuID < int.Parse(huozhuid));
+                                        where = where.Or(p => p.KehuDH == KehuDH);
+                                }
+                                if (KehuDHequal.Equals("like"))
+                                {
+                                    if (KehuDHand.Equals("and"))
+                                        where = where.And(p => p.KehuDH.Contains(KehuDH));
+                                    else
+                                        where = where.Or(p => p.KehuDH.Contains(KehuDH));
                                 }
                             }
                             break;
@@ -83,9 +106,19 @@ namespace CKWMS.Controllers
             int userid = (int)Session["user_id"];
             string pagetag = "cust_rukujihua_index";
             string page = "1";
+            //huozhuid
             string huozhuid = Request["huozhuid"] ?? "";
             string huozhuidequal = Request["huozhuidequal"] ?? "";
             string huozhuidand = Request["huozhuidand"] ?? "";
+            //gongyingid
+            string gongyingid = Request["gongyingid"] ?? "";
+            string gongyingidequal = Request["gongyingidequal"] ?? "";
+            string gongyingidand = Request["gongyingidand"] ?? "";
+            //KehuDH
+            string KehuDH = Request["KehuDH"] ?? "";
+            string KehuDHequal = Request["KehuDHequal"] ?? "";
+            string KehuDHand = Request["KehuDHand"] ?? "";
+
             Expression<Func<cust_rukujihua, bool>> where = PredicateExtensionses.True<cust_rukujihua>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -93,67 +126,115 @@ namespace CKWMS.Controllers
                 sc = new searchcondition();
                 sc.UserID = userid;
                 sc.PageBrief = pagetag;
+                //huozhuid
                 if (!string.IsNullOrEmpty(huozhuid))
                 {
                     if (huozhuidequal.Equals("="))
                     {
                         if (huozhuidand.Equals("and"))
-                            where = where.And(cust_rukujihua => cust_rukujihua.HuozhuID == int.Parse(huozhuid));
+                            where = where.And(p => p.HuozhuID == int.Parse(huozhuid));
                         else
-                            where = where.Or(cust_rukujihua => cust_rukujihua.HuozhuID == int.Parse(huozhuid));
-                    }
-                    if (huozhuidequal.Equals(">"))
-                    {
-                        if (huozhuidand.Equals("and"))
-                            where = where.And(cust_rukujihua => cust_rukujihua.HuozhuID > int.Parse(huozhuid));
-                        else
-                            where = where.Or(cust_rukujihua => cust_rukujihua.HuozhuID > int.Parse(huozhuid));
-                    }
-                    if (huozhuidequal.Equals("<"))
-                    {
-                        if (huozhuidand.Equals("and"))
-                            where = where.And(cust_rukujihua => cust_rukujihua.HuozhuID < int.Parse(huozhuid));
-                        else
-                            where = where.Or(cust_rukujihua => cust_rukujihua.HuozhuID < int.Parse(huozhuid));
+                            where = where.Or(p => p.HuozhuID == int.Parse(huozhuid));
                     }
                 }
                 if (!string.IsNullOrEmpty(huozhuid))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", huozhuid, huozhuidequal, huozhuidand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", "", huozhuidequal, huozhuidand);
+                //gongyingid
+                if (!string.IsNullOrEmpty(gongyingid))
+                {
+                    if (gongyingidequal.Equals("="))
+                    {
+                        if (gongyingidand.Equals("and"))
+                            where = where.And(p => p.GongyingshangID == int.Parse(gongyingid));
+                        else
+                            where = where.Or(p => p.GongyingshangID == int.Parse(gongyingid));
+                    }
+                }
+                if (!string.IsNullOrEmpty(gongyingid))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "gongyingid", gongyingid, gongyingidequal, gongyingidand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "gongyingid", "", gongyingidequal, gongyingidand);
+                //KehuDH
+                if (!string.IsNullOrEmpty(KehuDH))
+                {
+                    if (KehuDHequal.Equals("="))
+                    {
+                        if (KehuDHand.Equals("and"))
+                            where = where.And(p => p.KehuDH == KehuDH);
+                        else
+                            where = where.Or(p => p.KehuDH == KehuDH);
+                    }
+                    if (KehuDHequal.Equals("like"))
+                    {
+                        if (KehuDHand.Equals("and"))
+                            where = where.And(p => p.KehuDH.Contains(KehuDH));
+                        else
+                            where = where.Or(p => p.KehuDH.Contains(KehuDH));
+                    }
+                }
+                if (!string.IsNullOrEmpty(KehuDH))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "KehuDH", KehuDH, KehuDHequal, KehuDHand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "KehuDH", "", KehuDHequal, KehuDHand);
                 searchconditionService.GetInstance().AddEntity(sc);
             }
             else
             {
                 sc.ConditionInfo = "";
+                //huozhuid
                 if (!string.IsNullOrEmpty(huozhuid))
                 {
                     if (huozhuidequal.Equals("="))
                     {
                         if (huozhuidand.Equals("and"))
-                            where = where.And(cust_rukujihua => cust_rukujihua.HuozhuID == int.Parse(huozhuid));
+                            where = where.And(p => p.HuozhuID == int.Parse(huozhuid));
                         else
-                            where = where.Or(cust_rukujihua => cust_rukujihua.HuozhuID == int.Parse(huozhuid));
-                    }
-                    if (huozhuidequal.Equals(">"))
-                    {
-                        if (huozhuidand.Equals("and"))
-                            where = where.And(cust_rukujihua => cust_rukujihua.HuozhuID > int.Parse(huozhuid));
-                        else
-                            where = where.Or(cust_rukujihua => cust_rukujihua.HuozhuID > int.Parse(huozhuid));
-                    }
-                    if (huozhuidequal.Equals("<"))
-                    {
-                        if (huozhuidand.Equals("and"))
-                            where = where.And(cust_rukujihua => cust_rukujihua.HuozhuID < int.Parse(huozhuid));
-                        else
-                            where = where.Or(cust_rukujihua => cust_rukujihua.HuozhuID < int.Parse(huozhuid));
+                            where = where.Or(p => p.HuozhuID == int.Parse(huozhuid));
                     }
                 }
                 if (!string.IsNullOrEmpty(huozhuid))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", huozhuid, huozhuidequal, huozhuidand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", "", huozhuidequal, huozhuidand);
+                //gongyingid
+                if (!string.IsNullOrEmpty(gongyingid))
+                {
+                    if (gongyingidequal.Equals("="))
+                    {
+                        if (gongyingidand.Equals("and"))
+                            where = where.And(p => p.GongyingshangID == int.Parse(gongyingid));
+                        else
+                            where = where.Or(p => p.GongyingshangID == int.Parse(gongyingid));
+                    }
+                }
+                if (!string.IsNullOrEmpty(gongyingid))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "gongyingid", gongyingid, gongyingidequal, gongyingidand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "gongyingid", "", gongyingidequal, gongyingidand);
+                //KehuDH
+                if (!string.IsNullOrEmpty(KehuDH))
+                {
+                    if (KehuDHequal.Equals("="))
+                    {
+                        if (KehuDHand.Equals("and"))
+                            where = where.And(p => p.KehuDH == KehuDH);
+                        else
+                            where = where.Or(p => p.KehuDH == KehuDH);
+                    }
+                    if (KehuDHequal.Equals("like"))
+                    {
+                        if (KehuDHand.Equals("and"))
+                            where = where.And(p => p.KehuDH.Contains(KehuDH));
+                        else
+                            where = where.Or(p => p.KehuDH.Contains(KehuDH));
+                    }
+                }
+                if (!string.IsNullOrEmpty(KehuDH))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "KehuDH", KehuDH, KehuDHequal, KehuDHand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "KehuDH", "", KehuDHequal, KehuDHand);
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;

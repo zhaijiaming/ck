@@ -35,6 +35,7 @@ namespace CKWMS.reports
                 string _zlgl_rkysid = "";
                 string _zlgl_ckfhid = "";
                 string _spxx_huozhuid = "";
+                string _JH_ckjyid = "";
                 ReportDataSetZY _rds = new ReportDataSetZY();
                 //DataTable _dt;                
                 if (Request.QueryString["pid"] != null)
@@ -48,6 +49,7 @@ namespace CKWMS.reports
                     _zlgl_rkysid = Request.QueryString["zlgl_rkysid"] ?? "";
                     _zlgl_ckfhid = Request.QueryString["zlgl_ckfhid"] ?? "";
                     _spxx_huozhuid = Request.QueryString["spxx_huozhuid"] ?? "";
+                    _JH_ckjyid = Request.QueryString["JH_ckjyid"] ?? "";
                     switch (name)
                     {
                         case "daviskw":
@@ -94,7 +96,6 @@ namespace CKWMS.reports
 
                                     dtjhd.Rows.Add(drjhd);
                                 }
-                                drjhd = dtjhd.NewRow();
                             }
                             catch(Exception ex)
                             {
@@ -1266,6 +1267,72 @@ namespace CKWMS.reports
                                 dtYiweiInfo.Rows.Add(drYiweiInfo);
                             }
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["YiweiInfo"]));
+                            break;
+                        case "jianhuo_CKFuhejianyan":
+                            rptView.Reset();
+                            rptView.LocalReport.ReportPath = "reports/rptJH_CKFuhejianyan.rdlc";
+                            rptView.LocalReport.DataSources.Clear();
+                            DataTable dtjh_ckfhjy = _rds.Tables["JH_CKfuhejianyan"];
+                            DataRow drjh_ckfhjy;
+                            long JH_CKFHJY_SLs = 0;
+                            try
+                            {
+                                var _jhds = ob_wms_jianhuoservice.GetPickDetail(int.Parse(_JH_ckjyid), p => p.DaijianSL > 0).OrderBy(p => p.Kuwei).ThenBy(p => p.Pihao).ToList<wms_pick_v>();
+                                foreach (wms_pick_v _pv in _jhds)
+                                {
+                                    drjh_ckfhjy = dtjh_ckfhjy.NewRow();
+                                    drjh_ckfhjy["Mingcheng"] = _pv.ShangpinMC;
+                                    drjh_ckfhjy["Zhucezheng"] = _pv.Zhucezheng;
+                                    drjh_ckfhjy["Guige"] = _pv.Guige;
+                                    drjh_ckfhjy["Pihao"] = _pv.Pihao;
+                                    drjh_ckfhjy["Pihao1"] = _pv.Pihao1;
+                                    drjh_ckfhjy["Xuliema"] = _pv.Xuliema;
+                                    drjh_ckfhjy["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _pv.ShengchanRQ == null ? "" : ((DateTime)_pv.ShengchanRQ).ToString("yyyy/MM/dd"));
+                                    drjh_ckfhjy["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _pv.ShixiaoRQ == null ? "" : ((DateTime)_pv.ShixiaoRQ).ToString("yyyy/MM/dd"));
+                                    drjh_ckfhjy["DaijianSL"] = _pv.DaijianSL;
+                                    JH_CKFHJY_SLs += (long)_pv.DaijianSL;
+                                    drjh_ckfhjy["Changjia"] = _pv.Changjia;
+                                    drjh_ckfhjy["Chandi"] = _pv.Chandi;
+
+                                    dtjh_ckfhjy.Rows.Add(drjh_ckfhjy);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+
+                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["JH_CKfuhejianyan"]));
+
+                            DataTable dtjh_ckfhjy_t = _rds.Tables["JH_CKfuhejianyan_Title"];
+                            DataRow drjhdt_t = dtjh_ckfhjy_t.NewRow();
+                            try
+                            {
+                                wms_chukudan tempdata = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_JH_ckjyid) && p.IsDelete == false);
+                                if (tempdata != null)
+                                {
+                                    drjhdt_t["Yunsongdizhi"] = tempdata.Yunsongdizhi;
+                                    drjhdt_t["ChukuRQ"] = string.Format("{0:yyyy/MM/dd}", tempdata.ChukuRQ == null ? "" : ((DateTime)tempdata.ChukuRQ).ToString("yyyy/MM/dd"));
+                                    drjhdt_t["ChukudanBH"] = tempdata.ChukudanBH;
+                                    drjhdt_t["Lianxiren"] = tempdata.Lianxiren;
+                                    drjhdt_t["LianxiDH"] = tempdata.LianxiDH;
+                                    drjhdt_t["Beizhu"] = tempdata.Beizhu;
+                                    drjhdt_t["KehuMC"] = tempdata.KehuMC;
+                                    drjhdt_t["JH_CKFHJY_SLs"] = JH_CKFHJY_SLs;
+                                    base_weituokehu wtkhdata = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == tempdata.HuozhuID && p.IsDelete == false);
+                                    if (wtkhdata != null)
+                                    {
+                                        drjhdt_t["HuozhuID"] = wtkhdata.Kehumingcheng;
+                                    }
+                                    dtjh_ckfhjy_t.Rows.Add(drjhdt_t);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+
+                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["JH_CKfuhejianyan_Title"]));
                             break;
                         default:
                             break;
