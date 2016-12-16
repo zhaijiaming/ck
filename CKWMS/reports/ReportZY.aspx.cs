@@ -97,11 +97,11 @@ namespace CKWMS.reports
                                     dtjhd.Rows.Add(drjhd);
                                 }
                             }
-                            catch(Exception ex)
+                            catch (Exception ex)
                             {
                                 Console.WriteLine(ex.Message);
                             }
-                            
+
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["JianHuoDan"]));
 
                             DataTable dtjhdt = _rds.Tables["JianHuoDan_Title"];
@@ -127,11 +127,11 @@ namespace CKWMS.reports
                                     dtjhdt.Rows.Add(drjhdt);
                                 }
                             }
-                            catch(Exception ex)
+                            catch (Exception ex)
                             {
                                 Console.WriteLine(ex.Message);
                             }
-                            
+
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["JianHuoDan_Title"]));
                             break;
                         case "tongxingdan":
@@ -177,7 +177,7 @@ namespace CKWMS.reports
                                 Console.WriteLine(ex.Message);
                             }
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["TongXingDan"]));
-                            
+
                             //页眉&页脚
                             DataTable dtckd = _rds.Tables["TongXingDan_Title"];
                             DataRow drckd = dtckd.NewRow();
@@ -252,11 +252,11 @@ namespace CKWMS.reports
                                     dtfh.Rows.Add(drfh);
                                 }
                             }
-                            catch(Exception ex)
+                            catch (Exception ex)
                             {
                                 Console.WriteLine(ex.Message);
                             }
-                            
+
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["CKFuheBaoGao"]));
 
                             DataTable dtckfh = _rds.Tables["CKFuheBaoGao_Title"];
@@ -311,11 +311,11 @@ namespace CKWMS.reports
                                     dtfhjy.Rows.Add(drfhjy);
                                 }
                             }
-                            catch(Exception ex)
+                            catch (Exception ex)
                             {
                                 Console.WriteLine(ex.Message);
                             }
-                            
+
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["CKFuheJilu"]));
 
                             DataTable dtckfhjy = _rds.Tables["CKFuheJilu_Title"];
@@ -341,7 +341,7 @@ namespace CKWMS.reports
                                 drckfhjy["ckfhjyjhSLs"] = ckfujy_JianhuoSLs;
                                 dtckfhjy.Rows.Add(drckfhjy);
                             }
-                            catch(Exception ex)
+                            catch (Exception ex)
                             {
                                 Console.WriteLine(ex.Message);
                             }
@@ -411,11 +411,11 @@ namespace CKWMS.reports
                                     dtzlysbg.Rows.Add(drzlysbg);
                                 }
                             }
-                            catch(Exception ex)
+                            catch (Exception ex)
                             {
                                 Console.WriteLine(ex.Message);
                             }
-                            
+
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["RKYanshouBaoGao"]));
 
                             DataTable dtrkfhjy = _rds.Tables["RKYanshouBaoGao_Title"];
@@ -429,11 +429,11 @@ namespace CKWMS.reports
                                     drrkfhjy["HuozhuID"] = wtkh_others.Kehumingcheng;
                                 }
                                 var _ysbgs = ServiceFactory.quan_rukuysservice.GetEntrycheckByRK(int.Parse(_rkysid)).ToList<quan_entrycheck_v>();
-                                foreach(var _date in _ysbgs)
+                                foreach (var _date in _ysbgs)
                                 {
                                     var ystime = _date.ystime;
                                     if (ystime != null)
-                                        drrkfhjy["MakeDate"] = string.Format("{0:yyyy/MM/dd}", ystime == null ? "": ((DateTime)ystime).ToString("yyyy/MM/dd"));
+                                        drrkfhjy["MakeDate"] = string.Format("{0:yyyy/MM/dd}", ystime == null ? "" : ((DateTime)ystime).ToString("yyyy/MM/dd"));
                                     break;
                                 }
                                 userinfo man = ServiceFactory.userinfoservice.GetEntityById(p => p.ID == (int)Session["user_id"] && p.IsDelete == false);
@@ -441,7 +441,7 @@ namespace CKWMS.reports
                                 {
                                     drrkfhjy["MakeMan"] = man.FullName;
                                 }
-                                
+
                                 drrkfhjy["rkysbgSLs"] = rkysbg_Shuliangs;
                                 drrkfhjy["rkysbgYs"] = rkysbg_YanshouSL_Y;
                                 drrkfhjy["rkysbgNs"] = rkysbg_YanshouSL_N;
@@ -452,7 +452,7 @@ namespace CKWMS.reports
                             {
                                 Console.WriteLine(ex.Message);
                             }
-                            
+
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["RKYanshouBaoGao_Title"]));
                             break;
                         case "YanShouJiLu":
@@ -495,11 +495,11 @@ namespace CKWMS.reports
                                     dtrkysjl.Rows.Add(drrkysjl);
                                 }
                             }
-                            catch(Exception ex)
+                            catch (Exception ex)
                             {
                                 Console.WriteLine(ex.Message);
                             }
-                            
+
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["RKYanshouJilu"]));
 
                             DataTable dtysjl = _rds.Tables["RKYanshouJilu_Title"];
@@ -522,7 +522,7 @@ namespace CKWMS.reports
                             {
                                 Console.WriteLine(ex.Message);
                             }
-                            
+
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["RKYanshouJilu_Title"]));
                             break;
                         case "RuKuXiangDan":
@@ -559,12 +559,12 @@ namespace CKWMS.reports
                                     dtshlist.Rows.Add(drshlist);
                                 }
                             }
-                            catch(Exception ex)
+                            catch (Exception ex)
                             {
                                 Console.WriteLine(ex.Message);
                             }
 
-                            
+
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["RuKuXiangDan"]));
 
                             DataTable dtshlist_others = _rds.Tables["RuKuXiangDan_Title"];
@@ -587,11 +587,11 @@ namespace CKWMS.reports
 
                                 dtshlist_others.Rows.Add(drshlist_others);
                             }
-                            catch(Exception ex)
+                            catch (Exception ex)
                             {
                                 Console.WriteLine(ex.Message);
                             }
-                            
+
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["RuKuXiangDan_Title"]));
                             break;
                         case "ShangJiaList":
@@ -616,17 +616,17 @@ namespace CKWMS.reports
                                     drsjlist["Kuwei"] = _sh.Kuwei;
                                     drsjlist["CunhuoSM"] = _sh.CunhuoSM;
                                     drsjlist["MakeDate"] = string.Format("{0:yyyy/MM/dd}", _sh.MakeDate == null ? "" : ((DateTime)_sh.MakeDate).ToString("yyyy/MM/dd"));
-                                    if(_sh.sshuliang!=null)
+                                    if (_sh.sshuliang != null)
                                         sjl_sshuliangs += (long)_sh.sshuliang;
 
                                     dtsjlist.Rows.Add(drsjlist);
                                 }
                             }
-                            catch(Exception ex)
+                            catch (Exception ex)
                             {
                                 Console.WriteLine(ex.Message);
                             }
-                            
+
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["ShangJiaList"]));
 
                             DataTable dtsjlist_others = _rds.Tables["ShangJiaList_Title"];
@@ -642,18 +642,18 @@ namespace CKWMS.reports
                                         drsjlist_others["HuozhuID"] = wtkhsjlist_others.Kehumingcheng;
                                     }
                                     drsjlist_others["RukudanBH"] = rksjlist_others.RukudanBH;
-                                    drsjlist_others["RukuRQ"] = string.Format("{0:yyyy/MM/dd}", rksjlist_others.RukuRQ==null?"": ((DateTime)rksjlist_others.RukuRQ).ToString("yyyy/MM/dd"));
+                                    drsjlist_others["RukuRQ"] = string.Format("{0:yyyy/MM/dd}", rksjlist_others.RukuRQ == null ? "" : ((DateTime)rksjlist_others.RukuRQ).ToString("yyyy/MM/dd"));
                                     drsjlist_others["ChunyunYQ"] = rksjlist_others.ChunyunYQ;
                                 }
                                 drsjlist_others["sjlSLs"] = sjl_sshuliangs;
 
                                 dtsjlist_others.Rows.Add(drsjlist_others);
                             }
-                            catch(Exception ex)
+                            catch (Exception ex)
                             {
                                 Console.WriteLine(ex.Message);
                             }
-                            
+
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["ShangJiaList_Title"]));
                             break;
                         case "RuKuMX":
@@ -757,10 +757,11 @@ namespace CKWMS.reports
                                     drzlgl_bg["Guige"] = _pr.Guige;
                                     drzlgl_bg["Pihao"] = _pr.Pihao;
                                     drzlgl_bg["Xuliema"] = _pr.Xuliema;
-                                    drzlgl_bg["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShengchanRQ);
-                                    drzlgl_bg["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShixiaoRQ);
+                                    drzlgl_bg["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShengchanRQ == null ? "" : ((DateTime)_pr.ShengchanRQ).ToString("yyyy/MM/dd"));
+                                    drzlgl_bg["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShixiaoRQ == null ? "" : ((DateTime)_pr.ShixiaoRQ).ToString("yyyy/MM/dd"));
                                     drzlgl_bg["Zhucezheng"] = _pr.Zhucezheng;
                                     drzlgl_bg["Shuliang"] = _pr.Shuliang;
+                                    drzlgl_bg["ChunyunYQ"] = _pr.ChunyunYQ;
                                     //验收结果
                                     drzlgl_bg["ysresult"] = MvcApplication.CheckResult[_pr.ysresult];
                                     var ysresult = MvcApplication.CheckResult[_pr.ysresult];
@@ -793,26 +794,35 @@ namespace CKWMS.reports
                             DataRow drzlgl_bg_others = dtzlgl_bg_others.NewRow();
                             try
                             {
+                                int? huozhuid_first = -1;
                                 var _zlgl_rkyss = ServiceFactory.quan_rukuysservice.GetInrec(p => p.RukudanBH == _zlgl_rkysid && p.IsDelete == false).ToList<quan_inrec_v>();
                                 //得到第一个货主ID
-                                quan_inrec_v zlgl_huozhiid_first = _zlgl_rkyss.FirstOrDefault();
-                                if (zlgl_huozhiid_first != null)
+                                foreach (var rkys in _zlgl_rkyss)
                                 {
-                                    base_weituokehu zlgl_wtkh = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == zlgl_huozhiid_first.HuozhuID);
+                                    var huozhuid = rkys.HuozhuID;
+                                    if (huozhuid != null)
+                                    {
+                                        huozhuid_first = huozhuid;
+                                        break;
+                                    }
+                                }
+                                if (huozhuid_first >-1)
+                                {
+                                    base_weituokehu zlgl_wtkh = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == huozhuid_first && p.IsDelete == false);
                                     if (zlgl_wtkh != null)
                                     {
                                         drzlgl_bg_others["HuozhuID"] = zlgl_wtkh.Kehumingcheng;
                                     }
                                 }
-                                userinfo zlgl_man = ServiceFactory.userinfoservice.GetEntityById(p => p.ID == (int)Session["user_id"]);
+                                userinfo zlgl_man = ServiceFactory.userinfoservice.GetEntityById(p => p.ID == (int)Session["user_id"] && p.IsDelete == false);
                                 if (zlgl_man != null)
                                 {
                                     drzlgl_bg_others["MakeMan"] = zlgl_man.FullName;
                                 }
-                                wms_rukudan zlgl_rkd = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.RukudanBH == _zlgl_rkysid);
+                                wms_rukudan zlgl_rkd = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.RukudanBH == _zlgl_rkysid && p.IsDelete == false);
                                 if (zlgl_rkd != null)
                                 {
-                                    drzlgl_bg_others["RukuRQ"] = string.Format("{0:yyyy/MM/dd}", zlgl_rkd.RukuRQ);
+                                    drzlgl_bg_others["RukuRQ"] = string.Format("{0:yyyy/MM/dd}", zlgl_rkd.RukuRQ == null ? "" : ((DateTime)zlgl_rkd.RukuRQ).ToString("yyyy/MM/dd"));
 
                                 }
                                 drzlgl_bg_others["rkysbgSLs"] = zlgl_bg_Shuliang;
