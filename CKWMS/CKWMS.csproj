@@ -304,6 +304,7 @@
     <Compile Include="Controllers\json_importController.cs" />
     <Compile Include="Controllers\json_packageController.cs" />
     <Compile Include="Controllers\quan_chukufhController.cs" />
+    <Compile Include="Controllers\rmd_myreminderController.cs" />
     <Compile Include="Controllers\wms_cangguanszController.cs" />
     <Compile Include="Controllers\wms_cangkuController.cs" />
     <Compile Include="Controllers\wms_cangkuqyController.cs" />
@@ -333,6 +334,7 @@
     <Compile Include="Models\json_importViewModel.cs" />
     <Compile Include="Models\json_packageViewModel.cs" />
     <Compile Include="Models\quan_chukufhViewModel.cs" />
+    <Compile Include="Models\rmd_myreminderViewModel.cs" />
     <Compile Include="Models\wms_cangguanszViewModel.cs" />
     <Compile Include="Models\wms_cangkuqyViewModel.cs" />
     <Compile Include="Models\wms_cangkuViewModel.cs" />
@@ -916,6 +918,9 @@
     <Content Include="Views\base_yunshugs\Edit.cshtml" />
     <Content Include="Views\base_yunshugs\Index.cshtml" />
     <Content Include="Views\wms_jianhuo\PrintCKfuhejianyan.cshtml" />
+    <Content Include="Views\rmd_myreminder\Add.cshtml" />
+    <Content Include="Views\rmd_myreminder\Edit.cshtml" />
+    <Content Include="Views\rmd_myreminder\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

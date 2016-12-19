@@ -433,6 +433,12 @@ namespace CKWMS.App_Code
                 case "运送方式":
                     sb.Append(GetCommonSelect(selectedValue, MvcApplication.DeliveryType));
                     break;
+                case "提醒对象":
+                    sb.Append(GetCommonSelect(selectedValue, MvcApplication.RemindObject));
+                    break;
+                case "提醒区间":
+                    sb.Append(GetCommonSelect(selectedValue, MvcApplication.RemindPeriod));
+                    break;
                 default:
                     break;
             }
@@ -1317,6 +1323,14 @@ namespace CKWMS.App_Code
                 case "运送方式":
                     if (MvcApplication.DeliveryType.ContainsKey(dataValue))
                         returnvalue = MvcApplication.DeliveryType[dataValue];
+                    break;
+                case "提醒对象":
+                    if (MvcApplication.DeliveryType.ContainsKey(dataValue))
+                        returnvalue = MvcApplication.RemindObject[dataValue];
+                    break;
+                case "提醒区间":
+                    if (MvcApplication.DeliveryType.ContainsKey(dataValue))
+                        returnvalue = MvcApplication.RemindPeriod[dataValue];
                     break;
                 default:
                     break;

@@ -107,7 +107,14 @@ namespace CKWMS
         ///运送方式 
         /// </summary>
         public static Dictionary<int, string> DeliveryType;
-
+        /// <summary>
+        /// 提醒区间
+        /// </summary>
+        public static Dictionary<int, string> RemindPeriod;
+        /// <summary>
+        /// 提醒对象
+        /// </summary>
+        public static Dictionary<int, string> RemindObject;
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -165,7 +172,7 @@ namespace CKWMS
             TranCondition = new Dictionary<int, string>();
             TranCondition.Add(0, "");
             TranCondition.Add(1, "常温");
-            TranCondition.Add(2, "阴凉（30℃以下)");
+            TranCondition.Add(2, "阴凉");
             TranCondition.Add(3, "冷藏");
             TranCondition.Add(4, "冷冻");
 
@@ -316,6 +323,33 @@ namespace CKWMS
             DeliveryType.Add(3, "海运");
             DeliveryType.Add(4, "公路");
             DeliveryType.Add(5, "铁路");
+
+            RemindPeriod = new Dictionary<int, string>();
+            RemindPeriod.Add(0, "");
+            RemindPeriod.Add(1, "超出有效期");
+            RemindPeriod.Add(2, "近效期30天");
+            RemindPeriod.Add(3, "近效期60天");
+            RemindPeriod.Add(4, "近效期90天");
+            RemindPeriod.Add(5, "近效期120天");
+            RemindPeriod.Add(6, "近效期150天");
+            RemindPeriod.Add(7, "近效期180天");
+            RemindPeriod.Add(8, "近效期360天");
+
+            RemindObject = new Dictionary<int, string>();
+            RemindObject.Add(0, "");
+            RemindObject.Add(1, "库存商品");
+            RemindObject.Add(2, "注册证");
+            RemindObject.Add(3, "货主授权");
+            RemindObject.Add(4, "货主营业执照");
+            RemindObject.Add(5, "货主经营许可");
+            RemindObject.Add(6, "供应商营业执照");
+            RemindObject.Add(7, "供应商经营许可");
+            RemindObject.Add(8, "客户营业执照");
+            RemindObject.Add(9, "客户经营许可");
+            RemindObject.Add(10, "工厂营业执照");
+            RemindObject.Add(11, "工厂生产许可");
+            RemindObject.Add(12, "当前入库单");
+            RemindObject.Add(13, "当前出库单");
         }
     }
 }
