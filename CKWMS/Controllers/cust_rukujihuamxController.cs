@@ -70,7 +70,8 @@ namespace CKWMS.Controllers
             }
 
             where = where.And(cust_rukujihuamx => cust_rukujihuamx.IsDelete == false);
-
+            cust_rukujihuamx pp = new cust_rukujihuamx();
+            
             var tempData = ob_cust_rukujihuamxservice.LoadSortEntities(where.Compile(), false, cust_rukujihuamx => cust_rukujihuamx.ID).ToPagedList<cust_rukujihuamx>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.cust_rukujihuamx = tempData;
             return View(tempData);

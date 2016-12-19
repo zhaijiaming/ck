@@ -535,7 +535,7 @@ namespace CKWMS.Controllers
             var _ckid = Request["ckd"] ?? "";
             if (string.IsNullOrEmpty(_ckid))
                 return Json(-1);
-            var _cargos = ob_wms_chukumxservice.LoadSortEntities(p => p.ChukuID == int.Parse(_ckid), true, s => s.Pihao);
+            var _cargos = ob_wms_chukumxservice.LoadSortEntities(p => p.ChukuID == int.Parse(_ckid) && p.IsDelete==false, true, s => s.Pihao);
             if (_cargos == null)
                 return Json(-1);
             return Json(_cargos.ToList<wms_chukumx>());

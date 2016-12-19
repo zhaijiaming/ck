@@ -16,7 +16,34 @@
                 location.href = url_go;
             }
         });
-
+        $("#bt_sendcheck").click(function () {
+            var sendval = "";
+            $("tr input[type=checkbox]").each(function () {
+                if (this.checked)
+                    sendval = sendval + $(this).val() + ",";
+            });
+            $.ajax({
+                async: true,
+                beforeSend: function () {
+                    ShowWait();
+                },
+                complete: function () {
+                    HiddenWait();
+                },
+                type: "POST",
+                url: "/quan_shouyingsq/checkadd",
+                data: {
+                    checkval: sendval,
+                    checktype: "3"
+                },
+                success: function (data) {
+                    if (data != "ok")
+                        alert("送审失败，请重新上传！");
+                    else
+                        window.location.reload();
+                }
+            });
+        });
 
         var t = document.getElementsByClassName('yyzztp');
 
@@ -139,7 +166,7 @@
         <li class="active">供应商</li>
     </ul>
 </div>
-
+<div id="loading"><img src="~/Imgs/wait.gif" alt="" />...系统正在加载数据,请耐心等待...</div>
 <div class="page-content">
     @Html.Search_Condition((int)Session["user_id"], "供应商_条件组合查询", "/base_gongyingshang/index", "base_gongyingshangindex", scms)
     <div class="page-header">
@@ -150,6 +177,7 @@
             @*<button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>*@
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
             @*<button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="Export()">表格</button>*@
+            <button type="button" class="btn btn-default " id="bt_sendcheck"><i class="icon-check-sign"></i>送审</button>
             <button type="button" class="btn btn-default " id="bt_export" onclick="javascript: window.open('/base_gongyingshang/supplierexport')"><i class="icon-inbox"></i>导出</button>
        </p>
     </div>
@@ -171,6 +199,7 @@
                        sortOrder = ViewBag.NameSortParm
                    })
                     </td>*@
+                    <td>首营状态</td>
                     <td>代码</td>
                     <td>名称</td>
                     <td>营业执照编号</td>
@@ -219,6 +248,7 @@
                                     <label><input type="checkbox"  value="@item.ID"></label>
                                 </div>
                             </td>
+                            <td>@Html.GetCommonValue_ID("首营状态", (int)item.Shouying)</td>
                             <td>@item.Daima</td>
                             <td>@item.Mingcheng</td>
                             <td>@item.YingyezhizhaoBH</td>

@@ -21,11 +21,32 @@
                 if (this.checked)
                     sendval = sendval + $(this).val() + ",";
             });
-            $.post("/quan_shouyingsq/checkadd", { checkval: sendval, checktype: "5" }, function (data, status) {
-                if (data = "ok")
-                    window.location.reload();
-                else
-                    alert("送审失败，请重新上传！");
+            //$.post("/quan_shouyingsq/checkadd", { checkval: sendval, checktype: "5" }, function (data, status) {
+            //    if (data = "ok")
+            //        window.location.reload();
+            //    else
+            //        alert("送审失败，请重新上传！");
+            //});
+            $.ajax({
+                async: true,
+                beforeSend: function () {
+                    ShowWait();
+                },
+                complete: function () {
+                    HiddenWait();
+                },
+                type: "POST",
+                url: "/quan_shouyingsq/checkadd",
+                data: {
+                    checkval: sendval,
+                    checktype: "5"
+                },
+                success: function (data) {
+                    if (data != "ok")
+                        alert("送审失败，请重新上传！");
+                    else
+                        window.location.reload();
+                }
             });
         });
         var t = document.getElementsByClassName('yyzztp');

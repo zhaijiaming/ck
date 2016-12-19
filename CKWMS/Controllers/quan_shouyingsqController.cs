@@ -788,12 +788,12 @@ namespace CKWMS.Controllers
                 case 4:
                     base_shouhuodanwei _shdw = ServiceFactory.base_shouhuodanweiservice.GetEntityById(p => p.ID == valid);
                     if (_shdw != null)
-                        _sqcontent = string.Format("货主首营申请：名称，{0}；营业执照：{1}；经营许可：{2}；", _shdw.Mingcheng, _shdw.YingyezhizhaoBH, _shdw.JingyingxukeBH);
+                        _sqcontent = string.Format("收货单位首营申请：名称，{0}；营业执照：{1}；经营许可：{2}；", _shdw.Mingcheng, _shdw.YingyezhizhaoBH, _shdw.JingyingxukeBH);
                     break;
                 case 5:
                     base_shengchanqiye _scqy = ServiceFactory.base_shengchanqiyeservice.GetEntityById(p => p.ID == valid);
                     if (_scqy != null)
-                        _sqcontent = string.Format("货主首营申请：名称，{0}；营业执照：{1}；经营许可：{2}；", _scqy.Qiyemingcheng, _scqy.YingyezhizhaoBH, _scqy.ShengchanxukeBH);
+                        _sqcontent = string.Format("生产企业首营申请：名称，{0}；营业执照：{1}；经营许可：{2}；", _scqy.Qiyemingcheng, _scqy.YingyezhizhaoBH, _scqy.ShengchanxukeBH);
                     break;
                 case 6:
                     break;
