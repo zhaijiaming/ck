@@ -6,6 +6,8 @@
 }
 <script type="text/javascript">
     $(document).ready(function () {
+        if (eval($("#syid").val()) > 1)
+            $("#pl_fun").hide();
         $("#pl_jldw").draggable({ handle: '.tuodong' }, { containment: [-1000, 50, 1300, 600] });
         $("#pl_Fanwei").draggable({ handle: '.tuodong' }, { containment: [-1000, 50, 1300, 600] });
         $("#pl_Cunchu").draggable({ handle: '.tuodong' }, { containment: [-1000, 50, 1300, 600] });
@@ -378,11 +380,11 @@
         <input type="hidden" id="ohzid" value="@Model.HuozhuID" />
         <input type="hidden" id="ocpx" value="@Model.Chanpinxian" />
         <input type="hidden" id="ogg" value="@Model.Guige" />
-        <input type="hidden" name="Shouying" id="Shouying" value="@ViewData.Model.Shouying" />
+        <input type="hidden" name="Shouying" id="syid" value="@ViewData.Model.Shouying" />
         <input type="hidden" id="MakeMan" name="MakeMan" value=@Session["user_id"] />
         <input type="hidden" name="MakeDate" value=@string.Format("{0:yyyy-MM-dd}",DateTime.Now) />
         <input type="hidden" name="huozhuid" value="@Model.HuozhuID" />
-        <div class="page-header">
+        <div id="pl_fun" class="page-header">
             <p>
                 <button type="button" id="btn_update" class="btn btn-default"><i class="icon-save"></i>更新</button>
                 <button type="button" class="btn btn-default" onclick="javascript: history.back(-1); "><i class="icon-hand-left"></i>返回</button>

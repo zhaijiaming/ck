@@ -10,6 +10,8 @@
 @*收货明细*@
 <script type="text/javascript">
     $(document).ready(function () {
+        if (eval($("#shouyid").val()) > 1)
+            $("#pl_fun").hide();
         //时间
         $("#date_yingyezhizhaoyxq").datepicker();
         $("#date_jingyingxukeyxq").datepicker();
@@ -519,7 +521,8 @@
         <input type="hidden" id="MakeMan" name="MakeMan" value=@Session["user_id"] />
         <input type="hidden" name="MakeDate" value=@string.Format("{0:yyyy-MM-dd}",DateTime.Now) />
         <input type="hidden" name="huozhuid" id="huozhuid" value="@item.HuozhuID" />
-        <div class="page-header">
+        <input type="hidden" id="shouyid" value="@item.Shouying" />
+        <div id="pl_fun" class="page-header">
             <p>
                 <button type="button" id="bt_update" class="btn btn-default"><i class="icon-save"></i>更新</button>
                 <button type="button" class="btn btn-default" onclick="javascript: history.back(-1); "><i class="icon-hand-left"></i>返回</button>

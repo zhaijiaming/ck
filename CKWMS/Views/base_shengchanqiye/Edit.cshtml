@@ -67,6 +67,8 @@
     //}
 
     $(document).ready(function () {
+        if (eval($("#syid").val()) > 1)
+            $("#pl_fun").hide();
         $("#pl_Fanwei").draggable({ handle: '.tuodong' }, { containment: [-1000, 50, 1300, 600] });
         $("#YingyezhizhaoYXQ").datepicker();
         $("#ShengchanxukeYXQ").datepicker();
@@ -401,8 +403,8 @@
         <input type="hidden" id="btnSelect" value="" />
         <input type="hidden" id="MakeMan" name="MakeMan" value=@Session["user_id"] />
         <input type="hidden" name="MakeDate" value=@string.Format("{0:yyyy-MM-dd}",DateTime.Now) />
-        <input type="hidden" id="Shouying" name="Shouying" value="@ViewData.Model.Shouying" />
-        <div class="page-header">
+        <input type="hidden" id="syid" name="Shouying" value="@ViewData.Model.Shouying" />
+        <div id="pl_fun" class="page-header">
             <p>
                 <button type="button" class="btn btn-default" id="sub"><i class="icon-save"></i>更新</button>
                 <button type="button" class="btn btn-default" onclick="javascript: history.back(-1); "><i class="icon-hand-left"></i>返回</button>

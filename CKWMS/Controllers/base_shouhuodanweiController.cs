@@ -258,7 +258,8 @@ namespace CKWMS.Controllers
                 ob_base_shouhuodanwei.JingyingxukeBH = jingyingxukebh.Trim();
                 ob_base_shouhuodanwei.JingyingxukeYXQ = jingyingxukeyxq == "" ? DateTime.Now : DateTime.Parse(jingyingxukeyxq);
                 ob_base_shouhuodanwei.JingyingxukeTP = jingyingxuketp.Trim();
-                ob_base_shouhuodanwei.Shouying = shouying == "" ? 0 : int.Parse(shouying);
+                //ob_base_shouhuodanwei.Shouying = shouying == "" ? 0 : int.Parse(shouying);
+                ob_base_shouhuodanwei.Shouying = 1;
                 ob_base_shouhuodanwei.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 ob_base_shouhuodanwei.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
                 ob_base_shouhuodanwei.Jingyinfanwei = jingyingfanwei.Trim();

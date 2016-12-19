@@ -12,6 +12,8 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        if (eval($("#syid").val()) > 1)
+            $(".page-header").hide();
         $("#pl_Fanwei").draggable({ handle: '.tuodong' }, { containment: [-1000,50,1300,600] });
         $("#ob_base_gongyingshang_makedate").datepicker();
         $("#ob_base_gongyingshang_yingyezhizhaoyxq").datepicker();
@@ -421,6 +423,7 @@
     <form role="form" action="/base_gongyingshang/Update" method="post" id="tempform">
 
         <input type="hidden" name="ob_base_gongyingshang_id" value="@item.ID" />
+        <input type="hidden" id="syid" value="@item.Shouying" />
         <input type="hidden" id="btnSelect" value="" />
         <input type="hidden" id="ob_base_gongyingshang_makeman" name="ob_base_gongyingshang_makeman" value=@Session["user_id"] />
         <input type="hidden" id="ob_base_gongyingshang_makedate" name="ob_base_gongyingshang_makedate" value=@string.Format("{0:yyyy-MM-dd}",DateTime.Now) />
