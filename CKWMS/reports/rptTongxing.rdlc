@@ -6,13 +6,13 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>4.06194cm</Width>
+              <Width>3.91681cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.87011cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.56925cm</Width>
+              <Width>3.43593cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.77688cm</Width>
@@ -2085,7 +2085,7 @@
         <DataSetName>DataSet1</DataSetName>
         <Top>0.07617cm</Top>
         <Height>2.14396cm</Height>
-        <Width>26.2684cm</Width>
+        <Width>25.98995cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2096,7 +2096,7 @@
     <Height>0.88796in</Height>
     <Style />
   </Body>
-  <Width>10.34189in</Width>
+  <Width>10.35231in</Width>
   <Page>
     <PageHeader>
       <Height>4.02621cm</Height>
@@ -2124,7 +2124,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox19</rd:DefaultName>
-          <Left>10.75972cm</Left>
+          <Left>10.69357cm</Left>
           <Height>0.85577cm</Height>
           <Width>4.90771cm</Width>
           <Style>
@@ -2330,7 +2330,7 @@
           <Top>2.09959cm</Top>
           <Left>19.93372cm</Left>
           <Height>0.6cm</Height>
-          <Width>6.00012cm</Width>
+          <Width>5.6297cm</Width>
           <ZIndex>5</ZIndex>
           <Style>
             <Border />
@@ -2371,7 +2371,7 @@
           <Top>2.87598cm</Top>
           <Left>19.93372cm</Left>
           <Height>0.6cm</Height>
-          <Width>6.00012cm</Width>
+          <Width>5.6297cm</Width>
           <ZIndex>6</ZIndex>
           <Style>
             <Border />
@@ -2602,7 +2602,7 @@
           <Top>1.69387cm</Top>
           <Left>19.01994cm</Left>
           <Height>0.6cm</Height>
-          <Width>6.9139cm</Width>
+          <Width>6.54348cm</Width>
           <ZIndex>4</ZIndex>
           <Style>
             <Border />
@@ -2636,7 +2636,7 @@
           <Top>2.47026cm</Top>
           <Left>19.01994cm</Left>
           <Height>0.6cm</Height>
-          <Width>6.9139cm</Width>
+          <Width>6.54348cm</Width>
           <ZIndex>5</ZIndex>
           <Style>
             <Border />
@@ -2838,7 +2838,7 @@
     </PageFooter>
     <PageHeight>22cm</PageHeight>
     <PageWidth>27.9cm</PageWidth>
-    <LeftMargin>0.5cm</LeftMargin>
+    <LeftMargin>1cm</LeftMargin>
     <RightMargin>0.5cm</RightMargin>
     <TopMargin>0.5cm</TopMargin>
     <BottomMargin>0.5cm</BottomMargin>
