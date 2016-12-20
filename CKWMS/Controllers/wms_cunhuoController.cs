@@ -384,6 +384,35 @@ namespace CKWMS.Controllers
                                 }
                             }
                             break;
+                        case "shixiaorq":
+                            string shixiaorq = scld[1];
+                            string shixiaorqequal = scld[2];
+                            string shixiaorqand = scld[3];
+                            if (!string.IsNullOrEmpty(shixiaorq))
+                            {
+                                if (shixiaorqequal.Equals("="))
+                                {
+                                    if (shixiaorqand.Equals("and"))
+                                        where = where.And(p => p.ShixiaoRQ == DateTime.Now.AddDays(int.Parse(shixiaorq)));// DateTime.Parse());
+                                    else
+                                        where = where.Or(p => p.ShixiaoRQ == DateTime.Now.AddDays(int.Parse(shixiaorq)));
+                                }
+                                if (shixiaorqequal.Equals(">"))
+                                {
+                                    if (shixiaorqand.Equals("and"))
+                                        where = where.And(p => p.ShixiaoRQ > DateTime.Now.AddDays(int.Parse(shixiaorq)));
+                                    else
+                                        where = where.Or(p => p.ShixiaoRQ > DateTime.Now.AddDays(int.Parse(shixiaorq)));
+                                }
+                                if (shixiaorqequal.Equals("<"))
+                                {
+                                    if (shixiaorqand.Equals("and"))
+                                        where = where.And(p => p.ShixiaoRQ < DateTime.Now.AddDays(int.Parse(shixiaorq)));
+                                    else
+                                        where = where.Or(p => p.ShixiaoRQ < DateTime.Now.AddDays(int.Parse(shixiaorq)));
+                                }
+                            }
+                            break;
                         default:
                             break;
                     }

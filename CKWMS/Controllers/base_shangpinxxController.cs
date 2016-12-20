@@ -1019,36 +1019,10 @@ namespace CKWMS.Controllers
                                 }
                             }
                             break;
-                        case "shouying":
-                            string shouying = scld[1];
-                            string shouyingequal = scld[2];
-                            string shouyingand = scld[3];
-                            if (!string.IsNullOrEmpty(shouying))
-                            {
-                                if (shouying == "0")
-                                {
-                                    if (shouyingequal.Equals("="))
-                                    {
-                                        where = where.Or(p => p.Shouying == int.Parse(shouying));
-                                    }
-                                }
-                                else
-                                {
-                                    if (shouyingequal.Equals("="))
-                                    {
-                                        if (shouyingand.Equals("and"))
-                                            where = where.And(p => p.Shouying == int.Parse(shouying));
-                                        else
-                                            where = where.Or(p => p.Shouying == int.Parse(shouying));
-                                    }
-                                }
-                            }
-                            break;
                         case "zhucezhengbh":
                             string zhucezhengbh = scld[1];
                             string zhucezhengbhequal = scld[2];
                             string zhucezhengbhand = scld[3];
-                            //zhucezhengbh
                             if (!string.IsNullOrEmpty(zhucezhengbh))
                             {
                                 if (zhucezhengbhequal.Equals("="))
@@ -1064,6 +1038,67 @@ namespace CKWMS.Controllers
                                         where = where.And(p => p.ZhucezhengBH.Contains(zhucezhengbh));
                                     else
                                         where = where.Or(p => p.ZhucezhengBH.Contains(zhucezhengbh));
+                                }
+                            }
+                            break;
+                        case "shouying":
+                            string shouying = scld[1];
+                            string shouyingequal = scld[2];
+                            string shouyingand = scld[3];
+                            if (shouying == "0")
+                            {
+                                shouying = "";
+                            }
+                            if (!string.IsNullOrEmpty(shouying))
+                            {
+                                if (shouyingequal.Equals("="))
+                                {
+                                    if (shouyingand.Equals("and"))
+                                        where = where.And(p => p.Shouying == int.Parse(shouying));
+                                    else
+                                        where = where.Or(p => p.Shouying == int.Parse(shouying));
+                                }
+                            }
+                            break;
+                        case "shenchasf":
+                            string shenchasf = scld[1];
+                            string shenchasfequal = scld[2];
+                            string shenchasfand = scld[3];
+                            if (shenchasf == "1")
+                            {
+                                shenchasf = "true";
+                            }
+                            else if (shenchasf == "2")
+                            {
+                                shenchasf = "false";
+                            }
+                            else if (shenchasf == "-1")
+                            {
+                                shenchasf = "";
+                            }
+                            if (!string.IsNullOrEmpty(shenchasf))
+                            {
+                                if (shenchasfequal.Equals("="))
+                                {
+                                    if (shenchasfand.Equals("and"))
+                                        where = where.And(p => p.ShenchaSF == bool.Parse(shenchasf));
+                                    else
+                                        where = where.Or(p => p.ShenchaSF == bool.Parse(shenchasf));
+                                }
+                            }
+                            break;
+                        case "gongyingid":
+                            string gongyingid = scld[1];
+                            string gongyingidequal = scld[2];
+                            string gongyingidand = scld[3];
+                            if (!string.IsNullOrEmpty(gongyingid))
+                            {
+                                if (gongyingidequal.Equals("="))
+                                {
+                                    if (gongyingidand.Equals("and"))
+                                        where = where.And(p => p.GongyingID == int.Parse(gongyingid));
+                                    else
+                                        where = where.Or(p => p.GongyingID == int.Parse(gongyingid));
                                 }
                             }
                             break;
