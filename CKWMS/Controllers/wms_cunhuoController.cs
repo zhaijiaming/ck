@@ -1247,7 +1247,33 @@ namespace CKWMS.Controllers
             ViewBag.sjdid = _sjdid;
             return View();
         }
+        [OutputCache(Duration = 30)]
+        public ActionResult RemindOverdue(string page)
+        {
+            if (string.IsNullOrEmpty(page))
+                page = "1";
+            int userid = (int)Session["user_id"];
+            var period = Request["period"] ?? "";
 
+            if (string.IsNullOrEmpty(period))
+                period = "0";
+            var tempData = ob_wms_cunhuoservice.GetInventory(p=>p.ShixiaoRQ<=DateTime.Now.AddDays(int.Parse(period))).ToPagedList<wms_storage_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            ViewBag.wms_storage_v = tempData;
+            ViewBag.period = period;
+            return View(tempData);
+        }
+        public ActionResult RemindOverdueExport()
+        {
+            int userid = (int)Session["user_id"];
+            var period = Request["period"] ?? "";
+            if (string.IsNullOrEmpty(period))
+                period = "0";
+            var tempData = ob_wms_cunhuoservice.GetInventory(p => p.ShixiaoRQ <= DateTime.Now.AddDays(int.Parse(period)));
+            ViewBag.wms_storage_v = tempData;
+            ViewData.Model = tempData;
+            string viewHtml = ExportNow.RenderPartialViewToString(this, "RemindOverdueExport");
+            return File(System.Text.Encoding.UTF8.GetBytes(viewHtml), "application/ms-excel", string.Format("Overdue_{0}.xls", DateTime.Now.ToShortDateString()));
+        }
     }
 }
 

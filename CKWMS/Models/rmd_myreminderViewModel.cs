@@ -8,11 +8,11 @@ namespace CKWMS.Models
     {
         [Display(Name = "序号")]
         public int? ID { get; set; }
-        [Display(Name = "用户序号")]
+        [Display(Name = "用户")]
         public int? YonghuID { get; set; }
-        [Display(Name = "对象序号")]
+        [Display(Name = "提醒对象")]
         public int? TixingID { get; set; }
-        [Display(Name = "区间序号")]
+        [Display(Name = "提醒区间")]
         public int? TixingZQ { get; set; }
         [Display(Name = "主页显示")]
         public bool YemianXS { get; set; }

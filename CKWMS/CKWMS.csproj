@@ -335,6 +335,7 @@
     <Compile Include="Models\json_packageViewModel.cs" />
     <Compile Include="Models\quan_chukufhViewModel.cs" />
     <Compile Include="Models\rmd_myreminderViewModel.cs" />
+    <Compile Include="Models\rmd_remindlistViewModel.cs" />
     <Compile Include="Models\wms_cangguanszViewModel.cs" />
     <Compile Include="Models\wms_cangkuqyViewModel.cs" />
     <Compile Include="Models\wms_cangkuViewModel.cs" />
@@ -921,6 +922,13 @@
     <Content Include="Views\rmd_myreminder\Add.cshtml" />
     <Content Include="Views\rmd_myreminder\Edit.cshtml" />
     <Content Include="Views\rmd_myreminder\Index.cshtml" />
+    <Content Include="Views\rmd_myreminder\ReminderList.cshtml" />
+    <Content Include="Views\wms_cunhuo\RemindOverdue.cshtml" />
+    <Content Include="Views\wms_cunhuo\RemindOverdueExport.cshtml" />
+    <Content Include="Views\base_shangpinzcz\Overdue.cshtml" />
+    <Content Include="Views\base_shangpinzcz\OverdueExport.cshtml" />
+    <Content Include="Views\base_huozhushouquan\Overdue.cshtml" />
+    <Content Include="Views\base_weituokehu\Overdue.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

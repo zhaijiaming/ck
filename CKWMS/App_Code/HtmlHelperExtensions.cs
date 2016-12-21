@@ -1325,11 +1325,11 @@ namespace CKWMS.App_Code
                         returnvalue = MvcApplication.DeliveryType[dataValue];
                     break;
                 case "提醒对象":
-                    if (MvcApplication.DeliveryType.ContainsKey(dataValue))
+                    if (MvcApplication.RemindObject.ContainsKey(dataValue))
                         returnvalue = MvcApplication.RemindObject[dataValue];
                     break;
                 case "提醒区间":
-                    if (MvcApplication.DeliveryType.ContainsKey(dataValue))
+                    if (MvcApplication.RemindPeriod.ContainsKey(dataValue))
                         returnvalue = MvcApplication.RemindPeriod[dataValue];
                     break;
                 default:

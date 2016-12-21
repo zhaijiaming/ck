@@ -274,6 +274,21 @@ namespace CKWMS.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        public ActionResult Overdue(string page)
+        {
+            if (string.IsNullOrEmpty(page))
+                page = "1";
+            int userid = (int)Session["user_id"];
+            var period = Request["period"] ?? "";
+
+            if (string.IsNullOrEmpty(period))
+                period = "0";
+            var tempData = ob_base_huozhushouquanservice.LoadEntities(p => p.IsDelete == false && p.ShouquanshuYXQ <= DateTime.Now.AddDays(int.Parse(period))).ToPagedList(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            ViewBag.base_huozhushouquan = tempData;
+            ViewBag.period = period;
+            return View(tempData);
+        }
     }
 }
 

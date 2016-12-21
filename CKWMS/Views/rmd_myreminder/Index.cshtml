@@ -96,9 +96,9 @@
             <thead>
                 <tr>
                     <td></td>
-                    <td>用户序号</td>
-                    <td>对象序号</td>
-                    <td>区间序号</td>
+                    <td>用户</td>
+                    <td>提醒对象</td>
+                    <td>区间设置</td>
                     <td>主页显示</td>
                     <td>制单日期</td>
                     <td>制单人</td>
@@ -111,12 +111,12 @@
                         <td>
                             <label><input type="checkbox" value="@item.ID"></label>
                         </td>
-                        <td>@item.YonghuID</td>
-                        <td>@item.TixingID</td>
-                        <td>@item.TixingZQ</td>
+                        <td>@Html.GetDataValue_ID("userinfo","全名",(int)item.YonghuID)</td>
+                        <td>@Html.GetCommonValue_ID("提醒对象", (int)item.TixingID)</td>
+                        <td>@Html.GetCommonValue_ID("提醒区间", (int)item.TixingZQ)</td>
                         <td>@item.YemianXS</td>
-                        <td>@item.MakeDate</td>
-                        <td>@item.MakeMan</td>
+                        <td>@string.Format("{0:d}",item.MakeDate)</td>
+                        <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
                     </tr>
                 }
             </tbody>

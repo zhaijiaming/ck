@@ -533,6 +533,32 @@ namespace CKWMS.Controllers
             string viewHtml = ExportNow.RenderPartialViewToString(this, "RegistrationExport");
             return File(System.Text.Encoding.UTF8.GetBytes(viewHtml), "application/ms-excel", string.Format("Registration_{0}.xls", DateTime.Now.ToShortDateString()));
         }
+        public ActionResult Overdue(string page)
+        {
+            if (string.IsNullOrEmpty(page))
+                page = "1";
+            int userid = (int)Session["user_id"];
+            var period = Request["period"] ?? "";
+
+            if (string.IsNullOrEmpty(period))
+                period = "0";
+            var tempData = ob_base_shangpinzczservice.LoadEntities(p =>p.IsDelete==false && p.ZhucezhengYXQ <= DateTime.Now.AddDays(int.Parse(period))).ToPagedList(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            ViewBag.base_shangpinzcz = tempData;
+            ViewBag.period = period;
+            return View(tempData);
+        }
+        public ActionResult OverdueExport()
+        {
+            int userid = (int)Session["user_id"];
+            var period = Request["period"] ?? "";
+            if (string.IsNullOrEmpty(period))
+                period = "0";
+            var tempData = ob_base_shangpinzczservice.LoadEntities(p => p.IsDelete == false && p.ZhucezhengYXQ <= DateTime.Now.AddDays(int.Parse(period)));
+            ViewBag.base_shangpinzcz = tempData;
+            ViewData.Model = tempData;
+            string viewHtml = ExportNow.RenderPartialViewToString(this, "OverdueExport");
+            return File(System.Text.Encoding.UTF8.GetBytes(viewHtml), "application/ms-excel", string.Format("RegistOverdue_{0}.xls", DateTime.Now.ToShortDateString()));
+        }
     }
 }
 

@@ -1,0 +1,105 @@
+﻿@using CKWMS.App_Code
+@using CKWMS.Models
+@using X.PagedList
+@using X.PagedList.Mvc
+@{
+    ViewBag.Title = "库存近效期列表";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("tr").bind("dblclick", function () {
+            var u_id = $(this).find('td').eq(0).find('input').val();
+        });
+        $("#bt_export").click(function () {
+            window.open("/wms_cunhuo/remindoverdueexport?period="+$("#period").val(), "_blank");
+        });
+        $("#mydatatable tbody tr").each(function () {
+            if ($(this).find("td").eq(14).html() == "不合格")
+                $(this).addClass("red");
+            if ($(this).find("td").eq(15).html() != "正常")
+                $(this).add("blue");
+        });
+    });
+</script>
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    </script>
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="/Home">首页</a>
+        </li>
+        <li>
+            <a href="/rmd_myreminder/ReminderList">我的提醒</a>
+        </li>
+        <li class="active">库存货品近效期</li>
+    </ul>
+</div>
+<div class="page-content">
+    <input type="hidden" id="period" value="@ViewBag.period"/>
+    <div class="page-header">
+        <p>
+            <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
+            <button type="button" class="btn btn-default" id="bt_export"><i class="icon-file"></i>导出</button>
+        </p>
+    </div>
+    <div class="row">
+        <table class="table table-condensed table-hover" id="mydatatable">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>货主</td>
+                    <td>入库单</td>
+                    <td>库位</td>
+                    <td>入库日期</td>
+                    <td>商品代码</td>
+                    <td>商品名称</td>
+                    <td>规格</td>
+                    <td>注册证</td>
+                    <td>批号</td>
+                    <td>生产日期</td>
+                    <td>失效日期</td>
+                    <td>序列码</td>
+                    <td>数量</td>
+                    <td>单位</td>
+                    <td>质量</td>
+                    <td>状态</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.wms_storage_v)
+                {
+                    <tr>
+                        <td>
+                            <label><input type="checkbox" value="@item.sid"></label>
+                        </td>
+                        <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
+                        <td>@item.RukudanBH</td>
+                        <td>@item.Kuwei</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.RukuRQ == null ? "" : item.RukuRQ)</td>
+                        <td>@item.ShangpinDM</td>
+                        <td>@item.ShangpinMC</td>
+                        <td>@item.Guige</td>
+                        <td>@item.Zhucezheng</td>
+                        <td>@item.Pihao</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ == null ? "" : item.ShengchanRQ)</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ == null ? "" : item.ShixiaoRQ)</td>
+                        <td>@item.Xuliema</td>
+                        <td>@item.sshuliang</td>
+                        <td>@item.JibenDW</td>
+                        <td>@Html.Encode(item.HegeSF == true ? "合格" : "不合格")</td>
+                        <td>@Html.GetCommonValue_ID("存货状态", (int)(item.CunhuoZT==null?0:item.CunhuoZT))</td>
+                        <td>@item.CunhuoSM</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="pager">
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("remindoverdue", new { page }))
+    </div>
+</div>
+
