@@ -2614,7 +2614,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>储存要求：</Value>
+                  <Value>储存条件：</Value>
                   <Style>
                     <FontFamily>微软雅黑</FontFamily>
                     <FontSize>8pt</FontSize>

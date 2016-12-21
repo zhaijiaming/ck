@@ -78,7 +78,7 @@
                             <TextRun>
                               <Value>供应商名称</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -134,7 +134,7 @@
                             <TextRun>
                               <Value>生产厂家</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -190,7 +190,7 @@
                             <TextRun>
                               <Value>商品名称</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -246,7 +246,7 @@
                             <TextRun>
                               <Value>规格</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -302,7 +302,7 @@
                             <TextRun>
                               <Value>生产批号</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -358,7 +358,7 @@
                             <TextRun>
                               <Value>序列号</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -414,7 +414,7 @@
                             <TextRun>
                               <Value>到货日期</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -470,7 +470,7 @@
                             <TextRun>
                               <Value>生产日期</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -526,7 +526,7 @@
                             <TextRun>
                               <Value>失效日期</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -582,7 +582,7 @@
                             <TextRun>
                               <Value>注册证号</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -638,7 +638,7 @@
                             <TextRun>
                               <Value>商品数量</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -694,7 +694,7 @@
                             <TextRun>
                               <Value>合格数量</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -750,7 +750,7 @@
                             <TextRun>
                               <Value>不合格数量</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -804,9 +804,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>储运条件</Value>
+                              <Value>储存条件</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -862,7 +862,7 @@
                             <TextRun>
                               <Value>包装质量</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -918,7 +918,7 @@
                             <TextRun>
                               <Value>外观质量</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -974,7 +974,7 @@
                             <TextRun>
                               <Value>中文标签</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -1030,7 +1030,7 @@
                             <TextRun>
                               <Value>合格证</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -1086,7 +1086,7 @@
                             <TextRun>
                               <Value>验收结果</Value>
                               <Style>
-                                <FontFamily>宋体</FontFamily>
+                                <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -1913,14 +1913,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>□</Value>
-                              <Style>
-                                <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
-                            </TextRun>
-                            <TextRun>
-                              <Value>合格</Value>
+                              <Value>口合格</Value>
                               <Style>
                                 <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -1934,14 +1927,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>□</Value>
-                              <Style>
-                                <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
-                            </TextRun>
-                            <TextRun>
-                              <Value>不合格</Value>
+                              <Value>口不合格</Value>
                               <Style>
                                 <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -1996,14 +1982,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>□</Value>
-                              <Style>
-                                <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
-                            </TextRun>
-                            <TextRun>
-                              <Value>合格</Value>
+                              <Value>口合格</Value>
                               <Style>
                                 <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -2017,14 +1996,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>□</Value>
-                              <Style>
-                                <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
-                            </TextRun>
-                            <TextRun>
-                              <Value>不合格</Value>
+                              <Value>口不合格</Value>
                               <Style>
                                 <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -2079,14 +2051,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>□</Value>
-                              <Style>
-                                <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
-                            </TextRun>
-                            <TextRun>
-                              <Value>有</Value>
+                              <Value>口有</Value>
                               <Style>
                                 <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -2100,14 +2065,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>□</Value>
-                              <Style>
-                                <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
-                            </TextRun>
-                            <TextRun>
-                              <Value>无</Value>
+                              <Value>口无</Value>
                               <Style>
                                 <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -2162,14 +2120,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>□</Value>
-                              <Style>
-                                <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
-                            </TextRun>
-                            <TextRun>
-                              <Value>有</Value>
+                              <Value>口有</Value>
                               <Style>
                                 <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -2183,14 +2134,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>□</Value>
-                              <Style>
-                                <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
-                            </TextRun>
-                            <TextRun>
-                              <Value>无</Value>
+                              <Value>口无</Value>
                               <Style>
                                 <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -2245,14 +2189,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>□</Value>
-                              <Style>
-                                <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
-                            </TextRun>
-                            <TextRun>
-                              <Value>合格</Value>
+                              <Value>口合格</Value>
                               <Style>
                                 <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -2266,14 +2203,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>□</Value>
-                              <Style>
-                                <FontFamily>宋体</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
-                            </TextRun>
-                            <TextRun>
-                              <Value>不合格</Value>
+                              <Value>口不合格</Value>
                               <Style>
                                 <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
