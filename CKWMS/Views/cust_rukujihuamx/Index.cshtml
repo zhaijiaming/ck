@@ -146,7 +146,7 @@
                         <td>@item.Chandi</td>
                         <td>@item.Beizhu</td>
                         <td>@string.Format("{0:d}", item.MakeDate == null ? "" : item.MakeDate)</td>
-                        <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
+                        <td>@Html.GetDataValue_ID("userinfo", "全名", item.MakeMan == null ? int.Parse("0") : (int)item.MakeMan)</td>
                     </tr>
                 }
             </tbody>

@@ -12,6 +12,7 @@
             <thead>
                 <tr>
                     <td>入库编号</td>
+                    <td>商品编码</td>
                     <td>商品名称</td>
                     <td>注册证</td>
                     <td>规格型号</td>
@@ -41,6 +42,7 @@
                 {
                     <tr>
                         <td>@Html.GetDataValue_ID("入库单", "入库编号", (int)item.RukuID)</td>
+                        <td>@item.ShangpinDM</td>
                         <td>@item.ShangpinMC</td>
                         <td>@item.Zhucezheng</td>
                         <td>@item.Guige</td>

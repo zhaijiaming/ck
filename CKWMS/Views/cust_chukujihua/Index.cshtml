@@ -159,7 +159,7 @@
             <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
             <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
             <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
-            <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
+            @*<button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>*@
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
             <button type="button" class="btn btn-default " id="bt_newout"><i class="icon-adn"></i>生成出库单</button>
         </p>
@@ -170,6 +170,7 @@
             <thead>
                 <tr>
                     <td></td>
+                    <td>状态</td>
                     <td>货主</td>
                     <td>客户名称</td>
                     <td>送货地址</td>
@@ -179,7 +180,6 @@
                     <td>客户单号</td>
                     <td>联系人</td>
                     <td>联系电话</td>
-                    <td>状态</td>
                     <td>备注</td>
                     <td>制单日期</td>
                     <td>制单人</td>
@@ -192,6 +192,7 @@
                         <td>
                             <label><input type="checkbox" value="@item.ID"></label>
                         </td>
+                        <td>@Html.GetCommonValue_ID("出库计划状态", item.JihuaZT == null ? int.Parse("1") : (int)item.JihuaZT)</td>
                         <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
                         <td>@item.KehuMC</td>
                         <td>@item.Yunsongdizhi</td>
@@ -201,7 +202,6 @@
                         <td>@item.KehuDH</td>
                         <td>@item.Lianxiren</td>
                         <td>@item.LianxiDH</td>
-                        <td>@item.JihuaZT</td>
                         <td>@item.Beizhu</td>
                         <td>@string.Format("{0:d}", item.MakeDate == null ? "" : item.MakeDate)</td>
                         <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>

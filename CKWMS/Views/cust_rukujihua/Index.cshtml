@@ -165,7 +165,7 @@
             <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
             <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
             <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
-            <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
+            @*<button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>*@
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
             <button type="button" class="btn btn-default " id="bt_newentry"><i class="icon-adn"></i>生成入库单</button>
         </p>
@@ -176,13 +176,13 @@
                 <thead>
                     <tr>
                         <td></td>
+                        <td>计划状态</td>
                         <td>货主</td>
                         <td>供应商</td>
                         <td>入库日期</td>
                         <td>业务类型</td>
                         <td>储运要求</td>
                         <td>客户单号</td>
-                        <td>计划状态</td>
                         <td>入库单数量</td>
                         <td>备注</td>
                         <td>制单日期</td>
@@ -196,13 +196,13 @@
                     <td>
                         <label><input type="checkbox" value="@item.ID"></label>
                     </td>
+                    <td>@Html.GetCommonValue_ID("入库计划状态", item.JihuaZT == null ? int.Parse("1") : (int)item.JihuaZT)</td>
                     <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
                     <td>@Html.GetDataValue_ID("供应商", "", (int)item.GongyingshangID)</td>
                     <td>@string.Format("{0:d}", item.RukuRQ == null ? "" : item.RukuRQ)</td>
                     <td>@Html.GetCommonValue_ID("入库类型", (int)item.YewuLX)</td>
                     <td>@item.ChunyunYQ</td>
                     <td>@item.KehuDH</td>
-                    <td>@item.JihuaZT</td>
                     <td>@item.RukudanSL</td>
                     <td>@item.Beizhu</td>
                     <td>@string.Format("{0:d}", item.MakeDate==null?"": item.MakeDate)</td>
