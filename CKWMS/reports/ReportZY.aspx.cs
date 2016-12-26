@@ -193,6 +193,8 @@ namespace CKWMS.reports
                                     drckd["Lianxiren"] = ckd.Lianxiren;
                                     drckd["LianxiDH"] = ckd.LianxiDH;
                                     drckd["Beizhu"] = ckd.Beizhu;
+                                    drckd["YunsongFS"] = MvcApplication.DeliveryType[ckd.YunsongFS == null ? int.Parse("0") : (int)ckd.YunsongFS];
+                                    drckd["KDdanhao"] = ckd.KDdanhao == null ? "" : ckd.KDdanhao;
                                     base_weituokehu wtkhdata = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == ckd.HuozhuID && p.IsDelete == false);
                                     if (wtkhdata != null)
                                     {
@@ -658,7 +660,7 @@ namespace CKWMS.reports
                             break;
                         case "RuKuMX":
                             rptView.Reset();
-                            rptView.LocalReport.ReportPath = "reports/rptRuKumingxi.rdlc";
+                            rptView.LocalReport.ReportPath = "reports/rptRuKuMX_portrait.rdlc";
                             rptView.LocalReport.DataSources.Clear();
                             DataTable dtRuKuMX = _rds.Tables["RuKumingxi"];
                             DataRow drRuKuMX;

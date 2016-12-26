@@ -957,6 +957,7 @@
     <EmbeddedResource Include="reports\rptQuanxian.rdlc" />
     <EmbeddedResource Include="reports\rptRKyanshouBGdan.rdlc" />
     <EmbeddedResource Include="reports\rptRuKumingxi.rdlc" />
+    <EmbeddedResource Include="reports\rptRuKuMX_portrait.rdlc" />
     <EmbeddedResource Include="reports\rptShangJiaList.rdlc" />
     <EmbeddedResource Include="reports\rptShouHuoList.rdlc" />
     <EmbeddedResource Include="reports\rptSpxx_shouying.rdlc">
