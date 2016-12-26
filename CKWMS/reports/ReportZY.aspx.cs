@@ -605,7 +605,7 @@ namespace CKWMS.reports
                             long sjl_sshuliangs = 0;
                             try
                             {
-                                var _sjlist = ServiceFactory.wms_cunhuoservice.GetUploadList(int.Parse(_sjdid)).ToList<wms_upload_v>();
+                                var _sjlist = ServiceFactory.wms_cunhuoservice.GetUploadList(int.Parse(_sjdid)).OrderBy(p => p.Kuwei).ThenBy(p => p.Pihao).ToList<wms_upload_v>();
                                 foreach (wms_upload_v _sh in _sjlist)
                                 {
                                     drsjlist = dtsjlist.NewRow();
