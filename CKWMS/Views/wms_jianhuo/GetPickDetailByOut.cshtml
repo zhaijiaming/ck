@@ -82,7 +82,7 @@
                 var _cksl = $(this).find("td").eq(1).find("input");
                 var _cksm = $(this).find("td").eq(2).find("input");
                 if (eval(_cksl.val()) > 0 && _cksl.val() != "") {
-                    _pkct = _pkct + eval(_cksl.val());
+                    _pkct = _pkct + Number(_cksl.val());
                     _pkval = _pkval + $("#selmx").val() + "," + _cksl.val() + "," + _cksm.val() + "," + _ch.val() + ";";
                 }
             });
@@ -107,6 +107,11 @@
             //        PaintTable();
             //    }
             //});
+            if (_pkct > Number($("#picknum").val()))
+            {
+                alert("拣货数量大于应拣数量，请重新选择！");
+                return;
+            }
             $.ajax({
                 async: true,
                 beforeSend: function () {

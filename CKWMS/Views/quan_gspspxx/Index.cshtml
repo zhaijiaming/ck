@@ -1,0 +1,180 @@
+﻿@using CKWMS.App_Code
+@using CKWMS.Models
+@using X.PagedList
+@using X.PagedList.Mvc
+@{
+    ViewBag.Title = "GSP商品信息清单";
+    string _searchcondition = ViewBag.SearchCondition;
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("tr").bind("dblclick", function () {
+            var u_id = $(this).find('td').eq(0).find('input').val();
+            if (u_id != null) {
+                var url_go = "/quan_gspspxx/Edit/" + u_id;
+                location.href = url_go;
+            }
+        });
+    });
+    function AddInfo() {
+        location.href = "/quan_gspspxx/Add";
+    }
+    function EditInfo() {
+        $("#mydatatable tr input[type=checkbox]").each(function () {
+            if (this.checked)
+                location.href = "/quan_gspspxx/Edit/" + $(this).val();
+        });
+    }
+    function DelInfo() {
+        var sDel = "";
+        $("#mydatatable tr input[type=checkbox]").each(function () {
+            if (this.checked)
+                sDel = sDel + ", " + $(this).val()
+        });
+        if (sDel.length < 2)
+            return;
+        var url_go = "/quan_gspspxx/Delete/?del=" + sDel;
+        location.href = url_go;
+    }
+</script>
+@{
+    List<SearchConditionModel> scms = new List<SearchConditionModel>();
+    if (_searchcondition == null || _searchcondition == "")
+    {
+        SearchConditionModel scm = new SearchConditionModel();
+        scm.ItemCode = "HuozhuID";
+        scm.ItemTitle = "货主序号";
+        scm.ItemType = "System.Int32";
+        scms.Add(scm);
+    }
+    else
+    {
+        string[] scs = _searchcondition.Split(';');
+        if (scs.Length > 0)
+        {
+            SearchConditionModel scm = new SearchConditionModel();
+            scm.ItemCode = "HuozhuID";
+            scm.ItemTitle = "货主序号";
+            scm.ItemType = "System.Int32";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[0].Split(',')[1];
+                scm.ItemOpValue = scs[0].Split(',')[2];
+                scm.ItemJion = scs[0].Split(',')[3];
+            }
+            scms.Add(scm);
+        }
+    }
+}
+
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    </script>
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="/Home">首页</a>
+        </li>
+        <li class="active">GSP商品信息</li>
+    </ul>
+</div>
+<div class="page-content">
+    @Html.Search_Condition((int)Session["user_id"], "GSP商品信息_条件组合查询", "/quan_gspspxx/index", "quan_gspspxx_index", scms)
+    <div class="page-header">
+        <p>
+            <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
+            <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
+            <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
+            <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
+            <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
+        </p>
+    </div>
+    <div class="row">
+        <table class="table" id="mydatatable">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>货主序号</td>
+                    <td>货主授权序号</td>
+                    <td>代码</td>
+                    <td>名称</td>
+                    <td>注册证序号</td>
+                    <td>注册证编号</td>
+                    <td>规格</td>
+                    <td>型号</td>
+                    <td>单位</td>
+                    <td>换算率</td>
+                    <td>长</td>
+                    <td>宽</td>
+                    <td>高</td>
+                    <td>产品线</td>
+                    <td>目录序号</td>
+                    <td>管理分类</td>
+                    <td>包装要求</td>
+                    <td>存储条件</td>
+                    <td>生产企业序号</td>
+                    <td>生产企业名称</td>
+                    <td>供应商序号</td>
+                    <td>供应商授权序号</td>
+                    <td>供应商销售授权</td>
+                    <td>首营</td>
+                    <td>制单日期</td>
+                    <td>制单人</td>
+                    <td>是否审查</td>
+                    <td>是否经营</td>
+                    <td>包装单位</td>
+                    <td>商品条码</td>
+                    <td>产地</td>
+                    <td>商品描述</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.quan_gspspxx)
+                {
+                    <tr>
+                        <td>
+                            <label><input type="checkbox" value="@item.ID"></label>
+                        </td>
+                        <td>@item.HuozhuID</td>
+                        <td>@item.HuozhuSQID</td>
+                        <td>@item.Daima</td>
+                        <td>@item.Mingcheng</td>
+                        <td>@item.ZhucezhengID</td>
+                        <td>@item.ZhucezhengBH</td>
+                        <td>@item.Guige</td>
+                        <td>@item.Xinghao</td>
+                        <td>@item.Danwei</td>
+                        <td>@item.Huansuanlv</td>
+                        <td>@item.Volchang</td>
+                        <td>@item.Volkuan</td>
+                        <td>@item.Volgao</td>
+                        <td>@item.Chanpinxian</td>
+                        <td>@item.Muluxuhao</td>
+                        <td>@item.Guanlifenlei</td>
+                        <td>@item.Baozhuangyaoqiu</td>
+                        <td>@item.Cunchutiaojian</td>
+                        <td>@item.QiyeID</td>
+                        <td>@item.Qiyemingcheng</td>
+                        <td>@item.GongyingID</td>
+                        <td>@item.GongyingSQID</td>
+                        <td>@item.GongyingXSID</td>
+                        <td>@item.Shouying</td>
+                        <td>@item.MakeDate</td>
+                        <td>@item.MakeMan</td>
+                        <td>@item.ShenchaSF</td>
+                        <td>@item.JingyinSF</td>
+                        <td>@item.BaozhuangDW</td>
+                        <td>@item.ShangpinTM</td>
+                        <td>@item.Chandi</td>
+                        <td>@item.ShangpinMS</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="pager">
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+    </div>
+</div>

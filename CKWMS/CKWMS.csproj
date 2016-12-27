@@ -293,6 +293,7 @@
     <Compile Include="Controllers\base_huobiController.cs" />
     <Compile Include="Controllers\base_quyuController.cs" />
     <Compile Include="Controllers\base_yunshugsController.cs" />
+    <Compile Include="Controllers\base_zhucezhengjlController.cs" />
     <Compile Include="Controllers\cfda_cangkuController.cs" />
     <Compile Include="Controllers\cfda_zizhiController.cs" />
     <Compile Include="Controllers\cust_chukujihuaController.cs" />
@@ -304,6 +305,10 @@
     <Compile Include="Controllers\json_importController.cs" />
     <Compile Include="Controllers\json_packageController.cs" />
     <Compile Include="Controllers\quan_chukufhController.cs" />
+    <Compile Include="Controllers\quan_gspgysController.cs" />
+    <Compile Include="Controllers\quan_gspshdwController.cs" />
+    <Compile Include="Controllers\quan_gspspxxController.cs" />
+    <Compile Include="Controllers\quan_gspwtkhController.cs" />
     <Compile Include="Controllers\rmd_myreminderController.cs" />
     <Compile Include="Controllers\wms_cangguanszController.cs" />
     <Compile Include="Controllers\wms_cangkuController.cs" />
@@ -325,6 +330,7 @@
     <Compile Include="Models\base_kaipiaoxxViewModel.cs" />
     <Compile Include="Models\base_quyuViewModel.cs" />
     <Compile Include="Models\base_yunshugsViewModel.cs" />
+    <Compile Include="Models\base_zhucezhengjlViewModel.cs" />
     <Compile Include="Models\cust_chukujihuamxViewModel.cs" />
     <Compile Include="Models\cust_chukujihuaViewModel.cs" />
     <Compile Include="Models\cust_rukujihuamxViewModel.cs" />
@@ -334,6 +340,10 @@
     <Compile Include="Models\json_importViewModel.cs" />
     <Compile Include="Models\json_packageViewModel.cs" />
     <Compile Include="Models\quan_chukufhViewModel.cs" />
+    <Compile Include="Models\quan_gspgysViewModel.cs" />
+    <Compile Include="Models\quan_gspshdwViewModel.cs" />
+    <Compile Include="Models\quan_gspspxxViewModel.cs" />
+    <Compile Include="Models\quan_gspwtkhViewModel.cs" />
     <Compile Include="Models\rmd_myreminderViewModel.cs" />
     <Compile Include="Models\rmd_remindlistViewModel.cs" />
     <Compile Include="Models\wms_cangguanszViewModel.cs" />
@@ -929,6 +939,21 @@
     <Content Include="Views\base_shangpinzcz\OverdueExport.cshtml" />
     <Content Include="Views\base_huozhushouquan\Overdue.cshtml" />
     <Content Include="Views\base_weituokehu\Overdue.cshtml" />
+    <Content Include="Views\base_zhucezhengjl\Add.cshtml" />
+    <Content Include="Views\base_zhucezhengjl\Edit.cshtml" />
+    <Content Include="Views\base_zhucezhengjl\Index.cshtml" />
+    <Content Include="Views\quan_gspgys\Add.cshtml" />
+    <Content Include="Views\quan_gspgys\Edit.cshtml" />
+    <Content Include="Views\quan_gspgys\Index.cshtml" />
+    <Content Include="Views\quan_gspshdw\Add.cshtml" />
+    <Content Include="Views\quan_gspshdw\Edit.cshtml" />
+    <Content Include="Views\quan_gspshdw\Index.cshtml" />
+    <Content Include="Views\quan_gspspxx\Add.cshtml" />
+    <Content Include="Views\quan_gspspxx\Edit.cshtml" />
+    <Content Include="Views\quan_gspspxx\Index.cshtml" />
+    <Content Include="Views\quan_gspwtkh\Add.cshtml" />
+    <Content Include="Views\quan_gspwtkh\Edit.cshtml" />
+    <Content Include="Views\quan_gspwtkh\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
