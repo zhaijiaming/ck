@@ -124,6 +124,13 @@ namespace CKWMS.reports
                                     {
                                         drjhdt["HuozhuID"] = wtkhdata.Kehumingcheng;
                                     }
+                                    drjhdt["YunsongFS"] = MvcApplication.DeliveryType[tempdata.YunsongFS == null ? int.Parse("0") : (int)tempdata.YunsongFS];
+                                    if(tempdata.Kuaidi != null)
+                                    {
+                                        var tran_company = ServiceFactory.base_yunshugsservice.GetEntityById(p => p.ID == tempdata.Kuaidi && p.IsDelete == false);
+                                        drjhdt["Kuaidi"] = tran_company.Mingcheng;
+                                    }
+                                    drjhdt["JiesuanFS"] = MvcApplication.SettlingType[tempdata.JiesuanFS == null ? int.Parse("0") : (int)tempdata.JiesuanFS];
                                     dtjhdt.Rows.Add(drjhdt);
                                 }
                             }
@@ -143,7 +150,7 @@ namespace CKWMS.reports
                             long tx_ChukuSL = 0;
                             try
                             {
-                                var _ckmxs = ob_wms_chukumxservice.LoadSortEntities(p => p.ChukuID == int.Parse(_outid) && p.IsDelete == false, false, p => p.Guige);
+                                var _ckmxs = ob_wms_chukumxservice.LoadSortEntities(p => p.ChukuID == int.Parse(_outid) && p.IsDelete == false, true, p => p.Pihao);
                                 foreach (wms_chukumx _mx in _ckmxs)
                                 {
                                     drtx = dttx.NewRow();
@@ -193,13 +200,18 @@ namespace CKWMS.reports
                                     drckd["Lianxiren"] = ckd.Lianxiren;
                                     drckd["LianxiDH"] = ckd.LianxiDH;
                                     drckd["Beizhu"] = ckd.Beizhu;
-                                    drckd["YunsongFS"] = MvcApplication.DeliveryType[ckd.YunsongFS == null ? int.Parse("0") : (int)ckd.YunsongFS];
-                                    drckd["KDdanhao"] = ckd.KDdanhao == null ? "" : ckd.KDdanhao;
                                     base_weituokehu wtkhdata = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == ckd.HuozhuID && p.IsDelete == false);
                                     if (wtkhdata != null)
                                     {
                                         drckd["HuozhuID"] = wtkhdata.Kehumingcheng;
                                     }
+                                    drckd["YunsongFS"] = MvcApplication.DeliveryType[ckd.YunsongFS == null ? int.Parse("0") : (int)ckd.YunsongFS];
+                                    if (ckd.Kuaidi != null)
+                                    {
+                                        var tran_company = ServiceFactory.base_yunshugsservice.GetEntityById(p => p.ID == ckd.Kuaidi && p.IsDelete == false);
+                                        drckd["Kuaidi"] = tran_company.Mingcheng;
+                                    }
+                                    drckd["JiesuanFS"] = MvcApplication.SettlingType[ckd.JiesuanFS == null ? int.Parse("0") : (int)ckd.JiesuanFS];
                                 }
                                 drckd["txckSLs"] = tx_ChukuSL;
                                 dtckd.Rows.Add(drckd);

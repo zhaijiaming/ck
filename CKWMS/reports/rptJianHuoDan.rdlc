@@ -1149,7 +1149,7 @@
   <Width>10.64042in</Width>
   <Page>
     <PageHeader>
-      <Height>4.16279cm</Height>
+      <Height>4.93008cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1194,7 +1194,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>收货地址:</Value>
+                  <Value>收货地址：</Value>
                   <Style>
                     <FontFamily>微软雅黑</FontFamily>
                     <FontSize>9pt</FontSize>
@@ -1214,10 +1214,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>2.1514cm</Top>
-          <Left>0.74838cm</Left>
+          <Top>2.92779cm</Top>
+          <Left>9.98036cm</Left>
           <Height>0.6cm</Height>
-          <Width>11.22118cm</Width>
+          <Width>8.5257cm</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>
@@ -1237,7 +1237,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>备    注:</Value>
+                  <Value> 备    注 ：</Value>
                   <Style>
                     <FontFamily>微软雅黑</FontFamily>
                     <FontSize>9pt</FontSize>
@@ -1257,54 +1257,11 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>2.92778cm</Top>
-          <Left>0.74839cm</Left>
+          <Top>3.70418cm</Top>
+          <Left>0.71782cm</Left>
           <Height>0.6cm</Height>
-          <Width>11.22117cm</Width>
+          <Width>8.73118cm</Width>
           <ZIndex>2</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <VerticalAlign>Middle</VerticalAlign>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="Textbox4">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>发货单号:</Value>
-                  <Style>
-                    <FontFamily>微软雅黑</FontFamily>
-                    <FontSize>9pt</FontSize>
-                  </Style>
-                </TextRun>
-                <TextRun>
-                  <Value>=First(Fields!ChukudanBH.Value, "DataSet2")</Value>
-                  <Style>
-                    <FontFamily>微软雅黑</FontFamily>
-                    <FontSize>9pt</FontSize>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style>
-                <TextAlign>Left</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>1.37501cm</Top>
-          <Left>0.74839cm</Left>
-          <Height>0.6cm</Height>
-          <Width>11.22117cm</Width>
-          <ZIndex>3</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1323,7 +1280,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>出库单号:</Value>
+                  <Value>出库单号：</Value>
                   <Style>
                     <FontFamily>微软雅黑</FontFamily>
                     <FontSize>9pt</FontSize>
@@ -1344,10 +1301,10 @@
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
           <Top>1.37501cm</Top>
-          <Left>12.53459cm</Left>
+          <Left>0.74838cm</Left>
           <Height>0.6cm</Height>
-          <Width>7.49486cm</Width>
-          <ZIndex>4</ZIndex>
+          <Width>8.70062cm</Width>
+          <ZIndex>3</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1366,7 +1323,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>发货日期:</Value>
+                  <Value>发货日期：</Value>
                   <Style>
                     <FontFamily>微软雅黑</FontFamily>
                     <FontSize>9pt</FontSize>
@@ -1387,11 +1344,11 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>2.92778cm</Top>
-          <Left>12.54477cm</Left>
+          <Top>1.37501cm</Top>
+          <Left>10.00074cm</Left>
           <Height>0.6cm</Height>
-          <Width>7.48468cm</Width>
-          <ZIndex>5</ZIndex>
+          <Width>8.5257cm</Width>
+          <ZIndex>4</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1410,7 +1367,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>联 系 人:</Value>
+                  <Value>联 系 人：</Value>
                   <Style>
                     <FontFamily>微软雅黑</FontFamily>
                     <FontSize>9pt</FontSize>
@@ -1430,11 +1387,11 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>2.1514cm</Top>
-          <Left>20.39105cm</Left>
+          <Top>1.37501cm</Top>
+          <Left>19.00077cm</Left>
           <Height>0.6cm</Height>
-          <Width>6.08478cm</Width>
-          <ZIndex>6</ZIndex>
+          <Width>7.46061cm</Width>
+          <ZIndex>5</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1453,7 +1410,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>联系电话:</Value>
+                  <Value>联系电话：</Value>
                   <Style>
                     <FontFamily>微软雅黑</FontFamily>
                     <FontSize>9pt</FontSize>
@@ -1473,11 +1430,11 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>2.92778cm</Top>
-          <Left>20.39105cm</Left>
+          <Top>2.92779cm</Top>
+          <Left>19.00077cm</Left>
           <Height>0.6cm</Height>
-          <Width>6.08478cm</Width>
-          <ZIndex>7</ZIndex>
+          <Width>7.46061cm</Width>
+          <ZIndex>6</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1496,7 +1453,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>收货单位:</Value>
+                  <Value>收货单位：</Value>
                   <Style>
                     <FontFamily>微软雅黑</FontFamily>
                     <FontSize>9pt</FontSize>
@@ -1516,11 +1473,138 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox25</rd:DefaultName>
-          <Top>2.1514cm</Top>
-          <Left>12.53459cm</Left>
+          <Top>2.92779cm</Top>
+          <Left>0.71782cm</Left>
           <Height>0.6cm</Height>
-          <Width>7.49486cm</Width>
+          <Width>8.73118cm</Width>
+          <ZIndex>7</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <VerticalAlign>Middle</VerticalAlign>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="Textbox4">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>快递公司：</Value>
+                  <Style>
+                    <FontFamily>微软雅黑</FontFamily>
+                    <FontSize>9pt</FontSize>
+                  </Style>
+                </TextRun>
+                <TextRun>
+                  <Value>=First(Fields!Kuaidi.Value, "DataSet2")</Value>
+                  <Style>
+                    <FontFamily>微软雅黑</FontFamily>
+                    <FontSize>9pt</FontSize>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox2</rd:DefaultName>
+          <Top>2.1514cm</Top>
+          <Left>0.71782cm</Left>
+          <Height>0.6cm</Height>
+          <Width>8.73118cm</Width>
           <ZIndex>8</ZIndex>
+          <Style>
+            <Border />
+            <VerticalAlign>Middle</VerticalAlign>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="YunsongFS">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>发运方式：</Value>
+                  <Style>
+                    <FontFamily>微软雅黑</FontFamily>
+                    <FontSize>9pt</FontSize>
+                  </Style>
+                </TextRun>
+                <TextRun>
+                  <Value>=First(Fields!YunsongFS.Value, "DataSet2")</Value>
+                  <Style>
+                    <FontFamily>微软雅黑</FontFamily>
+                    <FontSize>9pt</FontSize>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>YunsongFS</rd:DefaultName>
+          <Top>2.1514cm</Top>
+          <Left>10.00074cm</Left>
+          <Height>0.6cm</Height>
+          <Width>8.5257cm</Width>
+          <ZIndex>9</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <VerticalAlign>Middle</VerticalAlign>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="KDdanhao">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>快递结算方式：</Value>
+                  <Style>
+                    <FontFamily>微软雅黑</FontFamily>
+                    <FontSize>9pt</FontSize>
+                  </Style>
+                </TextRun>
+                <TextRun>
+                  <Value>=First(Fields!JiesuanFS.Value, "DataSet2")</Value>
+                  <Style>
+                    <FontFamily>微软雅黑</FontFamily>
+                    <FontSize>9pt</FontSize>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>KDdanhao</rd:DefaultName>
+          <Top>2.1514cm</Top>
+          <Left>19.00077cm</Left>
+          <Height>0.6cm</Height>
+          <Width>7.44023cm</Width>
+          <ZIndex>10</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1903,10 +1987,22 @@
           <DataField>jhddjSLs</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="YunsongFS">
+          <DataField>YunsongFS</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Kuaidi">
+          <DataField>Kuaidi</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="JiesuanFS">
+          <DataField>JiesuanFS</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>ReportDataSetZY</rd:DataSetName>
-        <rd:SchemaPath>C:\Users\lawli\Source\Repos\CKWMS\CKWMS\reports\ReportDataSetZY.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Users\lawli\Source\Repos12\CKWMS\CKWMS\reports\ReportDataSetZY.xsd</rd:SchemaPath>
         <rd:TableName>JianHuoDan_Title</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />

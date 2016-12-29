@@ -409,7 +409,8 @@
               <xs:element name="txckSLs" msprop:Generator_ColumnVarNameInTable="columntxckSLs" msprop:Generator_ColumnPropNameInRow="txckSLs" msprop:Generator_ColumnPropNameInTable="txckSLsColumn" msprop:Generator_UserColumnName="txckSLs" type="xs:string" minOccurs="0" />
               <xs:element name="Beizhu" msprop:Generator_ColumnVarNameInTable="columnBeizhu" msprop:Generator_ColumnPropNameInRow="Beizhu" msprop:Generator_ColumnPropNameInTable="BeizhuColumn" msprop:Generator_UserColumnName="Beizhu" type="xs:string" minOccurs="0" />
               <xs:element name="YunsongFS" msprop:Generator_ColumnVarNameInTable="columnYunsongFS" msprop:Generator_ColumnPropNameInRow="YunsongFS" msprop:Generator_ColumnPropNameInTable="YunsongFSColumn" msprop:Generator_UserColumnName="YunsongFS" type="xs:string" minOccurs="0" />
-              <xs:element name="KDdanhao" msprop:Generator_ColumnVarNameInTable="columnKDdanhao" msprop:Generator_ColumnPropNameInRow="KDdanhao" msprop:Generator_ColumnPropNameInTable="KDdanhaoColumn" msprop:Generator_UserColumnName="KDdanhao" type="xs:string" minOccurs="0" />
+              <xs:element name="Kuaidi" msprop:Generator_ColumnVarNameInTable="columnKuaidi" msprop:Generator_ColumnPropNameInRow="Kuaidi" msprop:Generator_ColumnPropNameInTable="KuaidiColumn" msprop:Generator_UserColumnName="Kuaidi" type="xs:string" minOccurs="0" />
+              <xs:element name="JiesuanFS" msprop:Generator_ColumnVarNameInTable="columnJiesuanFS" msprop:Generator_ColumnPropNameInRow="JiesuanFS" msprop:Generator_ColumnPropNameInTable="JiesuanFSColumn" msprop:Generator_UserColumnName="JiesuanFS" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -425,6 +426,9 @@
               <xs:element name="HuozhuID" msprop:Generator_ColumnVarNameInTable="columnHuozhuID" msprop:Generator_ColumnPropNameInRow="HuozhuID" msprop:Generator_ColumnPropNameInTable="HuozhuIDColumn" msprop:Generator_UserColumnName="HuozhuID" type="xs:string" minOccurs="0" />
               <xs:element name="KehuMC" msprop:Generator_ColumnVarNameInTable="columnKehuMC" msprop:Generator_ColumnPropNameInRow="KehuMC" msprop:Generator_ColumnPropNameInTable="KehuMCColumn" msprop:Generator_UserColumnName="KehuMC" type="xs:string" minOccurs="0" />
               <xs:element name="jhddjSLs" msprop:Generator_ColumnVarNameInTable="columnjhddjSLs" msprop:Generator_ColumnPropNameInRow="jhddjSLs" msprop:Generator_ColumnPropNameInTable="jhddjSLsColumn" msprop:Generator_UserColumnName="jhddjSLs" type="xs:string" minOccurs="0" />
+              <xs:element name="YunsongFS" msprop:Generator_ColumnVarNameInTable="columnYunsongFS" msprop:Generator_ColumnPropNameInRow="YunsongFS" msprop:Generator_ColumnPropNameInTable="YunsongFSColumn" msprop:Generator_UserColumnName="YunsongFS" type="xs:string" minOccurs="0" />
+              <xs:element name="Kuaidi" msprop:Generator_ColumnVarNameInTable="columnKuaidi" msprop:Generator_ColumnPropNameInRow="Kuaidi" msprop:Generator_ColumnPropNameInTable="KuaidiColumn" msprop:Generator_UserColumnName="Kuaidi" type="xs:string" minOccurs="0" />
+              <xs:element name="JiesuanFS" msprop:Generator_ColumnVarNameInTable="columnJiesuanFS" msprop:Generator_ColumnPropNameInRow="JiesuanFS" msprop:Generator_ColumnPropNameInTable="JiesuanFSColumn" msprop:Generator_UserColumnName="JiesuanFS" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
