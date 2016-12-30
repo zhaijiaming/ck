@@ -87,6 +87,8 @@ namespace CKWMS.Models
         public string Chandi { get; set; }
         [Display(Name = "商品描述")]
         public string ShangpinMS { get; set; }
+        [Display(Name = "对象序号")]
+        public int? SPID { get; set; }
     }
 }
 

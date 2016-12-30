@@ -57,6 +57,25 @@
 
             }
         });
+        $("#bt_gspedit").click(function () {
+            var sendval = "";
+            var stateinfo = "";
+            $("tr input[type=checkbox]").each(function () {
+                if (this.checked) {
+                    sendval = $(this).val();
+                    stateinfo = $(this).parent().parent().parent().find("td").eq(1).html();
+                }
+            });
+            if (sendval == "") {
+                alert("请选择需要进行修改的资料！");
+                return;
+            }
+            if (stateinfo !== "已通过") {
+                alert("未通过的信息，不能使用GSP进行修改！");
+                return;
+            }
+            window.open("/quan_gspspxx/edit/" + sendval);
+        });
         $("#bt_sendcheck").click(function () {
             var sendval = "";
             $("#mydatatable tr input[type=checkbox]").each(function () {
@@ -340,7 +359,8 @@
             <button type="button" class="btn btn-default " id="bt_import"><i class="icon-inbox"></i>导入</button>
             <button type="button" class="btn btn-default " id="bt_export" onclick="javascript: window.open('/base_shangpinxx/commodityexport')"><i class="icon-inbox"></i>导出</button>
             <button type="button" class="btn btn-default " id="bt_print"><i class="icon-print"></i>打印</button>
-        </p>
+            <button type="button" class="btn btn-default " id="bt_gspedit"><i class="icon-eraser"></i>GSP修改</button>
+</p>
     </div>
     <div id="splist">
         <div class="table-responsive" style="overflow:auto;height:445px;">

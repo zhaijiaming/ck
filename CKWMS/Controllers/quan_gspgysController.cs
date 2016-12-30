@@ -182,6 +182,7 @@ namespace CKWMS.Controllers
             string beiantp = Request["beiantp"] ?? "";
             string xukepzrq = Request["xukepzrq"] ?? "";
             string xukefzjg = Request["xukefzjg"] ?? "";
+            string gysid = Request["gysid"] ?? "";
             try
             {
                 quan_gspgys ob_quan_gspgys = new quan_gspgys();
@@ -213,6 +214,7 @@ namespace CKWMS.Controllers
                 ob_quan_gspgys.BeianTP = beiantp.Trim();
                 ob_quan_gspgys.XukePZRQ = xukepzrq == "" ? DateTime.Now : DateTime.Parse(xukepzrq);
                 ob_quan_gspgys.XukeFZJG = xukefzjg.Trim();
+                ob_quan_gspgys.GYSID = gysid == "" ? 0 : int.Parse(gysid);
                 ob_quan_gspgys = ob_quan_gspgysservice.AddEntity(ob_quan_gspgys);
                 ViewBag.quan_gspgys = ob_quan_gspgys;
             }
@@ -226,7 +228,7 @@ namespace CKWMS.Controllers
         [OutputCache(Duration = 10)]
         public ActionResult Edit(int id)
         {
-            quan_gspgys tempData = ob_quan_gspgysservice.GetEntityById(quan_gspgys => quan_gspgys.ID == id && quan_gspgys.IsDelete == false);
+            quan_gspgys tempData = ob_quan_gspgysservice.GetEntityById(quan_gspgys => quan_gspgys.GYSID == id && quan_gspgys.Shouying<5 && quan_gspgys.IsDelete == false);
             ViewBag.quan_gspgys = tempData;
             if (tempData == null)
                 return View();
@@ -262,6 +264,7 @@ namespace CKWMS.Controllers
                 quan_gspgysviewmodel.BeianTP = tempData.BeianTP;
                 quan_gspgysviewmodel.XukePZRQ = tempData.XukePZRQ;
                 quan_gspgysviewmodel.XukeFZJG = tempData.XukeFZJG;
+                quan_gspgysviewmodel.GYSID = tempData.GYSID;
                 return View(quan_gspgysviewmodel);
             }
         }
@@ -299,6 +302,7 @@ namespace CKWMS.Controllers
             string beiantp = Request["beiantp"] ?? "";
             string xukepzrq = Request["xukepzrq"] ?? "";
             string xukefzjg = Request["xukefzjg"] ?? "";
+            string gysid = Request["gysid"] ?? "";
             int uid = int.Parse(id);
             try
             {
@@ -331,6 +335,7 @@ namespace CKWMS.Controllers
                 p.BeianTP = beiantp.Trim();
                 p.XukePZRQ = xukepzrq == "" ? DateTime.Now : DateTime.Parse(xukepzrq);
                 p.XukeFZJG = xukefzjg.Trim();
+                p.GYSID = gysid == "" ? 0 : int.Parse(gysid);
                 ob_quan_gspgysservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;
             }
@@ -357,6 +362,45 @@ namespace CKWMS.Controllers
                 }
             }
             return RedirectToAction("Index");
+        }
+        public ActionResult GSPEdit(int id)
+        {
+            int _userid = (int)Session["user_id"];
+            var _gys = ServiceFactory.base_gongyingshangservice.GetEntityById(p => p.ID == id && p.IsDelete == false);
+            if (_gys != null)
+            {
+                quan_gspgys _gsp = new quan_gspgys();
+                _gsp.GYSID = _gys.ID;
+                _gsp.BeianBH = _gys.BeianBH;
+                _gsp.BeianFZJG = _gys.BeianFZJG;
+                _gsp.BeianPZRQ = _gys.BeianPZRQ;
+                _gsp.BeianTP = _gys.BeianTP;
+                _gsp.BeianYXQ = _gys.BeianYXQ;
+                _gsp.Col1 = _gys.Col1;
+                _gsp.Col2 = _gys.Col2;
+                _gsp.Col3 = _gys.Col3;
+                _gsp.Col4 = _gys.Col4;
+                _gsp.Col5 = _gys.Col5;
+                _gsp.Col6 = _gys.Col6;
+                _gsp.Daima = _gys.Daima;
+                _gsp.HezuoSF = _gys.HezuoSF;
+                _gsp.Jingyingfanwei = _gys.Jingyingfanwei;
+                _gsp.JingyingfanweiDM = _gys.JingyingfanweiDM;
+                _gsp.JingyingxukeBH = _gys.JingyingxukeBH;
+                _gsp.JingyingxukeTP = _gys.JingyingxukeTP;
+                _gsp.JingyingxukeYXQ = _gys.JingyingxukeYXQ;
+                _gsp.MakeMan = _userid;
+                _gsp.MakeDate = DateTime.Now;
+                _gsp.Mingcheng = _gys.Mingcheng;
+                _gsp.ShenchaSF = _gys.ShenchaSF;
+                _gsp.Shouying = 1;
+                _gsp.XukeFZJG = _gys.XukeFZJG;
+                _gsp.XukePZRQ = _gys.XukePZRQ;
+                _gsp.YingyezhizhaoBH = _gys.YingyezhizhaoBH;
+                _gsp.YingyezhizhaoTP = _gys.YingyezhizhaoTP;
+                _gsp.YingyezhizhaoYXQ = _gys.YingyezhizhaoYXQ;
+            }
+            return View();
         }
     }
 }

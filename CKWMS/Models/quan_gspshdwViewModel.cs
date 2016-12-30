@@ -82,6 +82,8 @@ namespace CKWMS.Models
         public string Lianxiren { get; set; }
         [Display(Name = "联系地址")]
         public string LianxiDH { get; set; }
+        [Display(Name = "对象序号")]
+        public int? SHDWID { get; set; }
     }
 }
 

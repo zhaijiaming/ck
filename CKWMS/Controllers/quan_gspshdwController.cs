@@ -208,6 +208,7 @@ namespace CKWMS.Controllers
             string songhuodz = Request["songhuodz"] ?? "";
             string lianxiren = Request["lianxiren"] ?? "";
             string lianxidh = Request["lianxidh"] ?? "";
+            string shdwid = Request["shdwid"] ?? "";
             try
             {
                 quan_gspshdw ob_quan_gspshdw = new quan_gspshdw();
@@ -244,6 +245,7 @@ namespace CKWMS.Controllers
                 ob_quan_gspshdw.SonghuoDZ = songhuodz.Trim();
                 ob_quan_gspshdw.Lianxiren = lianxiren.Trim();
                 ob_quan_gspshdw.LianxiDH = lianxidh.Trim();
+                ob_quan_gspshdw.SHDWID = shdwid == "" ? 0 : int.Parse(shdwid);
                 ob_quan_gspshdw = ob_quan_gspshdwservice.AddEntity(ob_quan_gspshdw);
                 ViewBag.quan_gspshdw = ob_quan_gspshdw;
             }
@@ -298,6 +300,7 @@ namespace CKWMS.Controllers
                 quan_gspshdwviewmodel.SonghuoDZ = tempData.SonghuoDZ;
                 quan_gspshdwviewmodel.Lianxiren = tempData.Lianxiren;
                 quan_gspshdwviewmodel.LianxiDH = tempData.LianxiDH;
+                quan_gspshdwviewmodel.SHDWID = tempData.SHDWID;
                 return View(quan_gspshdwviewmodel);
             }
         }
@@ -340,6 +343,7 @@ namespace CKWMS.Controllers
             string songhuodz = Request["songhuodz"] ?? "";
             string lianxiren = Request["lianxiren"] ?? "";
             string lianxidh = Request["lianxidh"] ?? "";
+            string shdwid = Request["shdwid"] ?? "";
             int uid = int.Parse(id);
             try
             {
@@ -377,6 +381,7 @@ namespace CKWMS.Controllers
                 p.SonghuoDZ = songhuodz.Trim();
                 p.Lianxiren = lianxiren.Trim();
                 p.LianxiDH = lianxidh.Trim();
+                p.SHDWID = shdwid == "" ? 0 : int.Parse(shdwid);
                 ob_quan_gspshdwservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;
             }

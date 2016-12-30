@@ -72,6 +72,8 @@ namespace CKWMS.Models
         public DateTime? XukePZRQ { get; set; }
         [Display(Name = "许可发证机关")]
         public string XukeFZJG { get; set; }
+        [Display(Name = "对象序号")]
+        public int? GYSID { get; set; }
     }
 }
 

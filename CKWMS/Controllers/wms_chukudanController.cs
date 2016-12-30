@@ -624,8 +624,8 @@ namespace CKWMS.Controllers
             {
                 wms_chukudan p = ob_wms_chukudanservice.GetEntityById(wms_chukudan => wms_chukudan.ID == uid);
                 p.HuozhuID = huozhuid == "" ? 0 : int.Parse(huozhuid);
-                p.JihuaID = jihuaid == "" ? 0 : int.Parse(jihuaid);
-                p.XinxiLY = xinxily == "" ? 0 : int.Parse(xinxily);
+                //p.JihuaID = jihuaid == "" ? 0 : int.Parse(jihuaid);
+                //p.XinxiLY = xinxily == "" ? 0 : int.Parse(xinxily);
                 p.KehuID = kehuid == "" ? 0 : int.Parse(kehuid);
                 p.KehuMC = kehumc.Trim();
                 p.Fahuodizhi = fahuodizhi.Trim();
@@ -836,7 +836,7 @@ namespace CKWMS.Controllers
                         _ckd.BaoshuiSF = false;
                         _ckd.ChunyunYQ = "";
                         _ckd.CKID = 1;
-                        _ckd.FuheSF = false;
+                        _ckd.FuheSF = true;
                         _ckd.JianguanSF = true;
                         _ckd.HuozhuID = _ckjh.HuozhuID;
                         _ckd.Jianhuoren = 0;
@@ -861,6 +861,9 @@ namespace CKWMS.Controllers
                         _ckd.Lianxiren = _ckjh.Lianxiren;
                         _ckd.YewuLX = (int)_ckjh.YewuLX;
                         _ckd.Yunsongdizhi = _ckjh.Yunsongdizhi;
+                        _ckd.Kuaidi = GetExpress(_ckjh.Kuaidi);
+                        _ckd.JiesuanFS = GetCollectway(_ckjh.JiesuanFS);
+                        _ckd.YunsongFS = GetTransfertype(_ckjh.YunsongFS);
                         _ckd = ob_wms_chukudanservice.AddEntity(_ckd);
 
                         if (_ckd != null)
@@ -883,11 +886,14 @@ namespace CKWMS.Controllers
                                     {
                                         if (ch.sdsl == null)
                                             ch.sdsl = 0;
+                                        if (_fpsl == 0)
+                                            break;
                                         if (ch.chsl >= ch.sdsl + _fpsl)
                                         {
                                             wms_chukumx _ckmx = new wms_chukumx();
                                             _ckmx.ChukuID = _ckd.ID;
                                             _ckmx.Beizhu = ckjhmx.Beizhu;
+                                            _ckmx.Col1 = ckjhmx.HSDJ.ToString();
                                             _ckmx.ChukuSL = _fpsl;
                                             _ckmx.JianhuoSL = 0;
                                             _ckmx.Jianhuo = false;
@@ -920,38 +926,42 @@ namespace CKWMS.Controllers
                                         }
                                         else
                                         {
-                                            wms_chukumx _ckmx = new wms_chukumx();
-                                            _ckmx.ChukuID = _ckd.ID;
-                                            _ckmx.Beizhu = ckjhmx.Beizhu;
-                                            _ckmx.ChukuSL = ch.chsl - ch.sdsl;
-                                            _ckmx.JianhuoSL = 0;
-                                            _ckmx.Jianhuo = false;
-                                            _ckmx.MakeDate = DateTime.Now;
-                                            _ckmx.MakeMan = _userid;
+                                            if (ch.chsl - ch.sdsl > 0)
+                                            {
+                                                wms_chukumx _ckmx = new wms_chukumx();
+                                                _ckmx.ChukuID = _ckd.ID;
+                                                _ckmx.Beizhu = ckjhmx.Beizhu;
+                                                _ckmx.Col1 = ckjhmx.HSDJ.ToString();
+                                                _ckmx.ChukuSL = ch.chsl - ch.sdsl;
+                                                _ckmx.JianhuoSL = 0;
+                                                _ckmx.Jianhuo = false;
+                                                _ckmx.MakeDate = DateTime.Now;
+                                                _ckmx.MakeMan = _userid;
 
-                                            _ckmx.HuopinZT = ch.CunhuoZT;
-                                            _ckmx.BaozhuangDW = ch.BaozhuangDW;
-                                            _ckmx.Chandi = ch.Chandi;
-                                            _ckmx.Changjia = ch.Changjia;
-                                            _ckmx.Guige = ch.Guige;
-                                            _ckmx.Huansuanlv = ch.Huansuanlv;
-                                            _ckmx.JibenDW = ch.JibenDW;
-                                            _ckmx.Jifeidun = (_fpsl / ch.chsl) * ch.jfd;
-                                            _ckmx.Tiji = (_fpsl / ch.chsl) * ch.tj;
-                                            _ckmx.Zhongliang = (_fpsl / ch.chsl) * ch.zl;
-                                            _ckmx.Jingzhong = (_fpsl / ch.chsl) * ch.jz;
-                                            _ckmx.Pihao = ch.Pihao;
-                                            _ckmx.Pihao1 = ch.Pihao1;
-                                            _ckmx.ShangpinDM = ch.ShangpinDM;
-                                            _ckmx.ShangpinID = ch.ShangpinID;
-                                            _ckmx.ShangpinMC = ch.ShangpinMC;
-                                            _ckmx.ShengchanRQ = ch.ShengchanRQ;
-                                            _ckmx.ShixiaoRQ = ch.ShixiaoRQ;
-                                            _ckmx.Xuliema = ch.Xuliema;
-                                            _ckmx.Zhucezheng = ch.Zhucezheng;
-                                            _ckmx = ServiceFactory.wms_chukumxservice.AddEntity(_ckmx);
-                                            if (_ckmx != null)
-                                                _fpsl = _fpsl - (float)(ch.chsl - ch.sdsl);
+                                                _ckmx.HuopinZT = ch.CunhuoZT;
+                                                _ckmx.BaozhuangDW = ch.BaozhuangDW;
+                                                _ckmx.Chandi = ch.Chandi;
+                                                _ckmx.Changjia = ch.Changjia;
+                                                _ckmx.Guige = ch.Guige;
+                                                _ckmx.Huansuanlv = ch.Huansuanlv;
+                                                _ckmx.JibenDW = ch.JibenDW;
+                                                _ckmx.Jifeidun = (_fpsl / ch.chsl) * ch.jfd;
+                                                _ckmx.Tiji = (_fpsl / ch.chsl) * ch.tj;
+                                                _ckmx.Zhongliang = (_fpsl / ch.chsl) * ch.zl;
+                                                _ckmx.Jingzhong = (_fpsl / ch.chsl) * ch.jz;
+                                                _ckmx.Pihao = ch.Pihao;
+                                                _ckmx.Pihao1 = ch.Pihao1;
+                                                _ckmx.ShangpinDM = ch.ShangpinDM;
+                                                _ckmx.ShangpinID = ch.ShangpinID;
+                                                _ckmx.ShangpinMC = ch.ShangpinMC;
+                                                _ckmx.ShengchanRQ = ch.ShengchanRQ;
+                                                _ckmx.ShixiaoRQ = ch.ShixiaoRQ;
+                                                _ckmx.Xuliema = ch.Xuliema;
+                                                _ckmx.Zhucezheng = ch.Zhucezheng;
+                                                _ckmx = ServiceFactory.wms_chukumxservice.AddEntity(_ckmx);
+                                                if (_ckmx != null)
+                                                    _fpsl = _fpsl - (float)(ch.chsl - ch.sdsl);
+                                            }
                                         }
                                     }
                                 }
@@ -961,6 +971,33 @@ namespace CKWMS.Controllers
                 }
             }
             return Json(1);
+        }
+
+        public int GetTransfertype(string transfertype)
+        {
+            foreach (var key in MvcApplication.TransferType)
+            {
+                if (key.Value == transfertype)
+                    return key.Key;
+            }
+            return 0;
+        }
+
+        public int GetExpress(string expresscode)
+        {
+            var _exp = ServiceFactory.base_yunshugsservice.GetEntityById(p => p.Jiancheng.Contains(expresscode) && p.IsDelete == false);
+            if (_exp != null)
+                return _exp.ID;
+            return 0;
+        }
+        public int GetCollectway(string collectway)
+        {
+            foreach (var key in MvcApplication.SettlingType)
+            {
+                if (key.Value == collectway)
+                    return key.Key;
+            }
+            return 0;
         }
     }
 }

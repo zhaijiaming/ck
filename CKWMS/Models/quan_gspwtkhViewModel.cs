@@ -122,6 +122,8 @@ namespace CKWMS.Models
         public string Fuzeren { get; set; }
         [Display(Name = "三证合一")]
         public bool HeyiSF { get; set; }
+        [Display(Name = "对象序号")]
+        public int? WTKHID { get; set; }
     }
 }
 

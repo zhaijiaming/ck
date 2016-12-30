@@ -205,6 +205,7 @@ namespace CKWMS.Controllers
             string faren = Request["faren"] ?? "";
             string fuzeren = Request["fuzeren"] ?? "";
             string heyisf = Request["heyisf"] ?? "";
+            string wtkhid = Request["wtkhid"] ?? "";
             try
             {
                 quan_gspwtkh ob_quan_gspwtkh = new quan_gspwtkh();
@@ -259,6 +260,7 @@ namespace CKWMS.Controllers
                 ob_quan_gspwtkh.Faren = faren.Trim();
                 ob_quan_gspwtkh.Fuzeren = fuzeren.Trim();
                 ob_quan_gspwtkh.HeyiSF = heyisf == "" ? false : Boolean.Parse(heyisf);
+                ob_quan_gspwtkh.WTKHID = wtkhid == "" ? 0 : int.Parse(wtkhid);
                 ob_quan_gspwtkh = ob_quan_gspwtkhservice.AddEntity(ob_quan_gspwtkh);
                 ViewBag.quan_gspwtkh = ob_quan_gspwtkh;
             }
@@ -331,6 +333,7 @@ namespace CKWMS.Controllers
                 quan_gspwtkhviewmodel.Faren = tempData.Faren;
                 quan_gspwtkhviewmodel.Fuzeren = tempData.Fuzeren;
                 quan_gspwtkhviewmodel.HeyiSF = tempData.HeyiSF;
+                quan_gspwtkhviewmodel.WTKHID = tempData.WTKHID;
                 return View(quan_gspwtkhviewmodel);
             }
         }
@@ -391,6 +394,7 @@ namespace CKWMS.Controllers
             string faren = Request["faren"] ?? "";
             string fuzeren = Request["fuzeren"] ?? "";
             string heyisf = Request["heyisf"] ?? "";
+            string wtkhid = Request["wtkhid"] ?? "";
             int uid = int.Parse(id);
             try
             {
@@ -446,6 +450,7 @@ namespace CKWMS.Controllers
                 p.Faren = faren.Trim();
                 p.Fuzeren = fuzeren.Trim();
                 p.HeyiSF = heyisf == "" ? false : Boolean.Parse(heyisf);
+                p.WTKHID = wtkhid == "" ? 0 : int.Parse(wtkhid);
                 ob_quan_gspwtkhservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;
             }

@@ -213,6 +213,7 @@ namespace CKWMS.Controllers
             string shangpintm = Request["shangpintm"] ?? "";
             string chandi = Request["chandi"] ?? "";
             string shangpinms = Request["shangpinms"] ?? "";
+            string spid = Request["spid"] ?? "";
             try
             {
                 quan_gspspxx ob_quan_gspspxx = new quan_gspspxx();
@@ -254,6 +255,7 @@ namespace CKWMS.Controllers
                 ob_quan_gspspxx.ShangpinTM = shangpintm.Trim();
                 ob_quan_gspspxx.Chandi = chandi.Trim();
                 ob_quan_gspspxx.ShangpinMS = shangpinms.Trim();
+                ob_quan_gspspxx.SPID = spid == "" ? 0 : int.Parse(spid);
                 ob_quan_gspspxx = ob_quan_gspspxxservice.AddEntity(ob_quan_gspspxx);
                 ViewBag.quan_gspspxx = ob_quan_gspspxx;
             }
@@ -313,6 +315,7 @@ namespace CKWMS.Controllers
                 quan_gspspxxviewmodel.ShangpinTM = tempData.ShangpinTM;
                 quan_gspspxxviewmodel.Chandi = tempData.Chandi;
                 quan_gspspxxviewmodel.ShangpinMS = tempData.ShangpinMS;
+                quan_gspspxxviewmodel.SPID = tempData.SPID;
                 return View(quan_gspspxxviewmodel);
             }
         }
@@ -360,6 +363,7 @@ namespace CKWMS.Controllers
             string shangpintm = Request["shangpintm"] ?? "";
             string chandi = Request["chandi"] ?? "";
             string shangpinms = Request["shangpinms"] ?? "";
+            string spid = Request["spid"] ?? "";
             int uid = int.Parse(id);
             try
             {
@@ -402,6 +406,7 @@ namespace CKWMS.Controllers
                 p.ShangpinTM = shangpintm.Trim();
                 p.Chandi = chandi.Trim();
                 p.ShangpinMS = shangpinms.Trim();
+                p.SPID = spid == "" ? 0 : int.Parse(spid);
                 ob_quan_gspspxxservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;
             }

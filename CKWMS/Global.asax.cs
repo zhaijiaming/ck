@@ -312,16 +312,17 @@ namespace CKWMS
             SettlingType.Add(0, "");
             SettlingType.Add(1, "月结");
             SettlingType.Add(2, "到付");
-            SettlingType.Add(3, "30天");
-            SettlingType.Add(4, "60天");
-            SettlingType.Add(5, "90天");
+            SettlingType.Add(3, "包邮");
+            SettlingType.Add(4, "30天");
+            SettlingType.Add(5, "60天");
+            SettlingType.Add(6, "90天");
 
             DeliveryType = new Dictionary<int, string>();
             DeliveryType.Add(0, "");
             DeliveryType.Add(1, "快递");
-            DeliveryType.Add(2, "空运");
-            DeliveryType.Add(3, "海运");
-            DeliveryType.Add(4, "公路");
+            DeliveryType.Add(2, "航空");
+            DeliveryType.Add(3, "公路");
+            DeliveryType.Add(4, "海运");
             DeliveryType.Add(5, "铁路");
 
             RemindPeriod = new Dictionary<int, string>();

@@ -628,8 +628,8 @@ namespace CKWMS.Controllers
             {
                 wms_rukudan p = ob_wms_rukudanservice.GetEntityById(wms_rukudan => wms_rukudan.ID == uid);
                 p.HuozhuID = huozhuid == "" ? 0 : int.Parse(huozhuid);
-                p.JihuaID = jihuaid == "" ? 0 : int.Parse(jihuaid);
-                p.XinxiLY = xinxily == "" ? 0 : int.Parse(xinxily);
+                //p.JihuaID = jihuaid == "" ? 0 : int.Parse(jihuaid);
+                //p.XinxiLY = xinxily == "" ? 0 : int.Parse(xinxily);
                 p.GongyingshangID = gongyingshangid == "" ? 0 : int.Parse(gongyingshangid);
                 p.Fahuodizhi = fahuodizhi.Trim();
                 p.Yunsongdizhi = yunsongdizhi.Trim();
