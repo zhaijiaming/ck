@@ -438,6 +438,7 @@ namespace CKWMS.Controllers
                     if (!_ng)
                     {
                         _rkd.RukuZT = 5;
+                        _rkd.MakeDate = DateTime.Now;
                         ob_wms_rukudanservice.UpdateEntity(_rkd);
                     }
                     else

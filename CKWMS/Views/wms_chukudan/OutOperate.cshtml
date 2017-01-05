@@ -192,6 +192,7 @@
             $("#pl_xlm").hide();
         });
         $("#pl_xlm_check").click(function () {
+            $("#totalnum").html(0);
             getCount();
         });
         $("#pl_xlm_ok").click(function () {
@@ -247,12 +248,12 @@
                 var _sv = $(this).find("input");
                 if (eval(_sv.val()) > 0) {
                     _sval = _sval + _sv.data("sp") + "$" + _sv.val() + "$"
-                        + $(this).find("td").eq(1).html() + "$" + $(this).find("td").eq(2).html()
-                    + "$" + $(this).find("td").eq(5).html() + "$" + $(this).find("td").eq(6).html()
-                    + "$" + $(this).find("td").eq(7).html() + "$" + $(this).find("td").eq(8).html()
+                        + $(this).find("td").eq(1).html() + "$" + $(this).find("td").eq(2).text()
+                    + "$" + $(this).find("td").eq(5).html() + "$" + $(this).find("td").eq(6).text()
+                    + "$" + $(this).find("td").eq(7).text() + "$" + $(this).find("td").eq(8).text()
                     + "$" + $(this).find("td").eq(9).html() + "$" + $(this).find("td").eq(10).html()
                     + "$" + $(this).find("td").eq(11).html() + "$" + $(this).find("td").eq(12).html()
-                    + "$" + $(this).find("td").eq(13).html() + "$" + $(this).find("td").eq(14).html()
+                    + "$" + $(this).find("td").eq(13).html() + "$" + $(this).find("td").eq(14).text()
                     + "$" + $(this).find("td").eq(15).html() + "$" + $(this).find("td").eq(16).html()
                     + "$" + _sv.data("zl") + "$" + _sv.data("jz") + "$" + _sv.data("tj")
                     + "$" + _sv.data("jf") + "$" + _sv.data("zt") + "$" + $(this).find("td").eq(3).html() + ";";
@@ -291,7 +292,7 @@
     function getCount() {
         var p = $("#xlm").val();
         var pp = p.split("\n");
-        $("#totalnum").html(pp.length);
+        $("#totalnum").html(pp.length-1);
         for (var k in pp) {
             var ps = pp[k];
             if (ps.length > 0) {

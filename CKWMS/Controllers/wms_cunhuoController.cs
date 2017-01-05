@@ -461,6 +461,11 @@ namespace CKWMS.Controllers
             string shixiaorq = Request["shixiaorq"] ?? "";
             string shixiaorqequal = Request["shixiaorqequal"] ?? "";
             string shixiaorqand = Request["shixiaorqand"] ?? "";
+            //Èë¿âÈÕÆÚ
+            string rukurq = Request["rukurq"] ?? "";
+            string rukurqequal = Request["rukurqequal"] ?? "";
+            string rukurqand = Request["rukurqand"] ?? "";
+
             Expression<Func<wms_storage_v, bool>> where = PredicateExtensionses.True<wms_storage_v>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -636,6 +641,35 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shixiaorq", shixiaorq, shixiaorqequal, shixiaorqand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shixiaorq", "", shixiaorqequal, shixiaorqand);
+                //rukurq
+                if (!string.IsNullOrEmpty(rukurq))
+                {
+                    if (rukurqequal.Equals("="))
+                    {
+                        if (rukurqand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.RukuRQ == DateTime.Parse(rukurq));
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.RukuRQ == DateTime.Parse(rukurq));
+                    }
+                    if (rukurqequal.Equals(">"))
+                    {
+                        if (rukurqand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.RukuRQ > DateTime.Parse(rukurq));
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.RukuRQ > DateTime.Parse(rukurq));
+                    }
+                    if (rukurqequal.Equals("<"))
+                    {
+                        if (rukurqand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.RukuRQ < DateTime.Parse(rukurq));
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.RukuRQ < DateTime.Parse(rukurq));
+                    }
+                }
+                if (!string.IsNullOrEmpty(rukurq))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukurq", rukurq, rukurqequal, rukurqand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukurq", "", rukurqequal, rukurqand);
 
                 searchconditionService.GetInstance().AddEntity(sc);
             }
@@ -810,6 +844,35 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shixiaorq", shixiaorq, shixiaorqequal, shixiaorqand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shixiaorq", "", shixiaorqequal, shixiaorqand);
+                //rukurq
+                if (!string.IsNullOrEmpty(rukurq))
+                {
+                    if (rukurqequal.Equals("="))
+                    {
+                        if (rukurqand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.RukuRQ == DateTime.Parse(rukurq));
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.RukuRQ == DateTime.Parse(rukurq));
+                    }
+                    if (rukurqequal.Equals(">"))
+                    {
+                        if (rukurqand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.RukuRQ > DateTime.Parse(rukurq));
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.RukuRQ > DateTime.Parse(rukurq));
+                    }
+                    if (rukurqequal.Equals("<"))
+                    {
+                        if (rukurqand.Equals("and"))
+                            where = where.And(wms_storage_v => wms_storage_v.RukuRQ < DateTime.Parse(rukurq));
+                        else
+                            where = where.Or(wms_storage_v => wms_storage_v.RukuRQ < DateTime.Parse(rukurq));
+                    }
+                }
+                if (!string.IsNullOrEmpty(rukurq))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukurq", rukurq, rukurqequal, rukurqand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukurq", "", rukurqequal, rukurqand);
 
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
@@ -1001,6 +1064,35 @@ namespace CKWMS.Controllers
                                         where = where.And(p => p.ShixiaoRQ < DateTime.Now.AddDays(int.Parse(shixiaorq)));
                                     else
                                         where = where.Or(p => p.ShixiaoRQ < DateTime.Now.AddDays(int.Parse(shixiaorq)));
+                                }
+                            }
+                            break;
+                        case "rukurq":
+                            string rukurq = scld[1];
+                            string rukurqequal = scld[2];
+                            string rukurqand = scld[3];
+                            if (!string.IsNullOrEmpty(rukurq))
+                            {
+                                if (rukurqequal.Equals("="))
+                                {
+                                    if (rukurqand.Equals("and"))
+                                        where = where.And(wms_storage_v => wms_storage_v.RukuRQ == DateTime.Parse(rukurq));
+                                    else
+                                        where = where.Or(wms_storage_v => wms_storage_v.RukuRQ == DateTime.Parse(rukurq));
+                                }
+                                if (rukurqequal.Equals(">"))
+                                {
+                                    if (rukurqand.Equals("and"))
+                                        where = where.And(wms_storage_v => wms_storage_v.RukuRQ > DateTime.Parse(rukurq));
+                                    else
+                                        where = where.Or(wms_storage_v => wms_storage_v.RukuRQ > DateTime.Parse(rukurq));
+                                }
+                                if (rukurqequal.Equals("<"))
+                                {
+                                    if (rukurqand.Equals("and"))
+                                        where = where.And(wms_storage_v => wms_storage_v.RukuRQ < DateTime.Parse(rukurq));
+                                    else
+                                        where = where.Or(wms_storage_v => wms_storage_v.RukuRQ < DateTime.Parse(rukurq));
                                 }
                             }
                             break;

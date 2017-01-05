@@ -32,8 +32,8 @@
         $("#bt_fn_show").click(function () {
             $("#pl_fun").hide();
             $("#dt_pick tbody").html("");
-            $("#pl_picklist").show();
             GetPickList($("#ckd").val());
+            $("#pl_picklist").show();
         });
         $("#pl_pl_close").click(function () {
             $("#pl_picklist").hide();
@@ -56,6 +56,7 @@
             var _sj = _sr.find("td").eq(12).html();
             if (eval(_sj) == eval(_sn))
                 return;
+            $("#picknum").val("");
             _sr.addClass("gray");
             $("#selmx").val(_sc.val());
             if (_sj == "")

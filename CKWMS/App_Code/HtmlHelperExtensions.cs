@@ -662,6 +662,9 @@ namespace CKWMS.App_Code
                 case "System.Boolean":
                     os = "<option value=\"=\" selected=\"selected\">=</option><option value=\"<>\">></option>";
                     break;
+                case "System.DateTime":
+                    os = "<option value=\"=\" selected=\"selected\">=</option><option value=\">\">></option><option value=\"<\"><</option>";
+                    break;
                 default:
                     os = "<option value=\"=\" selected=\"selected\">=</option><option value=\"like\">包含</option>";
                     break;
@@ -688,6 +691,7 @@ namespace CKWMS.App_Code
                         else
                             os = "<option value=\"=\">=</option><option value=\"like\" selected=\"selected\">包含</option>";
                         break;
+                    case "System.DateTime":
                     case "System.Int32":
                     case "System.Int":
                     case "System.Int16":

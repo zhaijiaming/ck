@@ -71,7 +71,11 @@
         scm.ItemType = "System.Int32";
         scms.Add(scm);
 
-
+        scm = new SearchConditionModel();
+        scm.ItemCode = "RukuRQ";
+        scm.ItemTitle = "入库日期";
+        scm.ItemType = "System.DateTime";
+        scms.Add(scm);
     }
     else
     {
@@ -165,6 +169,18 @@
                 scm.ItemJion = scs[6].Split(',')[3];
             }
             scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "RukuRQ";
+            scm.ItemTitle = "入库日期";
+            scm.ItemType = "System.DateTime";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[7].Split(',')[1];
+                scm.ItemOpValue = scs[7].Split(',')[2];
+                scm.ItemJion = scs[7].Split(',')[3];
+            }
+            scms.Add(scm);
         }
     }
 }
@@ -238,7 +254,7 @@
                         <td>@item.sshuliang</td>
                         <td>@item.JibenDW</td>
                         <td>@Html.Encode(item.HegeSF == true? "合格":"不合格")</td>
-                        <td>@Html.GetCommonValue_ID("存货状态",(int)item.CunhuoZT)</td>
+                        <td>@Html.GetCommonValue_ID("存货状态",(int)(item.CunhuoZT==null?0:item.CunhuoZT))</td>
                         <td>@item.CunhuoSM</td>
                     </tr>
                 }
