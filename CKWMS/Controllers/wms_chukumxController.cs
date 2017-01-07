@@ -800,6 +800,86 @@ namespace CKWMS.Controllers
             string viewHtml = ExportNow.RenderPartialViewToString(this, "CommodityOfOutExport");
             return File(System.Text.Encoding.UTF8.GetBytes(viewHtml), "application/ms-excel", string.Format("CommodityOfOutInformation_{0}.xls", DateTime.Now.ToShortDateString()));
         }
+        public JsonResult ChangeCargoBatch()
+        {
+            int user_id = (int)Session["user_id"];
+            var _mxid = Request["mx"] ?? "";
+            var _ph = Request["ph"] ?? "";
+
+            if (string.IsNullOrEmpty(_mxid) || string.IsNullOrEmpty(_ph))
+                return Json(-1);
+
+            wms_chukumx _ckmx = ob_wms_chukumxservice.GetEntityById(p => p.ID == int.Parse(_mxid));
+            if (_ckmx == null)
+                return Json(-1);
+            _ckmx.Pihao = _ph;
+            ob_wms_chukumxservice.UpdateEntity(_ckmx);
+            return Json(1);
+        }
+        public JsonResult Degroup()
+        {
+            int _userid = (int)Session["user_id"];
+            var _mxid = Request["mx"] ?? "";
+            if (string.IsNullOrEmpty(_mxid))
+                return Json(-1);
+
+            wms_chukumx _ckmx = ob_wms_chukumxservice.GetEntityById(p => p.ID == int.Parse(_mxid));
+            if (_ckmx == null)
+                return Json(-1);
+            wms_chukumx _nmx = new wms_chukumx();
+            _nmx.BaozhuangDW = _ckmx.BaozhuangDW;
+            _nmx.Beizhu = _ckmx.Beizhu;
+            _nmx.Chandi = _ckmx.Chandi;
+            _nmx.Changjia = _ckmx.Changjia;
+            _nmx.ChukuID = _ckmx.ChukuID;
+            _nmx.ChukuSL = 0;
+            _nmx.Col1 = _ckmx.Col1;
+            _nmx.Col2 = _ckmx.Col2;
+            _nmx.Col3 = _ckmx.Col3;
+            _nmx.Guige = _ckmx.Guige;
+            _nmx.Huansuanlv = _ckmx.Huansuanlv;
+            _nmx.HuopinZT = _ckmx.HuopinZT;
+            _nmx.IsDelete = _ckmx.IsDelete;
+            _nmx.Jianhuo = _ckmx.Jianhuo;
+            _nmx.JianhuoSL = _ckmx.JianhuoSL;
+            _nmx.JibenDW = _ckmx.JibenDW;
+            _nmx.Jifeidun = _ckmx.Jifeidun;
+            _nmx.Jingzhong = _ckmx.Jingzhong;
+            _nmx.MakeDate = DateTime.Now;
+            _nmx.MakeMan = _userid;
+            _nmx.Pihao = _ckmx.Pihao;
+            _nmx.Pihao1 = _ckmx.Pihao1;
+            _nmx.ShangpinDM = _ckmx.ShangpinDM;
+            _nmx.ShangpinID = _ckmx.ShangpinID;
+            _nmx.ShangpinMC = _ckmx.ShangpinMC;
+            _nmx.ShangpinTM = _ckmx.ShangpinTM;
+            _nmx.ShengchanRQ = _ckmx.ShengchanRQ;
+            _nmx.ShixiaoRQ = _ckmx.ShixiaoRQ;
+            _nmx.Tiji = _ckmx.Tiji;
+            _nmx.Xuliema = _ckmx.Xuliema;
+            _nmx.Zhongliang = _ckmx.Zhongliang;
+            _nmx.Zhucezheng = _ckmx.Zhucezheng;
+
+            _nmx=ob_wms_chukumxservice.AddEntity(_nmx);
+            if (_nmx == null)
+                return Json(-1);
+            return Json(1);
+        }
+        public JsonResult ChangeNumber()
+        {
+            int _userid = (int)Session["user_id"];
+            var _mxid = Request["mx"] ?? "";
+            var _num = Request["num"] ?? "";
+
+            if (string.IsNullOrEmpty(_mxid) || string.IsNullOrEmpty(_num))
+                return Json(-1);
+            wms_chukumx _ckmx = ob_wms_chukumxservice.GetEntityById(p => p.ID == int.Parse(_mxid) && p.IsDelete == false);
+            if (_ckmx == null)
+                return Json(-1);
+            _ckmx.ChukuSL = float.Parse(_num);
+            ob_wms_chukumxservice.UpdateEntity(_ckmx);
+            return Json(1);
+        }
     }
 }
 

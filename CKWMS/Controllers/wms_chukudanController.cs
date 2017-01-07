@@ -875,7 +875,7 @@ namespace CKWMS.Controllers
                             else
                                 _ckjh.ChukudanSL = _ckjh.ChukudanSL + 1;
                             ServiceFactory.cust_chukujihuaservice.UpdateEntity(_ckjh);
-
+                            
                             var _ckjhmx = ServiceFactory.cust_chukujihuamxservice.LoadEntities(p => p.JihuaID == _ckjh.ID && p.IsDelete == false).ToList<cust_chukujihuamx>();
                             foreach (var ckjhmx in _ckjhmx)
                             {

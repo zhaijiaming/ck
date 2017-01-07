@@ -1142,7 +1142,44 @@ namespace CKWMS.Controllers
             if (tempData == null)
                 return Json(-1);
 
-            return Json(tempData.ToList<wms_invgoods_v>(), JsonRequestBehavior.AllowGet);
+            return Json(tempData.ToList<wms_invgoods_v>());
+        }
+        public JsonResult GetCustStoreGood2()
+        {
+            int _userid = (int)Session["user_id"];
+            var _custid = Request["cust"] ?? "";
+            var _mc = Request["mc"] ?? "";
+            var _gg = Request["gg"] ?? "";
+            var _ph = Request["ph"] ?? "";
+            if (int.Parse(_custid)== 0)
+            {
+                //if (string.IsNullOrEmpty(_ph))
+                //    return Json(-1);
+                //var _pp = ob_wms_cunhuoservice.GetInventoryGoods(p => p.Pihao == _ph).ToList<wms_invgoods_v>();
+                //if (_pp.Count == 0)
+                //    return Json(-1);
+                if (string.IsNullOrEmpty(_gg))
+                    return Json(-1);
+                var _pp = ServiceFactory.base_shangpinxxservice.GetEntityById(p => p.Guige == _gg);
+                if (_pp == null)
+                    return Json(-1);
+                _custid = _pp.HuozhuID.ToString();
+            }
+            //return Json(-1);
+            Expression<Func<wms_invgoods_v, bool>> where = PredicateExtensionses.True<wms_invgoods_v>();
+            if (!string.IsNullOrEmpty(_mc))
+                where = where.And(p => p.ShangpinMC.Contains(_mc));
+            if (!string.IsNullOrEmpty(_gg))
+                where = where.And(p => p.Guige.Contains(_gg));
+            if (!string.IsNullOrEmpty(_ph))
+                where = where.And(p => p.Pihao.Contains(_ph));
+            where = where.And(p => p.chsl > 0);
+            //var tempData = ob_wms_cunhuoservice.GetInventoryGoodsByCust(int.Parse(_custid),p=>p.chsl>0);
+            var tempData = ob_wms_cunhuoservice.GetInventoryGoodsByCust(int.Parse(_custid), where.Compile());
+            if (tempData == null)
+                return Json(-1);
+
+            return Json(tempData.ToList<wms_invgoods_v>());
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

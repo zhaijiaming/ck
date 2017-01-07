@@ -15,8 +15,109 @@
             //    location.href = url_go;
             //}
         });
+        $("#pl_xz").draggable({ handle: ".panel-heading" });
+        $("#pl_xz_close").click(function () {
+            $("#pl_xz").hide();
+        });
+        $("#bt_copy").click(function () {
+            var _lc = 1;
+            var _mx = "";
+            $("#mydatatable tbody tr input[type=checkbox]").each(function () {
+                if (this.checked) {
+                    _lc++;
+                    _mx = $(this).val();
+                }
+            });
+            if (_lc > 1) {
+                alert("只能选择一笔细单进行拆分！");
+                return;
+            }
+            $.ajax({
+                async: true,
+                beforeSend: function () {
+                    ShowWait();
+                },
+                complete: function () {
+                    HiddenWait();
+                },
+                type: "post",
+                url: "/wms_chukumx/degroup",
+                data: { mx: _mx},
+                success: function (data) {
+                    _vs = data;
+                    if (eval(data) == -1)
+                        alert("记录分拆失败！");
+                    else
+                        location.reload();
+                }
+            });
+        });
+        $(".icon-edit").click(function () {
+            var _selv = $(this).parent().parent().find("input[type=checkbox]");
+            $("#selmx").val(_selv.val());
+            $("#mc").val($(this).parent().parent().find("td").eq(2).text());
+            $("#gg").val($(this).parent().parent().find("td").eq(4).text());
+            $("#dt_xz tbody").html("");
+            GetCustStore(0);
+            $("#pl_xz").show();
+        });
+        $("#dt_xz tbody").on("dblclick", "tr", function () {
+            var _ph = $(this).find("td").eq(8).text();
+            $.ajax({
+                async: true,
+                beforeSend: function () {
+                    ShowWait();
+                },
+                complete: function () {
+                    HiddenWait();
+                },
+                type: "post",
+                url: "/wms_chukumx/ChangeCargoBatch",
+                data: { mx:$("#selmx").val(), ph: _ph },
+                success: function (data) {
+                    _vs = data;
+                    if (eval(data) == -1)
+                        alert("修改批号错误！");
+                    else
+                        location.reload();
+                }
+            });
+        });
         $("#bt_print").click(function () {
             alert("print now");
+        });
+        $(".icon-beer").click(function () {
+            var _selv = $(this).parent().parent().find("input[type=checkbox]");
+            $("#selmx").val(_selv.val());
+            $("#pl_number").show();
+        });
+        $("#bt_num_save").click(function () {
+            //$("#pl_number").hide();
+            if ($("#pl_num_text").val() == 0)
+                return;
+            $.ajax({
+                async: true,
+                beforeSend: function () {
+                    ShowWait();
+                },
+                complete: function () {
+                    HiddenWait();
+                },
+                type: "post",
+                url: "/wms_chukumx/changenumber",
+                data: { mx: _mx,num:$("#pl_num_text").val() },
+                success: function (data) {
+                    _vs = data;
+                    if (eval(data) == -1)
+                        alert("数量修改失败！");
+                    else
+                        location.reload();
+                }
+            });
+
+        });
+        $("#bt_num_cancel").click(function () {
+            $("#pl_number").hide();
         });
         $("#bt_fn_print").click(function () {
             alert("print now");
@@ -33,6 +134,17 @@
             $("#pl_fun").hide();
         });
     });
+    function CheckTotal() {
+        var outnum = 0;
+        $("#mydatatable tbody tr").each(function () {
+            outnum =outnum+Number($(this).find("td").eq(10).text());
+        });
+        alert(outnum);
+        if (outnum == number($("#maxval").val()))
+            alert("ok");
+        else
+            alert("数量不对！");
+    }
     function AddInfo() {
         location.href = "/wms_chukumx/Add";
     }
@@ -40,6 +152,96 @@
         $("#mydatatable tr input[type=checkbox]").each(function () {
             if (this.checked)
                 location.href = "/wms_chukumx/Edit/" + $(this).val();
+        });
+    }
+    function GetCustStore(_cust) {
+        var filltable = "";
+        if (_cust == null)
+            return;
+        $.ajax({
+            async: true,
+            beforeSend: function () {
+                ShowWait();
+            },
+            complete: function () {
+                HiddenWait();
+            },
+            type: "POST",
+            url: "/wms_cunhuo/getcuststoregood2",
+            data: {
+                cust: _cust,
+                mc: $("#mc").val(),
+                gg: $("#gg").val(),
+                ph: $("#ph").val()
+            },
+            success: function (data) {
+                if (data != -1) {
+                    for (var i in data) {
+                        filltable = filltable + '<tr><td><input type="hidden" size="5" value="0" data-sp="';
+                        filltable = filltable + data[i].ShangpinID;
+                        filltable = filltable + '" data-zt="';
+                        filltable = filltable + data[i].CunhuoZT;
+                        filltable = filltable + '" data-zl="';
+                        filltable = filltable + data[i].zl;
+                        filltable = filltable + '" data-jz="';
+                        filltable = filltable + data[i].jz;
+                        filltable = filltable + '" data-tj="';
+                        filltable = filltable + data[i].tj;
+                        filltable = filltable + '" data-jf="';
+                        filltable = filltable + data[i].jfd;
+                        filltable = filltable + '"/></td><td>';
+                        filltable = filltable + data[i].ShangpinDM;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].ShangpinMC;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].chsl;
+                        filltable = filltable + '</td><td>';
+                        if (data[i].sdsl != null)
+                            filltable = filltable + data[i].sdsl;
+                        else
+                            filltable = filltable + '0';
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].JibenDW;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].Guige;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].Zhucezheng;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].Pihao;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].ShengchanRQ.toDate().Format("yyyy-MM-dd");
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].ShixiaoRQ.toDate().Format("yyyy-MM-dd");
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].Xuliema;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].BaozhuangDW;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].Huansuanlv;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].Changjia;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].Chandi;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].ShangpinTM;
+                        filltable = filltable + '</td><td>';
+                        if (eval(data[i].CunhuoZT) == 0)
+                            filltable = filltable + '';
+                        if (eval(data[i].CunhuoZT) == 1)
+                            filltable = filltable + '正常';
+                        if (eval(data[i].CunhuoZT) == 2)
+                            filltable = filltable + '破损';
+                        if (eval(data[i].CunhuoZT) == 3)
+                            filltable = filltable + '污染';
+                        if (eval(data[i].CunhuoZT) == 4)
+                            filltable = filltable + '渗漏';
+                        if (eval(data[i].CunhuoZT) == 5)
+                            filltable = filltable + '其它';
+                        filltable = filltable + '</td></tr>';
+                    }
+                }
+                $("#dt_xz tbody").html(filltable);
+            }
         });
     }
     function DelInfo() {
@@ -70,12 +272,18 @@
         <li class="active">出库明细</li>
     </ul>
 </div>
+<div id="loading"><img src="~/Imgs/wait.gif" alt="" />...系统正在加载数据,请耐心等待...</div>
 <div class="page-content">
+    <input type="hidden" id="selmx" />
+    <input type="hidden" id="mc" />
+    <input type="hidden" id="gg" />
+    <input type="hidden" id="maxval" value="@ViewBag.totalproduct"/>
     <div class="page-header">
         <p>
-            @*<button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
-                <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
-                <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>*@
+            @*<button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>*@
+            @*<button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>*@
+            @*<button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>*@
+            <button type="button" class="btn btn-default " id="bt_copy"><i class="icon-adn"></i>复制</button>
             <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
             <button type="button" class="btn btn-default " id="bt_print"><i class="icon-print"></i>打印</button>
@@ -125,12 +333,12 @@
                         <td>@item.ShangpinMC</td>
                         <td>@item.Zhucezheng</td>
                         <td>@item.Guige</td>
-                        <td>@item.Pihao</td>
+                        <td><i class="icon-edit"></i>@item.Pihao</td>
                         <td>@item.Pihao1</td>
-                        <td>@item.Xuliema</td>
+                        <td><i class="icon-edit-sign"></i>@item.Xuliema</td>
                         <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ == null ? "" : item.ShengchanRQ)</td>
                         <td>@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ == null ? "" : item.ShixiaoRQ)</td>
-                        <td>@item.ChukuSL</td>
+                        <td><i class="icon-beer"></i>@item.ChukuSL</td>
                         <td>@item.JibenDW</td>
                         <td>@item.BaozhuangDW</td>
                         <td>@item.Huansuanlv</td>
@@ -166,6 +374,53 @@
             <div class="center"><p id="bt_fn_print" class="btn btn-default">打印</p></div>
             <br />
             <div class="center"><p id="bt_fn_cancel" class="btn btn-default">取消</p></div>
+        </div>
+    </div>
+</div>
+<div id="pl_xz" class="panel panel-primary" style="display:none;position:fixed;top:50px;left:50px;width:1200px;height:600px;z-index:999;">
+    <div class="panel-heading">
+        <h3 class="panel-title">当前可用库存<button id="pl_xz_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="row" style="width:1190px;height:500px;overflow:auto">
+            <table class="table table-condensed" id="dt_xz">
+                <caption></caption>
+                <thead>
+                    <tr>
+                        <td></td>
+                        <td>代码</td>
+                        <td>商品</td>
+                        <td>库存</td>
+                        <td>锁定</td>
+                        <td>单位</td>
+                        <td>规格</td>
+                        <td>注册证</td>
+                        <td>批号</td>
+                        <td>生产日期</td>
+                        <td>失效日期</td>
+                        <td>序列码</td>
+                        <td>包装单位</td>
+                        <td>换算率</td>
+                        <td>厂家</td>
+                        <td>产地</td>
+                        <td>条码</td>
+                        <td>状态</td>
+                    </tr>
+                </thead>
+                <tbody style="overflow:auto;"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div id="pl_number" class="panel panel-info" style="display:none;position:fixed;top:200px;left:300px;width:200px;height:200px;overflow:auto;">
+    <div class="panel-body">
+        <div class="row">
+            <div>
+                <input type="text" id="pl_num_text" value="0"/>
+            </div>
+            <div class="center"><p id="bt_num_save" class="btn btn-default">保存</p></div>
+            <br />
+            <div class="center"><p id="bt_num_cancel" class="btn btn-default">取消</p></div>
         </div>
     </div>
 </div>

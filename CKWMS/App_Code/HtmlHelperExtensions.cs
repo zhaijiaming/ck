@@ -1017,6 +1017,18 @@ namespace CKWMS.App_Code
                             returnvalue = string.Format("{0:d}", _ckd.ChukuRQ);
                     }
                     break;
+                case "商品":
+                    base_shangpinxx _shp = ServiceFactory.base_shangpinxxservice.GetEntityById(p => p.ID == dataValue);
+                    if (_shp == null)
+                        returnvalue = "";
+                    else
+                    {
+                        if (itemName == "产品线")
+                            returnvalue = _shp.Chanpinxian.ToString();
+                        if (itemName == "商品名称")
+                            returnvalue = _shp.ShangpinMS;
+                    }
+                    break;
                 case "功能":
                     Iauth_gongnengService gnservice = ServiceFactory.auth_gongnengservice;
                     auth_gongneng gongneng = gnservice.GetEntityById(auth_gongneng => auth_gongneng.ID == dataValue);

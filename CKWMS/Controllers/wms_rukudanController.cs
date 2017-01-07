@@ -845,6 +845,7 @@ namespace CKWMS.Controllers
                         _rkd.CangkuID = 1;
                         _rkd.ChunyunYQ = "";
                         _rkd.MakeDate = DateTime.Now;
+                        _rkd.RukuRQ = DateTime.Now;
                         _rkd.MakeMan = _userid;
                         _rkd.RukuZT = 1;
                         _rkd.Shouhuoren = 0;
@@ -852,13 +853,13 @@ namespace CKWMS.Controllers
                         _rkd.YanshouSF = false;
                         _rkd.ZhijieSH = false;
                         _rkd.DuifangQY = "";
+                        //_rkd.RukuRQ = _rkjh.RukuRQ;
 
                         _rkd.JihuaID = _rkjh.ID;
                         _rkd.HuozhuID = _rkjh.HuozhuID;
                         _rkd.KehuDH = _rkjh.KehuDH;
                         _rkd.Fahuodizhi = _rkjh.Fahuodizhi;
                         _rkd.GongyingshangID = _rkjh.GongyingshangID;
-                        _rkd.RukuRQ = _rkjh.RukuRQ;
                         _rkd.LianxiDH = _rkjh.LianxiDH;
                         _rkd.Lianxiren = _rkjh.Lianxiren;
                         _rkd.YewuLX = _rkjh.YewuLX;

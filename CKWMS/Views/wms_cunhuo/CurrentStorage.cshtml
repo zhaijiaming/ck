@@ -220,6 +220,7 @@
                     <td>商品代码</td>
                     <td>商品名称</td>
                     <td>规格</td>
+                    <td>产品线</td>
                     <td>注册证</td>
                     <td>批号</td>
                     <td>生产日期</td>
@@ -246,6 +247,7 @@
                         <td>@item.ShangpinDM</td>
                         <td>@item.ShangpinMC</td>
                         <td>@item.Guige</td>
+                        <td>@Html.GetDataValue_ID("商品","产品线",(int)item.ShangpinID)</td>
                         <td>@item.Zhucezheng</td>
                         <td>@item.Pihao</td>
                         <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ == null ? "" : item.ShengchanRQ)</td>
