@@ -6,22 +6,25 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>5.24829cm</Width>
+              <Width>4.72732cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.73735cm</Width>
+              <Width>1.20121cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1.42925cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>2.09122cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.8927cm</Width>
+              <Width>2.34475cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>2.64118cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.16042cm</Width>
+              <Width>3.02813cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.28292cm</Width>
@@ -33,7 +36,7 @@
               <Width>2.01102cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>4.28178cm</Width>
+              <Width>4.74248cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -62,6 +65,41 @@
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox3</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox23">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>数量</Value>
+                              <Style>
+                                <FontFamily>微软雅黑</FontFamily>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox23</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -252,14 +290,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox29">
+                    <Textbox Name="Textbox18">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>数量</Value>
+                              <Value>件数</Value>
                               <Style>
                                 <FontFamily>微软雅黑</FontFamily>
                                 <FontWeight>Bold</FontWeight>
@@ -271,7 +309,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox29</rd:DefaultName>
+                      <rd:DefaultName>Textbox18</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -417,6 +455,41 @@
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Mingcheng</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="DaijianSL">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!DaijianSL.Value</Value>
+                              <Style>
+                                <FontFamily>微软雅黑</FontFamily>
+                                <FontSize>9pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>DaijianSL</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -607,14 +680,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="DaijianSL">
+                    <Textbox Name="JianShu">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!DaijianSL.Value</Value>
+                              <Value>=Fields!JianShu.Value</Value>
                               <Style>
                                 <FontFamily>微软雅黑</FontFamily>
                                 <FontWeight>Bold</FontWeight>
@@ -626,7 +699,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>DaijianSL</rd:DefaultName>
+                      <rd:DefaultName>JianShu</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -772,6 +845,41 @@
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox72</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox29">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=First(Fields!jhddjSLs.Value, "DataSet2")</Value>
+                              <Style>
+                                <FontFamily>微软雅黑</FontFamily>
+                                <FontSize>9pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox29</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -962,14 +1070,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox31">
+                    <Textbox Name="Textbox21">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=First(Fields!jhddjSLs.Value, "DataSet2")</Value>
+                              <Value>=First(Fields!JianShus.Value, "DataSet2")</Value>
                               <Style>
                                 <FontFamily>微软雅黑</FontFamily>
                                 <FontWeight>Bold</FontWeight>
@@ -981,7 +1089,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox31</rd:DefaultName>
+                      <rd:DefaultName>Textbox21</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -1116,6 +1224,7 @@
             <TablixMember />
             <TablixMember />
             <TablixMember />
+            <TablixMember />
           </TablixMembers>
         </TablixColumnHierarchy>
         <TablixRowHierarchy>
@@ -1135,7 +1244,7 @@
         <DataSetName>DataSet1</DataSetName>
         <Top>0.07056cm</Top>
         <Height>1.8cm</Height>
-        <Width>27.02667cm</Width>
+        <Width>27.17927cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1146,10 +1255,10 @@
     <Height>0.77316in</Height>
     <Style />
   </Body>
-  <Width>10.64042in</Width>
+  <Width>10.7005in</Width>
   <Page>
     <PageHeader>
-      <Height>4.93008cm</Height>
+      <Height>4.983cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1215,7 +1324,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
           <Top>2.92779cm</Top>
-          <Left>9.98036cm</Left>
+          <Left>10.1999cm</Left>
           <Height>0.6cm</Height>
           <Width>8.5257cm</Width>
           <ZIndex>1</ZIndex>
@@ -1237,7 +1346,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value> 备    注 ：</Value>
+                  <Value>备     注 ：</Value>
                   <Style>
                     <FontFamily>微软雅黑</FontFamily>
                     <FontSize>9pt</FontSize>
@@ -1258,7 +1367,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
           <Top>3.70418cm</Top>
-          <Left>0.71782cm</Left>
+          <Left>0.93736cm</Left>
           <Height>0.6cm</Height>
           <Width>8.73118cm</Width>
           <ZIndex>2</ZIndex>
@@ -1301,7 +1410,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
           <Top>1.37501cm</Top>
-          <Left>0.74838cm</Left>
+          <Left>0.96792cm</Left>
           <Height>0.6cm</Height>
           <Width>8.70062cm</Width>
           <ZIndex>3</ZIndex>
@@ -1345,7 +1454,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
           <Top>1.37501cm</Top>
-          <Left>10.00074cm</Left>
+          <Left>10.22028cm</Left>
           <Height>0.6cm</Height>
           <Width>8.5257cm</Width>
           <ZIndex>4</ZIndex>
@@ -1388,9 +1497,9 @@
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
           <Top>1.37501cm</Top>
-          <Left>19.00077cm</Left>
+          <Left>19.22031cm</Left>
           <Height>0.6cm</Height>
-          <Width>7.46061cm</Width>
+          <Width>7.11665cm</Width>
           <ZIndex>5</ZIndex>
           <Style>
             <Border>
@@ -1431,9 +1540,9 @@
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
           <Top>2.92779cm</Top>
-          <Left>19.00077cm</Left>
+          <Left>19.22031cm</Left>
           <Height>0.6cm</Height>
-          <Width>7.46061cm</Width>
+          <Width>7.11665cm</Width>
           <ZIndex>6</ZIndex>
           <Style>
             <Border>
@@ -1474,7 +1583,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox25</rd:DefaultName>
           <Top>2.92779cm</Top>
-          <Left>0.71782cm</Left>
+          <Left>0.93736cm</Left>
           <Height>0.6cm</Height>
           <Width>8.73118cm</Width>
           <ZIndex>7</ZIndex>
@@ -1517,7 +1626,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox2</rd:DefaultName>
           <Top>2.1514cm</Top>
-          <Left>0.71782cm</Left>
+          <Left>0.93736cm</Left>
           <Height>0.6cm</Height>
           <Width>8.73118cm</Width>
           <ZIndex>8</ZIndex>
@@ -1558,7 +1667,7 @@
           </Paragraphs>
           <rd:DefaultName>YunsongFS</rd:DefaultName>
           <Top>2.1514cm</Top>
-          <Left>10.00074cm</Left>
+          <Left>10.22028cm</Left>
           <Height>0.6cm</Height>
           <Width>8.5257cm</Width>
           <ZIndex>9</ZIndex>
@@ -1601,9 +1710,9 @@
           </Paragraphs>
           <rd:DefaultName>KDdanhao</rd:DefaultName>
           <Top>2.1514cm</Top>
-          <Left>19.00077cm</Left>
+          <Left>19.22031cm</Left>
           <Height>0.6cm</Height>
-          <Width>7.44023cm</Width>
+          <Width>7.09627cm</Width>
           <ZIndex>10</ZIndex>
           <Style>
             <Border>
@@ -1635,7 +1744,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>发货单位:</Value>
+                  <Value>发货单位：</Value>
                   <Style>
                     <FontFamily>微软雅黑</FontFamily>
                     <FontSize>9pt</FontSize>
@@ -1677,7 +1786,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>发货人:</Value>
+                  <Value>发货人：</Value>
                   <Style>
                     <FontFamily>微软雅黑</FontFamily>
                     <FontSize>9pt</FontSize>
@@ -1837,7 +1946,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>复核人:</Value>
+                  <Value>复核人：</Value>
                   <Style>
                     <FontFamily>微软雅黑</FontFamily>
                     <FontSize>9pt</FontSize>
@@ -1935,10 +2044,14 @@
           <DataField>JianhuoSM</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="JianShu">
+          <DataField>JianShu</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>ReportDataSetZY</rd:DataSetName>
-        <rd:SchemaPath>C:\Users\lawli\Source\Repos\CKWMS\CKWMS\reports\ReportDataSetZY.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Users\lawli\Source\Repos12\CKWMS\CKWMS\reports\ReportDataSetZY.xsd</rd:SchemaPath>
         <rd:TableName>JianHuoDan</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
@@ -1997,6 +2110,10 @@
         </Field>
         <Field Name="JiesuanFS">
           <DataField>JiesuanFS</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="JianShus">
+          <DataField>JianShus</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>

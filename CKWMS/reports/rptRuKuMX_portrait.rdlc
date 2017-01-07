@@ -6,25 +6,25 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>2.80475cm</Width>
+              <Width>2.45511cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>2.51504cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.53732cm</Width>
+              <Width>3.05539cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.22991cm</Width>
+              <Width>2.62903cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.35629cm</Width>
+              <Width>1.87436cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.8539cm</Width>
+              <Width>0.88604cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.82672cm</Width>
+              <Width>1.8734cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>3.70566cm</Width>
@@ -316,14 +316,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox22">
+                    <Textbox Name="Textbox99">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>到货数量</Value>
+                              <Value>件数</Value>
                               <Style>
                                 <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -336,7 +336,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox22</rd:DefaultName>
+                      <rd:DefaultName>Textbox99</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -485,7 +485,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.6cm</Height>
+              <Height>0.7932cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -764,16 +764,17 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="DaohuoSL">
+                    <Textbox Name="DaohuoJS">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!DaohuoSL.Value</Value>
+                              <Value>=Fields!DaohuoJS.Value</Value>
                               <Style>
                                 <FontFamily>微软雅黑</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -783,7 +784,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>DaohuoSL</rd:DefaultName>
+                      <rd:DefaultName>DaohuoJS</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -1209,16 +1210,17 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox38">
+                    <Textbox Name="Textbox101">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=First(Fields!rkmxdhSLs.Value, "DataSet2")</Value>
+                              <Value>=First(Fields!rkmxdhJSs.Value, "DataSet2")</Value>
                               <Style>
                                 <FontFamily>微软雅黑</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -1228,7 +1230,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox38</rd:DefaultName>
+                      <rd:DefaultName>Textbox101</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -1392,7 +1394,7 @@
           <TablixMembers>
             <TablixMember>
               <KeepWithGroup>After</KeepWithGroup>
-            <RepeatOnNewPage>true</RepeatOnNewPage>
+              <RepeatOnNewPage>true</RepeatOnNewPage>
             </TablixMember>
             <TablixMember>
               <Group Name="详细信息" />
@@ -1404,8 +1406,8 @@
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
         <Top>0.17639cm</Top>
-        <Height>1.8cm</Height>
-        <Width>18.82959cm</Width>
+        <Height>1.9932cm</Height>
+        <Width>18.99402cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1413,10 +1415,10 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>0.82292in</Height>
+    <Height>0.85417in</Height>
     <Style />
   </Body>
-  <Width>7.41322in</Width>
+  <Width>7.47796in</Width>
   <Page>
     <PageHeader>
       <Height>3.30729cm</Height>
@@ -1998,6 +2000,10 @@
           <DataField>YishouSL</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="DaohuoJS">
+          <DataField>DaohuoJS</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>ReportDataSetZY</rd:DataSetName>
@@ -2040,6 +2046,10 @@
         </Field>
         <Field Name="rkmxdhSLs">
           <DataField>rkmxdhSLs</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="rkmxdhJSs">
+          <DataField>rkmxdhJSs</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
