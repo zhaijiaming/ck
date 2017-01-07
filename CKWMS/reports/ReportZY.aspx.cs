@@ -77,6 +77,8 @@ namespace CKWMS.reports
                             DataTable dtjhd = _rds.Tables["JianHuoDan"];
                             DataRow drjhd;
                             long jhd_DaijianSLs = 0;
+                            float JianShus = 0;
+                            float JianShu = 0;
                             try
                             {
                                 var _jhds = ob_wms_jianhuoservice.GetPickDetail(int.Parse(_outid), p => p.DaijianSL > 0).OrderBy(p => p.Kuwei).ThenBy(p => p.Pihao).ToList<wms_pick_v>();
@@ -86,6 +88,11 @@ namespace CKWMS.reports
                                     drjhd["Mingcheng"] = _pv.ShangpinMC;
                                     drjhd["DaijianSL"] = _pv.DaijianSL;
                                     drjhd["Huansuanlv"] = _pv.Huansuanlv;
+
+                                    JianShu = _pv.DaijianSL / _pv.Huansuanlv == null ? int.Parse("0") : (float)_pv.DaijianSL / _pv.Huansuanlv;
+                                    drjhd["JianShu"] = JianShu;
+                                    JianShus += JianShu;
+
                                     drjhd["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _pv.ShixiaoRQ == null ? "" : ((DateTime)_pv.ShixiaoRQ).ToString("yyyy/MM/dd"));
                                     drjhd["Guige"] = _pv.Guige;
                                     drjhd["Pihao"] = _pv.Pihao;
@@ -118,6 +125,7 @@ namespace CKWMS.reports
                                     drjhdt["LianxiDH"] = tempdata.LianxiDH;
                                     drjhdt["Beizhu"] = tempdata.Beizhu;
                                     drjhdt["jhddjSLs"] = jhd_DaijianSLs;
+                                    drjhdt["JianShus"] = JianShus;
                                     drjhdt["KehuMC"] = tempdata.KehuMC;
                                     base_weituokehu wtkhdata = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == tempdata.HuozhuID && p.IsDelete == false);
                                     if (wtkhdata != null)
@@ -475,7 +483,8 @@ namespace CKWMS.reports
                             rptView.LocalReport.DataSources.Clear();
                             DataTable dtrkysjl = _rds.Tables["RKYanshouJilu"];
                             DataRow drrkysjl;
-                            long ysjl_Shuliangs = 0;
+                            //long ysjl_Shuliangs = 0;
+                            float ysjl_JianShus = 0;
                             try
                             {
                                 var _rkysjls = ServiceFactory.quan_rukuysservice.GetEntrycheckByRK(int.Parse(_rkysid)).ToList<quan_entrycheck_v>();
@@ -501,10 +510,11 @@ namespace CKWMS.reports
                                     drrkysjl["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShengchanRQ == null ? "" : ((DateTime)_pr.ShengchanRQ).ToString("yyyy/MM/dd"));
                                     drrkysjl["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShixiaoRQ == null ? "" : ((DateTime)_pr.ShixiaoRQ).ToString("yyyy/MM/dd"));
                                     drrkysjl["Zhucezheng"] = _pr.Zhucezheng;
-                                    drrkysjl["Shuliang"] = _pr.Shuliang;
                                     drrkysjl["ChunyunYQ"] = rkd.ChunyunYQ;
 
-                                    ysjl_Shuliangs += (long)_pr.Shuliang;
+                                    var ysjl_JianShu = _pr.Shuliang / _pr.Huansuanlv == null ? int.Parse("0") : (float)_pr.Shuliang / _pr.Huansuanlv;
+                                    drrkysjl["JianShu"] = Math.Round(ysjl_JianShu,2) ;
+                                    ysjl_JianShus += ysjl_JianShu;
 
                                     dtrkysjl.Rows.Add(drrkysjl);
                                 }
@@ -529,7 +539,7 @@ namespace CKWMS.reports
                                         drysjl["HuozhuID"] = wtkhjl_others.Kehumingcheng;
                                     }
                                 }
-                                drysjl["rkysjlSLs"] = ysjl_Shuliangs;
+                                drysjl["rkysjlJSs"] = Math.Round(ysjl_JianShus, 2);
                                 dtysjl.Rows.Add(drysjl);
                             }
                             catch (Exception ex)
@@ -677,6 +687,7 @@ namespace CKWMS.reports
                             DataTable dtRuKuMX = _rds.Tables["RuKumingxi"];
                             DataRow drRuKuMX;
                             long rkmx_DaohuoSLs = 0;
+                            float rkmx_DaohuoJSs = 0;
                             try
                             {
                                 //_RuKuMXs:'规格'&'批号'&'注册证'&'失效日期'&'到货数量'.
@@ -688,9 +699,14 @@ namespace CKWMS.reports
                                     drRuKuMX["Guige"] = _pr.Guige;
                                     drRuKuMX["Pihao"] = _pr.Pihao;
                                     drRuKuMX["Zhucezheng"] = _pr.Zhucezheng;
+
+                                    var DaohuoJS = _pr.DaohuoSL / _pr.Huansuanlv == null ? int.Parse("0") : (float)_pr.DaohuoSL / _pr.Huansuanlv;
+                                    drRuKuMX["DaohuoJS"] = DaohuoJS;
+                                    rkmx_DaohuoJSs += DaohuoJS;
+
                                     //drRuKuMX["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShengchanRQ);
                                     drRuKuMX["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShixiaoRQ == null ? "" : ((DateTime)_pr.ShixiaoRQ).ToString("yyyy/MM/dd"));
-                                    drRuKuMX["DaohuoSL"] = _pr.DaohuoSL;
+                                    
                                     //drRuKuMX["Chandi"] = _pr.Chandi;
                                     rkmx_DaohuoSLs += (long)_pr.DaohuoSL;
 
@@ -736,6 +752,8 @@ namespace CKWMS.reports
                                 }
                                 //到货数量总计
                                 drRuKuMX_others["rkmxdhSLs"] = rkmx_DaohuoSLs;
+                                //到货件数总计
+                                drRuKuMX_others["rkmxdhJSs"] = rkmx_DaohuoJSs;
 
                                 dtRuKuMX_others.Rows.Add(drRuKuMX_others);
                             }
