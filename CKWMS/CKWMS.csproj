@@ -310,6 +310,7 @@
     <Compile Include="Controllers\quan_gspspxxController.cs" />
     <Compile Include="Controllers\quan_gspwtkhController.cs" />
     <Compile Include="Controllers\rmd_myreminderController.cs" />
+    <Compile Include="Controllers\u8_lackcargoController.cs" />
     <Compile Include="Controllers\wms_cangguanszController.cs" />
     <Compile Include="Controllers\wms_cangkuController.cs" />
     <Compile Include="Controllers\wms_cangkuqyController.cs" />
@@ -346,6 +347,7 @@
     <Compile Include="Models\quan_gspwtkhViewModel.cs" />
     <Compile Include="Models\rmd_myreminderViewModel.cs" />
     <Compile Include="Models\rmd_remindlistViewModel.cs" />
+    <Compile Include="Models\u8_lackcargoViewModel.cs" />
     <Compile Include="Models\wms_cangguanszViewModel.cs" />
     <Compile Include="Models\wms_cangkuqyViewModel.cs" />
     <Compile Include="Models\wms_cangkuViewModel.cs" />
@@ -954,6 +956,9 @@
     <Content Include="Views\quan_gspwtkh\Add.cshtml" />
     <Content Include="Views\quan_gspwtkh\Edit.cshtml" />
     <Content Include="Views\quan_gspwtkh\Index.cshtml" />
+    <Content Include="Views\u8_lackcargo\Add.cshtml" />
+    <Content Include="Views\u8_lackcargo\Edit.cshtml" />
+    <Content Include="Views\u8_lackcargo\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
