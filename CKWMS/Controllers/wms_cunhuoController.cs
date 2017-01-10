@@ -413,6 +413,35 @@ namespace CKWMS.Controllers
                                 }
                             }
                             break;
+                        case "rukurq":
+                            string rukurq = scld[1];
+                            string rukurqequal = scld[2];
+                            string rukurqand = scld[3];
+                            if (!string.IsNullOrEmpty(rukurq))
+                            {
+                                if (rukurqequal.Equals("="))
+                                {
+                                    if (rukurqand.Equals("and"))
+                                        where = where.And(wms_storage_v => wms_storage_v.RukuRQ == DateTime.Parse(rukurq));
+                                    else
+                                        where = where.Or(wms_storage_v => wms_storage_v.RukuRQ == DateTime.Parse(rukurq));
+                                }
+                                if (rukurqequal.Equals(">"))
+                                {
+                                    if (rukurqand.Equals("and"))
+                                        where = where.And(wms_storage_v => wms_storage_v.RukuRQ > DateTime.Parse(rukurq));
+                                    else
+                                        where = where.Or(wms_storage_v => wms_storage_v.RukuRQ > DateTime.Parse(rukurq));
+                                }
+                                if (rukurqequal.Equals("<"))
+                                {
+                                    if (rukurqand.Equals("and"))
+                                        where = where.And(wms_storage_v => wms_storage_v.RukuRQ < DateTime.Parse(rukurq));
+                                    else
+                                        where = where.Or(wms_storage_v => wms_storage_v.RukuRQ < DateTime.Parse(rukurq));
+                                }
+                            }
+                            break;
                         default:
                             break;
                     }

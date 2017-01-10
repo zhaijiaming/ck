@@ -64,6 +64,12 @@
         scm.ItemTitle = "批号";
         scm.ItemType = "System.String";
         scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "MakeDate";
+        scm.ItemTitle = "录入日期";
+        scm.ItemType = "System.DateTime";
+        scms.Add(scm);
     }
     else
     {
@@ -115,6 +121,18 @@
                 scm.ItemValue = scs[3].Split(',')[1];
                 scm.ItemOpValue = scs[3].Split(',')[2];
                 scm.ItemJion = scs[3].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "MakeDate";
+            scm.ItemTitle = "录入日期";
+            scm.ItemType = "System.DateTime";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[4].Split(',')[1];
+                scm.ItemOpValue = scs[4].Split(',')[2];
+                scm.ItemJion = scs[4].Split(',')[3];
             }
             scms.Add(scm);
         }
