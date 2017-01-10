@@ -351,6 +351,7 @@ namespace CKWMS
             //RemindObject.Add(11, "工厂生产许可");
             RemindObject.Add(12, "当前入库单");
             RemindObject.Add(13, "当前出库单");
+            RemindObject.Add(14, "U8-无商品");
         }
     }
 }
