@@ -805,7 +805,10 @@ namespace CKWMS.Controllers
             int user_id = (int)Session["user_id"];
             var _mxid = Request["mx"] ?? "";
             var _ph = Request["ph"] ?? "";
-
+            var _xlm = Request["xlm"] ?? "";
+            var _scrq = Request["scrq"] ?? "";
+            var _sxrq = Request["sxrq"] ?? "";
+            var _zcz = Request["zcz"] ?? "";
             if (string.IsNullOrEmpty(_mxid) || string.IsNullOrEmpty(_ph))
                 return Json(-1);
 
@@ -813,6 +816,14 @@ namespace CKWMS.Controllers
             if (_ckmx == null)
                 return Json(-1);
             _ckmx.Pihao = _ph;
+            if (!string.IsNullOrEmpty(_xlm))
+                _ckmx.Xuliema = _xlm;
+            if (!string.IsNullOrEmpty(_scrq))
+                _ckmx.ShengchanRQ =DateTime.Parse(_scrq);
+            if (!string.IsNullOrEmpty(_sxrq))
+                _ckmx.ShixiaoRQ = DateTime.Parse(_sxrq);
+            if (!string.IsNullOrEmpty(_zcz))
+                _ckmx.Zhucezheng = _zcz;
             ob_wms_chukumxservice.UpdateEntity(_ckmx);
             return Json(1);
         }

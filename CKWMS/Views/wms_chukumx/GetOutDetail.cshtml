@@ -20,7 +20,7 @@
             $("#pl_xz").hide();
         });
         $("#bt_copy").click(function () {
-            var _lc = 1;
+            var _lc = 0;
             var _mx = "";
             $("#mydatatable tbody tr input[type=checkbox]").each(function () {
                 if (this.checked) {
@@ -63,6 +63,10 @@
         });
         $("#dt_xz tbody").on("dblclick", "tr", function () {
             var _ph = $(this).find("td").eq(8).text();
+            var _zcz = $(this).find("td").eq(7).text();
+            var _scrq = $(this).find("td").eq(9).text();
+            var _sxrq = $(this).find("td").eq(10).text();
+            var _xlm = $(this).find("td").eq(11).text();
             $.ajax({
                 async: true,
                 beforeSend: function () {
@@ -73,7 +77,14 @@
                 },
                 type: "post",
                 url: "/wms_chukumx/ChangeCargoBatch",
-                data: { mx:$("#selmx").val(), ph: _ph },
+                data: {
+                    mx: $("#selmx").val(),
+                    ph: _ph,
+                    zcz: _zcz,
+                    scrq: _scrq,
+                    sxrq: _sxrq,
+                    xlm:_xlm
+                },
                 success: function (data) {
                     _vs = data;
                     if (eval(data) == -1)
@@ -93,7 +104,7 @@
         });
         $("#bt_num_save").click(function () {
             //$("#pl_number").hide();
-            if ($("#pl_num_text").val() == 0)
+            if (eval($("#pl_num_text").val()) == 0)
                 return;
             $.ajax({
                 async: true,
@@ -105,7 +116,10 @@
                 },
                 type: "post",
                 url: "/wms_chukumx/changenumber",
-                data: { mx: _mx,num:$("#pl_num_text").val() },
+                data: {
+                    mx: $("#selmx").val(),
+                    num: $("#pl_num_text").val()
+                },
                 success: function (data) {
                     _vs = data;
                     if (eval(data) == -1)
