@@ -146,11 +146,15 @@ namespace CKWMS.Controllers
             var rkysid = id;
             var _username = Session["user_name"];
             var _userid = Session["user_id"];
-            var tempData = ob_quan_rukuysservice.GetEntrycheckByRK(id);
+            var tempData = ob_quan_rukuysservice.GetEntrycheckByRK(id).ToList<quan_entrycheck_v>();
             ViewBag.userid = _userid;
             ViewBag.username = _username;
             ViewBag.quan_entrycheck = tempData;
             ViewBag.rkysid = rkysid;
+
+            ViewBag.linecount = tempData.Count;
+            ViewBag.totalproduct = tempData.Sum(p => p.Shuliang);
+            ViewBag.YanshouSLs = tempData.Sum(p => p.YanshouSL);
             return View();
         }
         public JsonResult AddCheckPart()

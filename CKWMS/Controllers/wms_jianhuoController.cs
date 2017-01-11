@@ -186,9 +186,14 @@ namespace CKWMS.Controllers
             var _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid));
             ViewBag.chukubh = _ckd.ChukudanBH;
 
-            var _outdetail = ServiceFactory.wms_chukumxservice.LoadSortEntities(p => p.ChukuID == int.Parse(_outid) && p.IsDelete == false, true, s => s.Guige);
+            var _outdetail = ServiceFactory.wms_chukumxservice.LoadSortEntities(p => p.ChukuID == int.Parse(_outid) && p.IsDelete == false, true, s => s.Guige).ToList<wms_chukumx>();
             ViewBag.outdetail = _outdetail;
             ViewBag.chukudan = _outid;
+            //总数和总计
+            ViewBag.linecount = _outdetail.Count;
+            ViewBag.totalproduct = _outdetail.Sum(p => p.ChukuSL);
+            ViewBag.JianhuoSLs = _outdetail.Sum(p => p.JianhuoSL);
+
             return View();
         }
         public JsonResult GetPickByOut()

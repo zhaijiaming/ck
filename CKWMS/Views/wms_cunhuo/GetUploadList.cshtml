@@ -312,6 +312,11 @@
     @*<div class="pager">
             @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
         </div>*@
+    <div class="row">
+        <p class="pull-right">记录:@ViewBag.linecount 条</p>
+        <p>入库数量总计:@ViewBag.totalproduct</p>
+        <p>上架数量总计:@ViewBag.shangjiaSL</p>
+    </div>
 </div>
 <div id="pl_yanshou" class="panel panel-info" style="display:none;position:fixed;top:100px;left:200px;width:600px;height:420px;z-index:999;">
     <div class="panel-heading">

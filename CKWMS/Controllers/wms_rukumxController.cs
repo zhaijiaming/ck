@@ -194,9 +194,13 @@ namespace CKWMS.Controllers
         }
         public ActionResult GetCargos(int id)
         {
-            var _mxtmp = ob_wms_rukumxservice.LoadSortEntities(p => p.RukuID == id && p.IsDelete == false, true, s => s.Pihao);
+            var _mxtmp = ob_wms_rukumxservice.LoadSortEntities(p => p.RukuID == id && p.IsDelete == false, true, s => s.Pihao).ToList<wms_rukumx>();
             ViewBag.wms_rukumx = _mxtmp;
             ViewBag.rkid = id;
+
+            ViewBag.linecount = _mxtmp.Count;
+            ViewBag.totalproduct = _mxtmp.Sum(p => p.DaohuoSL);
+            ViewBag.YishouSLs = _mxtmp.Sum(p => p.YishouSL);
             return View("CargoIndex", _mxtmp);
         }
         //public ActionResult Index(int id)

@@ -170,11 +170,15 @@ namespace CKWMS.Controllers
             int _userid = (int)Session["user_id"];
             var _username = Session["user_name"];
 
-            var tempData = ob_wms_cunhuoservice.GetUploadList(id);
+            var tempData = ob_wms_cunhuoservice.GetUploadList(id).ToList<wms_upload_v>();
             ViewBag.username = _username;
             ViewBag.userid = _userid;
             ViewBag.wms_upload = tempData;
             ViewBag.sjdid = _sjdid;
+
+            ViewBag.linecount = tempData.Count;
+            ViewBag.totalproduct = tempData.Sum(p => p.Shuliang);
+            ViewBag.shangjiaSL = tempData.Sum(p => p.ShangjiaSL);
             return View();
         }
         public JsonResult AddUpload()

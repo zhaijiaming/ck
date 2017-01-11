@@ -83,11 +83,15 @@ namespace CKWMS.Controllers
             //if (_ckid == "")
             //    _ckid = "0";
 
-            var tempData = ServiceFactory.quan_chukufhservice.GetOutcheckByCK(id,p=>p.JianhuoSL>0);
+            var tempData = ServiceFactory.quan_chukufhservice.GetOutcheckByCK(id,p=>p.JianhuoSL>0).ToList<quan_outcheck_v>();
             ViewBag.waitcheck = tempData;
             ViewBag.userid = _userid;
             ViewBag.username = _username;
             ViewBag.outid = outid;
+
+            ViewBag.linecount = tempData.Count;
+            ViewBag.totalproduct = tempData.Sum(p => p.ChukuSL);
+            ViewBag.FuheSLs = tempData.Sum(p => p.FuheSL);
             return View();
         }
         public ActionResult PrintFuheDan()

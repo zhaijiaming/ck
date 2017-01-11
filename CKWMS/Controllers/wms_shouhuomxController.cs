@@ -458,9 +458,16 @@ namespace CKWMS.Controllers
             if (rkdid.Length == 0)
                 rkdid = "0";
             //var tempData = ServiceFactory.wms_rukumxservice.LoadSortEntities(p => p.RukuID == int.Parse(rkdid) && p.IsDelete==false && (p.DaohuoSL-p.YishouSL>0), true, s => s.ShangpinMC).ToPagedList<wms_rukumx>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
-            var tempData = ServiceFactory.wms_rukumxservice.LoadSortEntities(p => p.RukuID == int.Parse(rkdid) && p.IsDelete == false && (p.DaohuoSL - p.YishouSL > 0), true, s => s.Pihao);
+            var tempData = ServiceFactory.wms_rukumxservice.LoadSortEntities(p => p.RukuID == int.Parse(rkdid) && p.IsDelete == false && (p.DaohuoSL - p.YishouSL > 0), true, s => s.Pihao).ToList<wms_rukumx>();
             ViewBag.wms_rukumx = tempData;
             ViewBag.rkdid = rkdid;
+
+            ViewBag.linecount_rkmx = tempData.Count;
+            ViewBag.totalproduct_rkmx = tempData.Sum(p => p.DaohuoSL);
+            //ÒÑÊÕ»õ
+            var _shouhuo = ServiceFactory.wms_shouhuomxservice.LoadSortEntities(p => p.IsDelete == false && p.RukuID == int.Parse(rkdid), false, s => s.MakeDate).ToList<wms_shouhuomx>();
+            ViewBag.linecount = _shouhuo.Count;
+            ViewBag.totalproduct = _shouhuo.Sum(p => p.Shuliang);
             return View(tempData);
         }
 
