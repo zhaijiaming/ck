@@ -156,6 +156,8 @@ namespace CKWMS.reports
                             DataTable dttx = _rds.Tables["TongXingDan"];
                             DataRow drtx;
                             long tx_ChukuSL = 0;
+                            float ChukuJS = 0;
+                            float tx_ChukuJSs = 0;
                             try
                             {
                                 var _ckmxs = ob_wms_chukumxservice.LoadSortEntities(p => p.ChukuID == int.Parse(_outid) && p.IsDelete == false, true, p => p.Pihao);
@@ -169,7 +171,11 @@ namespace CKWMS.reports
                                     drtx["Xuliema"] = _mx.Xuliema;
                                     drtx["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _mx.ShixiaoRQ == null ? "" : ((DateTime)_mx.ShixiaoRQ).ToString("yyyy/MM/dd"));
                                     drtx["Zhucezheng"] = _mx.Zhucezheng;
-                                    drtx["ChukuSL"] = _mx.ChukuSL;
+
+                                    ChukuJS = _mx.ChukuSL / _mx.Huansuanlv == null ? int.Parse("0") : (float)_mx.ChukuSL / _mx.Huansuanlv;
+                                    drtx["ChukuJS"] = ChukuJS;
+                                    tx_ChukuJSs += ChukuJS;
+
                                     drtx["JibenDW"] = _mx.JibenDW;
                                     wms_chukudan _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid) && p.IsDelete == false);
                                     if (_ckd != null)
@@ -221,7 +227,7 @@ namespace CKWMS.reports
                                     }
                                     drckd["JiesuanFS"] = MvcApplication.SettlingType[ckd.JiesuanFS == null ? int.Parse("0") : (int)ckd.JiesuanFS];
                                 }
-                                drckd["txckSLs"] = tx_ChukuSL;
+                                drckd["tx_ChukuJSs"] = tx_ChukuJSs;
                                 dtckd.Rows.Add(drckd);
                             }
                             catch (Exception ex)
@@ -1316,7 +1322,9 @@ namespace CKWMS.reports
                             rptView.LocalReport.DataSources.Clear();
                             DataTable dtjh_ckfhjy = _rds.Tables["JH_CKfuhejianyan"];
                             DataRow drjh_ckfhjy;
-                            long JH_CKFHJY_SLs = 0;
+                            //long JH_CKFHJY_SLs = 0;
+                            float ckfh_jianshu = 0;
+                            float JH_CKFHJY_JSs = 0;
                             try
                             {
                                 var _jhds = ob_wms_jianhuoservice.GetPickDetail(int.Parse(_JH_ckjyid), p => p.DaijianSL > 0).OrderBy(p => p.Kuwei).ThenBy(p => p.Pihao).ToList<wms_pick_v>();
@@ -1331,8 +1339,12 @@ namespace CKWMS.reports
                                     drjh_ckfhjy["Xuliema"] = _pv.Xuliema;
                                     drjh_ckfhjy["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _pv.ShengchanRQ == null ? "" : ((DateTime)_pv.ShengchanRQ).ToString("yyyy/MM/dd"));
                                     drjh_ckfhjy["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _pv.ShixiaoRQ == null ? "" : ((DateTime)_pv.ShixiaoRQ).ToString("yyyy/MM/dd"));
-                                    drjh_ckfhjy["DaijianSL"] = _pv.DaijianSL;
-                                    JH_CKFHJY_SLs += (long)_pv.DaijianSL;
+
+                                    ckfh_jianshu = _pv.DaijianSL / _pv.Huansuanlv == null ? int.Parse("0") : (float)_pv.DaijianSL / _pv.Huansuanlv;
+                                    JH_CKFHJY_JSs += ckfh_jianshu;
+                                    drjh_ckfhjy["JianShu"] = ckfh_jianshu;
+
+                                    //JH_CKFHJY_SLs += (long)_pv.DaijianSL;
                                     drjh_ckfhjy["Changjia"] = _pv.Changjia;
                                     drjh_ckfhjy["Chandi"] = _pv.Chandi;
 
@@ -1360,7 +1372,9 @@ namespace CKWMS.reports
                                     drjhdt_t["LianxiDH"] = tempdata.LianxiDH;
                                     drjhdt_t["Beizhu"] = tempdata.Beizhu;
                                     drjhdt_t["KehuMC"] = tempdata.KehuMC;
-                                    drjhdt_t["JH_CKFHJY_SLs"] = JH_CKFHJY_SLs;
+                                    //drjhdt_t["JH_CKFHJY_SLs"] = JH_CKFHJY_SLs;
+                                    drjhdt_t["JH_CKFHJY_JSs"] = JH_CKFHJY_JSs;
+
                                     base_weituokehu wtkhdata = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == tempdata.HuozhuID && p.IsDelete == false);
                                     if (wtkhdata != null)
                                     {

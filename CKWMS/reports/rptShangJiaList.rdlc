@@ -1846,10 +1846,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>PageNumber</rd:DefaultName>
-          <Top>1.73729cm</Top>
-          <Left>12.4877cm</Left>
-          <Height>0.44125cm</Height>
-          <Width>1.01333cm</Width>
+          <Top>1.65792cm</Top>
+          <Left>12.07318cm</Left>
+          <Height>0.52062cm</Height>
+          <Width>1.41021cm</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1895,10 +1895,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>OverallTotalPages</rd:DefaultName>
-          <Top>1.73729cm</Top>
-          <Left>13.53631cm</Left>
-          <Height>0.44125cm</Height>
-          <Width>1.01333cm</Width>
+          <Top>1.65792cm</Top>
+          <Left>13.55394cm</Left>
+          <Height>0.52062cm</Height>
+          <Width>1.41021cm</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>

@@ -33,65 +33,65 @@ namespace CKWMS.Controllers
                     string[] scld = scl.Split(',');
                     switch (scld[0])
                     {
-                        case "huozhuid":
-                            string huozhuid = scld[1];
-                            string huozhuidequal = scld[2];
-                            string huozhuidand = scld[3];
-                            if (!string.IsNullOrEmpty(huozhuid))
-                            {
-                                if (huozhuidequal.Equals("="))
-                                {
-                                    if (huozhuidand.Equals("and"))
-                                        where = where.And(p => p.HuozhuID == int.Parse(huozhuid));
-                                    else
-                                        where = where.Or(p => p.HuozhuID == int.Parse(huozhuid));
-                                }
-                            }
-                            break;
-                        case "KehuMC":
-                            string KehuMC = scld[1];
-                            string KehuMCequal = scld[2];
-                            string KehuMCand = scld[3];
-                            if (!string.IsNullOrEmpty(KehuMC))
-                            {
-                                if (KehuMCequal.Equals("="))
-                                {
-                                    if (KehuMCand.Equals("and"))
-                                        where = where.And(p => p.KehuMC == KehuMC);
-                                    else
-                                        where = where.Or(p => p.KehuMC == KehuMC);
-                                }
-                                if (KehuMCequal.Equals("like"))
-                                {
-                                    if (KehuMCand.Equals("and"))
-                                        where = where.And(p => p.KehuMC.Contains(KehuMC));
-                                    else
-                                        where = where.Or(p => p.KehuMC.Contains(KehuMC));
-                                }
-                            }
-                            break;
-                        case "KehuDH":
-                            string KehuDH = scld[1];
-                            string KehuDHequal = scld[2];
-                            string KehuDHand = scld[3];
-                            if (!string.IsNullOrEmpty(KehuDH))
-                            {
-                                if (KehuDHequal.Equals("="))
-                                {
-                                    if (KehuDHand.Equals("and"))
-                                        where = where.And(p => p.KehuDH == KehuDH);
-                                    else
-                                        where = where.Or(p => p.KehuDH == KehuDH);
-                                }
-                                if (KehuDHequal.Equals("like"))
-                                {
-                                    if (KehuDHand.Equals("and"))
-                                        where = where.And(p => p.KehuDH.Contains(KehuDH));
-                                    else
-                                        where = where.Or(p => p.KehuDH.Contains(KehuDH));
-                                }
-                            }
-                            break;
+                        //case "huozhuid":
+                        //    string huozhuid = scld[1];
+                        //    string huozhuidequal = scld[2];
+                        //    string huozhuidand = scld[3];
+                        //    if (!string.IsNullOrEmpty(huozhuid))
+                        //    {
+                        //        if (huozhuidequal.Equals("="))
+                        //        {
+                        //            if (huozhuidand.Equals("and"))
+                        //                where = where.And(p => p.HuozhuID == int.Parse(huozhuid));
+                        //            else
+                        //                where = where.Or(p => p.HuozhuID == int.Parse(huozhuid));
+                        //        }
+                        //    }
+                        //    break;
+                        //case "KehuMC":
+                        //    string KehuMC = scld[1];
+                        //    string KehuMCequal = scld[2];
+                        //    string KehuMCand = scld[3];
+                        //    if (!string.IsNullOrEmpty(KehuMC))
+                        //    {
+                        //        if (KehuMCequal.Equals("="))
+                        //        {
+                        //            if (KehuMCand.Equals("and"))
+                        //                where = where.And(p => p.KehuMC == KehuMC);
+                        //            else
+                        //                where = where.Or(p => p.KehuMC == KehuMC);
+                        //        }
+                        //        if (KehuMCequal.Equals("like"))
+                        //        {
+                        //            if (KehuMCand.Equals("and"))
+                        //                where = where.And(p => p.KehuMC.Contains(KehuMC));
+                        //            else
+                        //                where = where.Or(p => p.KehuMC.Contains(KehuMC));
+                        //        }
+                        //    }
+                        //    break;
+                        //case "KehuDH":
+                        //    string KehuDH = scld[1];
+                        //    string KehuDHequal = scld[2];
+                        //    string KehuDHand = scld[3];
+                        //    if (!string.IsNullOrEmpty(KehuDH))
+                        //    {
+                        //        if (KehuDHequal.Equals("="))
+                        //        {
+                        //            if (KehuDHand.Equals("and"))
+                        //                where = where.And(p => p.KehuDH == KehuDH);
+                        //            else
+                        //                where = where.Or(p => p.KehuDH == KehuDH);
+                        //        }
+                        //        if (KehuDHequal.Equals("like"))
+                        //        {
+                        //            if (KehuDHand.Equals("and"))
+                        //                where = where.And(p => p.KehuDH.Contains(KehuDH));
+                        //            else
+                        //                where = where.Or(p => p.KehuDH.Contains(KehuDH));
+                        //        }
+                        //    }
+                        //    break;
                         default:
                             break;
                     }

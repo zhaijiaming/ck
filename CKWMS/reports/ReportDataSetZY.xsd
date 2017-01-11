@@ -54,6 +54,7 @@
               <xs:element name="ShengchanxukeBH" msprop:Generator_ColumnVarNameInTable="columnShengchanxukeBH" msprop:Generator_ColumnPropNameInRow="ShengchanxukeBH" msprop:Generator_ColumnPropNameInTable="ShengchanxukeBHColumn" msprop:Generator_UserColumnName="ShengchanxukeBH" type="xs:string" minOccurs="0" />
               <xs:element name="BeianBH" msprop:Generator_ColumnVarNameInTable="columnBeianBH" msprop:Generator_ColumnPropNameInRow="BeianBH" msprop:Generator_ColumnPropNameInTable="BeianBHColumn" msprop:Generator_UserColumnName="BeianBH" type="xs:string" minOccurs="0" />
               <xs:element name="ChunyunYQ" msprop:Generator_ColumnVarNameInTable="columnChunyunYQ" msprop:Generator_ColumnPropNameInRow="ChunyunYQ" msprop:Generator_ColumnPropNameInTable="ChunyunYQColumn" msprop:Generator_UserColumnName="ChunyunYQ" type="xs:string" minOccurs="0" />
+              <xs:element name="ChukuJS" msprop:Generator_ColumnVarNameInTable="columnChukuJS" msprop:Generator_ColumnPropNameInRow="ChukuJS" msprop:Generator_ColumnPropNameInTable="ChukuJSColumn" msprop:Generator_UserColumnName="ChukuJS" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -414,6 +415,7 @@
               <xs:element name="YunsongFS" msprop:Generator_ColumnVarNameInTable="columnYunsongFS" msprop:Generator_ColumnPropNameInRow="YunsongFS" msprop:Generator_ColumnPropNameInTable="YunsongFSColumn" msprop:Generator_UserColumnName="YunsongFS" type="xs:string" minOccurs="0" />
               <xs:element name="Kuaidi" msprop:Generator_ColumnVarNameInTable="columnKuaidi" msprop:Generator_ColumnPropNameInRow="Kuaidi" msprop:Generator_ColumnPropNameInTable="KuaidiColumn" msprop:Generator_UserColumnName="Kuaidi" type="xs:string" minOccurs="0" />
               <xs:element name="JiesuanFS" msprop:Generator_ColumnVarNameInTable="columnJiesuanFS" msprop:Generator_ColumnPropNameInRow="JiesuanFS" msprop:Generator_ColumnPropNameInTable="JiesuanFSColumn" msprop:Generator_UserColumnName="JiesuanFS" type="xs:string" minOccurs="0" />
+              <xs:element name="tx_ChukuJSs" msprop:Generator_ColumnVarNameInTable="columntx_ChukuJSs" msprop:Generator_ColumnPropNameInRow="tx_ChukuJSs" msprop:Generator_ColumnPropNameInTable="tx_ChukuJSsColumn" msprop:Generator_UserColumnName="tx_ChukuJSs" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -451,6 +453,7 @@
               <xs:element name="ShengchanRQ" msprop:Generator_ColumnVarNameInTable="columnShengchanRQ" msprop:Generator_ColumnPropNameInRow="ShengchanRQ" msprop:Generator_ColumnPropNameInTable="ShengchanRQColumn" msprop:Generator_UserColumnName="ShengchanRQ" type="xs:string" minOccurs="0" />
               <xs:element name="Changjia" msprop:Generator_ColumnVarNameInTable="columnChangjia" msprop:Generator_ColumnPropNameInRow="Changjia" msprop:Generator_ColumnPropNameInTable="ChangjiaColumn" msprop:Generator_UserColumnName="Changjia" type="xs:string" minOccurs="0" />
               <xs:element name="Chandi" msprop:Generator_ColumnVarNameInTable="columnChandi" msprop:Generator_ColumnPropNameInRow="Chandi" msprop:Generator_ColumnPropNameInTable="ChandiColumn" msprop:Generator_UserColumnName="Chandi" type="xs:string" minOccurs="0" />
+              <xs:element name="JianShu" msprop:Generator_ColumnVarNameInTable="columnJianShu" msprop:Generator_ColumnPropNameInRow="JianShu" msprop:Generator_ColumnPropNameInTable="JianShuColumn" msprop:Generator_UserColumnName="JianShu" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -466,6 +469,7 @@
               <xs:element name="HuozhuID" msprop:Generator_ColumnVarNameInTable="columnHuozhuID" msprop:Generator_ColumnPropNameInRow="HuozhuID" msprop:Generator_ColumnPropNameInTable="HuozhuIDColumn" msprop:Generator_UserColumnName="HuozhuID" type="xs:string" minOccurs="0" />
               <xs:element name="KehuMC" msprop:Generator_ColumnVarNameInTable="columnKehuMC" msprop:Generator_ColumnPropNameInRow="KehuMC" msprop:Generator_ColumnPropNameInTable="KehuMCColumn" msprop:Generator_UserColumnName="KehuMC" type="xs:string" minOccurs="0" />
               <xs:element name="JH_CKFHJY_SLs" msprop:Generator_ColumnVarNameInTable="columnJH_CKFHJY_SLs" msprop:Generator_ColumnPropNameInRow="JH_CKFHJY_SLs" msprop:Generator_ColumnPropNameInTable="JH_CKFHJY_SLsColumn" msprop:Generator_UserColumnName="JH_CKFHJY_SLs" type="xs:string" minOccurs="0" />
+              <xs:element name="JH_CKFHJY_JSs" msprop:Generator_ColumnVarNameInTable="columnJH_CKFHJY_JSs" msprop:Generator_ColumnPropNameInRow="JH_CKFHJY_JSs" msprop:Generator_ColumnPropNameInTable="JH_CKFHJY_JSsColumn" msprop:Generator_UserColumnName="JH_CKFHJY_JSs" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

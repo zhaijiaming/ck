@@ -27,16 +27,16 @@
               <Width>3.02813cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.28292cm</Width>
+              <Width>1.62688cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.67979cm</Width>
+              <Width>2.05021cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>2.01102cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>4.74248cm</Width>
+              <Width>4.02811cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -1283,7 +1283,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox22</rd:DefaultName>
-          <Left>12.26334cm</Left>
+          <Left>12.33964cm</Left>
           <Height>0.81166cm</Height>
           <Width>2.5cm</Width>
           <Style>
@@ -1827,6 +1827,54 @@
             </Border>
           </Style>
         </Line>
+        <Line Name="Line2">
+          <Top>1.66261cm</Top>
+          <Left>21.15834cm</Left>
+          <Height>0cm</Height>
+          <Width>3.15461cm</Width>
+          <ZIndex>3</ZIndex>
+          <Style>
+            <Border>
+              <Style>Solid</Style>
+            </Border>
+          </Style>
+        </Line>
+        <Textbox Name="Textbox28">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>复核人：</Value>
+                  <Style>
+                    <FontFamily>微软雅黑</FontFamily>
+                    <FontSize>9pt</FontSize>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox25</rd:DefaultName>
+          <Top>1.02733cm</Top>
+          <Left>19.73625cm</Left>
+          <Height>0.6cm</Height>
+          <Width>5.41041cm</Width>
+          <ZIndex>4</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <VerticalAlign>Middle</VerticalAlign>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
         <Textbox Name="PageNumber">
           <CanGrow>true</CanGrow>
           <KeepTogether>true</KeepTogether>
@@ -1861,11 +1909,11 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>PageNumber</rd:DefaultName>
-          <Top>2.17813cm</Top>
-          <Left>12.5488cm</Left>
-          <Height>0.44125cm</Height>
-          <Width>1.01333cm</Width>
-          <ZIndex>3</ZIndex>
+          <Top>2.09876cm</Top>
+          <Left>12.14415cm</Left>
+          <Height>0.52062cm</Height>
+          <Width>1.41021cm</Width>
+          <ZIndex>5</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1911,58 +1959,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>OverallTotalPages</rd:DefaultName>
-          <Top>2.17813cm</Top>
-          <Left>13.59741cm</Left>
-          <Height>0.44125cm</Height>
-          <Width>1.01333cm</Width>
-          <ZIndex>4</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <VerticalAlign>Middle</VerticalAlign>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Line Name="Line2">
-          <Top>1.66261cm</Top>
-          <Left>21.15834cm</Left>
-          <Height>0cm</Height>
-          <Width>3.15461cm</Width>
-          <ZIndex>5</ZIndex>
-          <Style>
-            <Border>
-              <Style>Solid</Style>
-            </Border>
-          </Style>
-        </Line>
-        <Textbox Name="Textbox28">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>复核人：</Value>
-                  <Style>
-                    <FontFamily>微软雅黑</FontFamily>
-                    <FontSize>9pt</FontSize>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style>
-                <TextAlign>Left</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox25</rd:DefaultName>
-          <Top>1.02733cm</Top>
-          <Left>19.73625cm</Left>
-          <Height>0.6cm</Height>
-          <Width>5.41041cm</Width>
+          <Top>2.09876cm</Top>
+          <Left>13.62491cm</Left>
+          <Height>0.52062cm</Height>
+          <Width>1.41021cm</Width>
           <ZIndex>6</ZIndex>
           <Style>
             <Border>

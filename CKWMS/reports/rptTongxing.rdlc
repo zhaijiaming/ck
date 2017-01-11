@@ -6,7 +6,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>3.91681cm</Width>
+              <Width>3.65755cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.87011cm</Width>
@@ -21,19 +21,19 @@
               <Width>1.68478cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.86314cm</Width>
+              <Width>2.02189cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.93458cm</Width>
+              <Width>1.2556cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.99687cm</Width>
+              <Width>1.18208cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.49862cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.93377cm</Width>
+              <Width>3.69244cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.97084cm</Width>
@@ -391,7 +391,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>数量</Value>
+                              <Value>件数</Value>
                               <Style>
                                 <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -1055,14 +1055,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="ChukuSL">
+                    <Textbox Name="ChukuJS">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!ChukuSL.Value</Value>
+                              <Value>=Fields!ChukuJS.Value</Value>
                               <Style>
                                 <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -1074,7 +1074,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>ChukuSL</rd:DefaultName>
+                      <rd:DefaultName>ChukuJS</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -1720,14 +1720,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox38">
+                    <Textbox Name="Textbox17">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=First(Fields!txckSLs.Value, "DataSet2")</Value>
+                              <Value>=First(Fields!tx_ChukuJSs.Value, "DataSet2")</Value>
                               <Style>
                                 <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -1739,7 +1739,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox38</rd:DefaultName>
+                      <rd:DefaultName>Textbox17</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -2085,7 +2085,7 @@
         <DataSetName>DataSet1</DataSetName>
         <Top>0.07617cm</Top>
         <Height>2.14396cm</Height>
-        <Width>25.80475cm</Width>
+        <Width>25.96914cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2096,7 +2096,7 @@
     <Height>0.88796in</Height>
     <Style />
   </Body>
-  <Width>10.15935in</Width>
+  <Width>10.22407in</Width>
   <Page>
     <PageHeader>
       <Height>4.13204cm</Height>
@@ -2124,7 +2124,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox19</rd:DefaultName>
-          <Left>10.57452cm</Left>
+          <Left>10.53071cm</Left>
           <Height>0.85577cm</Height>
           <Width>4.90771cm</Width>
           <Style>
@@ -2371,7 +2371,7 @@
           <Top>2.87598cm</Top>
           <Left>19.27226cm</Left>
           <Height>0.6cm</Height>
-          <Width>6.35292cm</Width>
+          <Width>6.29116cm</Width>
           <ZIndex>6</ZIndex>
           <Style>
             <Border />
@@ -2462,7 +2462,7 @@
           <Top>2.09959cm</Top>
           <Left>19.27226cm</Left>
           <Height>0.6cm</Height>
-          <Width>6.35292cm</Width>
+          <Width>6.29116cm</Width>
           <ZIndex>8</ZIndex>
           <Style>
             <Border>
@@ -2738,6 +2738,54 @@
             <PaddingBottom>2pt</PaddingBottom>
           </Style>
         </Textbox>
+        <Line Name="Line1">
+          <Top>3.07026cm</Top>
+          <Left>2.50792cm</Left>
+          <Height>0cm</Height>
+          <Width>3.02917cm</Width>
+          <ZIndex>7</ZIndex>
+          <Style>
+            <Border>
+              <Style>Solid</Style>
+            </Border>
+          </Style>
+        </Line>
+        <Line Name="Line3">
+          <Top>2.29387cm</Top>
+          <Left>20.5939cm</Left>
+          <Height>0cm</Height>
+          <Width>3.02917cm</Width>
+          <ZIndex>8</ZIndex>
+          <Style>
+            <Border>
+              <Style>Solid</Style>
+            </Border>
+          </Style>
+        </Line>
+        <Line Name="Line4">
+          <Top>3.07026cm</Top>
+          <Left>20.5939cm</Left>
+          <Height>0cm</Height>
+          <Width>3.02917cm</Width>
+          <ZIndex>9</ZIndex>
+          <Style>
+            <Border>
+              <Style>Solid</Style>
+            </Border>
+          </Style>
+        </Line>
+        <Line Name="Line5">
+          <Top>2.29387cm</Top>
+          <Left>2.50792cm</Left>
+          <Height>0cm</Height>
+          <Width>3.02917cm</Width>
+          <ZIndex>10</ZIndex>
+          <Style>
+            <Border>
+              <Style>Solid</Style>
+            </Border>
+          </Style>
+        </Line>
         <Textbox Name="PageNumber">
           <CanGrow>true</CanGrow>
           <KeepTogether>true</KeepTogether>
@@ -2772,11 +2820,11 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>PageNumber</rd:DefaultName>
-          <Top>3.62714cm</Top>
-          <Left>12.02901cm</Left>
-          <Height>0.44125cm</Height>
-          <Width>1.01333cm</Width>
-          <ZIndex>7</ZIndex>
+          <Top>3.54777cm</Top>
+          <Left>11.45689cm</Left>
+          <Height>0.52062cm</Height>
+          <Width>1.41021cm</Width>
+          <ZIndex>11</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -2822,11 +2870,11 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>OverallTotalPages</rd:DefaultName>
-          <Top>3.62714cm</Top>
-          <Left>13.07762cm</Left>
-          <Height>0.44125cm</Height>
-          <Width>1.01333cm</Width>
-          <ZIndex>8</ZIndex>
+          <Top>3.54777cm</Top>
+          <Left>12.93765cm</Left>
+          <Height>0.52062cm</Height>
+          <Width>1.41021cm</Width>
+          <ZIndex>12</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -2838,54 +2886,6 @@
             <PaddingBottom>2pt</PaddingBottom>
           </Style>
         </Textbox>
-        <Line Name="Line1">
-          <Top>3.07026cm</Top>
-          <Left>2.50792cm</Left>
-          <Height>0cm</Height>
-          <Width>3.02917cm</Width>
-          <ZIndex>9</ZIndex>
-          <Style>
-            <Border>
-              <Style>Solid</Style>
-            </Border>
-          </Style>
-        </Line>
-        <Line Name="Line3">
-          <Top>2.29387cm</Top>
-          <Left>20.5939cm</Left>
-          <Height>0cm</Height>
-          <Width>3.02917cm</Width>
-          <ZIndex>10</ZIndex>
-          <Style>
-            <Border>
-              <Style>Solid</Style>
-            </Border>
-          </Style>
-        </Line>
-        <Line Name="Line4">
-          <Top>3.07026cm</Top>
-          <Left>20.5939cm</Left>
-          <Height>0cm</Height>
-          <Width>3.02917cm</Width>
-          <ZIndex>11</ZIndex>
-          <Style>
-            <Border>
-              <Style>Solid</Style>
-            </Border>
-          </Style>
-        </Line>
-        <Line Name="Line5">
-          <Top>2.29387cm</Top>
-          <Left>2.50792cm</Left>
-          <Height>0cm</Height>
-          <Width>3.02917cm</Width>
-          <ZIndex>12</ZIndex>
-          <Style>
-            <Border>
-              <Style>Solid</Style>
-            </Border>
-          </Style>
-        </Line>
       </ReportItems>
       <Style>
         <Border>
@@ -2971,6 +2971,10 @@
           <DataField>ChunyunYQ</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="ChukuJS">
+          <DataField>ChukuJS</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>ReportDataSetZY</rd:DataSetName>
@@ -3033,6 +3037,10 @@
         </Field>
         <Field Name="JiesuanFS">
           <DataField>JiesuanFS</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="tx_ChukuJSs">
+          <DataField>tx_ChukuJSs</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>

@@ -9,7 +9,7 @@
               <Width>2.94507cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.62438cm</Width>
+              <Width>2.34859cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>2.64012cm</Width>
@@ -33,16 +33,16 @@
               <Width>1.62688cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.05563cm</Width>
+              <Width>2.9498cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.98786cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.99188cm</Width>
+              <Width>1.12417cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.93896cm</Width>
+              <Width>1.18829cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.12417cm</Width>
@@ -400,7 +400,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>验收日期</Value>
+                              <Value>到货日期</Value>
                               <Style>
                                 <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -2851,10 +2851,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>PageNumber</rd:DefaultName>
-          <Top>1.11979cm</Top>
-          <Left>12.46398cm</Left>
-          <Height>0.44125cm</Height>
-          <Width>1.01333cm</Width>
+          <Top>1.04042cm</Top>
+          <Left>12.20201cm</Left>
+          <Height>0.52062cm</Height>
+          <Width>1.41021cm</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -2900,10 +2900,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>OverallTotalPages</rd:DefaultName>
-          <Top>1.11979cm</Top>
-          <Left>13.51258cm</Left>
-          <Height>0.44125cm</Height>
-          <Width>1.01333cm</Width>
+          <Top>1.04042cm</Top>
+          <Left>13.68277cm</Left>
+          <Height>0.52062cm</Height>
+          <Width>1.41021cm</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>
