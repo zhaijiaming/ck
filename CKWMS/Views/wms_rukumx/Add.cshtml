@@ -11,6 +11,18 @@
             $("#ShengchanRQ").datepicker();
             $("#ShixiaoRQ").datepicker();
             $("#pl_shangpin").draggable({ handle: ".panel-heading" });
+            $("#DaohuoJS").blur(function () {
+                var _js = $("#DaohuoJS").val();
+                if (_js == "")
+                    return;
+                var _hsl = $("#Huansuanlv").val();
+                if (_hsl == "") {
+                    alert("换算率为空时不能使用件数录入！");
+                    return;
+                }
+                var _sl = Number(_js) * Number(_hsl);
+                $("#DaohuoSL").val(_sl);
+            });
             $("#bt_selsp").click(function () {
                 if (!_spload) {
                     getShangPin();
@@ -202,6 +214,12 @@
                     @Html.LabelFor(m => m.ShixiaoRQ, new { @class = "control-label col-sm-2" })
                     <div class="col-sm-10">
                         <input id="ShixiaoRQ" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="ShixiaoRQ">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="DaohuoJS">到货件数</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" data-val="true" data-val-number="字段 已收数量 必须是一个数字。" id="DaohuoJS" type="text" value="" />
                     </div>
                 </div>
                 <div class="form-group">
