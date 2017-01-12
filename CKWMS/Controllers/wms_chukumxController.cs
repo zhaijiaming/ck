@@ -161,6 +161,9 @@ namespace CKWMS.Controllers
 
             var tempData = ob_wms_chukumxservice.LoadSortEntities(where.Compile(), false, wms_chukumx => wms_chukumx.ID).ToPagedList<wms_chukumx>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.wms_chukumx = tempData;
+            ViewBag.linecount = tempData.Count;
+            ViewBag.totalproduct = tempData.Sum(p => p.ChukuSL);
+            ViewBag.totalpick = tempData.Sum(p => p.JianhuoSL);
             return View(tempData);
         }
 

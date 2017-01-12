@@ -161,6 +161,9 @@ namespace CKWMS.Controllers
 
             var tempData = ob_wms_shouhuomxservice.LoadSortEntities(where.Compile(), false, wms_shouhuomx => wms_shouhuomx.ID).ToPagedList<wms_shouhuomx>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.wms_shouhuomx = tempData;
+            ViewBag.linecount = tempData.Count;
+            ViewBag.totalproduct = tempData.Sum(p => p.Shuliang);
+
             return View(tempData);
         }
 
@@ -446,6 +449,8 @@ namespace CKWMS.Controllers
 
             var tempData = ob_wms_shouhuomxservice.LoadSortEntities(where.Compile(), false, wms_shouhuomx => wms_shouhuomx.ID).ToPagedList<wms_shouhuomx>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.wms_shouhuomx = tempData;
+            ViewBag.linecount = tempData.Count;
+            ViewBag.totalproduct = tempData.Sum(p => p.Shuliang);
             return View(tempData);
         }
         [OutputCache(Duration = 30)]

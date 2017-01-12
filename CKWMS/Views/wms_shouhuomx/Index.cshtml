@@ -241,3 +241,7 @@
         @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
     </div>
 </div>
+<div class="row">
+    <p class="pull-right">记录:@ViewBag.linecount 条&emsp;&emsp;</p>
+    <p>&emsp;数量总计:@ViewBag.totalproduct</p>
+</div>

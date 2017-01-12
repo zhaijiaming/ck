@@ -183,6 +183,7 @@
                     <td>基本单位</td>
                     <td>包装单位</td>
                     <td>换算率</td>
+                    <td>拣货数量</td>
                     <td>厂家</td>
                     <td>产地</td>
                     <td>重量</td>
@@ -216,6 +217,7 @@
                         <td>@item.JibenDW</td>
                         <td>@item.BaozhuangDW</td>
                         <td>@item.Huansuanlv</td>
+                        <td>@item.JianhuoSL</td>
                         <td>@item.Changjia</td>
                         <td>@item.Chandi</td>
                         <td>@item.Zhongliang</td>
@@ -232,4 +234,9 @@
     <div class="pager">
         @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
     </div>
+</div>
+<div class="row">
+    <p class="pull-right">记录:@ViewBag.linecount 条&emsp;&emsp;</p>
+    <p>&emsp;出库数量:@ViewBag.totalproduct</p>
+    <p>&emsp;实拣数量:@ViewBag.totalpick</p>
 </div>
