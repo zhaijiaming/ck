@@ -835,7 +835,7 @@ namespace CKWMS.Controllers
                         wms_chukudan _ckd = new wms_chukudan();
                         _ckd.BaifangQY = "";
                         _ckd.BaoshuiSF = false;
-                        _ckd.ChunyunYQ = "";
+                        _ckd.ChunyunYQ = "³£ÎÂ";
                         _ckd.CKID = 1;
                         _ckd.FuheSF = true;
                         _ckd.JianguanSF = true;
@@ -850,11 +850,12 @@ namespace CKWMS.Controllers
                         _ckd.MakeMan = _userid;
                         _ckd.XinxiLY = 1;
                         _ckd.YunsongFS = 1;
+                        _ckd.ChukuRQ =DateTime.Parse(DateTime.Now.ToShortDateString());
 
+                        //_ckd.ChukuRQ = _ckjh.ChukuRQ;
                         _ckd.JihuaID = _ckjh.ID;
                         _ckd.KehuDH = _ckjh.KehuDH;
                         _ckd.Beizhu = _ckjh.Beizhu;
-                        _ckd.ChukuRQ = _ckjh.ChukuRQ;
                         _ckd.Fahuodizhi = _ckjh.Fahuodizhi;
                         _ckd.KehuID = _ckjh.KehuID;
                         _ckd.KehuMC = _ckjh.KehuMC;

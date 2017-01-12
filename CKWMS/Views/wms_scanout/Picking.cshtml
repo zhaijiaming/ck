@@ -20,8 +20,10 @@
             GetLocCargo();
         });
         $("#bt_kw").click(function () {
-            $("#pl_cargo").hide();
-            $("#pl_loc").show();
+            location.reload();
+            //$("#txkuwei").val("");
+            //$("#pl_cargo").hide();
+            //$("#pl_loc").show();
         });
         $("#bt_ok").click(function () {
             $.post("/wms_scanout/pickfinish", {
@@ -85,11 +87,11 @@
                         filltable = filltable + data[i].ShijianSL;
                         filltable = filltable + '</td></tr>';
                     }
+                    $("#dt_cargo tbody").html(filltable);
+                    $("#pihao").val("");
+                    $("#xlm").val("");
+                    $("#num").val("");
                 }
-                $("#dt_cargo tbody").html(filltable);
-                $("#pihao").val("");
-                $("#xlm").val("");
-                $("#num").val("");
             });
 
     }
@@ -103,7 +105,7 @@
         <p>
             <button type="button" id="bt_ok" class="btn btn-default"><i class="icon-ok"></i>完成</button>
             <button type="button" class="btn btn-default" onclick="javascript:location.href='/wms_scanout'; "><i class="icon-hand-left"></i>返回</button>
-            <button type="button" id="bt_save" class="btn btn-default"><i class="icon-save"></i>保存</button>
+            @*<button type="button" id="bt_save" class="btn btn-default"><i class="icon-save"></i>保存</button>*@
             <button type="button" id="bt_kw" class="btn btn-default"><i class="icon-location-arrow"></i>库位</button>
         </p>
     </div>
