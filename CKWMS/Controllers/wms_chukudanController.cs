@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Linq;
 using System.Web.Mvc;
 using System.Linq.Expressions;
@@ -835,7 +835,7 @@ namespace CKWMS.Controllers
                         wms_chukudan _ckd = new wms_chukudan();
                         _ckd.BaifangQY = "";
                         _ckd.BaoshuiSF = false;
-                        _ckd.ChunyunYQ = "³£ÎÂ";
+                        _ckd.ChunyunYQ = "å¸¸æ¸©";
                         _ckd.CKID = 1;
                         _ckd.FuheSF = true;
                         _ckd.JianguanSF = true;
