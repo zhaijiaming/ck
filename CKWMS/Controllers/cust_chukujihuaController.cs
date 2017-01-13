@@ -450,6 +450,19 @@ namespace CKWMS.Controllers
             }
             return RedirectToAction("Index");
         }
+        public JsonResult getCargos()
+        {
+            var chukujihua_id = Request["id"] ?? "";
+            if (string.IsNullOrEmpty(chukujihua_id))
+            {
+                return Json(-1);
+            }
+            else
+            {
+                var tempdata = ServiceFactory.cust_chukujihuamxservice.LoadSortEntities(p => p.ID == int.Parse(chukujihua_id) && p.IsDelete == false, false, p => p.Pihao).ToList<cust_chukujihuamx>();
+                return Json(tempdata);
+            }
+        }
     }
 }
 

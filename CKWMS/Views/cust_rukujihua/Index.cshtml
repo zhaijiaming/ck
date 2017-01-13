@@ -19,7 +19,7 @@
             var _selval = "";
             $("#mydatatable tbody tr input[type=checkbox]").each(function () {
                 if (this.checked) {
-                    _selval =_selval+ $(this).val() + ",";
+                    _selval = _selval + $(this).val() + ",";
                 }
             });
             if (_selval != "") {
@@ -45,7 +45,83 @@
                 });
             }
         });
+        $("#pl_cargo").draggable({ handle: '.panel-heading' }, { containment: [-1000, 50, 1300, 600] });
+        //商品列表
+        $(".icon-list-ul").click(function () {
+            var rukujihua_id = $(this).parent().find("input").val();
+            if (rukujihua_id > 0 && rukujihua_id != null) {
+                getCargos(rukujihua_id);
+                $("#pl_cargo").show();
+            }
+        });
+        $("#pl_cargo_close").click(function () {
+            $("#pl_cargo").hide();
+        });
     });
+    function getCargos(id) {
+        var detail = "";
+        var rukujihua_id = id;
+        $.ajax({
+            async: false,
+            beforeSend: function () {
+                ShowWait();
+            },
+            complete: function () {
+                HiddenWait();
+            },
+            type: "POST",
+            url: "/cust_rukujihua/getCargos",
+            data: {
+                id: rukujihua_id
+            },
+            success: function (data) {
+                if (data.length > 0) {
+                    for (var i in data) {
+                        detail = detail + '<tr><td class="hidden">';
+                        detail = detail + data[i].ID;
+                        detail = detail + '</td><td>';
+                        detail = detail + data[i].ShangpinDM;
+                        detail = detail + '</td><td>';
+                        detail = detail + data[i].ShangpinMC;
+                        detail = detail + '</td><td>';
+                        detail = detail + data[i].Zhucezheng;
+                        detail = detail + '</td><td>';
+                        detail = detail + data[i].Guige;
+                        detail = detail + '</td><td>';
+                        detail = detail + data[i].Pihao;
+                        detail = detail + '</td><td>';
+                        detail = detail + data[i].Pihao1;
+                        detail = detail + '</td><td>';
+                        detail = detail + data[i].Xuliema;
+                        detail = detail + '</td><td>';
+                        if (data[i].ShengchanRQ != null)
+                            detail = detail + data[i].ShengchanRQ.toDate().Format("yyyy-MM-dd");
+                        detail = detail + '</td><td>';
+                        if (data[i].ShixiaoRQ != null)
+                            detail = detail + data[i].ShixiaoRQ.toDate().Format("yyyy-MM-dd");
+                        detail = detail + '</td><td>';
+                        detail = detail + data[i].JihuaSL;
+                        detail = detail + '</td><td>';
+                        detail = detail + data[i].DaohuoSL;
+                        detail = detail + '</td><td>';
+                        detail = detail + data[i].JibenDW;
+                        detail = detail + '</td><td>';
+                        detail = detail + data[i].BaozhuangDW;
+                        detail = detail + '</td><td>';
+                        detail = detail + data[i].Huansuanlv;
+                        detail = detail + '</td><td>';
+                        detail = detail + data[i].Changjia;
+                        detail = detail + '</td><td>';
+                        detail = detail + data[i].Chandi;
+                        detail = detail + '</td><td>';
+                        detail = detail + data[i].Beizhu;
+                        detail = detail + '</td><tr>';
+                    }
+                }
+                $("#dt_cargo tbody").html(detail);
+            }
+        });
+    }
     function AddInfo() {
         location.href = "/cust_rukujihua/Add";
     }
@@ -170,49 +246,87 @@
             <button type="button" class="btn btn-default " id="bt_newentry"><i class="icon-adn"></i>生成入库单</button>
         </p>
     </div>
-        <div class="row" style="overflow:auto;height:445px;">
-            <table class="table" id="mydatatable" style="white-space: nowrap;">
+    <div class="row" style="overflow:auto;height:445px;">
+        <table class="table" id="mydatatable" style="white-space: nowrap;">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>货品</td>
+                    <td>计划状态</td>
+                    <td>货主</td>
+                    <td>供应商</td>
+                    <td>入库日期</td>
+                    <td>业务类型</td>
+                    <td>储运要求</td>
+                    <td>客户单号</td>
+                    <td>入库单数量</td>
+                    <td>备注</td>
+                    <td>制单日期</td>
+                    <td>制单人</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.cust_rukujihua)
+                {
+                    <tr>
+                        <td>
+                            <label><input type="checkbox" value="@item.ID"></label>
+                        </td>
+                        <td>
+                            <label><i class="icon-list-ul"></i><input type="hidden" value="@item.ID"></label>
+                        </td>
+                        <td>@Html.GetCommonValue_ID("入库计划状态", item.JihuaZT == null ? int.Parse("1") : (int)item.JihuaZT)</td>
+                        <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
+                        <td>@Html.GetDataValue_ID("供应商", "", (int)item.GongyingshangID)</td>
+                        <td>@string.Format("{0:d}", item.RukuRQ == null ? "" : item.RukuRQ)</td>
+                        <td>@Html.GetCommonValue_ID("入库类型", (int)item.YewuLX)</td>
+                        <td>@item.ChunyunYQ</td>
+                        <td>@item.KehuDH</td>
+                        <td>@item.RukudanSL</td>
+                        <td>@item.Beizhu</td>
+                        <td>@string.Format("{0:d}", item.MakeDate == null ? "" : item.MakeDate)</td>
+                        <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="pager" style="height:0px;">
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+    </div>
+</div>
+<div id="pl_cargo" class="panel panel-primary" style="display:none;position:fixed;top:160px;left:230px;z-index:999;">
+    <div class="panel-heading">
+        <h3 class="panel-title">货品列表<button id="pl_cargo_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="row" style="overflow:auto;height:400px;width:1000px;">
+            <table class="table" id="dt_cargo" style="white-space: nowrap;">
                 <caption></caption>
                 <thead>
                     <tr>
-                        <td></td>
-                        <td>计划状态</td>
-                        <td>货主</td>
-                        <td>供应商</td>
-                        <td>入库日期</td>
-                        <td>业务类型</td>
-                        <td>储运要求</td>
-                        <td>客户单号</td>
-                        <td>入库单数量</td>
+                        <td>商品代码</td>
+                        <td>商品名称</td>
+                        <td>注册证</td>
+                        <td>规格型号</td>
+                        <td>批号</td>
+                        <td>次批号</td>
+                        <td>序列码</td>
+                        <td>生产日期</td>
+                        <td>失效日期</td>
+                        <td>计划数量</td>
+                        <td>到货数量</td>
+                        <td>基本单位</td>
+                        <td>包装单位</td>
+                        <td>换算率</td>
+                        <td>厂家</td>
+                        <td>产地</td>
                         <td>备注</td>
-                        <td>制单日期</td>
-                        <td>制单人</td>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach (var item in ViewBag.cust_rukujihua)
-                {
-                <tr>
-                    <td>
-                        <label><input type="checkbox" value="@item.ID"></label>
-                    </td>
-                    <td>@Html.GetCommonValue_ID("入库计划状态", item.JihuaZT == null ? int.Parse("1") : (int)item.JihuaZT)</td>
-                    <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
-                    <td>@Html.GetDataValue_ID("供应商", "", (int)item.GongyingshangID)</td>
-                    <td>@string.Format("{0:d}", item.RukuRQ == null ? "" : item.RukuRQ)</td>
-                    <td>@Html.GetCommonValue_ID("入库类型", (int)item.YewuLX)</td>
-                    <td>@item.ChunyunYQ</td>
-                    <td>@item.KehuDH</td>
-                    <td>@item.RukudanSL</td>
-                    <td>@item.Beizhu</td>
-                    <td>@string.Format("{0:d}", item.MakeDate==null?"": item.MakeDate)</td>
-                    <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
-                </tr>
-                }
-                </tbody>
+                <tbody class="table-striped table-hover"></tbody>
             </table>
         </div>
-        <div class="pager" style="height:0px;">
-            @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
-        </div>
+    </div>
 </div>
