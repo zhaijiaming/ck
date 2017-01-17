@@ -865,7 +865,7 @@ namespace CKWMS.Controllers
                         _ckd.Yunsongdizhi = _ckjh.Yunsongdizhi;
                         _ckd.Kuaidi = GetExpress(_ckjh.Kuaidi);
                         _ckd.JiesuanFS = GetCollectway(_ckjh.JiesuanFS);
-                        _ckd.YunsongFS = GetTransfertype(_ckjh.YunsongFS);
+                        _ckd.YunsongFS = GetDeliverType(_ckjh.YunsongFS);
                         _ckd = ob_wms_chukudanservice.AddEntity(_ckd);
 
                         if (_ckd != null)
@@ -1020,6 +1020,15 @@ namespace CKWMS.Controllers
             return 0;
         }
 
+        public int GetDeliverType(string deliverytype)
+        {
+            foreach (var key in MvcApplication.DeliveryType)
+            {
+                if (key.Value == deliverytype)
+                    return key.Key;
+            }
+            return 0;
+        }
         public int GetExpress(string expresscode)
         {
             var _exp = ServiceFactory.base_yunshugsservice.GetEntityById(p => p.Jiancheng.Contains(expresscode) && p.IsDelete == false);

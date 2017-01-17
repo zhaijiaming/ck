@@ -43,6 +43,9 @@
         $("#mydatatable tbody").on("dblclick", "tr", function () {
             $("#pl_fun").show();
         });
+        $(".icon-gear").click(function () {
+            $("#pl_fun").show();
+        });
         $("#pl_fn_cancel").click(function () {
             $("#pl_fun").hide();
         });
@@ -484,7 +487,7 @@
             <caption></caption>
             <thead>
                 <tr>
-                    <td></td>
+                    <td><i class="icon-gear"></i></td>
                     <td>拣货</td>
                     <td>商品代码</td>
                     <td>商品名称</td>

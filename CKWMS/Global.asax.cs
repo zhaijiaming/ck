@@ -324,6 +324,7 @@ namespace CKWMS
             DeliveryType.Add(3, "公路");
             DeliveryType.Add(4, "海运");
             DeliveryType.Add(5, "铁路");
+            DeliveryType.Add(6, "自提");
 
             RemindPeriod = new Dictionary<int, string>();
             RemindPeriod.Add(0, "");

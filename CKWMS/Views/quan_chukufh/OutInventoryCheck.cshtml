@@ -114,6 +114,9 @@
             $("#fhid").val($(this).find("input").data("fh"));
             $("#pl_fun").show();
         });
+        $(".icon-gear").click(function () {
+            $("#pl_fun").show();
+        });
         $("#pl_fn_close").click(function () {
             $("#pl_fun").hide();
         });
@@ -418,7 +421,7 @@
             <caption></caption>
             <thead>
                 <tr>
-                    <td></td>
+                    <td><i class="icon-gear"></i></td>
                     <td>复核</td>
                     <td>商品名称</td>
                     <td>注册证</td>

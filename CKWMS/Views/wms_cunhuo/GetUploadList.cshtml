@@ -15,6 +15,9 @@
             window.open("/wms_cunhuo/PrintShouHuoList?sjdid=" + sjdid);
             $("#pl_fun").hide();
         });
+        $(".icon-gear").click(function () {
+            $("#pl_fun").show();
+        });
         $("#pl_fun").draggable({ containment: "parent" });
         $("#mydatatable tbody").on("dblclick", "tr", function () {
             _selrow = $(this);
@@ -250,7 +253,7 @@
             <caption></caption>
             <thead>
                 <tr>
-                    <td></td>
+                    <td><i class="icon-gear"></i></td>
                     <td>上架</td>
                     <td>商品名称</td>
                     <td>注册证</td>

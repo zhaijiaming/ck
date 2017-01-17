@@ -133,7 +133,7 @@ namespace CKWMS.reports
                                         drjhdt["HuozhuID"] = wtkhdata.Kehumingcheng;
                                     }
                                     drjhdt["YunsongFS"] = MvcApplication.DeliveryType[tempdata.YunsongFS == null ? int.Parse("0") : (int)tempdata.YunsongFS];
-                                    if(tempdata.Kuaidi != null)
+                                    if (tempdata.Kuaidi != null)
                                     {
                                         var tran_company = ServiceFactory.base_yunshugsservice.GetEntityById(p => p.ID == tempdata.Kuaidi && p.IsDelete == false);
                                         drjhdt["Kuaidi"] = tran_company.Mingcheng;
@@ -223,7 +223,10 @@ namespace CKWMS.reports
                                     if (ckd.Kuaidi != null)
                                     {
                                         var tran_company = ServiceFactory.base_yunshugsservice.GetEntityById(p => p.ID == ckd.Kuaidi && p.IsDelete == false);
-                                        drckd["Kuaidi"] = tran_company.Mingcheng;
+                                        if (tran_company == null)
+                                            drckd["Kuaidi"] = "";
+                                        else
+                                            drckd["Kuaidi"] = tran_company.Mingcheng;
                                     }
                                     drckd["JiesuanFS"] = MvcApplication.SettlingType[ckd.JiesuanFS == null ? int.Parse("0") : (int)ckd.JiesuanFS];
                                 }
@@ -519,7 +522,7 @@ namespace CKWMS.reports
                                     drrkysjl["ChunyunYQ"] = rkd.ChunyunYQ;
 
                                     var ysjl_JianShu = _pr.Shuliang / _pr.Huansuanlv == null ? int.Parse("0") : (float)_pr.Shuliang / _pr.Huansuanlv;
-                                    drrkysjl["JianShu"] = Math.Round(ysjl_JianShu,2) ;
+                                    drrkysjl["JianShu"] = Math.Round(ysjl_JianShu, 2);
                                     ysjl_JianShus += ysjl_JianShu;
 
                                     dtrkysjl.Rows.Add(drrkysjl);
@@ -712,7 +715,7 @@ namespace CKWMS.reports
 
                                     //drRuKuMX["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShengchanRQ);
                                     drRuKuMX["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShixiaoRQ == null ? "" : ((DateTime)_pr.ShixiaoRQ).ToString("yyyy/MM/dd"));
-                                    
+
                                     //drRuKuMX["Chandi"] = _pr.Chandi;
                                     rkmx_DaohuoSLs += (long)_pr.DaohuoSL;
 
@@ -844,7 +847,7 @@ namespace CKWMS.reports
                                         break;
                                     }
                                 }
-                                if (huozhuid_first >-1)
+                                if (huozhuid_first > -1)
                                 {
                                     base_weituokehu zlgl_wtkh = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == huozhuid_first && p.IsDelete == false);
                                     if (zlgl_wtkh != null)

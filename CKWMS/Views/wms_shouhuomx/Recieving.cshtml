@@ -16,6 +16,9 @@
             alert("print now");
             $("#pl_fun").hide();
         });
+        $(".icon-gear").click(function () {
+            $("#pl_fun").show();
+        });
         $("#bt_fn_del").click(function () {
             var _sh = _selr.find("input");
             if (eval(_sh.data("ys"))) {
@@ -407,7 +410,7 @@
             <caption></caption>
             <thead>
                 <tr>
-                    <td><span id="selall">全选</span></td>
+                    <td><i class="icon-gear"></i><span id="selall">全选</span></td>
                     <td>收货</td>
                     <td>商品代码</td>
                     <td>商品名称</td>
