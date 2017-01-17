@@ -459,7 +459,7 @@ namespace CKWMS.Controllers
             }
             else
             {
-                var tempdata = ServiceFactory.cust_chukujihuamxservice.LoadSortEntities(p => p.ID == int.Parse(chukujihua_id) && p.IsDelete == false, false, p => p.Pihao).ToList<cust_chukujihuamx>();
+                var tempdata = ServiceFactory.cust_chukujihuamxservice.LoadSortEntities(p => p.JihuaID == int.Parse(chukujihua_id) && p.IsDelete == false, false, p => p.Pihao).ToList<cust_chukujihuamx>();
                 return Json(tempdata);
             }
         }
