@@ -260,9 +260,10 @@ namespace CKWMS.reports
                                     drJSGRtx["Xuliema"] = _mx.Xuliema == null ? "" : _mx.Xuliema.Trim();
                                     drJSGRtx["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _mx.ShixiaoRQ == null ? "" : ((DateTime)_mx.ShixiaoRQ).ToString("yyyy/MM/dd"));
                                     drJSGRtx["Zhucezheng"] = _mx.Zhucezheng == null ? "" : _mx.Zhucezheng.Trim();
+                                    drJSGRtx["Huansuanlv"] = string.Format("{0:0.00}", _mx.Huansuanlv);
 
                                     JSGRChukuJS = _mx.ChukuSL / _mx.Huansuanlv == null ? int.Parse("0") : (float)_mx.ChukuSL / _mx.Huansuanlv;
-                                    drJSGRtx["ChukuJS"] = JSGRChukuJS;
+                                    drJSGRtx["ChukuJS"] = string.Format("{0:0.00}", JSGRChukuJS);
                                     JSGRtx_ChukuJSs += JSGRChukuJS;
 
                                     drJSGRtx["JibenDW"] = _mx.JibenDW == null ? "" : _mx.JibenDW.Trim();
@@ -319,7 +320,7 @@ namespace CKWMS.reports
                                     }
                                     drJSGRckd["JiesuanFS"] = MvcApplication.SettlingType[ckd.JiesuanFS == null ? int.Parse("0") : (int)ckd.JiesuanFS];
                                 }
-                                drJSGRckd["tx_ChukuJSs"] = JSGRtx_ChukuJSs;
+                                drJSGRckd["tx_ChukuJSs"] = string.Format("{0:0.00}", JSGRtx_ChukuJSs);
                                 dtJSGRckd.Rows.Add(drJSGRckd);
                             }
                             catch (Exception ex)
