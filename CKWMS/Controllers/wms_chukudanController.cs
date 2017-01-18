@@ -382,6 +382,12 @@ namespace CKWMS.Controllers
             ViewBag.id = id;
             return View();
         }
+        public ActionResult PrintJSGRTongxing()
+        {
+            var id = Request["out"] ?? "";
+            ViewBag.id = id;
+            return View();
+        }
         public ActionResult OutOperate()
         {
             int userid = (int)Session["user_id"];

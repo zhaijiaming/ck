@@ -56,7 +56,12 @@
         //随货同行单打印
         $("#mydatatable").on("click", ".outOperateid", function () {
             var outOperateid = $(this).find(".input_outOperateid").val();
-            window.open("/wms_chukudan/PrintTongxing?out=" + outOperateid);
+            var huozhuid = $(this).parent().find(".huozhuid").text();
+            if (huozhuid == "嘉事国润") {
+                window.open("/wms_chukudan/PrintJSGRTongxing?out=" + outOperateid);
+            } else {
+                window.open("/wms_chukudan/PrintTongxing?out=" + outOperateid);
+            }
         });
         $(".icon-bookmark-empty").click(function () {
             var _selv = $(this).parent().parent().find("input[type=checkbox]");
@@ -649,7 +654,7 @@
                             </label>
                         </td>
                         <td>@item.ChukudanBH</td>
-                        <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
+                        <td class="huozhuid">@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
                         <td>@item.KehuMC</td>
                         <td>@item.Yunsongdizhi</td>
                         <td>@string.Format("{0:yyyy-MM-dd}", item.ChukuRQ == null ? "" : item.ChukuRQ)</td>

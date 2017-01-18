@@ -26,7 +26,6 @@ namespace CKWMS.reports
             {
                 int _userid = (int)Session["user_id"];
                 string name = "";
-                int i = 0;
                 string _outid = "";
                 string _rkysid = "";
                 string _rkxdid = "";
@@ -232,6 +231,96 @@ namespace CKWMS.reports
                                 }
                                 drckd["tx_ChukuJSs"] = tx_ChukuJSs;
                                 dtckd.Rows.Add(drckd);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["TongXingDan_Title"]));
+                            break;
+                        case "JSGRtongxingdan":
+                            rptView.Reset();
+                            rptView.LocalReport.ReportPath = "reports/rptJSGRTongxing.rdlc";
+                            rptView.LocalReport.DataSources.Clear();
+                            DataTable dtJSGRtx = _rds.Tables["TongXingDan"];
+                            DataRow drJSGRtx;
+                            long JSGRtx_ChukuSL = 0;
+                            float JSGRChukuJS = 0;
+                            float JSGRtx_ChukuJSs = 0;
+                            try
+                            {
+                                var _ckmxs = ob_wms_chukumxservice.LoadSortEntities(p => p.ChukuID == int.Parse(_outid) && p.IsDelete == false, true, p => p.Pihao);
+                                foreach (wms_chukumx _mx in _ckmxs)
+                                {
+                                    drJSGRtx = dtJSGRtx.NewRow();
+                                    drJSGRtx["Guige"] = _mx.Guige == null ? "" : _mx.Guige.Trim();
+                                    drJSGRtx["Changjia"] = _mx.Changjia == null ? "" : _mx.Changjia.Trim();
+                                    drJSGRtx["ShangpinMC"] = _mx.ShangpinMC == null ? "" : _mx.ShangpinMC.Trim();
+                                    drJSGRtx["Pihao"] = _mx.Pihao == null ? "" : _mx.Pihao.Trim();
+                                    drJSGRtx["Xuliema"] = _mx.Xuliema == null ? "" : _mx.Xuliema.Trim();
+                                    drJSGRtx["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _mx.ShixiaoRQ == null ? "" : ((DateTime)_mx.ShixiaoRQ).ToString("yyyy/MM/dd"));
+                                    drJSGRtx["Zhucezheng"] = _mx.Zhucezheng == null ? "" : _mx.Zhucezheng.Trim();
+
+                                    JSGRChukuJS = _mx.ChukuSL / _mx.Huansuanlv == null ? int.Parse("0") : (float)_mx.ChukuSL / _mx.Huansuanlv;
+                                    drJSGRtx["ChukuJS"] = JSGRChukuJS;
+                                    JSGRtx_ChukuJSs += JSGRChukuJS;
+
+                                    drJSGRtx["JibenDW"] = _mx.JibenDW == null ? "" : _mx.JibenDW.Trim();
+                                    wms_chukudan _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid) && p.IsDelete == false);
+                                    if (_ckd != null)
+                                    {
+                                        drJSGRtx["ChunyunYQ"] = _ckd.ChunyunYQ == null ? "" : _ckd.ChunyunYQ.Trim();
+                                    }
+                                    base_shengchanqiye _scqy = ServiceFactory.base_shengchanqiyeservice.GetEntityById(p => p.Qiyemingcheng == _mx.Changjia && p.IsDelete == false);
+                                    if (_scqy != null)
+                                    {
+                                        drJSGRtx["ShengchanxukeBH"] = _scqy.ShengchanxukeBH == null ? "" : _scqy.ShengchanxukeBH.Trim();
+                                        drJSGRtx["BeianBH"] = _scqy.BeianBH == null ? "" : _scqy.BeianBH.Trim();
+                                    }
+                                    JSGRtx_ChukuSL += (long)_mx.ChukuSL;
+
+                                    dtJSGRtx.Rows.Add(drJSGRtx);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["TongXingDan"]));
+
+                            //页眉&页脚
+                            DataTable dtJSGRckd = _rds.Tables["TongXingDan_Title"];
+                            DataRow drJSGRckd = dtJSGRckd.NewRow();
+                            try
+                            {
+                                wms_chukudan ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid) && p.IsDelete == false);
+                                if (ckd != null)
+                                {
+                                    drJSGRckd["ChukudanBH"] = ckd.ChukudanBH == null ? "" : ckd.ChukudanBH.Trim();
+                                    drJSGRckd["KehuMC"] = ckd.KehuMC == null ? "" : ckd.KehuMC.Trim();
+                                    drJSGRckd["Yunsongdizhi"] = ckd.Yunsongdizhi == null ? "" : ckd.Yunsongdizhi.Trim();
+                                    drJSGRckd["ChukuRQ"] = string.Format("{0:yyyy/MM/dd}", ckd.ChukuRQ == null ? "" : ((DateTime)ckd.ChukuRQ).ToString("yyyy/MM/dd"));
+                                    drJSGRckd["Lianxiren"] = ckd.Lianxiren == null ? "" : ckd.Lianxiren.Trim();
+                                    drJSGRckd["LianxiDH"] = ckd.LianxiDH == null ? "" : ckd.LianxiDH.Trim();
+                                    drJSGRckd["Beizhu"] = ckd.Beizhu == null ? "" : ckd.Beizhu.Trim();
+                                    base_weituokehu wtkhdata = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == ckd.HuozhuID && p.IsDelete == false);
+                                    if (wtkhdata != null)
+                                    {
+                                        drJSGRckd["HuozhuID"] = wtkhdata.Kehumingcheng == null ? "" : wtkhdata.Kehumingcheng.Trim();
+                                    }
+                                    drJSGRckd["YunsongFS"] = MvcApplication.DeliveryType[ckd.YunsongFS == null ? int.Parse("0") : (int)ckd.YunsongFS];
+                                    if (ckd.Kuaidi != null)
+                                    {
+                                        var tran_company = ServiceFactory.base_yunshugsservice.GetEntityById(p => p.ID == ckd.Kuaidi && p.IsDelete == false);
+                                        if (tran_company == null)
+                                            drJSGRckd["Kuaidi"] = "";
+                                        else
+                                            drJSGRckd["Kuaidi"] = tran_company.Mingcheng == null ? "" : tran_company.Mingcheng.Trim();
+                                    }
+                                    drJSGRckd["JiesuanFS"] = MvcApplication.SettlingType[ckd.JiesuanFS == null ? int.Parse("0") : (int)ckd.JiesuanFS];
+                                }
+                                drJSGRckd["tx_ChukuJSs"] = JSGRtx_ChukuJSs;
+                                dtJSGRckd.Rows.Add(drJSGRckd);
                             }
                             catch (Exception ex)
                             {

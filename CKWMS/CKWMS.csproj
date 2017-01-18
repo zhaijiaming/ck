@@ -959,6 +959,7 @@
     <Content Include="Views\u8_lackcargo\Add.cshtml" />
     <Content Include="Views\u8_lackcargo\Edit.cshtml" />
     <Content Include="Views\u8_lackcargo\Index.cshtml" />
+    <Content Include="Views\wms_chukudan\PrintJSGRTongxing.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -983,6 +984,7 @@
     <EmbeddedResource Include="reports\rptCKFuheJYdan.rdlc" />
     <EmbeddedResource Include="reports\rptJH_CKFuhejianyan.rdlc" />
     <EmbeddedResource Include="reports\rptJianHuoDan.rdlc" />
+    <EmbeddedResource Include="reports\rptJSGRTongxing.rdlc" />
     <EmbeddedResource Include="reports\rptRKYanShouJiLu.rdlc" />
     <EmbeddedResource Include="reports\rptQuanxian.rdlc" />
     <EmbeddedResource Include="reports\rptRKyanshouBGdan.rdlc" />

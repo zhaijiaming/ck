@@ -77,6 +77,35 @@ namespace CKWMS.Controllers
                                 }
                             }
                             break;
+                        case "makedate":
+                            string makedate = scld[1];
+                            string makedateequal = scld[2];
+                            string makedateand = scld[3];
+                            if (!string.IsNullOrEmpty(makedate))
+                            {
+                                if (makedateequal.Equals("="))
+                                {
+                                    if (makedateand.Equals("and"))
+                                        where = where.And(p => p.MakeDate.ToString("yyyy-MM-dd") == makedate || p.MakeDate.ToString("yyyy/MM/dd") == makedate || p.MakeDate.ToString("yyyy.MM.dd") == makedate);
+                                    else
+                                        where = where.Or(p => p.MakeDate.ToString("yyyy-MM-dd") == makedate || p.MakeDate.ToString("yyyy/MM/dd") == makedate || p.MakeDate.ToString("yyyy.MM.dd") == makedate);
+                                }
+                                if (makedateequal.Equals(">"))
+                                {
+                                    if (makedateand.Equals("and"))
+                                        where = where.And(p => p.MakeDate > DateTime.Parse(makedate));
+                                    else
+                                        where = where.Or(p => p.MakeDate > DateTime.Parse(makedate));
+                                }
+                                if (makedateequal.Equals("<"))
+                                {
+                                    if (makedateand.Equals("and"))
+                                        where = where.And(p => p.MakeDate < DateTime.Parse(makedate));
+                                    else
+                                        where = where.Or(p => p.MakeDate < DateTime.Parse(makedate));
+                                }
+                            }
+                            break;
                         default:
                             break;
                     }
