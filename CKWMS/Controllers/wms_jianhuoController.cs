@@ -275,6 +275,8 @@ namespace CKWMS.Controllers
                     wms_cunhuo _ch = ServiceFactory.wms_cunhuoservice.GetEntityById(p => p.ID == _chmx);
                     if (_ch != null)
                     {
+                        if (_pknum > _ch.Shuliang - _ch.DaijianSL)
+                            return Json(-2);
                         var _rt = _pknum / _ch.Shuliang;
                         wms_jianhuo _jh = new wms_jianhuo();
                         _jh.CKMXID = _ckmx;

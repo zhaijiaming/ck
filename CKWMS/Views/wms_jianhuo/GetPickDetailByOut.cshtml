@@ -132,6 +132,10 @@
                 success: function (data) {
                     if (data == -1)
                         alert("拣货失败，请重试！");
+                    else if(data==-2){
+                        alert("拣货失败，拣货数量超过可用量！");
+                        location.reload();
+                    }
                     else {
                         $("#mydatatable tr").each(function () {
                             var _sv = $(this).find("input").val();
