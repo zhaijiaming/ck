@@ -201,6 +201,7 @@ namespace CKWMS.Controllers
             ViewBag.linecount = _mxtmp.Count;
             ViewBag.totalproduct = _mxtmp.Sum(p => p.DaohuoSL);
             ViewBag.YishouSLs = _mxtmp.Sum(p => p.YishouSL);
+            ViewBag.totalbox = _mxtmp.Sum(p => p.DaohuoSL / p.Huansuanlv);
             return View("CargoIndex", _mxtmp);
         }
         //public ActionResult Index(int id)
@@ -486,6 +487,50 @@ namespace CKWMS.Controllers
             ViewBag.rkmxid = rkmxid;
 
             return View();
+        }
+        public JsonResult ImportDataU8()
+        {
+            int _userid = (int)Session["user_id"];
+            var _rkid = Request["rk"] ?? "";
+            if (string.IsNullOrEmpty(_rkid))
+                return Json(-1);
+            wms_rukudan _rkd = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_rkid) && p.IsDelete == false);
+            if (_rkd == null)
+                return Json(-1);
+            if (string.IsNullOrEmpty(_rkd.KehuDH))
+                return Json(-2);
+            if (_rkd.JihuaID == null)
+                return Json(-2);
+            var _jhid = _rkd.JihuaID;
+
+            var _jhmxs = ServiceFactory.cust_rukujihuamxservice.LoadEntities(p => p.JihuaID == _jhid && p.IsDelete == false).ToList();
+            if (_jhmxs.Count == 0)
+                return Json(-3);
+            foreach(var jhmx in _jhmxs)
+            {
+                wms_rukumx _rkmx = new wms_rukumx();
+                _rkmx.RukuID = _rkd.ID;
+                _rkmx.MakeDate = DateTime.Now;
+                _rkmx.MakeMan = _userid;
+                _rkmx.YishouSL = 0;
+                _rkmx.DaohuoSL =jhmx.JihuaSL;
+
+                //_rkmx.ShangpinID = jhmx.ShangpinID;
+                //_rkmx.ShangpinDM = jhmx.ShangpinDM;
+                //_rkmx.ShangpinMC =jhmx.ShangpinMC;
+                //_rkmx.ShangpinTM = batch.ShangpinTM;
+                //_rkmx.BaozhuangDW =jhmx.BaozhuangDW;
+                //_rkmx.Chandi = jhmx.Chandi;
+                //_rkmx.Changjia = jhmx.Qiyemingcheng;
+                //_rkmx.Guige =jhmx.Guige;
+                //_rkmx.Huansuanlv =jhmx.Huansuanlv;
+                //_rkmx.JibenDW = batch.Danwei;
+                //_rkmx.Pihao = batch.BATCH_NUMBER;
+                //_rkmx.ShixiaoRQ = batch.EXP_DATE;
+                //_rkmx.Zhucezheng = batch.ZhucezhengBH;
+                //_rkmx = ServiceFactory.wms_rukumxservice.AddEntity(_rkmx);
+            }
+            return Json(1);
         }
 
     }
