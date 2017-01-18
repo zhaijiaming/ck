@@ -115,6 +115,21 @@ namespace CKWMS.Controllers
                                 }
                             }
                             break;
+                        case "gongyingid":
+                            string gongyingid = scld[1];
+                            string gongyingidequal = scld[2];
+                            string gongyingidand = scld[3];
+                            if (!string.IsNullOrEmpty(gongyingid))
+                            {
+                                if (gongyingidequal.Equals("="))
+                                {
+                                    if (gongyingidand.Equals("and"))
+                                        where = where.And(p => p.GongyingID == int.Parse(gongyingid));
+                                    else
+                                        where = where.Or(p => p.GongyingID == int.Parse(gongyingid));
+                                }
+                            }
+                            break;
                         case "shouying":
                             string shouying = scld[1];
                             string shouyingequal = scld[2];
@@ -158,21 +173,6 @@ namespace CKWMS.Controllers
                                         where = where.And(p => p.ShenchaSF == bool.Parse(shenchasf));
                                     else
                                         where = where.Or(p => p.ShenchaSF == bool.Parse(shenchasf));
-                                }
-                            }
-                            break;
-                        case "gongyingid":
-                            string gongyingid = scld[1];
-                            string gongyingidequal = scld[2];
-                            string gongyingidand = scld[3];
-                            if (!string.IsNullOrEmpty(gongyingid))
-                            {
-                                if (gongyingidequal.Equals("="))
-                                {
-                                    if (gongyingidand.Equals("and"))
-                                        where = where.And(p => p.GongyingID == int.Parse(gongyingid));
-                                    else
-                                        where = where.Or(p => p.GongyingID == int.Parse(gongyingid));
                                 }
                             }
                             break;
@@ -1041,6 +1041,21 @@ namespace CKWMS.Controllers
                                 }
                             }
                             break;
+                        case "gongyingid":
+                            string gongyingid = scld[1];
+                            string gongyingidequal = scld[2];
+                            string gongyingidand = scld[3];
+                            if (!string.IsNullOrEmpty(gongyingid))
+                            {
+                                if (gongyingidequal.Equals("="))
+                                {
+                                    if (gongyingidand.Equals("and"))
+                                        where = where.And(p => p.GongyingID == int.Parse(gongyingid));
+                                    else
+                                        where = where.Or(p => p.GongyingID == int.Parse(gongyingid));
+                                }
+                            }
+                            break;
                         case "shouying":
                             string shouying = scld[1];
                             string shouyingequal = scld[2];
@@ -1084,21 +1099,6 @@ namespace CKWMS.Controllers
                                         where = where.And(p => p.ShenchaSF == bool.Parse(shenchasf));
                                     else
                                         where = where.Or(p => p.ShenchaSF == bool.Parse(shenchasf));
-                                }
-                            }
-                            break;
-                        case "gongyingid":
-                            string gongyingid = scld[1];
-                            string gongyingidequal = scld[2];
-                            string gongyingidand = scld[3];
-                            if (!string.IsNullOrEmpty(gongyingid))
-                            {
-                                if (gongyingidequal.Equals("="))
-                                {
-                                    if (gongyingidand.Equals("and"))
-                                        where = where.And(p => p.GongyingID == int.Parse(gongyingid));
-                                    else
-                                        where = where.Or(p => p.GongyingID == int.Parse(gongyingid));
                                 }
                             }
                             break;
