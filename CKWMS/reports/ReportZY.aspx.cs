@@ -231,7 +231,7 @@ namespace CKWMS.reports
                                         if (tran_company == null)
                                             drckd["Kuaidi"] = "";
                                         else
-                                            drckd["Kuaidi"] = tran_company.Mingcheng;
+                                            drckd["Kuaidi"] = tran_company.Mingcheng == null ? "" : tran_company.Mingcheng.Trim();
                                     }
 
                                     drckd["JiesuanFS"] = MvcApplication.SettlingType[ckd.JiesuanFS == null ? int.Parse("0") : (int)ckd.JiesuanFS];
@@ -321,7 +321,9 @@ namespace CKWMS.reports
                                     {
                                         drJSGRckd["HuozhuID"] = wtkhdata.Kehumingcheng == null ? "" : wtkhdata.Kehumingcheng.Trim();
                                     }
+
                                     drJSGRckd["YunsongFS"] = MvcApplication.DeliveryType[ckd.YunsongFS == null ? int.Parse("0") : (int)ckd.YunsongFS];
+
                                     if (ckd.Kuaidi != null)
                                     {
                                         var tran_company = ServiceFactory.base_yunshugsservice.GetEntityById(p => p.ID == ckd.Kuaidi && p.IsDelete == false);
