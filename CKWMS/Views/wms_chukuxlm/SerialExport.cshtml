@@ -9,7 +9,6 @@
             <caption></caption>
             <thead>
                 <tr>
-                    <td></td>
                     <td>客户</td>
                     <td>出库单</td>
                     <td>序列码</td>
@@ -21,8 +20,6 @@
                 @foreach (var item in ViewBag.wms_chukuxlm)
                 {
                     <tr>
-                        <td>
-                        </td>
                         <td>@Html.GetOtherValue_ID("出库单客户名称", (int)item.ChukuID)</td>
                         <td>@item.Chukudan</td>
                         <td>'@item.Xuliema</td>

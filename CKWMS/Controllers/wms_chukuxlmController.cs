@@ -380,32 +380,76 @@ namespace CKWMS.Controllers
                     string[] scld = scl.Split(',');
                     switch (scld[0])
                     {
-                        case "chukuid":
-                            string chukuid = scld[1];
-                            string chukuidequal = scld[2];
-                            string chukuidand = scld[3];
-                            if (!string.IsNullOrEmpty(chukuid))
+                        case "Chukudan":
+                            string Chukudan = scld[1];
+                            string Chukudanequal = scld[2];
+                            string Chukudanand = scld[3];
+                            if (!string.IsNullOrEmpty(Chukudan))
                             {
-                                if (chukuidequal.Equals("="))
+                                if (Chukudanequal.Equals("="))
                                 {
-                                    if (chukuidand.Equals("and"))
-                                        where = where.And(wms_chukuxlm => wms_chukuxlm.ChukuID == int.Parse(chukuid));
+                                    if (Chukudanand.Equals("and"))
+                                        where = where.And(p => p.Chukudan == Chukudan);
                                     else
-                                        where = where.Or(wms_chukuxlm => wms_chukuxlm.ChukuID == int.Parse(chukuid));
+                                        where = where.Or(p => p.Chukudan == Chukudan);
                                 }
-                                if (chukuidequal.Equals(">"))
+                                if (Chukudanequal.Equals("like"))
                                 {
-                                    if (chukuidand.Equals("and"))
-                                        where = where.And(wms_chukuxlm => wms_chukuxlm.ChukuID > int.Parse(chukuid));
+                                    if (Chukudanand.Equals("and"))
+                                        where = where.And(p => p.Chukudan.Contains(Chukudan));
                                     else
-                                        where = where.Or(wms_chukuxlm => wms_chukuxlm.ChukuID > int.Parse(chukuid));
+                                        where = where.Or(p => p.Chukudan.Contains(Chukudan));
                                 }
-                                if (chukuidequal.Equals("<"))
+                            }
+                            break;
+                        case "Xuliema":
+                            string Xuliema = scld[1];
+                            string Xuliemaequal = scld[2];
+                            string Xuliemaand = scld[3];
+                            if (!string.IsNullOrEmpty(Xuliema))
+                            {
+                                if (Xuliemaequal.Equals("="))
                                 {
-                                    if (chukuidand.Equals("and"))
-                                        where = where.And(wms_chukuxlm => wms_chukuxlm.ChukuID < int.Parse(chukuid));
+                                    if (Xuliemaand.Equals("and"))
+                                        where = where.And(p => p.Xuliema == Xuliema);
                                     else
-                                        where = where.Or(wms_chukuxlm => wms_chukuxlm.ChukuID < int.Parse(chukuid));
+                                        where = where.Or(p => p.Xuliema == Xuliema);
+                                }
+                                if (Xuliemaequal.Equals("like"))
+                                {
+                                    if (Xuliemaand.Equals("and"))
+                                        where = where.And(p => p.Xuliema.Contains(Xuliema));
+                                    else
+                                        where = where.Or(p => p.Xuliema.Contains(Xuliema));
+                                }
+                            }
+                            break;
+                        case "makedate":
+                            string makedate = scld[1];
+                            string makedateequal = scld[2];
+                            string makedateand = scld[3];
+                            if (!string.IsNullOrEmpty(makedate))
+                            {
+                                if (makedateequal.Equals("="))
+                                {
+                                    if (makedateand.Equals("and"))
+                                        where = where.And(p => p.MakeDate.ToString("yyyy-MM-dd") == makedate || p.MakeDate.ToString("yyyy/MM/dd") == makedate || p.MakeDate.ToString("yyyy.MM.dd") == makedate);
+                                    else
+                                        where = where.Or(p => p.MakeDate.ToString("yyyy-MM-dd") == makedate || p.MakeDate.ToString("yyyy/MM/dd") == makedate || p.MakeDate.ToString("yyyy.MM.dd") == makedate);
+                                }
+                                if (makedateequal.Equals(">"))
+                                {
+                                    if (makedateand.Equals("and"))
+                                        where = where.And(p => p.MakeDate > DateTime.Parse(makedate));
+                                    else
+                                        where = where.Or(p => p.MakeDate > DateTime.Parse(makedate));
+                                }
+                                if (makedateequal.Equals("<"))
+                                {
+                                    if (makedateand.Equals("and"))
+                                        where = where.And(p => p.MakeDate < DateTime.Parse(makedate));
+                                    else
+                                        where = where.Or(p => p.MakeDate < DateTime.Parse(makedate));
                                 }
                             }
                             break;
