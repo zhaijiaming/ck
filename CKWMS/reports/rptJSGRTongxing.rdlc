@@ -2168,9 +2168,6 @@
             </TablixMember>
             <TablixMember>
               <Group Name="详细信息" />
-              <TablixMembers>
-                <TablixMember />
-              </TablixMembers>
             </TablixMember>
             <TablixMember>
               <KeepWithGroup>Before</KeepWithGroup>
@@ -2178,9 +2175,6 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
-        <PageBreak>
-          <BreakLocation>StartAndEnd</BreakLocation>
-        </PageBreak>
         <Height>1.95875cm</Height>
         <Width>26.06226cm</Width>
         <Style>
@@ -2190,7 +2184,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>0.84072in</Height>
+    <Height>0.83333in</Height>
     <Style />
   </Body>
   <Width>10.26073in</Width>
