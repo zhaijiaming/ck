@@ -15,9 +15,12 @@
                     <td>货主</td>
                     <td>客户</td>
                     <td>快递单号</td>
-                    <td>出库日期</td>
+                    <td>发运方式</td>
+                    <td>结算方式</td>
                     <td>客户单号</td>
                     <td>联系人</td>
+                    <td>出库日期</td>
+                    <td>送货地址</td>
                 </tr>
             </thead>
             <tbody>
@@ -28,9 +31,12 @@
                         <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
                         <td>@item.KehuMC</td>
                         <td>@item.KDdanhao</td>
-                        <td>@string.Format("{0:yyyy-MM-dd}", item.ChukuRQ)</td>
+                        <td>@Html.GetCommonValue_ID("运送方式", (int)(item.YunsongFS==null?0:item.YunsongFS))</td>
+                        <td>@Html.GetCommonValue_ID("结算方式", (int)(item.JiesuanFS==null?0:item.JiesuanFS))</td>
                         <td>@item.KehuDH</td>
                         <td>@item.Lianxiren</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ChukuRQ)</td>
+                        <td>@item.Yunsongdizhi</td>
                     </tr>
                 }
             </tbody>
