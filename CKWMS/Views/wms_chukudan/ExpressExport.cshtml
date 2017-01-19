@@ -1,0 +1,39 @@
+﻿@using CKWMS.App_Code
+@using CKWMS.Models
+@using X.PagedList
+@using X.PagedList.Mvc
+@{
+    ViewBag.Title = "出库快递信息";
+}
+<div class="page-content">
+    <div class="row">
+        <table class="table table-condensed table-hover" id="mydatatable">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <td>出库编号</td>
+                    <td>货主</td>
+                    <td>客户</td>
+                    <td>快递单号</td>
+                    <td>出库日期</td>
+                    <td>客户单号</td>
+                    <td>联系人</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.ExpressOut)
+                {
+                    <tr>
+                        <td>@item.ChukudanBH</td>
+                        <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
+                        <td>@item.KehuMC</td>
+                        <td>@item.KDdanhao</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ChukuRQ)</td>
+                        <td>@item.KehuDH</td>
+                        <td>@item.Lianxiren</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

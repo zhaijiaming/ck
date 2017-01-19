@@ -89,6 +89,8 @@
                     _vs = data;
                     if (eval(data) == -1)
                         alert("修改批号错误！");
+                    else if (data == -3)
+                        alert("已拣货的批号不能修改！");
                     else
                         location.reload();
                 }
@@ -124,6 +126,8 @@
                     _vs = data;
                     if (eval(data) == -1)
                         alert("数量修改失败！");
+                    else if(data==-3)
+                        alert("已拣货的细单不能修改数量！");
                     else
                         location.reload();
                 }

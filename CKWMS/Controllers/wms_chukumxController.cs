@@ -936,6 +936,8 @@ namespace CKWMS.Controllers
             wms_chukumx _ckmx = ob_wms_chukumxservice.GetEntityById(p => p.ID == int.Parse(_mxid));
             if (_ckmx == null)
                 return Json(-1);
+            if (_ckmx.JianhuoSL > 0)
+                return Json(-3);
             _ckmx.Pihao = _ph;
             if (!string.IsNullOrEmpty(_xlm))
                 _ckmx.Xuliema = _xlm;
@@ -1008,6 +1010,8 @@ namespace CKWMS.Controllers
             wms_chukumx _ckmx = ob_wms_chukumxservice.GetEntityById(p => p.ID == int.Parse(_mxid) && p.IsDelete == false);
             if (_ckmx == null)
                 return Json(-1);
+            if (_ckmx.JianhuoSL > 0)
+                return Json(-3);
             _ckmx.ChukuSL = float.Parse(_num);
             ob_wms_chukumxservice.UpdateEntity(_ckmx);
             return Json(1);

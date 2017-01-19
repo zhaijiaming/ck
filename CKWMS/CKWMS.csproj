@@ -961,6 +961,7 @@
     <Content Include="Views\u8_lackcargo\Index.cshtml" />
     <Content Include="Views\wms_chukudan\PrintJSGRTongxing.cshtml" />
     <Content Include="Views\wms_cunhuo\InoutCheck.cshtml" />
+    <Content Include="Views\wms_chukudan\ExpressExport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

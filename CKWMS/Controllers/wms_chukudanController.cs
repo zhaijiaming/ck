@@ -1057,6 +1057,31 @@ namespace CKWMS.Controllers
             }
             return 0;
         }
+        public ActionResult ExpressExport()
+        {
+            int userid = (int)Session["user_id"];
+
+            //var tempData = ob_wms_chukumxservice.LoadSortEntities(where.Compile(), false, wms_chukumx => wms_chukumx.ID);
+            var _ids = Request["ck"] ?? "";
+            if (string.IsNullOrEmpty(_ids))
+                return Json(-1);
+            string[] _efs = _ids.Split(',');
+            List<wms_chukudan> _ckds=new List<wms_chukudan>();
+            foreach (var _ckid in _efs)
+            {
+                wms_chukudan _ckd = ob_wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_ckid));
+                if (_ckd != null)
+                {
+                    _ckds.Add(_ckd);
+                }
+            }
+            var tempData =_ckds;
+            ViewBag.ExpressOut = tempData;
+            ViewData.Model = tempData;
+            //return View();
+            string viewHtml = ExportNow.RenderPartialViewToString(this, "ExpressExport");
+            return File(System.Text.Encoding.UTF8.GetBytes(viewHtml), "application/ms-excel", string.Format("ExpressFile_{0}.xls", DateTime.Now.ToShortDateString()));
+        }
     }
 }
 
