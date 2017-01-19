@@ -297,8 +297,12 @@ namespace CKWMS.reports
                                     //注册证&备案编号2选1
                                     if (string.IsNullOrEmpty(_mx.Zhucezheng))
                                     {
-                                        drJSGRtx["Zhucezheng_BeianBH"] = _scqy.BeianBH == null ? "" : _scqy.BeianBH.Trim();
-                                    }else
+                                        if (_scqy != null)
+                                            drJSGRtx["Zhucezheng_BeianBH"] = _scqy.BeianBH == null ? "" : _scqy.BeianBH.Trim();
+                                        else
+                                            drJSGRtx["Zhucezheng_BeianBH"] = "";
+                                    }
+                                    else
                                     {
                                         drJSGRtx["Zhucezheng_BeianBH"] = _mx.Zhucezheng == null ? "" : _mx.Zhucezheng.Trim();
                                     }

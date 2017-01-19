@@ -5,14 +5,16 @@
 <script type="text/javascript">
     $(window).load(function () {
         var chukuid = $("#chukuid").val();
-        if ($("#valueequal").val() == "1") {
-            document.getElementById("myReport").src = "../../reports/ReportZY.aspx?pid=JianHuoDan&out=" + chukuid;
-            $("#autoUpdate").show();
-        }
-        else
-        {
-            alert("拣货数量与发货数量不符，请重新拣货！");
-        }
+        //if ($("#valueequal").val() == "1") {
+        //    document.getElementById("myReport").src = "../../reports/ReportZY.aspx?pid=JianHuoDan&out=" + chukuid;
+        //    $("#autoUpdate").show();
+        //}
+        //else
+        //{
+        //    alert("拣货数量与发货数量不符，请重新拣货！");
+        //}
+        document.getElementById("myReport").src = "../../reports/ReportZY.aspx?pid=JianHuoDan&out=" + chukuid;
+        $("#autoUpdate").show();
     });
 </script>
 <div id="autoUpdate" style="display:none; overflow-y: auto;background-color:white">
