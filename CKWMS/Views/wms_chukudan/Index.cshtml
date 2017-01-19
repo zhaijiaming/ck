@@ -18,6 +18,17 @@
                 location.href = url_go;
             }
         });
+        $("#bt_Express").click(function () {
+            var sDel = "";
+            $("#mydatatable tbody tr input[type=checkbox]").each(function () {
+                if (this.checked) {
+                    sDel = sDel + ", " + $(this).val()
+                }
+            });
+            if (sDel.length < 2)
+                return;
+            window.open("/wms_chukudan/expressexport?ck=" + sDel, "_blank");
+        });
         $("#pl_cargo_close").click(function () {
             $("#pl_cargo").hide();
         });
@@ -284,6 +295,7 @@
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
             <button type="button" class="btn btn-default " id="bt_export" onclick="javascript: window.open('/wms_chukudan/historyofoutexport')"><i class="icon-inbox"></i>导出</button>
             <button type="button" class="btn btn-default " id="bt_print"><i class="icon-print"></i>打印</button>
+            <button type="button" class="btn btn-default " id="bt_Express"><i class="icon-file"></i>快递导出</button>
         </p>
     </div>
     <div class="row">
@@ -318,7 +330,7 @@
                 {
                     <tr>
                         <td>
-                            <label><i class="icon-list-alt"></i><input type="hidden" class="table_chukuID" value="@item.ID" data-zt="@item.JihuaZT"></label>
+                            <label><i class="icon-list-alt"></i><input type="checkbox" class="table_chukuID" value="@item.ID" data-zt="@item.JihuaZT"></label>
                         </td>
                         <td class="table_chukuBH">@item.ChukudanBH</td>
                         <td class="huozhu">@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
