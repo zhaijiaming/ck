@@ -53,9 +53,13 @@
                         $("#mydatatable tbody tr").each(function () {
                             var table_chukuBH = $(this).find(".table_chukuBH").text();
                             if (table_chukuBH == chukuBH) {
+                                var huozhu = $(this).find(".huozhu").text();
                                 var chukuID = $(this).find(".table_chukuID").val();
-                                //执行打印
-                                window.open("/wms_chukudan/PrintTongxing?out=" + chukuID);
+                                if (huozhu == "嘉事国润") {
+                                    window.open("/wms_chukudan/PrintJSGRTongxing?out=" + chukuID);
+                                } else {
+                                    window.open("/wms_chukudan/PrintTongxing?out=" + chukuID);
+                                }
                             }
                         });
                         $("#pl_fun").hide();
@@ -317,7 +321,7 @@
                             <label><i class="icon-list-alt"></i><input type="hidden" class="table_chukuID" value="@item.ID" data-zt="@item.JihuaZT"></label>
                         </td>
                         <td class="table_chukuBH">@item.ChukudanBH</td>
-                        <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
+                        <td class="huozhu">@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
                         <td>@item.KehuMC</td>
                         <td>@item.Yunsongdizhi</td>
                         <td>@item.KDdanhao</td>

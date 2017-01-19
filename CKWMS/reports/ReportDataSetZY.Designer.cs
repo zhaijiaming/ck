@@ -1898,7 +1898,7 @@ namespace CKWMS.reports {
             
             private global::System.Data.DataColumn columnZhucezheng;
             
-            private global::System.Data.DataColumn columnChukuSL;
+            private global::System.Data.DataColumn columnJianhuoSL;
             
             private global::System.Data.DataColumn columnJibenDW;
             
@@ -1999,9 +1999,9 @@ namespace CKWMS.reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn ChukuSLColumn {
+            public global::System.Data.DataColumn JianhuoSLColumn {
                 get {
-                    return this.columnChukuSL;
+                    return this.columnJianhuoSL;
                 }
             }
             
@@ -2106,7 +2106,7 @@ namespace CKWMS.reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public TongXingDanRow AddTongXingDanRow(string Guige, string ShangpinMC, string Pihao, string Xuliema, string ShixiaoRQ, string Zhucezheng, string ChukuSL, string JibenDW, string Changjia, string Beizhu, string ShengchanxukeBH, string BeianBH, string ChunyunYQ, string ChukuJS, string Huansuanlv) {
+            public TongXingDanRow AddTongXingDanRow(string Guige, string ShangpinMC, string Pihao, string Xuliema, string ShixiaoRQ, string Zhucezheng, string JianhuoSL, string JibenDW, string Changjia, string Beizhu, string ShengchanxukeBH, string BeianBH, string ChunyunYQ, string ChukuJS, string Huansuanlv) {
                 TongXingDanRow rowTongXingDanRow = ((TongXingDanRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Guige,
@@ -2115,7 +2115,7 @@ namespace CKWMS.reports {
                         Xuliema,
                         ShixiaoRQ,
                         Zhucezheng,
-                        ChukuSL,
+                        JianhuoSL,
                         JibenDW,
                         Changjia,
                         Beizhu,
@@ -2152,7 +2152,7 @@ namespace CKWMS.reports {
                 this.columnXuliema = base.Columns["Xuliema"];
                 this.columnShixiaoRQ = base.Columns["ShixiaoRQ"];
                 this.columnZhucezheng = base.Columns["Zhucezheng"];
-                this.columnChukuSL = base.Columns["ChukuSL"];
+                this.columnJianhuoSL = base.Columns["JianhuoSL"];
                 this.columnJibenDW = base.Columns["JibenDW"];
                 this.columnChangjia = base.Columns["Changjia"];
                 this.columnBeizhu = base.Columns["Beizhu"];
@@ -2178,8 +2178,8 @@ namespace CKWMS.reports {
                 base.Columns.Add(this.columnShixiaoRQ);
                 this.columnZhucezheng = new global::System.Data.DataColumn("Zhucezheng", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnZhucezheng);
-                this.columnChukuSL = new global::System.Data.DataColumn("ChukuSL", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnChukuSL);
+                this.columnJianhuoSL = new global::System.Data.DataColumn("JianhuoSL", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnJianhuoSL);
                 this.columnJibenDW = new global::System.Data.DataColumn("JibenDW", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnJibenDW);
                 this.columnChangjia = new global::System.Data.DataColumn("Changjia", typeof(string), null, global::System.Data.MappingType.Element);
@@ -10307,6 +10307,8 @@ namespace CKWMS.reports {
             
             private global::System.Data.DataColumn columntx_ChukuJSs;
             
+            private global::System.Data.DataColumn columntx_JianhuoSLs;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public TongXingDan_TitleDataTable() {
@@ -10446,6 +10448,14 @@ namespace CKWMS.reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn tx_JianhuoSLsColumn {
+                get {
+                    return this.columntx_JianhuoSLs;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -10481,7 +10491,7 @@ namespace CKWMS.reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public TongXingDan_TitleRow AddTongXingDan_TitleRow(string Yunsongdizhi, string ChukuRQ, string ChukudanBH, string Lianxiren, string LianxiDH, string HuozhuID, string KehuMC, string txckSLs, string Beizhu, string YunsongFS, string Kuaidi, string JiesuanFS, string tx_ChukuJSs) {
+            public TongXingDan_TitleRow AddTongXingDan_TitleRow(string Yunsongdizhi, string ChukuRQ, string ChukudanBH, string Lianxiren, string LianxiDH, string HuozhuID, string KehuMC, string txckSLs, string Beizhu, string YunsongFS, string Kuaidi, string JiesuanFS, string tx_ChukuJSs, string tx_JianhuoSLs) {
                 TongXingDan_TitleRow rowTongXingDan_TitleRow = ((TongXingDan_TitleRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Yunsongdizhi,
@@ -10496,7 +10506,8 @@ namespace CKWMS.reports {
                         YunsongFS,
                         Kuaidi,
                         JiesuanFS,
-                        tx_ChukuJSs};
+                        tx_ChukuJSs,
+                        tx_JianhuoSLs};
                 rowTongXingDan_TitleRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowTongXingDan_TitleRow);
                 return rowTongXingDan_TitleRow;
@@ -10532,6 +10543,7 @@ namespace CKWMS.reports {
                 this.columnKuaidi = base.Columns["Kuaidi"];
                 this.columnJiesuanFS = base.Columns["JiesuanFS"];
                 this.columntx_ChukuJSs = base.Columns["tx_ChukuJSs"];
+                this.columntx_JianhuoSLs = base.Columns["tx_JianhuoSLs"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -10563,6 +10575,8 @@ namespace CKWMS.reports {
                 base.Columns.Add(this.columnJiesuanFS);
                 this.columntx_ChukuJSs = new global::System.Data.DataColumn("tx_ChukuJSs", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columntx_ChukuJSs);
+                this.columntx_JianhuoSLs = new global::System.Data.DataColumn("tx_JianhuoSLs", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columntx_JianhuoSLs);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -12426,17 +12440,17 @@ namespace CKWMS.reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string ChukuSL {
+            public string JianhuoSL {
                 get {
                     try {
-                        return ((string)(this[this.tableTongXingDan.ChukuSLColumn]));
+                        return ((string)(this[this.tableTongXingDan.JianhuoSLColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("表“TongXingDan”中列“ChukuSL”的值为 DBNull。", e);
+                        throw new global::System.Data.StrongTypingException("表“TongXingDan”中列“JianhuoSL”的值为 DBNull。", e);
                     }
                 }
                 set {
-                    this[this.tableTongXingDan.ChukuSLColumn] = value;
+                    this[this.tableTongXingDan.JianhuoSLColumn] = value;
                 }
             }
             
@@ -12642,14 +12656,14 @@ namespace CKWMS.reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsChukuSLNull() {
-                return this.IsNull(this.tableTongXingDan.ChukuSLColumn);
+            public bool IsJianhuoSLNull() {
+                return this.IsNull(this.tableTongXingDan.JianhuoSLColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetChukuSLNull() {
-                this[this.tableTongXingDan.ChukuSLColumn] = global::System.Convert.DBNull;
+            public void SetJianhuoSLNull() {
+                this[this.tableTongXingDan.JianhuoSLColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -19336,6 +19350,22 @@ namespace CKWMS.reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string tx_JianhuoSLs {
+                get {
+                    try {
+                        return ((string)(this[this.tableTongXingDan_Title.tx_JianhuoSLsColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("表“TongXingDan_Title”中列“tx_JianhuoSLs”的值为 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableTongXingDan_Title.tx_JianhuoSLsColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsYunsongdizhiNull() {
                 return this.IsNull(this.tableTongXingDan_Title.YunsongdizhiColumn);
             }
@@ -19488,6 +19518,18 @@ namespace CKWMS.reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void Settx_ChukuJSsNull() {
                 this[this.tableTongXingDan_Title.tx_ChukuJSsColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Istx_JianhuoSLsNull() {
+                return this.IsNull(this.tableTongXingDan_Title.tx_JianhuoSLsColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Settx_JianhuoSLsNull() {
+                this[this.tableTongXingDan_Title.tx_JianhuoSLsColumn] = global::System.Convert.DBNull;
             }
         }
         

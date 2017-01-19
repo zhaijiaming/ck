@@ -8,7 +8,7 @@
   <Shapes>
     <Shape ID="DesignTable:davistest_kw" ZOrder="28" X="-2" Y="19" Height="28" Width="150" AdapterExpanded="true" DataTableExpanded="false" OldAdapterHeight="0" OldDataTableHeight="101" SplitterPosition="24" />
     <Shape ID="DesignTable:JianHuoDan" ZOrder="8" X="4" Y="374" Height="219" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="24" SplitterPosition="215" />
-    <Shape ID="DesignTable:TongXingDan" ZOrder="1" X="-2" Y="63" Height="257" Width="153" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="24" SplitterPosition="253" />
+    <Shape ID="DesignTable:TongXingDan" ZOrder="2" X="-2" Y="63" Height="257" Width="153" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="24" SplitterPosition="253" />
     <Shape ID="DesignTable:RKYanshouJilu" ZOrder="15" X="527" Y="55" Height="257" Width="161" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="24" SplitterPosition="253" />
     <Shape ID="DesignTable:RuKumingxi" ZOrder="6" X="285" Y="367" Height="28" Width="150" AdapterExpanded="true" DataTableExpanded="false" OldAdapterHeight="0" OldDataTableHeight="253" SplitterPosition="24" />
     <Shape ID="DesignTable:zlgl_RKYSBG" ZOrder="26" X="0" Y="143" Height="28" Width="169" AdapterExpanded="true" DataTableExpanded="false" OldAdapterHeight="0" OldDataTableHeight="253" SplitterPosition="24" />
@@ -30,7 +30,7 @@
     <Shape ID="DesignTable:CKFuheJilu_Title" ZOrder="17" X="283" Y="316" Height="28" Width="165" AdapterExpanded="true" DataTableExpanded="false" OldAdapterHeight="0" OldDataTableHeight="196" SplitterPosition="24" />
     <Shape ID="DesignTable:CKFuheBaoGao" ZOrder="3" X="4" Y="299" Height="28" Width="150" AdapterExpanded="true" DataTableExpanded="false" OldAdapterHeight="0" OldDataTableHeight="253" SplitterPosition="24" />
     <Shape ID="DesignTable:CKFuheBaoGao_Title" ZOrder="23" X="5" Y="332" Height="28" Width="194" AdapterExpanded="true" DataTableExpanded="false" OldAdapterHeight="0" OldDataTableHeight="215" SplitterPosition="24" />
-    <Shape ID="DesignTable:TongXingDan_Title" ZOrder="2" X="-3" Y="96" Height="257" Width="184" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="24" SplitterPosition="253" />
+    <Shape ID="DesignTable:TongXingDan_Title" ZOrder="1" X="-3" Y="96" Height="257" Width="184" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="24" SplitterPosition="253" />
     <Shape ID="DesignTable:JianHuoDan_Title" ZOrder="7" X="5" Y="406" Height="257" Width="174" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="24" SplitterPosition="253" />
     <Shape ID="DesignTable:JH_CKfuhejianyan" ZOrder="10" X="529" Y="217" Height="257" Width="177" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="253" />
     <Shape ID="DesignTable:JH_CKfuhejianyan_Title" ZOrder="9" X="737" Y="213" Height="219" Width="210" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="215" />
