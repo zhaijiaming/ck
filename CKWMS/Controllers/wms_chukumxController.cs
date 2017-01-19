@@ -965,6 +965,7 @@ namespace CKWMS.Controllers
             _nmx.Changjia = _ckmx.Changjia;
             _nmx.ChukuID = _ckmx.ChukuID;
             _nmx.ChukuSL = 0;
+            _nmx.JianhuoSL =0;
             _nmx.Col1 = _ckmx.Col1;
             _nmx.Col2 = _ckmx.Col2;
             _nmx.Col3 = _ckmx.Col3;
@@ -973,7 +974,6 @@ namespace CKWMS.Controllers
             _nmx.HuopinZT = _ckmx.HuopinZT;
             _nmx.IsDelete = _ckmx.IsDelete;
             _nmx.Jianhuo = _ckmx.Jianhuo;
-            _nmx.JianhuoSL = _ckmx.JianhuoSL;
             _nmx.JibenDW = _ckmx.JibenDW;
             _nmx.Jifeidun = _ckmx.Jifeidun;
             _nmx.Jingzhong = _ckmx.Jingzhong;

@@ -47,6 +47,11 @@
                 success: function (data) {
                     if (data == -1)
                         alert("操作失败，请联系管理员！");
+                    else if(data==-2)
+                    {
+                        alert("系统出现错误，请立即通知管理员！");
+                        location.reload();
+                    }
                     else
                         location.reload();
                 }

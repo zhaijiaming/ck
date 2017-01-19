@@ -578,7 +578,13 @@ namespace CKWMS.Controllers
                     {
                         _ckd.JihuaZT = 5;
                         _ckd.MakeDate = DateTime.Now;
-                        ob_wms_chukudanservice.UpdateEntity(_ckd);
+                        var backval=ob_wms_chukudanservice.UpdateEntity(_ckd);
+                        if (!backval)
+                        {
+                            _ckd.JihuaZT = 6;
+                            ob_wms_chukudanservice.UpdateEntity(_ckd);
+                            return Json(-2);
+                       }
                     }
                     else
                         return Json(-1);

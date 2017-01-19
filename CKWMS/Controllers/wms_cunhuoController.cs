@@ -1436,6 +1436,16 @@ namespace CKWMS.Controllers
             string viewHtml = ExportNow.RenderPartialViewToString(this, "RemindOverdueExport");
             return File(System.Text.Encoding.UTF8.GetBytes(viewHtml), "application/ms-excel", string.Format("Overdue_{0}.xls", DateTime.Now.ToShortDateString()));
         }
+        public ActionResult InoutCheck(string page)
+        {
+            if (string.IsNullOrEmpty(page))
+                page = "1";
+            int userid = (int)Session["user_id"];
+            string pagetag = "wms_inoutcheck";
+            var tempData = ob_wms_cunhuoservice.InoutCheck(p => p.id > 1).ToPagedList<wms_inoutcheckgood_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            ViewBag.wms_cunhuo = tempData;
+            return View(tempData);
+        }
     }
 }
 
