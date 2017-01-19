@@ -263,7 +263,6 @@ namespace CKWMS.reports
                                     drJSGRtx = dtJSGRtx.NewRow();
                                     drJSGRtx["Guige"] = _mx.Guige == null ? "" : _mx.Guige.Trim();
                                     drJSGRtx["ShangpinMC"] = _mx.ShangpinMC == null ? "" : _mx.ShangpinMC.Trim();
-                                    drJSGRtx["Zhucezheng"] = _mx.Zhucezheng == null ? "" : _mx.Zhucezheng.Trim();
                                     drJSGRtx["Changjia"] = _mx.Changjia == null ? "" : _mx.Changjia.Trim();
                                     drJSGRtx["Pihao"] = _mx.Pihao == null ? "" : _mx.Pihao.Trim();
                                     drJSGRtx["Xuliema"] = _mx.Xuliema == null ? "" : _mx.Xuliema.Trim();
@@ -272,6 +271,12 @@ namespace CKWMS.reports
                                     drJSGRtx["JianhuoSL"] = string.Format("{0:0.00}", _mx.JianhuoSL == null ? int.Parse("0.00") : _mx.JianhuoSL);
                                     drJSGRtx["JibenDW"] = _mx.JibenDW == null ? "" : _mx.JibenDW.Trim();
 
+                                    var spxxData = ServiceFactory.base_shangpinxxservice.GetEntityById(p => p.ID == _mx.ShangpinID && p.IsDelete == false);
+                                    if(spxxData != null)
+                                    {
+                                        drJSGRtx["ShangpinMS"] = spxxData.ShangpinMS == null ? "" : spxxData.ShangpinMS;
+                                    }
+                                    
                                     JSGRChukuJS = _mx.JianhuoSL / _mx.Huansuanlv == null ? int.Parse("0.00") : (float)_mx.JianhuoSL / _mx.Huansuanlv;
                                     drJSGRtx["ChukuJS"] = string.Format("{0:0.00}", JSGRChukuJS);
 
@@ -289,8 +294,14 @@ namespace CKWMS.reports
                                     {
                                         drJSGRtx["ShengchanxukeBH"] = _scqy.ShengchanxukeBH == null ? "" : _scqy.ShengchanxukeBH.Trim();
                                     }
-                                    drJSGRtx["BeianBH"] = _scqy.BeianBH == null ? "" : _scqy.BeianBH.Trim();
-                                    
+                                    //注册证&备案编号2选1
+                                    if (string.IsNullOrEmpty(_mx.Zhucezheng))
+                                    {
+                                        drJSGRtx["Zhucezheng_BeianBH"] = _scqy.BeianBH == null ? "" : _scqy.BeianBH.Trim();
+                                    }else
+                                    {
+                                        drJSGRtx["Zhucezheng_BeianBH"] = _mx.Zhucezheng == null ? "" : _mx.Zhucezheng.Trim();
+                                    }
 
                                     dtJSGRtx.Rows.Add(drJSGRtx);
                                 }
