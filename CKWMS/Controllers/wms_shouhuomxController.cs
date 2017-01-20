@@ -33,6 +33,37 @@ namespace CKWMS.Controllers
                     string[] scld = scl.Split(',');
                     switch (scld[0])
                     {
+                        case "rukubh":
+                            string rukubh = scld[1];
+                            string rukubhequal = scld[2];
+                            string rukubhand = scld[3];
+                            if (!string.IsNullOrEmpty(rukubh))
+                            {
+                                var tempdate = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.RukudanBH == rukubh.Trim() && p.IsDelete == false);
+                                var rukuid = tempdate.ID;
+                                if (rukubhequal.Equals("="))
+                                {
+                                    if (rukubhand.Equals("and"))
+                                        where = where.And(p => p.RukuID == rukuid);
+                                    else
+                                        where = where.Or(p => p.RukuID == rukuid);
+                                }
+                                if (rukubhequal.Equals(">"))
+                                {
+                                    if (rukubhand.Equals("and"))
+                                        where = where.And(p => p.RukuID > rukuid);
+                                    else
+                                        where = where.Or(p => p.RukuID > rukuid);
+                                }
+                                if (rukubhequal.Equals("<"))
+                                {
+                                    if (rukubhand.Equals("and"))
+                                        where = where.And(p => p.RukuID < rukuid);
+                                    else
+                                        where = where.Or(p => p.RukuID < rukuid);
+                                }
+                            }
+                            break;
                         case "shangpinmc":
                             string shangpinmc = scld[1];
                             string shangpinmcequal = scld[2];
@@ -174,6 +205,10 @@ namespace CKWMS.Controllers
             int userid = (int)Session["user_id"];
             string pagetag = "wms_shouhuomx_index";
             string page = "1";
+            //rukubh
+            string rukubh = Request["rukubh"] ?? "";
+            string rukubhequal = Request["rukubhequal"] ?? "";
+            string rukubhand = Request["rukubhand"] ?? "";
             //shangpinmc
             string shangpinmc = Request["shangpinmc"] ?? "";
             string shangpinmcequal = Request["shangpinmcequal"] ?? "";
@@ -202,6 +237,38 @@ namespace CKWMS.Controllers
                 sc = new searchcondition();
                 sc.UserID = userid;
                 sc.PageBrief = pagetag;
+                //rukubh
+                if (!string.IsNullOrEmpty(rukubh))
+                {
+                    var tempdate = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.RukudanBH == rukubh.Trim() && p.IsDelete == false);
+                    var rukuid = tempdate.ID;
+                    if (rukubhequal.Equals("="))
+                    {
+                        if (rukubhand.Equals("and"))
+                            where = where.And(p => p.RukuID == rukuid);
+                        else
+                            where = where.Or(p => p.RukuID == rukuid);
+                    }
+                    if (rukubhequal.Equals(">"))
+                    {
+                        if (rukubhand.Equals("and"))
+                            where = where.And(p => p.RukuID > rukuid);
+                        else
+                            where = where.Or(p => p.RukuID > rukuid);
+                    }
+                    if (rukubhequal.Equals("<"))
+                    {
+                        if (rukubhand.Equals("and"))
+                            where = where.And(p => p.RukuID < rukuid);
+                        else
+                            where = where.Or(p => p.RukuID < rukuid);
+                    }
+                }
+                if (!string.IsNullOrEmpty(rukubh))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukubh", rukubh, rukubhequal, rukubhand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukubh", "", rukubhequal, rukubhand);
+
                 //shangpinmc
                 if (!string.IsNullOrEmpty(shangpinmc))
                 {
@@ -325,6 +392,37 @@ namespace CKWMS.Controllers
             else
             {
                 sc.ConditionInfo = "";
+                //rukubh
+                if (!string.IsNullOrEmpty(rukubh))
+                {
+                    var tempdate = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.RukudanBH == rukubh.Trim() && p.IsDelete == false);
+                    var rukuid = tempdate.ID;
+                    if (rukubhequal.Equals("="))
+                    {
+                        if (rukubhand.Equals("and"))
+                            where = where.And(p => p.RukuID == rukuid);
+                        else
+                            where = where.Or(p => p.RukuID == rukuid);
+                    }
+                    if (rukubhequal.Equals(">"))
+                    {
+                        if (rukubhand.Equals("and"))
+                            where = where.And(p => p.RukuID > rukuid);
+                        else
+                            where = where.Or(p => p.RukuID > rukuid);
+                    }
+                    if (rukubhequal.Equals("<"))
+                    {
+                        if (rukubhand.Equals("and"))
+                            where = where.And(p => p.RukuID < rukuid);
+                        else
+                            where = where.Or(p => p.RukuID < rukuid);
+                    }
+                }
+                if (!string.IsNullOrEmpty(rukubh))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukubh", rukubh, rukubhequal, rukubhand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukubh", "", rukubhequal, rukubhand);
                 //shangpinmc
                 if (!string.IsNullOrEmpty(shangpinmc))
                 {
@@ -822,6 +920,37 @@ namespace CKWMS.Controllers
                     string[] scld = scl.Split(',');
                     switch (scld[0])
                     {
+                        case "rukubh":
+                            string rukubh = scld[1];
+                            string rukubhequal = scld[2];
+                            string rukubhand = scld[3];
+                            if (!string.IsNullOrEmpty(rukubh))
+                            {
+                                var tempdate = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.RukudanBH == rukubh.Trim() && p.IsDelete == false);
+                                var rukuid = tempdate.ID;
+                                if (rukubhequal.Equals("="))
+                                {
+                                    if (rukubhand.Equals("and"))
+                                        where = where.And(p => p.RukuID == rukuid);
+                                    else
+                                        where = where.Or(p => p.RukuID == rukuid);
+                                }
+                                if (rukubhequal.Equals(">"))
+                                {
+                                    if (rukubhand.Equals("and"))
+                                        where = where.And(p => p.RukuID > rukuid);
+                                    else
+                                        where = where.Or(p => p.RukuID > rukuid);
+                                }
+                                if (rukubhequal.Equals("<"))
+                                {
+                                    if (rukubhand.Equals("and"))
+                                        where = where.And(p => p.RukuID < rukuid);
+                                    else
+                                        where = where.Or(p => p.RukuID < rukuid);
+                                }
+                            }
+                            break;
                         case "shangpinmc":
                             string shangpinmc = scld[1];
                             string shangpinmcequal = scld[2];

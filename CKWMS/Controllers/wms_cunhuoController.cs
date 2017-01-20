@@ -1442,7 +1442,255 @@ namespace CKWMS.Controllers
                 page = "1";
             int userid = (int)Session["user_id"];
             string pagetag = "wms_inoutcheck";
-            var tempData = ob_wms_cunhuoservice.InoutCheck(p => p.id > 1).ToPagedList<wms_inoutcheckgood_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            Expression<Func<wms_inoutcheckgood_v, bool>> where = PredicateExtensionses.True<wms_inoutcheckgood_v>();
+            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            if (sc != null)
+            {
+                string[] sclist = sc.ConditionInfo.Split(';');
+                foreach (string scl in sclist)
+                {
+                    string[] scld = scl.Split(',');
+                    switch (scld[0])
+                    {
+                        case "guige":
+                            string guige = scld[1];
+                            string guigeequal = scld[2];
+                            string guigeand = scld[3];
+                            if (!string.IsNullOrEmpty(guige))
+                            {
+                                if (guigeequal.Equals("="))
+                                {
+                                    if (guigeand.Equals("and"))
+                                        where = where.And(p => p.guige == guige);
+                                    else
+                                        where = where.Or(p => p.guige == guige);
+                                }
+                                if (guigeequal.Equals("like"))
+                                {
+                                    if (guigeand.Equals("and"))
+                                        where = where.And(p => p.guige.Contains(guige));
+                                    else
+                                        where = where.Or(p => p.guige.Contains(guige));
+                                }
+                            }
+                            break;
+                        case "pihao":
+                            string pihao = scld[1];
+                            string pihaoequal = scld[2];
+                            string pihaoand = scld[3];
+                            if (!string.IsNullOrEmpty(pihao))
+                            {
+                                if (pihaoequal.Equals("="))
+                                {
+                                    if (pihaoand.Equals("and"))
+                                        where = where.And(p => p.pihao == pihao);
+                                    else
+                                        where = where.Or(p => p.pihao == pihao);
+                                }
+                                if (pihaoequal.Equals("like"))
+                                {
+                                    if (pihaoand.Equals("and"))
+                                        where = where.And(p => p.pihao.Contains(pihao));
+                                    else
+                                        where = where.Or(p => p.pihao.Contains(pihao));
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                ViewBag.SearchCondition = sc.ConditionInfo;
+            }
+            var tempData = ob_wms_cunhuoservice.InoutCheck(where.Compile()).ToPagedList<wms_inoutcheckgood_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            ViewBag.wms_cunhuo = tempData;
+            return View(tempData);
+        }
+        [HttpPost]
+        [OutputCache(Duration = 30)]
+        public ActionResult InoutCheck()
+        {
+            int userid = (int)Session["user_id"];
+            string pagetag = "wms_inoutcheck";
+            string page = "1";
+            //guige
+            string guige = Request["guige"] ?? "";
+            string guigeequal = Request["guigeequal"] ?? "";
+            string guigeand = Request["guigeand"] ?? "";
+            //pihao
+            string pihao = Request["pihao"] ?? "";
+            string pihaoequal = Request["pihaoequal"] ?? "";
+            string pihaoand = Request["pihaoand"] ?? "";
+            //cysl
+            string cysl = Request["cysl"] ?? "";
+            string cyslequal = Request["cyslequal"] ?? "";
+            string cysland = Request["cysland"] ?? "";
+            Expression<Func<wms_inoutcheckgood_v, bool>> where = PredicateExtensionses.True<wms_inoutcheckgood_v>();
+            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            if (sc == null)
+            {
+                sc = new searchcondition();
+                sc.UserID = userid;
+                sc.PageBrief = pagetag;
+                //guige
+                if (!string.IsNullOrEmpty(guige))
+                {
+                    if (guigeequal.Equals("="))
+                    {
+                        if (guigeand.Equals("and"))
+                            where = where.And(p => p.guige == guige);
+                        else
+                            where = where.Or(p => p.guige == guige);
+                    }
+                    if (guigeequal.Equals("like"))
+                    {
+                        if (guigeand.Equals("and"))
+                            where = where.And(p => p.guige.Contains(guige));
+                        else
+                            where = where.Or(p => p.guige.Contains(guige));
+                    }
+                }
+                if (!string.IsNullOrEmpty(guige))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "guige", guige, guigeequal, guigeand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "guige", "", guigeequal, guigeand);
+                //pihao
+                if (!string.IsNullOrEmpty(pihao))
+                {
+                    if (pihaoequal.Equals("="))
+                    {
+                        if (pihaoand.Equals("and"))
+                            where = where.And(p => p.pihao == pihao);
+                        else
+                            where = where.Or(p => p.pihao == pihao);
+                    }
+                    if (pihaoequal.Equals("like"))
+                    {
+                        if (pihaoand.Equals("and"))
+                            where = where.And(p => p.pihao.Contains(pihao));
+                        else
+                            where = where.Or(p => p.pihao.Contains(pihao));
+                    }
+                }
+                if (!string.IsNullOrEmpty(pihao))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pihao", pihao, pihaoequal, pihaoand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pihao", "", pihaoequal, pihaoand);
+                //cysl
+                if (!string.IsNullOrEmpty(cysl))
+                {
+                    if (cyslequal.Equals("="))
+                    {
+                        if (cysland.Equals("and"))
+                            where = where.And(p => p.cysl == double.Parse(cysl));
+                        else
+                            where = where.Or(p => p.cysl == double.Parse(cysl));
+                    }
+                    if (cyslequal.Equals(">"))
+                    {
+                        if (cysland.Equals("and"))
+                            where = where.And(p => p.cysl > double.Parse(cysl));
+                        else
+                            where = where.Or(p => p.cysl > double.Parse(cysl));
+                    }
+                    if (cyslequal.Equals("<"))
+                    {
+                        if (cysland.Equals("and"))
+                            where = where.And(p => p.cysl < double.Parse(cysl));
+                        else
+                            where = where.Or(p => p.cysl < double.Parse(cysl));
+                    }
+                }
+                if (!string.IsNullOrEmpty(cysl))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "cysl", cysl, cyslequal, cysland);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "cysl", "", cyslequal, cysland);
+
+                searchconditionService.GetInstance().AddEntity(sc);
+            }
+            else
+            {
+                sc.ConditionInfo = "";
+                //guige
+                if (!string.IsNullOrEmpty(guige))
+                {
+                    if (guigeequal.Equals("="))
+                    {
+                        if (guigeand.Equals("and"))
+                            where = where.And(p => p.guige == guige);
+                        else
+                            where = where.Or(p => p.guige == guige);
+                    }
+                    if (guigeequal.Equals("like"))
+                    {
+                        if (guigeand.Equals("and"))
+                            where = where.And(p => p.guige.Contains(guige));
+                        else
+                            where = where.Or(p => p.guige.Contains(guige));
+                    }
+                }
+                if (!string.IsNullOrEmpty(guige))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "guige", guige, guigeequal, guigeand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "guige", "", guigeequal, guigeand);
+                //pihao
+                if (!string.IsNullOrEmpty(pihao))
+                {
+                    if (pihaoequal.Equals("="))
+                    {
+                        if (pihaoand.Equals("and"))
+                            where = where.And(p => p.pihao == pihao);
+                        else
+                            where = where.Or(p => p.pihao == pihao);
+                    }
+                    if (pihaoequal.Equals("like"))
+                    {
+                        if (pihaoand.Equals("and"))
+                            where = where.And(p => p.pihao.Contains(pihao));
+                        else
+                            where = where.Or(p => p.pihao.Contains(pihao));
+                    }
+                }
+                if (!string.IsNullOrEmpty(pihao))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pihao", pihao, pihaoequal, pihaoand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pihao", "", pihaoequal, pihaoand);
+                //cysl
+                if (!string.IsNullOrEmpty(cysl))
+                {
+                    if (cyslequal.Equals("="))
+                    {
+                        if (cysland.Equals("and"))
+                            where = where.And(p => p.cysl == double.Parse(cysl));
+                        else
+                            where = where.Or(p => p.cysl == double.Parse(cysl));
+                    }
+                    if (cyslequal.Equals(">"))
+                    {
+                        if (cysland.Equals("and"))
+                            where = where.And(p => p.cysl > double.Parse(cysl));
+                        else
+                            where = where.Or(p => p.cysl > double.Parse(cysl));
+                    }
+                    if (cyslequal.Equals("<"))
+                    {
+                        if (cysland.Equals("and"))
+                            where = where.And(p => p.cysl < double.Parse(cysl));
+                        else
+                            where = where.Or(p => p.cysl < double.Parse(cysl));
+                    }
+                }
+                if (!string.IsNullOrEmpty(cysl))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "cysl", cysl, cyslequal, cysland);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "cysl", "", cyslequal, cysland);
+
+                searchconditionService.GetInstance().UpdateEntity(sc);
+            }
+            
+            ViewBag.SearchCondition = sc.ConditionInfo;
+
+            var tempData = ob_wms_cunhuoservice.InoutCheck(where.Compile()).ToPagedList<wms_inoutcheckgood_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.wms_cunhuo = tempData;
             return View(tempData);
         }

@@ -33,6 +33,37 @@ namespace CKWMS.Controllers
                     string[] scld = scl.Split(',');
                     switch (scld[0])
                     {
+                        case "chukubh":
+                            string chukubh = scld[1];
+                            string chukubhequal = scld[2];
+                            string chukubhand = scld[3];
+                            if (!string.IsNullOrEmpty(chukubh))
+                            {
+                                var tempdate = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ChukudanBH == chukubh.Trim() && p.IsDelete == false);
+                                var chukuid = tempdate.ID;
+                                if (chukubhequal.Equals("="))
+                                {
+                                    if (chukubhand.Equals("and"))
+                                        where = where.And(p => p.ChukuID == chukuid);
+                                    else
+                                        where = where.Or(p => p.ChukuID == chukuid);
+                                }
+                                if (chukubhequal.Equals(">"))
+                                {
+                                    if (chukubhand.Equals("and"))
+                                        where = where.And(p => p.ChukuID > chukuid);
+                                    else
+                                        where = where.Or(p => p.ChukuID > chukuid);
+                                }
+                                if (chukubhequal.Equals("<"))
+                                {
+                                    if (chukubhand.Equals("and"))
+                                        where = where.And(p => p.ChukuID < chukuid);
+                                    else
+                                        where = where.Or(p => p.ChukuID < chukuid);
+                                }
+                            }
+                            break;
                         case "shangpindm":
                             string shangpindm = scld[1];
                             string shangpindmequal = scld[2];
@@ -174,6 +205,10 @@ namespace CKWMS.Controllers
             int userid = (int)Session["user_id"];
             string pagetag = "wms_chukumx_index";
             string page = "1";
+            //chukubh
+            string chukubh = Request["chukubh"] ?? "";
+            string chukubhequal = Request["chukubhequal"] ?? "";
+            string chukubhand = Request["chukubhand"] ?? "";
             //shangpindm
             string shangpindm = Request["shangpindm"] ?? "";
             string shangpindmequal = Request["shangpindmequal"] ?? "";
@@ -201,6 +236,37 @@ namespace CKWMS.Controllers
                 sc = new searchcondition();
                 sc.UserID = userid;
                 sc.PageBrief = pagetag;
+                //chukubh
+                if (!string.IsNullOrEmpty(chukubh))
+                {
+                    var tempdate = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ChukudanBH == chukubh.Trim() && p.IsDelete == false);
+                    var chukuid = tempdate.ID;
+                    if (chukubhequal.Equals("="))
+                    {
+                        if (chukubhand.Equals("and"))
+                            where = where.And(p => p.ChukuID == chukuid);
+                        else
+                            where = where.Or(p => p.ChukuID == chukuid);
+                    }
+                    if (chukubhequal.Equals(">"))
+                    {
+                        if (chukubhand.Equals("and"))
+                            where = where.And(p => p.ChukuID > chukuid);
+                        else
+                            where = where.Or(p => p.ChukuID > chukuid);
+                    }
+                    if (chukubhequal.Equals("<"))
+                    {
+                        if (chukubhand.Equals("and"))
+                            where = where.And(p => p.ChukuID < chukuid);
+                        else
+                            where = where.Or(p => p.ChukuID < chukuid);
+                    }
+                }
+                if (!string.IsNullOrEmpty(chukubh))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "chukubh", chukubh, chukubhequal, chukubhand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "chukubh", "", chukubhequal, chukubhand);
                 //shangpindm
                 if (!string.IsNullOrEmpty(shangpindm))
                 {
@@ -323,6 +389,37 @@ namespace CKWMS.Controllers
             else
             {
                 sc.ConditionInfo = "";
+                //chukubh
+                if (!string.IsNullOrEmpty(chukubh))
+                {
+                    var tempdate = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ChukudanBH == chukubh.Trim() && p.IsDelete == false);
+                    var chukuid = tempdate.ID;
+                    if (chukubhequal.Equals("="))
+                    {
+                        if (chukubhand.Equals("and"))
+                            where = where.And(p => p.ChukuID == chukuid);
+                        else
+                            where = where.Or(p => p.ChukuID == chukuid);
+                    }
+                    if (chukubhequal.Equals(">"))
+                    {
+                        if (chukubhand.Equals("and"))
+                            where = where.And(p => p.ChukuID > chukuid);
+                        else
+                            where = where.Or(p => p.ChukuID > chukuid);
+                    }
+                    if (chukubhequal.Equals("<"))
+                    {
+                        if (chukubhand.Equals("and"))
+                            where = where.And(p => p.ChukuID < chukuid);
+                        else
+                            where = where.Or(p => p.ChukuID < chukuid);
+                    }
+                }
+                if (!string.IsNullOrEmpty(chukubh))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "chukubh", chukubh, chukubhequal, chukubhand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "chukubh", "", chukubhequal, chukubhand);
                 //shangpindm
                 if (!string.IsNullOrEmpty(shangpindm))
                 {
@@ -789,6 +886,37 @@ namespace CKWMS.Controllers
                     string[] scld = scl.Split(',');
                     switch (scld[0])
                     {
+                        case "chukubh":
+                            string chukubh = scld[1];
+                            string chukubhequal = scld[2];
+                            string chukubhand = scld[3];
+                            if (!string.IsNullOrEmpty(chukubh))
+                            {
+                                var tempdate = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ChukudanBH == chukubh.Trim() && p.IsDelete == false);
+                                var chukuid = tempdate.ID;
+                                if (chukubhequal.Equals("="))
+                                {
+                                    if (chukubhand.Equals("and"))
+                                        where = where.And(p => p.ChukuID == chukuid);
+                                    else
+                                        where = where.Or(p => p.ChukuID == chukuid);
+                                }
+                                if (chukubhequal.Equals(">"))
+                                {
+                                    if (chukubhand.Equals("and"))
+                                        where = where.And(p => p.ChukuID > chukuid);
+                                    else
+                                        where = where.Or(p => p.ChukuID > chukuid);
+                                }
+                                if (chukubhequal.Equals("<"))
+                                {
+                                    if (chukubhand.Equals("and"))
+                                        where = where.And(p => p.ChukuID < chukuid);
+                                    else
+                                        where = where.Or(p => p.ChukuID < chukuid);
+                                }
+                            }
+                            break;
                         case "shangpindm":
                             string shangpindm = scld[1];
                             string shangpindmequal = scld[2];

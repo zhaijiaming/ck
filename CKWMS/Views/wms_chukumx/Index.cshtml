@@ -42,6 +42,12 @@
     if (_searchcondition == null || _searchcondition == "")
     {
         SearchConditionModel scm = new SearchConditionModel();
+        scm.ItemCode = "chukubh";
+        scm.ItemTitle = "出库编号";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
         scm.ItemCode = "ShangpinDM";
         scm.ItemTitle = "商品代码";
         scm.ItemType = "System.String";
@@ -77,8 +83,8 @@
         if (scs.Length > 0)
         {
             SearchConditionModel scm = new SearchConditionModel();
-            scm.ItemCode = "ShangpinDM";
-            scm.ItemTitle = "商品代码";
+            scm.ItemCode = "chukubh";
+            scm.ItemTitle = "出库编号";
             scm.ItemType = "System.String";
             if (scs.Length > 1)
             {
@@ -89,8 +95,8 @@
             scms.Add(scm);
 
             scm = new SearchConditionModel();
-            scm.ItemCode = "ShangpinMC";
-            scm.ItemTitle = "商品名称";
+            scm.ItemCode = "ShangpinDM";
+            scm.ItemTitle = "商品代码";
             scm.ItemType = "System.String";
             if (scs.Length > 1)
             {
@@ -101,8 +107,8 @@
             scms.Add(scm);
 
             scm = new SearchConditionModel();
-            scm.ItemCode = "Guige";
-            scm.ItemTitle = "规格";
+            scm.ItemCode = "ShangpinMC";
+            scm.ItemTitle = "商品名称";
             scm.ItemType = "System.String";
             if (scs.Length > 1)
             {
@@ -113,8 +119,8 @@
             scms.Add(scm);
 
             scm = new SearchConditionModel();
-            scm.ItemCode = "Pihao";
-            scm.ItemTitle = "批号";
+            scm.ItemCode = "Guige";
+            scm.ItemTitle = "规格";
             scm.ItemType = "System.String";
             if (scs.Length > 1)
             {
@@ -125,14 +131,26 @@
             scms.Add(scm);
 
             scm = new SearchConditionModel();
-            scm.ItemCode = "MakeDate";
-            scm.ItemTitle = "录入日期";
-            scm.ItemType = "System.DateTime";
+            scm.ItemCode = "Pihao";
+            scm.ItemTitle = "批号";
+            scm.ItemType = "System.String";
             if (scs.Length > 1)
             {
                 scm.ItemValue = scs[4].Split(',')[1];
                 scm.ItemOpValue = scs[4].Split(',')[2];
                 scm.ItemJion = scs[4].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "MakeDate";
+            scm.ItemTitle = "录入日期";
+            scm.ItemType = "System.DateTime";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[5].Split(',')[1];
+                scm.ItemOpValue = scs[5].Split(',')[2];
+                scm.ItemJion = scs[5].Split(',')[3];
             }
             scms.Add(scm);
         }

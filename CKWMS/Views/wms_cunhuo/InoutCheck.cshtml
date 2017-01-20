@@ -42,8 +42,20 @@
     if (_searchcondition == null || _searchcondition == "")
     {
         SearchConditionModel scm = new SearchConditionModel();
-        scm.ItemCode = "RKMXID";
-        scm.ItemTitle = "明细序号";
+        scm.ItemCode = "guige";
+        scm.ItemTitle = "规格";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "pihao";
+        scm.ItemTitle = "批号";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "cysl";
+        scm.ItemTitle = "数量差异";
         scm.ItemType = "System.Int32";
         scms.Add(scm);
     }
@@ -53,14 +65,38 @@
         if (scs.Length > 0)
         {
             SearchConditionModel scm = new SearchConditionModel();
-            scm.ItemCode = "RKMXID";
-            scm.ItemTitle = "明细序号";
-            scm.ItemType = "System.Int32";
+            scm.ItemCode = "guige";
+            scm.ItemTitle = "规格";
+            scm.ItemType = "System.String";
             if (scs.Length > 1)
             {
                 scm.ItemValue = scs[0].Split(',')[1];
                 scm.ItemOpValue = scs[0].Split(',')[2];
                 scm.ItemJion = scs[0].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "pihao";
+            scm.ItemTitle = "批号";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[1].Split(',')[1];
+                scm.ItemOpValue = scs[1].Split(',')[2];
+                scm.ItemJion = scs[1].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "cysl";
+            scm.ItemTitle = "数量差异";
+            scm.ItemType = "System.Int32";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[2].Split(',')[1];
+                scm.ItemOpValue = scs[2].Split(',')[2];
+                scm.ItemJion = scs[2].Split(',')[3];
             }
             scms.Add(scm);
         }
