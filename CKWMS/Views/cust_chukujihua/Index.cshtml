@@ -19,7 +19,8 @@
             var _selval = "";
             $("#mydatatable tbody tr input[type=checkbox]").each(function () {
                 if (this.checked) {
-                    _selval =_selval+ $(this).val() + ",";
+                    //_selval = _selval + $(this).val() + ",";
+                    _selval = $(this).val() + ",";
                 }
             });
             if (_selval != "") {
@@ -39,8 +40,11 @@
                     success: function (data) {
                         if (data == -1)
                             alert("操作失败，请联系管理员！");
+                        else if (data == -3) {
+                            alert("已生成了出库单，不能再次生成出库dan！");
+                        }
                         else
-                            location.href("/cust_chukujihua/index");
+                            location.reload();
                     }
                 });
             }
@@ -165,6 +169,12 @@
         scm.ItemTitle = "客户单号";
         scm.ItemType = "System.String";
         scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "MakeDate";
+        scm.ItemTitle = "录入日期";
+        scm.ItemType = "System.DateTime";
+        scms.Add(scm);
     }
     else
     {
@@ -209,6 +219,18 @@
                 scm.ItemValue = scs[2].Split(',')[1];
                 scm.ItemOpValue = scs[2].Split(',')[2];
                 scm.ItemJion = scs[2].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "MakeDate";
+            scm.ItemTitle = "录入日期";
+            scm.ItemType = "System.DateTime";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[3].Split(',')[1];
+                scm.ItemOpValue = scs[3].Split(',')[2];
+                scm.ItemJion = scs[3].Split(',')[3];
             }
             scms.Add(scm);
         }

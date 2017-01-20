@@ -578,13 +578,13 @@ namespace CKWMS.Controllers
                     {
                         _ckd.JihuaZT = 5;
                         _ckd.MakeDate = DateTime.Now;
-                        var backval=ob_wms_chukudanservice.UpdateEntity(_ckd);
+                        var backval = ob_wms_chukudanservice.UpdateEntity(_ckd);
                         if (!backval)
                         {
                             _ckd.JihuaZT = 6;
                             ob_wms_chukudanservice.UpdateEntity(_ckd);
                             return Json(-2);
-                       }
+                        }
                     }
                     else
                         return Json(-1);
@@ -844,6 +844,11 @@ namespace CKWMS.Controllers
                     cust_chukujihua _ckjh = ServiceFactory.cust_chukujihuaservice.GetEntityById(p => p.ID == int.Parse(ck) && p.IsDelete == false);
                     if (_ckjh != null)
                     {
+                        if (_ckjh.ChukudanSL != null)
+                        {
+                            if (_ckjh.ChukudanSL >=1)
+                                return Json(-3);
+                        }
                         wms_chukudan _ckd = new wms_chukudan();
                         _ckd.BaifangQY = "";
                         _ckd.BaoshuiSF = false;
@@ -862,7 +867,7 @@ namespace CKWMS.Controllers
                         _ckd.MakeMan = _userid;
                         _ckd.XinxiLY = 1;
                         _ckd.YunsongFS = 1;
-                        _ckd.ChukuRQ =DateTime.Parse(DateTime.Now.ToShortDateString());
+                        _ckd.ChukuRQ = DateTime.Parse(DateTime.Now.ToShortDateString());
 
                         //_ckd.ChukuRQ = _ckjh.ChukuRQ;
                         _ckd.JihuaID = _ckjh.ID;
@@ -888,7 +893,7 @@ namespace CKWMS.Controllers
                             else
                                 _ckjh.ChukudanSL = _ckjh.ChukudanSL + 1;
                             ServiceFactory.cust_chukujihuaservice.UpdateEntity(_ckjh);
-                            
+
                             var _ckjhmx = ServiceFactory.cust_chukujihuamxservice.LoadEntities(p => p.JihuaID == _ckjh.ID && p.IsDelete == false).ToList<cust_chukujihuamx>();
                             foreach (var ckjhmx in _ckjhmx)
                             {
@@ -1066,7 +1071,7 @@ namespace CKWMS.Controllers
             if (string.IsNullOrEmpty(_ids))
                 return Json(-1);
             string[] _efs = _ids.Split(',');
-            List<wms_chukudan> _ckds=new List<wms_chukudan>();
+            List<wms_chukudan> _ckds = new List<wms_chukudan>();
             foreach (var _ckid in _efs)
             {
                 wms_chukudan _ckd = ob_wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_ckid));
@@ -1075,7 +1080,7 @@ namespace CKWMS.Controllers
                     _ckds.Add(_ckd);
                 }
             }
-            var tempData =_ckds;
+            var tempData = _ckds;
             ViewBag.ExpressOut = tempData;
             ViewData.Model = tempData;
             //return View();

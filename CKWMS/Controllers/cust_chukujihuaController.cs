@@ -92,6 +92,35 @@ namespace CKWMS.Controllers
                                 }
                             }
                             break;
+                        case "makedate":
+                            string makedate = scld[1];
+                            string makedateequal = scld[2];
+                            string makedateand = scld[3];
+                            if (!string.IsNullOrEmpty(makedate))
+                            {
+                                if (makedateequal.Equals("="))
+                                {
+                                    if (makedateand.Equals("and"))
+                                        where = where.And(p => p.MakeDate.ToString("yyyy-MM-dd") == makedate);
+                                    else
+                                        where = where.Or(p => p.MakeDate.ToString("yyyy-MM-dd") == makedate);
+                                }
+                                if (makedateequal.Equals(">"))
+                                {
+                                    if (makedateand.Equals("and"))
+                                        where = where.And(p => p.MakeDate > DateTime.Parse(makedate));
+                                    else
+                                        where = where.Or(p => p.MakeDate > DateTime.Parse(makedate));
+                                }
+                                if (makedateequal.Equals("<"))
+                                {
+                                    if (makedateand.Equals("and"))
+                                        where = where.And(p => p.MakeDate < DateTime.Parse(makedate));
+                                    else
+                                        where = where.Or(p => p.MakeDate < DateTime.Parse(makedate));
+                                }
+                            }
+                            break;
                         default:
                             break;
                     }
@@ -125,6 +154,10 @@ namespace CKWMS.Controllers
             string KehuDH = Request["KehuDH"] ?? "";
             string KehuDHequal = Request["KehuDHequal"] ?? "";
             string KehuDHand = Request["KehuDHand"] ?? "";
+            //makedate
+            string makedate = Request["makedate"] ?? "";
+            string makedateequal = Request["makedateequal"] ?? "";
+            string makedateand = Request["makedateand"] ?? "";
             Expression<Func<cust_chukujihua, bool>> where = PredicateExtensionses.True<cust_chukujihua>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -192,6 +225,36 @@ namespace CKWMS.Controllers
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "KehuDH", "", KehuDHequal, KehuDHand);
                 searchconditionService.GetInstance().AddEntity(sc);
+                //makedate
+                if (!string.IsNullOrEmpty(makedate))
+                {
+                    if (makedateequal.Equals("="))
+                    {
+                        if (makedateand.Equals("and"))
+                            where = where.And(p => p.MakeDate.ToString("yyyy-MM-dd") == makedate);
+                        else
+                            where = where.Or(p => p.MakeDate.ToString("yyyy-MM-dd") == makedate);
+                    }
+                    if (makedateequal.Equals(">"))
+                    {
+                        if (makedateand.Equals("and"))
+                            where = where.And(p => p.MakeDate > DateTime.Parse(makedate));
+                        else
+                            where = where.Or(p => p.MakeDate > DateTime.Parse(makedate));
+                    }
+                    if (makedateequal.Equals("<"))
+                    {
+                        if (makedateand.Equals("and"))
+                            where = where.And(p => p.MakeDate < DateTime.Parse(makedate));
+                        else
+                            where = where.Or(p => p.MakeDate < DateTime.Parse(makedate));
+                    }
+                }
+                if (!string.IsNullOrEmpty(makedate))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "makedate", makedate, makedateequal, makedateand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "makedate", "", makedateequal, makedateand);
+                searchconditionService.GetInstance().AddEntity(sc);
             }
             else
             {
@@ -255,6 +318,35 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "KehuDH", KehuDH, KehuDHequal, KehuDHand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "KehuDH", "", KehuDHequal, KehuDHand);
+                //makedate
+                if (!string.IsNullOrEmpty(makedate))
+                {
+                    if (makedateequal.Equals("="))
+                    {
+                        if (makedateand.Equals("and"))
+                            where = where.And(p => p.MakeDate.ToString("yyyy-MM-dd") == makedate);
+                        else
+                            where = where.Or(p => p.MakeDate.ToString("yyyy-MM-dd") == makedate);
+                    }
+                    if (makedateequal.Equals(">"))
+                    {
+                        if (makedateand.Equals("and"))
+                            where = where.And(p => p.MakeDate > DateTime.Parse(makedate));
+                        else
+                            where = where.Or(p => p.MakeDate > DateTime.Parse(makedate));
+                    }
+                    if (makedateequal.Equals("<"))
+                    {
+                        if (makedateand.Equals("and"))
+                            where = where.And(p => p.MakeDate < DateTime.Parse(makedate));
+                        else
+                            where = where.Or(p => p.MakeDate < DateTime.Parse(makedate));
+                    }
+                }
+                if (!string.IsNullOrEmpty(makedate))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "makedate", makedate, makedateequal, makedateand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "makedate", "", makedateequal, makedateand);
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;
