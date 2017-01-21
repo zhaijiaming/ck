@@ -135,7 +135,10 @@ namespace CKWMS.reports
                                     if (tempdata.Kuaidi != null)
                                     {
                                         var tran_company = ServiceFactory.base_yunshugsservice.GetEntityById(p => p.ID == tempdata.Kuaidi && p.IsDelete == false);
-                                        drjhdt["Kuaidi"] = tran_company.Mingcheng;
+                                        if (tran_company == null)
+                                            drjhdt["Kuaidi"] = "";
+                                        else
+                                            drjhdt["Kuaidi"] = tran_company.Mingcheng;
                                     }
                                     drjhdt["JiesuanFS"] = MvcApplication.SettlingType[tempdata.JiesuanFS == null ? int.Parse("0") : (int)tempdata.JiesuanFS];
                                     dtjhdt.Rows.Add(drjhdt);

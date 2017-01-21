@@ -10,11 +10,23 @@
     $(document).ready(function () {
         var _selall = false;
         var _selr;
-        $("#ShengchanRQ").datepicker();
-        $("#ShixiaoRQ").datepicker();
+        //$("#ShengchanRQ").datepicker();
+        //$("#ShixiaoRQ").datepicker();
         $("#bt_fn_print").click(function () {
             alert("print now");
             $("#pl_fun").hide();
+        });
+        $("#ShouhuoJS").blur(function () {
+            var _js = $("#ShouhuoJS").val();
+            if (_js == "")
+                return;
+            var _hsl = $("#Huansuanlv").val();
+            if (_hsl == "") {
+                alert("换算率为空时不能使用件数录入！");
+                return;
+            }
+            var _sl = Number(_js) * Number(_hsl);
+            $("#YishouSL").val(_sl);
         });
         $(".icon-gear").click(function () {
             $("#pl_fun").show();
@@ -95,6 +107,7 @@
             $("#Tiji").val(_rk.data("tj"));
             $("#Jifeidun").val(_rk.data("jfd"));
             $("#Beizhu").val(_rk.data("bz"));
+            $("#Huansuanlv").val(_rk.data("hsl"));
             $("#pl_Shouhuo").show();
         });
         $("#pl_close").click(function () {
@@ -114,6 +127,11 @@
         });
         $("#shsave").click(function () {
             var _shok = 0;
+            if ($("#ShixiaoRQ").val() == "")
+            {
+                alert("失效日期必须输入！");
+                return;
+            }
             if (eval($("#YishouSL").val()) > eval($("#selnum").val())) {
                 if (!confirm("收货数量大于预收数量，确定需要保存吗？"))
                     return;
@@ -192,6 +210,12 @@
                 success: function (data) {
                     if (data == -1)
                         alert("收货信息保存失败，请重试！");
+                    else if(data==-2)
+                        alert("失效日期不能为今天！");
+                    else if(data==-3)
+                        alert("过期货品不能入库！");
+                    else if(data==-4)
+                        alert("生产日期和失效日期错乱，请检查！");
                     else {
                         $("#dt_rk tr input[type=checkbox]").each(function () {
                             if ($(this).val() == $("#selrk").val()) {
@@ -318,6 +342,8 @@
                         filltable = filltable + data[i].Yanshou;
                         filltable = filltable + '" data-sj="';
                         filltable = filltable + data[i].ShangjiaSL;
+                        filltable = filltable + '" data-hsl="';
+                        filltable = filltable + data[i].Huansuanlv;
                         filltable = filltable + '" data-sl="';
                         filltable = filltable + data[i].Shuliang;
                         filltable = filltable + '"></label></div></td><td>';
@@ -523,7 +549,7 @@
         </div>
     </div>
 </div>
-<div id="pl_Shouhuo" class="panel panel-info" style="display:none;position:fixed;top:100px;left:200px;width:700px;height:550px;z-index:999;">
+<div id="pl_Shouhuo" class="panel panel-info" style="display:none;position:fixed;top:100px;left:200px;width:700px;z-index:999;">
     <div class="panel-heading">
         <h3 class="panel-title">收货登记<button id="pl_close" class="pull-right">X</button></h3>
     </div>
@@ -561,7 +587,19 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for="ShixiaoRQ">失效日期</label>
             <div class="col-sm-10">
-                <input id="ShixiaoRQ" type="date" class="form-control" value="@string.Format("{0:yyyy-MM-dd}",DateTime.Now)" name="ShixiaoRQ">
+                <input id="ShixiaoRQ" type="date" class="form-control" value="" name="ShixiaoRQ">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="ShouhuoJS">收货件数</label>
+            <div class="col-sm-10">
+                <input class="form-control" data-val="true" data-val-number="字段 已收数量 必须是一个数字。" id="ShouhuoJS" type="text" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Huansuanlv">换算率</label>
+            <div class="col-sm-10">
+                <input class="form-control" data-val="true" readonly data-val-number="字段 已收数量 必须是一个数字。" id="Huansuanlv" type="text" value="" />
             </div>
         </div>
         <div class="form-group">

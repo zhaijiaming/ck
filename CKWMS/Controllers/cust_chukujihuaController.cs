@@ -224,7 +224,7 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "KehuDH", KehuDH, KehuDHequal, KehuDHand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "KehuDH", "", KehuDHequal, KehuDHand);
-                searchconditionService.GetInstance().AddEntity(sc);
+                //searchconditionService.GetInstance().AddEntity(sc);
                 //makedate
                 if (!string.IsNullOrEmpty(makedate))
                 {

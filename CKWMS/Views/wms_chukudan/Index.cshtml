@@ -19,15 +19,16 @@
             }
         });
         $("#bt_Express").click(function () {
-            var sDel = "";
-            $("#mydatatable tbody tr input[type=checkbox]").each(function () {
-                if (this.checked) {
-                    sDel = sDel + ", " + $(this).val()
-                }
-            });
-            if (sDel.length < 2)
-                return;
-            window.open("/wms_chukudan/expressexport?ck=" + sDel, "_blank");
+            //var sDel = "";
+            //$("#mydatatable tbody tr input[type=checkbox]").each(function () {
+            //    if (this.checked) {
+            //        sDel = sDel + ", " + $(this).val()
+            //    }
+            //});
+            //if (sDel.length < 2)
+            //    return;
+            //window.open("/wms_chukudan/expressexport?ck=" + sDel, "_blank");
+            window.open("/wms_chukudan/expressexport" , "_blank");
         });
         $("#pl_cargo_close").click(function () {
             $("#pl_cargo").hide();

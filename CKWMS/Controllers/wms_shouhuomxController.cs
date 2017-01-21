@@ -697,6 +697,12 @@ namespace CKWMS.Controllers
                 _jfd = "0";
             try
             {
+                if (DateTime.Parse(_sxrq) == DateTime.Parse(DateTime.Now.ToShortDateString()))
+                    return Json(-2);
+                if (DateTime.Parse(_sxrq) < DateTime.Parse(DateTime.Now.ToShortDateString()))
+                    return Json(-3);
+                if (DateTime.Parse(_sxrq) <= DateTime.Parse(_scrq))
+                    return Json(-4);
                 wms_rukumx _rkmx = ServiceFactory.wms_rukumxservice.GetEntityById(p => p.ID == int.Parse(_rkmxid));
                 if (_rkmx != null)
                 {
