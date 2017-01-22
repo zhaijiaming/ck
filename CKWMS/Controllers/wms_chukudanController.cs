@@ -1054,6 +1054,11 @@ namespace CKWMS.Controllers
                                     _ckmx = ServiceFactory.wms_chukumxservice.AddEntity(_ckmx);
                                 }
                             }
+                            var _ckmxs = ServiceFactory.wms_chukumxservice.LoadEntities(p => p.ChukuID == _ckd.ID && p.IsDelete == false).ToList();
+                            var _totalmxsl = _ckmxs.Sum(p => p.ChukuSL);
+                            var _totaljhsl = _ckjhmx.Sum(p => p.JihuaSL);
+                            if (_totaljhsl != _totalmxsl)
+                                return Json(-4);
                         }
                     }
                 }

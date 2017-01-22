@@ -15,6 +15,18 @@
             window.open("/wms_cunhuo/PrintShouHuoList?sjdid=" + sjdid);
             $("#pl_fun").hide();
         });
+        $("#ShouhuoJS").blur(function () {
+            var _js = $("#ShouhuoJS").val();
+            if (_js == "")
+                return;
+            var _hsl = $("#Huansuanlv").val();
+            if (_hsl == "") {
+                alert("换算率为空时不能使用件数录入！");
+                return;
+            }
+            var _sl = Number(_js) * Number(_hsl);
+            $("#sjSL").val(_sl);
+        });
         $(".icon-gear").click(function () {
             $("#pl_fun").show();
         });
@@ -85,6 +97,7 @@
             $("#sjzl").val(_sdata.data("zl"));
             $("#sjjz").val(_sdata.data("jz"));
             $("#sjtj").val(_sdata.data("tj"));
+            $("#Huansuanlv").val(_sdata.data("hsl"));
             $("#pl_yanshou").show();
         });
         $("#pl_close").click(function () {
@@ -175,6 +188,13 @@
             });
         });
         $("#kuwei").blur(function () {
+            if ($("#kuwei").val() == "")
+                return;
+            var _kw = $("#kuwei").val();
+            if (_kw.indexOf("-") < 0){
+                var _nkw = _kw.substr(0, 3) + "-" + _kw.substr(3, 2) + "-" + _kw.substr(5, 2) + "-" + _kw.substr(7, 2);
+                $("#kuwei").val(_nkw);
+            }
             $.post("/wms_kuwei/validlocation", { loc: $("#kuwei").val() }, function (data) {
                 if (data == -1) {
                     alert($("#kuwei").val() + "，该库位不存在或不可用，请重新选择！");
@@ -287,7 +307,8 @@
                                        data-zl="@item.Zhongliang"
                                        data-jz="@item.Jingzhong"
                                        data-jf="@item.Jifeidun"
-                                       data-sj="@item.ShangjiaSL">
+                                       data-sj="@item.ShangjiaSL"
+                                       data-hsl="@item.Huansuanlv">
                             </label>
                         </td>
                         <td><i class="icon-columns"></i></td>
@@ -333,15 +354,27 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="sjSL">上架数量</label>
-            <div class="col-sm-10">
-                <input class="form-control" id="sjSL" name="sjSL" type="text" value="" />
-            </div>
-        </div>
-        <div class="form-group">
             <label class="control-label col-sm-2" for="kuwei">库位</label>
             <div class="col-sm-10">
                 <input class="form-control" id="kuwei" name="kuwei" type="text" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="ShouhuoJS">上架件数</label>
+            <div class="col-sm-10">
+                <input class="form-control" data-val="true" data-val-number="字段 已收数量 必须是一个数字。" id="ShouhuoJS" type="text" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Huansuanlv">换算率</label>
+            <div class="col-sm-10">
+                <input class="form-control" data-val="true" readonly data-val-number="字段 已收数量 必须是一个数字。" id="Huansuanlv" type="text" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="sjSL">上架数量</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="sjSL" name="sjSL" type="text" value="" />
             </div>
         </div>
         <div class="form-group">

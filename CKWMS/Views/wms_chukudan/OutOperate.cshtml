@@ -95,6 +95,9 @@
                 $("#JiesuanFS").val(1);
             else
                 $("#JiesuanFS").val(_selv.data("js"));
+            $("#lxren").val(_selv.data("man"));
+            $("#lxdh").val(_selv.data("tel"));
+            $("#ysdizhi").val(_selv.data("addr"));
             $("#pl_kd").show();
         });
         $("#pl_kd_close").click(function () {
@@ -103,6 +106,9 @@
             $("#Kuaidi").val(0);
             $("#ydhm").val("");
             $("#JiesuanFS").val();
+            $("#lxren").val("");
+            $("#lxdh").val("");
+            $("#ysdizhi").val("");
         });
         $("#pl_kd_cancel").click(function () {
             $("#pl_kd").hide();
@@ -110,6 +116,9 @@
             $("#Kuaidi").val(0);
             $("#ydhm").val("");
             $("#JiesuanFS").val();
+            $("#lxren").val("");
+            $("#lxdh").val("");
+            $("#ysdizhi").val("");
         });
         $("#pl_kd_ok").click(function () {
             if ($("#ydhm").val() == "") {
@@ -765,7 +774,7 @@
         </div>
     </div>
 </div>
-<div id="pl_kd" class="panel panel-primary" style="display:none;position:fixed;top:100px;left:200px;width:400px;height:300px;z-index:999;">
+<div id="pl_kd" class="panel panel-primary" style="display:none;position:fixed;top:100px;left:200px;width:400px;z-index:999;">
     <div class="panel-heading">
         <h3 class="panel-title">快递登记<button id="pl_kd_close" class="pull-right">X</button></h3>
     </div>
@@ -798,6 +807,24 @@
                 <label class="col-sm-3">结算方式</label>
                 <div class="col-sm-9">
                     @Html.SelectList_Common("JiesuanFS", "结算方式")
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3">联系人</label>
+                <div class="col-sm-9">
+                    <input type="text" id="lxren" readonly class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3">联系电话</label>
+                <div class="col-sm-9">
+                    <input type="text" id="lxdh" readonly class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3">运送地址</label>
+                <div class="col-sm-9">
+                    <input type="text" id="ysdizhi" readonly class="form-control" />
                 </div>
             </div>
         </div>

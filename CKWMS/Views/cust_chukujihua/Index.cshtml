@@ -43,6 +43,8 @@
                         else if (data == -3) {
                             alert("已生成了出库单，不能再次生成出库dan！");
                         }
+                        else if(data==-4)
+                            alert("生成的出库单商品和指令不符，请联系管理员！");
                         else
                             location.reload();
                     }

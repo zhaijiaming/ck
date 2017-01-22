@@ -275,17 +275,17 @@ namespace CKWMS.reports
                                     drJSGRtx["JibenDW"] = _mx.JibenDW == null ? "" : _mx.JibenDW.Trim();
 
                                     var spxxData = ServiceFactory.base_shangpinxxservice.GetEntityById(p => p.ID == _mx.ShangpinID && p.IsDelete == false);
-                                    if(spxxData != null)
+                                    if (spxxData != null)
                                     {
                                         drJSGRtx["ShangpinMS"] = spxxData.ShangpinMS == null ? "" : spxxData.ShangpinMS;
                                     }
-                                    
+
                                     JSGRChukuJS = _mx.JianhuoSL / _mx.Huansuanlv == null ? int.Parse("0.00") : (float)_mx.JianhuoSL / _mx.Huansuanlv;
                                     drJSGRtx["ChukuJS"] = string.Format("{0:0.00}", JSGRChukuJS);
 
                                     JSGRtx_ChukuJSs += (long)JSGRChukuJS;//件数总计
                                     JSGRtx_JianhuoSLs += (long)_mx.JianhuoSL;//数量总计
-                                    
+
                                     wms_chukudan _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid) && p.IsDelete == false);
                                     if (_ckd != null)
                                     {
@@ -295,7 +295,11 @@ namespace CKWMS.reports
                                     base_shengchanqiye _scqy = ServiceFactory.base_shengchanqiyeservice.GetEntityById(p => p.Qiyemingcheng == _mx.Changjia && p.IsDelete == false);
                                     if (_scqy != null)
                                     {
-                                        drJSGRtx["ShengchanxukeBH"] = _scqy.ShengchanxukeBH == null ? "" : _scqy.ShengchanxukeBH.Trim();
+                                        if (_scqy.ShengchanxukeBH != null)
+                                            drJSGRtx["ShengchanxukeBH"] = _scqy.Qiyemingcheng.Trim() + "/" + _scqy.ShengchanxukeBH.Trim();
+                                        else
+                                            drJSGRtx["ShengchanxukeBH"] = _scqy.Qiyemingcheng;
+                                        //drJSGRtx["ShengchanxukeBH"] = _scqy.ShengchanxukeBH == null ? "" : _scqy.ShengchanxukeBH.Trim();
                                     }
                                     //注册证&备案编号2选1
                                     if (string.IsNullOrEmpty(_mx.Zhucezheng))
@@ -352,7 +356,7 @@ namespace CKWMS.reports
                                     }
                                     drJSGRckd["JiesuanFS"] = MvcApplication.SettlingType[ckd.JiesuanFS == null ? int.Parse("0") : (int)ckd.JiesuanFS];
                                 }
-                                drJSGRckd["tx_ChukuJSs"] = string.Format("{0:0.00}", JSGRtx_ChukuJSs); 
+                                drJSGRckd["tx_ChukuJSs"] = string.Format("{0:0.00}", JSGRtx_ChukuJSs);
                                 drJSGRckd["tx_JianhuoSLs"] = string.Format("{0:0.00}", JSGRtx_JianhuoSLs);
                                 dtJSGRckd.Rows.Add(drJSGRckd);
                             }
