@@ -6,16 +6,16 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>2.1165cm</Width>
+              <Width>1.92913cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.97708cm</Width>
+              <Width>2.24166cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.03904cm</Width>
+              <Width>2.41162cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.12995cm</Width>
+              <Width>2.62724cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.66465cm</Width>
@@ -45,12 +45,12 @@
               <Width>1.51786cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.02917cm</Width>
+              <Width>2.74131cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.62646cm</Height>
+              <Height>0.78437cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -117,7 +117,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>商品描述</Value>
+                              <Value>商品名称</Value>
                               <Style>
                                 <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -173,7 +173,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>商品名称</Value>
+                              <Value>商品描述</Value>
                               <Style>
                                 <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -898,14 +898,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="ShangpinMS1">
+                    <Textbox Name="ShangpinMC1">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!ShangpinMS.Value</Value>
+                              <Value>=Fields!ShangpinMC.Value</Value>
                               <Style>
                                 <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -917,7 +917,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>ShangpinMS1</rd:DefaultName>
+                      <rd:DefaultName>ShangpinMC1</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -953,14 +953,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="ShangpinMC">
+                    <Textbox Name="ShangpinMS">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!ShangpinMC.Value</Value>
+                              <Value>=Fields!ShangpinMS.Value</Value>
                               <Style>
                                 <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -972,7 +972,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>ShangpinMC</rd:DefaultName>
+                      <rd:DefaultName>ShangpinMS</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -2345,8 +2345,9 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
-        <Height>1.95875cm</Height>
-        <Width>25.1173cm</Width>
+        <Left>0.3175cm</Left>
+        <Height>2.11666cm</Height>
+        <Width>24.77653cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2357,7 +2358,7 @@
     <Height>0.83333in</Height>
     <Style />
   </Body>
-  <Width>11.24498in</Width>
+  <Width>10.03665in</Width>
   <Page>
     <PageHeader>
       <Height>4.13744cm</Height>
