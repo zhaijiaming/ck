@@ -428,7 +428,7 @@ namespace CKWMS.Controllers
                             _ng = true;
                         foreach(var mx in _shmx)
                         {
-                            if (mx.Shuliang != mx.ShangjiaSL)
+                            if (mx.Shuliang != mx.ShangjiaSL || mx.Yanshou==false)
                             {
                                 _ng = true;
                                 break;
