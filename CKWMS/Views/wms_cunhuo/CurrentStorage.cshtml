@@ -76,6 +76,12 @@
         scm.ItemTitle = "入库日期";
         scm.ItemType = "System.DateTime";
         scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "Chanpinxian";
+        scm.ItemTitle = "产品线";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
     }
     else
     {
@@ -181,6 +187,19 @@
                 scm.ItemJion = scs[7].Split(',')[3];
             }
             scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "Chanpinxian";
+            scm.ItemTitle = "产品线";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[8].Split(',')[1];
+                scm.ItemOpValue = scs[8].Split(',')[2];
+                scm.ItemJion = scs[8].Split(',')[3];
+            }
+            scms.Add(scm);
+
         }
     }
 }
@@ -228,6 +247,8 @@
                     <td>序列码</td>
                     <td>数量</td>
                     <td>单位</td>
+                    <td>换算率</td>
+                    <td>件数</td>
                     <td>质量</td>
                     <td>状态</td>
                     <td>说明</td>
@@ -247,7 +268,7 @@
                         <td>@item.ShangpinDM</td>
                         <td>@item.ShangpinMC</td>
                         <td>@item.Guige</td>
-                        <td>@Html.GetDataValue_ID("商品","产品线",(int)item.ShangpinID)</td>
+                        <td>@item.cpxmingcheng</td>
                         <td>@item.Zhucezheng</td>
                         <td>@item.Pihao</td>
                         <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ == null ? "" : item.ShengchanRQ)</td>
@@ -255,6 +276,8 @@
                         <td>@item.Xuliema</td>
                         <td>@item.sshuliang</td>
                         <td>@item.JibenDW</td>
+                        <td>@item.Huansuanlv</td>
+                        <td>@string.Format("{0}", item.Huansuanlv != null && item.Huansuanlv > 0 ? item.sshuliang / item.Huansuanlv : item.sshuliang)</td>
                         <td>@Html.Encode(item.HegeSF == true? "合格":"不合格")</td>
                         <td>@Html.GetCommonValue_ID("存货状态",(int)(item.CunhuoZT==null?0:item.CunhuoZT))</td>
                         <td>@item.CunhuoSM</td>
@@ -266,4 +289,31 @@
     <div class="pager">
         @Html.PagedListPager((IPagedList)Model, page => Url.Action("CurrentStorage", new { page }))
     </div>
+    <div class="row">
+        <p>&emsp;数量总计:@ViewBag.totalproduct</p>
+        <p class="pull-right">&emsp;件数总计:@ViewBag.totalbox</p>
+
+    </div>
 </div>
+<div id="pl_fun" class="panel panel-primary" style="display:none;position:fixed;top:200px;left:300px;overflow:auto;">
+    <div class="panel-heading tuodong">
+        <h3 class="panel-title">产品线过滤<button id="pl_fn_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="form-group">
+                <div class="col-sm-4">
+                    <label>选择产品线</label>
+                </div>
+                <div class="col-sm-8">
+                    @Html.SelectList_Auto("Chanpinxian", "产品线", "")
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div>
+                <input type="button" class="form-control btn btn-default" id="Yes_print" value="查询" />
+            </div>
+        </div>
+    </div>
+    </div>

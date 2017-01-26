@@ -62,11 +62,11 @@
             $("#pl_xz").show();
         });
         $("#dt_xz tbody").on("dblclick", "tr", function () {
-            var _ph = $(this).find("td").eq(8).text();
-            var _zcz = $(this).find("td").eq(7).text();
-            var _scrq = $(this).find("td").eq(9).text();
-            var _sxrq = $(this).find("td").eq(10).text();
-            var _xlm = $(this).find("td").eq(11).text();
+            var _ph = $(this).find("td").eq(9).text();
+            var _zcz = $(this).find("td").eq(8).text();
+            var _scrq = $(this).find("td").eq(10).text();
+            var _sxrq = $(this).find("td").eq(11).text();
+            var _xlm = $(this).find("td").eq(12).text();
             $.ajax({
                 async: true,
                 beforeSend: function () {
@@ -157,7 +157,7 @@
         $("#mydatatable tbody tr").each(function () {
             outnum =outnum+Number($(this).find("td").eq(10).text());
         });
-        alert(outnum);
+        //alert(outnum);
         if (outnum == number($("#maxval").val()))
             alert("ok");
         else
@@ -200,22 +200,24 @@
                         filltable = filltable + '" data-zt="';
                         filltable = filltable + data[i].CunhuoZT;
                         filltable = filltable + '" data-zl="';
-                        filltable = filltable + data[i].zl;
+                        filltable = filltable + data[i].szhongliang;
                         filltable = filltable + '" data-jz="';
-                        filltable = filltable + data[i].jz;
+                        filltable = filltable + data[i].sjingzhong;
                         filltable = filltable + '" data-tj="';
-                        filltable = filltable + data[i].tj;
+                        filltable = filltable + data[i].stiji;
                         filltable = filltable + '" data-jf="';
-                        filltable = filltable + data[i].jfd;
+                        filltable = filltable + data[i].sjfd;
                         filltable = filltable + '"/></td><td>';
                         filltable = filltable + data[i].ShangpinDM;
                         filltable = filltable + '</td><td>';
                         filltable = filltable + data[i].ShangpinMC;
                         filltable = filltable + '</td><td>';
-                        filltable = filltable + data[i].chsl;
+                        filltable = filltable + data[i].Kuwei;
+                        filltable = filltable + '</td><td>';
+                        filltable = filltable + data[i].sshuliang;
                         filltable = filltable + '</td><td>';
                         if (data[i].sdsl != null)
-                            filltable = filltable + data[i].sdsl;
+                            filltable = filltable + data[i].DaijianSL;
                         else
                             filltable = filltable + '0';
                         filltable = filltable + '</td><td>';
@@ -237,7 +239,10 @@
                         filltable = filltable + '</td><td>';
                         filltable = filltable + data[i].Huansuanlv;
                         filltable = filltable + '</td><td>';
-                        filltable = filltable + data[i].Changjia;
+                        if (data[i].Huansuanlv != null && data[i].Huansuanlv > 0)
+                            filltable = filltable + Number(data[i].sshuliang) / Number(data[i].Huansuanlv);
+                        else
+                            filltable = filltable + Number(data[i].sshuliang);
                         filltable = filltable + '</td><td>';
                         filltable = filltable + data[i].Chandi;
                         filltable = filltable + '</td><td>';
@@ -326,6 +331,7 @@
                     <td>基本单位</td>
                     <td>包装单位</td>
                     <td>换算率</td>
+                    <td>件数</td>
                     <td>厂家</td>
                     <td>产地</td>
                     <td>重量</td>
@@ -360,6 +366,7 @@
                         <td>@item.JibenDW</td>
                         <td>@item.BaozhuangDW</td>
                         <td>@item.Huansuanlv</td>
+                        <td>@string.Format("{0}",item.Huansuanlv>0?item.ChukuSL/item.Huansuanlv:item.ChukuSL)</td>
                         <td>@item.Changjia</td>
                         <td>@item.Chandi</td>
                         <td>@item.Zhongliang</td>
@@ -408,6 +415,7 @@
                         <td></td>
                         <td>代码</td>
                         <td>商品</td>
+                        <td>库位</td>
                         <td>库存</td>
                         <td>锁定</td>
                         <td>单位</td>
@@ -419,7 +427,7 @@
                         <td>序列码</td>
                         <td>包装单位</td>
                         <td>换算率</td>
-                        <td>厂家</td>
+                        <td>件数</td>
                         <td>产地</td>
                         <td>条码</td>
                         <td>状态</td>

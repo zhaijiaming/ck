@@ -213,8 +213,8 @@
                     <td>基本单位</td>
                     <td>包装单位</td>
                     <td>换算率</td>
-                    <td>厂家</td>
-                    <td>产地</td>
+                    <td>到货件数</td>
+                    <td>已收件数</td>
                     <td>重量</td>
                     <td>净重</td>
                     <td>体积</td>
@@ -247,8 +247,8 @@
                         <td>@item.JibenDW</td>
                         <td>@item.BaozhuangDW</td>
                         <td>@item.Huansuanlv</td>
-                        <td>@item.Changjia</td>
-                        <td>@item.Chandi</td>
+                        <td>@string.Format("{0}",item.Huansuanlv!=null && item.Huansuanlv>0?item.DaohuoSL/item.Huansuanlv:item.DaohuoSL)</td>
+                        <td>@string.Format("{0}", item.Huansuanlv != null && item.Huansuanlv > 0 ? item.YishouSL / item.Huansuanlv : item.YishouSL)</td>
                         <td>@item.Zhongliang</td>
                         <td>@item.Jingzhong</td>
                         <td>@item.Tiji</td>

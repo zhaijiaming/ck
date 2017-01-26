@@ -239,7 +239,7 @@ namespace CKWMS.Controllers
             //string page = "1";
             int userid = (int)Session["user_id"];
             string pagetag = "wms_cunhuo_currentstorage";
-            Expression<Func<wms_storage_v, bool>> where = PredicateExtensionses.True<wms_storage_v>();
+            Expression<Func<wms_inventory_v, bool>> where = PredicateExtensionses.True<wms_inventory_v>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc != null && sc.ConditionInfo != null)
             {
@@ -258,23 +258,23 @@ namespace CKWMS.Controllers
                                 if (huozhuidequal.Equals("="))
                                 {
                                     if (huozhuidand.Equals("and"))
-                                        where = where.And(wms_storage_v => wms_storage_v.HuozhuID == int.Parse(huozhuid));
+                                        where = where.And(wms_inventory_v => wms_inventory_v.HuozhuID == int.Parse(huozhuid));
                                     else
-                                        where = where.Or(wms_storage_v => wms_storage_v.HuozhuID == int.Parse(huozhuid));
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.HuozhuID == int.Parse(huozhuid));
                                 }
                                 if (huozhuidequal.Equals(">"))
                                 {
                                     if (huozhuidand.Equals("and"))
-                                        where = where.And(wms_storage_v => wms_storage_v.HuozhuID > int.Parse(huozhuid));
+                                        where = where.And(wms_inventory_v => wms_inventory_v.HuozhuID > int.Parse(huozhuid));
                                     else
-                                        where = where.Or(wms_storage_v => wms_storage_v.HuozhuID > int.Parse(huozhuid));
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.HuozhuID > int.Parse(huozhuid));
                                 }
                                 if (huozhuidequal.Equals("<"))
                                 {
                                     if (huozhuidand.Equals("and"))
-                                        where = where.And(wms_storage_v => wms_storage_v.HuozhuID < int.Parse(huozhuid));
+                                        where = where.And(wms_inventory_v => wms_inventory_v.HuozhuID < int.Parse(huozhuid));
                                     else
-                                        where = where.Or(wms_storage_v => wms_storage_v.HuozhuID < int.Parse(huozhuid));
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.HuozhuID < int.Parse(huozhuid));
                                 }
                             }
                             break;
@@ -287,16 +287,16 @@ namespace CKWMS.Controllers
                                 if (rukudanbhequal.Equals("="))
                                 {
                                     if (rukudanbhand.Equals("and"))
-                                        where = where.And(wms_storage_v => wms_storage_v.RukudanBH == rukudanbh);
+                                        where = where.And(wms_inventory_v => wms_inventory_v.RukudanBH == rukudanbh);
                                     else
-                                        where = where.Or(wms_storage_v => wms_storage_v.RukudanBH == rukudanbh);
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.RukudanBH == rukudanbh);
                                 }
                                 if (rukudanbhequal.Equals("like"))
                                 {
                                     if (rukudanbhand.Equals("and"))
-                                        where = where.And(wms_storage_v => wms_storage_v.RukudanBH.Contains(rukudanbh));
+                                        where = where.And(wms_inventory_v => wms_inventory_v.RukudanBH.Contains(rukudanbh));
                                     else
-                                        where = where.Or(wms_storage_v => wms_storage_v.RukudanBH.Contains(rukudanbh));
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.RukudanBH.Contains(rukudanbh));
                                 }
                             }
                             break;
@@ -309,16 +309,16 @@ namespace CKWMS.Controllers
                                 if (kuweiequal.Equals("="))
                                 {
                                     if (kuweiand.Equals("and"))
-                                        where = where.And(wms_storage_v => wms_storage_v.Kuwei == kuwei);
+                                        where = where.And(wms_inventory_v => wms_inventory_v.Kuwei == kuwei);
                                     else
-                                        where = where.Or(wms_storage_v => wms_storage_v.Kuwei == kuwei);
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.Kuwei == kuwei);
                                 }
                                 if (kuweiequal.Equals("like"))
                                 {
                                     if (kuweiand.Equals("and"))
-                                        where = where.And(wms_storage_v => wms_storage_v.Kuwei.Contains(kuwei));
+                                        where = where.And(wms_inventory_v => wms_inventory_v.Kuwei.Contains(kuwei));
                                     else
-                                        where = where.Or(wms_storage_v => wms_storage_v.Kuwei.Contains(kuwei));
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.Kuwei.Contains(kuwei));
                                 }
                             }
                             break;
@@ -331,16 +331,16 @@ namespace CKWMS.Controllers
                                 if (shangpindmequal.Equals("="))
                                 {
                                     if (shangpindmand.Equals("and"))
-                                        where = where.And(wms_storage_v => wms_storage_v.ShangpinDM == shangpindm);
+                                        where = where.And(wms_inventory_v => wms_inventory_v.ShangpinDM == shangpindm);
                                     else
-                                        where = where.Or(wms_storage_v => wms_storage_v.ShangpinDM == shangpindm);
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.ShangpinDM == shangpindm);
                                 }
                                 if (shangpindmequal.Equals("like"))
                                 {
                                     if (shangpindmand.Equals("and"))
-                                        where = where.And(wms_storage_v => wms_storage_v.ShangpinDM.Contains(shangpindm));
+                                        where = where.And(wms_inventory_v => wms_inventory_v.ShangpinDM.Contains(shangpindm));
                                     else
-                                        where = where.Or(wms_storage_v => wms_storage_v.ShangpinDM.Contains(shangpindm));
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.ShangpinDM.Contains(shangpindm));
                                 }
                             }
                             break;
@@ -353,16 +353,16 @@ namespace CKWMS.Controllers
                                 if (shangpinmcequal.Equals("="))
                                 {
                                     if (shangpinmcand.Equals("and"))
-                                        where = where.And(wms_storage_v => wms_storage_v.ShangpinMC == shangpinmc);
+                                        where = where.And(wms_inventory_v => wms_inventory_v.ShangpinMC == shangpinmc);
                                     else
-                                        where = where.Or(wms_storage_v => wms_storage_v.ShangpinMC == shangpinmc);
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.ShangpinMC == shangpinmc);
                                 }
                                 if (shangpinmcequal.Equals("like"))
                                 {
                                     if (shangpinmcand.Equals("and"))
-                                        where = where.And(wms_storage_v => wms_storage_v.ShangpinMC.Contains(shangpinmc));
+                                        where = where.And(wms_inventory_v => wms_inventory_v.ShangpinMC.Contains(shangpinmc));
                                     else
-                                        where = where.Or(wms_storage_v => wms_storage_v.ShangpinMC.Contains(shangpinmc));
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.ShangpinMC.Contains(shangpinmc));
                                 }
                             }
                             break;
@@ -385,6 +385,28 @@ namespace CKWMS.Controllers
                                         where = where.And(p => p.Pihao.Contains(pihao));
                                     else
                                         where = where.Or(p => p.Pihao.Contains(pihao));
+                                }
+                            }
+                            break;
+                        case "chanpinxian":
+                            string chanpinxian = scld[1];
+                            string chanpinxianequal = scld[2];
+                            string chanpinxianand = scld[3];
+                            if (!string.IsNullOrEmpty(chanpinxian))
+                            {
+                                if (chanpinxianequal.Equals("="))
+                                {
+                                    if (chanpinxianand.Equals("and"))
+                                        where = where.And(p => p.cpxmingcheng == chanpinxian);
+                                    else
+                                        where = where.Or(p => p.cpxmingcheng == chanpinxian);
+                                }
+                                if (chanpinxianequal.Equals("like"))
+                                {
+                                    if (chanpinxianand.Equals("and"))
+                                        where = where.And(p => p.cpxmingcheng.Contains(chanpinxian));
+                                    else
+                                        where = where.Or(p => p.cpxmingcheng.Contains(chanpinxian));
                                 }
                             }
                             break;
@@ -426,23 +448,23 @@ namespace CKWMS.Controllers
                                 if (rukurqequal.Equals("="))
                                 {
                                     if (rukurqand.Equals("and"))
-                                        where = where.And(wms_storage_v => wms_storage_v.RukuRQ == DateTime.Parse(rukurq));
+                                        where = where.And(wms_inventory_v => wms_inventory_v.RukuRQ == DateTime.Parse(rukurq));
                                     else
-                                        where = where.Or(wms_storage_v => wms_storage_v.RukuRQ == DateTime.Parse(rukurq));
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.RukuRQ == DateTime.Parse(rukurq));
                                 }
                                 if (rukurqequal.Equals(">"))
                                 {
                                     if (rukurqand.Equals("and"))
-                                        where = where.And(wms_storage_v => wms_storage_v.RukuRQ > DateTime.Parse(rukurq));
+                                        where = where.And(wms_inventory_v => wms_inventory_v.RukuRQ > DateTime.Parse(rukurq));
                                     else
-                                        where = where.Or(wms_storage_v => wms_storage_v.RukuRQ > DateTime.Parse(rukurq));
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.RukuRQ > DateTime.Parse(rukurq));
                                 }
                                 if (rukurqequal.Equals("<"))
                                 {
                                     if (rukurqand.Equals("and"))
-                                        where = where.And(wms_storage_v => wms_storage_v.RukuRQ < DateTime.Parse(rukurq));
+                                        where = where.And(wms_inventory_v => wms_inventory_v.RukuRQ < DateTime.Parse(rukurq));
                                     else
-                                        where = where.Or(wms_storage_v => wms_storage_v.RukuRQ < DateTime.Parse(rukurq));
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.RukuRQ < DateTime.Parse(rukurq));
                                 }
                             }
                             break;
@@ -453,7 +475,7 @@ namespace CKWMS.Controllers
                 ViewBag.SearchCondition = sc.ConditionInfo;
             }
 
-            var tempData = ob_wms_cunhuoservice.GetInventory(where.Compile()).ToList<wms_storage_v>();
+            var tempData = ob_wms_cunhuoservice.GetInventory(where.Compile()).ToList<wms_inventory_v>();
             ViewBag.wms_storage_v = tempData;
             ViewData.Model = tempData;
             string viewHtml = ExportNow.RenderPartialViewToString(this, "CurrentStorageExport");
@@ -498,8 +520,12 @@ namespace CKWMS.Controllers
             string rukurq = Request["rukurq"] ?? "";
             string rukurqequal = Request["rukurqequal"] ?? "";
             string rukurqand = Request["rukurqand"] ?? "";
+            //chanpinxian
+            string chanpinxian = Request["chanpinxian"] ?? "";
+            string chanpinxianequal = Request["chanpinxianequal"] ?? "";
+            string chanpinxianand = Request["chanpinxianand"] ?? "";
 
-            Expression<Func<wms_storage_v, bool>> where = PredicateExtensionses.True<wms_storage_v>();
+            Expression<Func<wms_inventory_v, bool>> where = PredicateExtensionses.True<wms_inventory_v>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
             {
@@ -512,23 +538,23 @@ namespace CKWMS.Controllers
                     if (huozhuidequal.Equals("="))
                     {
                         if (huozhuidand.Equals("and"))
-                            where = where.And(wms_storage_v => wms_storage_v.HuozhuID == int.Parse(huozhuid));
+                            where = where.And(wms_inventory_v => wms_inventory_v.HuozhuID == int.Parse(huozhuid));
                         else
-                            where = where.Or(wms_storage_v => wms_storage_v.HuozhuID == int.Parse(huozhuid));
+                            where = where.Or(wms_inventory_v => wms_inventory_v.HuozhuID == int.Parse(huozhuid));
                     }
                     if (huozhuidequal.Equals(">"))
                     {
                         if (huozhuidand.Equals("and"))
-                            where = where.And(wms_storage_v => wms_storage_v.HuozhuID > int.Parse(huozhuid));
+                            where = where.And(wms_inventory_v => wms_inventory_v.HuozhuID > int.Parse(huozhuid));
                         else
-                            where = where.Or(wms_storage_v => wms_storage_v.HuozhuID > int.Parse(huozhuid));
+                            where = where.Or(wms_inventory_v => wms_inventory_v.HuozhuID > int.Parse(huozhuid));
                     }
                     if (huozhuidequal.Equals("<"))
                     {
                         if (huozhuidand.Equals("and"))
-                            where = where.And(wms_storage_v => wms_storage_v.HuozhuID < int.Parse(huozhuid));
+                            where = where.And(wms_inventory_v => wms_inventory_v.HuozhuID < int.Parse(huozhuid));
                         else
-                            where = where.Or(wms_storage_v => wms_storage_v.HuozhuID < int.Parse(huozhuid));
+                            where = where.Or(wms_inventory_v => wms_inventory_v.HuozhuID < int.Parse(huozhuid));
                     }
                 }
                 if (!string.IsNullOrEmpty(huozhuid))
@@ -541,16 +567,16 @@ namespace CKWMS.Controllers
                     if (rukudanbhequal.Equals("="))
                     {
                         if (rukudanbhand.Equals("and"))
-                            where = where.And(wms_storage_v => wms_storage_v.RukudanBH == rukudanbh);
+                            where = where.And(wms_inventory_v => wms_inventory_v.RukudanBH == rukudanbh);
                         else
-                            where = where.Or(wms_storage_v => wms_storage_v.RukudanBH == rukudanbh);
+                            where = where.Or(wms_inventory_v => wms_inventory_v.RukudanBH == rukudanbh);
                     }
                     if (rukudanbhequal.Equals("like"))
                     {
                         if (rukudanbhand.Equals("and"))
-                            where = where.And(wms_storage_v => wms_storage_v.RukudanBH.Contains(rukudanbh));
+                            where = where.And(wms_inventory_v => wms_inventory_v.RukudanBH.Contains(rukudanbh));
                         else
-                            where = where.Or(wms_storage_v => wms_storage_v.RukudanBH.Contains(rukudanbh));
+                            where = where.Or(wms_inventory_v => wms_inventory_v.RukudanBH.Contains(rukudanbh));
                     }
                 }
                 if (!string.IsNullOrEmpty(rukudanbh))
@@ -563,16 +589,16 @@ namespace CKWMS.Controllers
                     if (kuweiequal.Equals("="))
                     {
                         if (kuweiand.Equals("and"))
-                            where = where.And(wms_storage_v => wms_storage_v.Kuwei == kuwei);
+                            where = where.And(wms_inventory_v => wms_inventory_v.Kuwei == kuwei);
                         else
-                            where = where.Or(wms_storage_v => wms_storage_v.Kuwei == kuwei);
+                            where = where.Or(wms_inventory_v => wms_inventory_v.Kuwei == kuwei);
                     }
                     if (kuweiequal.Equals("like"))
                     {
                         if (kuweiand.Equals("and"))
-                            where = where.And(wms_storage_v => wms_storage_v.Kuwei.Contains(kuwei));
+                            where = where.And(wms_inventory_v => wms_inventory_v.Kuwei.Contains(kuwei));
                         else
-                            where = where.Or(wms_storage_v => wms_storage_v.Kuwei.Contains(kuwei));
+                            where = where.Or(wms_inventory_v => wms_inventory_v.Kuwei.Contains(kuwei));
                     }
                 }
                 if (!string.IsNullOrEmpty(kuwei))
@@ -585,16 +611,16 @@ namespace CKWMS.Controllers
                     if (shangpindmequal.Equals("="))
                     {
                         if (shangpindmand.Equals("and"))
-                            where = where.And(wms_storage_v => wms_storage_v.ShangpinDM == shangpindm);
+                            where = where.And(wms_inventory_v => wms_inventory_v.ShangpinDM == shangpindm);
                         else
-                            where = where.Or(wms_storage_v => wms_storage_v.ShangpinDM == shangpindm);
+                            where = where.Or(wms_inventory_v => wms_inventory_v.ShangpinDM == shangpindm);
                     }
                     if (shangpindmequal.Equals("like"))
                     {
                         if (shangpindmand.Equals("and"))
-                            where = where.And(wms_storage_v => wms_storage_v.ShangpinDM.Contains(shangpindm));
+                            where = where.And(wms_inventory_v => wms_inventory_v.ShangpinDM.Contains(shangpindm));
                         else
-                            where = where.Or(wms_storage_v => wms_storage_v.ShangpinDM.Contains(shangpindm));
+                            where = where.Or(wms_inventory_v => wms_inventory_v.ShangpinDM.Contains(shangpindm));
                     }
                 }
                 if (!string.IsNullOrEmpty(shangpindm))
@@ -607,16 +633,16 @@ namespace CKWMS.Controllers
                     if (shangpinmcequal.Equals("="))
                     {
                         if (shangpinmcand.Equals("and"))
-                            where = where.And(wms_storage_v => wms_storage_v.ShangpinMC == shangpinmc);
+                            where = where.And(wms_inventory_v => wms_inventory_v.ShangpinMC == shangpinmc);
                         else
-                            where = where.Or(wms_storage_v => wms_storage_v.ShangpinMC == shangpinmc);
+                            where = where.Or(wms_inventory_v => wms_inventory_v.ShangpinMC == shangpinmc);
                     }
                     if (shangpinmcequal.Equals("like"))
                     {
                         if (shangpinmcand.Equals("and"))
-                            where = where.And(wms_storage_v => wms_storage_v.ShangpinMC.Contains(shangpinmc));
+                            where = where.And(wms_inventory_v => wms_inventory_v.ShangpinMC.Contains(shangpinmc));
                         else
-                            where = where.Or(wms_storage_v => wms_storage_v.ShangpinMC.Contains(shangpinmc));
+                            where = where.Or(wms_inventory_v => wms_inventory_v.ShangpinMC.Contains(shangpinmc));
                     }
                 }
                 if (!string.IsNullOrEmpty(shangpinmc))
@@ -680,29 +706,51 @@ namespace CKWMS.Controllers
                     if (rukurqequal.Equals("="))
                     {
                         if (rukurqand.Equals("and"))
-                            where = where.And(wms_storage_v => wms_storage_v.RukuRQ == DateTime.Parse(rukurq));
+                            where = where.And(wms_inventory_v => wms_inventory_v.RukuRQ == DateTime.Parse(rukurq));
                         else
-                            where = where.Or(wms_storage_v => wms_storage_v.RukuRQ == DateTime.Parse(rukurq));
+                            where = where.Or(wms_inventory_v => wms_inventory_v.RukuRQ == DateTime.Parse(rukurq));
                     }
                     if (rukurqequal.Equals(">"))
                     {
                         if (rukurqand.Equals("and"))
-                            where = where.And(wms_storage_v => wms_storage_v.RukuRQ > DateTime.Parse(rukurq));
+                            where = where.And(wms_inventory_v => wms_inventory_v.RukuRQ > DateTime.Parse(rukurq));
                         else
-                            where = where.Or(wms_storage_v => wms_storage_v.RukuRQ > DateTime.Parse(rukurq));
+                            where = where.Or(wms_inventory_v => wms_inventory_v.RukuRQ > DateTime.Parse(rukurq));
                     }
                     if (rukurqequal.Equals("<"))
                     {
                         if (rukurqand.Equals("and"))
-                            where = where.And(wms_storage_v => wms_storage_v.RukuRQ < DateTime.Parse(rukurq));
+                            where = where.And(wms_inventory_v => wms_inventory_v.RukuRQ < DateTime.Parse(rukurq));
                         else
-                            where = where.Or(wms_storage_v => wms_storage_v.RukuRQ < DateTime.Parse(rukurq));
+                            where = where.Or(wms_inventory_v => wms_inventory_v.RukuRQ < DateTime.Parse(rukurq));
                     }
                 }
                 if (!string.IsNullOrEmpty(rukurq))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukurq", rukurq, rukurqequal, rukurqand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukurq", "", rukurqequal, rukurqand);
+                //chanpinxian
+                if (!string.IsNullOrEmpty(chanpinxian))
+                {
+                    if (chanpinxianequal.Equals("="))
+                    {
+                        if (chanpinxianand.Equals("and"))
+                            where = where.And(p => p.cpxmingcheng == chanpinxian);
+                        else
+                            where = where.Or(p => p.cpxmingcheng == chanpinxian);
+                    }
+                    if (chanpinxianequal.Equals("like"))
+                    {
+                        if (chanpinxianand.Equals("and"))
+                            where = where.And(p => p.cpxmingcheng.Contains(chanpinxian));
+                        else
+                            where = where.Or(p => p.cpxmingcheng.Contains(chanpinxian));
+                    }
+                }
+                if (!string.IsNullOrEmpty(pihao))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "chanpinxian", chanpinxian, chanpinxianequal, chanpinxianand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "chanpinxian", "", chanpinxianequal, chanpinxianand);
 
                 searchconditionService.GetInstance().AddEntity(sc);
             }
@@ -715,23 +763,23 @@ namespace CKWMS.Controllers
                     if (huozhuidequal.Equals("="))
                     {
                         if (huozhuidand.Equals("and"))
-                            where = where.And(wms_storage_v => wms_storage_v.HuozhuID == int.Parse(huozhuid));
+                            where = where.And(wms_inventory_v => wms_inventory_v.HuozhuID == int.Parse(huozhuid));
                         else
-                            where = where.Or(wms_storage_v => wms_storage_v.HuozhuID == int.Parse(huozhuid));
+                            where = where.Or(wms_inventory_v => wms_inventory_v.HuozhuID == int.Parse(huozhuid));
                     }
                     if (huozhuidequal.Equals(">"))
                     {
                         if (huozhuidand.Equals("and"))
-                            where = where.And(wms_storage_v => wms_storage_v.HuozhuID > int.Parse(huozhuid));
+                            where = where.And(wms_inventory_v => wms_inventory_v.HuozhuID > int.Parse(huozhuid));
                         else
-                            where = where.Or(wms_storage_v => wms_storage_v.HuozhuID > int.Parse(huozhuid));
+                            where = where.Or(wms_inventory_v => wms_inventory_v.HuozhuID > int.Parse(huozhuid));
                     }
                     if (huozhuidequal.Equals("<"))
                     {
                         if (huozhuidand.Equals("and"))
-                            where = where.And(wms_storage_v => wms_storage_v.HuozhuID < int.Parse(huozhuid));
+                            where = where.And(wms_inventory_v => wms_inventory_v.HuozhuID < int.Parse(huozhuid));
                         else
-                            where = where.Or(wms_storage_v => wms_storage_v.HuozhuID < int.Parse(huozhuid));
+                            where = where.Or(wms_inventory_v => wms_inventory_v.HuozhuID < int.Parse(huozhuid));
                     }
                 }
                 if (!string.IsNullOrEmpty(huozhuid))
@@ -744,16 +792,16 @@ namespace CKWMS.Controllers
                     if (rukudanbhequal.Equals("="))
                     {
                         if (rukudanbhand.Equals("and"))
-                            where = where.And(wms_storage_v => wms_storage_v.RukudanBH == rukudanbh);
+                            where = where.And(wms_inventory_v => wms_inventory_v.RukudanBH == rukudanbh);
                         else
-                            where = where.Or(wms_storage_v => wms_storage_v.RukudanBH == rukudanbh);
+                            where = where.Or(wms_inventory_v => wms_inventory_v.RukudanBH == rukudanbh);
                     }
                     if (rukudanbhequal.Equals("like"))
                     {
                         if (rukudanbhand.Equals("and"))
-                            where = where.And(wms_storage_v => wms_storage_v.RukudanBH.Contains(rukudanbh));
+                            where = where.And(wms_inventory_v => wms_inventory_v.RukudanBH.Contains(rukudanbh));
                         else
-                            where = where.Or(wms_storage_v => wms_storage_v.RukudanBH.Contains(rukudanbh));
+                            where = where.Or(wms_inventory_v => wms_inventory_v.RukudanBH.Contains(rukudanbh));
                     }
                 }
                 if (!string.IsNullOrEmpty(rukudanbh))
@@ -766,16 +814,16 @@ namespace CKWMS.Controllers
                     if (kuweiequal.Equals("="))
                     {
                         if (kuweiand.Equals("and"))
-                            where = where.And(wms_storage_v => wms_storage_v.Kuwei == kuwei);
+                            where = where.And(wms_inventory_v => wms_inventory_v.Kuwei == kuwei);
                         else
-                            where = where.Or(wms_storage_v => wms_storage_v.Kuwei == kuwei);
+                            where = where.Or(wms_inventory_v => wms_inventory_v.Kuwei == kuwei);
                     }
                     if (kuweiequal.Equals("like"))
                     {
                         if (kuweiand.Equals("and"))
-                            where = where.And(wms_storage_v => wms_storage_v.Kuwei.Contains(kuwei));
+                            where = where.And(wms_inventory_v => wms_inventory_v.Kuwei.Contains(kuwei));
                         else
-                            where = where.Or(wms_storage_v => wms_storage_v.Kuwei.Contains(kuwei));
+                            where = where.Or(wms_inventory_v => wms_inventory_v.Kuwei.Contains(kuwei));
                     }
                 }
                 if (!string.IsNullOrEmpty(kuwei))
@@ -788,16 +836,16 @@ namespace CKWMS.Controllers
                     if (shangpindmequal.Equals("="))
                     {
                         if (shangpindmand.Equals("and"))
-                            where = where.And(wms_storage_v => wms_storage_v.ShangpinDM == shangpindm);
+                            where = where.And(wms_inventory_v => wms_inventory_v.ShangpinDM == shangpindm);
                         else
-                            where = where.Or(wms_storage_v => wms_storage_v.ShangpinDM == shangpindm);
+                            where = where.Or(wms_inventory_v => wms_inventory_v.ShangpinDM == shangpindm);
                     }
                     if (shangpindmequal.Equals("like"))
                     {
                         if (shangpindmand.Equals("and"))
-                            where = where.And(wms_storage_v => wms_storage_v.ShangpinDM.Contains(shangpindm));
+                            where = where.And(wms_inventory_v => wms_inventory_v.ShangpinDM.Contains(shangpindm));
                         else
-                            where = where.Or(wms_storage_v => wms_storage_v.ShangpinDM.Contains(shangpindm));
+                            where = where.Or(wms_inventory_v => wms_inventory_v.ShangpinDM.Contains(shangpindm));
                     }
                 }
                 if (!string.IsNullOrEmpty(shangpindm))
@@ -810,16 +858,16 @@ namespace CKWMS.Controllers
                     if (shangpinmcequal.Equals("="))
                     {
                         if (shangpinmcand.Equals("and"))
-                            where = where.And(wms_storage_v => wms_storage_v.ShangpinMC == shangpinmc);
+                            where = where.And(wms_inventory_v => wms_inventory_v.ShangpinMC == shangpinmc);
                         else
-                            where = where.Or(wms_storage_v => wms_storage_v.ShangpinMC == shangpinmc);
+                            where = where.Or(wms_inventory_v => wms_inventory_v.ShangpinMC == shangpinmc);
                     }
                     if (shangpinmcequal.Equals("like"))
                     {
                         if (shangpinmcand.Equals("and"))
-                            where = where.And(wms_storage_v => wms_storage_v.ShangpinMC.Contains(shangpinmc));
+                            where = where.And(wms_inventory_v => wms_inventory_v.ShangpinMC.Contains(shangpinmc));
                         else
-                            where = where.Or(wms_storage_v => wms_storage_v.ShangpinMC.Contains(shangpinmc));
+                            where = where.Or(wms_inventory_v => wms_inventory_v.ShangpinMC.Contains(shangpinmc));
                     }
                 }
                 if (!string.IsNullOrEmpty(shangpinmc))
@@ -883,36 +931,60 @@ namespace CKWMS.Controllers
                     if (rukurqequal.Equals("="))
                     {
                         if (rukurqand.Equals("and"))
-                            where = where.And(wms_storage_v => wms_storage_v.RukuRQ == DateTime.Parse(rukurq));
+                            where = where.And(wms_inventory_v => wms_inventory_v.RukuRQ == DateTime.Parse(rukurq));
                         else
-                            where = where.Or(wms_storage_v => wms_storage_v.RukuRQ == DateTime.Parse(rukurq));
+                            where = where.Or(wms_inventory_v => wms_inventory_v.RukuRQ == DateTime.Parse(rukurq));
                     }
                     if (rukurqequal.Equals(">"))
                     {
                         if (rukurqand.Equals("and"))
-                            where = where.And(wms_storage_v => wms_storage_v.RukuRQ > DateTime.Parse(rukurq));
+                            where = where.And(wms_inventory_v => wms_inventory_v.RukuRQ > DateTime.Parse(rukurq));
                         else
-                            where = where.Or(wms_storage_v => wms_storage_v.RukuRQ > DateTime.Parse(rukurq));
+                            where = where.Or(wms_inventory_v => wms_inventory_v.RukuRQ > DateTime.Parse(rukurq));
                     }
                     if (rukurqequal.Equals("<"))
                     {
                         if (rukurqand.Equals("and"))
-                            where = where.And(wms_storage_v => wms_storage_v.RukuRQ < DateTime.Parse(rukurq));
+                            where = where.And(wms_inventory_v => wms_inventory_v.RukuRQ < DateTime.Parse(rukurq));
                         else
-                            where = where.Or(wms_storage_v => wms_storage_v.RukuRQ < DateTime.Parse(rukurq));
+                            where = where.Or(wms_inventory_v => wms_inventory_v.RukuRQ < DateTime.Parse(rukurq));
                     }
                 }
                 if (!string.IsNullOrEmpty(rukurq))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukurq", rukurq, rukurqequal, rukurqand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukurq", "", rukurqequal, rukurqand);
+                //chanpinxian
+                if (!string.IsNullOrEmpty(chanpinxian))
+                {
+                    if (chanpinxianequal.Equals("="))
+                    {
+                        if (chanpinxianand.Equals("and"))
+                            where = where.And(p => p.cpxmingcheng == chanpinxian);
+                        else
+                            where = where.Or(p => p.cpxmingcheng == chanpinxian);
+                    }
+                    if (chanpinxianequal.Equals("like"))
+                    {
+                        if (chanpinxianand.Equals("and"))
+                            where = where.And(p => p.cpxmingcheng.Contains(chanpinxian));
+                        else
+                            where = where.Or(p => p.cpxmingcheng.Contains(chanpinxian));
+                    }
+                }
+                if (!string.IsNullOrEmpty(chanpinxian))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "chanpinxian", chanpinxian, chanpinxianequal, chanpinxianand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "chanpinxian", "", chanpinxianequal, chanpinxianand);
 
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;
 
-            var tempData = ob_wms_cunhuoservice.GetInventory(where.Compile()).ToPagedList<wms_storage_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            var tempData = ob_wms_cunhuoservice.GetInventory(where.Compile()).ToPagedList<wms_inventory_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.wms_storage_v = tempData;
+            ViewBag.totalproduct = tempData.Sum(p => p.sshuliang);
+            ViewBag.totalbox = tempData.Sum(p => p.sshuliang / (p.Huansuanlv != 0 ? p.Huansuanlv : 1));
             return View(tempData);
         }
         [OutputCache(Duration = 30)]
@@ -922,7 +994,7 @@ namespace CKWMS.Controllers
                 page = "1";
             int userid = (int)Session["user_id"];
             string pagetag = "wms_cunhuo_currentstorage";
-            Expression<Func<wms_storage_v, bool>> where = PredicateExtensionses.True<wms_storage_v>();
+            Expression<Func<wms_inventory_v, bool>> where = PredicateExtensionses.True<wms_inventory_v>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc != null && sc.ConditionInfo != null)
             {
@@ -941,23 +1013,23 @@ namespace CKWMS.Controllers
                                 if (huozhuidequal.Equals("="))
                                 {
                                     if (huozhuidand.Equals("and"))
-                                        where = where.And(wms_storage_v => wms_storage_v.HuozhuID == int.Parse(huozhuid));
+                                        where = where.And(wms_inventory_v => wms_inventory_v.HuozhuID == int.Parse(huozhuid));
                                     else
-                                        where = where.Or(wms_storage_v => wms_storage_v.HuozhuID == int.Parse(huozhuid));
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.HuozhuID == int.Parse(huozhuid));
                                 }
                                 if (huozhuidequal.Equals(">"))
                                 {
                                     if (huozhuidand.Equals("and"))
-                                        where = where.And(wms_storage_v => wms_storage_v.HuozhuID > int.Parse(huozhuid));
+                                        where = where.And(wms_inventory_v => wms_inventory_v.HuozhuID > int.Parse(huozhuid));
                                     else
-                                        where = where.Or(wms_storage_v => wms_storage_v.HuozhuID > int.Parse(huozhuid));
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.HuozhuID > int.Parse(huozhuid));
                                 }
                                 if (huozhuidequal.Equals("<"))
                                 {
                                     if (huozhuidand.Equals("and"))
-                                        where = where.And(wms_storage_v => wms_storage_v.HuozhuID < int.Parse(huozhuid));
+                                        where = where.And(wms_inventory_v => wms_inventory_v.HuozhuID < int.Parse(huozhuid));
                                     else
-                                        where = where.Or(wms_storage_v => wms_storage_v.HuozhuID < int.Parse(huozhuid));
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.HuozhuID < int.Parse(huozhuid));
                                 }
                             }
                             break;
@@ -970,16 +1042,16 @@ namespace CKWMS.Controllers
                                 if (rukudanbhequal.Equals("="))
                                 {
                                     if (rukudanbhand.Equals("and"))
-                                        where = where.And(wms_storage_v => wms_storage_v.RukudanBH == rukudanbh);
+                                        where = where.And(wms_inventory_v => wms_inventory_v.RukudanBH == rukudanbh);
                                     else
-                                        where = where.Or(wms_storage_v => wms_storage_v.RukudanBH == rukudanbh);
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.RukudanBH == rukudanbh);
                                 }
                                 if (rukudanbhequal.Equals("like"))
                                 {
                                     if (rukudanbhand.Equals("and"))
-                                        where = where.And(wms_storage_v => wms_storage_v.RukudanBH.Contains(rukudanbh));
+                                        where = where.And(wms_inventory_v => wms_inventory_v.RukudanBH.Contains(rukudanbh));
                                     else
-                                        where = where.Or(wms_storage_v => wms_storage_v.RukudanBH.Contains(rukudanbh));
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.RukudanBH.Contains(rukudanbh));
                                 }
                             }
                             break;
@@ -992,16 +1064,16 @@ namespace CKWMS.Controllers
                                 if (kuweiequal.Equals("="))
                                 {
                                     if (kuweiand.Equals("and"))
-                                        where = where.And(wms_storage_v => wms_storage_v.Kuwei == kuwei);
+                                        where = where.And(wms_inventory_v => wms_inventory_v.Kuwei == kuwei);
                                     else
-                                        where = where.Or(wms_storage_v => wms_storage_v.Kuwei == kuwei);
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.Kuwei == kuwei);
                                 }
                                 if (kuweiequal.Equals("like"))
                                 {
                                     if (kuweiand.Equals("and"))
-                                        where = where.And(wms_storage_v => wms_storage_v.Kuwei.Contains(kuwei));
+                                        where = where.And(wms_inventory_v => wms_inventory_v.Kuwei.Contains(kuwei));
                                     else
-                                        where = where.Or(wms_storage_v => wms_storage_v.Kuwei.Contains(kuwei));
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.Kuwei.Contains(kuwei));
                                 }
                             }
                             break;
@@ -1014,16 +1086,16 @@ namespace CKWMS.Controllers
                                 if (shangpindmequal.Equals("="))
                                 {
                                     if (shangpindmand.Equals("and"))
-                                        where = where.And(wms_storage_v => wms_storage_v.ShangpinDM == shangpindm);
+                                        where = where.And(wms_inventory_v => wms_inventory_v.ShangpinDM == shangpindm);
                                     else
-                                        where = where.Or(wms_storage_v => wms_storage_v.ShangpinDM == shangpindm);
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.ShangpinDM == shangpindm);
                                 }
                                 if (shangpindmequal.Equals("like"))
                                 {
                                     if (shangpindmand.Equals("and"))
-                                        where = where.And(wms_storage_v => wms_storage_v.ShangpinDM.Contains(shangpindm));
+                                        where = where.And(wms_inventory_v => wms_inventory_v.ShangpinDM.Contains(shangpindm));
                                     else
-                                        where = where.Or(wms_storage_v => wms_storage_v.ShangpinDM.Contains(shangpindm));
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.ShangpinDM.Contains(shangpindm));
                                 }
                             }
                             break;
@@ -1036,16 +1108,16 @@ namespace CKWMS.Controllers
                                 if (shangpinmcequal.Equals("="))
                                 {
                                     if (shangpinmcand.Equals("and"))
-                                        where = where.And(wms_storage_v => wms_storage_v.ShangpinMC == shangpinmc);
+                                        where = where.And(wms_inventory_v => wms_inventory_v.ShangpinMC == shangpinmc);
                                     else
-                                        where = where.Or(wms_storage_v => wms_storage_v.ShangpinMC == shangpinmc);
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.ShangpinMC == shangpinmc);
                                 }
                                 if (shangpinmcequal.Equals("like"))
                                 {
                                     if (shangpinmcand.Equals("and"))
-                                        where = where.And(wms_storage_v => wms_storage_v.ShangpinMC.Contains(shangpinmc));
+                                        where = where.And(wms_inventory_v => wms_inventory_v.ShangpinMC.Contains(shangpinmc));
                                     else
-                                        where = where.Or(wms_storage_v => wms_storage_v.ShangpinMC.Contains(shangpinmc));
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.ShangpinMC.Contains(shangpinmc));
                                 }
                             }
                             break;
@@ -1109,23 +1181,45 @@ namespace CKWMS.Controllers
                                 if (rukurqequal.Equals("="))
                                 {
                                     if (rukurqand.Equals("and"))
-                                        where = where.And(wms_storage_v => wms_storage_v.RukuRQ == DateTime.Parse(rukurq));
+                                        where = where.And(wms_inventory_v => wms_inventory_v.RukuRQ == DateTime.Parse(rukurq));
                                     else
-                                        where = where.Or(wms_storage_v => wms_storage_v.RukuRQ == DateTime.Parse(rukurq));
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.RukuRQ == DateTime.Parse(rukurq));
                                 }
                                 if (rukurqequal.Equals(">"))
                                 {
                                     if (rukurqand.Equals("and"))
-                                        where = where.And(wms_storage_v => wms_storage_v.RukuRQ > DateTime.Parse(rukurq));
+                                        where = where.And(wms_inventory_v => wms_inventory_v.RukuRQ > DateTime.Parse(rukurq));
                                     else
-                                        where = where.Or(wms_storage_v => wms_storage_v.RukuRQ > DateTime.Parse(rukurq));
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.RukuRQ > DateTime.Parse(rukurq));
                                 }
                                 if (rukurqequal.Equals("<"))
                                 {
                                     if (rukurqand.Equals("and"))
-                                        where = where.And(wms_storage_v => wms_storage_v.RukuRQ < DateTime.Parse(rukurq));
+                                        where = where.And(wms_inventory_v => wms_inventory_v.RukuRQ < DateTime.Parse(rukurq));
                                     else
-                                        where = where.Or(wms_storage_v => wms_storage_v.RukuRQ < DateTime.Parse(rukurq));
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.RukuRQ < DateTime.Parse(rukurq));
+                                }
+                            }
+                            break;
+                        case "chanpinxian":
+                            string chanpinxian = scld[1];
+                            string chanpinxianequal = scld[2];
+                            string chanpinxianand = scld[3];
+                            if (!string.IsNullOrEmpty(chanpinxian))
+                            {
+                                if (chanpinxianequal.Equals("="))
+                                {
+                                    if (chanpinxianand.Equals("and"))
+                                        where = where.And(p => p.cpxmingcheng == chanpinxian);
+                                    else
+                                        where = where.Or(p => p.cpxmingcheng == chanpinxian);
+                                }
+                                if (chanpinxianequal.Equals("like"))
+                                {
+                                    if (chanpinxianand.Equals("and"))
+                                        where = where.And(p => p.cpxmingcheng.Contains(chanpinxian));
+                                    else
+                                        where = where.Or(p => p.cpxmingcheng.Contains(chanpinxian));
                                 }
                             }
                             break;
@@ -1136,8 +1230,10 @@ namespace CKWMS.Controllers
                 ViewBag.SearchCondition = sc.ConditionInfo;
             }
 
-            var tempData = ob_wms_cunhuoservice.GetInventory(where.Compile()).ToPagedList<wms_storage_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            var tempData = ob_wms_cunhuoservice.GetInventory(where.Compile()).ToPagedList(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.wms_storage_v = tempData;
+            ViewBag.totalproduct = tempData.Sum(p => p.sshuliang);
+            ViewBag.totalbox = tempData.Sum(p => p.sshuliang / (p.Huansuanlv!=0?p.Huansuanlv:1));
             return View(tempData);
         }
         public JsonResult GetCustStore()
@@ -1199,20 +1295,23 @@ namespace CKWMS.Controllers
                 _custid = _pp.HuozhuID.ToString();
             }
             //return Json(-1);
-            Expression<Func<wms_invgoods_v, bool>> where = PredicateExtensionses.True<wms_invgoods_v>();
+            //Expression<Func<wms_invgoods_v, bool>> where = PredicateExtensionses.True<wms_invgoods_v>();
+            Expression<Func<wms_storage_v, bool>> where = PredicateExtensionses.True<wms_storage_v>();
             if (!string.IsNullOrEmpty(_mc))
                 where = where.And(p => p.ShangpinMC.Contains(_mc));
             if (!string.IsNullOrEmpty(_gg))
                 where = where.And(p => p.Guige.Contains(_gg));
             if (!string.IsNullOrEmpty(_ph))
                 where = where.And(p => p.Pihao.Contains(_ph));
-            where = where.And(p => p.chsl > 0);
+            //where = where.And(p => p.chsl > 0);
+            where = where.And(p => p.sshuliang > 0);
             //var tempData = ob_wms_cunhuoservice.GetInventoryGoodsByCust(int.Parse(_custid),p=>p.chsl>0);
-            var tempData = ob_wms_cunhuoservice.GetInventoryGoodsByCust(int.Parse(_custid), where.Compile());
+            //var tempData = ob_wms_cunhuoservice.GetInventoryGoodsByCust(int.Parse(_custid), where.Compile());
+            var tempData = ob_wms_cunhuoservice.GetStorageList(int.Parse(_custid), where.Compile());
             if (tempData == null)
                 return Json(-1);
 
-            return Json(tempData.ToList<wms_invgoods_v>());
+            return Json(tempData.ToList());
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -1419,7 +1518,7 @@ namespace CKWMS.Controllers
 
             if (string.IsNullOrEmpty(period))
                 period = "0";
-            var tempData = ob_wms_cunhuoservice.GetInventory(p=>p.ShixiaoRQ<=DateTime.Now.AddDays(int.Parse(period))).ToPagedList<wms_storage_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            var tempData = ob_wms_cunhuoservice.GetStorageList(p=>p.ShixiaoRQ<=DateTime.Now.AddDays(int.Parse(period))).ToPagedList<wms_storage_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.wms_storage_v = tempData;
             ViewBag.period = period;
             return View(tempData);
@@ -1430,7 +1529,7 @@ namespace CKWMS.Controllers
             var period = Request["period"] ?? "";
             if (string.IsNullOrEmpty(period))
                 period = "0";
-            var tempData = ob_wms_cunhuoservice.GetInventory(p => p.ShixiaoRQ <= DateTime.Now.AddDays(int.Parse(period)));
+            var tempData = ob_wms_cunhuoservice.GetStorageList(p => p.ShixiaoRQ <= DateTime.Now.AddDays(int.Parse(period)));
             ViewBag.wms_storage_v = tempData;
             ViewData.Model = tempData;
             string viewHtml = ExportNow.RenderPartialViewToString(this, "RemindOverdueExport");

@@ -251,6 +251,17 @@ namespace CKWMS.App_Code
                             sb.AppendFormat("<option value=\"{0}\">{1}</option>", i.ID, i.Mingcheng);
                     }
                     break;
+                case "产品线": //"auth_gongsi":
+                    Ibase_chanpinxianService cpx = ServiceFactory.base_chanpinxianservice;
+                    var tmpcpx = cpx.LoadSortEntities(p => p.IsDelete == false, true,s=>s.Mingcheng);
+                    foreach (var i in tmpcpx)
+                    {
+                        if (i.ID == selectedvalue && selectedvalue != 0)
+                            sb.AppendFormat("<option value=\"{0}\" selected=\"selected\">{1}</option>", i.ID, i.Mingcheng);
+                        else
+                            sb.AppendFormat("<option value=\"{0}\">{1}</option>", i.ID, i.Mingcheng);
+                    }
+                    break;
                 case "角色"://auth_juese
                     Iauth_jueseService jueseservice = ServiceFactory.auth_jueseservice;
                     var tmpjs = jueseservice.LoadSortEntities(auth_juese => auth_juese.IsDelete == false, true, auth_juese => auth_juese.RoleName);
@@ -1024,7 +1035,18 @@ namespace CKWMS.App_Code
                     else
                     {
                         if (itemName == "产品线")
-                            returnvalue = _shp.Chanpinxian.ToString();
+                        {
+                            if (_shp.Chanpinxian != null)
+                            {
+                                var _chpx = ServiceFactory.base_chanpinxianservice.GetEntityById(p => p.ID == _shp.Chanpinxian);
+                                if (_chpx != null)
+                                    returnvalue = _chpx.Mingcheng;
+                                else
+                                    returnvalue = "";
+                            }
+                            else
+                                returnvalue = "";
+                        }
                         if (itemName == "商品名称")
                             returnvalue = _shp.ShangpinMS;
                     }

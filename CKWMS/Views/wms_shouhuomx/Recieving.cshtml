@@ -373,7 +373,10 @@
                         filltable = filltable + '</td><td>';
                         filltable = filltable + data[i].Huansuanlv;
                         filltable = filltable + '</td><td>';
-                        filltable = filltable + data[i].Changjia;
+                        if (data[i].Huansuanlv != null && data[i].Huansuanlv > 0)
+                            filltable = filltable + Number(data[i].Shuliang) / Number(data[i].Huansuanlv);
+                        else
+                            filltable = filltable + Number(data[i].Shuliang);
                         filltable = filltable + '</td><td>';
                         filltable = filltable + data[i].Chandi;
                         filltable = filltable + '</td><td>';
@@ -452,8 +455,8 @@
                     <td>基本单位</td>
                     <td>包装单位</td>
                     <td>换算率</td>
-                    <td>厂家</td>
-                    <td>产地</td>
+                    <td>到货件数</td>
+                    <td>已收件数</td>
                     <td>备注</td>
                 </tr>
             </thead>
@@ -505,8 +508,8 @@
                         <td>@item.JibenDW</td>
                         <td>@item.BaozhuangDW</td>
                         <td>@item.Huansuanlv</td>
-                        <td>@item.Changjia</td>
-                        <td>@item.Chandi</td>
+                        <td>@string.Format("{0}", item.Huansuanlv != null && item.Huansuanlv > 0 ? item.DaohuoSL / item.Huansuanlv : item.DaohuoSL)</td>
+                        <td>@string.Format("{0}", item.Huansuanlv != null && item.Huansuanlv > 0 ? item.YishouSL / item.Huansuanlv : item.YishouSL)</td>
                         <td>@item.Beizhu</td>
                     </tr>
                 }
@@ -536,7 +539,7 @@
                     <td>基本单位</td>
                     <td>包装单位</td>
                     <td>换算率</td>
-                    <td>厂家</td>
+                    <td>已收件数</td>
                     <td>产地</td>
                     <td>备注</td>
                 </tr>
@@ -545,7 +548,8 @@
         </table>
         <div class="row">
             <p class="pull-right">记录:@ViewBag.linecount 条</p>
-            <p>&emsp;数量总计:@ViewBag.totalproduct</p>
+            <p>&emsp;收货数量总计:@ViewBag.totalproduct</p>
+            <p>&emsp;收货件数总计:@ViewBag.totalbox</p>
         </div>
     </div>
 </div>

@@ -130,7 +130,7 @@ namespace CKWMS.Controllers
 
             where = where.And(cust_chukujihua => cust_chukujihua.IsDelete == false);
 
-            var tempData = ob_cust_chukujihuaservice.LoadSortEntities(where.Compile(), false, cust_chukujihua => cust_chukujihua.ID).ToPagedList<cust_chukujihua>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            var tempData = ob_cust_chukujihuaservice.LoadSortEntities(where.Compile(), true, cust_chukujihua => cust_chukujihua.JihuaZT).ToPagedList<cust_chukujihua>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.cust_chukujihua = tempData;
             return View(tempData);
         }
@@ -352,7 +352,7 @@ namespace CKWMS.Controllers
             ViewBag.SearchCondition = sc.ConditionInfo;
             where = where.And(cust_chukujihua => cust_chukujihua.IsDelete == false);
 
-            var tempData = ob_cust_chukujihuaservice.LoadSortEntities(where.Compile(), false, cust_chukujihua => cust_chukujihua.ID).ToPagedList<cust_chukujihua>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            var tempData = ob_cust_chukujihuaservice.LoadSortEntities(where.Compile(), true, cust_chukujihua => cust_chukujihua.JihuaZT).ToPagedList<cust_chukujihua>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.cust_chukujihua = tempData;
             return View(tempData);
         }
