@@ -912,7 +912,7 @@ namespace CKWMS.Controllers
                                             wms_chukumx _ckmx = new wms_chukumx();
                                             _ckmx.ChukuID = _ckd.ID;
                                             _ckmx.Beizhu = ckjhmx.Beizhu;
-                                            _ckmx.Col1 = ckjhmx.HSDJ.ToString();
+                                            _ckmx.Col1 = string.Format("{0:N2}",ckjhmx.HSDJ);// ckjhmx.HSDJ.ToString();
                                             _ckmx.ChukuSL = _fpsl;
                                             _ckmx.JianhuoSL = 0;
                                             _ckmx.Jianhuo = false;

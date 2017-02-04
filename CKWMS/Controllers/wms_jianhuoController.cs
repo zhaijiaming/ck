@@ -168,7 +168,7 @@ namespace CKWMS.Controllers
             var id = Request["id"] ?? "";
             if (id.Length < 1)
                 id = "0";
-            var _ckmxs = ServiceFactory.wms_chukumxservice.LoadEntities(p => p.ID == int.Parse(id)).ToList();
+            var _ckmxs = ServiceFactory.wms_chukumxservice.LoadEntities(p => p.ChukuID == int.Parse(id)).ToList();
             var _cksl = _ckmxs.Sum(p => p.ChukuSL);
             var _jhsl = _ckmxs.Sum(p => p.JianhuoSL);
             if (_cksl != _jhsl)
