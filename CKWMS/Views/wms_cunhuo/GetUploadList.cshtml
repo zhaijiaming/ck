@@ -98,6 +98,7 @@
             $("#sjjz").val(_sdata.data("jz"));
             $("#sjtj").val(_sdata.data("tj"));
             $("#Huansuanlv").val(_sdata.data("hsl"));
+            $("#ShouhuoJS").val("");
             $("#pl_yanshou").show();
         });
         $("#pl_close").click(function () {
@@ -178,7 +179,11 @@
                             },
                             success: function (data) {
                                 if (data == -1)
-                                    alert("货品上架失败，请重新操作！");
+                                    alert("货品上架参数传送失败，请重新操作！");
+                                else if (data == -2)
+                                    alert("收货记录已经失效，请联系管理员！");
+                                else if (data == -3)
+                                    alert("请注意，未验收的货品不能上架！");
                                 else
                                     location.reload();
                             }
@@ -191,7 +196,7 @@
             if ($("#kuwei").val() == "")
                 return;
             var _kw = $("#kuwei").val();
-            if (_kw.indexOf("-") < 0){
+            if (_kw.indexOf("-") < 0) {
                 var _nkw = _kw.substr(0, 3) + "-" + _kw.substr(3, 2) + "-" + _kw.substr(5, 2) + "-" + _kw.substr(7, 2);
                 $("#kuwei").val(_nkw);
             }
@@ -284,9 +289,10 @@
                     <td>生产日期</td>
                     <td>失效日期</td>
                     <td>数量</td>
-                    <td>厂家</td>
-                    <td>产地</td>
+                    <td>件数</td>
+                    <td>换算率</td>
                     <td>上架数量</td>
+                    <td>上架件数</td>
                     <td>库位</td>
                     <td>上架人</td>
                     <td>货品说明</td>
@@ -321,9 +327,10 @@
                         <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ)</td>
                         <td>@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ)</td>
                         <td>@item.Shuliang</td>
-                        <td>@item.Changjia</td>
-                        <td>@item.Chandi</td>
+                        <td>@string.Format("{0}", item.Shuliang==null?"":(item.Huansuanlv != null && item.Huansuanlv > 0 ? item.Shuliang / item.Huansuanlv : item.Shuliang))</td>
+                        <td>@item.Huansuanlv</td>
                         <td>@item.sshuliang</td>
+                        <td>@string.Format("{0}", item.sshuliang == null ? "" : (item.Huansuanlv != null && item.Huansuanlv > 0 ? item.sshuliang / item.Huansuanlv : item.sshuliang))</td>
                         <td>@item.Kuwei</td>
                         <td>@item.RenSJ</td>
                         <td>@item.CunhuoSM</td>
@@ -338,7 +345,7 @@
         </div>*@
     <div class="row">
         <p class="pull-right">记录:@ViewBag.linecount 条</p>
-        <p>入库数量总计:@ViewBag.totalproduct</p>
+        <p>上架件数总计:@ViewBag.totalproduct</p>
         <p>上架数量总计:@ViewBag.shangjiaSL</p>
     </div>
 </div>

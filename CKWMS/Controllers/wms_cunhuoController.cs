@@ -177,8 +177,8 @@ namespace CKWMS.Controllers
             ViewBag.sjdid = _sjdid;
 
             ViewBag.linecount = tempData.Count;
-            ViewBag.totalproduct = tempData.Sum(p => p.Shuliang);
-            ViewBag.shangjiaSL = tempData.Sum(p => p.ShangjiaSL);
+            ViewBag.totalproduct = tempData.Sum(p => p.sshuliang/p.Huansuanlv);
+            ViewBag.shangjiaSL = tempData.Sum(p => p.sshuliang);
             return View();
         }
         public JsonResult AddUpload()
@@ -198,6 +198,11 @@ namespace CKWMS.Controllers
 
             if (int.Parse(_shmx) == 0)
                 return Json(-1);
+            var _shtemp = ServiceFactory.wms_shouhuomxservice.GetEntityById(p => p.ID == int.Parse(_shmx) && p.IsDelete == false);
+            if (_shtemp == null)
+                return Json(-2);
+            if (_shtemp.Yanshou == false)
+                return Json(-3);
             try
             {
                 wms_cunhuo _cunhuo = new wms_cunhuo();
@@ -217,6 +222,7 @@ namespace CKWMS.Controllers
                 _cunhuo.SuodingSF = false;
                 _cunhuo.CunhuoZT = 1;
                 _cunhuo.JiahuoSF = true;
+                _cunhuo.ChushiSL = _cunhuo.Shuliang;
                 _cunhuo = ob_wms_cunhuoservice.AddEntity(_cunhuo);
                 if (_cunhuo == null)
                     return Json(-1);
@@ -1359,7 +1365,9 @@ namespace CKWMS.Controllers
                 ob_wms_cunhuo.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 ob_wms_cunhuo.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
                 ob_wms_cunhuo.HegeSF = hegesf == "" ? false : Boolean.Parse(hegesf);
+                ob_wms_cunhuo.ChushiSL = ob_wms_cunhuo.Shuliang;
                 ob_wms_cunhuo = ob_wms_cunhuoservice.AddEntity(ob_wms_cunhuo);
+                
                 ViewBag.wms_cunhuo = ob_wms_cunhuo;
             }
             catch (Exception ex)

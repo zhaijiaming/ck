@@ -567,10 +567,12 @@ namespace CKWMS.Controllers
 
             ViewBag.linecount_rkmx = tempData.Count;
             ViewBag.totalproduct_rkmx = tempData.Sum(p => p.DaohuoSL);
+            ViewBag.totalbox_rkmx = tempData.Sum(p => p.DaohuoSL/p.Huansuanlv);
             //ÒÑÊÕ»õ
             var _shouhuo = ServiceFactory.wms_shouhuomxservice.LoadSortEntities(p => p.IsDelete == false && p.RukuID == int.Parse(rkdid), false, s => s.MakeDate).ToList<wms_shouhuomx>();
             ViewBag.linecount = _shouhuo.Count;
             ViewBag.totalproduct = _shouhuo.Sum(p => p.Shuliang);
+            ViewBag.totalbox = _shouhuo.Sum(p => p.Shuliang / p.Huansuanlv);
             return View(tempData);
         }
 

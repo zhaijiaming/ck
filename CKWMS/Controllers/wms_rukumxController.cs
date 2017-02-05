@@ -200,8 +200,9 @@ namespace CKWMS.Controllers
 
             ViewBag.linecount = _mxtmp.Count;
             ViewBag.totalproduct = _mxtmp.Sum(p => p.DaohuoSL);
-            ViewBag.YishouSLs = _mxtmp.Sum(p => p.YishouSL);
             ViewBag.totalbox = _mxtmp.Sum(p => p.DaohuoSL / p.Huansuanlv);
+            ViewBag.YishouSLs = _mxtmp.Sum(p => p.YishouSL);
+            ViewBag.YishouJSs = _mxtmp.Sum(p => p.YishouSL/p.Huansuanlv);
             return View("CargoIndex", _mxtmp);
         }
         //public ActionResult Index(int id)

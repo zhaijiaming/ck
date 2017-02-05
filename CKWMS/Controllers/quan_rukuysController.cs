@@ -153,7 +153,7 @@ namespace CKWMS.Controllers
             ViewBag.rkysid = rkysid;
 
             ViewBag.linecount = tempData.Count;
-            ViewBag.totalproduct = tempData.Sum(p => p.Shuliang);
+            ViewBag.totalproduct = tempData.Sum(p => p.YanshouSL/p.Huansuanlv);
             ViewBag.YanshouSLs = tempData.Sum(p => p.YanshouSL);
             return View();
         }
