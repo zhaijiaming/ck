@@ -151,6 +151,18 @@
         $("#pl_fn_close").click(function () {
             $("#pl_fun").hide();
         });
+        $("#mydatatable tbody tr").each(function () {
+            var _selr = $(this).find("input");
+            var _yj = _selr.data("yj");
+            if (Number(_yj) > 0)
+            {
+                var _onum = $(this).find("td").eq(10).text();
+                if (Number(_yj) == Number(_onum))
+                    $(this).addClass("green");
+                else
+                    $(this).addClass("blue");
+            }
+        });
     });
     function CheckTotal() {
         var outnum = 0;
@@ -216,7 +228,7 @@
                         filltable = filltable + '</td><td>';
                         filltable = filltable + data[i].sshuliang;
                         filltable = filltable + '</td><td>';
-                        if (data[i].sdsl != null)
+                        if (data[i].DaijianSL != null)
                             filltable = filltable + data[i].DaijianSL;
                         else
                             filltable = filltable + '0';

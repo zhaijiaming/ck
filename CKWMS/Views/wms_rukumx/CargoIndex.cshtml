@@ -26,9 +26,9 @@
             var _orn = $(this).find('td').eq(10).html();
             var _oys = $(this).find('td').eq(11).html();
             if (eval(_orn) == eval(_oys))
-                $(this).addClass("green");;
+                $(this).addClass("green");
             if (eval(_orn) > eval(_oys) && eval(_oys) > 0)
-                $(this).addClass("blue");;
+                $(this).addClass("blue");
         });
         $("#pl_fn_close").click(function () {
             $("#pl_fun").hide();
