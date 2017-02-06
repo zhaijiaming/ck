@@ -162,6 +162,8 @@
             $("#Oknum").val(0);
             $("#Ngnum").val(0);
             //$("#YanshouSM").val("");
+            $("#Huansuanlv").val(_selrow.find("input").data("hsl"));
+            $("#YanshouJS").val(Number(_onum) / Number(_selrow.find("input").data("hsl")));
             $("#pl_yanshou").show();
         });
         $("#pl_close").click(function () {
@@ -439,6 +441,7 @@
                     <td>复核人</td>
                     <td>复核说明</td>
                     <td>复核日期</td>
+                    <td>复核件数</td>
                 </tr>
             </thead>
             <tbody>
@@ -446,7 +449,9 @@
                 {
                     <tr>
                         <td>
-                            <label><input type="checkbox" value="@item.ID" data-fh="@item.fhid"></label>
+                            <label><input type="checkbox" value="@item.ID" 
+                                          data-fh="@item.fhid"
+                                          data-hsl="@item.Huansuanlv"></label>
                         </td>
                         <td><i class="icon-youtube-play"></i></td>
                         <td>@item.ShangpinMC</td>
@@ -465,7 +470,8 @@
                         <td>@item.Fuheren</td>
                         <td>@item.FuheSM</td>
                         <td>@item.MakeDate</td>
-                    </tr>
+                        <td>@string.Format("{0}", item.FuheSL == null ? "" : (item.Huansuanlv != null && item.Huansuanlv > 0 ? item.FuheSL / item.Huansuanlv : item.FuheSL))</td>
+                   </tr>
                 }
             </tbody>
         </table>
@@ -475,8 +481,8 @@
         </div>*@
     <div class="row">
         <p class="pull-right">记录:@ViewBag.linecount 条</p>
-        <p>出库数量总计:@ViewBag.totalproduct</p>
-        <p>出库复核总计:@ViewBag.FuheSLs</p>
+        <p>复核数量总计:@ViewBag.fuhesls</p>
+        <p>复核件数总计:@ViewBag.fuhejss</p>
     </div>
 </div>
 <div id="pl_yanshou" class="panel panel-info" style="display:none;position:fixed;top:100px;left:200px;width:600px;height:360px;z-index:999;">
@@ -488,6 +494,18 @@
             <label class="control-label col-sm-2" for="Yanshouren">复核人</label>
             <div class="col-sm-10">
                 <input class="form-control" id="Yanshouren" name="Yanshouren" type="text" value="@ViewBag.username" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="YanshouJS">复核件数</label>
+            <div class="col-sm-10">
+                <input class="form-control" data-val="true" readonly data-val-number="字段 已收数量 必须是一个数字。" id="YanshouJS" type="text" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Huansuanlv">换算率</label>
+            <div class="col-sm-10">
+                <input class="form-control" data-val="true" readonly data-val-number="字段 已收数量 必须是一个数字。" id="Huansuanlv" type="text" value="" />
             </div>
         </div>
         <div class="form-group">

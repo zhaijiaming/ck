@@ -912,7 +912,7 @@ namespace CKWMS.Controllers
                                             wms_chukumx _ckmx = new wms_chukumx();
                                             _ckmx.ChukuID = _ckd.ID;
                                             _ckmx.Beizhu = ckjhmx.Beizhu;
-                                            _ckmx.Col1 = string.Format("{0:N2}",ckjhmx.HSDJ);// ckjhmx.HSDJ.ToString();
+                                            _ckmx.Col1 = string.Format("{0:N2}", ckjhmx.HSDJ);// ckjhmx.HSDJ.ToString();
                                             _ckmx.ChukuSL = _fpsl;
                                             _ckmx.JianhuoSL = 0;
                                             _ckmx.Jianhuo = false;
@@ -1247,8 +1247,22 @@ namespace CKWMS.Controllers
             var _ckdbh = Request["ckd"] ?? "";
             if (string.IsNullOrEmpty(_ckdbh))
                 return Json(-2);
-
-            int _rv = ob_wms_chukudanservice.BillCancel(int.Parse(_ckdbh));
+            var _ckd = ob_wms_chukudanservice.GetEntityById(p => p.ChukudanBH == _ckdbh);
+            if (_ckd == null)
+                return Json(-2);
+            int _rv = ob_wms_chukudanservice.BillCancel(_ckd.ID);
+            if (_ckd.JihuaID != null)
+            {
+                if (_rv == 1 && _ckd.JihuaID > 0)
+                {
+                    var _ckjh = ServiceFactory.cust_chukujihuaservice.GetEntityById(p => p.ID == _ckd.JihuaID && p.IsDelete == false);
+                    if (_ckjh != null)
+                    {
+                        _ckjh.IsDelete = true;
+                        ServiceFactory.cust_chukujihuaservice.UpdateEntity(_ckjh);
+                    }
+                }
+            }
             return Json(_rv);
         }
 

@@ -506,8 +506,8 @@
                     <td>拣货</td>
                     <td>单位</td>
                     <td>换算率</td>
-                    <td>厂家</td>
-                    <td>产地</td>
+                    <td>出库件数</td>
+                    <td>拣货件数</td>
                     <td>备注</td>
                     <td>货品状态</td>
                 </tr>
@@ -533,8 +533,8 @@
                         <td>@item.JianhuoSL</td>
                         <td>@item.JibenDW</td>
                         <td>@item.Huansuanlv</td>
-                        <td>@item.Changjia</td>
-                        <td>@item.Chandi</td>
+                        <td>@string.Format("{0}", item.Huansuanlv != null && item.Huansuanlv > 0 ? item.ChukuSL / item.Huansuanlv : item.ChukuSL)</td>
+                        <td>@string.Format("{0}", item.JianhuoSL==null?"":(item.Huansuanlv != null && item.Huansuanlv > 0 ? item.JianhuoSL / item.Huansuanlv : item.JianhuoSL))</td>
                         <td>@item.Beizhu</td>
                         <td>@Html.GetCommonValue_ID("存货状态", (int)item.HuopinZT)</td>
                     </tr>
@@ -546,6 +546,9 @@
         <p class="pull-right">记录:@ViewBag.linecount 条</p>
         <p>出库数量总计:@ViewBag.totalproduct</p>
         <p>拣货数量总计:@ViewBag.JianhuoSLs</p>
+        <p>出库件数总计:@ViewBag.totalbox</p>
+        <p>拣货件数总计:@ViewBag.JianhuoJSs</p>
+
     </div>
 </div>
 <div id="pl_picklist" class="panel panel-info" style="position:fixed;top:100px;left:200px;width:1000px;height:500px;display:none;">

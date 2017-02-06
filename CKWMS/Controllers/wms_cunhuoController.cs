@@ -987,10 +987,11 @@ namespace CKWMS.Controllers
             }
             ViewBag.SearchCondition = sc.ConditionInfo;
 
+            var tempdt = ob_wms_cunhuoservice.GetInventory(where.Compile());
+            ViewBag.totalproduct = tempdt.Sum(p => p.sshuliang);
+            ViewBag.totalbox = tempdt.Sum(p => p.sshuliang / (p.Huansuanlv != 0 ? p.Huansuanlv : 1));
             var tempData = ob_wms_cunhuoservice.GetInventory(where.Compile()).ToPagedList<wms_inventory_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.wms_storage_v = tempData;
-            ViewBag.totalproduct = tempData.Sum(p => p.sshuliang);
-            ViewBag.totalbox = tempData.Sum(p => p.sshuliang / (p.Huansuanlv != 0 ? p.Huansuanlv : 1));
             return View(tempData);
         }
         [OutputCache(Duration = 30)]
@@ -1235,11 +1236,12 @@ namespace CKWMS.Controllers
                 }
                 ViewBag.SearchCondition = sc.ConditionInfo;
             }
+            var tempdt = ob_wms_cunhuoservice.GetInventory(where.Compile());
+            ViewBag.totalproduct = tempdt.Sum(p => p.sshuliang);
+            ViewBag.totalbox = tempdt.Sum(p => p.sshuliang / (p.Huansuanlv!=0?p.Huansuanlv:1));
 
             var tempData = ob_wms_cunhuoservice.GetInventory(where.Compile()).ToPagedList(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.wms_storage_v = tempData;
-            ViewBag.totalproduct = tempData.Sum(p => p.sshuliang);
-            ViewBag.totalbox = tempData.Sum(p => p.sshuliang / (p.Huansuanlv!=0?p.Huansuanlv:1));
             return View(tempData);
         }
         public JsonResult GetCustStore()

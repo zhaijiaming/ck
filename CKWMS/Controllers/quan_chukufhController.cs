@@ -88,10 +88,10 @@ namespace CKWMS.Controllers
             ViewBag.userid = _userid;
             ViewBag.username = _username;
             ViewBag.outid = outid;
-
+            
             ViewBag.linecount = tempData.Count;
-            ViewBag.totalproduct = tempData.Sum(p => p.ChukuSL);
-            ViewBag.FuheSLs = tempData.Sum(p => p.FuheSL);
+            ViewBag.fuhesls = tempData.Sum(p => p.FuheSL);
+            ViewBag.fuhejss = tempData.Sum(p => p.FuheSL/p.Huansuanlv);
             return View();
         }
         public ActionResult PrintFuheDan()

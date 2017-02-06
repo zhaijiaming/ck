@@ -639,6 +639,7 @@ namespace CKWMS.Controllers
             var tempdt = ob_wms_chukumxservice.LoadSortEntities(p => p.ChukuID == id && p.IsDelete == false, false, s => s.Pihao).ToList<wms_chukumx>();
             ViewBag.linecount = tempdt.Count;
             ViewBag.totalproduct = tempdt.Sum(p => p.ChukuSL);
+            ViewBag.totalbox = tempdt.Sum(p => p.ChukuSL / p.Huansuanlv);
             var tempData = ob_wms_chukumxservice.LoadSortEntities(p => p.ChukuID == id && p.IsDelete == false, false, s => s.Pihao).ToPagedList<wms_chukumx>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.wms_chukumx = tempData;
             return View(tempData);

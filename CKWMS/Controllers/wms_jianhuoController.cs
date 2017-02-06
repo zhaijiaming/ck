@@ -200,6 +200,8 @@ namespace CKWMS.Controllers
             ViewBag.linecount = _outdetail.Count;
             ViewBag.totalproduct = _outdetail.Sum(p => p.ChukuSL);
             ViewBag.JianhuoSLs = _outdetail.Sum(p => p.JianhuoSL);
+            ViewBag.totalbox = _outdetail.Sum(p => p.ChukuSL/p.Huansuanlv);
+            ViewBag.JianhuoJSs = _outdetail.Sum(p => p.JianhuoSL/p.Huansuanlv);
 
             return View();
         }
