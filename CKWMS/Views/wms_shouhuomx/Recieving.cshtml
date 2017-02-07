@@ -475,7 +475,7 @@
                                            data-ph="@item.Pihao"
                                            data-ph1="@item.Pihao1"
                                            data-xlm="@item.Xuliema"
-                                           data-scrq=@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ==null?DateTime.Now:item.ShengchanRQ)
+                                           data-scrq=@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ==null?DateTime.Now.AddDays(-30):item.ShengchanRQ)
                                            data-sxrq=@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ==null?DateTime.Now:item.ShixiaoRQ)
                                            data-sl="@item.DaohuoSL"
                                            data-ys="@item.YishouSL"
@@ -501,7 +501,7 @@
                         <td>@item.Pihao</td>
                         <td>@item.Pihao1</td>
                         <td>@item.Xuliema</td>
-                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ == null ? DateTime.Now : item.ShengchanRQ)</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ == null ? DateTime.Now.AddDays(-30) : item.ShengchanRQ)</td>
                         <td>@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ == null ? DateTime.Now : item.ShixiaoRQ)</td>
                         <td>@item.DaohuoSL</td>
                         <td>@item.YishouSL</td>
@@ -586,7 +586,7 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for="ShengchanRQ">生产日期</label>
             <div class="col-sm-10">
-                <input id="ShengchanRQ" type="date" class="form-control" value="@string.Format("{0:yyyy-MM-dd}",DateTime.Now)" name="ShengchanRQ">
+                <input id="ShengchanRQ" type="date" class="form-control" value="" name="ShengchanRQ">
             </div>
         </div>
         <div class="form-group">

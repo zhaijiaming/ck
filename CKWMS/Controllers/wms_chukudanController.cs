@@ -897,7 +897,8 @@ namespace CKWMS.Controllers
                             var _ckjhmx = ServiceFactory.cust_chukujihuamxservice.LoadEntities(p => p.JihuaID == _ckjh.ID && p.IsDelete == false).ToList<cust_chukujihuamx>();
                             foreach (var ckjhmx in _ckjhmx)
                             {
-                                var _ch = ServiceFactory.wms_cunhuoservice.GetInventoryGoodsByCust((int)_ckd.HuozhuID, p => p.ShangpinDM == ckjhmx.ShangpinDM).OrderBy(s => s.ShixiaoRQ).ToList<wms_invgoods_v>();
+                                //var _ch = ServiceFactory.wms_cunhuoservice.GetInventoryGoodsByCust((int)_ckd.HuozhuID, p => p.ShangpinDM == ckjhmx.ShangpinDM).OrderBy(s => s.ShixiaoRQ).ToList<wms_invgoods_v>();
+                                var _ch = ServiceFactory.wms_cunhuoservice.GetInventoryGoodsByCustNormal((int)_ckd.HuozhuID, p => p.ShangpinDM == ckjhmx.ShangpinDM).OrderBy(s => s.ShixiaoRQ).ToList<wms_invgoods_v>();
                                 if (_ch != null)
                                 {
                                     var _fpsl = ckjhmx.JihuaSL;

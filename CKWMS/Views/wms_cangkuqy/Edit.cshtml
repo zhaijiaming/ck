@@ -65,7 +65,13 @@
             <div class="form-group">
                 <label class="col-sm-2">类型</label>
                 <div class="col-sm-10">
-                    @Html.SelectList_Common("leixing", "仓库区域类型", (int)ViewData.Model.Leixing)
+                    @Html.SelectList_Common("leixing", "仓库区域类型", (int)(ViewData.Model.Leixing==null?0: ViewData.Model.Leixing))
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2">功能类型</label>
+                <div class="col-sm-10">
+                    @Html.SelectList_Common("gongnenglx", "区域功能类型", (int)(ViewData.Model.GongnengLX==null?0: ViewData.Model.GongnengLX))
                 </div>
             </div>
             @*<div class="form-group">

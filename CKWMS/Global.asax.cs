@@ -92,6 +92,10 @@ namespace CKWMS
         /// </summary>
         public static Dictionary<int, string> AreaType;
         /// <summary>
+        /// 仓库区域功能类型
+        /// </summary>
+        public static Dictionary<int, string> AreaFunType;
+        /// <summary>
         /// 快递公司
         /// </summary>
         public static Dictionary<int, string> ExpressCompany;
@@ -182,6 +186,12 @@ namespace CKWMS
             AreaType.Add(2, "阴凉");
             AreaType.Add(3, "冷藏");
             AreaType.Add(4, "冷冻");
+
+            AreaFunType = new Dictionary<int, string>();
+            AreaFunType.Add(0, "");
+            AreaFunType.Add(1, "正常");
+            AreaFunType.Add(2, "特殊");
+            AreaFunType.Add(3, "临时");
 
             EntryType = new Dictionary<int, string>();
             EntryType.Add(0, "");

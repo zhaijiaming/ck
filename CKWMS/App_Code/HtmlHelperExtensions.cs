@@ -396,6 +396,9 @@ namespace CKWMS.App_Code
                 case "仓库区域类型":
                     sb.Append(GetCommonSelect(selectedValue, MvcApplication.AreaType));
                     break;
+                case "区域功能类型":
+                    sb.Append(GetCommonSelect(selectedValue, MvcApplication.AreaFunType));
+                    break;
                 case "入库类型":
                     sb.Append(GetCommonSelect(selectedValue, MvcApplication.EntryType));
                     break;
@@ -1295,8 +1298,12 @@ namespace CKWMS.App_Code
                         returnvalue = MvcApplication.TranCondition[dataValue];
                     break;
                 case "仓库区域类型":
-                    if (MvcApplication.TranCondition.ContainsKey(dataValue))
+                    if (MvcApplication.AreaType.ContainsKey(dataValue))
                         returnvalue = MvcApplication.AreaType[dataValue];
+                    break;
+                case "区域功能类型":
+                    if (MvcApplication.AreaFunType.ContainsKey(dataValue))
+                        returnvalue = MvcApplication.AreaFunType[dataValue];
                     break;
                 case "入库类型":
                     if (MvcApplication.EntryType.ContainsKey(dataValue))

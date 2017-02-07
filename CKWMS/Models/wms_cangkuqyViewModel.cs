@@ -32,6 +32,8 @@ namespace CKWMS.Models
         public bool IsDelete { get; set; }
         [Display(Name = "类型")]
         public int? Leixing { get; set; }
+        [Display(Name = "功能类型")]
+        public int? GongnengLX { get; set; }
     }
 }
 
