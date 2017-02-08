@@ -693,13 +693,13 @@
                         <td>@Html.GetCommonValue_ID("出库状态", (int)item.JihuaZT)</td>
                         <td title="@item.Beizhu">@string.Format("{0:s}", item.Beizhu == null ? "" : item.Beizhu.Length > 12 ? item.Beizhu.Substring(0, 12) : item.Beizhu)</td>
                         <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
-                        <td><a href="/wms_chukumx/GetOutDetail/@item.ID" target="_blank"><i class="icon-list"></i></a></td>
-                        <td><i class="icon-edit-sign"></i></td>
-                        <td><a href="/wms_jianhuo/getpickdetailbyout?out=@item.ID" target="_blank"><i class="icon-hand-up"></i></a></td>
-                        <td><a href="/quan_chukufh/outinventorycheck/@item.ID" target="_blank"><i class="icon-check"></i></a></td>
-                        <td><i class="icon-barcode"></i></td>
-                        <td><i class="icon-bookmark-empty"></i></td>
-                        <td class="outOperateid"><i class="icon-print"><input type="hidden" class="input_outOperateid" value="@item.ID" /></i></td>
+                        <td><a href="/wms_chukumx/GetOutDetail/@item.ID" target="_blank"><i class="icon-list bigger-200 blue"></i></a></td>
+                        <td><i class="icon-edit-sign bigger-200 blue"></i></td>
+                        <td><a href="/wms_jianhuo/getpickdetailbyout?out=@item.ID" target="_blank"><i class="icon-hand-up bigger-200 blue"></i></a></td>
+                        <td><a href="/quan_chukufh/outinventorycheck/@item.ID" target="_blank"><i class="icon-check bigger-200 blue"></i></a></td>
+                        <td><i class="icon-barcode bigger-200 blue"></i></td>
+                        <td><i class="icon-bookmark-empty bigger-200 blue"></i></td>
+                        <td class="outOperateid"><i class="icon-print bigger-200 blue"><input type="hidden" class="input_outOperateid" value="@item.ID" /></i></td>
                     </tr>
                 }
             </tbody>
