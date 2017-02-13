@@ -822,28 +822,51 @@ namespace CKWMS.reports
                             rptView.LocalReport.DataSources.Clear();
                             DataTable dtRuKuMX = _rds.Tables["RuKumingxi"];
                             DataRow drRuKuMX;
-                            long rkmx_DaohuoSLs = 0;
+                            float rkmx_DaohuoSLs = 0;
                             float rkmx_DaohuoJSs = 0;
+                            var sum_rkdBH = "";
+                            var sum_khDH = "";
+                            List<wms_rukumx> lists = new List<wms_rukumx>();
+                            foreach (string mxid in _rkmxid.Split(','))
+                            {
+                                if (mxid.Length > 0)
+                                {
+                                    //数据整合成一个list
+                                    var _RuKuMXs = ServiceFactory.wms_rukumxservice.LoadSortEntities(p => p.RukuID == int.Parse(mxid) && p.IsDelete == false, true, s => s.Pihao);
+                                    foreach (wms_rukumx _mx in _RuKuMXs)
+                                    {
+                                        lists.Add(_mx);
+                                    }
+                                    //入库编号总和
+                                    wms_rukudan RuKuMX_others = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(mxid));
+                                    sum_rkdBH = sum_rkdBH + RuKuMX_others.RukudanBH +",";
+                                    //客户单号总和
+                                    sum_khDH = sum_khDH + RuKuMX_others.KehuDH + ",";
+                                }
+                            }
+                            var _grouplist = from p in lists
+                                             group p by p.ShangpinDM into g
+                                             select g;
+
+                            lists.ForEach(c => {
+                                var group = lists.Where(a => a.Pihao == c.Pihao);
+                                c.DaohuoSL = group.Sum(x => x.DaohuoSL);
+                            });
                             try
                             {
-                                //_RuKuMXs:'规格'&'批号'&'注册证'&'失效日期'&'到货数量'.
-                                var _RuKuMXs = ServiceFactory.wms_rukumxservice.LoadSortEntities(p => p.RukuID == int.Parse(_rkmxid) && p.IsDelete == false, true, s => s.ShangpinMC);
-                                foreach (wms_rukumx _pr in _RuKuMXs)
+                                foreach (wms_rukumx _pr in lists)
                                 {
                                     drRuKuMX = dtRuKuMX.NewRow();
-                                    //drRuKuMX["ShangpinMC"] = _pr.ShangpinMC;
                                     drRuKuMX["Guige"] = _pr.Guige;
                                     drRuKuMX["Pihao"] = _pr.Pihao;
                                     drRuKuMX["Zhucezheng"] = _pr.Zhucezheng;
 
                                     var DaohuoJS = _pr.DaohuoSL / _pr.Huansuanlv == null ? int.Parse("0") : (float)_pr.DaohuoSL / _pr.Huansuanlv;
-                                    drRuKuMX["DaohuoJS"] = DaohuoJS;
+                                    drRuKuMX["DaohuoJS"] = string.Format("{0:0.00}", DaohuoJS);
                                     rkmx_DaohuoJSs += DaohuoJS;
-
-                                    //drRuKuMX["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShengchanRQ);
+                                    
                                     drRuKuMX["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShixiaoRQ == null ? "" : ((DateTime)_pr.ShixiaoRQ).ToString("yyyy/MM/dd"));
-
-                                    //drRuKuMX["Chandi"] = _pr.Chandi;
+                                    
                                     rkmx_DaohuoSLs += (long)_pr.DaohuoSL;
 
                                     dtRuKuMX.Rows.Add(drRuKuMX);
@@ -860,6 +883,8 @@ namespace CKWMS.reports
                             DataRow drRuKuMX_others = dtRuKuMX_others.NewRow();
                             try
                             {
+                                //入库编号总和
+                                drRuKuMX_others["RukudanBH"] = sum_rkdBH;
                                 //wms_rukudan:'入库单编号'&'入库日期'&'储运要求'.
                                 wms_rukudan RuKuMX_others = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_rkmxid));
                                 if (RuKuMX_others != null)
@@ -887,9 +912,9 @@ namespace CKWMS.reports
                                     }
                                 }
                                 //到货数量总计
-                                drRuKuMX_others["rkmxdhSLs"] = rkmx_DaohuoSLs;
+                                drRuKuMX_others["rkmxdhSLs"] = string.Format("{0:0.00}", rkmx_DaohuoSLs);
                                 //到货件数总计
-                                drRuKuMX_others["rkmxdhJSs"] = rkmx_DaohuoJSs;
+                                drRuKuMX_others["rkmxdhJSs"] = string.Format("{0:0.00}", rkmx_DaohuoJSs);
 
                                 dtRuKuMX_others.Rows.Add(drRuKuMX_others);
                             }
