@@ -295,6 +295,8 @@
     <Compile Include="Controllers\base_yunshugsController.cs" />
     <Compile Include="Controllers\base_zhucezhengjlController.cs" />
     <Compile Include="Controllers\cfda_cangkuController.cs" />
+    <Compile Include="Controllers\cfda_inhistoryController.cs" />
+    <Compile Include="Controllers\cfda_outhistoryController.cs" />
     <Compile Include="Controllers\cfda_zizhiController.cs" />
     <Compile Include="Controllers\cust_chukujihuaController.cs" />
     <Compile Include="Controllers\cust_chukujihuamxController.cs" />
@@ -332,6 +334,8 @@
     <Compile Include="Models\base_quyuViewModel.cs" />
     <Compile Include="Models\base_yunshugsViewModel.cs" />
     <Compile Include="Models\base_zhucezhengjlViewModel.cs" />
+    <Compile Include="Models\cfda_inhistoryViewModel.cs" />
+    <Compile Include="Models\cfda_outhistoryViewModel.cs" />
     <Compile Include="Models\cust_chukujihuamxViewModel.cs" />
     <Compile Include="Models\cust_chukujihuaViewModel.cs" />
     <Compile Include="Models\cust_rukujihuamxViewModel.cs" />
@@ -962,6 +966,12 @@
     <Content Include="Views\wms_chukudan\PrintJSGRTongxing.cshtml" />
     <Content Include="Views\wms_cunhuo\InoutCheck.cshtml" />
     <Content Include="Views\wms_chukudan\ExpressExport.cshtml" />
+    <Content Include="Views\cfda_inhistory\Add.cshtml" />
+    <Content Include="Views\cfda_inhistory\Edit.cshtml" />
+    <Content Include="Views\cfda_inhistory\Index.cshtml" />
+    <Content Include="Views\cfda_outhistory\Add.cshtml" />
+    <Content Include="Views\cfda_outhistory\Edit.cshtml" />
+    <Content Include="Views\cfda_outhistory\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

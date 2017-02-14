@@ -839,22 +839,36 @@ namespace CKWMS.reports
                                     }
                                     //入库编号总和
                                     wms_rukudan RuKuMX_others = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(mxid));
-                                    sum_rkdBH = sum_rkdBH + RuKuMX_others.RukudanBH +",";
+                                    sum_rkdBH = sum_rkdBH + RuKuMX_others.RukudanBH + ",";
                                     //客户单号总和
                                     sum_khDH = sum_khDH + RuKuMX_others.KehuDH + ",";
                                 }
                             }
                             var _grouplist = from p in lists
-                                             group p by p.ShangpinDM into g
-                                             select g;
-
-                            lists.ForEach(c => {
-                                var group = lists.Where(a => a.Pihao == c.Pihao);
-                                c.DaohuoSL = group.Sum(x => x.DaohuoSL);
-                            });
+                                             group p by new {p.ShangpinID,p.ShangpinDM,p.Pihao } into g
+                                             select new
+                                             {
+                                                 spid=g.Key.ShangpinID,
+                                                 sp=g.Key.ShangpinDM,
+                                                 ph=g.Key.Pihao,
+                                                 num = g.Sum(p => p.DaohuoSL)
+                                             };
+                            List<wms_rukumx> _newLists = new List<wms_rukumx>();
+                            foreach(var gl in _grouplist)
+                            {
+                                foreach(var mx in lists)
+                                {
+                                    if(mx.ShangpinID==gl.spid && mx.Pihao==gl.ph && mx.ShangpinDM==gl.sp)
+                                    {
+                                        mx.DaohuoSL = gl.num;
+                                        _newLists.Add(mx);
+                                        break;
+                                    }
+                                }
+                            }
                             try
                             {
-                                foreach (wms_rukumx _pr in lists)
+                                foreach (wms_rukumx _pr in _newLists)
                                 {
                                     drRuKuMX = dtRuKuMX.NewRow();
                                     drRuKuMX["Guige"] = _pr.Guige;
@@ -864,9 +878,9 @@ namespace CKWMS.reports
                                     var DaohuoJS = _pr.DaohuoSL / _pr.Huansuanlv == null ? int.Parse("0") : (float)_pr.DaohuoSL / _pr.Huansuanlv;
                                     drRuKuMX["DaohuoJS"] = string.Format("{0:0.00}", DaohuoJS);
                                     rkmx_DaohuoJSs += DaohuoJS;
-                                    
+
                                     drRuKuMX["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShixiaoRQ == null ? "" : ((DateTime)_pr.ShixiaoRQ).ToString("yyyy/MM/dd"));
-                                    
+
                                     rkmx_DaohuoSLs += (long)_pr.DaohuoSL;
 
                                     dtRuKuMX.Rows.Add(drRuKuMX);
@@ -889,7 +903,7 @@ namespace CKWMS.reports
                                 wms_rukudan RuKuMX_others = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_rkmxid));
                                 if (RuKuMX_others != null)
                                 {
-                                    drRuKuMX_others["RukudanBH"] = RuKuMX_others.RukudanBH;
+                                    drRuKuMX_others["RukudanBH"] =RuKuMX_others.RukudanBH;
                                     drRuKuMX_others["RukuRQ"] = string.Format("{0:yyyy/MM/dd}", RuKuMX_others.RukuRQ == null ? "" : ((DateTime)RuKuMX_others.RukuRQ).ToString("yyyy/MM/dd"));
                                     drRuKuMX_others["ChunyunYQ"] = RuKuMX_others.ChunyunYQ;
                                     //base_weituokehu:'货主'.
