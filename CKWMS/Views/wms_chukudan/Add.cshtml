@@ -387,11 +387,11 @@
         </div>
     </div>
 </div>
-<div id="pl_cust" class="panel panel-primary" style="display:none;position:absolute;top:50px;left:100px;width:800px;z-index:999;">
+<div id="pl_cust" class="panel panel-primary" style="display:none;position:fixed;top:50px;left:100px;width:600px;z-index:999;overflow:auto;">
     <div class="panel-heading">
         <h3 class="panel-title">请选择客户<button id="pl_cust_close" class="pull-right">X</button></h3>
     </div>
-    <div class="panel-body">
+    <div class="panel-body" style="width:580px;height:360px;overflow:auto;">
         <div class="row">
             <table class="table table-condensed" id="dt_cust">
                 <caption></caption>
@@ -405,7 +405,7 @@
                         <td>经营范围</td>
                     </tr>
                 </thead>
-                <tbody style="display:block;height:400px;overflow:auto;"></tbody>
+                <tbody></tbody>
             </table>
         </div>
     </div>

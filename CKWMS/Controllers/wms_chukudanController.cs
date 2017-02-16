@@ -554,7 +554,7 @@ namespace CKWMS.Controllers
             string[] _efs = _ids.Split(',');
             foreach (var _ckid in _efs)
             {
-                wms_chukudan _ckd = ob_wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_ckid));
+                wms_chukudan _ckd = ob_wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_ckid) && p.IsDelete==false);
                 if (_ckd != null)
                 {
                     var _ng = false;
@@ -849,6 +849,9 @@ namespace CKWMS.Controllers
                             if (_ckjh.ChukudanSL >= 1)
                                 return Json(-3);
                         }
+                        wms_chukudan _ckdcheck = ob_wms_chukudanservice.GetEntityById(p => p.KehuDH == _ckjh.KehuDH && p.IsDelete == false);
+                        if (_ckdcheck != null)
+                            return Json(-3);
                         wms_chukudan _ckd = new wms_chukudan();
                         _ckd.BaifangQY = "";
                         _ckd.BaoshuiSF = false;
@@ -1248,7 +1251,7 @@ namespace CKWMS.Controllers
             var _ckdbh = Request["ckd"] ?? "";
             if (string.IsNullOrEmpty(_ckdbh))
                 return Json(-2);
-            var _ckd = ob_wms_chukudanservice.GetEntityById(p => p.ChukudanBH == _ckdbh);
+            var _ckd = ob_wms_chukudanservice.GetEntityById(p => p.ChukudanBH == _ckdbh && p.IsDelete==false);
             if (_ckd == null)
                 return Json(-2);
             int _rv = ob_wms_chukudanservice.BillCancel(_ckd.ID);

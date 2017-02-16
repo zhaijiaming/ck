@@ -15,8 +15,8 @@ namespace CKWMS.Controllers
 {
     public class operatelogController : Controller
     {
-        //private IoperatelogService ob_operatelogservice = ServiceFactory.operatelogservice;
-        private IoperatelogService ob_operatelogservice =operatelogService.GetInstance();
+        private IoperatelogService ob_operatelogservice = ServiceFactory.operatelogservice;
+        //private IoperatelogService ob_operatelogservice =operatelogService.GetInstance();
         //private List<SearchConditionModel> _searchconditions;
         [OutputCache(Duration = 30)]
         public ActionResult Index(string page)

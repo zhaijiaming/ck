@@ -392,6 +392,25 @@ namespace CKWMS.Controllers
             }
             return Json(flag);
         }
+        public JsonResult CheckCancel()
+        {
+            int _userid = (int)Session["user_id"];
+            var _ckdid = Request["ckd"] ?? "";
+            if (string.IsNullOrEmpty(_ckdid))
+                return Json(-1);
+            var _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_ckdid) && p.IsDelete == false);
+            if (_ckd == null)
+                return Json(-1);
+            if (_ckd.JihuaZT == 3)
+            {
+                _ckd.JihuaZT = 1;
+                ServiceFactory.wms_chukudanservice.UpdateEntity(_ckd);
+            }
+            else
+                return Json(-2);
+            return Json(1);
+        }
+
     }
 }
 

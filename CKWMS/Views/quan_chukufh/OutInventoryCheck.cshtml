@@ -25,6 +25,34 @@
         $("#bt_fn_cancel").click(function () {
             $("#pl_fun").hide();
         });
+        $("#bt_fn_cancel").click(function () {
+            var _info = confirm("确实需要回退这张出库单的复核状态吗？");
+            if (_info == true) {
+                $.ajax({
+                    async: true,
+                    beforeSend: function () {
+                        ShowWait();
+                    },
+                    complete: function () {
+                        HiddenWait();
+                    },
+                    type: "POST",
+                    url: "/quan_chukufh/checkcancel",
+                    data: {
+                        ckd: $("#outid").val()
+                    },
+                    success: function (data) {
+                        if (data == -1)
+                            alert("复核回退操作失败，请重试！");
+                        if (data == -2)
+                            alert("非复核状态，不能回退！");
+                        if (data == 1)
+                            window.close();
+                            //location.reload();
+                    }
+                });
+            }
+        });
         $("#bt_fn_over").click(function () {
             var _isover = true;
             $("#pl_fun").hide();
@@ -485,7 +513,7 @@
         <p>复核件数总计:@ViewBag.fuhejss</p>
     </div>
 </div>
-<div id="pl_yanshou" class="panel panel-info" style="display:none;position:fixed;top:100px;left:200px;width:600px;height:360px;z-index:999;">
+<div id="pl_yanshou" class="panel panel-info" style="display:none;position:fixed;top:100px;left:200px;width:600px;z-index:999;">
     <div class="panel-heading">
         <h3 class="panel-title">出库复核<button id="pl_close" class="pull-right">X</button></h3>
     </div>
@@ -548,7 +576,7 @@
         </div>
     </div>
 </div>
-<div id="pl_jh" class="panel panel-primary" style="display:none;position:fixed;top:50px;left:100px;width:800px;height:600px;z-index:999;">
+<div id="pl_jh" class="panel panel-primary" style="display:none;position:fixed;top:50px;left:100px;width:800px;z-index:999;">
     <div class="panel-heading">
         <h3 class="panel-title">货品下架记录<button id="pl_jh_close" class="pull-right">X</button></h3>
     </div>
@@ -595,6 +623,8 @@
             <div class="center"><p id="bt_fn_over" class="btn btn-default">复核完成</p></div>
             <br />
             <div class="center"><p id="bt_fn_delete" class="btn btn-default">删除选中</p></div>
+            <br />
+            <div class="center"><p id="bt_fn_cancel" class="btn btn-default">复核回退</p></div>
             <br />
             <div class="center"><p id="bt_fn_cancel" class="btn btn-default" style="letter-spacing:1em;">取消</p></div>
         </div>
