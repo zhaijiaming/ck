@@ -39,6 +39,8 @@
                         alert("取消出库单前，必须清空拣货信息！");
                     else if (data == -4)
                         alert("更新失败，请马上联系开发人员！");
+                    else if(data==-5)
+                        alert("此状态下不能删除，请联络管理员！");
                     else {
                         alert("出库单已删除！");
                         $("#chukuBH").val("");

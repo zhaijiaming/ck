@@ -294,6 +294,8 @@ namespace CKWMS
             EntryState.Add(3, "验收");
             EntryState.Add(4, "上架");
             EntryState.Add(5, "完成");
+            EntryState.Add(6, "错误");
+            EntryState.Add(7, "上传");
 
             OutState = new Dictionary<int, string>();
             OutState.Add(0, "");
@@ -302,6 +304,8 @@ namespace CKWMS
             OutState.Add(3, "复核");
             OutState.Add(4, "装箱");
             OutState.Add(5, "完成");
+            OutState.Add(6, "错误");
+            OutState.Add(7, "上传");
 
             ExpressCompany = new Dictionary<int, string>();
             ExpressCompany.Add(0, "");

@@ -31,7 +31,8 @@
             var sDel = "";
             $("#mydatatable tbody tr input[type=checkbox]").each(function () {
                 if (this.checked) {
-                    sDel = sDel + ", " + $(this).val()
+                    //sDel = sDel   + ", "+ $(this).val();
+                    sDel = ", " + $(this).val();
                 }
             });
             if (sDel.length < 2)
@@ -62,6 +63,12 @@
                     {
                         alert("系统出现错误，请立即通知管理员！");
                     }
+                    else if(data==-3)
+                        alert("处于非正常出库状态，不能完成出库！");
+                    else if(data==-4)
+                        alert("需要复核后才能完成出库！");
+                    else if(data==-5)
+                        alert("拣货数量与出库数量不符，请检查是否有不合格的商品出库！");
                     else
                         location.reload();
                 }

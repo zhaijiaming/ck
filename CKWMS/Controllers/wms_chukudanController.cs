@@ -558,21 +558,27 @@ namespace CKWMS.Controllers
                 if (_ckd != null)
                 {
                     var _ng = false;
+                    if (_ckd.JihuaZT > 4 || _ckd.JihuaZT < 1)
+                        return Json(-3);
                     if (_ckd.FuheSF && _ckd.JihuaZT < 3)
-                        _ng = true;
+                        return Json(-4);
                     else
                     {
                         var _ckmx = ServiceFactory.wms_chukumxservice.LoadEntities(p => p.ChukuID == _ckd.ID && p.IsDelete == false).ToList<wms_chukumx>();
                         if (_ckmx.Count == 0)
                             _ng = true;
-                        foreach (wms_chukumx mx in _ckmx)
-                        {
-                            if (mx.ChukuSL != mx.JianhuoSL)
-                            {
-                                _ng = true;
-                                break;
-                            }
-                        }
+                        var _cksl = _ckmx.Sum(p => p.ChukuSL);
+                        var _jhsl = _ckmx.Sum(p => p.JianhuoSL);
+                        if (_cksl != _jhsl)
+                            _ng = true;
+                        //foreach (wms_chukumx mx in _ckmx)
+                        //{
+                        //    if (mx.ChukuSL != mx.JianhuoSL)
+                        //    {
+                        //        _ng = true;
+                        //        break;
+                        //    }
+                        //}
                     }
                     if (!_ng)
                     {
@@ -587,7 +593,7 @@ namespace CKWMS.Controllers
                         }
                     }
                     else
-                        return Json(-1);
+                        return Json(-5);
                 }
             }
             return Json(1);

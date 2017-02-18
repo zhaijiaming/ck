@@ -222,6 +222,12 @@
                 alert("验收数量不正确，请重新输入！");
                 return;
             }
+            if (eval(_ysresult) == 3) {
+                var _ngconfirm = confirm("此货品被验证为不合格，请再次确认商品的质量！");
+                if (_ngconfirm ==false) {
+                    return;
+                }
+            }
             if (eval(_ysresult) == 2) {
                 alert("请标识不合格的货品！");
                 $("#bhg").val($("#Ngnum").val());
@@ -254,10 +260,10 @@
                         success: function (data) {
                             if (data == -1)
                                 alert("标识不合格商品失败！");
+                            else
+                                alert("产品不合格，需要重新拣货！");
                         }
                     });
-
-                    alert("产品不合格，需要重新拣货！");
                 }
                 else
                     //$.post("/quan_chukufh/addcheck", {
@@ -298,7 +304,6 @@
                             }
                         }
                     });
-
             }
         });
         $("#mydatatable tbody tr").each(function () {
