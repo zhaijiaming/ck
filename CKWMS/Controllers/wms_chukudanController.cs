@@ -924,6 +924,7 @@ namespace CKWMS.Controllers
                                             _ckmx.Beizhu = ckjhmx.Beizhu;
                                             _ckmx.Col1 = string.Format("{0:N2}", ckjhmx.HSDJ);// ckjhmx.HSDJ.ToString();
                                             _ckmx.ChukuSL = _fpsl;
+                                            _ckmx.Col2 = ckjhmx.TBH;
                                             _ckmx.JianhuoSL = 0;
                                             _ckmx.Jianhuo = false;
                                             _ckmx.MakeDate = DateTime.Now;
@@ -961,6 +962,7 @@ namespace CKWMS.Controllers
                                                 _ckmx.ChukuID = _ckd.ID;
                                                 _ckmx.Beizhu = ckjhmx.Beizhu;
                                                 _ckmx.Col1 = ckjhmx.HSDJ.ToString();
+                                                _ckmx.Col2 = ckjhmx.TBH;
                                                 _ckmx.ChukuSL = ch.chsl - ch.sdsl;
                                                 _ckmx.JianhuoSL = 0;
                                                 _ckmx.Jianhuo = false;
@@ -1035,6 +1037,7 @@ namespace CKWMS.Controllers
                                     _ckmx.ChukuID = _ckd.ID;
                                     _ckmx.Beizhu = ckjhmx.Beizhu;
                                     _ckmx.Col1 = ckjhmx.HSDJ.ToString();
+                                    _ckmx.Col2 = ckjhmx.TBH;
                                     _ckmx.ChukuSL = 0;
                                     _ckmx.JianhuoSL = 0;
                                     _ckmx.Jianhuo = false;
