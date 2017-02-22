@@ -33,25 +33,69 @@ namespace CKWMS.Controllers
                     string[] scld = scl.Split(',');
                     switch (scld[0])
                     {
-                        case "xh":
-                            string xh = scld[1];
-                            string xhequal = scld[2];
-                            string xhand = scld[3];
-                            if (!string.IsNullOrEmpty(xh))
+                        case "CPMC":
+                            string CPMC = scld[1];
+                            string CPMCequal = scld[2];
+                            string CPMCand = scld[3];
+                            if (!string.IsNullOrEmpty(CPMC))
                             {
-                                if (xhequal.Equals("="))
+                                if (CPMCequal.Equals("="))
                                 {
-                                    if (xhand.Equals("and"))
-                                        where = where.And(cfda_inhistory => cfda_inhistory.XH == xh);
+                                    if (CPMCand.Equals("and"))
+                                        where = where.And(p => p.CPMC == CPMC.Trim());
                                     else
-                                        where = where.Or(cfda_inhistory => cfda_inhistory.XH == xh);
+                                        where = where.Or(p => p.CPMC == CPMC.Trim());
                                 }
-                                if (xhequal.Equals("like"))
+                                if (CPMCequal.Equals("like"))
                                 {
-                                    if (xhand.Equals("and"))
-                                        where = where.And(cfda_inhistory => cfda_inhistory.XH.Contains(xh));
+                                    if (CPMCand.Equals("and"))
+                                        where = where.And(p => p.CPMC.Contains(CPMC.Trim()));
                                     else
-                                        where = where.Or(cfda_inhistory => cfda_inhistory.XH.Contains(xh));
+                                        where = where.Or(p => p.CPMC.Contains(CPMC.Trim()));
+                                }
+                            }
+                            break;
+                        case "GGXH":
+                            string GGXH = scld[1];
+                            string GGXHequal = scld[2];
+                            string GGXHand = scld[3];
+                            if (!string.IsNullOrEmpty(GGXH))
+                            {
+                                if (GGXHequal.Equals("="))
+                                {
+                                    if (GGXHand.Equals("and"))
+                                        where = where.And(p => p.GGXH == GGXH.Trim());
+                                    else
+                                        where = where.Or(p => p.GGXH == GGXH.Trim());
+                                }
+                                if (GGXHequal.Equals("like"))
+                                {
+                                    if (GGXHand.Equals("and"))
+                                        where = where.And(p => p.GGXH.Contains(GGXH.Trim()));
+                                    else
+                                        where = where.Or(p => p.GGXH.Contains(GGXH.Trim()));
+                                }
+                            }
+                            break;
+                        case "SCPH":
+                            string SCPH = scld[1];
+                            string SCPHequal = scld[2];
+                            string SCPHand = scld[3];
+                            if (!string.IsNullOrEmpty(SCPH))
+                            {
+                                if (SCPHequal.Equals("="))
+                                {
+                                    if (SCPHand.Equals("and"))
+                                        where = where.And(p => p.SCPH == SCPH.Trim());
+                                    else
+                                        where = where.Or(p => p.SCPH == SCPH.Trim());
+                                }
+                                if (SCPHequal.Equals("like"))
+                                {
+                                    if (SCPHand.Equals("and"))
+                                        where = where.And(p => p.SCPH.Contains(SCPH.Trim()));
+                                    else
+                                        where = where.Or(p => p.SCPH.Contains(SCPH.Trim()));
                                 }
                             }
                             break;
@@ -76,9 +120,18 @@ namespace CKWMS.Controllers
             int userid = (int)Session["user_id"];
             string pagetag = "cfda_inhistory_index";
             string page = "1";
-            string xh = Request["xh"] ?? "";
-            string xhequal = Request["xhequal"] ?? "";
-            string xhand = Request["xhand"] ?? "";
+            //CPMC
+            string CPMC = Request["CPMC"] ?? "";
+            string CPMCequal = Request["CPMCequal"] ?? "";
+            string CPMCand = Request["CPMCand"] ?? "";
+            //GGXH
+            string GGXH = Request["GGXH"] ?? "";
+            string GGXHequal = Request["GGXHequal"] ?? "";
+            string GGXHand = Request["GGXHand"] ?? "";
+            //SCPH
+            string SCPH = Request["SCPH"] ?? "";
+            string SCPHequal = Request["SCPHequal"] ?? "";
+            string SCPHand = Request["SCPHand"] ?? "";
             Expression<Func<cfda_inhistory, bool>> where = PredicateExtensionses.True<cfda_inhistory>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -86,53 +139,143 @@ namespace CKWMS.Controllers
                 sc = new searchcondition();
                 sc.UserID = userid;
                 sc.PageBrief = pagetag;
-                if (!string.IsNullOrEmpty(xh))
+                //CPMC
+                if (!string.IsNullOrEmpty(CPMC))
                 {
-                    if (xhequal.Equals("="))
+                    if (CPMCequal.Equals("="))
                     {
-                        if (xhand.Equals("and"))
-                            where = where.And(cfda_inhistory => cfda_inhistory.XH == xh);
+                        if (CPMCand.Equals("and"))
+                            where = where.And(p => p.CPMC == CPMC.Trim());
                         else
-                            where = where.Or(cfda_inhistory => cfda_inhistory.XH == xh);
+                            where = where.Or(p => p.CPMC == CPMC.Trim());
                     }
-                    if (xhequal.Equals("like"))
+                    if (CPMCequal.Equals("like"))
                     {
-                        if (xhand.Equals("and"))
-                            where = where.And(cfda_inhistory => cfda_inhistory.XH.Contains(xh));
+                        if (CPMCand.Equals("and"))
+                            where = where.And(p => p.CPMC.Contains(CPMC.Trim()));
                         else
-                            where = where.Or(cfda_inhistory => cfda_inhistory.XH.Contains(xh));
+                            where = where.Or(p => p.CPMC.Contains(CPMC.Trim()));
                     }
                 }
-                if (!string.IsNullOrEmpty(xh))
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "xh", xh, xhequal, xhand);
+                if (!string.IsNullOrEmpty(CPMC))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "CPMC", CPMC, CPMCequal, CPMCand);
                 else
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "xh", "", xhequal, xhand);
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "CPMC", "", CPMCequal, CPMCand);
+                //GGXH
+                if (!string.IsNullOrEmpty(GGXH))
+                {
+                    if (GGXHequal.Equals("="))
+                    {
+                        if (GGXHand.Equals("and"))
+                            where = where.And(p => p.GGXH == GGXH.Trim());
+                        else
+                            where = where.Or(p => p.GGXH == GGXH.Trim());
+                    }
+                    if (GGXHequal.Equals("like"))
+                    {
+                        if (GGXHand.Equals("and"))
+                            where = where.And(p => p.GGXH.Contains(GGXH.Trim()));
+                        else
+                            where = where.Or(p => p.GGXH.Contains(GGXH.Trim()));
+                    }
+                }
+                if (!string.IsNullOrEmpty(GGXH))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "GGXH", GGXH, GGXHequal, GGXHand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "GGXH", "", GGXHequal, GGXHand);
+                //SCPH
+                if (!string.IsNullOrEmpty(SCPH))
+                {
+                    if (SCPHequal.Equals("="))
+                    {
+                        if (SCPHand.Equals("and"))
+                            where = where.And(p => p.SCPH == SCPH.Trim());
+                        else
+                            where = where.Or(p => p.SCPH == SCPH.Trim());
+                    }
+                    if (SCPHequal.Equals("like"))
+                    {
+                        if (SCPHand.Equals("and"))
+                            where = where.And(p => p.SCPH.Contains(SCPH.Trim()));
+                        else
+                            where = where.Or(p => p.SCPH.Contains(SCPH.Trim()));
+                    }
+                }
+                if (!string.IsNullOrEmpty(SCPH))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "SCPH", SCPH, SCPHequal, SCPHand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "SCPH", "", SCPHequal, SCPHand);
+
                 searchconditionService.GetInstance().AddEntity(sc);
             }
             else
             {
                 sc.ConditionInfo = "";
-                if (!string.IsNullOrEmpty(xh))
+                if (!string.IsNullOrEmpty(CPMC))
                 {
-                    if (xhequal.Equals("="))
+                    if (CPMCequal.Equals("="))
                     {
-                        if (xhand.Equals("and"))
-                            where = where.And(cfda_inhistory => cfda_inhistory.XH == xh);
+                        if (CPMCand.Equals("and"))
+                            where = where.And(p => p.CPMC == CPMC.Trim());
                         else
-                            where = where.Or(cfda_inhistory => cfda_inhistory.XH == xh);
+                            where = where.Or(p => p.CPMC == CPMC.Trim());
                     }
-                    if (xhequal.Equals("like"))
+                    if (CPMCequal.Equals("like"))
                     {
-                        if (xhand.Equals("and"))
-                            where = where.And(cfda_inhistory => cfda_inhistory.XH.Contains(xh));
+                        if (CPMCand.Equals("and"))
+                            where = where.And(p => p.CPMC.Contains(CPMC.Trim()));
                         else
-                            where = where.Or(cfda_inhistory => cfda_inhistory.XH.Contains(xh));
+                            where = where.Or(p => p.CPMC.Contains(CPMC.Trim()));
                     }
                 }
-                if (!string.IsNullOrEmpty(xh))
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "xh", xh, xhequal, xhand);
+                if (!string.IsNullOrEmpty(CPMC))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "CPMC", CPMC, CPMCequal, CPMCand);
                 else
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "xh", "", xhequal, xhand);
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "CPMC", "", CPMCequal, CPMCand);
+                //GGXH
+                if (!string.IsNullOrEmpty(GGXH))
+                {
+                    if (GGXHequal.Equals("="))
+                    {
+                        if (GGXHand.Equals("and"))
+                            where = where.And(p => p.GGXH == GGXH.Trim());
+                        else
+                            where = where.Or(p => p.GGXH == GGXH.Trim());
+                    }
+                    if (GGXHequal.Equals("like"))
+                    {
+                        if (GGXHand.Equals("and"))
+                            where = where.And(p => p.GGXH.Contains(GGXH.Trim()));
+                        else
+                            where = where.Or(p => p.GGXH.Contains(GGXH.Trim()));
+                    }
+                }
+                if (!string.IsNullOrEmpty(GGXH))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "GGXH", GGXH, GGXHequal, GGXHand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "GGXH", "", GGXHequal, GGXHand);
+                //SCPH
+                if (!string.IsNullOrEmpty(SCPH))
+                {
+                    if (SCPHequal.Equals("="))
+                    {
+                        if (SCPHand.Equals("and"))
+                            where = where.And(p => p.SCPH == SCPH.Trim());
+                        else
+                            where = where.Or(p => p.SCPH == SCPH.Trim());
+                    }
+                    if (SCPHequal.Equals("like"))
+                    {
+                        if (SCPHand.Equals("and"))
+                            where = where.And(p => p.SCPH.Contains(SCPH.Trim()));
+                        else
+                            where = where.Or(p => p.SCPH.Contains(SCPH.Trim()));
+                    }
+                }
+                if (!string.IsNullOrEmpty(SCPH))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "SCPH", SCPH, SCPHequal, SCPHand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "SCPH", "", SCPHequal, SCPHand);
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;
@@ -312,6 +455,101 @@ namespace CKWMS.Controllers
                 }
             }
             return RedirectToAction("Index");
+        }
+        public ActionResult inHistoryExport()
+        {
+            int userid = (int)Session["user_id"];
+            string pagetag = "cfda_inhistory_index";
+            Expression<Func<cfda_inhistory, bool>> where = PredicateExtensionses.True<cfda_inhistory>();
+            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            if (sc != null && sc.ConditionInfo != null)
+            {
+                string[] sclist = sc.ConditionInfo.Split(';');
+                foreach (string scl in sclist)
+                {
+                    string[] scld = scl.Split(',');
+                    switch (scld[0])
+                    {
+                        case "CPMC":
+                            string CPMC = scld[1];
+                            string CPMCequal = scld[2];
+                            string CPMCand = scld[3];
+                            if (!string.IsNullOrEmpty(CPMC))
+                            {
+                                if (CPMCequal.Equals("="))
+                                {
+                                    if (CPMCand.Equals("and"))
+                                        where = where.And(p => p.CPMC == CPMC.Trim());
+                                    else
+                                        where = where.Or(p => p.CPMC == CPMC.Trim());
+                                }
+                                if (CPMCequal.Equals("like"))
+                                {
+                                    if (CPMCand.Equals("and"))
+                                        where = where.And(p => p.CPMC.Contains(CPMC.Trim()));
+                                    else
+                                        where = where.Or(p => p.CPMC.Contains(CPMC.Trim()));
+                                }
+                            }
+                            break;
+                        case "GGXH":
+                            string GGXH = scld[1];
+                            string GGXHequal = scld[2];
+                            string GGXHand = scld[3];
+                            if (!string.IsNullOrEmpty(GGXH))
+                            {
+                                if (GGXHequal.Equals("="))
+                                {
+                                    if (GGXHand.Equals("and"))
+                                        where = where.And(p => p.GGXH == GGXH.Trim());
+                                    else
+                                        where = where.Or(p => p.GGXH == GGXH.Trim());
+                                }
+                                if (GGXHequal.Equals("like"))
+                                {
+                                    if (GGXHand.Equals("and"))
+                                        where = where.And(p => p.GGXH.Contains(GGXH.Trim()));
+                                    else
+                                        where = where.Or(p => p.GGXH.Contains(GGXH.Trim()));
+                                }
+                            }
+                            break;
+                        case "SCPH":
+                            string SCPH = scld[1];
+                            string SCPHequal = scld[2];
+                            string SCPHand = scld[3];
+                            if (!string.IsNullOrEmpty(SCPH))
+                            {
+                                if (SCPHequal.Equals("="))
+                                {
+                                    if (SCPHand.Equals("and"))
+                                        where = where.And(p => p.SCPH == SCPH.Trim());
+                                    else
+                                        where = where.Or(p => p.SCPH == SCPH.Trim());
+                                }
+                                if (SCPHequal.Equals("like"))
+                                {
+                                    if (SCPHand.Equals("and"))
+                                        where = where.And(p => p.SCPH.Contains(SCPH.Trim()));
+                                    else
+                                        where = where.Or(p => p.SCPH.Contains(SCPH.Trim()));
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                ViewBag.SearchCondition = sc.ConditionInfo;
+            }
+
+            where = where.And(cfda_inhistory => cfda_inhistory.IsDelete == false);
+
+            var tempData = ob_cfda_inhistoryservice.LoadSortEntities(where.Compile(), false, cfda_inhistory => cfda_inhistory.ID);
+            ViewBag.cfda_inhistory = tempData;
+            ViewData.Model = tempData;
+            string viewHtml = ExportNow.RenderPartialViewToString(this, "inHistoryExport");
+            return File(System.Text.Encoding.UTF8.GetBytes(viewHtml), "application/ms-excel", string.Format("inHistoryExport_{0}.xls", DateTime.Now.ToShortDateString()));
         }
     }
 }

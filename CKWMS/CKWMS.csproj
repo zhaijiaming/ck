@@ -956,6 +956,7 @@
     <Content Include="Views\cfda_outhistory\Add.cshtml" />
     <Content Include="Views\cfda_outhistory\Edit.cshtml" />
     <Content Include="Views\cfda_outhistory\Index.cshtml" />
+    <Content Include="Views\cfda_inhistory\inHistoryExport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
