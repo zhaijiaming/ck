@@ -40,7 +40,9 @@
                         if (data == -1)
                             alert("操作失败，请联系管理员！");
                         else
-                            location.href("/cust_rukujihua/index");
+                            window.open("/cust_rukujihua/index", "_parent");
+                            //location.reload();
+                            //location.href("");
                     }
                 });
             }

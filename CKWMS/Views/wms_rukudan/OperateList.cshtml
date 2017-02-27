@@ -46,6 +46,10 @@
                 success: function (data) {
                     if (data == -1)
                         alert("操作失败,上架数量不对或是没有完全验收，请联系管理员！");
+                    else if(data==-3)
+                        alert("操作失败，收货数量与计划入库数量不符，请检查计划入库信息！");
+                    else if(data==-4)
+                        alert("严重错误，收货数量出现错误，马上与管理员联系！");
                     else
                         location.reload();
                 }

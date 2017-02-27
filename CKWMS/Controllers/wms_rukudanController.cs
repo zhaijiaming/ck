@@ -434,12 +434,40 @@ namespace CKWMS.Controllers
                                 break;
                             }
                         }
+                        var _shtotal = _shmx.Sum(p => p.ShangjiaSL);
+                        if(_rkd.JihuaID!=null && _rkd.JihuaID > 0)
+                        {
+                            var _jhmx = ServiceFactory.cust_rukujihuamxservice.LoadEntities(p => p.JihuaID == _rkd.JihuaID && p.IsDelete == false).ToList();
+                            if (_jhmx.Count == 0)
+                                _ng = true;
+                            var _jhmxtotaljh = _jhmx.Sum(p => p.JihuaSL);
+                            var _jhmxtotaldh = _jhmx.Sum(p => p.DaohuoSL);
+                            var _jhmxtotal = _jhmxtotaljh - _jhmxtotaldh;
+                            if (_shtotal > _jhmxtotal)
+                                return Json(-3);
+                        }
                     }
                     if (!_ng)
                     {
                         _rkd.RukuZT = 5;
                         _rkd.MakeDate = DateTime.Now;
                         ob_wms_rukudanservice.UpdateEntity(_rkd);
+                        if(_rkd.JihuaID!=null && _rkd.JihuaID > 0)
+                        {
+                            var _jhmx = ServiceFactory.cust_rukujihuamxservice.LoadEntities(p => p.JihuaID == _rkd.JihuaID).ToList();
+                            foreach(var jhmx in _jhmx)
+                            {
+                                if (jhmx.JihuaSL - jhmx.DaohuoSL > 0)
+                                {
+                                    var _rkmx = ServiceFactory.wms_shouhuomxservice.LoadEntities(p =>p.RukuID==_rkd.ID && p.ShangpinDM == jhmx.ShangpinDM && p.IsDelete == false).ToList();
+                                    var _rksl = _rkmx.Sum(p => p.ShangjiaSL);
+                                    if (_rksl > jhmx.JihuaSL - jhmx.DaohuoSL)
+                                        return Json(-4);
+                                    jhmx.DaohuoSL = jhmx.DaohuoSL + _rksl;
+                                    ServiceFactory.cust_rukujihuamxservice.UpdateEntity(jhmx);
+                                }
+                            }
+                        }
                     }
                     else
                         return Json(-1);
