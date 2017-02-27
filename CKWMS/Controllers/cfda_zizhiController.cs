@@ -339,25 +339,25 @@ namespace CKWMS.Controllers
                     string[] scld = scl.Split(',');
                     switch (scld[0])
                     {
-                        case "kehumingcheng":
-                            string kehumingcheng = scld[1];
-                            string kehumingchengequal = scld[2];
-                            string kehumingchengand = scld[3];
-                            if (!string.IsNullOrEmpty(kehumingcheng))
+                        case "Kehumingcheng":
+                            string Kehumingcheng = scld[1];
+                            string Kehumingchengequal = scld[2];
+                            string Kehumingchengand = scld[3];
+                            if (!string.IsNullOrEmpty(Kehumingcheng))
                             {
-                                if (kehumingchengequal.Equals("="))
+                                if (Kehumingchengequal.Equals("="))
                                 {
-                                    if (kehumingchengand.Equals("and"))
-                                        where = where.And(p => p.Kehumingcheng == kehumingcheng);
+                                    if (Kehumingchengand.Equals("and"))
+                                        where = where.And(p => p.Kehumingcheng == Kehumingcheng);
                                     else
-                                        where = where.Or(p => p.Kehumingcheng == kehumingcheng);
+                                        where = where.Or(p => p.Kehumingcheng == Kehumingcheng);
                                 }
-                                if (kehumingchengequal.Equals("like"))
+                                if (Kehumingchengequal.Equals("like"))
                                 {
-                                    if (kehumingchengand.Equals("and"))
-                                        where = where.And(p => p.Kehumingcheng.Contains(kehumingcheng));
+                                    if (Kehumingchengand.Equals("and"))
+                                        where = where.And(p => p.Kehumingcheng.Contains(Kehumingcheng));
                                     else
-                                        where = where.Or(p => p.Kehumingcheng.Contains(kehumingcheng));
+                                        where = where.Or(p => p.Kehumingcheng.Contains(Kehumingcheng));
                                 }
                             }
                             break;
@@ -438,25 +438,25 @@ namespace CKWMS.Controllers
                     string[] scld = scl.Split(',');
                     switch (scld[0])
                     {
-                        case "kehumingcheng":
-                            string kehumingcheng = scld[1];
-                            string kehumingchengequal = scld[2];
-                            string kehumingchengand = scld[3];
-                            if (!string.IsNullOrEmpty(kehumingcheng))
+                        case "Kehumingcheng":
+                            string Kehumingcheng = scld[1];
+                            string Kehumingchengequal = scld[2];
+                            string Kehumingchengand = scld[3];
+                            if (!string.IsNullOrEmpty(Kehumingcheng))
                             {
-                                if (kehumingchengequal.Equals("="))
+                                if (Kehumingchengequal.Equals("="))
                                 {
-                                    if (kehumingchengand.Equals("and"))
-                                        where = where.And(p => p.Kehumingcheng== kehumingcheng);
+                                    if (Kehumingchengand.Equals("and"))
+                                        where = where.And(p => p.Kehumingcheng == Kehumingcheng);
                                     else
-                                        where = where.Or(p => p.Kehumingcheng == kehumingcheng);
+                                        where = where.Or(p => p.Kehumingcheng == Kehumingcheng);
                                 }
-                                if (kehumingchengequal.Equals("like"))
+                                if (Kehumingchengequal.Equals("like"))
                                 {
-                                    if (kehumingchengand.Equals("and"))
-                                        where = where.And(p => p.Kehumingcheng.Contains(kehumingcheng));
+                                    if (Kehumingchengand.Equals("and"))
+                                        where = where.And(p => p.Kehumingcheng.Contains(Kehumingcheng));
                                     else
-                                        where = where.Or(p => p.Kehumingcheng.Contains(kehumingcheng));
+                                        where = where.Or(p => p.Kehumingcheng.Contains(Kehumingcheng));
                                 }
                             }
                             break;
