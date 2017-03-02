@@ -39,32 +39,25 @@ namespace CKWMS.Controllers
                     string[] scld = scl.Split(',');
                     switch (scld[0])
                     {
-                        case "quyuid":
-                            string quyuid = scld[1];
-                            string quyuidequal = scld[2];
-                            string quyuidand = scld[3];
-                            if (!string.IsNullOrEmpty(quyuid))
+                        case "Mingcheng":
+                            string Mingcheng = scld[1];
+                            string Mingchengequal = scld[2];
+                            string Mingchengand = scld[3];
+                            if (!string.IsNullOrEmpty(Mingcheng))
                             {
-                                if (quyuidequal.Equals("="))
+                                if (Mingchengequal.Equals("="))
                                 {
-                                    if (quyuidand.Equals("and"))
-                                        where = where.And(wms_kuwei => wms_kuwei.QuyuID == int.Parse(quyuid));
+                                    if (Mingchengand.Equals("and"))
+                                        where = where.And(p => p.Mingcheng == Mingcheng);
                                     else
-                                        where = where.Or(wms_kuwei => wms_kuwei.QuyuID == int.Parse(quyuid));
+                                        where = where.Or(p => p.Mingcheng == Mingcheng);
                                 }
-                                if (quyuidequal.Equals(">"))
+                                if (Mingchengequal.Equals("like"))
                                 {
-                                    if (quyuidand.Equals("and"))
-                                        where = where.And(wms_kuwei => wms_kuwei.QuyuID > int.Parse(quyuid));
+                                    if (Mingchengand.Equals("and"))
+                                        where = where.And(p => p.Mingcheng.Contains(Mingcheng));
                                     else
-                                        where = where.Or(wms_kuwei => wms_kuwei.QuyuID > int.Parse(quyuid));
-                                }
-                                if (quyuidequal.Equals("<"))
-                                {
-                                    if (quyuidand.Equals("and"))
-                                        where = where.And(wms_kuwei => wms_kuwei.QuyuID < int.Parse(quyuid));
-                                    else
-                                        where = where.Or(wms_kuwei => wms_kuwei.QuyuID < int.Parse(quyuid));
+                                        where = where.Or(p => p.Mingcheng.Contains(Mingcheng));
                                 }
                             }
                             break;
@@ -89,9 +82,10 @@ namespace CKWMS.Controllers
             int userid = (int)Session["user_id"];
             string pagetag = "wms_kuwei_index";
             string page = "1";
-            string quyuid = Request["quyuid"] ?? "";
-            string quyuidequal = Request["quyuidequal"] ?? "";
-            string quyuidand = Request["quyuidand"] ?? "";
+            //Mingcheng
+            string Mingcheng = Request["Mingcheng"] ?? "";
+            string Mingchengequal = Request["Mingchengequal"] ?? "";
+            string Mingchengand = Request["Mingchengand"] ?? "";
             Expression<Func<wms_kuwei, bool>> where = PredicateExtensionses.True<wms_kuwei>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -99,67 +93,56 @@ namespace CKWMS.Controllers
                 sc = new searchcondition();
                 sc.UserID = userid;
                 sc.PageBrief = pagetag;
-                if (!string.IsNullOrEmpty(quyuid))
+                //Mingcheng
+                if (!string.IsNullOrEmpty(Mingcheng))
                 {
-                    if (quyuidequal.Equals("="))
+                    if (Mingchengequal.Equals("="))
                     {
-                        if (quyuidand.Equals("and"))
-                            where = where.And(wms_kuwei => wms_kuwei.QuyuID == int.Parse(quyuid));
+                        if (Mingchengand.Equals("and"))
+                            where = where.And(p => p.Mingcheng == Mingcheng);
                         else
-                            where = where.Or(wms_kuwei => wms_kuwei.QuyuID == int.Parse(quyuid));
+                            where = where.Or(p => p.Mingcheng == Mingcheng);
                     }
-                    if (quyuidequal.Equals(">"))
+                    if (Mingchengequal.Equals("like"))
                     {
-                        if (quyuidand.Equals("and"))
-                            where = where.And(wms_kuwei => wms_kuwei.QuyuID > int.Parse(quyuid));
+                        if (Mingchengand.Equals("and"))
+                            where = where.And(p => p.Mingcheng.Contains(Mingcheng));
                         else
-                            where = where.Or(wms_kuwei => wms_kuwei.QuyuID > int.Parse(quyuid));
-                    }
-                    if (quyuidequal.Equals("<"))
-                    {
-                        if (quyuidand.Equals("and"))
-                            where = where.And(wms_kuwei => wms_kuwei.QuyuID < int.Parse(quyuid));
-                        else
-                            where = where.Or(wms_kuwei => wms_kuwei.QuyuID < int.Parse(quyuid));
+                            where = where.Or(p => p.Mingcheng.Contains(Mingcheng));
                     }
                 }
-                if (!string.IsNullOrEmpty(quyuid))
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "quyuid", quyuid, quyuidequal, quyuidand);
+                if (!string.IsNullOrEmpty(Mingcheng))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "Mingcheng", Mingcheng, Mingchengequal, Mingchengand);
                 else
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "quyuid", "", quyuidequal, quyuidand);
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "Mingcheng", "", Mingchengequal, Mingchengand);
+
                 searchconditionService.GetInstance().AddEntity(sc);
             }
             else
             {
                 sc.ConditionInfo = "";
-                if (!string.IsNullOrEmpty(quyuid))
+                //Mingcheng
+                if (!string.IsNullOrEmpty(Mingcheng))
                 {
-                    if (quyuidequal.Equals("="))
+                    if (Mingchengequal.Equals("="))
                     {
-                        if (quyuidand.Equals("and"))
-                            where = where.And(wms_kuwei => wms_kuwei.QuyuID == int.Parse(quyuid));
+                        if (Mingchengand.Equals("and"))
+                            where = where.And(p => p.Mingcheng == Mingcheng);
                         else
-                            where = where.Or(wms_kuwei => wms_kuwei.QuyuID == int.Parse(quyuid));
+                            where = where.Or(p => p.Mingcheng == Mingcheng);
                     }
-                    if (quyuidequal.Equals(">"))
+                    if (Mingchengequal.Equals("like"))
                     {
-                        if (quyuidand.Equals("and"))
-                            where = where.And(wms_kuwei => wms_kuwei.QuyuID > int.Parse(quyuid));
+                        if (Mingchengand.Equals("and"))
+                            where = where.And(p => p.Mingcheng.Contains(Mingcheng));
                         else
-                            where = where.Or(wms_kuwei => wms_kuwei.QuyuID > int.Parse(quyuid));
-                    }
-                    if (quyuidequal.Equals("<"))
-                    {
-                        if (quyuidand.Equals("and"))
-                            where = where.And(wms_kuwei => wms_kuwei.QuyuID < int.Parse(quyuid));
-                        else
-                            where = where.Or(wms_kuwei => wms_kuwei.QuyuID < int.Parse(quyuid));
+                            where = where.Or(p => p.Mingcheng.Contains(Mingcheng));
                     }
                 }
-                if (!string.IsNullOrEmpty(quyuid))
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "quyuid", quyuid, quyuidequal, quyuidand);
+                if (!string.IsNullOrEmpty(Mingcheng))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "Mingcheng", Mingcheng, Mingchengequal, Mingchengand);
                 else
-                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "quyuid", "", quyuidequal, quyuidand);
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "Mingcheng", "", Mingchengequal, Mingchengand);
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;

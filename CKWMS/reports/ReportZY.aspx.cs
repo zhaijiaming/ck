@@ -950,38 +950,36 @@ namespace CKWMS.reports
                             long zlgl_bg_YanshouBHGSL = 0;
                             try
                             {
+                                //通过'入库单编号'查找数据
                                 var _zlgl_rkyss = ServiceFactory.quan_rukuysservice.GetInrec(p => p.RukudanBH == _zlgl_rkysid && p.IsDelete == false).ToList<quan_inrec_v>();
                                 foreach (quan_inrec_v _pr in _zlgl_rkyss)
                                 {
                                     drzlgl_bg = dtzlgl_bg.NewRow();
                                     base_gongyingshang zlgl_gys = ServiceFactory.base_gongyingshangservice.GetEntityById(p => p.ID == _pr.GongyingshangID && p.IsDelete == false);
-                                    if (zlgl_gys != null)
-                                    {
-                                        drzlgl_bg["GongyingshangID"] = zlgl_gys.Mingcheng;
-                                    }
-                                    drzlgl_bg["Changjia"] = _pr.Changjia;
-                                    drzlgl_bg["ShangpinMC"] = _pr.ShangpinMC;
-                                    drzlgl_bg["Guige"] = _pr.Guige;
-                                    drzlgl_bg["Pihao"] = _pr.Pihao;
-                                    drzlgl_bg["Xuliema"] = _pr.Xuliema;
+                                    drzlgl_bg["GongyingshangID"] = zlgl_gys.Mingcheng == null ? "" : zlgl_gys.Mingcheng;
+                                    drzlgl_bg["Changjia"] = _pr.Changjia == null ? "" : _pr.Changjia;
+                                    drzlgl_bg["ShangpinMC"] = _pr.ShangpinMC == null ? "" : _pr.ShangpinMC;
+                                    drzlgl_bg["Guige"] = _pr.Guige == null ? "" : _pr.Guige;
+                                    drzlgl_bg["Pihao"] = _pr.Pihao == null ? "" : _pr.Pihao;
+                                    drzlgl_bg["Xuliema"] = _pr.Xuliema == null ? "" : _pr.Xuliema;
                                     drzlgl_bg["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShengchanRQ == null ? "" : ((DateTime)_pr.ShengchanRQ).ToString("yyyy/MM/dd"));
                                     drzlgl_bg["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShixiaoRQ == null ? "" : ((DateTime)_pr.ShixiaoRQ).ToString("yyyy/MM/dd"));
-                                    drzlgl_bg["Zhucezheng"] = _pr.Zhucezheng;
-                                    drzlgl_bg["Shuliang"] = _pr.Shuliang;
-                                    drzlgl_bg["ChunyunYQ"] = _pr.ChunyunYQ;
+                                    drzlgl_bg["Zhucezheng"] = _pr.Zhucezheng == null ? "" : _pr.Zhucezheng;
+                                    drzlgl_bg["Shuliang"] = _pr.Shuliang == null ? int.Parse("0") : _pr.Shuliang;
+                                    drzlgl_bg["ChunyunYQ"] = _pr.ChunyunYQ == null ? "" : _pr.ChunyunYQ;
                                     //验收结果
                                     drzlgl_bg["ysresult"] = MvcApplication.CheckResult[_pr.ysresult];
                                     var ysresult = MvcApplication.CheckResult[_pr.ysresult];
                                     if (ysresult == "合格")
                                     {
-                                        drzlgl_bg["YanshouHGSL"] = _pr.YanshouSL;
+                                        drzlgl_bg["YanshouHGSL"] = _pr.YanshouSL == null ? int.Parse("0") : _pr.YanshouSL;
                                         drzlgl_bg["YanshouBHGSL"] = "0";
                                         zlgl_bg_YanshouHGSL += (long)_pr.YanshouSL;
                                     }
                                     if (ysresult == "不合格")
                                     {
                                         drzlgl_bg["YanshouHGSL"] = "0";
-                                        drzlgl_bg["YanshouBHGSL"] = _pr.YanshouSL;
+                                        drzlgl_bg["YanshouBHGSL"] = _pr.YanshouSL == null ? int.Parse("0") : _pr.YanshouSL;
                                         zlgl_bg_YanshouBHGSL += (long)_pr.YanshouSL;
                                     }
                                     drzlgl_bg["ystime"] = string.Format("{0:yyyy/MM/dd}", _pr.ystime == null ? "" : _pr.ystime.ToString("yyyy/MM/dd"));
@@ -1001,9 +999,10 @@ namespace CKWMS.reports
                             DataRow drzlgl_bg_others = dtzlgl_bg_others.NewRow();
                             try
                             {
+                                drzlgl_bg_others["RukudanBH"] = _zlgl_rkysid;
                                 int? huozhuid_first = -1;
                                 var _zlgl_rkyss = ServiceFactory.quan_rukuysservice.GetInrec(p => p.RukudanBH == _zlgl_rkysid && p.IsDelete == false).ToList<quan_inrec_v>();
-                                //得到第一个货主ID
+                                //判断是否存在数据
                                 foreach (var rkys in _zlgl_rkyss)
                                 {
                                     var huozhuid = rkys.HuozhuID;
@@ -1018,13 +1017,13 @@ namespace CKWMS.reports
                                     base_weituokehu zlgl_wtkh = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == huozhuid_first && p.IsDelete == false);
                                     if (zlgl_wtkh != null)
                                     {
-                                        drzlgl_bg_others["HuozhuID"] = zlgl_wtkh.Kehumingcheng;
+                                        drzlgl_bg_others["HuozhuID"] = zlgl_wtkh.Kehumingcheng == null ? "" : zlgl_wtkh.Kehumingcheng;
                                     }
                                 }
                                 userinfo zlgl_man = ServiceFactory.userinfoservice.GetEntityById(p => p.ID == (int)Session["user_id"] && p.IsDelete == false);
                                 if (zlgl_man != null)
                                 {
-                                    drzlgl_bg_others["MakeMan"] = zlgl_man.FullName;
+                                    drzlgl_bg_others["MakeMan"] = zlgl_man.FullName == null ? "" : zlgl_man.FullName;
                                 }
                                 wms_rukudan zlgl_rkd = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.RukudanBH == _zlgl_rkysid && p.IsDelete == false);
                                 if (zlgl_rkd != null)
@@ -1061,20 +1060,20 @@ namespace CKWMS.reports
                                 foreach (quan_outrec_v _pr in _zlgl_ckfhs)
                                 {
                                     drzlgl_ckfhbg = dtzlgl_ckfhbg.NewRow();
-                                    drzlgl_ckfhbg["ShangpinMC"] = _pr.ShangpinMC;
-                                    drzlgl_ckfhbg["Zhucezheng"] = _pr.Zhucezheng;
-                                    drzlgl_ckfhbg["Guige"] = _pr.Guige;
-                                    drzlgl_ckfhbg["Pihao"] = _pr.Pihao;
-                                    drzlgl_ckfhbg["Pihao1"] = _pr.Pihao1;
-                                    drzlgl_ckfhbg["Xuliema"] = _pr.Xuliema;
+                                    drzlgl_ckfhbg["ShangpinMC"] = _pr.ShangpinMC == null ? "" : _pr.ShangpinMC;
+                                    drzlgl_ckfhbg["Zhucezheng"] = _pr.Zhucezheng == null ? "" : _pr.Zhucezheng;
+                                    drzlgl_ckfhbg["Guige"] = _pr.Guige == null ? "" : _pr.Guige;
+                                    drzlgl_ckfhbg["Pihao"] = _pr.Pihao == null ? "" : _pr.Pihao;
+                                    drzlgl_ckfhbg["Pihao1"] = _pr.Pihao1 == null ? "" : _pr.Pihao1;
+                                    drzlgl_ckfhbg["Xuliema"] = _pr.Xuliema == null ? "" : _pr.Xuliema;
                                     drzlgl_ckfhbg["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShengchanRQ == null ? "" : ((DateTime)_pr.ShengchanRQ).ToString("yyyy/MM/dd"));
                                     drzlgl_ckfhbg["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShixiaoRQ == null ? "" : ((DateTime)_pr.ShixiaoRQ).ToString("yyyy/MM/dd"));
-                                    drzlgl_ckfhbg["JianhuoSL"] = _pr.JianhuoSL;
-                                    drzlgl_ckfhbg["Changjia"] = _pr.Changjia;
-                                    drzlgl_ckfhbg["Chandi"] = _pr.Chandi;
+                                    drzlgl_ckfhbg["JianhuoSL"] = _pr.JianhuoSL == int.Parse("0") ? "" : _pr.Zhucezheng;
+                                    drzlgl_ckfhbg["Changjia"] = _pr.Changjia == null ? "" : _pr.Changjia;
+                                    drzlgl_ckfhbg["Chandi"] = _pr.Chandi == null ? "" : _pr.Chandi;
                                     //验收结果
                                     drzlgl_ckfhbg["Fuhe"] = MvcApplication.CheckResult[_pr.Fuhe];
-                                    drzlgl_ckfhbg["FuheSL"] = _pr.FuheSL;
+                                    drzlgl_ckfhbg["FuheSL"] = _pr.FuheSL == null ? int.Parse("0") : _pr.FuheSL;
                                     //var FuheResult = MvcApplication.CheckResult[_pr.Fuhe];
                                     //if (FuheResult == "合格")
                                     //{
@@ -1088,8 +1087,8 @@ namespace CKWMS.reports
                                     //    drzlgl_ckfhbg["FuheBHGSL"] = _pr.FuheSL;
                                     //    zlgl_ckfhbg_YanshouBHGSL += (long)_pr.FuheSL;
                                     //}
-                                    drzlgl_ckfhbg["Fuheren"] = _pr.Fuheren;
-                                    drzlgl_ckfhbg["FuheSM"] = _pr.FuheSM;
+                                    drzlgl_ckfhbg["Fuheren"] = _pr.Fuheren == null ? "" : _pr.Fuheren;
+                                    drzlgl_ckfhbg["FuheSM"] = _pr.FuheSM == null ? "" : _pr.FuheSM;
                                     drzlgl_ckfhbg["MakeDate"] = string.Format("{0:yyyy/MM/dd}", _pr.MakeDate == null ? "" : ((DateTime)_pr.MakeDate).ToString("yyyy/MM/dd"));
                                     zlgl_ckfhbg_Shuliang += (long)_pr.JianhuoSL;
                                     zlgl_ckfhbg_FuheSL += (long)_pr.FuheSL;
