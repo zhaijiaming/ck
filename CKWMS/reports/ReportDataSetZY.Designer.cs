@@ -4173,11 +4173,13 @@ namespace CKWMS.reports {
             
             private global::System.Data.DataColumn columnMakeMan;
             
+            private global::System.Data.DataColumn columnRukudanBH;
+            
+            private global::System.Data.DataColumn columnrkysbgSLs;
+            
             private global::System.Data.DataColumn columnrkysbgYs;
             
             private global::System.Data.DataColumn columnrkysbgNs;
-            
-            private global::System.Data.DataColumn columnrkysbgSLs;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -4246,6 +4248,22 @@ namespace CKWMS.reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn RukudanBHColumn {
+                get {
+                    return this.columnRukudanBH;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn rkysbgSLsColumn {
+                get {
+                    return this.columnrkysbgSLs;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public global::System.Data.DataColumn rkysbgYsColumn {
                 get {
                     return this.columnrkysbgYs;
@@ -4257,14 +4275,6 @@ namespace CKWMS.reports {
             public global::System.Data.DataColumn rkysbgNsColumn {
                 get {
                     return this.columnrkysbgNs;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn rkysbgSLsColumn {
-                get {
-                    return this.columnrkysbgSLs;
                 }
             }
             
@@ -4305,16 +4315,17 @@ namespace CKWMS.reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public zlgl_RKYSBG_TitleRow Addzlgl_RKYSBG_TitleRow(string HuozhuID, string RukuRQ, string MakeDate, string MakeMan, string rkysbgYs, string rkysbgNs, string rkysbgSLs) {
+            public zlgl_RKYSBG_TitleRow Addzlgl_RKYSBG_TitleRow(string HuozhuID, string RukuRQ, string MakeDate, string MakeMan, string RukudanBH, string rkysbgSLs, string rkysbgYs, string rkysbgNs) {
                 zlgl_RKYSBG_TitleRow rowzlgl_RKYSBG_TitleRow = ((zlgl_RKYSBG_TitleRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         HuozhuID,
                         RukuRQ,
                         MakeDate,
                         MakeMan,
+                        RukudanBH,
+                        rkysbgSLs,
                         rkysbgYs,
-                        rkysbgNs,
-                        rkysbgSLs};
+                        rkysbgNs};
                 rowzlgl_RKYSBG_TitleRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowzlgl_RKYSBG_TitleRow);
                 return rowzlgl_RKYSBG_TitleRow;
@@ -4341,9 +4352,10 @@ namespace CKWMS.reports {
                 this.columnRukuRQ = base.Columns["RukuRQ"];
                 this.columnMakeDate = base.Columns["MakeDate"];
                 this.columnMakeMan = base.Columns["MakeMan"];
+                this.columnRukudanBH = base.Columns["RukudanBH"];
+                this.columnrkysbgSLs = base.Columns["rkysbgSLs"];
                 this.columnrkysbgYs = base.Columns["rkysbgYs"];
                 this.columnrkysbgNs = base.Columns["rkysbgNs"];
-                this.columnrkysbgSLs = base.Columns["rkysbgSLs"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4357,12 +4369,14 @@ namespace CKWMS.reports {
                 base.Columns.Add(this.columnMakeDate);
                 this.columnMakeMan = new global::System.Data.DataColumn("MakeMan", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnMakeMan);
+                this.columnRukudanBH = new global::System.Data.DataColumn("RukudanBH", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRukudanBH);
+                this.columnrkysbgSLs = new global::System.Data.DataColumn("rkysbgSLs", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnrkysbgSLs);
                 this.columnrkysbgYs = new global::System.Data.DataColumn("rkysbgYs", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnrkysbgYs);
                 this.columnrkysbgNs = new global::System.Data.DataColumn("rkysbgNs", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnrkysbgNs);
-                this.columnrkysbgSLs = new global::System.Data.DataColumn("rkysbgSLs", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnrkysbgSLs);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -14684,6 +14698,38 @@ namespace CKWMS.reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string RukudanBH {
+                get {
+                    try {
+                        return ((string)(this[this.tablezlgl_RKYSBG_Title.RukudanBHColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("表“zlgl_RKYSBG_Title”中列“RukudanBH”的值为 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tablezlgl_RKYSBG_Title.RukudanBHColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string rkysbgSLs {
+                get {
+                    try {
+                        return ((string)(this[this.tablezlgl_RKYSBG_Title.rkysbgSLsColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("表“zlgl_RKYSBG_Title”中列“rkysbgSLs”的值为 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tablezlgl_RKYSBG_Title.rkysbgSLsColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string rkysbgYs {
                 get {
                     try {
@@ -14711,22 +14757,6 @@ namespace CKWMS.reports {
                 }
                 set {
                     this[this.tablezlgl_RKYSBG_Title.rkysbgNsColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string rkysbgSLs {
-                get {
-                    try {
-                        return ((string)(this[this.tablezlgl_RKYSBG_Title.rkysbgSLsColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("表“zlgl_RKYSBG_Title”中列“rkysbgSLs”的值为 DBNull。", e);
-                    }
-                }
-                set {
-                    this[this.tablezlgl_RKYSBG_Title.rkysbgSLsColumn] = value;
                 }
             }
             
@@ -14780,6 +14810,30 @@ namespace CKWMS.reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsRukudanBHNull() {
+                return this.IsNull(this.tablezlgl_RKYSBG_Title.RukudanBHColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetRukudanBHNull() {
+                this[this.tablezlgl_RKYSBG_Title.RukudanBHColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsrkysbgSLsNull() {
+                return this.IsNull(this.tablezlgl_RKYSBG_Title.rkysbgSLsColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetrkysbgSLsNull() {
+                this[this.tablezlgl_RKYSBG_Title.rkysbgSLsColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsrkysbgYsNull() {
                 return this.IsNull(this.tablezlgl_RKYSBG_Title.rkysbgYsColumn);
             }
@@ -14800,18 +14854,6 @@ namespace CKWMS.reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetrkysbgNsNull() {
                 this[this.tablezlgl_RKYSBG_Title.rkysbgNsColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsrkysbgSLsNull() {
-                return this.IsNull(this.tablezlgl_RKYSBG_Title.rkysbgSLsColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetrkysbgSLsNull() {
-                this[this.tablezlgl_RKYSBG_Title.rkysbgSLsColumn] = global::System.Convert.DBNull;
             }
         }
         

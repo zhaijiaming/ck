@@ -53,9 +53,9 @@
     if (_searchcondition == null || _searchcondition == "")
     {
         SearchConditionModel scm = new SearchConditionModel();
-        scm.ItemCode = "QuyuID";
-        scm.ItemTitle = "区域序号";
-        scm.ItemType = "System.Int32";
+        scm.ItemCode = "Mingcheng";
+        scm.ItemTitle = "库位名称";
+        scm.ItemType = "System.String";
         scms.Add(scm);
     }
     else
@@ -64,9 +64,9 @@
         if (scs.Length > 0)
         {
             SearchConditionModel scm = new SearchConditionModel();
-            scm.ItemCode = "QuyuID";
-            scm.ItemTitle = "区域序号";
-            scm.ItemType = "System.Int32";
+            scm.ItemCode = "Mingcheng";
+            scm.ItemTitle = "库位名称";
+            scm.ItemType = "System.String";
             if (scs.Length > 1)
             {
                 scm.ItemValue = scs[0].Split(',')[1];
