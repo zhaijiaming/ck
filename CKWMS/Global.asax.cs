@@ -298,6 +298,7 @@ namespace CKWMS
             EntryState.Add(7, "上传");
 
             OutState = new Dictionary<int, string>();
+            OutState.Add(-12, "扫码");
             OutState.Add(0, "");
             OutState.Add(1, "新建");
             OutState.Add(2, "拣货");

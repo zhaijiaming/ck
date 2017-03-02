@@ -1322,11 +1322,11 @@ namespace CKWMS.App_Code
                         returnvalue = MvcApplication.OutPlanState[dataValue];
                     break;
                 case "入库状态":
-                    if (MvcApplication.OutPlanState.ContainsKey(dataValue))
+                    if (MvcApplication.EntryState.ContainsKey(dataValue))
                         returnvalue = MvcApplication.EntryState[dataValue];
                     break;
                 case "出库状态":
-                    if (MvcApplication.OutPlanState.ContainsKey(dataValue))
+                    if (MvcApplication.OutState.ContainsKey(dataValue))
                         returnvalue = MvcApplication.OutState[dataValue];
                     break;
                 case "验收状态":
@@ -1346,7 +1346,7 @@ namespace CKWMS.App_Code
                         returnvalue = MvcApplication.CheckMemo1[dataValue];
                     break;
                 case "验收标准":
-                    if (MvcApplication.CheckMemo.ContainsKey(dataValue))
+                    if (MvcApplication.CheckStandard.ContainsKey(dataValue))
                         returnvalue = MvcApplication.CheckStandard[dataValue];
                     break;
                 case "存货状态":

@@ -191,7 +191,7 @@ namespace CKWMS.Controllers
 
             if (string.IsNullOrEmpty(_loc))
                 return Json(-1);
-            var _kw = ob_wms_kuweiservice.GetEntityById(p => p.Mingcheng == _loc);
+            var _kw = ob_wms_kuweiservice.GetEntityById(p => p.Mingcheng == _loc && p.IsDelete==false && p.QiyongSF==true);
             if (_kw == null)
                 return Json(-1);
 

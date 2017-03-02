@@ -871,14 +871,14 @@ namespace CKWMS.Controllers
                         _rkd.JianguanSF = true;
                         _rkd.KefuID = 0;
                         _rkd.CangkuID = 1;
-                        _rkd.ChunyunYQ = "";
+                        _rkd.ChunyunYQ = MvcApplication.TranCondition[1];// "";
                         _rkd.MakeDate = DateTime.Now;
                         _rkd.RukuRQ = DateTime.Now;
                         _rkd.MakeMan = _userid;
                         _rkd.RukuZT = 1;
                         _rkd.Shouhuoren = 0;
                         _rkd.XinxiLY = 2;
-                        _rkd.YanshouSF = false;
+                        _rkd.YanshouSF = true;
                         _rkd.ZhijieSH = false;
                         _rkd.DuifangQY = "";
                         //_rkd.RukuRQ = _rkjh.RukuRQ;
