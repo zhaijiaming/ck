@@ -1020,11 +1020,19 @@ namespace CKWMS.reports
                                         drzlgl_bg_others["HuozhuID"] = zlgl_wtkh.Kehumingcheng == null ? "" : zlgl_wtkh.Kehumingcheng;
                                     }
                                 }
-                                userinfo zlgl_man = ServiceFactory.userinfoservice.GetEntityById(p => p.ID == (int)Session["user_id"] && p.IsDelete == false);
-                                if (zlgl_man != null)
+                                foreach (var rkys in _zlgl_rkyss)
                                 {
-                                    drzlgl_bg_others["MakeMan"] = zlgl_man.FullName == null ? "" : zlgl_man.FullName;
+                                    if (rkys.Yanshouren != null)
+                                    {
+                                        drzlgl_bg_others["MakeMan"] = rkys.Yanshouren;
+                                        break;
+                                    }
                                 }
+                                //userinfo zlgl_man = ServiceFactory.userinfoservice.GetEntityById(p => p.ID == (int)Session["user_id"] && p.IsDelete == false);
+                                //if (zlgl_man != null)
+                                //{
+                                //    drzlgl_bg_others["MakeMan"] = zlgl_man.FullName == null ? "" : zlgl_man.FullName;
+                                //}
                                 wms_rukudan zlgl_rkd = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.RukudanBH == _zlgl_rkysid && p.IsDelete == false);
                                 if (zlgl_rkd != null)
                                 {

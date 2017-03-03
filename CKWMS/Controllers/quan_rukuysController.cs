@@ -61,6 +61,7 @@ namespace CKWMS.Controllers
                 }
                 ViewBag.SearchCondition = sc.ConditionInfo;
             }
+            where = where.And(p => p.IsDelete == false);
 
             var tempData = ob_quan_rukuysservice.GetInrec(where.Compile()).ToPagedList<quan_inrec_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.quan_inrec = tempData;
@@ -135,6 +136,8 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukudanbh", "", rukudanbhequal, rukudanbhand);
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
+            where = where.And(p => p.IsDelete == false);
+
             ViewBag.SearchCondition = sc.ConditionInfo;
             var tempData = ob_quan_rukuysservice.GetInrec(where.Compile()).ToPagedList<quan_inrec_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.quan_inrec = tempData;
