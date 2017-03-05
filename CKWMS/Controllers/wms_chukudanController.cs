@@ -571,14 +571,15 @@ namespace CKWMS.Controllers
                         var _jhsl = _ckmx.Sum(p => p.JianhuoSL);
                         if (_cksl != _jhsl)
                             _ng = true;
-                        //foreach (wms_chukumx mx in _ckmx)
-                        //{
-                        //    if (mx.ChukuSL != mx.JianhuoSL)
-                        //    {
-                        //        _ng = true;
-                        //        break;
-                        //    }
-                        //}
+                        if(_ckd.JihuaID!=null && _ckd.JihuaID > 0)
+                        {
+                            var _ckjhmx = ServiceFactory.cust_chukujihuamxservice.LoadEntities(p => p.JihuaID == _ckd.JihuaID && p.IsDelete == false).ToList();
+                            if (_ckjhmx.Count == 0)
+                                _ng = true;
+                            var _ckjhtotal = _ckjhmx.Sum(p => p.JihuaSL);
+                            if (_jhsl != _ckjhtotal)
+                                return Json(-6);
+                        }
                     }
                     if (!_ng)
                     {
@@ -588,6 +589,7 @@ namespace CKWMS.Controllers
                         if (!backval)
                         {
                             _ckd.JihuaZT = 6;
+                            _ckd.Beizhu = _ckd.Beizhu + "；出库单完成时发生了错误！";
                             ob_wms_chukudanservice.UpdateEntity(_ckd);
                             return Json(-2);
                         }
@@ -1071,7 +1073,12 @@ namespace CKWMS.Controllers
                             var _totalmxsl = _ckmxs.Sum(p => p.ChukuSL);
                             var _totaljhsl = _ckjhmx.Sum(p => p.JihuaSL);
                             if (_totaljhsl != _totalmxsl)
+                            {
+                                _ckd.JihuaZT = 6;
+                                _ckd.Beizhu = _ckd.Beizhu + "；生成出库单时，计划数量与出库数量不一至！";
+                                ServiceFactory.wms_chukudanservice.UpdateEntity(_ckd);
                                 return Json(-4);
+                            }
                         }
                     }
                 }

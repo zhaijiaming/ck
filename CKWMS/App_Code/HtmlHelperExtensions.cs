@@ -989,6 +989,34 @@ namespace CKWMS.App_Code
                             returnvalue = _shmx.ShangpinMC + "," + _shmx.Guige + "," + _shmx.Pihao + "," + _shmx.Xuliema;
                     }
                     break;
+                case "存货":
+                    var _chlst = ServiceFactory.wms_cunhuoservice.GetInventory(p => p.sid == dataValue).ToList();
+                    if (_chlst.Count > 0)
+                    {
+                        wms_inventory_v _chxx = _chlst[0];
+                        if (_chxx == null)
+                            returnvalue = "";
+                        else
+                        {
+                            if (itemName == "批号")
+                                returnvalue = _chxx.Pihao;
+                            if (itemName == "序列码")
+                                returnvalue = _chxx.Xuliema;
+                            if (itemName == "商品代码")
+                                returnvalue = _chxx.ShangpinDM;
+                            if (itemName == "商品名称")
+                                returnvalue = _chxx.ShangpinMC;
+                            if (itemName == "失效日期")
+                                returnvalue = _chxx.ShixiaoRQ.ToString();
+                            if (itemName == "数量")
+                                returnvalue = _chxx.sshuliang.ToString();
+                            if (itemName == "库位")
+                                returnvalue = _chxx.Kuwei;
+                        }
+                    }
+                    else
+                        returnvalue = "";
+                    break;
                 case "拣货":
                     wms_chukumx _ckmx = ServiceFactory.wms_chukumxservice.GetEntityById(p => p.ID == dataValue);
                     if (_ckmx == null)

@@ -1803,6 +1803,249 @@ namespace CKWMS.Controllers
             ViewBag.wms_cunhuo = tempData;
             return View(tempData);
         }
+
+        public ActionResult QuantityChange(string page)
+        {
+            if (string.IsNullOrEmpty(page))
+                page = "1";
+            int userid = (int)Session["user_id"];
+            string pagetag = "quan_statechange";
+            Expression<Func<wms_inventory_v, bool>> where = PredicateExtensionses.True<wms_inventory_v>();
+            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            if (sc != null)
+            {
+                string[] sclist = sc.ConditionInfo.Split(';');
+                foreach (string scl in sclist)
+                {
+                    string[] scld = scl.Split(',');
+                    switch (scld[0])
+                    {
+                        case "guige":
+                            string guige = scld[1];
+                            string guigeequal = scld[2];
+                            string guigeand = scld[3];
+                            if (!string.IsNullOrEmpty(guige))
+                            {
+                                if (guigeequal.Equals("="))
+                                {
+                                    if (guigeand.Equals("and"))
+                                        where = where.And(p => p.Guige == guige);
+                                    else
+                                        where = where.Or(p => p.Guige == guige);
+                                }
+                                if (guigeequal.Equals("like"))
+                                {
+                                    if (guigeand.Equals("and"))
+                                        where = where.And(p => p.Guige.Contains(guige));
+                                    else
+                                        where = where.Or(p => p.Guige.Contains(guige));
+                                }
+                            }
+                            break;
+                        case "pihao":
+                            string pihao = scld[1];
+                            string pihaoequal = scld[2];
+                            string pihaoand = scld[3];
+                            if (!string.IsNullOrEmpty(pihao))
+                            {
+                                if (pihaoequal.Equals("="))
+                                {
+                                    if (pihaoand.Equals("and"))
+                                        where = where.And(p => p.Pihao == pihao);
+                                    else
+                                        where = where.Or(p => p.Pihao == pihao);
+                                }
+                                if (pihaoequal.Equals("like"))
+                                {
+                                    if (pihaoand.Equals("and"))
+                                        where = where.And(p => p.Pihao.Contains(pihao));
+                                    else
+                                        where = where.Or(p => p.Pihao.Contains(pihao));
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                ViewBag.SearchCondition = sc.ConditionInfo;
+            }
+            var tempData = ob_wms_cunhuoservice.GetInventory(where.Compile()).ToPagedList<wms_inventory_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            ViewBag.wms_storage_v = tempData;
+            return View(tempData);
+        }
+        [HttpPost]
+        [OutputCache(Duration = 30)]
+        public ActionResult QuantityChange()
+        {
+            int userid = (int)Session["user_id"];
+            string pagetag = "quan_statechange";
+            string page = "1";
+            //guige
+            string guige = Request["guige"] ?? "";
+            string guigeequal = Request["guigeequal"] ?? "";
+            string guigeand = Request["guigeand"] ?? "";
+            //pihao
+            string pihao = Request["pihao"] ?? "";
+            string pihaoequal = Request["pihaoequal"] ?? "";
+            string pihaoand = Request["pihaoand"] ?? "";
+            Expression<Func<wms_inventory_v, bool>> where = PredicateExtensionses.True<wms_inventory_v>();
+            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            if (sc == null)
+            {
+                sc = new searchcondition();
+                sc.UserID = userid;
+                sc.PageBrief = pagetag;
+                //guige
+                if (!string.IsNullOrEmpty(guige))
+                {
+                    if (guigeequal.Equals("="))
+                    {
+                        if (guigeand.Equals("and"))
+                            where = where.And(p => p.Guige == guige);
+                        else
+                            where = where.Or(p => p.Guige == guige);
+                    }
+                    if (guigeequal.Equals("like"))
+                    {
+                        if (guigeand.Equals("and"))
+                            where = where.And(p => p.Guige.Contains(guige));
+                        else
+                            where = where.Or(p => p.Guige.Contains(guige));
+                    }
+                }
+                if (!string.IsNullOrEmpty(guige))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "guige", guige, guigeequal, guigeand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "guige", "", guigeequal, guigeand);
+                //pihao
+                if (!string.IsNullOrEmpty(pihao))
+                {
+                    if (pihaoequal.Equals("="))
+                    {
+                        if (pihaoand.Equals("and"))
+                            where = where.And(p => p.Pihao == pihao);
+                        else
+                            where = where.Or(p => p.Pihao == pihao);
+                    }
+                    if (pihaoequal.Equals("like"))
+                    {
+                        if (pihaoand.Equals("and"))
+                            where = where.And(p => p.Pihao.Contains(pihao));
+                        else
+                            where = where.Or(p => p.Pihao.Contains(pihao));
+                    }
+                }
+                if (!string.IsNullOrEmpty(pihao))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pihao", pihao, pihaoequal, pihaoand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pihao", "", pihaoequal, pihaoand);
+                searchconditionService.GetInstance().AddEntity(sc);
+            }
+            else
+            {
+                sc.ConditionInfo = "";
+                //guige
+                if (!string.IsNullOrEmpty(guige))
+                {
+                    if (guigeequal.Equals("="))
+                    {
+                        if (guigeand.Equals("and"))
+                            where = where.And(p => p.Guige == guige);
+                        else
+                            where = where.Or(p => p.Guige == guige);
+                    }
+                    if (guigeequal.Equals("like"))
+                    {
+                        if (guigeand.Equals("and"))
+                            where = where.And(p => p.Guige.Contains(guige));
+                        else
+                            where = where.Or(p => p.Guige.Contains(guige));
+                    }
+                }
+                if (!string.IsNullOrEmpty(guige))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "guige", guige, guigeequal, guigeand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "guige", "", guigeequal, guigeand);
+                //pihao
+                if (!string.IsNullOrEmpty(pihao))
+                {
+                    if (pihaoequal.Equals("="))
+                    {
+                        if (pihaoand.Equals("and"))
+                            where = where.And(p => p.Pihao == pihao);
+                        else
+                            where = where.Or(p => p.Pihao == pihao);
+                    }
+                    if (pihaoequal.Equals("like"))
+                    {
+                        if (pihaoand.Equals("and"))
+                            where = where.And(p => p.Pihao.Contains(pihao));
+                        else
+                            where = where.Or(p => p.Pihao.Contains(pihao));
+                    }
+                }
+                if (!string.IsNullOrEmpty(pihao))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pihao", pihao, pihaoequal, pihaoand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pihao", "", pihaoequal, pihaoand);
+                searchconditionService.GetInstance().UpdateEntity(sc);
+            }
+
+            ViewBag.SearchCondition = sc.ConditionInfo;
+
+            var tempData = ob_wms_cunhuoservice.GetInventory(where.Compile()).ToPagedList<wms_inventory_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            ViewBag.wms_storage_v = tempData;
+            return View(tempData);
+        }
+        public JsonResult QuantityGood()
+        {
+            int _userid = (int)Session["user_id"];
+            var _chid = Request["ch"] ?? "";
+            var _reason = Request["rn"] ?? "";
+            if (string.IsNullOrEmpty(_chid))
+                return Json(-1);
+            wms_cunhuo _ch = ob_wms_cunhuoservice.GetEntityById(p => p.ID == int.Parse(_chid) && p.IsDelete == false);
+            if (_ch == null)
+                return Json(-1);
+            if (_ch.HegeSF)
+                return Json(-2);
+            _ch.HegeSF = true;
+            if (!ob_wms_cunhuoservice.UpdateEntity(_ch))
+                return Json(-3);
+            quan_zhiliangwh _zl = new quan_zhiliangwh();
+            _zl.CHID = _ch.ID;
+            _zl.ZhiliangZT = _ch.HegeSF;
+            _zl.XiugaiYY = _reason;
+            _zl.MakeDate = DateTime.Now;
+            _zl.MakeMan = _userid;
+            _zl = ServiceFactory.quan_zhiliangwhservice.AddEntity(_zl);
+            return Json(1);
+        }
+        public JsonResult quantityNotGood()
+        {
+            int _userid = (int)Session["user_id"];
+            var _chid = Request["ch"] ?? "";
+            var _reason = Request["rn"] ?? "";
+            if (string.IsNullOrEmpty(_chid))
+                return Json(-1);
+            wms_cunhuo _ch = ob_wms_cunhuoservice.GetEntityById(p => p.ID == int.Parse(_chid) && p.IsDelete == false);
+            if (_ch == null)
+                return Json(-1);
+            if (!_ch.HegeSF)
+                return Json(-2);
+            _ch.HegeSF = false;
+            if (!ob_wms_cunhuoservice.UpdateEntity(_ch))
+                return Json(-3);
+            quan_zhiliangwh _zl = new quan_zhiliangwh();
+            _zl.CHID = _ch.ID;
+            _zl.ZhiliangZT = _ch.HegeSF;
+            _zl.XiugaiYY = _reason;
+            _zl.MakeDate = DateTime.Now;
+            _zl.MakeMan = _userid;
+            _zl = ServiceFactory.quan_zhiliangwhservice.AddEntity(_zl);
+            return Json(1);
+        }
     }
 }
 

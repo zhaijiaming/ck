@@ -1,0 +1,290 @@
+﻿@using CKWMS.App_Code
+@using CKWMS.Models
+@using X.PagedList
+@using X.PagedList.Mvc
+@{
+    ViewBag.Title = "库存质量管理";
+    string _searchcondition = ViewBag.SearchCondition;
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("tr").bind("dblclick", function () {
+            var u_id = $(this).find('td').eq(0).find('input').val();
+        });
+        $("#mydatatable tbody tr").each(function () {
+            if ($(this).find("td").eq(14).html() == "不合格")
+                $(this).addClass("red");
+            if ($(this).find("td").eq(15).html() != "正常")
+                $(this).add("blue");
+        });
+        $("#pl_good").draggable({ handle: ".panel-heading" });
+        $("#pl_notgood").draggable({ handle: ".panel-heading" });
+        $("#bt_good").click(function () {
+            $("#pl_good").show();
+        });
+        $("#bt_notgood").click(function () {
+            $("#pl_notgood").show();
+        });
+        $("#pl_ng_close").click(function () {
+            $("#pl_notgood").hide();
+        });
+        $("#pl_gd_close").click(function () {
+            $("#pl_good").hide();
+        });
+        $("#bt_save_good").click(function () {
+            var _yes = confirm("确定要修改质量状态吗？");
+            if (_yes == true) {
+                var sDel = "";
+                $("#mydatatable tbody tr input[type=checkbox]").each(function () {
+                    if (this.checked) {
+                        sDel = $(this).val();
+                    }
+                });
+                if (sDel == "") {
+                    alert("必须选择一个需要修改内容！");
+                    return;
+                }
+                if ($("#goodinfo").val() == "") {
+                    alert("必须输入修改质量状态的原因！");
+                    return;
+                }
+                else {
+                    $.ajax({
+                        async: true,
+                        beforeSend: function () {
+                            ShowWait();
+                        },
+                        complete: function () {
+                            HiddenWait();
+                        },
+                        type: "POST",
+                        url: "/wms_cunhuo/quantitygood",
+                        data: {
+                            ch: sDel,
+                            rn: $("#goodinfo").val()
+                        },
+                        success: function (data) {
+                            if (data == -1)
+                                alert("修改的内容为空！");
+                            else if (data == -2)
+                                alert("相同质量状态不用修改！");
+                            else if (data == -3)
+                                alert("保存时出现错误，请与管理员联系！");
+                            else
+                                location.reload();
+                        }
+                    });
+                }
+            }
+        });
+        $("#bt_save_ng").click(function () {
+            var _yes = confirm("确定要修改质量状态吗？");
+            if (_yes == true) {
+                var sDel = "";
+                $("#mydatatable tbody tr input[type=checkbox]").each(function () {
+                    if (this.checked) {
+                        sDel = $(this).val();
+                    }
+                });
+                if (sDel == "") {
+                    alert("必须选择一个需要修改内容！");
+                    return;
+                }
+                if ($("#nginfo").val() == "") {
+                    alert("必须输入修改质量状态的原因！");
+                    return;
+                }
+                else {
+                    $.ajax({
+                        async: true,
+                        beforeSend: function () {
+                            ShowWait();
+                        },
+                        complete: function () {
+                            HiddenWait();
+                        },
+                        type: "POST",
+                        url: "/wms_cunhuo/quantitynotgood",
+                        data: {
+                            ch: sDel,
+                            rn: $("#nginfo").val()
+                        },
+                        success: function (data) {
+                            if (data == -1)
+                                alert("修改的内容为空！");
+                            else if (data == -2)
+                                alert("相同质量状态不用修改！");
+                            else if (data == -3)
+                                alert("保存时出现错误，请与管理员联系！");
+                            else
+                                location.reload();
+                        }
+                    });
+                }
+            }
+        });
+    });
+</script>
+@{
+    List<SearchConditionModel> scms = new List<SearchConditionModel>();
+    if (_searchcondition == null || _searchcondition == "")
+    {
+        SearchConditionModel scm = new SearchConditionModel();
+        scm.ItemCode = "Guige";
+        scm.ItemTitle = "规格";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "Pihao";
+        scm.ItemTitle = "批号";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+
+    }
+    else
+    {
+        string[] scs = _searchcondition.Split(';');
+        if (scs.Length > 0)
+        {
+            SearchConditionModel scm = new SearchConditionModel();
+            scm.ItemCode = "Guige";
+            scm.ItemTitle = "规格";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[0].Split(',')[1];
+                scm.ItemOpValue = scs[0].Split(',')[2];
+                scm.ItemJion = scs[0].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "Pihao";
+            scm.ItemTitle = "批号";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[1].Split(',')[1];
+                scm.ItemOpValue = scs[1].Split(',')[2];
+                scm.ItemJion = scs[1].Split(',')[3];
+            }
+            scms.Add(scm);
+
+        }
+    }
+}
+<div id="loading"><img src="~/Imgs/wait.gif" alt="" />...系统正在加载数据,请耐心等待...</div>
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    </script>
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="/Home">首页</a>
+        </li>
+        <li class="active">库存货品质量维护</li>
+    </ul>
+</div>
+<div class="page-content">
+    @Html.Search_Condition((int)Session["user_id"], "质量管理_条件组合查询", "/wms_cunhuo/quantitychange", "quan_statechange", scms)
+    <input type="hidden" id="selid" />
+    <div class="page-header">
+        <p>
+            <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
+            <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
+            <button type="button" class="btn btn-default" id="bt_good"><i class="icon-ok-circle"></i>合格</button>
+            <button type="button" class="btn btn-default" id="bt_notgood"><i class="icon-ban-circle"></i>不合格</button>
+        </p>
+    </div>
+    <div class="row">
+        <table class="table table-condensed table-hover" id="mydatatable">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>货主</td>
+                    <td>入库单</td>
+                    <td>库位</td>
+                    <td>质量状态</td>
+                    <td>入库日期</td>
+                    <td>商品代码</td>
+                    <td>商品名称</td>
+                    <td>规格</td>
+                    <td>注册证</td>
+                    <td>批号</td>
+                    <td>生产日期</td>
+                    <td>失效日期</td>
+                    <td>序列码</td>
+                    <td>数量</td>
+                    <td>单位</td>
+                    <td>货品状态</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.wms_storage_v)
+                {
+                    <tr>
+                        <td>
+                            <label><input type="checkbox" value="@item.sid"></label>
+                        </td>
+                        <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
+                        <td>@item.RukudanBH</td>
+                        <td>@item.Kuwei</td>
+                        <td>@Html.Encode(item.HegeSF == true ? "合格" : "不合格")</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.RukuRQ == null ? "" : item.RukuRQ)</td>
+                        <td>@item.ShangpinDM</td>
+                        <td>@item.ShangpinMC</td>
+                        <td>@item.Guige</td>
+                        <td>@item.Zhucezheng</td>
+                        <td>@item.Pihao</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ == null ? "" : item.ShengchanRQ)</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ == null ? "" : item.ShixiaoRQ)</td>
+                        <td>@item.Xuliema</td>
+                        <td>@item.sshuliang</td>
+                        <td>@item.JibenDW</td>
+                        <td>@Html.GetCommonValue_ID("存货状态", (int)(item.CunhuoZT == null ? 0 : item.CunhuoZT))</td>
+                        <td>@item.CunhuoSM</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="pager">
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("quantitychange", new { page }))
+    </div>
+</div>
+<div id="pl_good" class="panel panel-primary" style="display:none;position:fixed;top:200px;left:300px;width:300px;overflow:auto;">
+    <div class="panel-heading">
+        <h3 class="panel-title"><button id="pl_gd_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <label>合格的原因</label>
+            <div class="form-group">
+                <textarea class="form-control" id="goodinfo" placeholder="请输入质量调整的理由"></textarea>
+            </div>
+            <div class="form-group">
+                <input type="button" class="form-control btn btn-default" id="bt_save_good" value="保存" />
+            </div>
+        </div>
+    </div>
+</div>
+<div id="pl_notgood" class="panel panel-primary" style="display:none;position:fixed;top:200px;left:300px;width:300px;overflow:auto;">
+    <div class="panel-heading">
+        <h3 class="panel-title"><button id="pl_ng_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <label>不合格原因</label>
+            <div class="form-group">
+                <textarea class="form-control" id="nginfo" placeholder="请输入质量调整的理由"></textarea>
+            </div>
+            <div class="form-group">
+                <input type="button" class="form-control btn btn-default" id="bt_save_ng" value="保存" />
+            </div>
+        </div>
+    </div>
+</div>

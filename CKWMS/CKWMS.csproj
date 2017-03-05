@@ -307,6 +307,7 @@
     <Compile Include="Controllers\json_importController.cs" />
     <Compile Include="Controllers\json_packageController.cs" />
     <Compile Include="Controllers\quan_chukufhController.cs" />
+    <Compile Include="Controllers\quan_zhiliangwhController.cs" />
     <Compile Include="Controllers\rmd_myreminderController.cs" />
     <Compile Include="Controllers\u8_lackcargoController.cs" />
     <Compile Include="Controllers\wms_cangguanszController.cs" />
@@ -345,6 +346,7 @@
     <Compile Include="Models\quan_gspshdwViewModel.cs" />
     <Compile Include="Models\quan_gspspxxViewModel.cs" />
     <Compile Include="Models\quan_gspwtkhViewModel.cs" />
+    <Compile Include="Models\quan_zhiliangwhViewModel.cs" />
     <Compile Include="Models\rmd_myreminderViewModel.cs" />
     <Compile Include="Models\rmd_remindlistViewModel.cs" />
     <Compile Include="Models\u8_lackcargoViewModel.cs" />
@@ -957,6 +959,10 @@
     <Content Include="Views\cfda_outhistory\Edit.cshtml" />
     <Content Include="Views\cfda_outhistory\Index.cshtml" />
     <Content Include="Views\cfda_inhistory\inHistoryExport.cshtml" />
+    <Content Include="Views\quan_zhiliangwh\Add.cshtml" />
+    <Content Include="Views\quan_zhiliangwh\Edit.cshtml" />
+    <Content Include="Views\quan_zhiliangwh\Index.cshtml" />
+    <Content Include="Views\wms_cunhuo\QuantityChange.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
