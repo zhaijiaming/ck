@@ -23,6 +23,9 @@ namespace CKWMS.Controllers
                 page = "1";
             int userid = (int)Session["user_id"];
             string pagetag = "wms_yiwei_index";
+
+            PageMenu.Set("Index", "wms_yiwei", "²Ö¿â²Ù×÷");
+
             Expression<Func<wms_yiwei, bool>> where = PredicateExtensionses.True<wms_yiwei>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc != null && sc.ConditionInfo != null)
@@ -106,6 +109,9 @@ namespace CKWMS.Controllers
             string xkwbh = Request["xkwbh"] ?? "";
             string xkwbhequal = Request["xkwbhequal"] ?? "";
             string xkwbhand = Request["xkwbhand"] ?? "";
+
+            PageMenu.Set("Index", "wms_yiwei", "²Ö¿â²Ù×÷");
+
             Expression<Func<wms_yiwei, bool>> where = PredicateExtensionses.True<wms_yiwei>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)

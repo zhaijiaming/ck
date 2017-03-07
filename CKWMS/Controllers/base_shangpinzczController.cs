@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Linq;
 using System.Web.Mvc;
 using System.Linq.Expressions;
@@ -17,13 +17,13 @@ namespace CKWMS.Controllers
     public class ZhuCeZhenXX
     {
         public int ID { get; set; }
-        public string Bianhao { get; set; }//×¢²áÖ¤±àºÅ
-        public string Mingcheng { get; set; }//ÉÌÆ·Ãû³Æ
-        public string Bianzhun { get; set; }//²úÆ·±ê×¼
-        public string Chandi { get; set; }//²úµØ
-        public int ShengchanqiyeID { get; set; }//Éú²úÆóÒµĞòºÅ
-        public string Shengchanqiye { get; set; }//Éú²úÆóÒµ
-        public List<base_zhucezhenggg> Guige { get; set; }//¹æ¸ñÁĞ±í
+        public string Bianhao { get; set; }//æ³¨å†Œè¯ç¼–å·
+        public string Mingcheng { get; set; }//å•†å“åç§°
+        public string Bianzhun { get; set; }//äº§å“æ ‡å‡†
+        public string Chandi { get; set; }//äº§åœ°
+        public int ShengchanqiyeID { get; set; }//ç”Ÿäº§ä¼ä¸šåºå·
+        public string Shengchanqiye { get; set; }//ç”Ÿäº§ä¼ä¸š
+        public List<base_zhucezhenggg> Guige { get; set; }//è§„æ ¼åˆ—è¡¨
     }
     public class base_shangpinzczController : Controller
     {
@@ -36,6 +36,7 @@ namespace CKWMS.Controllers
                 page = "1";
             int userid = (int)Session["user_id"];
             string pagetag = "base_shangpinzcz_index";
+            PageMenu.Set("Index", "base_shangpinzcz", "åŸºç¡€æ•°æ®");
             Expression<Func<base_shangpinzcz, bool>> where = PredicateExtensionses.True<base_shangpinzcz>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc != null)
@@ -119,6 +120,7 @@ namespace CKWMS.Controllers
             string mingcheng = Request["mingcheng"] ?? "";
             string mingchengequal = Request["mingchengequal"] ?? "";
             string mingchengand = Request["mingchengand"] ?? "";
+            PageMenu.Set("Index", "base_shangpinzcz", "åŸºç¡€æ•°æ®");
             Expression<Func<base_shangpinzcz, bool>> where = PredicateExtensionses.True<base_shangpinzcz>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)

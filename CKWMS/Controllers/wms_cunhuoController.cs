@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Web.Mvc;
 using System.Linq.Expressions;
@@ -522,7 +522,7 @@ namespace CKWMS.Controllers
             string shixiaorq = Request["shixiaorq"] ?? "";
             string shixiaorqequal = Request["shixiaorqequal"] ?? "";
             string shixiaorqand = Request["shixiaorqand"] ?? "";
-            //�������
+            //入库日期
             string rukurq = Request["rukurq"] ?? "";
             string rukurqequal = Request["rukurqequal"] ?? "";
             string rukurqand = Request["rukurqand"] ?? "";
@@ -530,6 +530,8 @@ namespace CKWMS.Controllers
             string chanpinxian = Request["chanpinxian"] ?? "";
             string chanpinxianequal = Request["chanpinxianequal"] ?? "";
             string chanpinxianand = Request["chanpinxianand"] ?? "";
+
+            PageMenu.Set("CurrentStorage", "wms_cunhuo", "仓库操作");
 
             Expression<Func<wms_inventory_v, bool>> where = PredicateExtensionses.True<wms_inventory_v>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
@@ -1001,6 +1003,9 @@ namespace CKWMS.Controllers
                 page = "1";
             int userid = (int)Session["user_id"];
             string pagetag = "wms_cunhuo_currentstorage";
+
+            PageMenu.Set("CurrentStorage", "wms_cunhuo", "仓库操作");
+
             Expression<Func<wms_inventory_v, bool>> where = PredicateExtensionses.True<wms_inventory_v>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc != null && sc.ConditionInfo != null)
@@ -1551,6 +1556,9 @@ namespace CKWMS.Controllers
                 page = "1";
             int userid = (int)Session["user_id"];
             string pagetag = "wms_inoutcheck";
+
+            PageMenu.Set("InoutCheck", "wms_cunhuo", "仓库操作");
+
             Expression<Func<wms_inoutcheckgood_v, bool>> where = PredicateExtensionses.True<wms_inoutcheckgood_v>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc != null)
@@ -1634,6 +1642,9 @@ namespace CKWMS.Controllers
             string cysl = Request["cysl"] ?? "";
             string cyslequal = Request["cyslequal"] ?? "";
             string cysland = Request["cysland"] ?? "";
+
+            PageMenu.Set("InoutCheck", "wms_cunhuo", "仓库操作");
+
             Expression<Func<wms_inoutcheckgood_v, bool>> where = PredicateExtensionses.True<wms_inoutcheckgood_v>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)

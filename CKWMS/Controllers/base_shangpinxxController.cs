@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Linq;
 using System.Web.Mvc;
 using System.Linq.Expressions;
@@ -24,6 +24,7 @@ namespace CKWMS.Controllers
                 page = "1";
             int userid = (int)Session["user_id"];
             string pagetag = "base_shangpinxx_index";
+            PageMenu.Set("Index", "base_shangpinxx", "åŸºç¡€æ•°æ®");
             Expression<Func<base_shangpin_v, bool>> where = PredicateExtensionses.True<base_shangpin_v>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc != null)
@@ -241,6 +242,7 @@ namespace CKWMS.Controllers
             {
                 shenchasf = "";
             }
+            PageMenu.Set("Index", "base_shangpinxx", "åŸºç¡€æ•°æ®");
             Expression<Func<base_shangpin_v, bool>> where = PredicateExtensionses.True<base_shangpin_v>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -536,7 +538,7 @@ namespace CKWMS.Controllers
             return View(tempData);
         }
         /// <summary>
-        /// »õÖ÷µÄÉÌÆ·ÁĞ±í
+        /// è´§ä¸»çš„å•†å“åˆ—è¡¨
         /// </summary>
         /// <returns></returns>
         public JsonResult GetCustomerCargos()
@@ -555,7 +557,7 @@ namespace CKWMS.Controllers
             }
         }
         /// <summary>
-        /// ÒÔÈë¿âĞòºÅ²é»õÖ÷¾­ÓªµÄÉÌÆ·ÁĞ±í
+        /// ä»¥å…¥åº“åºå·æŸ¥è´§ä¸»ç»è¥çš„å•†å“åˆ—è¡¨
         /// </summary>
         /// <returns></returns>
         public JsonResult GetCustomerCargosByEntryID()
@@ -591,7 +593,7 @@ namespace CKWMS.Controllers
             }
         }
         /// <summary>
-        /// »õÖ÷È«²¿ÉÌÆ·ÁĞ±í
+        /// è´§ä¸»å…¨éƒ¨å•†å“åˆ—è¡¨
         /// </summary>
         /// <returns></returns>
         public JsonResult GetCustomerCargosAllByEntryID()

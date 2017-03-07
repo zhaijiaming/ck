@@ -24,6 +24,7 @@ namespace CKWMS.Controllers
                 page = "1";
             int userid = (int)Session["user_id"];
             string pagetag = "quan_shouyingsq_index";
+            PageMenu.Set("Index", "quan_shouyingsq", "质量管理");
             Expression<Func<quan_shouyingsq, bool>> where = PredicateExtensionses.True<quan_shouyingsq>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc != null && sc.ConditionInfo != null)
@@ -96,6 +97,7 @@ namespace CKWMS.Controllers
             string shenheren = Request["shenheren"] ?? "";
             string shenherenequal = Request["shenherenequal"] ?? "";
             string shenherenand = Request["shenherenand"] ?? "";
+            PageMenu.Set("Index", "quan_shouyingsq", "质量管理");
             Expression<Func<quan_shouyingsq, bool>> where = PredicateExtensionses.True<quan_shouyingsq>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -258,6 +260,7 @@ namespace CKWMS.Controllers
                 page = "1";
             int userid = (int)Session["user_id"];
             string pagetag = "quan_shouyingsq_recindex";
+            PageMenu.Set("RecIndex", "quan_shouyingsq", "质量管理");
             Expression<Func<quan_shouyingsq, bool>> where = PredicateExtensionses.True<quan_shouyingsq>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc != null && sc.ConditionInfo != null)
@@ -328,6 +331,7 @@ namespace CKWMS.Controllers
             string shenheren = Request["shenheren"] ?? "";
             string shenherenequal = Request["shenherenequal"] ?? "";
             string shenherenand = Request["shenherenand"] ?? "";
+            PageMenu.Set("RecIndex", "quan_shouyingsq", "质量管理");
             Expression<Func<quan_shouyingsq, bool>> where = PredicateExtensionses.True<quan_shouyingsq>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)

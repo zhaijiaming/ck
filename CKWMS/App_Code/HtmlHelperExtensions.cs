@@ -253,7 +253,7 @@ namespace CKWMS.App_Code
                     break;
                 case "产品线": //"auth_gongsi":
                     Ibase_chanpinxianService cpx = ServiceFactory.base_chanpinxianservice;
-                    var tmpcpx = cpx.LoadSortEntities(p => p.IsDelete == false, true,s=>s.Mingcheng);
+                    var tmpcpx = cpx.LoadSortEntities(p => p.IsDelete == false, true, s => s.Mingcheng);
                     foreach (var i in tmpcpx)
                     {
                         if (i.ID == selectedvalue && selectedvalue != 0)
@@ -494,7 +494,6 @@ namespace CKWMS.App_Code
         {
             return SelectList_Common(html, showName, itemName, 0);
         }
-
         public static MvcHtmlString Search_UserRights(this HtmlHelper html, int userid)
         {
             string curmodule = "";
@@ -535,6 +534,79 @@ namespace CKWMS.App_Code
                         Console.WriteLine(rp.ryid);
                     }
                 }
+            }
+            if (userid == -1)
+            {
+                sb.AppendLine("<li><a href=\"#\" class=\"dropdown-toggle\">");
+                sb.AppendLine("<i class=\"icon-ban-circle\"></i>");
+                sb.AppendLine("<span class=\"menu-text\">权限管理</span>");
+                sb.AppendLine("<b class=\"arrow icon-angle-down\"></b></a>");
+                sb.AppendLine("<ul class=\"submenu\">");
+                sb.AppendLine("<li><i class=\"icon-double-angle-right\"></i><a href=\"/auth_juese/Index\">系统角色</a></li>");
+                sb.AppendLine("<li><i class=\"icon-double-angle-right\"></i><a href=\"/auth_gongneng/index\">功能设定</a></li>");
+                sb.AppendLine("<li><i class=\"icon-double-angle-right\"></i><a href=\"/auth_juesemx/index\">角色明细</a></li>");
+                sb.AppendLine("<li><i class=\"icon-double-angle-right\"></i><a href=\"/auth_quanxian/index\">权限清单</a></li>");
+                sb.AppendLine("</ul></li>");
+            }
+            return MvcHtmlString.Create(sb.ToString());
+        }
+
+        public static MvcHtmlString Search_UserRights(this HtmlHelper html, int userid, string currentpage,string currentcontrol, string currentmodel)
+        {
+            string curmodule = "";
+            bool currentfunction = false;
+            StringBuilder sb = new StringBuilder();
+            Iauth_quanxianService qxservice = ServiceFactory.auth_quanxianservice;
+            var rps = qxservice.GetPersonRightsFirst(userid).DistinctBy(auth_personrights => auth_personrights.ID);//.GroupBy(p=>p.ID).Select(g=>g.First());
+            if (rps != null)
+            {
+                foreach (auth_personrights rp in rps)
+                {
+                    if (rp.ryid == userid)
+                    {
+                        if (!string.IsNullOrEmpty(currentpage) && !string.IsNullOrEmpty(currentcontrol))
+                            if (rp.controller.ToLower() == currentcontrol.ToLower() && rp.function.ToLower() == currentpage.ToLower())
+                                currentfunction = true;
+                            else
+                                currentfunction = false;
+                        if (curmodule.Equals(rp.module.Trim()))
+                        {
+                            if (currentfunction)
+                                sb.AppendLine("<li class=\"active\"><i class=\"icon-double-angle-right\"></i><a href=\"/" + rp.controller.Trim() + "/" + rp.function.Trim() + "\">" + rp.name + "</a></li>");
+                            else
+                                sb.AppendLine("<li><i class=\"icon-double-angle-right\"></i><a href=\"/" + rp.controller.Trim() + "/" + rp.function.Trim() + "\">" + rp.name + "</a></li>");
+                        }
+                        else
+                        {
+                            if (curmodule.Length > 1)
+                            {
+                                sb.AppendLine("</ul>");
+                                sb.AppendLine("</li>");
+                            }
+                            if (!string.IsNullOrEmpty(currentmodel))
+                            {
+                                if (rp.module.Trim() == currentmodel.Trim())
+                                    sb.AppendLine("<li class=\"active open\">");
+                                else 
+                                    sb.AppendLine("<li>");
+                            }
+                            else
+                                sb.AppendLine("<li>");
+                            sb.AppendLine("<a href=\"#\" class=\"dropdown-toggle\">");
+                            sb.AppendLine("<i class=\"" + getIcon(rp.module.Trim()) + "\"></i>");
+                            sb.AppendLine("<span class=\"menu-text\">" + rp.module.Trim() + "</span>");
+                            sb.AppendLine("<b class=\"arrow icon-angle-down\"></b>");
+                            sb.AppendLine("</a>");
+                            sb.AppendLine("<ul class=\"submenu\">");
+                            curmodule = rp.module.Trim();
+                            sb.AppendLine("<li><i class=\"icon-double-angle-right\"></i><a href=\"/" + rp.controller.Trim() + "/" + rp.function.Trim() + "\">" + rp.name + "</a></li>");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine(rp.ryid);
+                    }
+                }                
             }
             if (userid == -1)
             {

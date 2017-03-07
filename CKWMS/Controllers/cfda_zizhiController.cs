@@ -27,6 +27,7 @@ namespace CKWMS.Controllers
                 page = "1";
             int userid = (int)Session["user_id"];
             string pagetag = "cfda_zizhi_customer";
+            PageMenu.Set("CustomerCheckList", "cfda_zizhi", "药监查核");
             Expression<Func<base_weituokehu, bool>> where = PredicateExtensionses.True<base_weituokehu>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc != null && sc.ConditionInfo != null)
@@ -82,6 +83,7 @@ namespace CKWMS.Controllers
             string kehumingcheng = Request["kehumingcheng"] ?? "";
             string kehumingchengequal = Request["kehumingchengequal"] ?? "";
             string kehumingchengand = Request["kehumingchengand"] ?? "";
+            PageMenu.Set("CustomerCheckList", "cfda_zizhi", "药监查核");
             Expression<Func<base_weituokehu, bool>> where = PredicateExtensionses.True<base_weituokehu>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -156,6 +158,7 @@ namespace CKWMS.Controllers
             var custid = Request["customer_id"] ?? "";
             if (custid.Length == 0)
                 custid = "0";
+            PageMenu.Set("CargoCheckList", "cfda_zizhi", "药监查核");
             Expression<Func<cfda_cargos_v, bool>> where = PredicateExtensionses.True<cfda_cargos_v>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             //Kehumingcheng
@@ -428,6 +431,7 @@ namespace CKWMS.Controllers
             if (custid.Length == 0)
                 custid = "0";
             string pagetag = "cfda_zizhi_cargochecklist";
+            PageMenu.Set("CargoCheckList", "cfda_zizhi", "药监查核");
             Expression<Func<cfda_cargos_v, bool>> where = PredicateExtensionses.True<cfda_cargos_v>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc != null)

@@ -1,4 +1,4 @@
-using System;
+锘縰sing System;
 using System.Linq;
 using System.Web.Mvc;
 using System.Linq.Expressions;
@@ -27,6 +27,7 @@ namespace CKWMS.Controllers
             //Expression<Func<base_gongyingshang, bool>> where = PredicateExtensionses.True<base_gongyingshang>();
             int userid = (int)Session["user_id"];
             string pagetag = "base_gongyingshang_index";
+            PageMenu.Set("Index", "base_gongyingshang", "鍩虹鏁版嵁");
             Expression<Func<base_gongyingshang, bool>> where = PredicateExtensionses.True<base_gongyingshang>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc != null)
@@ -216,6 +217,7 @@ namespace CKWMS.Controllers
             string mingcheng = Request["mingcheng"] ?? "";
             string mingchengequal = Request["mingchengequal"] ?? "";
             string mingchengand = Request["mingchengand"] ?? "";
+            PageMenu.Set("Index", "base_gongyingshang", "鍩虹鏁版嵁");
             Expression<Func<base_gongyingshang, bool>> where = PredicateExtensionses.True<base_gongyingshang>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -351,7 +353,7 @@ namespace CKWMS.Controllers
             string shouying = Request["ob_base_gongyingshang_shouying"] ?? "";
             string makedate = Request["ob_base_gongyingshang_makedate"] ?? "";
             string makeman = Request["ob_base_gongyingshang_makeman"] ?? "";
-            //增加
+            //澧炲姞
             string shenchasf = Request["shenchasf"] ?? "";
             string hezuosf = Request["hezuosf"] ?? "";
             string beianbh = Request["ob_base_gongyingshang_beianbh"] ?? "";
@@ -383,7 +385,7 @@ namespace CKWMS.Controllers
                 ob_base_gongyingshang.Shouying =1;
                 ob_base_gongyingshang.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 ob_base_gongyingshang.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
-                //增加
+                //澧炲姞
                 ob_base_gongyingshang.ShenchaSF = shenchasf == "" ? false : Boolean.Parse(shenchasf);
                 ob_base_gongyingshang.HezuoSF = hezuosf == "" ? false : Boolean.Parse(hezuosf);
                 ob_base_gongyingshang.BeianBH = beianbh.Trim();
@@ -435,7 +437,7 @@ namespace CKWMS.Controllers
             //    base_gongyingshangviewmodel.Shouying = (int)tempData.Shouying;
             //    base_gongyingshangviewmodel.MakeDate = tempData.MakeDate;
             //    base_gongyingshangviewmodel.MakeMan = tempData.MakeMan;
-            //    //新增
+            //    //鏂板
             //    base_gongyingshangviewmodel.HezuoSF = tempData.HezuoSF;
             //    base_gongyingshangviewmodel.ShenchaSF = tempData.ShenchaSF;
             //    base_gongyingshangviewmodel.BeianBH = tempData.BeianBH;
@@ -465,7 +467,7 @@ namespace CKWMS.Controllers
             string jingyingfanweidm = Request["ob_base_gongyingshang_jingyingfanweidm"] ?? "";
             string shouying = Request["ob_base_gongyingshang_shouying"] ?? "";
             string makedate = Request["ob_base_gongyingshang_makedate"] ?? "";
-            //增加
+            //澧炲姞
             string shenchasf = Request["shenchasf"] ?? "";
             string hezuosf = Request["hezuosf"] ?? "";
             string beianbh = Request["ob_base_gongyingshang_beianbh"] ?? "";
@@ -499,7 +501,7 @@ namespace CKWMS.Controllers
                 p.Shouying = shouying == "" ? 0 : int.Parse(shouying);
                 p.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 p.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
-                //增加
+                //澧炲姞
                 p.ShenchaSF = shenchasf == "" ? false : Boolean.Parse(shenchasf);
                 p.HezuoSF = hezuosf == "" ? false : Boolean.Parse(hezuosf);
                 p.BeianBH = beianbh.Trim();

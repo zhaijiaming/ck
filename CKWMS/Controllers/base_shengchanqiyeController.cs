@@ -1,4 +1,4 @@
-using System;
+锘縰sing System;
 using System.Linq;
 using System.Web.Mvc;
 using System.Linq.Expressions;
@@ -26,6 +26,7 @@ namespace CKWMS.Controllers
                 page = "1";
             int userid = (int)Session["user_id"];
             string pagetag = "base_shengchanqiye_index";
+            PageMenu.Set("Index", "base_shengchanqiye", "鍩虹鏁版嵁");
             Expression<Func<base_shengchanqiye, bool>> where = PredicateExtensionses.True<base_shengchanqiye>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc != null)
@@ -144,6 +145,7 @@ namespace CKWMS.Controllers
             //string shouying = Request["shouying"] ?? "";
             //string shouyingequal = Request["shouyingequal"] ?? "";
             //string shouyingand = Request["shouyingand"] ?? "";
+            PageMenu.Set("Index", "base_shengchanqiye", "鍩虹鏁版嵁");
             Expression<Func<base_shengchanqiye, bool>> where = PredicateExtensionses.True<base_shengchanqiye>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -308,7 +310,7 @@ namespace CKWMS.Controllers
             string shouying = Request["shouying"] ?? "";
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
-            //新增
+            //鏂板
             string qiyedizhi = Request["qiyedizhi"] ?? "";
             string shengchandizhi = Request["shengchandizhi"] ?? "";
             string hezuosf = Request["hezuosf"] ?? "";
@@ -342,7 +344,7 @@ namespace CKWMS.Controllers
                 ob_base_shengchanqiye.Shouying = shouying == "" ? 0 : int.Parse(shouying);
                 ob_base_shengchanqiye.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 ob_base_shengchanqiye.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
-                //新增
+                //鏂板
                 ob_base_shengchanqiye.Qiyedizhi = qiyedizhi.Trim();
                 ob_base_shengchanqiye.Shengchandizhi = shengchandizhi.Trim();
                 ob_base_shengchanqiye.HezuoSF = hezuosf == "" ? false : Boolean.Parse(hezuosf);
@@ -397,7 +399,7 @@ namespace CKWMS.Controllers
                 base_shengchanqiyeviewmodel.Shouying = tempData.Shouying;
                 base_shengchanqiyeviewmodel.MakeDate = tempData.MakeDate;
                 base_shengchanqiyeviewmodel.MakeMan = tempData.MakeMan;
-                //新增
+                //鏂板
                 base_shengchanqiyeviewmodel.Qiyedizhi = tempData.Qiyedizhi;
                 base_shengchanqiyeviewmodel.Shengchandizhi = tempData.Shengchandizhi;
                 base_shengchanqiyeviewmodel.HezuoSF = tempData.HezuoSF;
@@ -433,7 +435,7 @@ namespace CKWMS.Controllers
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
             //string makeman = Session["user_id"].ToString();
-            //新增
+            //鏂板
             string qiyedizhi = Request["qiyedizhi"] ?? "";
             string shengchandizhi = Request["shengchandizhi"] ?? "";
             string hezuosf = Request["hezuosf"] ?? "";
@@ -468,7 +470,7 @@ namespace CKWMS.Controllers
                 p.Shouying = shouying == "" ? 0 : int.Parse(shouying);
                 p.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 p.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
-                //新增
+                //鏂板
                 p.Qiyedizhi = qiyedizhi.Trim();
                 p.Shengchandizhi = shengchandizhi.Trim();
                 p.HezuoSF = hezuosf == "" ? false : Boolean.Parse(hezuosf);

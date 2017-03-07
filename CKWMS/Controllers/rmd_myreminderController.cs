@@ -23,6 +23,7 @@ namespace CKWMS.Controllers
                 page = "1";
             int userid = (int)Session["user_id"];
             string pagetag = "rmd_myreminder_index";
+            PageMenu.Set("Index", "rmd_myreminder", "信息提醒");
             Expression<Func<rmd_myreminder, bool>> where = PredicateExtensionses.True<rmd_myreminder>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc != null && sc.ConditionInfo != null)
@@ -86,6 +87,7 @@ namespace CKWMS.Controllers
             string yonghuid = Request["yonghuid"] ?? "";
             string yonghuidequal = Request["yonghuidequal"] ?? "";
             string yonghuidand = Request["yonghuidand"] ?? "";
+            PageMenu.Set("Index", "rmd_myreminder", "信息提醒");
             Expression<Func<rmd_myreminder, bool>> where = PredicateExtensionses.True<rmd_myreminder>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -278,6 +280,7 @@ namespace CKWMS.Controllers
         public ActionResult ReminderList()
         {
             int _userid = (int)Session["user_id"];
+            PageMenu.Set("ReminderList", "rmd_myreminder", "信息提醒");
 
             List<rmd_remindlistViewModel> _reminds = new List<rmd_remindlistViewModel>();
             var _myremind = ob_rmd_myreminderservice.LoadEntities(p => p.YonghuID == _userid && p.IsDelete == false).ToList<rmd_myreminder>();

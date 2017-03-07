@@ -133,6 +133,7 @@ namespace CKWMS.Controllers
                 page = "1";
             int userid = (int)Session["user_id"];
             string pagetag = "cfda_cangku_inventory";
+            PageMenu.Set("GetInventory", "cfda_cangku", "药监查核");
             Expression<Func<cfda_storage_v, bool>> where = PredicateExtensionses.True<cfda_storage_v>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc != null)
@@ -242,6 +243,7 @@ namespace CKWMS.Controllers
             string pagetag = "cfda_cangku_inventory";
             string page = "1";
 
+            PageMenu.Set("GetInventory", "cfda_cangku", "药监查核");
             Expression<Func<cfda_storage_v, bool>> where = PredicateExtensionses.True<cfda_storage_v>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             //huozhuid
@@ -555,6 +557,7 @@ namespace CKWMS.Controllers
                 page = "1";
             int userid = (int)Session["user_id"];
             string pagetag = "cfda_cangku_entryrec";
+            PageMenu.Set("GetEntryrec", "cfda_cangku", "药监查核");
             Expression<Func<cfda_entryrec_v, bool>> where = PredicateExtensionses.True<cfda_entryrec_v>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc != null)
@@ -679,6 +682,7 @@ namespace CKWMS.Controllers
             string pihao = Request["pihao"] ?? "";
             string pihaoequal = Request["pihaoequal"] ?? "";
             string pihaoand = Request["pihaoand"] ?? "";
+            PageMenu.Set("GetEntryrec", "cfda_cangku", "药监查核");
             Expression<Func<cfda_entryrec_v, bool>> where = PredicateExtensionses.True<cfda_entryrec_v>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -998,6 +1002,7 @@ namespace CKWMS.Controllers
                 page = "1";
             int userid = (int)Session["user_id"];
             string pagetag = "cfda_cangku_outrec";
+            PageMenu.Set("GetOutrec", "cfda_cangku", "药监查核");
             Expression<Func<cfda_outrec_v, bool>> where = PredicateExtensionses.True<cfda_outrec_v>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc != null && sc.ConditionInfo != null)
@@ -1148,6 +1153,7 @@ namespace CKWMS.Controllers
             string kehumc = Request["kehumc"] ?? "";
             string kehumcequal = Request["kehumcequal"] ?? "";
             string kehumcand = Request["kehumcand"] ?? "";
+            PageMenu.Set("GetOutrec", "cfda_cangku", "药监查核");
             Expression<Func<cfda_outrec_v, bool>> where = PredicateExtensionses.True<cfda_outrec_v>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)

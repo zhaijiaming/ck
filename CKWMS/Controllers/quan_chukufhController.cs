@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Web.Mvc;
 using System.Linq.Expressions;
@@ -23,6 +23,7 @@ namespace CKWMS.Controllers
                 page = "1";
             int userid = (int)Session["user_id"];
             string pagetag = "quan_chukufh_index";
+            PageMenu.Set("Index", "quan_chukufh", "质量管理");
             Expression<Func<quan_outrec_v, bool>> where = PredicateExtensionses.True<quan_outrec_v>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc != null && sc.ConditionInfo != null)
@@ -151,6 +152,7 @@ namespace CKWMS.Controllers
             string chukudanbh = Request["chukudanbh"] ?? "";
             string chukudanbhequal = Request["chukudanbhequal"] ?? "";
             string chukudanbhand = Request["chukudanbhand"] ?? "";
+            PageMenu.Set("Index", "quan_chukufh", "质量管理");
             Expression<Func<quan_outrec_v, bool>> where = PredicateExtensionses.True<quan_outrec_v>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)

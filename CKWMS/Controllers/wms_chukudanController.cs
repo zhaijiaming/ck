@@ -23,6 +23,9 @@ namespace CKWMS.Controllers
                 page = "1";
             int userid = (int)Session["user_id"];
             string pagetag = "wms_chukudan_index";
+
+            PageMenu.Set("Index", "wms_chukudan", "仓库操作");
+
             Expression<Func<wms_chukudan, bool>> where = PredicateExtensionses.True<wms_chukudan>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc != null && sc.ConditionInfo != null)
@@ -165,6 +168,9 @@ namespace CKWMS.Controllers
             string yunsongdizhi = Request["yunsongdizhi"] ?? "";
             string yunsongdizhiequal = Request["yunsongdizhiequal"] ?? "";
             string yunsongdizhiand = Request["yunsongdizhiand"] ?? "";
+
+            PageMenu.Set("Index", "wms_chukudan", "仓库操作");
+
             Expression<Func<wms_chukudan, bool>> where = PredicateExtensionses.True<wms_chukudan>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -392,6 +398,7 @@ namespace CKWMS.Controllers
         {
             int userid = (int)Session["user_id"];
             string page = Request["page"] ?? "1";
+            PageMenu.Set("OutOperate","wms_chukudan","仓库操作");
             var tempData = ob_wms_chukudanservice.LoadSortEntities(wms_chukudan => wms_chukudan.IsDelete == false && wms_chukudan.JihuaZT < 5, false, wms_chukudan => wms_chukudan.ID).ToPagedList<wms_chukudan>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.wms_chukudan = tempData;
             return View(tempData);
@@ -1270,6 +1277,8 @@ namespace CKWMS.Controllers
             var _ckd = ob_wms_chukudanservice.GetEntityById(p => p.ChukudanBH == _ckdbh && p.IsDelete==false);
             if (_ckd == null)
                 return Json(-2);
+            if (_ckd.JihuaZT > 5)
+                return Json(-5);
             int _rv = ob_wms_chukudanservice.BillCancel(_ckd.ID);
             if (_ckd.JihuaID != null)
             {

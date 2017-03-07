@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Web.Mvc;
 using System.Linq.Expressions;
@@ -24,6 +24,7 @@ namespace CKWMS.Controllers
                 page = "1";
             int userid = (int)Session["user_id"];
             string pagetag = "wms_rukudan_index";
+            PageMenu.Set("Index", "wms_rukudan", "仓库操作");
             Expression<Func<wms_rukudan, bool>> where = PredicateExtensionses.True<wms_rukudan>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc != null && sc.ConditionInfo != null)
@@ -173,6 +174,7 @@ namespace CKWMS.Controllers
             string fahuodizhi = Request["fahuodizhi"] ?? "";
             string fahuodizhiequal = Request["fahuodizhiequal"] ?? "";
             string fahuodizhiand = Request["fahuodizhiand"] ?? "";
+            PageMenu.Set("Index", "wms_rukudan", "仓库操作");
             Expression<Func<wms_rukudan, bool>> where = PredicateExtensionses.True<wms_rukudan>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -403,6 +405,7 @@ namespace CKWMS.Controllers
         {
             int userid = (int)Session["user_id"];
 
+            PageMenu.Set("OperateList", "wms_rukudan", "仓库操作");
             var tempData = ob_wms_rukudanservice.LoadSortEntities(p => p.IsDelete == false && p.RukuZT < 5, false, s => s.MakeDate);
             ViewBag.wms_rukudan = tempData;
             return View();

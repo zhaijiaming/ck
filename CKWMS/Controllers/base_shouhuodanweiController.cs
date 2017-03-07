@@ -1,4 +1,4 @@
-using System;
+锘縰sing System;
 using System.Linq;
 using System.Web.Mvc;
 using System.Linq.Expressions;
@@ -22,6 +22,7 @@ namespace CKWMS.Controllers
                 page = "1";
             int userid = (int)Session["user_id"];
             string pagetag = "base_shouhuodanwei_index";
+            PageMenu.Set("Index", "base_shouhuodanwei", "鍩虹鏁版嵁");
             Expression<Func<base_shouhuodanwei, bool>> where = PredicateExtensionses.True<base_shouhuodanwei>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc != null)
@@ -89,14 +90,15 @@ namespace CKWMS.Controllers
             int userid = (int)Session["user_id"];
             string pagetag = "base_shouhuodanwei_index";
             string page = "1";
-            //货主
+            //璐т富
             string huozhuid = Request["huozhuid"] ?? "";
             string huozhuidequal = Request["huozhuidequal"] ?? "";
             string huozhuidand = Request["huozhuidand"] ?? "";
-            //单位名称
+            //鍗曚綅鍚嶇О
             string mingcheng = Request["mingcheng"] ?? "";
             string mingchengequal = Request["mingchengequal"] ?? "";
             string mingchengand = Request["mingchengand"] ?? "";
+            PageMenu.Set("Index", "base_shouhuodanwei", "鍩虹鏁版嵁");
             Expression<Func<base_shouhuodanwei, bool>> where = PredicateExtensionses.True<base_shouhuodanwei>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)

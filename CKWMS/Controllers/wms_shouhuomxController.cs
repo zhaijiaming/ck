@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Web.Mvc;
 using System.Linq.Expressions;
@@ -23,6 +23,7 @@ namespace CKWMS.Controllers
                 page = "1";
             int userid = (int)Session["user_id"];
             string pagetag = "wms_shouhuomx_index";
+            PageMenu.Set("Index", "wms_shouhuomx", "仓库操作");
             Expression<Func<wms_shouhuomx, bool>> where = PredicateExtensionses.True<wms_shouhuomx>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc != null && sc.ConditionInfo != null)
@@ -230,6 +231,7 @@ namespace CKWMS.Controllers
             string makedateequal = Request["makedateequal"] ?? "";
             string makedateand = Request["makedateand"] ?? "";
 
+            PageMenu.Set("Index", "wms_shouhuomx", "仓库操作");
             Expression<Func<wms_shouhuomx, bool>> where = PredicateExtensionses.True<wms_shouhuomx>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -568,7 +570,7 @@ namespace CKWMS.Controllers
             ViewBag.linecount_rkmx = tempData.Count;
             ViewBag.totalproduct_rkmx = tempData.Sum(p => p.DaohuoSL);
             ViewBag.totalbox_rkmx = tempData.Sum(p => p.DaohuoSL/p.Huansuanlv);
-            //���ջ�
+            //已收货
             var _shouhuo = ServiceFactory.wms_shouhuomxservice.LoadSortEntities(p => p.IsDelete == false && p.RukuID == int.Parse(rkdid), false, s => s.MakeDate).ToList<wms_shouhuomx>();
             ViewBag.linecount = _shouhuo.Count;
             ViewBag.totalproduct = _shouhuo.Sum(p => p.Shuliang);
