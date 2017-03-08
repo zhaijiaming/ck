@@ -25,13 +25,13 @@
             });
             if (sDel.length < 2)
                 return;
-            window.open("/wms_chukudan/expressexport?ck="+sDel, "_blank");
+            window.open("/wms_chukudan/expressexport?ck=" + sDel, "_blank");
         });
         $("#bt_over").click(function () {
             var sDel = "";
             $("#mydatatable tbody tr input[type=checkbox]").each(function () {
                 if (this.checked) {
-                    sDel = sDel   + ", "+ $(this).val();
+                    sDel = sDel + ", " + $(this).val();
                     //sDel = ", " + $(this).val();
                 }
             });
@@ -59,17 +59,16 @@
                 success: function (data) {
                     if (data == -1)
                         alert("操作失败，请联系管理员！");
-                    else if(data==-2)
-                    {
+                    else if (data == -2) {
                         alert("系统出现错误，请立即通知管理员！");
                     }
-                    else if(data==-3)
+                    else if (data == -3)
                         alert("处于非正常出库状态，不能完成出库！");
-                    else if(data==-4)
+                    else if (data == -4)
                         alert("需要复核后才能完成出库！");
-                    else if(data==-5)
+                    else if (data == -5)
                         alert("拣货数量与出库数量不符，请检查是否有不合格的商品出库！");
-                    else if(data==-6)
+                    else if (data == -6)
                         alert("拣货数量与计划出库数量不符，请检查是否有漏检的情况出现！");
                     else
                         location.reload();
@@ -152,7 +151,11 @@
                 },
                 success: function (data) {
                     if (data == -1)
-                        alert("操作失败，请联系管理员！");
+                        alert("参数传输错误，请联系管理员！");
+                    else if(data==-2)
+                        alert("该出库单已经被删除了！");
+                    else if(data==-3)
+                        alert("保存快递信息出错，请联系管理员！");
                     else {
                         //alert("添加快递单成功！");
                         $("#pl_kd").hide();
@@ -264,6 +267,12 @@
                 success: function (data) {
                     if (data == -1)
                         alert("导入序列码失败，请与管理员联系！");
+                    else if (data == -2)
+                        alert("此出库单已被删除！");
+                    else if (data == -3)
+                        alert("这些状态下不能进行扫码！");
+                    else
+                        location.reload();
                 }
             });
 
@@ -279,6 +288,38 @@
             $("#xlm").val("");
             $("#totalnum").html("0");
             $("#pl_xlm").show();
+            $.ajax({
+                async: true,
+                beforeSend: function () {
+                    ShowWait();
+                },
+                complete: function () {
+                    HiddenWait();
+                },
+                type: "POST",
+                url: "/wms_chukuxlm/getxlm",
+                data: {
+                    ckd: $("#ck").val()
+                },
+                success: function (data) {
+                    if (data == -1)
+                        alert("出库单编号传送失败！");
+                    else if (data == -2)
+                        alert("此出库单已被删除！");
+                    else if (data == -3)
+                        alert("当前状态下不能扫码！");
+                    else {
+                        if (data != "") {
+                            var _ft = "";
+                            for (var i in data) {
+                                _ft = _ft + data[i].Xuliema+"\r\n";
+                            }
+                            $("#xlm").val(_ft);
+                        }
+                    }
+                }
+            });
+
         });
         $("#pl_ok").click(function () {
             var _sval = "";
@@ -330,7 +371,7 @@
     function getCount() {
         var p = $("#xlm").val();
         var pp = p.split("\n");
-        $("#totalnum").html(pp.length-1);
+        $("#totalnum").html(pp.length - 1);
         for (var k in pp) {
             var ps = pp[k];
             if (ps.length > 0) {
@@ -661,8 +702,9 @@
                     <td>列表</td>
                     <td>选货</td>
                     <td>拣货</td>
-                    <td>复核</td>
                     <td>序列</td>
+                    <td>复核</td>
+                    <td>装箱</td>
                     <td>快递</td>
                     <td>详单</td>
                 </tr>
@@ -704,8 +746,9 @@
                         <td><a href="/wms_chukumx/GetOutDetail/@item.ID" target="_blank"><i class="icon-list bigger-200 blue"></i></a></td>
                         <td><i class="icon-edit-sign bigger-200 blue"></i></td>
                         <td><a href="/wms_jianhuo/getpickdetailbyout?out=@item.ID" target="_blank"><i class="icon-hand-up bigger-200 blue"></i></a></td>
-                        <td><a href="/quan_chukufh/outinventorycheck/@item.ID" target="_blank"><i class="icon-check bigger-200 blue"></i></a></td>
                         <td><i class="icon-barcode bigger-200 blue"></i></td>
+                        <td><a href="/quan_chukufh/outinventorycheck/@item.ID" target="_blank"><i class="icon-check bigger-200 blue"></i></a></td>
+                        <td><i class="icon-shopping-cart bigger-200 blue"></i></td>
                         <td><i class="icon-bookmark-empty bigger-200 blue"></i></td>
                         <td class="outOperateid"><i class="icon-print bigger-200 blue"><input type="hidden" class="input_outOperateid" value="@item.ID" /></i></td>
                     </tr>
@@ -763,7 +806,7 @@
         </div>
     </div>
 </div>
-<div id="pl_xlm" class="panel panel-primary" style="display:none;position:fixed;top:100px;left:200px;width:500px;height:500px;z-index:999;">
+<div id="pl_xlm" class="panel panel-primary" style="display:none;position:fixed;top:100px;left:200px;width:500px;z-index:999;">
     <div class="panel-heading">
         <h3 class="panel-title">登记出库单的序列码<button id="pl_xlm_close" class="pull-right">X</button></h3>
     </div>
@@ -771,7 +814,7 @@
         <div>
             <div class="col-sm-4"><p>总数：<label id="totalnum"></label></p></div>
             <div class="col-sm-2">
-                <p class="btn default" id="pl_xlm_check"><i class="icon-check-minus"></i>复核</p>                
+                <p class="btn default" id="pl_xlm_check"><i class="icon-check-minus"></i>复核</p>
             </div>
             <div class="col-sm-2"><p class="btn default" id="pl_xlm_clear"><i class="icon-ok"></i>清除</p></div>
             <div class="col-sm-2"><p class="btn default" id="pl_xlm_ok"><i class="icon-ok"></i>确定</p></div>

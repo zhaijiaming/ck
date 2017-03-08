@@ -319,23 +319,30 @@ namespace CKWMS.Controllers
             var _xlm = Request["xlm"] ?? "";
             var _ck = Request["ck"] ?? "";
             var _ckd = Request["ckd"] ?? "";
-            if (_xlm == "" || _ck=="" || _ckd=="")
+            if (_xlm == "" || _ck == "" || _ckd == "")
                 return Json(-1);
+            var _ckdxx = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_ck) && p.IsDelete == false);
+            if (_ckdxx == null)
+                return Json(-2);
+            if (_ckdxx.JihuaZT > 3)
+                return Json(-3);
             string[] _xlms = _xlm.Split();
-            foreach(var _m in _xlms)
+            foreach (var _m in _xlms)
             {
                 if (_m.Length > 0)
                 {
-                wms_chukuxlm _nm = new wms_chukuxlm();
-                _nm.Chukudan = _ckd;
-                _nm.ChukuID = int.Parse(_ck);
-                _nm.MakeDate = DateTime.Now;
-                _nm.MakeMan = _userid;
-                _nm.Xuliema = _m;
+                    wms_chukuxlm _nm = new wms_chukuxlm();
+                    _nm.Chukudan = _ckd;
+                    _nm.ChukuID = int.Parse(_ck);
+                    _nm.MakeDate = DateTime.Now;
+                    _nm.MakeMan = _userid;
+                    _nm.Xuliema = _m;
 
-                _nm=ob_wms_chukuxlmservice.AddEntity(_nm);
+                    _nm = ob_wms_chukuxlmservice.AddEntity(_nm);
                 }
             }
+            _ckdxx.JihuaZT = -12;
+            ServiceFactory.wms_chukudanservice.UpdateEntity(_ckdxx);
             return Json(1);
         }
         public ActionResult Add()
@@ -540,6 +547,23 @@ namespace CKWMS.Controllers
                 }
             }
             return RedirectToAction("Index");
+        }
+        public JsonResult GetXLM()
+        {
+            int _userid = (int)Session["user_id"];
+            var _ckdid = Request["ckd"] ?? "";
+
+            if (string.IsNullOrEmpty(_ckdid))
+                return Json(-1);
+            var _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_ckdid) && p.IsDelete == false);
+            if (_ckd == null)
+                return Json(-2);
+            if (_ckd.JihuaZT > 4)
+                return Json(-3);
+            var _xlms = ob_wms_chukuxlmservice.LoadEntities(p => p.ChukuID == _ckd.ID && p.IsDelete == false).ToList();
+            if (_xlms.Count == 0)
+                return Json("");
+            return Json(_xlms);
         }
     }
 }

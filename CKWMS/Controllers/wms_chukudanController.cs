@@ -543,14 +543,15 @@ namespace CKWMS.Controllers
             var _ckid = Request["ck"] ?? "";
             if (string.IsNullOrEmpty(_ckid) || string.IsNullOrEmpty(_kuaidi) || string.IsNullOrEmpty(_yunsong) || string.IsNullOrEmpty(_jiesuan) || string.IsNullOrEmpty(_danhao))
                 return Json(-1);
-            var _ckd = ob_wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_ckid));
+            var _ckd = ob_wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_ckid) && p.IsDelete==false);
             if (_ckd == null)
-                return Json(-1);
+                return Json(-2);
             _ckd.KDdanhao = _danhao;
             _ckd.Kuaidi = int.Parse(_kuaidi);
             _ckd.YunsongFS = int.Parse(_yunsong);
             _ckd.JiesuanFS = int.Parse(_jiesuan);
-            ob_wms_chukudanservice.UpdateEntity(_ckd);
+            if (!ob_wms_chukudanservice.UpdateEntity(_ckd))
+                return Json(-3);
             return Json(1);
         }
         public JsonResult OutFinish()
