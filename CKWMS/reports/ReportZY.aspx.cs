@@ -1076,7 +1076,7 @@ namespace CKWMS.reports
                                     drzlgl_ckfhbg["Xuliema"] = _pr.Xuliema == null ? "" : _pr.Xuliema;
                                     drzlgl_ckfhbg["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShengchanRQ == null ? "" : ((DateTime)_pr.ShengchanRQ).ToString("yyyy/MM/dd"));
                                     drzlgl_ckfhbg["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShixiaoRQ == null ? "" : ((DateTime)_pr.ShixiaoRQ).ToString("yyyy/MM/dd"));
-                                    drzlgl_ckfhbg["JianhuoSL"] = _pr.JianhuoSL == int.Parse("0") ? "" : _pr.Zhucezheng;
+                                    drzlgl_ckfhbg["JianhuoSL"] = _pr.JianhuoSL ==null? int.Parse("0"): _pr.JianhuoSL;
                                     drzlgl_ckfhbg["Changjia"] = _pr.Changjia == null ? "" : _pr.Changjia;
                                     drzlgl_ckfhbg["Chandi"] = _pr.Chandi == null ? "" : _pr.Chandi;
                                     //验收结果
