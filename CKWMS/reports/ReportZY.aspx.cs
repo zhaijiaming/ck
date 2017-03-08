@@ -868,7 +868,7 @@ namespace CKWMS.reports
                             }
                             try
                             {
-                                foreach (wms_rukumx _pr in _newLists)
+                                foreach (wms_rukumx _pr in _newLists.OrderBy(p=>p.Guige).ThenBy(p=>p.Pihao))
                                 {
                                     drRuKuMX = dtRuKuMX.NewRow();
                                     drRuKuMX["Guige"] = _pr.Guige;
