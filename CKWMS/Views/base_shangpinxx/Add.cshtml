@@ -558,7 +558,7 @@
                                             <label for="name" class="col-sm-2 control-label"><b>注册证</b></label>
                                             <div class="col-sm-9">
                                                 <div class="input-group">
-                                                    <input id="zczbh" placeholder="注册证" class="form-control" type="text">
+                                                    <input id="zczbh" placeholder="请填写注册证" class="form-control" type="text">
                                                     <span class="input-group-btn">
                                                         <button id="selzcz" type="button" class="btn btn-purple btn-sm">
                                                             选择
@@ -572,21 +572,21 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label" for="Mingcheng"><b>商品名称</b></label>
                                             <div class="col-sm-9">
-                                                @Html.TextBoxFor(m => m.Mingcheng, new { @class = "form-control", @placeholder = "商品名称" })
+                                                @Html.TextBoxFor(m => m.Mingcheng, new { @class = "form-control", @placeholder = "请填写商品名称" })
                                             </div>
                                         </div>
                                         @*商品描述*@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label" for="ShangpinMS"><b>商品描述</b></label>
                                             <div class="col-sm-9">
-                                                @Html.TextBoxFor(m => m.ShangpinMS, new { @class = "form-control", @placeholder = "商品描述" })
+                                                @Html.TextBoxFor(m => m.ShangpinMS, new { @class = "form-control", @placeholder = "请填写商品描述" })
                                             </div>
                                         </div>
                                         @*规格*@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label" for="guige"><b>规格</b></label>
                                             <div id="pl_gg" class="col-sm-9">
-                                                <input type="text" name="guige" id="guige" class="form-control" placeholder="规格" />
+                                                <input type="text" name="guige" id="guige" class="form-control" placeholder="请填写规格" />
                                             </div>
                                         </div>
                                         @*供应商*@
@@ -600,28 +600,28 @@
                                         <div class="form-group">
                                             <label for="Qiyemingcheng" class="col-sm-2 control-label"><b>生产企业</b></label>
                                             <div class="col-sm-9">
-                                                @Html.TextBoxFor(m => m.Qiyemingcheng, new { @class = "form-control", @placeholder = "生产企业" })
+                                                @Html.TextBoxFor(m => m.Qiyemingcheng, new { @class = "form-control", @placeholder = "请填写生产企业" })
                                             </div>
                                         </div>
                                         @*产地*@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label" for="Chandi"><b>产地</b></label>
                                             <div class="col-sm-9">
-                                                @Html.TextBoxFor(m => m.Chandi, new { @class = "form-control", @placeholder = "产地" })
+                                                @Html.TextBoxFor(m => m.Chandi, new { @class = "form-control", @placeholder = "请填写产地" })
                                             </div>
                                         </div>
                                         @*型号*@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label" for="Xinghao"><b>型号</b></label>
                                             <div class="col-sm-9">
-                                                @Html.TextBoxFor(m => m.Xinghao, new { @class = "form-control", @placeholder = "型号" })
+                                                @Html.TextBoxFor(m => m.Xinghao, new { @class = "form-control", @placeholder = "请填写型号" })
                                             </div>
                                         </div>
                                         @*商品条码*@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label" for="ShangpinTM"><b>商品条码</b></label>
                                             <div class="col-sm-9">
-                                                @Html.TextBoxFor(m => m.ShangpinTM, new { @class = "form-control", @placeholder = "商品条码" })
+                                                @Html.TextBoxFor(m => m.ShangpinTM, new { @class = "form-control", @placeholder = "请填写商品条码" })
                                             </div>
                                         </div>
                                         @*计量单位*@
@@ -629,7 +629,7 @@
                                             <label class="col-sm-2 control-label" for="Danwei"><b>单位</b></label>
                                             <div class="col-sm-9">
                                                 <div class="input-group">
-                                                    <input id="Danwei" name="Danwei" placeholder="单位" class="form-control" type="text">
+                                                    <input id="Danwei" name="Danwei" placeholder="请选择单位" class="form-control" type="text">
                                                     <span class="input-group-btn">
                                                         <button type="button" id="btn_jldw" class="btn btn-purple btn-sm">
                                                             选择
@@ -644,7 +644,7 @@
                                             <label class="col-sm-2 control-label" for="BaozhuangDW"><b>包装单位</b></label>
                                             <div class="col-sm-9">
                                                 <div class="input-group">
-                                                    <input id="BaozhuangDW" name="BaozhuangDW" placeholder="包装单位" class="form-control" type="text">
+                                                    <input id="BaozhuangDW" name="BaozhuangDW" placeholder="请选择包装单位" class="form-control" type="text">
                                                     <span class="input-group-btn">
                                                         <button type="button" id="btn_jldw1" class="btn btn-purple btn-sm">
                                                             选择
@@ -660,7 +660,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label" for="Huansuanlv"><b>换算率</b></label>
                                             <div class="col-sm-9">
-                                                @Html.TextBoxFor(m => m.Huansuanlv, new { @class = "form-control", @placeholder = "Huansuanlv" })
+                                                @Html.TextBoxFor(m => m.Huansuanlv, new { @class = "form-control", @placeholder = "请填写换算率" })
                                             </div>
                                         </div>
                                         @*长*@
@@ -668,7 +668,7 @@
                                             <label class="col-sm-2 control-label" for="Volchang"><b>长</b></label>
                                             <div class="col-sm-9">
                                                 <div class="input-group">
-                                                    <input id="Volchang" name="Volchang" placeholder="长" class="form-control col-sm-10" type="text">
+                                                    <input id="Volchang" name="Volchang" placeholder="请填写长" class="form-control col-sm-10" type="text">
                                                     <span class="input-group-addon input-group-sm">米(m)</span>
                                                 </div>
                                             </div>
@@ -678,7 +678,7 @@
                                             <label class="col-sm-2 control-label" for="Volkuan"><b>宽</b></label>
                                             <div class="col-sm-9">
                                                 <div class="input-group">
-                                                    <input id="Volkuan" name="Volkuan" placeholder="宽" class="form-control col-sm-10" type="text">
+                                                    <input id="Volkuan" name="Volkuan" placeholder="请填写宽" class="form-control col-sm-10" type="text">
                                                     <span class="input-group-addon input-group-sm">米(m)</span>
                                                 </div>
                                             </div>
@@ -688,7 +688,7 @@
                                             <label class="col-sm-2 control-label" for="Volgao"><b>高</b></label>
                                             <div class="col-sm-9">
                                                 <div class="input-group">
-                                                    <input id="Volgao" name="Volgao" placeholder="高" class="form-control col-sm-10" type="text">
+                                                    <input id="Volgao" name="Volgao" placeholder="请填写高" class="form-control col-sm-10" type="text">
                                                     <span class="input-group-addon input-group-sm">米(m)</span>
                                                 </div>
                                             </div>
@@ -705,7 +705,7 @@
                                             <label class="col-sm-2 control-label" for="Guanlifenlei"><b>分类目录</b></label>
                                             <div class="col-sm-9">
                                                 <div class="input-group">
-                                                    <input id="Mulu" placeholder="分类目录" class="form-control" type="text">
+                                                    <input id="Mulu" placeholder="请选择分类目录" class="form-control" type="text">
                                                     <span class="input-group-btn">
                                                         <button type="button" id="bt_mulu" class="btn btn-purple btn-sm">
                                                             选择
@@ -726,7 +726,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label" for="Baozhuangyaoqiu"><b>包装要求</b></label>
                                             <div class="col-sm-9">
-                                                @Html.TextBoxFor(m => m.Baozhuangyaoqiu, new { @class = "form-control", @placeholder = "包装要求" })
+                                                @Html.TextBoxFor(m => m.Baozhuangyaoqiu, new { @class = "form-control", @placeholder = "请填写包装要求" })
                                             </div>
                                         </div>
                                         @*存储条件*@
@@ -734,7 +734,7 @@
                                             <label class="col-sm-2 control-label" for="Cunchutiaojian"><b>存储条件</b></label>
                                             <div class="col-sm-9">
                                                 <div class="input-group">
-                                                    <input id="Cunchutiaojian" placeholder="存储条件" name="cunchutiaojian" class="form-control" type="text">
+                                                    <input id="Cunchutiaojian" placeholder="请选择存储条件" name="cunchutiaojian" class="form-control" type="text">
                                                     <span class="input-group-btn">
                                                         <button type="button" id="btn_cctj" class="btn btn-purple btn-sm">
                                                             选择
@@ -776,7 +776,7 @@
                                             <label class="col-sm-2 control-label" for="makedate"><b>录入日期</b></label>
                                             <div class="col-sm-9">
                                                 <div class="input-group">
-                                                    <input name="makedate" disabled="disabled" placeholder="InputDate" class="form-control" value="@DateTime.Now.ToString("yyyy/MM/dd")" type="text">
+                                                    <input name="makedate" disabled="disabled" placeholder="请填写录入日期" class="form-control" value="@DateTime.Now.ToString("yyyy/MM/dd")" type="text">
                                                     <span class="input-group-addon">
                                                         <i class="icon-calendar bigger-110"></i>
                                                     </span>
