@@ -510,6 +510,7 @@
     <Content Include="assets\css\font-awesome-ie7.min.css" />
     <Content Include="assets\css\font-awesome.min.css" />
     <Content Include="assets\css\fullcalendar.css" />
+    <Content Include="assets\css\images\bg-all.jpg" />
     <Content Include="assets\css\images\loading.gif" />
     <Content Include="assets\css\jquery-ui-1.10.3.custom.min.css" />
     <Content Include="assets\css\jquery-ui-1.10.3.full.min.css" />

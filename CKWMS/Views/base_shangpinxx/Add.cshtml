@@ -240,7 +240,7 @@
         $("#Daima").attr('required', 'required');
         $("#gongyingid").attr('required', 'required');
         //'审查'绑定值
-        $("#shenchasf").val("false");//默认赋值
+        $("#shenchasf").val("true");//默认赋值
         $("#shenchasf").change(function () {
             if ($("#shenchasf").is(":checked")) {
                 $("#shenchasf").val("true");//选中=true
@@ -248,9 +248,36 @@
                 $("#shenchasf").val("false");//不选中=false
             }
         });
+        //'经营'绑定值
+        $("#JingyinSF").val("true");//默认赋值
+        $("#JingyinSF").change(function () {
+            if ($("#JingyinSF").is(":checked")) {
+                $("#JingyinSF").val("true");//选中=true
+            } else {
+                $("#JingyinSF").val("false");//不选中=false
+            }
+        });
         //保存提交
         var form = $("#spxx_form");
-        $("#btn_save").click(function () {
+        $("#btn_save1").bind("click", function () {
+            var muluxuhao = $("#muluxuhao").val();
+            var mlc_huozhuid = $("#huozhuid").val();
+            if ($("#shenchasf").is(":checked") == true) {//审查=true
+                if (muluxuhao == null || muluxuhao == "") {//分类目录=null
+                    alert("您已经选择审查，分类目录不可为空！");
+                    return false;
+                } else {//分类目录 != null
+                    check_ajax(form, muluxuhao, mlc_huozhuid);
+                }
+            } else {//审查=false
+                if (muluxuhao == null || muluxuhao == "") {//分类目录=空
+                    form.submit();
+                } else {//分类目录 != null
+                    check_ajax(form, muluxuhao, mlc_huozhuid);
+                }
+            }
+        });
+        $("#btn_save").bind("click", function () {
             var muluxuhao = $("#muluxuhao").val();
             var mlc_huozhuid = $("#huozhuid").val();
             if ($("#shenchasf").is(":checked") == true) {//审查=true
@@ -478,365 +505,441 @@
     </ul>
 </div>
 <div class="page-content">
-    @using (Html.BeginForm("Save", "base_shangpinxx", FormMethod.Post, new { @role = "form", id = "spxx_form" }))
-    {
-        @Html.AntiForgeryToken()
-        <input type="hidden" name="id" />
-        <input type="hidden" name="qiyeid" id="qiyeid" />
-        <input type="hidden" name="Muluxuhao" id="muluxuhao" />
-        <input type="hidden" name="zhucezhengbh" id="zhucezhengbh" />
-        <input type="hidden" name="zhucezhengid" id="zhucezhengid" />
-        <input type="hidden" id="Shouying" name="Shouying" value="1" />
-        <input type="hidden" id="hz_allow" />
-        <input type="hidden" id="MakeMan" name="MakeMan" value=@Session["user_id"] />
-        <div class="page-header">
-            <p>
-                <button type="button" id="btn_save" class="btn btn-default"><i class="icon-save"></i>保存</button>
-                <button type="button" class="btn btn-default" onclick="javascript:history.back(-1); "><i class="icon-hand-left"></i>返回</button>
-            </p>
-        </div>
+    <div class="page-header">
+        <p>
+            <button type="button" class="btn btn-app btn-xs btn-primary radius-4" onclick="javascript:history.back(-1); "><i class="icon-reply icon-only"></i>返回</button>
+            <button type="button" id="btn_save" class="btn btn-app btn-xs btn-primary radius-4">
+                <i class="icon-save"></i>保存
+                <span class="badge badge-transparent">
+                    <i class="light-red icon-asterisk"></i>
+                </span>
+            </button>
+        </p>
+    </div>
+    <div class="row" style="background: url('../../assets/css/images/bg-all.jpg') repeat;">
         <div class="container">
-            <div class="form-group">
-                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>货主</label>
-                <div class="col-sm-10">
-                    @Html.SelectList_Auto("huozhuid", "货主", "名称")
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="name" class="col-sm-2"><i class="icon-leaf red"></i>代码</label>
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Daima, new { @class = "form-control" })
-                </div>
-            </div>
-            @*注册证*@
-            <div class="form-group">
-                <label for="name" class="col-sm-2">注册证</label>
-                <div class="col-sm-8">
-                    @*@Html.SelectList_Auto("zhucezhengid", "注册证", "编号")*@
-                    <input type="text" id="zczbh" class="form-control" readonly />
-                </div>
-                <div class="col-sm-2">
-                    <input type="button" id="selzcz" value="选择" class="form-control" />
-                </div>
-            </div>
-            @*商品名称*@
-            <div class="form-group">
-                @Html.LabelFor(m => m.Mingcheng, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @*<select name="mingcheng" id="select_zczmc" style="width:100%;"></select>*@
-                    @Html.TextBoxFor(m => m.Mingcheng, new { @class = "form-control" })
-                </div>
-            </div>
-            @*商品描述*@
-            <div class="form-group">
-                @Html.LabelFor(m => m.ShangpinMS, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.ShangpinMS, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="name" class="col-sm-2">规格</label>
-                <div id="pl_gg" class="col-sm-10">
-                    <input type="text" name="guige" id="guige" class="form-control" />
-                    @*<select name="guige" id="select_gg" style="width:100%;"></select>*@
-                </div>
-            </div>
-            @*供应商*@
-            <div class="form-group">
-                @Html.LabelFor(m => m.GongyingID, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.SelectList_Auto("gongyingid", "供应商", "")
-                </div>
-            </div>
-            @*生产企业*@
-            <div class="form-group">
-                <label for="name" class="col-sm-2">生产企业</label>
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Qiyemingcheng, new { @class = "form-control" })
-                </div>
-            </div>
-            @*产地*@
-            <div class="form-group">
-                <label for="name" class="col-sm-2">产地</label>
-                <div class="col-sm-10">
-                    @*<select name="qiyemingcheng" id="select_qymc" style="width:100%;"></select>*@
-                    @Html.TextBoxFor(m => m.Chandi, new { @class = "form-control" })
-                </div>
-            </div>
-            @*型号*@
-            <div class="form-group">
-                @Html.LabelFor(m => m.Xinghao, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Xinghao, new { @class = "form-control" })
-                </div>
-            </div>
-            @*商品条码*@
-            <div class="form-group">
-                <label for="name" class="col-sm-2">商品条码</label>
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.ShangpinTM, new { @class = "form-control" })
-                </div>
-            </div>
-            @*计量单位*@
-            <div class="form-group">
-                <label for="name" class="col-sm-2">单位</label>
-                <div class="col-sm-8">
-                    @Html.TextBoxFor(m => m.Danwei, new { @class = "form-control" })
-                </div>
-                <div class="col-sm-2">
-                    <input id="btn_jldw" type="button" value="选择单位" class="form-control" />
-                </div>
-            </div>
-            @*包装单位*@
-            <div class="form-group">
-                <label for="name" class="col-sm-2">包装单位</label>
-                <div class="col-sm-8">
-                    @Html.TextBoxFor(m => m.BaozhuangDW, new { @class = "form-control" })
-                </div>
-                <div class="col-sm-2">
-                    <input id="btn_jldw1" type="button" value="选择单位" class="form-control" />
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Huansuanlv, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Huansuanlv, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Volchang, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-8">
-                    @Html.TextBoxFor(m => m.Volchang, new { @class = "form-control" })
-                </div>
-                <div class="col-sm-2">
-                    <label class="form-control">米(M)</label>
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Volkuan, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-8">
-                    @Html.TextBoxFor(m => m.Volkuan, new { @class = "form-control" })
-                </div>
-                <div class="col-sm-2">
-                    <label class="form-control">米(M)</label>
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Volgao, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-8">
-                    @Html.TextBoxFor(m => m.Volgao, new { @class = "form-control" })
-                </div>
-                <div class="col-sm-2">
-                    <label class="form-control">米(M)</label>
-                </div>
-            </div>
-            @*产品线*@
-            <div class="form-group">
-                <label for="name" class="col-sm-2">产品线名称</label>
-                <div class="col-sm-10">
-                    <select name="chanpinxian" id="select_cpx" style="width:100%;"></select>
-                </div>
-            </div>
-            @*分类目录*@
-            <div class="form-group">
-                <label for="name" class="col-sm-2">分类目录</label>
-                <div class="col-sm-8">
-                    @*@Html.TextBoxFor(m => m.Muluxuhao, new { @class = "form-control" })*@
-                    <input type="text" id="Mulu" class="form-control" readonly />
-                </div>
-                <div class="col-sm-2">
-                    <input id="bt_mulu" type="button" value="选择分类目录" class="form-control" />
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Guanlifenlei, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.SelectList_Common("guanlifenlei", "医疗器械管理类别")
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Baozhuangyaoqiu, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Baozhuangyaoqiu, new { @class = "form-control" })
-                </div>
-            </div>
-            @*存储条件*@
-            <div class="form-group">
-                @Html.LabelFor(m => m.Cunchutiaojian, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-8">
-                    @*@Html.TextBoxFor(m => m.Cunchutiaojian, new { @class = "form-control" })*@
-                    <input type="text" id="Cunchutiaojian" name="cunchutiaojian" class="form-control" readonly />
-                </div>
-                <div class="col-sm-2">
-                    <input id="btn_cctj" type="button" value="存储条件" class="form-control" />
-                </div>
-            </div>
-            @*是否审查*@
-            <div class="form-group">
-                @Html.LabelFor(m => m.ShenchaSF, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    <input type="checkbox" id="shenchasf" name="shenchasf" class="form-control"/>
-                    @*@Html.CheckBoxFor(m => m.ShenchaSF, new { @class = "form-control" })*@
-                </div>
-            </div>
-            @*是否经营*@
-            <div class="form-group">
-                @Html.LabelFor(m => m.JingyinSF, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.CheckBoxFor(m => m.JingyinSF, new { @class = "form-control checkBox" })
-                </div>
-            </div>
-            @*首营状态*@
-            <div class="form-group">
-                @Html.LabelFor(m => m.Shouying, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @*@Html.SelectList_Common("shouying", "首营状态")*@
-                    <input type="text" class="form-control" readonly value="@Html.GetCommonValue_ID("首营状态", 1)">
-                </div>
-            </div>
-            @*录入日期*@
-            <div class="form-group">
-                @Html.LabelFor(m => m.MakeDate, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    <input type="text" readonly class="form-control" name="makedate" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.MakeMan, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" readonly value="@Html.GetDataValue_ID("userinfo", "全名", (int)ViewBag.userid)" />
+            <div class="col-sm-12">
+                <div class="widget-box radius-4">
+                    <div class="widget-header">
+                        <h3><b>商品信息</b></h3>
+                    </div>
+                    <div class="widget-body">
+                        <div class="widget-main no-padding">
+                            @using (Html.BeginForm("Save", "base_shangpinxx", FormMethod.Post, new { @role = "form", id = "spxx_form", @class = "form-horizontal" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" />
+                                <input type="hidden" name="qiyeid" id="qiyeid" />
+                                <input type="hidden" name="Muluxuhao" id="muluxuhao" />
+                                <input type="hidden" name="zhucezhengbh" id="zhucezhengbh" />
+                                <input type="hidden" name="zhucezhengid" id="zhucezhengid" />
+                                <input type="hidden" id="Shouying" name="Shouying" value="1" />
+                                <input type="hidden" id="hz_allow" />
+                                <input type="hidden" id="MakeMan" name="MakeMan" value=@Session["user_id"] />
+
+                                <fieldset>
+                                    <div class="col-sm-6">
+                                        @*货主*@
+                                        <div class="form-group">
+                                            <label for="huozhuid" class="control-label col-sm-2"><i class="red glyphicon glyphicon-asterisk"></i> <b>货主</b></label>
+                                            <div class="col-sm-9">
+                                                @Html.SelectList_Auto("huozhuid", "货主", "名称")
+                                            </div>
+                                        </div>
+                                        @*代码*@
+                                        <div class="form-group">
+                                            <label for="Daima" class="col-sm-2 control-label"><i class="red glyphicon glyphicon-asterisk"></i> <b>代码</b></label>
+                                            <div class="col-sm-9">
+                                                @Html.TextBoxFor(m => m.Daima, new { @class = "form-control", @placeholder = "必填，请先选择规格" })
+                                            </div>
+                                        </div>
+                                        @*注册证*@
+                                        <div class="form-group">
+                                            <label for="name" class="col-sm-2 control-label"><b>注册证</b></label>
+                                            <div class="col-sm-9">
+                                                <div class="input-group">
+                                                    <input id="zczbh" placeholder="请填写注册证" class="form-control" type="text">
+                                                    <span class="input-group-btn">
+                                                        <button id="selzcz" type="button" class="btn btn-purple btn-sm">
+                                                            选择
+                                                            <i class="icon-hand-up icon-on-right bigger-110"></i>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*商品名称*@
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="Mingcheng"><b>商品名称</b></label>
+                                            <div class="col-sm-9">
+                                                @Html.TextBoxFor(m => m.Mingcheng, new { @class = "form-control", @placeholder = "请填写商品名称" })
+                                            </div>
+                                        </div>
+                                        @*商品描述*@
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="ShangpinMS"><b>商品描述</b></label>
+                                            <div class="col-sm-9">
+                                                @Html.TextBoxFor(m => m.ShangpinMS, new { @class = "form-control", @placeholder = "请填写商品描述" })
+                                            </div>
+                                        </div>
+                                        @*规格*@
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="guige"><b>规格</b></label>
+                                            <div id="pl_gg" class="col-sm-9">
+                                                <input type="text" name="guige" id="guige" class="form-control" placeholder="请填写规格" />
+                                            </div>
+                                        </div>
+                                        @*供应商*@
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="gongyingid"><b>供应商</b></label>
+                                            <div class="col-sm-9">
+                                                @Html.SelectList_Auto("gongyingid", "供应商", "")
+                                            </div>
+                                        </div>
+                                        @*生产企业*@
+                                        <div class="form-group">
+                                            <label for="Qiyemingcheng" class="col-sm-2 control-label"><b>生产企业</b></label>
+                                            <div class="col-sm-9">
+                                                @Html.TextBoxFor(m => m.Qiyemingcheng, new { @class = "form-control", @placeholder = "请填写生产企业" })
+                                            </div>
+                                        </div>
+                                        @*产地*@
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="Chandi"><b>产地</b></label>
+                                            <div class="col-sm-9">
+                                                @Html.TextBoxFor(m => m.Chandi, new { @class = "form-control", @placeholder = "请填写产地" })
+                                            </div>
+                                        </div>
+                                        @*型号*@
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="Xinghao"><b>型号</b></label>
+                                            <div class="col-sm-9">
+                                                @Html.TextBoxFor(m => m.Xinghao, new { @class = "form-control", @placeholder = "请填写型号" })
+                                            </div>
+                                        </div>
+                                        @*商品条码*@
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="ShangpinTM"><b>商品条码</b></label>
+                                            <div class="col-sm-9">
+                                                @Html.TextBoxFor(m => m.ShangpinTM, new { @class = "form-control", @placeholder = "请填写商品条码" })
+                                            </div>
+                                        </div>
+                                        @*计量单位*@
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="Danwei"><b>单位</b></label>
+                                            <div class="col-sm-9">
+                                                <div class="input-group">
+                                                    <input id="Danwei" name="Danwei" placeholder="请选择单位" class="form-control" type="text">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" id="btn_jldw" class="btn btn-purple btn-sm">
+                                                            选择
+                                                            <i class="icon-hand-up icon-on-right bigger-110"></i>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*包装单位*@
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="BaozhuangDW"><b>包装单位</b></label>
+                                            <div class="col-sm-9">
+                                                <div class="input-group">
+                                                    <input id="BaozhuangDW" name="BaozhuangDW" placeholder="请选择包装单位" class="form-control" type="text">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" id="btn_jldw1" class="btn btn-purple btn-sm">
+                                                            选择
+                                                            <i class="icon-hand-up icon-on-right bigger-110"></i>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        @*换算率*@
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="Huansuanlv"><b>换算率</b></label>
+                                            <div class="col-sm-9">
+                                                @Html.TextBoxFor(m => m.Huansuanlv, new { @class = "form-control", @placeholder = "请填写换算率" })
+                                            </div>
+                                        </div>
+                                        @*长*@
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="Volchang"><b>长</b></label>
+                                            <div class="col-sm-9">
+                                                <div class="input-group">
+                                                    <input id="Volchang" name="Volchang" placeholder="请填写长" class="form-control col-sm-10" type="text">
+                                                    <span class="input-group-addon input-group-sm">米(m)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*宽*@
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="Volkuan"><b>宽</b></label>
+                                            <div class="col-sm-9">
+                                                <div class="input-group">
+                                                    <input id="Volkuan" name="Volkuan" placeholder="请填写宽" class="form-control col-sm-10" type="text">
+                                                    <span class="input-group-addon input-group-sm">米(m)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*高*@
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="Volgao"><b>高</b></label>
+                                            <div class="col-sm-9">
+                                                <div class="input-group">
+                                                    <input id="Volgao" name="Volgao" placeholder="请填写高" class="form-control col-sm-10" type="text">
+                                                    <span class="input-group-addon input-group-sm">米(m)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*产品线*@
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="chanpinxian"><b>产品线</b></label>
+                                            <div class="col-sm-9">
+                                                <select name="chanpinxian" id="select_cpx" style="width:100%;"></select>
+                                            </div>
+                                        </div>
+                                        @*分类目录*@
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="Guanlifenlei"><b>分类目录</b></label>
+                                            <div class="col-sm-9">
+                                                <div class="input-group">
+                                                    <input id="Mulu" placeholder="请选择分类目录" class="form-control" type="text">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" id="bt_mulu" class="btn btn-purple btn-sm">
+                                                            选择
+                                                            <i class="icon-hand-up icon-on-right bigger-110"></i>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*管理分类*@
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="guanlifenlei"><b>管理分类</b></label>
+                                            <div class="col-sm-9">
+                                                @Html.SelectList_Common("guanlifenlei", "医疗器械管理类别")
+                                            </div>
+                                        </div>
+                                        @*包装要求*@
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="Baozhuangyaoqiu"><b>包装要求</b></label>
+                                            <div class="col-sm-9">
+                                                @Html.TextBoxFor(m => m.Baozhuangyaoqiu, new { @class = "form-control", @placeholder = "请填写包装要求" })
+                                            </div>
+                                        </div>
+                                        @*存储条件*@
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="Cunchutiaojian"><b>存储条件</b></label>
+                                            <div class="col-sm-9">
+                                                <div class="input-group">
+                                                    <input id="Cunchutiaojian" placeholder="请选择存储条件" name="cunchutiaojian" class="form-control" type="text">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" id="btn_cctj" class="btn btn-purple btn-sm">
+                                                            选择
+                                                            <i class="icon-hand-up icon-on-right bigger-110"></i>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*是否审查*@
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="shenchasf"><b>是否审查</b></label>
+                                            <div class="col-sm-4">
+                                                <label class="control-group">
+                                                    <input name="shenchasf" id="shenchasf" class="ace ace-switch ace-switch-7" checked="checked" type="checkbox">
+                                                    <span class="lbl"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        @*是否经营*@
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="JingyinSF"><b>是否经营</b></label>
+                                            <div class="col-sm-4">
+                                                <label class="control-group">
+                                                    <input name="JingyinSF" id="JingyinSF" class="ace ace-switch ace-switch-7" checked="checked" type="checkbox">
+                                                    <span class="lbl"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        @*首营状态*@
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="Shouying"><b>首营状态</b></label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" disabled="disabled" type="text" value="@Html.GetCommonValue_ID("首营状态", 1)">
+                                            </div>
+                                        </div>
+                                        @*输入日期*@
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="makedate"><b>录入日期</b></label>
+                                            <div class="col-sm-9">
+                                                <div class="input-group">
+                                                    <input name="makedate" disabled="disabled" placeholder="请填写录入日期" class="form-control" value="@DateTime.Now.ToString("yyyy/MM/dd")" type="text">
+                                                    <span class="input-group-addon">
+                                                        <i class="icon-calendar bigger-110"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*录入人*@
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="MakeMan"><b>录入人</b></label>
+                                            <div class="col-sm-9">
+                                                <div class="input-group">
+                                                    <input placeholder="MakeMan" disabled="disabled" class="form-control" type="text" value="@Html.GetDataValue_ID("userinfo", "全名", (int)ViewBag.userid)">
+                                                    <span class="input-group-addon">
+                                                        <i class="icon-user bigger-110"></i>
+                                                    </span>
+                                                </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <div class="form-actions center">
+                                    <button id="btn_save1" class="btn btn-primary" type="button">
+                                        <b>保存</b>
+                                        <i class="icon-save bigger-110"></i>
+                                    </button>
+                                </div>
+                            }
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    }
-</div>
-<div id="pl_jldw" class="panel panel-primary " style="display:none;position:fixed;top:100px;left:250px;width:400px;height:500px;z-index:99999;">
-    <div class="panel-heading tuodong">
-        <h3 class="panel-title">计量单位<button id="pl_close" class="pull-right">X</button></h3>
+
     </div>
-    <div class="panel-body">
-        <div class="center">
-            <button type="button" class="btn btn-default " id="bt_jldw_add"><i class="icon-add"></i>确定</button>
-            <table class="table" id="jldwdatatable" style="margin-top:10px;">
-                <caption></caption>
-                <thead style="display:block">
-                    <tr>
-                        <td width="50px;"></td>
-                        <td width="30%;">编号</td>
-                        <td width="30%;">名称</td>
-                        <td width="30%;">说明</td>
-                    </tr>
-                </thead>
-                <tbody style="display:block; max-height:380px;overflow:auto;"></tbody>
-            </table>
+
+    </div>
+    <div id="pl_jldw" class="panel panel-primary " style="display:none;position:fixed;top:100px;left:250px;width:400px;height:500px;z-index:99999;">
+        <div class="panel-heading tuodong">
+            <h3 class="panel-title">计量单位<button id="pl_close" class="pull-right">X</button></h3>
         </div>
-    </div>
-</div>
-<div id="pl_Fanwei" class="panel panel-primary " style="display:none;position:fixed;top:100px;left:200px;z-index:999;">
-    <div class="panel-heading tuodong">
-        <h3 class="panel-title">分类目录<button id="plfw_close" class="pull-right">X</button></h3>
-    </div>
-    <div class="panel-body">
-        <div class="center">
-            <button type="button" class="btn btn-default " id="bt_fanwei_add"><i class="icon-add"></i>确定</button>
-            <span class="gllb">
-                <span style="margin-left:10px;">管理类别</span>
-                <select name="cata_guanlifenlei" id="cata_guanlifenlei">
-                    <option value="全部">全部</option>
-                    <option value="一类">一类</option>
-                    <option value="二类">二类</option>
-                    <option value="三类">三类</option>
-                </select>
-            </span>
-            <table class="table" id="qxdatatable" style="margin-top:10px;">
-                <caption></caption>
-                <thead style="display:block">
-                    <tr>
-                        <td style="width:4%"></td>
-                        <td style="width:10%">编号</td>
-                        <td style="width:30%">名称</td>
-                        <td style="width:30%">描述</td>
-                        <td style="width:10%">管理分类</td>
-                    </tr>
-                </thead>
-                <tbody style="display:block; max-height:330px;overflow:auto;"></tbody>
-            </table>
-        </div>
-    </div>
-</div>
-@*存储条件*@
-<div id="pl_Cunchu" class="panel panel-primary" style="display:none;position:fixed;top:100px;left:240px;width:240px;height:auto;z-index:999;">
-    <div class="panel-heading tuodong">
-        <h3 class="panel-title">存储条件<button id="plcc_close" class="pull-right">X</button></h3>
-    </div>
-    <div class="panel-body">
-        <div class="center">
-            <button type="button" class="btn btn-default " id="bt_cunchu_add"><i class="icon-add"></i>确定</button>
-            <table class="table" id="ccdatatable" style="margin-top:10px;">
-                <caption></caption>
-                <thead style="display:block">
-                    <tr>
-                        <td width="40px"></td>
-                        <td width="95px">编号</td>
-                        <td width="100px">名称</td>
-                    </tr>
-                </thead>
-                <tbody style="display:block; max-height:460px;overflow:auto;">
-                    @foreach (var dd in MvcApplication.TranCondition)
-                    {
+        <div class="panel-body">
+            <div class="center">
+                <button type="button" class="btn btn-default " id="bt_jldw_add"><i class="icon-add"></i>确定</button>
+                <table class="table" id="jldwdatatable" style="margin-top:10px;">
+                    <caption></caption>
+                    <thead style="display:block">
                         <tr>
-                            <td>
-                                <label><input type="checkbox" class="checkbox" value="" /></label>
-                            </td>
-                            <td width="90px">@dd.Key</td>
-                            <td width="100px" class="cctj_val">@dd.Value</td>
+                            <td width="50px;"></td>
+                            <td width="30%;">编号</td>
+                            <td width="30%;">名称</td>
+                            <td width="30%;">说明</td>
                         </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-<div id="pl_zcz" class="panel panel-primary" style="display:none;position:fixed;top:100px;left:240px;width:1000px;height:600px;z-index:999;">
-    <div class="panel-heading tuodong">
-        <h3 class="panel-title">注册证<button id="pl_zcz_close" class="pull-right">X</button></h3>
-    </div>
-    <div class="panel-body">
-        <div class="row">
-            <label class="col-sm-1"><i class="icon-leaf red"></i>编号</label>
-            <div class="col-sm-2">
-                <input type="text" id="pl_zcz_bh" size="20" />
-            </div>
-            <div class="col-sm-1">
-                <label><i class="icon-leaf red"></i>名称</label>
-            </div>
-            <div class="col-sm-2">
-                <input type="text" id="pl_zcz_mc" size="20" />
-            </div>
-            <div class="col-sm-1">
-                <label><i class="icon-leaf red"></i>规格</label>
-            </div>
-            <div class="col-sm-2">
-                <input type="text" id="pl_zcz_gg" size="20" />
-            </div>
-            <div class="col-sm-3 center">
-                <button type="button" class="btn btn-default" id="pl_zcz_search"><i class="icon-search"></i>查询</button>
+                    </thead>
+                    <tbody style="display:block; max-height:380px;overflow:auto;"></tbody>
+                </table>
             </div>
         </div>
-        <div style="overflow:auto;height:500px;">
-            <table class="table table-condensed" id="dt_zcz">
-                <caption></caption>
-                <thead style="white-space: nowrap;">
-                    <tr>
-                        <td></td>
-                        <td>编号</td>
-                        <td>名称</td>
-                        <td>失效日期</td>
-                        <td>使用范围</td>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+    </div>
+    <div id="pl_Fanwei" class="panel panel-primary " style="display:none;position:fixed;top:100px;left:200px;z-index:999;">
+        <div class="panel-heading tuodong">
+            <h3 class="panel-title">分类目录<button id="plfw_close" class="pull-right">X</button></h3>
+        </div>
+        <div class="panel-body">
+            <div class="center">
+                <button type="button" class="btn btn-default " id="bt_fanwei_add"><i class="icon-add"></i>确定</button>
+                <span class="gllb">
+                    <span style="margin-left:10px;">管理类别</span>
+                    <select name="cata_guanlifenlei" id="cata_guanlifenlei">
+                        <option value="全部">全部</option>
+                        <option value="一类">一类</option>
+                        <option value="二类">二类</option>
+                        <option value="三类">三类</option>
+                    </select>
+                </span>
+                <table class="table" id="qxdatatable" style="margin-top:10px;">
+                    <caption></caption>
+                    <thead style="display:block">
+                        <tr>
+                            <td style="width:4%"></td>
+                            <td style="width:10%">编号</td>
+                            <td style="width:30%">名称</td>
+                            <td style="width:30%">描述</td>
+                            <td style="width:10%">管理分类</td>
+                        </tr>
+                    </thead>
+                    <tbody style="display:block; max-height:330px;overflow:auto;"></tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
+    @*存储条件*@
+    <div id="pl_Cunchu" class="panel panel-primary" style="display:none;position:fixed;top:100px;left:240px;width:240px;height:auto;z-index:999;">
+        <div class="panel-heading tuodong">
+            <h3 class="panel-title">存储条件<button id="plcc_close" class="pull-right">X</button></h3>
+        </div>
+        <div class="panel-body">
+            <div class="center">
+                <button type="button" class="btn btn-default " id="bt_cunchu_add"><i class="icon-add"></i>确定</button>
+                <table class="table" id="ccdatatable" style="margin-top:10px;">
+                    <caption></caption>
+                    <thead style="display:block">
+                        <tr>
+                            <td width="40px"></td>
+                            <td width="95px">编号</td>
+                            <td width="100px">名称</td>
+                        </tr>
+                    </thead>
+                    <tbody style="display:block; max-height:460px;overflow:auto;">
+                        @foreach (var dd in MvcApplication.TranCondition)
+                        {
+                            <tr>
+                                <td>
+                                    <label><input type="checkbox" class="checkbox" value="" /></label>
+                                </td>
+                                <td width="90px">@dd.Key</td>
+                                <td width="100px" class="cctj_val">@dd.Value</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div id="pl_zcz" class="panel panel-primary" style="display:none;position:fixed;top:100px;left:240px;width:1000px;height:600px;z-index:999;">
+        <div class="panel-heading tuodong">
+            <h3 class="panel-title">注册证<button id="pl_zcz_close" class="pull-right">X</button></h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <label class="col-sm-1"><i class="icon-leaf red"></i>编号</label>
+                <div class="col-sm-2">
+                    <input type="text" id="pl_zcz_bh" size="20" />
+                </div>
+                <div class="col-sm-1">
+                    <label><i class="icon-leaf red"></i>名称</label>
+                </div>
+                <div class="col-sm-2">
+                    <input type="text" id="pl_zcz_mc" size="20" />
+                </div>
+                <div class="col-sm-1">
+                    <label><i class="icon-leaf red"></i>规格</label>
+                </div>
+                <div class="col-sm-2">
+                    <input type="text" id="pl_zcz_gg" size="20" />
+                </div>
+                <div class="col-sm-3 center">
+                    <button type="button" class="btn btn-default" id="pl_zcz_search"><i class="icon-search"></i>查询</button>
+                </div>
+            </div>
+            <div style="overflow:auto;height:500px;">
+                <table class="table table-condensed" id="dt_zcz">
+                    <caption></caption>
+                    <thead style="white-space: nowrap;">
+                        <tr>
+                            <td></td>
+                            <td>编号</td>
+                            <td>名称</td>
+                            <td>失效日期</td>
+                            <td>使用范围</td>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
