@@ -17,15 +17,15 @@
             $(this).addClass("blue");
         });
         $("#bt_Express").click(function () {
-            var sDel = "";
-            $("#mydatatable tbody tr input[type=checkbox]").each(function () {
-                if (this.checked) {
-                    sDel = sDel + ", " + $(this).val()
-                }
-            });
-            if (sDel.length < 2)
-                return;
-            window.open("/wms_chukudan/expressexport?ck=" + sDel, "_blank");
+            //var sDel = "";
+            //$("#mydatatable tbody tr input[type=checkbox]").each(function () {
+            //    if (this.checked) {
+            //        sDel = sDel + ", " + $(this).val()
+            //    }
+            //});
+            //if (sDel.length < 2)
+            //    return;
+            window.open("/wms_chukudan/expressexportnow", "_blank");
         });
         $("#bt_over").click(function () {
             var sDel = "";
@@ -371,18 +371,21 @@
     function getCount() {
         var p = $("#xlm").val();
         var pp = p.split("\n");
-        $("#totalnum").html(pp.length - 1);
+        var pc = pp.length-1;
         for (var k in pp) {
             var ps = pp[k];
             if (ps.length > 0) {
                 for (var j in pp) {
                     if (j > k) {
-                        if (ps == pp[j])
+                        if (ps == pp[j]) {
+                            pc = pc - 1;
                             alert(ps);
+                        }
                     }
                 }
             }
         }
+        $("#totalnum").html(pc);
         //alert((p.split()).length);
     }
     function AddInfo() {

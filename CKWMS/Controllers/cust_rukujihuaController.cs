@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Web.Mvc;
 using System.Linq.Expressions;
@@ -23,6 +23,7 @@ namespace CKWMS.Controllers
                 page = "1";
             int userid = (int)Session["user_id"];
             string pagetag = "cust_rukujihua_index";
+            PageMenu.Set("Index", "cust_rukujihua", "客户服务");
             Expression<Func<cust_rukujihua, bool>> where = PredicateExtensionses.True<cust_rukujihua>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc != null && sc.ConditionInfo != null)
@@ -152,6 +153,7 @@ namespace CKWMS.Controllers
             string makedateequal = Request["makedateequal"] ?? "";
             string makedateand = Request["makedateand"] ?? "";
 
+            PageMenu.Set("Index", "cust_rukujihua", "客户服务");
             Expression<Func<cust_rukujihua, bool>> where = PredicateExtensionses.True<cust_rukujihua>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)

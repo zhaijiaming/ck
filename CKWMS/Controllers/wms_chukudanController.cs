@@ -1129,6 +1129,16 @@ namespace CKWMS.Controllers
             }
             return 0;
         }
+        public ActionResult ExpressExportNow()
+        {
+            int _userid = (int)Session["user_id"];
+            var tempData = ob_wms_chukudanservice.LoadSortEntities(p=>p.JihuaZT<5 && p.IsDelete==false, false,s =>s.ChukudanBH);
+            ViewBag.ExpressOut = tempData;
+            ViewData.Model = tempData;
+            //return View();
+            string viewHtml = ExportNow.RenderPartialViewToString(this, "ExpressExport");
+            return File(System.Text.Encoding.UTF8.GetBytes(viewHtml), "application/ms-excel", string.Format("ExpressFile_{0}.xls", DateTime.Now.ToShortDateString()));
+        }
         public ActionResult ExpressExport()
         {
             int userid = (int)Session["user_id"];
