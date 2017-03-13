@@ -453,6 +453,12 @@ namespace CKWMS.App_Code
                 case "提醒区间":
                     sb.Append(GetCommonSelect(selectedValue, MvcApplication.RemindPeriod));
                     break;
+                case "纸箱规格":
+                    sb.Append(GetCommonSelect(selectedValue, MvcApplication.BoxType));
+                    break;
+                case "包装箱状态":
+                    sb.Append(GetCommonSelect(selectedValue, MvcApplication.BoxState));
+                    break;
                 default:
                     break;
             }
@@ -1476,6 +1482,14 @@ namespace CKWMS.App_Code
                 case "提醒区间":
                     if (MvcApplication.RemindPeriod.ContainsKey(dataValue))
                         returnvalue = MvcApplication.RemindPeriod[dataValue];
+                    break;
+                case "纸箱规格":
+                    if (MvcApplication.BoxType.ContainsKey(dataValue))
+                        returnvalue = MvcApplication.BoxType[dataValue];
+                    break;
+                case "包装箱状态":
+                    if (MvcApplication.BoxState.ContainsKey(dataValue))
+                        returnvalue = MvcApplication.BoxState[dataValue];
                     break;
                 default:
                     break;

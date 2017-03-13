@@ -119,6 +119,15 @@ namespace CKWMS
         /// 提醒对象
         /// </summary>
         public static Dictionary<int, string> RemindObject;
+        /// <summary>
+        /// 纸箱规格
+        /// </summary>
+        public static Dictionary<int, string> BoxType;
+        /// <summary>
+        /// 包装箱状态
+        /// </summary>
+        public static Dictionary<int, string> BoxState;
+
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -352,6 +361,33 @@ namespace CKWMS
             RemindPeriod.Add(150, "近效期150天");
             RemindPeriod.Add(180, "近效期180天");
             RemindPeriod.Add(360, "近效期360天");
+
+            BoxType = new Dictionary<int, string>();
+            BoxType.Add(0, "");
+            BoxType.Add(1, "一号箱");
+            BoxType.Add(2, "二号箱");
+            BoxType.Add(3, "三号箱");
+            BoxType.Add(4, "四号箱");
+            BoxType.Add(5, "五号箱");
+            BoxType.Add(6, "六号箱");
+            BoxType.Add(7, "七号箱");
+            BoxType.Add(8, "八号箱");
+            BoxType.Add(9, "九号箱");
+            BoxType.Add(10, "十号箱");
+            BoxType.Add(11, "十一号箱");
+            BoxType.Add(12, "十二号箱");
+            BoxType.Add(13, "十三号箱");
+            BoxType.Add(14, "十四号箱");
+            BoxType.Add(15, "十五号箱");
+
+            BoxState = new Dictionary<int, string>();
+            BoxState.Add(0, "");
+            BoxState.Add(1, "新建");
+            BoxState.Add(2, "启用");
+            BoxState.Add(3, "装箱");
+            BoxState.Add(4, "封箱");
+            BoxState.Add(5, "出库");
+            BoxState.Add(6, "损坏");
 
             RemindObject = new Dictionary<int, string>();
             RemindObject.Add(0, "");
