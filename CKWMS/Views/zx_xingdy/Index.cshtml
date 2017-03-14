@@ -15,6 +15,22 @@
                 location.href = url_go;
             }
         });
+        //true => '是'，false => '否'
+        var item_sum = $("#mydatatable tr").length-1;//获取总行数
+        for (var i = 0; i < item_sum; i++) {
+            if ($(".ZhanyongSF").eq(i).html() == "True") {
+                $(".ZhanyongSF").eq(i).html("是")
+            }
+            else {
+                $(".ZhanyongSF").eq(i).html("否")
+            }
+            if ($(".ZhouzhuanSF").eq(i).html() == "True") {
+                $(".ZhouzhuanSF").eq(i).html("是")
+            }
+            else {
+                $(".ZhouzhuanSF").eq(i).html("否")
+            }
+        }
     });
     function AddInfo() {
         location.href = "/zx_xingdy/Add";
@@ -83,52 +99,52 @@
     @Html.Search_Condition((int)Session["user_id"], "包装箱_条件组合查询", "/zx_xingdy/index", "zx_xingdy_index", scms)
     <div class="page-header">
         <p>
-            <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
-            <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
-            <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
-            <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
-            <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
+            <button type="button" class="btn btn-primary btn-xs btn-app radius-4 " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
+            <button type="button" class="btn btn-primary btn-xs btn-app radius-4 " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
+            <button type="button" class="btn btn-primary btn-xs btn-app radius-4 " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
+            <button type="button" class="btn btn-primary btn-xs btn-app radius-4 " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
+            <button type="button" class="btn btn-primary btn-xs btn-app radius-4 " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
         </p>
     </div>
     <div class="row">
-        <table class="table" id="mydatatable">
-            <caption></caption>
-            <thead>
-                <tr>
-                    <td></td>
-                    <td>型号</td>
-                    <td>箱型</td>
-                    <td>体积</td>
-                    <td>状态</td>
-                    <td>开始装箱时间</td>
-                    <td>结束装箱时间</td>
-                    <td>是否占用</td>
-                    <td>是否周转</td>
-                    <td>制单日期</td>
-                    <td>制单人</td>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in ViewBag.zx_xingdy)
-                {
+            <table class="table table-striped" id="mydatatable">
+                <caption></caption>
+                <thead>
                     <tr>
-                        <td>
-                            <label><input type="checkbox" value="@item.ID"></label>
-                        </td>
-                        <td>@item.Xianghao</td>
-                        <td>@item.Xiangxing</td>
-                        <td>@item.Tiji</td>
-                        <td>@item.Zhuangtai</td>
-                        <td>@item.KaishiSJ</td>
-                        <td>@item.JieshuoSJ</td>
-                        <td>@item.ZhanyongSF</td>
-                        <td>@item.ZhouzhuanSF</td>
-                        <td>@item.MakeDate</td>
-                        <td>@item.MakeMan</td>
+                        <td></td>
+                        <td>型号</td>
+                        <td>体积</td>
+                        <td>箱型</td>
+                        <td>状态</td>
+                        <td>开始装箱时间</td>
+                        <td>结束装箱时间</td>
+                        <td>是否占用</td>
+                        <td>是否周转</td>
+                        <td>制单日期</td>
+                        <td>制单人</td>
                     </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in ViewBag.zx_xingdy)
+                {
+                        <tr>
+                            <td>
+                                <label><input type="checkbox" value="@item.ID"></label>
+                            </td>
+                            <td>@item.Xianghao</td>
+                            <td>@item.Tiji</td>
+                            <td>@Html.GetCommonValue_ID("纸箱规格", (int)item.Xiangxing)</td>
+                            <td>@Html.GetCommonValue_ID("包装箱状态", (int)item.Zhuangtai)</td>
+                            <td>@string.Format("{0:yyyy/MM/dd}", item.KaishiSJ)</td>
+                            <td>@string.Format("{0:yyyy/MM/dd}", item.JieshuoSJ)</td>
+                            <td><span class="ZhanyongSF">@item.ZhanyongSF</span></td>
+                            <td><span class="ZhouzhuanSF">@item.ZhouzhuanSF</span></td>
+                            <td>@string.Format("{0:yyyy/MM/dd}", item.MakeDate)</td>
+                            <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
+                        </tr>
                 }
-            </tbody>
-        </table>
+                </tbody>
+            </table>
     </div>
     <div class="pager">
         @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))

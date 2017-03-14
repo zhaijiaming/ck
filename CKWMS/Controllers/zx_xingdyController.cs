@@ -165,6 +165,14 @@ namespace CKWMS.Controllers
             string col1 = Request["col1"] ?? "";
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
+            if (zhanyongsf.IndexOf("true") > -1)
+                zhanyongsf = "true";
+            else
+                zhanyongsf = "false";
+            if (zhouzhuansf.IndexOf("true") > -1)
+                zhouzhuansf = "true";
+            else
+                zhouzhuansf = "false";
             try
             {
                 zx_xingdy ob_zx_xingdy = new zx_xingdy();
@@ -232,6 +240,14 @@ namespace CKWMS.Controllers
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
             int uid = int.Parse(id);
+            if (zhanyongsf.IndexOf("true") > -1)
+                zhanyongsf = "true";
+            else
+                zhanyongsf = "false";
+            if (zhouzhuansf.IndexOf("true") > -1)
+                zhouzhuansf = "true";
+            else
+                zhouzhuansf = "false";
             try
             {
                 zx_xingdy p = ob_zx_xingdyservice.GetEntityById(zx_xingdy => zx_xingdy.ID == uid);
@@ -254,7 +270,7 @@ namespace CKWMS.Controllers
                 Console.WriteLine(ex.Message);
                 ViewBag.saveok = ViewAddTag.ModifyNo;
             }
-            return RedirectToAction("Edit", new { id = uid });
+            return RedirectToAction("Index");
         }
         public ActionResult Delete()
         {

@@ -2,11 +2,41 @@
 @using CKWMS.Models
 @model zx_xingdyViewModel
 @{ViewBag.Title = "包装箱添加";}
+<script type="text/javascript">
+    try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    $(document).ready(function () {
+        //Select time
+        $("#KaishiSJ").datepicker();
+        $("#JieshuoSJ").datepicker();
+        //'是否占用'绑定值
+        $("#ZhanyongSF").val("true");//默认赋值
+        $("#ZhanyongSF").change(function () {
+            if ($("#ZhanyongSF").is(":checked")) {
+                $("#ZhanyongSF").val("true");//选中=true
+            } else {
+                $("#ZhanyongSF").val("false");//不选中=false
+            }
+        });
+        //'是否周转'绑定值
+        $("#ZhouzhuanSF").val("true");//默认赋值
+        $("#ZhouzhuanSF").change(function () {
+            if ($("#ZhouzhuanSF").is(":checked")) {
+                $("#ZhouzhuanSF").val("true");//选中=true
+            } else {
+                $("#ZhouzhuanSF").val("false");//不选中=false
+            }
+        });
+        //submit
+        $("#save_top").bind("click", function () {
+            $("#form").submit();
+        });
+        $("#save_buttom").bind("click", function () {
+            $("#form").submit();
+        });
+    });
+</script>
 
 <div class="breadcrumbs" id="breadcrumbs">
-    <script type="text/javascript">
-        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
-    </script>
     <ul class="breadcrumb">
         <li>
             <i class="icon-home home-icon"></i>
@@ -20,83 +50,153 @@
 </div>
 
 <div class="page-content">
-    @using (Html.BeginForm("Save", "zx_xingdy", FormMethod.Post, new { @role = "form" }))
-    {
-        @Html.AntiForgeryToken()
-        <input type="hidden" name="id" />
-        <div class="page-header">
-            <p>
-                <button type="submit" class="btn btn-default"><i class="icon-save"></i>保存</button>
-                <button type="button" class="btn btn-default" onclick="javascript:history.back(-1); "><i class="icon-hand-left"></i>返回</button>
-            </p>
-        </div>
+    <div class="page-header">
+        <p>
+            <button type="button" class="btn btn-app btn-xs btn-primary radius-4" onclick="javascript:history.back(-1); "><i class="icon-reply icon-only"></i>返回</button>
+            <button type="button" id="save_top" class="btn btn-app btn-xs btn-primary radius-4">
+                <i class="icon-save"></i>保存
+                <span class="badge badge-transparent">
+                    <i class="light-red icon-asterisk"></i>
+                </span>
+            </button>
+        </p>
+    </div>
+    <div class="row" style="background: url('/Imgs/bg-cloud.png') repeat;">
         <div class="container">
-            <div class="form-group">
-                @Html.LabelFor(m => m.Xianghao, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Xianghao, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Xiangxing, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Xiangxing, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Tiji, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Tiji, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Zhuangtai, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Zhuangtai, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.KaishiSJ, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    <input id="KaishiSJ" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="KaishiSJ">
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.JieshuoSJ, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    <input id="JieshuoSJ" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="JieshuoSJ">
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.ZhanyongSF, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.ZhanyongSF, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.ZhouzhuanSF, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.ZhouzhuanSF, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Col1, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Col1, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.MakeDate, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    <input id="MakeDate" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="MakeDate">
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.MakeMan, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.SelectList_Auto("MakeMan", "userinfo", "fullname")
+            <div class="col-sm-8 col-sm-offset-2">
+                <div class="widget-box radius-4">
+                    <div class="widget-header">
+                        <h3><b>包装箱信息</b></h3>
+                    </div>
+                    <div class="widget-body">
+                        <div class="widget-main no-padding">
+                            @using (Html.BeginForm("Save", "zx_xingdy", FormMethod.Post, new { @role = "form", @class = "form-horizontal",@id = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" id="MakeMan" name="MakeMan" value=@Session["user_id"] />
+                                <input type="hidden" name="id" />
+                                <fieldset>
+                                    @*型号*@
+                                    <div class="form-group">
+                                        <label for="Xianghao" class="col-sm-2 control-label"><b>型号</b></label>
+                                        <div class="col-sm-9">
+                                            @Html.TextBoxFor(m => m.Xianghao, new { @class = "form-control", @placeholder = "请填写型号" })
+                                        </div>
+                                    </div>                                    
+                                    @*体积*@
+                                    <div class="form-group">
+                                        <label for="Tiji" class="col-sm-2 control-label"><b>体积</b></label>
+                                        <div class="col-sm-9">
+                                            @Html.TextBoxFor(m => m.Tiji, new { @class = "form-control", @placeholder = "请填写体积" })
+                                        </div>
+                                    </div>
+                                    @*箱型*@
+                                    <div class="form-group">
+                                        <label for="Xiangxing" class="col-sm-2 control-label"><b>箱型</b></label>
+                                        <div class="col-sm-9">
+                                            @Html.SelectList_Common("Xiangxing", "纸箱规格")
+                                        </div>
+                                    </div>
+                                    @*状态*@
+                                    <div class="form-group">
+                                        <label for="Zhuangtai" class="col-sm-2 control-label"><b>状态</b></label>
+                                        <div class="col-sm-9">
+                                            @Html.SelectList_Common("Zhuangtai", "包装箱状态")
+                                        </div>
+                                    </div>
+                                    @*开始装箱时间*@
+                                    <div class="form-group">
+                                        <label for="KaishiSJ" class="col-sm-2 control-label"><b>开始装箱时间</b></label>
+                                        <div class="col-sm-9">
+                                            <div class="input-group">
+                                                <input id="KaishiSJ" name="KaishiSJ" placeholder="开始装箱时间" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" type="date" style="z-index:1000;position:relative;">
+                                                <span class="input-group-addon">
+                                                    <i class="icon-calendar bigger-110"></i>
+                                                </span>
+                                            </div>
+                                            @*<input id="KaishiSJ" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="KaishiSJ">*@
+                                        </div>
+                                    </div>
+                                    @*结束装箱时间*@
+                                    <div class="form-group">
+                                        <label for="JieshuoSJ" class="col-sm-2 control-label"><b>结束装箱时间</b></label>
+                                        <div class="col-sm-9">
+                                            <div class="input-group">
+                                                <input id="JieshuoSJ" name="JieshuoSJ" placeholder="请填写结束装箱时间" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" type="date" style="z-index:1000;position:relative;">
+                                                <span class="input-group-addon">
+                                                    <i class="icon-calendar bigger-110"></i>
+                                                </span>
+                                            </div>
+                                            @*<input id="JieshuoSJ" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="JieshuoSJ">*@
+                                        </div>
+                                    </div>
+
+                                    @*是否占用*@
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="ZhanyongSF"><b>是否占用</b></label>
+                                        <div class="col-sm-9">
+
+                                            <label class="control-group">
+                                                <input name="ZhanyongSF" id="ZhanyongSF" class="ace ace-switch ace-switch-7" checked="checked" type="checkbox">
+                                                <span class="lbl"></span>
+                                            </label>
+                                            @*@Html.TextBoxFor(m => m.ZhanyongSF, new { @class = "form-control" })*@
+                                        </div>
+                                    </div>
+                                    @*是否周转*@
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="ZhouzhuanSF"><b>是否周转</b></label>
+                                        <div class="col-sm-9">
+                                            <label class="control-group">
+                                                <input name="ZhouzhuanSF" id="ZhouzhuanSF" class="ace ace-switch ace-switch-7" checked="checked" type="checkbox">
+                                                <span class="lbl"></span>
+                                            </label>
+                                            @*@Html.TextBoxFor(m => m.ZhouzhuanSF, new { @class = "form-control" })*@
+                                        </div>
+                                    </div>
+                                    @*col1*@
+                                    <div class="form-group" style="display:none;">
+                                        @Html.LabelFor(m => m.Col1, new { @class = "control-label col-sm-2" })
+                                        <div class="col-sm-10">
+                                            @Html.TextBoxFor(m => m.Col1, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    @*输入日期*@
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="makedate"><b>录入日期</b></label>
+                                        <div class="col-sm-9">
+                                            <div class="input-group">
+                                                <input name="makedate" disabled="disabled" placeholder="请填写录入日期" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" type="text">
+                                                <span class="input-group-addon">
+                                                    <i class="icon-calendar bigger-110"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*录入人*@
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="MakeMan"><b>录入人</b></label>
+                                        <div class="col-sm-9">
+                                            <div class="input-group">
+                                                <input placeholder="MakeMan" disabled="disabled" class="form-control" type="text" value="@Html.GetDataValue_ID("userinfo", "全名", (int)ViewBag.userid)">
+                                                <span class="input-group-addon">
+                                                    <i class="icon-user bigger-110"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <div class="form-actions center">
+                                    <button id="save_buttom" class="btn btn-primary" type="submit">
+                                        <b>保存</b>
+                                        <i class="icon-save bigger-110"></i>
+                                    </button>
+                                </div>
+                            }
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    }
+    </div>
 </div>
