@@ -17,7 +17,7 @@
         });
     });
     function AddInfo() {
-        location.href = "/zx_xiangnr/Add?ckid="+$("#ckd").val();
+        location.href = "/zx_xiangnr/Add?ckd="+$("#ckd").val();
     }
     function EditInfo() {
         $("#mydatatable tr input[type=checkbox]").each(function () {
@@ -37,35 +37,6 @@
         location.href = url_go;
     }
 </script>
-@{
-    List<SearchConditionModel> scms = new List<SearchConditionModel>();
-    if (_searchcondition == null || _searchcondition == "")
-    {
-        SearchConditionModel scm = new SearchConditionModel();
-        scm.ItemCode = "XiangID";
-        scm.ItemTitle = "箱子序号";
-        scm.ItemType = "System.Int32";
-        scms.Add(scm);
-    }
-    else
-    {
-        string[] scs = _searchcondition.Split(';');
-        if (scs.Length > 0)
-        {
-            SearchConditionModel scm = new SearchConditionModel();
-            scm.ItemCode = "XiangID";
-            scm.ItemTitle = "箱子序号";
-            scm.ItemType = "System.Int32";
-            if (scs.Length > 1)
-            {
-                scm.ItemValue = scs[0].Split(',')[1];
-                scm.ItemOpValue = scs[0].Split(',')[2];
-                scm.ItemJion = scs[0].Split(',')[3];
-            }
-            scms.Add(scm);
-        }
-    }
-}
 
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
@@ -81,12 +52,10 @@
 </div>
 <div class="page-content">
     <input type="hidden" id="ckd" value="@ViewBag.ckd" />
-    @Html.Search_Condition((int)Session["user_id"], "装箱内容_条件组合查询", "/zx_xiangnr/index", "zx_xiangnr_index", scms)
     <div class="page-header">
         <p>
-            <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
             <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
-            <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
+            @*<button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>*@
             <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
         </p>
@@ -123,7 +92,5 @@
             </tbody>
         </table>
     </div>
-    <div class="pager">
-        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
-    </div>
 </div>
+

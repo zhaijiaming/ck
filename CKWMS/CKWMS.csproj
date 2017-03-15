@@ -977,6 +977,7 @@
     <Content Include="Views\zx_xingdy\Add.cshtml" />
     <Content Include="Views\zx_xingdy\Edit.cshtml" />
     <Content Include="Views\zx_xingdy\Index.cshtml" />
+    <Content Include="Views\zx_xiangnr\GetPackageByBill.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

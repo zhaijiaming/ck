@@ -22,6 +22,7 @@ namespace CKWMS.Controllers
             if (string.IsNullOrEmpty(page))
                 page = "1";
             int userid = (int)Session["user_id"];
+
             string pagetag = "zx_xiangnr_index";
             Expression<Func<zx_xiangnr, bool>> where = PredicateExtensionses.True<zx_xiangnr>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
@@ -166,7 +167,13 @@ namespace CKWMS.Controllers
 
         public ActionResult Add()
         {
-            ViewBag.userid = (int)Session["user_id"];
+            int _userid=(int)Session["user_id"];
+            var _ckdid=Request["ckd"] ?? "";
+
+            if (string.IsNullOrEmpty(_ckdid))
+                _ckdid = "0";
+            ViewBag.userid = _userid;
+            ViewBag.ckd = _ckdid;
             return View();
         }
 
@@ -273,6 +280,17 @@ namespace CKWMS.Controllers
                 }
             }
             return RedirectToAction("Index");
+        }
+        public ActionResult GetPackageByBill()
+        {
+            int _userid = (int)Session["user_id"];
+            var _ckdid = Request["out"] ?? "";
+            if (string.IsNullOrEmpty(_ckdid))
+                _ckdid = "0";
+            var tempData = ob_zx_xiangnrservice.GetPackageList(int.Parse(_ckdid)).ToList();
+            ViewBag.zx_xiangnr = tempData;
+            ViewBag.ckd = _ckdid;
+            return View(tempData);
         }
     }
 }

@@ -289,6 +289,14 @@ namespace CKWMS.Controllers
             }
             return RedirectToAction("Index");
         }
+        public JsonResult GetValidBox()
+        {
+            int user_id = (int)Session["user_id"];
+            var _boxes = ob_zx_xingdyservice.LoadEntities(p => p.IsDelete == false && p.ZhanyongSF == false && p.Zhuangtai == 1).ToList();
+            if (_boxes.Count == 0)
+                return Json(-1);
+            return Json(_boxes);
+        }
     }
 }
 

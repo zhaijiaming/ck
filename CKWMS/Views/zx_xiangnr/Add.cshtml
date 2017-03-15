@@ -2,6 +2,127 @@
 @using CKWMS.Models
 @model zx_xiangnrViewModel
 @{ViewBag.Title = "装箱内容添加";}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("tr").bind("dblclick", function () {
+            var u_id = $(this).find('td').eq(0).find('input').val();
+            //if (u_id != null) {
+            //    var url_go = "/zx_xiangnr/Edit/" + u_id;
+            //    location.href = url_go;
+            //}
+        });
+        $("#pl_list").draggable({ handle: ".panel-heading" });
+        $("#pl_box").draggable({ handle: ".panel-heading" });
+        $("#pl_list_close").click(function () {
+            $("#pl_list").hide();
+        });
+        $("#pl_bx_close").click(function () {
+            $("#pl_box").hide();
+        });
+        $("#bt_save").click(function () {
+            if (eval($("#ckdid").val()) > 0 && eval($("#mxid").val()) > 0)
+                $("form").submit();
+            else
+                alert("必须把货品放到箱子以后才能保存！");
+        });
+        $("#dt_box tbody").on("dblclick", "tr", function () {
+            var _bid = $(this).find("input").val();
+            var _bcode = $(this).find("td").eq(1).html();
+            var _btype = $(this).find("td").eq(2).html();
+            $("#xiangid").val(_bid);
+            $("#box_code").val(_bcode);
+            $("#box_type").val(_btype);
+            $("#pl_box").hide();
+        });
+        $("#dt_list tbody").on("dblclick", "tr", function () {
+            var _sid = $(this).find("input").val();
+            var _sname = $(this).find("td").eq(1).html();
+            var _sspec = $(this).find("td").eq(2).html();
+            var _sbatch = $(this).find("td").eq(3).html();
+            var _sserial = $(this).find("td").eq(4).html();
+            var _snum = $(this).find("td").eq(5).html();
+            $("#mxid").val(_sid);
+            $("#sp_code").val(_sspec);
+            $("#sp_batch").val(_sbatch);
+            $("#sp_serial").val(_sserial);
+            $("#Shuliang").val(_snum);
+            $("#pl_list").hide();
+        });
+        $("#bt_selbox").click(function () {
+            var filltable = "";
+            $.ajax({
+                async: true,
+                beforeSend: function () {
+                    ShowWait();
+                },
+                complete: function () {
+                    HiddenWait();
+                },
+                type: "POST",
+                url: "/zx_xingdy/getvalidbox",
+                data: {
+                },
+                success: function (data) {
+                    if (data != -1) {
+                        for (var i in data) {
+                            filltable = filltable + '<tr><td><input type="hidden" value="';
+                            filltable = filltable + data[i].ID;
+                            filltable = filltable + '"/></td><td>';
+                            filltable = filltable + data[i].Xianghao;
+                            filltable = filltable + '</td><td>';
+                            filltable = filltable + data[i].Xiangxing;
+                            filltable = filltable + '</td><td>';
+                            filltable = filltable + data[i].ZhouzhuanSF;
+                            filltable = filltable + '</td></tr>';
+                        }
+                    }
+                    $("#dt_box tbody").html(filltable);
+                }
+            });
+            $("#pl_box").show();
+        });
+        $("#bt_selsp").click(function () {
+            var filltable = "";
+            $.ajax({
+                async: true,
+                beforeSend: function () {
+                    ShowWait();
+                },
+                complete: function () {
+                    HiddenWait();
+                },
+                type: "POST",
+                url: "/wms_chukumx/getcargodetail",
+                data: {
+                    ckd: $("#ckdid").val()
+                },
+                success: function (data) {
+                    if (data != -1) {
+                        for (var i in data) {
+                            filltable = filltable + '<tr><td><input type="hidden" value="';
+                            filltable = filltable + data[i].ID;
+                            filltable = filltable + '"/></td><td>';
+                            filltable = filltable + data[i].ShangpinMC;
+                            filltable = filltable + '</td><td>';
+                            filltable = filltable + data[i].Guige;
+                            filltable = filltable + '</td><td>';
+                            if (data[i].Pihao != null)
+                                filltable = filltable + data[i].Pihao;
+                            filltable = filltable + '</td><td>';
+                            if (data[i].Xuliehao != null)
+                                filltable = filltable + data[i].Xuliehao;
+                            filltable = filltable + '</td><td>';
+                            filltable = filltable + data[i].JianhuoSL;
+                            filltable = filltable + '</td></tr>';
+                        }
+                    }
+                    $("#dt_list tbody").html(filltable);
+                }
+            });
+            $("#pl_list").show();
+        });
+    });
+</script>
 
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
@@ -13,34 +134,60 @@
             <a href="/Home">首页</a>
         </li>
         <li>
-            <a href="/zx_xiangnr">装箱内容</a>
+            <a href="/zx_xiangnr/getpackagebybill?out=@ViewBag.ckd">装箱内容</a>
         </li>
         <li class="active"> 新增</li>
     </ul>
 </div>
-
+<div id="loading"><img src="~/Imgs/wait.gif" alt="" />...系统正在加载数据,请耐心等待...</div>
 <div class="page-content">
     @using (Html.BeginForm("Save", "zx_xiangnr", FormMethod.Post, new { @role = "form" }))
     {
         @Html.AntiForgeryToken()
-        <input type="hidden" name="id" />
+        <input type="hidden" id="ckdid" name="ckid" value="@ViewBag.ckd" />
+        <input type="hidden" id="xiangid" name="xiangid" />
+        <input type="hidden" id="mxid" name="mxid" />
         <div class="page-header">
             <p>
-                <button type="submit" class="btn btn-default"><i class="icon-save"></i>保存</button>
-                <button type="button" class="btn btn-default" onclick="javascript:history.back(-1); "><i class="icon-hand-left"></i>返回</button>
+                <button type="button" class="btn btn-default" id="bt_save"><i class="icon-save"></i>保存</button>
+                <button type="button" class="btn btn-default" id="bt_back" onclick="javascript:history.back(-1); "><i class="icon-hand-left"></i>返回</button>
             </p>
         </div>
         <div class="container">
             <div class="form-group">
-                @Html.LabelFor(m => m.XiangID, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.XiangID, new { @class = "form-control" })
+                <label class="control-label col-sm-2">箱号</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="box_code" />
+                </div>
+                <div class="col-sm-2">
+                    <input type="button" class="form-control btn-default" value="选择箱子" id="bt_selbox" />
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.MXID, new { @class = "control-label col-sm-2" })
+                <label class="control-label col-sm-2">箱型</label>
                 <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.MXID, new { @class = "form-control" })
+                    <input type="text" class="form-control" readonly id="box_type" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">规格</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="sp_code" readonly />
+                </div>
+                <div class="col-sm-2">
+                    <input type="button" class="form-control btn-default" value="货品选择" id="bt_selsp" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">批号</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" readonly id="sp_batch" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">序列号</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" readonly id="sp_serial" />
                 </div>
             </div>
             <div class="form-group">
@@ -56,12 +203,6 @@
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.Col1, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Col1, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
                 @Html.LabelFor(m => m.MakeDate, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     <input id="MakeDate" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="MakeDate">
@@ -70,9 +211,51 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.MakeMan, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
-                    @Html.SelectList_Auto("MakeMan", "userinfo", "fullname")
+                    @Html.SelectList_Auto("MakeMan", "userinfo", "fullname", (int)ViewBag.userid)
                 </div>
             </div>
         </div>
     }
+</div>
+<div id="pl_box" class="panel panel-info" style="display:none;position:fixed;top:100px;left:200px;width:500px;overflow:auto;">
+    <div class="panel-heading">
+        <h3 class="panel-title">包装箱<button id="pl_bx_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <table class="table table-condensed" id="dt_box">
+                <caption></caption>
+                <thead>
+                    <tr>
+                        <td></td>
+                        <td>箱号</td>
+                        <td>箱型</td>
+                        <td>周转箱</td>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div id="pl_list" class="panel panel-info" style="position:fixed;top:100px;left:200px;width:600px;display:none;">
+    <div class="panel-heading">
+        <h3 class="panel-title">出库明细<button id="pl_list_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body" style="width:590px;height:440px;overflow:auto;">
+        <table class="table table-condensed" id="dt_list">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>名称</td>
+                    <td>规格</td>
+                    <td>批号</td>
+                    <td>序列号</td>
+                    <td>拣货数量</td>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 </div>

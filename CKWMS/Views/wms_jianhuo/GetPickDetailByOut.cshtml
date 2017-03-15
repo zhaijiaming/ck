@@ -39,7 +39,7 @@
             $("#pl_picklist").hide();
         });
         $("#pl_picklist").draggable({ handle: ".panel-heading" });
-        $("#pl_fun").draggable();
+        $("#pl_fun").draggable({ handle: ".panel-heading" });
         $("#mydatatable tbody").on("dblclick", "tr", function () {
             $("#pl_fun").show();
         });
