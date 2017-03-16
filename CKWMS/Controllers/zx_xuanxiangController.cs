@@ -279,6 +279,7 @@ namespace CKWMS.Controllers
             _xx = ob_zx_xuanxiangservice.AddEntity(_xx);
             if (_xx == null)
                 return Json(-2);
+            
             return Json(1);
         }
     }
