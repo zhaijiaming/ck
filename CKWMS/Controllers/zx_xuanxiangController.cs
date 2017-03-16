@@ -13,18 +13,17 @@ using CKWMS.Filters;
 
 namespace CKWMS.Controllers
 {
-    public class zx_xiangnrController : Controller
+    public class zx_xuanxiangController : Controller
     {
-        private Izx_xiangnrService ob_zx_xiangnrservice = ServiceFactory.zx_xiangnrservice;
+        private Izx_xuanxiangService ob_zx_xuanxiangservice = ServiceFactory.zx_xuanxiangservice;
         [OutputCache(Duration = 30)]
         public ActionResult Index(string page)
         {
             if (string.IsNullOrEmpty(page))
                 page = "1";
             int userid = (int)Session["user_id"];
-
-            string pagetag = "zx_xiangnr_index";
-            Expression<Func<zx_xiangnr, bool>> where = PredicateExtensionses.True<zx_xiangnr>();
+            string pagetag = "zx_xuanxiang_index";
+            Expression<Func<zx_xuanxiang, bool>> where = PredicateExtensionses.True<zx_xuanxiang>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc != null && sc.ConditionInfo != null)
             {
@@ -43,23 +42,23 @@ namespace CKWMS.Controllers
                                 if (xiangidequal.Equals("="))
                                 {
                                     if (xiangidand.Equals("and"))
-                                        where = where.And(zx_xiangnr => zx_xiangnr.XiangID == int.Parse(xiangid));
+                                        where = where.And(zx_xuanxiang => zx_xuanxiang.XiangID == int.Parse(xiangid));
                                     else
-                                        where = where.Or(zx_xiangnr => zx_xiangnr.XiangID == int.Parse(xiangid));
+                                        where = where.Or(zx_xuanxiang => zx_xuanxiang.XiangID == int.Parse(xiangid));
                                 }
                                 if (xiangidequal.Equals(">"))
                                 {
                                     if (xiangidand.Equals("and"))
-                                        where = where.And(zx_xiangnr => zx_xiangnr.XiangID > int.Parse(xiangid));
+                                        where = where.And(zx_xuanxiang => zx_xuanxiang.XiangID > int.Parse(xiangid));
                                     else
-                                        where = where.Or(zx_xiangnr => zx_xiangnr.XiangID > int.Parse(xiangid));
+                                        where = where.Or(zx_xuanxiang => zx_xuanxiang.XiangID > int.Parse(xiangid));
                                 }
                                 if (xiangidequal.Equals("<"))
                                 {
                                     if (xiangidand.Equals("and"))
-                                        where = where.And(zx_xiangnr => zx_xiangnr.XiangID < int.Parse(xiangid));
+                                        where = where.And(zx_xuanxiang => zx_xuanxiang.XiangID < int.Parse(xiangid));
                                     else
-                                        where = where.Or(zx_xiangnr => zx_xiangnr.XiangID < int.Parse(xiangid));
+                                        where = where.Or(zx_xuanxiang => zx_xuanxiang.XiangID < int.Parse(xiangid));
                                 }
                             }
                             break;
@@ -70,10 +69,10 @@ namespace CKWMS.Controllers
                 ViewBag.SearchCondition = sc.ConditionInfo;
             }
 
-            where = where.And(zx_xiangnr => zx_xiangnr.IsDelete == false);
+            where = where.And(zx_xuanxiang => zx_xuanxiang.IsDelete == false);
 
-            var tempData = ob_zx_xiangnrservice.LoadSortEntities(where.Compile(), false, zx_xiangnr => zx_xiangnr.ID).ToPagedList<zx_xiangnr>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
-            ViewBag.zx_xiangnr = tempData;
+            var tempData = ob_zx_xuanxiangservice.LoadSortEntities(where.Compile(), false, zx_xuanxiang => zx_xuanxiang.ID).ToPagedList<zx_xuanxiang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            ViewBag.zx_xuanxiang = tempData;
             return View(tempData);
         }
 
@@ -82,12 +81,12 @@ namespace CKWMS.Controllers
         public ActionResult Index()
         {
             int userid = (int)Session["user_id"];
-            string pagetag = "zx_xiangnr_index";
+            string pagetag = "zx_xuanxiang_index";
             string page = "1";
             string xiangid = Request["xiangid"] ?? "";
             string xiangidequal = Request["xiangidequal"] ?? "";
             string xiangidand = Request["xiangidand"] ?? "";
-            Expression<Func<zx_xiangnr, bool>> where = PredicateExtensionses.True<zx_xiangnr>();
+            Expression<Func<zx_xuanxiang, bool>> where = PredicateExtensionses.True<zx_xuanxiang>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
             {
@@ -99,23 +98,23 @@ namespace CKWMS.Controllers
                     if (xiangidequal.Equals("="))
                     {
                         if (xiangidand.Equals("and"))
-                            where = where.And(zx_xiangnr => zx_xiangnr.XiangID == int.Parse(xiangid));
+                            where = where.And(zx_xuanxiang => zx_xuanxiang.XiangID == int.Parse(xiangid));
                         else
-                            where = where.Or(zx_xiangnr => zx_xiangnr.XiangID == int.Parse(xiangid));
+                            where = where.Or(zx_xuanxiang => zx_xuanxiang.XiangID == int.Parse(xiangid));
                     }
                     if (xiangidequal.Equals(">"))
                     {
                         if (xiangidand.Equals("and"))
-                            where = where.And(zx_xiangnr => zx_xiangnr.XiangID > int.Parse(xiangid));
+                            where = where.And(zx_xuanxiang => zx_xuanxiang.XiangID > int.Parse(xiangid));
                         else
-                            where = where.Or(zx_xiangnr => zx_xiangnr.XiangID > int.Parse(xiangid));
+                            where = where.Or(zx_xuanxiang => zx_xuanxiang.XiangID > int.Parse(xiangid));
                     }
                     if (xiangidequal.Equals("<"))
                     {
                         if (xiangidand.Equals("and"))
-                            where = where.And(zx_xiangnr => zx_xiangnr.XiangID < int.Parse(xiangid));
+                            where = where.And(zx_xuanxiang => zx_xuanxiang.XiangID < int.Parse(xiangid));
                         else
-                            where = where.Or(zx_xiangnr => zx_xiangnr.XiangID < int.Parse(xiangid));
+                            where = where.Or(zx_xuanxiang => zx_xuanxiang.XiangID < int.Parse(xiangid));
                     }
                 }
                 if (!string.IsNullOrEmpty(xiangid))
@@ -132,23 +131,23 @@ namespace CKWMS.Controllers
                     if (xiangidequal.Equals("="))
                     {
                         if (xiangidand.Equals("and"))
-                            where = where.And(zx_xiangnr => zx_xiangnr.XiangID == int.Parse(xiangid));
+                            where = where.And(zx_xuanxiang => zx_xuanxiang.XiangID == int.Parse(xiangid));
                         else
-                            where = where.Or(zx_xiangnr => zx_xiangnr.XiangID == int.Parse(xiangid));
+                            where = where.Or(zx_xuanxiang => zx_xuanxiang.XiangID == int.Parse(xiangid));
                     }
                     if (xiangidequal.Equals(">"))
                     {
                         if (xiangidand.Equals("and"))
-                            where = where.And(zx_xiangnr => zx_xiangnr.XiangID > int.Parse(xiangid));
+                            where = where.And(zx_xuanxiang => zx_xuanxiang.XiangID > int.Parse(xiangid));
                         else
-                            where = where.Or(zx_xiangnr => zx_xiangnr.XiangID > int.Parse(xiangid));
+                            where = where.Or(zx_xuanxiang => zx_xuanxiang.XiangID > int.Parse(xiangid));
                     }
                     if (xiangidequal.Equals("<"))
                     {
                         if (xiangidand.Equals("and"))
-                            where = where.And(zx_xiangnr => zx_xiangnr.XiangID < int.Parse(xiangid));
+                            where = where.And(zx_xuanxiang => zx_xuanxiang.XiangID < int.Parse(xiangid));
                         else
-                            where = where.Or(zx_xiangnr => zx_xiangnr.XiangID < int.Parse(xiangid));
+                            where = where.Or(zx_xuanxiang => zx_xuanxiang.XiangID < int.Parse(xiangid));
                     }
                 }
                 if (!string.IsNullOrEmpty(xiangid))
@@ -158,22 +157,16 @@ namespace CKWMS.Controllers
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;
-            where = where.And(zx_xiangnr => zx_xiangnr.IsDelete == false);
+            where = where.And(zx_xuanxiang => zx_xuanxiang.IsDelete == false);
 
-            var tempData = ob_zx_xiangnrservice.LoadSortEntities(where.Compile(), false, zx_xiangnr => zx_xiangnr.ID).ToPagedList<zx_xiangnr>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
-            ViewBag.zx_xiangnr = tempData;
+            var tempData = ob_zx_xuanxiangservice.LoadSortEntities(where.Compile(), false, zx_xuanxiang => zx_xuanxiang.ID).ToPagedList<zx_xuanxiang>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            ViewBag.zx_xuanxiang = tempData;
             return View(tempData);
         }
 
         public ActionResult Add()
         {
-            int _userid = (int)Session["user_id"];
-            var _ckdid = Request["ckd"] ?? "";
-
-            if (string.IsNullOrEmpty(_ckdid))
-                _ckdid = "0";
-            ViewBag.userid = _userid;
-            ViewBag.ckd = _ckdid;
+            ViewBag.userid = (int)Session["user_id"];
             return View();
         }
 
@@ -183,56 +176,45 @@ namespace CKWMS.Controllers
         {
             string id = Request["id"] ?? "";
             string xiangid = Request["xiangid"] ?? "";
-            string mxid = Request["mxid"] ?? "";
-            string shuliang = Request["shuliang"] ?? "";
-            string shouming = Request["shouming"] ?? "";
+            string chukuid = Request["chukuid"] ?? "";
             string col1 = Request["col1"] ?? "";
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
-            string ckd = Request["ckid"] ?? "";
             try
             {
-                if (!string.IsNullOrEmpty(ckd))
-                {
-                    zx_xiangnr ob_zx_xiangnr = new zx_xiangnr();
-                    ob_zx_xiangnr.XiangID = xiangid == "" ? 0 : int.Parse(xiangid);
-                    ob_zx_xiangnr.MXID = mxid == "" ? 0 : int.Parse(mxid);
-                    ob_zx_xiangnr.Shuliang = shuliang == "" ? 0 : float.Parse(shuliang);
-                    ob_zx_xiangnr.Shouming = shouming.Trim();
-                    ob_zx_xiangnr.Col1 = col1.Trim();
-                    ob_zx_xiangnr.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
-                    ob_zx_xiangnr.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
-                    ob_zx_xiangnr = ob_zx_xiangnrservice.AddEntity(ob_zx_xiangnr);
-
-                    ViewBag.zx_xiangnr = ob_zx_xiangnr;
-                }
+                zx_xuanxiang ob_zx_xuanxiang = new zx_xuanxiang();
+                ob_zx_xuanxiang.XiangID = xiangid == "" ? 0 : int.Parse(xiangid);
+                ob_zx_xuanxiang.ChukuID = chukuid == "" ? 0 : int.Parse(chukuid);
+                ob_zx_xuanxiang.Col1 = col1.Trim();
+                ob_zx_xuanxiang.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
+                ob_zx_xuanxiang.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
+                ob_zx_xuanxiang = ob_zx_xuanxiangservice.AddEntity(ob_zx_xuanxiang);
+                ViewBag.zx_xuanxiang = ob_zx_xuanxiang;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
-            return RedirectToAction("GetPackageByBill", new { ckid = ckd });
+            return RedirectToAction("Index");
         }
 
         [OutputCache(Duration = 10)]
         public ActionResult Edit(int id)
         {
-            zx_xiangnr tempData = ob_zx_xiangnrservice.GetEntityById(zx_xiangnr => zx_xiangnr.ID == id && zx_xiangnr.IsDelete == false);
-            ViewBag.zx_xiangnr = tempData;
+            zx_xuanxiang tempData = ob_zx_xuanxiangservice.GetEntityById(zx_xuanxiang => zx_xuanxiang.ID == id && zx_xuanxiang.IsDelete == false);
+            ViewBag.zx_xuanxiang = tempData;
             if (tempData == null)
                 return View();
             else
             {
-                zx_xiangnrViewModel zx_xiangnrviewmodel = new zx_xiangnrViewModel();
-                zx_xiangnrviewmodel.ID = tempData.ID;
-                zx_xiangnrviewmodel.XiangID = tempData.XiangID;
-                zx_xiangnrviewmodel.MXID = tempData.MXID;
-                zx_xiangnrviewmodel.Shuliang = tempData.Shuliang;
-                zx_xiangnrviewmodel.Shouming = tempData.Shouming;
-                zx_xiangnrviewmodel.Col1 = tempData.Col1;
-                zx_xiangnrviewmodel.MakeDate = tempData.MakeDate;
-                zx_xiangnrviewmodel.MakeMan = tempData.MakeMan;
-                return View(zx_xiangnrviewmodel);
+                zx_xuanxiangViewModel zx_xuanxiangviewmodel = new zx_xuanxiangViewModel();
+                zx_xuanxiangviewmodel.ID = tempData.ID;
+                zx_xuanxiangviewmodel.XiangID = tempData.XiangID;
+                zx_xuanxiangviewmodel.ChukuID = tempData.ChukuID;
+                zx_xuanxiangviewmodel.Col1 = tempData.Col1;
+                zx_xuanxiangviewmodel.MakeDate = tempData.MakeDate;
+                zx_xuanxiangviewmodel.MakeMan = tempData.MakeMan;
+                return View(zx_xuanxiangviewmodel);
             }
         }
 
@@ -242,24 +224,20 @@ namespace CKWMS.Controllers
         {
             string id = Request["id"] ?? "";
             string xiangid = Request["xiangid"] ?? "";
-            string mxid = Request["mxid"] ?? "";
-            string shuliang = Request["shuliang"] ?? "";
-            string shouming = Request["shouming"] ?? "";
+            string chukuid = Request["chukuid"] ?? "";
             string col1 = Request["col1"] ?? "";
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
             int uid = int.Parse(id);
             try
             {
-                zx_xiangnr p = ob_zx_xiangnrservice.GetEntityById(zx_xiangnr => zx_xiangnr.ID == uid);
+                zx_xuanxiang p = ob_zx_xuanxiangservice.GetEntityById(zx_xuanxiang => zx_xuanxiang.ID == uid);
                 p.XiangID = xiangid == "" ? 0 : int.Parse(xiangid);
-                p.MXID = mxid == "" ? 0 : int.Parse(mxid);
-                p.Shuliang = shuliang == "" ? 0 : float.Parse(shuliang);
-                p.Shouming = shouming.Trim();
+                p.ChukuID = chukuid == "" ? 0 : int.Parse(chukuid);
                 p.Col1 = col1.Trim();
                 p.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 p.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
-                ob_zx_xiangnrservice.UpdateEntity(p);
+                ob_zx_xuanxiangservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;
             }
             catch (Exception ex)
@@ -273,29 +251,35 @@ namespace CKWMS.Controllers
         {
             string sdel = Request["del"] ?? "";
             int id;
-            zx_xiangnr ob_zx_xiangnr;
+            zx_xuanxiang ob_zx_xuanxiang;
             foreach (string sD in sdel.Split(','))
             {
                 if (sD.Length > 0)
                 {
                     id = int.Parse(sD);
-                    ob_zx_xiangnr = ob_zx_xiangnrservice.GetEntityById(zx_xiangnr => zx_xiangnr.ID == id && zx_xiangnr.IsDelete == false);
-                    ob_zx_xiangnr.IsDelete = true;
-                    ob_zx_xiangnrservice.UpdateEntity(ob_zx_xiangnr);
+                    ob_zx_xuanxiang = ob_zx_xuanxiangservice.GetEntityById(zx_xuanxiang => zx_xuanxiang.ID == id && zx_xuanxiang.IsDelete == false);
+                    ob_zx_xuanxiang.IsDelete = true;
+                    ob_zx_xuanxiangservice.UpdateEntity(ob_zx_xuanxiang);
                 }
             }
             return RedirectToAction("Index");
         }
-        public ActionResult GetPackageByBill()
+        public JsonResult AddBox()
         {
             int _userid = (int)Session["user_id"];
-            var _ckdid = Request["ckid"] ?? "";
-            if (string.IsNullOrEmpty(_ckdid))
-                _ckdid = "0";
-            var tempData = ob_zx_xiangnrservice.GetPackageList(int.Parse(_ckdid)).ToList();
-            ViewBag.zx_xiangnr = tempData;
-            ViewBag.ckd = _ckdid;
-            return View(tempData);
+            var _ckid = Request["ckid"] ?? "";
+            var _xid = Request["box"] ?? "";
+
+            if (string.IsNullOrEmpty(_ckid) || string.IsNullOrEmpty(_xid))
+                return Json(-1);
+            zx_xuanxiang _xx = new zx_xuanxiang();
+            _xx.ChukuID = int.Parse(_ckid);
+            _xx.XiangID = int.Parse(_xid);
+            _xx.MakeMan = _userid;
+            _xx = ob_zx_xuanxiangservice.AddEntity(_xx);
+            if (_xx == null)
+                return Json(-2);
+            return Json(1);
         }
     }
 }

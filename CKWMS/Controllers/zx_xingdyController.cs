@@ -291,10 +291,21 @@ namespace CKWMS.Controllers
         }
         public JsonResult GetValidBox()
         {
-            int user_id = (int)Session["user_id"];
+            int _userid = (int)Session["user_id"];
             var _boxes = ob_zx_xingdyservice.LoadEntities(p => p.IsDelete == false && p.ZhanyongSF == false && p.Zhuangtai == 1).ToList();
             if (_boxes.Count == 0)
                 return Json(-1);
+            return Json(_boxes);
+        }
+        public JsonResult GetBox()
+        {
+            int _userid = (int)Session["user_id"];
+            var _ckid = Request["ck"] ?? "";
+            if (string.IsNullOrEmpty(_ckid))
+                return Json(-1);
+            var _boxes = ob_zx_xingdyservice.GetBoxInBill(int.Parse(_ckid)).ToList();
+            if (_boxes.Count == 0)
+                return Json(-2);
             return Json(_boxes);
         }
     }

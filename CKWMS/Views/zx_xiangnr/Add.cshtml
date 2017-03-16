@@ -59,8 +59,9 @@
                     HiddenWait();
                 },
                 type: "POST",
-                url: "/zx_xingdy/getvalidbox",
+                url: "/zx_xingdy/getbox",
                 data: {
+                    ck: $("#ckdid").val()
                 },
                 success: function (data) {
                     if (data != -1) {

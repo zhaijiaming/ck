@@ -10,10 +10,80 @@
     $(document).ready(function () {
         $("tr").bind("dblclick", function () {
             var u_id = $(this).find('td').eq(0).find('input').val();
-            if (u_id != null) {
-                var url_go = "/zx_xiangnr/Edit/" + u_id;
-                location.href = url_go;
-            }
+            //if (u_id != null) {
+            //    var url_go = "/zx_xiangnr/Edit/" + u_id;
+            //    location.href = url_go;
+            //}
+        });
+        $("#pl_box").draggable({ handle: ".panel-heading" });
+        $("#pl_bx_close").click(function () {
+            $("#pl_box").hide();
+        });
+        $("#dt_box tbody").on("dblclick", "tr", function () {
+            var _bid = $(this).find("input").val();
+            //var _bcode = $(this).find("td").eq(1).html();
+            //var _btype = $(this).find("td").eq(2).html();
+            //$("#xiangid").val(_bid);
+            //$("#box_code").val(_bcode);
+            //$("#box_type").val(_btype);
+            $.ajax({
+                async: true,
+                beforeSend: function () {
+                    ShowWait();
+                },
+                complete: function () {
+                    HiddenWait();
+                },
+                type: "POST",
+                url: "/zx_xuanxiang/addbox",
+                data: {
+                    box: _bid,
+                    ckid:$("#ckd").val()
+                },
+                success: function (data) {
+                    if (data == -1) {
+                        alert("参数传送不正确");
+                    }
+                    else if (data == -2)
+                        alert("箱子添加失败！");
+                    else
+                        alert("添加箱子成功！");
+                }
+            });
+            $("#pl_box").hide();
+        });
+        $("#bt_addbox").click(function () {
+            var filltable = "";
+            $.ajax({
+                async: true,
+                beforeSend: function () {
+                    ShowWait();
+                },
+                complete: function () {
+                    HiddenWait();
+                },
+                type: "POST",
+                url: "/zx_xingdy/getvalidbox",
+                data: {
+                },
+                success: function (data) {
+                    if (data != -1) {
+                        for (var i in data) {
+                            filltable = filltable + '<tr><td><input type="hidden" value="';
+                            filltable = filltable + data[i].ID;
+                            filltable = filltable + '"/></td><td>';
+                            filltable = filltable + data[i].Xianghao;
+                            filltable = filltable + '</td><td>';
+                            filltable = filltable + data[i].Xiangxing;
+                            filltable = filltable + '</td><td>';
+                            filltable = filltable + data[i].ZhouzhuanSF;
+                            filltable = filltable + '</td></tr>';
+                        }
+                    }
+                    $("#dt_box tbody").html(filltable);
+                }
+            });
+            $("#pl_box").show();
         });
     });
     function AddInfo() {
@@ -54,8 +124,9 @@
     <input type="hidden" id="ckd" value="@ViewBag.ckd" />
     <div class="page-header">
         <p>
-            <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
-            @*<button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>*@
+            <button type="button" class="btn btn-default " id="bt_addbox"><i class="icon-briefcase"></i>选箱</button>
+            <button type="button" class="btn btn-default " id="bt_package" onclick="AddInfo()"><i class="icon-adn"></i>装箱</button>
+            <button type="button" class="btn btn-default " id="bt_closebox"><i class="icon-folder-close"></i>封箱</button>
             <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
         </p>
@@ -66,12 +137,16 @@
             <thead>
                 <tr>
                     <td></td>
-                    <td>箱子序号</td>
-                    <td>出库明细</td>
+                    <td>箱号</td>
+                    <td>出库单</td>
+                    <td>名称</td>
+                    <td>规格</td>
+                    <td>批号</td>
+                    <td>序列号</td>
                     <td>装箱数量</td>
                     <td>装箱说明</td>
-                    <td>制单日期</td>
-                    <td>制单人</td>
+                    <td>装箱日期</td>
+                    <td>装箱人</td>
                 </tr>
             </thead>
             <tbody>
@@ -81,16 +156,41 @@
                         <td>
                             <label><input type="checkbox" value="@item.ID"></label>
                         </td>
-                        <td>@item.XiangID</td>
-                        <td>@item.MXID</td>
+                        <td>@item.Xianghao</td>
+                        <td>@item.ChukudanBH</td>
+                        <td>@item.ShangpinMC</td>
+                        <td>@item.Guige</td>
+                        <td>@item.Pihao</td>
+                        <td>@item.Xuliema</td>
                         <td>@item.Shuliang</td>
                         <td>@item.Shouming</td>
                         <td>@item.MakeDate</td>
-                        <td>@item.MakeMan</td>
+                        <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
                     </tr>
                 }
             </tbody>
         </table>
+    </div>
+</div>
+<div id="pl_box" class="panel panel-info" style="display:none;position:fixed;top:100px;left:200px;width:500px;overflow:auto;">
+    <div class="panel-heading">
+        <h3 class="panel-title">包装箱<button id="pl_bx_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <table class="table table-condensed" id="dt_box">
+                <caption></caption>
+                <thead>
+                    <tr>
+                        <td></td>
+                        <td>箱号</td>
+                        <td>箱型</td>
+                        <td>周转箱</td>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
     </div>
 </div>
 

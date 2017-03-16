@@ -326,6 +326,7 @@
     <Compile Include="Controllers\wms_yiweiController.cs" />
     <Compile Include="Controllers\zx_xiangnrController.cs" />
     <Compile Include="Controllers\zx_xingdyController.cs" />
+    <Compile Include="Controllers\zx_xuanxiangController.cs" />
     <Compile Include="Models\auth_gongsiViewModel.cs" />
     <Compile Include="Models\base_bumenViewModel.cs" />
     <Compile Include="Models\base_feiyongxmViewModel.cs" />
@@ -365,6 +366,7 @@
     <Compile Include="Models\wms_yiweiViewModel.cs" />
     <Compile Include="Models\zx_xiangnrViewModel.cs" />
     <Compile Include="Models\zx_xingdyViewModel.cs" />
+    <Compile Include="Models\zx_xuanxiangViewModel.cs" />
     <Compile Include="reports\ReportDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -978,6 +980,9 @@
     <Content Include="Views\zx_xingdy\Edit.cshtml" />
     <Content Include="Views\zx_xingdy\Index.cshtml" />
     <Content Include="Views\zx_xiangnr\GetPackageByBill.cshtml" />
+    <Content Include="Views\zx_xuanxiang\Add.cshtml" />
+    <Content Include="Views\zx_xuanxiang\Edit.cshtml" />
+    <Content Include="Views\zx_xuanxiang\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
