@@ -569,7 +569,7 @@ namespace CKWMS.Controllers
 
             ViewBag.linecount_rkmx = tempData.Count;
             ViewBag.totalproduct_rkmx = tempData.Sum(p => p.DaohuoSL);
-            ViewBag.totalbox_rkmx = tempData.Sum(p => p.DaohuoSL/p.Huansuanlv);
+            ViewBag.totalbox_rkmx = tempData.Sum(p => p.DaohuoSL / p.Huansuanlv);
             //已收货
             var _shouhuo = ServiceFactory.wms_shouhuomxservice.LoadSortEntities(p => p.IsDelete == false && p.RukuID == int.Parse(rkdid), false, s => s.MakeDate).ToList<wms_shouhuomx>();
             ViewBag.linecount = _shouhuo.Count;
@@ -1093,6 +1093,53 @@ namespace CKWMS.Controllers
             string viewHtml = ExportNow.RenderPartialViewToString(this, "CommodityOfInExport");
             return File(System.Text.Encoding.UTF8.GetBytes(viewHtml), "application/ms-excel", string.Format("CommodityOfIn_{0}.xls", DateTime.Now.ToShortDateString()));
         }
+        public JsonResult ChangeInfo()
+        {
+            int _userid = (int)Session["user_id"];
+            var _mxid = Request["shmx"] ?? "";
+            var _zcz = Request["zcz"] ?? "";
+            var _ph = Request["ph"] ?? "";
+            var _ph1 = Request["ph1"] ?? "";
+            var _xlm = Request["xlm"] ?? "";
+            var _scrq = Request["scrq"] ?? "";
+            var _sxrq = Request["sxrq"] ?? "";
+
+            if (string.IsNullOrEmpty(_mxid))
+                return Json(-1);
+            if (string.IsNullOrEmpty(_zcz) && string.IsNullOrEmpty(_ph) && string.IsNullOrEmpty(_ph1) && string.IsNullOrEmpty(_xlm) && string.IsNullOrEmpty(_scrq) && string.IsNullOrEmpty(_sxrq))
+                return Json(-1);
+            try
+            {
+                if (!string.IsNullOrEmpty(_scrq))
+                {
+                    DateTime.Parse(_scrq);
+                }
+                if (!string.IsNullOrEmpty(_sxrq))
+                    DateTime.Parse(_sxrq);
+                var _shmx = ob_wms_shouhuomxservice.GetEntityById(p => p.ID == int.Parse(_mxid) && p.IsDelete == false);
+                if (_shmx == null)
+                    return Json(-2);
+                if (!string.IsNullOrEmpty(_zcz))
+                    _shmx.Zhucezheng = _zcz;
+                if (!string.IsNullOrEmpty(_ph))
+                    _shmx.Pihao = _ph;
+                if (!string.IsNullOrEmpty(_ph1))
+                    _shmx.Pihao1 = _ph1;
+                if (!string.IsNullOrEmpty(_xlm))
+                    _shmx.Xuliema = _xlm;
+                if (!string.IsNullOrEmpty(_scrq))
+                    _shmx.ShengchanRQ =DateTime.Parse(_scrq);
+                if (!string.IsNullOrEmpty(_sxrq))
+                    _shmx.ShixiaoRQ = DateTime.Parse(_sxrq);
+                ob_wms_shouhuomxservice.UpdateEntity(_shmx);
+            }
+            catch
+            {
+                return Json(-3);
+            }
+            return Json(1);
+        }
+
     }
 }
 

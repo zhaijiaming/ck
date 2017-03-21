@@ -81,6 +81,72 @@
 
             }
         });
+        $(".icon-edit").click(function () {
+            var _sr =  $(this).parent().parent();
+            var _rk = $(this).parent().parent().find("input");
+            $("#shmx").val(_rk.val());
+            //var _zcz = _sr.find("td").eq(3).html();
+            //var _ph = _sr.find("td").eq(5).html();
+            //var _ph1 = _sr.find("td").eq(6).html();
+            //var _xlm = _sr.find("td").eq(7).html();
+            //var _scrq = _sr.find("td").eq(8).html();
+            //var _sxrq = _sr.find("td").eq(9).html();
+            //$("#Zhucezheng").val(_zcz);
+            //$("#Pihao").val(_ph);
+            //$("#Pihao1").val(_ph1);
+            //$("#Xuliema").val(_xlm);
+            //$("#ShengchanRQ").val(_scrq);
+            //$("#ShixiaoRQ").val(_sxrq);
+            $("#Zhucezheng").val("");
+            $("#Pihao").val("");
+            $("#Pihao1").val("");
+            $("#Xuliema").val("");
+            $("#ShengchanRQ").val("");
+            $("#ShixiaoRQ").val("");
+            $("#pl_RecChange").show();
+        });
+        $("#pl_rc_close").click(function () {
+            $("#pl_RecChange").hide();
+        });
+        $("#shsave").click(function () {
+            var _ok = confirm("确定要修改这些信息吗？");
+            if (_ok == true) {
+                $.ajax({
+                    async: true,
+                    beforeSend: function () {
+                        ShowWait();
+                    },
+                    complete: function () {
+                        HiddenWait();
+                    },
+                    type: "POST",
+                    url: "/wms_shouhuomx/changeinfo",
+                    data: {
+                        shmx: $("#shmx").val(),
+                        zcz: $("#Zhucezheng").val(),
+                        ph: $("#Pihao").val(),
+                        ph1: $("#Pihao1").val(),
+                        xlm: $("#Xuliema").val(),
+                        scrq: $("#ShengchanRQ").val(),
+                        sxrq: $("#ShixiaoRQ").val()
+                    },
+                    success: function (data) {
+                        if (data == -1)
+                            alert("参数传送失败，请重新操作！");
+                        else if (data == -2)
+                            alert("收货记录已经失效，请联系管理员！");
+                        else if(data==-3)
+                            alert("日期格式错误，请按照正确的格式录入！");
+                        else
+                            location.reload();
+                    }
+                });
+
+            }
+        });
+        $("#shcancel").click(function () {
+            $("#pl_RecChange").hide();
+        });
         $(".icon-columns").click(function () {
             var _selrow = $(this).parent().parent();
             var _sdata = _selrow.find("input");
@@ -321,7 +387,7 @@
                         <td>@item.ShangpinMC</td>
                         <td>@item.Zhucezheng</td>
                         <td>@item.Guige</td>
-                        <td>@item.Pihao</td>
+                        <td><i class="icon-edit"></i>@item.Pihao</td>
                         <td>@item.Pihao1</td>
                         <td>@item.Xuliema</td>
                         <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ)</td>
@@ -425,6 +491,54 @@
             <div class="center"><p id="bt_fn_print" class="btn btn-default">打印</p></div>
             <br />
             <div class="center"><p id="pl_fn_cancel" class="btn btn-default">取消</p></div>
+        </div>
+    </div>
+</div>
+<div id="pl_RecChange" class="panel panel-info" style="display:none;position:fixed;top:100px;left:200px;width:700px;z-index:999;">
+    <div class="panel-heading">
+        <h3 class="panel-title">收货信息修正<button id="pl_rc_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Zhucezheng">注册证</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="Zhucezheng" name="Zhucezheng" type="text" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Pihao">批号</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="Pihao" name="Pihao" type="text" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Pihao1">次批号</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="Pihao1" name="Pihao1" type="text" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Xuliema">序列码</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="Xuliema" name="Xuliema" type="text" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="ShengchanRQ">生产日期</label>
+            <div class="col-sm-10">
+                <input id="ShengchanRQ" type="date" class="form-control" value="" name="ShengchanRQ">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="ShixiaoRQ">失效日期</label>
+            <div class="col-sm-10">
+                <input id="ShixiaoRQ" type="date" class="form-control" value="" name="ShixiaoRQ">
+            </div>
+        </div>
+        <div class="form-group"></div>
+        <div class="form-group">
+            <div class="col-sm-6 center"><p id="shsave" class="btn btn-default"><i class="icon-save"></i>保存</p></div>
+            <div class="col-sm-6 center"><p id="shcancel" class="btn btn-default"><i class="icon-backward"></i>取消</p></div>
         </div>
     </div>
 </div>

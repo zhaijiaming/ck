@@ -319,11 +319,21 @@ namespace CKWMS
 
             ExpressCompany = new Dictionary<int, string>();
             ExpressCompany.Add(0, "");
-            ExpressCompany.Add(1, "顺风");
+            ExpressCompany.Add(1, "顺丰");
             ExpressCompany.Add(2, "德邦");
             ExpressCompany.Add(3, "申通");
             ExpressCompany.Add(4, "圆通");
             ExpressCompany.Add(5, "韵达");
+            ExpressCompany.Add(6, "中通");
+            ExpressCompany.Add(7, "天天");
+            ExpressCompany.Add(8, "联邦");
+            ExpressCompany.Add(9, "宅急送");
+            ExpressCompany.Add(10, "邮政");
+            ExpressCompany.Add(11, "TNT");
+            ExpressCompany.Add(12, "菜鸟");
+            ExpressCompany.Add(13, "京东");
+            ExpressCompany.Add(14, "DHL");
+            ExpressCompany.Add(15, "UPS");
 
             TransferType = new Dictionary<int, string>();
             TransferType.Add(0, "");

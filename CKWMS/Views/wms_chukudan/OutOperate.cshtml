@@ -348,6 +348,7 @@
             var _sv = $(this).find("input");
             var _sp = _sv.data("sp");
             var _vs = 0;
+            //客户经营范围检查
             $.ajax({
                 type: "post",
                 url: "/wms_chukumx/ValidateCustCargo",
@@ -356,13 +357,15 @@
                 success: function (data) {
                     _vs = data;
                     if (eval(data) == -1)
-                        return -1;
+                        _vs= -1;
                     else
-                        return 1;
+                        _vs= 1;
                 }
             });
             if (_vs == -1) {
                 _sv.attr("readonly", "true");
+                _sv.val("0");
+                alert("该收货单位无此商品的经营权！");
             } else {
                 _sv.val(eval(_ch) - eval(_sd));
             }
@@ -462,7 +465,7 @@
                 HiddenWait();
             },
             type: "POST",
-            url: "/wms_cunhuo/getcuststoregood",
+            url: "/wms_cunhuo/getcuststoregood1",
             data: {
                 cust: _cust,
                 mc: $("#mc").val(),

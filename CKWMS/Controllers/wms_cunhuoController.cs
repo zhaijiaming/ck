@@ -1286,6 +1286,30 @@ namespace CKWMS.Controllers
 
             return Json(tempData.ToList<wms_invgoods_v>());
         }
+        public JsonResult GetCustStoreGood1()
+        {
+            int _userid = (int)Session["user_id"];
+            var _custid = Request["cust"] ?? "";
+            var _mc = Request["mc"] ?? "";
+            var _gg = Request["gg"] ?? "";
+            var _ph = Request["ph"] ?? "";
+            if (_custid.Length == 0)
+                return Json(-1);
+            Expression<Func<wms_invgoods_v, bool>> where = PredicateExtensionses.True<wms_invgoods_v>();
+            if (!string.IsNullOrEmpty(_mc))
+                where = where.And(p => p.ShangpinMC.Contains(_mc));
+            if (!string.IsNullOrEmpty(_gg))
+                where = where.And(p => p.Guige.Contains(_gg));
+            if (!string.IsNullOrEmpty(_ph))
+                where = where.And(p => p.Pihao.Contains(_ph));
+            where = where.And(p => p.chsl > 0 && p.ShixiaoRQ>DateTime.Now.AddDays(-1).Date);
+            //var tempData = ob_wms_cunhuoservice.GetInventoryGoodsByCust(int.Parse(_custid),p=>p.chsl>0);
+            var tempData = ob_wms_cunhuoservice.GetInventoryGoodsByCust(int.Parse(_custid), where.Compile());
+            if (tempData == null)
+                return Json(-1);
+
+            return Json(tempData.ToList<wms_invgoods_v>());
+        }
         public JsonResult GetCustStoreGood2()
         {
             int _userid = (int)Session["user_id"];

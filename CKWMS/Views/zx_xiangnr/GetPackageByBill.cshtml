@@ -15,9 +15,41 @@
             //    location.href = url_go;
             //}
         });
+        if (Number($("#ckstate").val()) > 4)
+            $("#opmenu").hide();
         $("#pl_box").draggable({ handle: ".panel-heading" });
         $("#pl_bx_close").click(function () {
             $("#pl_box").hide();
+        });
+        $("#bt_closebox").click(function () {
+            var _ckd = $("#ckd").val();
+            if (_ckd == "")
+                return;
+            $.ajax({
+                async: true,
+                beforeSend: function () {
+                    ShowWait();
+                },
+                complete: function () {
+                    HiddenWait();
+                },
+                type: "POST",
+                url: "/zx_xiangnr/packagefinish",
+                data: {
+                    ckd: _ckd
+                },
+                success: function (data) {
+                    if (data == -1) {
+                        alert("参数传送不正确");
+                    }
+                    else if (data == -2)
+                        alert("无此出库单！");
+                    else if (data == -3)
+                        alert("当前出库状态不正确！");
+                    else
+                        alert("装箱完成！");
+                }
+            });
         });
         $("#dt_box tbody").on("dblclick", "tr", function () {
             var _bid = $(this).find("input").val();
@@ -38,7 +70,7 @@
                 url: "/zx_xuanxiang/addbox",
                 data: {
                     box: _bid,
-                    ckid:$("#ckd").val()
+                    ckid: $("#ckd").val()
                 },
                 success: function (data) {
                     if (data == -1) {
@@ -89,7 +121,7 @@
         });
     });
     function AddInfo() {
-        location.href = "/zx_xiangnr/Add?ckd="+$("#ckd").val();
+        location.href = "/zx_xiangnr/Add?ckd=" + $("#ckd").val();
     }
     function EditInfo() {
         $("#mydatatable tr input[type=checkbox]").each(function () {
@@ -99,6 +131,11 @@
     }
     function DelInfo() {
         var sDel = "";
+        if (Number($("#ckstate").val()) > 3)
+        {
+            alert("已经封箱了，不能删除装箱内容！");
+            return;
+        }
         $("#mydatatable tr input[type=checkbox]").each(function () {
             if (this.checked)
                 sDel = sDel + ", " + $(this).val()
@@ -124,11 +161,12 @@
 </div>
 <div class="page-content">
     <input type="hidden" id="ckd" value="@ViewBag.ckd" />
+    <input type="hidden" id="ckstate" value="@ViewBag.ckstate" />
     <div class="page-header">
-        <p>
+        <p id="opmenu">
             <button type="button" class="btn btn-default " id="bt_addbox"><i class="icon-briefcase"></i>选箱</button>
             <button type="button" class="btn btn-default " id="bt_package" onclick="AddInfo()"><i class="icon-adn"></i>装箱</button>
-            <button type="button" class="btn btn-default " id="bt_closebox"><i class="icon-folder-close"></i>封箱</button>
+            <button type="button" class="btn btn-default " id="bt_closebox"><i class="icon-folder-close"></i>完成</button>
             <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
         </p>

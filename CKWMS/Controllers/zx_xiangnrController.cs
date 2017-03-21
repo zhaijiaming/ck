@@ -292,10 +292,30 @@ namespace CKWMS.Controllers
             var _ckdid = Request["ckid"] ?? "";
             if (string.IsNullOrEmpty(_ckdid))
                 _ckdid = "0";
-            var tempData = ob_zx_xiangnrservice.GetPackageList(int.Parse(_ckdid)).ToList();
-            ViewBag.zx_xiangnr = tempData;
-            ViewBag.ckd = _ckdid;
-            return View(tempData);
+            var _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_ckdid) && p.IsDelete == false);
+            if (_ckd != null)
+            {
+                var tempData = ob_zx_xiangnrservice.GetPackageList(int.Parse(_ckdid)).ToList();
+                ViewBag.zx_xiangnr = tempData;
+                ViewBag.ckd = _ckdid;
+                ViewBag.ckstate = _ckd.JihuaZT;
+            }
+            return View();
+        }
+        public JsonResult PackageFinish()
+        {
+            int _userid = (int)Session["user_id"];
+            var _ckdid = Request["ckd"] ?? "";
+            if (string.IsNullOrEmpty(_ckdid))
+                return Json(-1);
+            var _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_ckdid) && p.IsDelete == false);
+            if (_ckd == null)
+                return Json(-2);
+            if (_ckd.JihuaZT > 4)
+                return Json(-3);
+            if (!ob_zx_xiangnrservice.PackageFinish(_ckd.ID))
+                return Json(-2);
+            return Json(1);
         }
     }
 }

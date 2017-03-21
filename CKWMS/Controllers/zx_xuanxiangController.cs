@@ -275,7 +275,7 @@ namespace CKWMS.Controllers
             zx_xuanxiang _xx = new zx_xuanxiang();
             _xx.ChukuID = int.Parse(_ckid);
             _xx.XiangID = int.Parse(_xid);
-            _xx.MakeMan = _userid;
+            _xx.MakeMan = _userid;            
             _xx = ob_zx_xuanxiangservice.AddEntity(_xx);
             if (_xx == null)
                 return Json(-2);
