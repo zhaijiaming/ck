@@ -78,9 +78,9 @@
                                 <fieldset>
                                     @*型号*@
                                     <div class="form-group">
-                                        <label for="Xianghao" class="col-sm-2 control-label"><b>型号</b></label>
+                                        <label for="Xianghao" class="col-sm-2 control-label"><b>箱号</b></label>
                                         <div class="col-sm-9">
-                                            @Html.TextBoxFor(m => m.Xianghao, new { @class = "form-control", @placeholder = "请填写型号" })
+                                            @Html.TextBoxFor(m => m.Xianghao, new { @class = "form-control readonly", @placeholder = "请填写型号" })
                                         </div>
                                     </div>                                    
                                     @*体积*@
