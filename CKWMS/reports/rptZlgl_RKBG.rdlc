@@ -400,7 +400,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>到货日期</Value>
+                              <Value>验收日期</Value>
                               <Style>
                                 <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -2730,7 +2730,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>到货日期：</Value>
+                  <Value>入库日期：</Value>
                   <Style>
                     <FontFamily>微软雅黑</FontFamily>
                     <FontSize>8pt</FontSize>

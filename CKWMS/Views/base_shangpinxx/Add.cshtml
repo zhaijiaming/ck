@@ -654,6 +654,21 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        @*分类目录*@
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="Guanlifenlei"><b>分类目录</b></label>
+                                            <div class="col-sm-9">
+                                                <div class="input-group">
+                                                    <input id="Mulu" placeholder="请选择分类目录" class="form-control" type="text">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" id="bt_mulu" class="btn btn-primary btn-sm">
+                                                            选择
+                                                            <i class="icon-hand-up icon-on-right bigger-110"></i>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="col-sm-6">
                                         @*换算率*@
@@ -700,21 +715,6 @@
                                                 <select name="chanpinxian" id="select_cpx" style="width:100%;"></select>
                                             </div>
                                         </div>
-                                        @*分类目录*@
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label" for="Guanlifenlei"><b>分类目录</b></label>
-                                            <div class="col-sm-9">
-                                                <div class="input-group">
-                                                    <input id="Mulu" placeholder="请选择分类目录" class="form-control" type="text">
-                                                    <span class="input-group-btn">
-                                                        <button type="button" id="bt_mulu" class="btn btn-primary btn-sm">
-                                                            选择
-                                                            <i class="icon-hand-up icon-on-right bigger-110"></i>
-                                                        </button>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
                                         @*管理分类*@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label" for="guanlifenlei"><b>管理分类</b></label>
@@ -742,6 +742,22 @@
                                                         </button>
                                                     </span>
                                                 </div>
+                                            </div>
+                                        </div>
+                                        @*温度上限*@
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="Huansuanlv"><b>温度上限</b></label>
+                                            <div class="col-sm-9">
+                                                @*@Html.TextBoxFor(m => m.WenduSX, new { @class = "form-control", @placeholder = "请填写温度上限" })*@
+                                                <input id="WenduSX" placeholder="请填写温度上限" name="WenduSX" class="form-control" type="text">
+                                            </div>
+                                        </div>
+                                        @*温度下限*@
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label" for="Huansuanlv"><b>温度下限</b></label>
+                                            <div class="col-sm-9">
+                                                @*@Html.TextBoxFor(m => m.WenduXX, new { @class = "form-control", @placeholder = "请填写温度下限" })*@
+                                                <input id="WenduXX" placeholder="请填写温度下限" name="WenduXX" class="form-control" type="text">
                                             </div>
                                         </div>
                                         @*是否审查*@

@@ -529,9 +529,9 @@ namespace CKWMS.reports
                                         {
                                             drzlysbg["GYSMingcheng"] = gys.Mingcheng;
                                         }
-                                        drzlysbg["ystime"] = string.Format("{0:yyyy/MM/dd}", rkd.RukuRQ == null ? "" : ((DateTime)rkd.RukuRQ).ToString("yyyy/MM/dd"));
                                         drzlysbg["ChunyunYQ"] = rkd.ChunyunYQ;
                                     }
+                                    drzlysbg["ystime"] = string.Format("{0:yyyy/MM/dd}", _pr.ystime == null ? "" : ((DateTime)_pr.ystime).ToString("yyyy/MM/dd"));
                                     drzlysbg["Changjia"] = _pr.Changjia;
                                     drzlysbg["ShangpinMC"] = _pr.ShangpinMC;
                                     drzlysbg["Guige"] = _pr.Guige;
@@ -586,14 +586,16 @@ namespace CKWMS.reports
                                     base_weituokehu wtkh_others = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == rkd_others.HuozhuID);
                                     drrkfhjy["HuozhuID"] = wtkh_others.Kehumingcheng;
                                 }
-                                var _ysbgs = ServiceFactory.quan_rukuysservice.GetEntrycheckByRK(int.Parse(_rkysid)).ToList<quan_entrycheck_v>();
-                                foreach (var _date in _ysbgs)
-                                {
-                                    var ystime = _date.ystime;
-                                    if (ystime != null)
-                                        drrkfhjy["MakeDate"] = string.Format("{0:yyyy/MM/dd}", ystime == null ? "" : ((DateTime)ystime).ToString("yyyy/MM/dd"));
-                                    break;
-                                }
+                                drrkfhjy["MakeDate"] = string.Format("{0:yyyy/MM/dd}", rkd_others.RukuRQ == null ? "" : ((DateTime)rkd_others.RukuRQ).ToString("yyyy/MM/dd")); 
+                                //var _ysbgs = ServiceFactory.quan_rukuysservice.GetEntrycheckByRK(int.Parse(_rkysid)).ToList<quan_entrycheck_v>();
+                                //foreach (var _date in _ysbgs)
+                                //{
+                                //    var ystime = _date.ystime;
+                                //    if (ystime != null)
+                                //        drrkfhjy["MakeDate"] = string.Format("{0:yyyy/MM/dd}", ystime == null ? "" : ((DateTime)ystime).ToString("yyyy/MM/dd"));
+                                //    break;
+                                //}
+
                                 userinfo man = ServiceFactory.userinfoservice.GetEntityById(p => p.ID == (int)Session["user_id"] && p.IsDelete == false);
                                 if (man != null)
                                 {

@@ -400,7 +400,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>到货日期</Value>
+                              <Value>验收日期</Value>
                               <Style>
                                 <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -2730,7 +2730,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>验收日期：</Value>
+                  <Value>入库日期：</Value>
                   <Style>
                     <FontFamily>微软雅黑</FontFamily>
                     <FontSize>8pt</FontSize>
@@ -2838,42 +2838,7 @@
                   </Style>
                 </TextRun>
                 <TextRun>
-                  <Value>页</Value>
-                  <Style>
-                    <FontFamily>微软雅黑</FontFamily>
-                    <FontSize>8pt</FontSize>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style>
-                <TextAlign>Center</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>PageNumber</rd:DefaultName>
-          <Top>1.41083cm</Top>
-          <Left>11.89706cm</Left>
-          <Height>0.52062cm</Height>
-          <Width>1.41021cm</Width>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <VerticalAlign>Middle</VerticalAlign>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="OverallTotalPages">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>共</Value>
+                  <Value>页  共</Value>
                   <Style>
                     <FontFamily>微软雅黑</FontFamily>
                     <FontSize>8pt</FontSize>
@@ -2899,12 +2864,11 @@
               </Style>
             </Paragraph>
           </Paragraphs>
-          <rd:DefaultName>OverallTotalPages</rd:DefaultName>
+          <rd:DefaultName>PageNumber</rd:DefaultName>
           <Top>1.41083cm</Top>
-          <Left>13.37782cm</Left>
+          <Left>9.66821cm</Left>
           <Height>0.52062cm</Height>
-          <Width>1.41021cm</Width>
-          <ZIndex>1</ZIndex>
+          <Width>7.84981cm</Width>
           <Style>
             <Border>
               <Style>None</Style>

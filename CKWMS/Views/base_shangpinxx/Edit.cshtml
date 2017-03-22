@@ -626,6 +626,20 @@
                     <input id="btn_cctj" type="button" value="存储条件" class="form-control" />
                 </div>
             </div>
+            @*温度上限*@
+            <div class="form-group">
+                @Html.LabelFor(m => m.WenduSX, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.WenduSX, new { @class = "form-control" })
+                </div>
+            </div>
+            @*温度下限*@
+            <div class="form-group">
+                @Html.LabelFor(m => m.WenduXX, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.WenduXX, new { @class = "form-control" })
+                </div>
+            </div>
             @*是否审查*@
             <div class="form-group">
                 @Html.LabelFor(m => m.ShenchaSF, new { @class = "control-label col-sm-2" })

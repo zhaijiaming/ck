@@ -15,27 +15,27 @@
         //质量管理-入库验收单打印
         $("#bt_print").click(function () {
             $("#pl_fun").show();
-            $("#zlgl_rkysid").val("");
+            $("#zlgl_rkbh").val("");
         });
         $("#Yes_print").click(function () {
-            var zlgl_rkysid = $("#zlgl_rkysid").val().trim();//获取入库单编号，去掉空格。
-            if (zlgl_rkysid.length > 0) {
-                $.post(
-                "/quan_rukuys/Check_rkysid",
-                {
-                    zlgl_rkysid: zlgl_rkysid
-                },
-                function (data) {
-                    if (data == 1) {
-                        window.open("/quan_rukuys/PrintRukuYS?zlgl_rkysid=" + zlgl_rkysid);
+            var zlgl_rkbh = $("#zlgl_rkbh").val().trim();//获取入库编号，去掉空格。
+            if (zlgl_rkbh == "" || zlgl_rkbh == null) {
+                alert("入库编号不能为空！");
+            } else {
+                //遍历该'入库编号'是否存在
+                $("#mydatatable tbody tr").each(function (i) {
+                    var table_rukuBH = $(this).find(".table_rukuBH").text();
+                    var table_length = $("#mydatatable tbody tr").length;
+                    if (table_rukuBH == zlgl_rkbh) {
+                        var rukuID = $(this).find(".RukuID").val();
+                        window.open("/quan_rukuys/PrintYanShouBaoGao?rkysid=" + rukuID);
                         $("#pl_fun").hide();
-                    } else {
-                        alert("请输入正确的入库单编号。");
-                        $("#zlgl_rkysid").val("");
+                        return false;
+                    }
+                    if (i == table_length - 1 && table_rukuBH != zlgl_rkbh) {
+                        alert("该入库单编号不存在，请检查！");
                     }
                 });
-            } else {
-                alert("请输入入库编号!");
             }
         });
         $("#pl_fn_close").click(function () {
@@ -128,29 +128,32 @@
                     {
                         <tr>
                             <td>
-                                <label><input type="checkbox" class="rkysid" value="@item.ID"></label>
+                                <label>
+                                    <input type="checkbox" class="rkysid" value="@item.ID">
+                                    <input type="hidden" class="RukuID" value="@item.RukuID">
+                                </label>
                             </td>
-                            <td>@item.RukudanBH</td>
+                            <td class="table_rukuBH">@item.RukudanBH</td>
                             <td>@string.Format("{0:yyyy-MM-dd}", item.RukuRQ)</td>
-                        <td>@Html.GetDataValue_ID("货主", "名称", (int)item.HuozhuID)</td>
-                        <td>@Html.GetDataValue_ID("供应商", "", (int)item.GongyingshangID)</td>
-                        <td>@item.ShangpinMC</td>
-                        <td>@item.Zhucezheng</td>
-                        <td>@item.Guige</td>
-                        <td>@item.Pihao</td>
-                        <td>@item.Pihao1</td>
-                        <td>@item.Xuliema</td>
-                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ)</td>
-                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ)</td>
-                        <td>@item.Shuliang</td>
-                        <td>@item.Changjia</td>
-                        <td>@item.Chandi</td>
-                        <td>@item.YanshouSL</td>
-                        <td>@Html.GetCommonValue_ID("验收结果", (int)(item.ysresult == null ? 0 : item.ysresult))</td>
-                        <td>@item.Yanshouren</td>
-                        <td>@item.YanshouSM</td>
-                        <td>@item.ystime</td>
-                    </tr>
+                            <td>@Html.GetDataValue_ID("货主", "名称", (int)item.HuozhuID)</td>
+                            <td>@Html.GetDataValue_ID("供应商", "", (int)item.GongyingshangID)</td>
+                            <td>@item.ShangpinMC</td>
+                            <td>@item.Zhucezheng</td>
+                            <td>@item.Guige</td>
+                            <td>@item.Pihao</td>
+                            <td>@item.Pihao1</td>
+                            <td>@item.Xuliema</td>
+                            <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ)</td>
+                            <td>@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ)</td>
+                            <td>@item.Shuliang</td>
+                            <td>@item.Changjia</td>
+                            <td>@item.Chandi</td>
+                            <td>@item.YanshouSL</td>
+                            <td>@Html.GetCommonValue_ID("验收结果", (int)(item.ysresult == null ? 0 : item.ysresult))</td>
+                            <td>@item.Yanshouren</td>
+                            <td>@item.YanshouSM</td>
+                            <td>@item.ystime</td>
+                        </tr>
                     }
                 </tbody>
             </table>
@@ -162,16 +165,16 @@
 </div>
 <div id="pl_fun" class="panel panel-primary" style="display:none;position:fixed;top:200px;left:300px;overflow:auto;">
     <div class="panel-heading tuodong">
-        <h3 class="panel-title">打印查询<button id="pl_fn_close" class="pull-right">X</button></h3>
+        <h3 class="panel-title">入库质量验收报告单<button id="pl_fn_close" class="pull-right">X</button></h3>
     </div>
     <div class="panel-body">
         <div class="row">
             <div class="form-group">
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="zlgl_rkysid" placeholder="输入入库编号"/>
+                    <input type="text" class="form-control" id="zlgl_rkbh" placeholder="输入入库编号" />
                 </div>
                 <div class="col-sm-4">
-                    <input type="button" class="form-control btn btn-default" id="Yes_print" value="打印"/>
+                    <input type="button" class="form-control btn btn-default" id="Yes_print" value="打印" />
                 </div>
             </div>
         </div>

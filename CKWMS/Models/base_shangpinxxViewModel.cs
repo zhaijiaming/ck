@@ -87,6 +87,10 @@ namespace CKWMS.Models
         public string Chandi { get; set; }
         [Display(Name = "商品描述")]
         public string ShangpinMS { get; set; }
+        [Display(Name = "温度上限")]
+        public float? WenduSX { get; set; }
+        [Display(Name = "温度下限")]
+        public float? WenduXX { get; set; }
     }
 }
 

@@ -734,6 +734,8 @@ namespace CKWMS.Controllers
             string shangpintm = Request["shangpintm"] ?? "";
             string chandi = Request["chandi"] ?? "";
             string ShangpinMS = Request["ShangpinMS"] ?? "";
+            string WenduSX = Request["WenduSX"] ?? "";
+            string WenduXX = Request["WenduXX"] ?? "";
             if (shenchasf.IndexOf("true") > -1)
                 shenchasf = "true";
             else
@@ -780,6 +782,8 @@ namespace CKWMS.Controllers
                     ob_base_shangpinxx.ShangpinTM = shangpintm.Trim();
                     ob_base_shangpinxx.Chandi = chandi.Trim();
                     ob_base_shangpinxx.ShangpinMS = ShangpinMS.Trim();
+                    ob_base_shangpinxx.WenduSX = WenduSX == "" ? 0 : float.Parse(WenduSX);
+                    ob_base_shangpinxx.WenduXX = WenduXX == "" ? 0 : float.Parse(WenduXX);
 
                     ob_base_shangpinxx = ob_base_shangpinxxservice.AddEntity(ob_base_shangpinxx);
                 }
@@ -835,6 +839,8 @@ namespace CKWMS.Controllers
                 base_shangpinxxviewmodel.ShangpinTM = tempData.ShangpinTM;
                 base_shangpinxxviewmodel.Chandi = tempData.Chandi;
                 base_shangpinxxviewmodel.ShangpinMS = tempData.ShangpinMS;
+                base_shangpinxxviewmodel.WenduSX = tempData.WenduSX;
+                base_shangpinxxviewmodel.WenduXX = tempData.WenduXX;
                 return View(base_shangpinxxviewmodel);
             }
         }
@@ -876,6 +882,8 @@ namespace CKWMS.Controllers
             string shangpintm = Request["shangpintm"] ?? "";
             string chandi = Request["chandi"] ?? "";
             string ShangpinMS = Request["ShangpinMS"] ?? "";
+            string WenduSX = Request["WenduSX"] ?? "";
+            string WenduXX = Request["WenduXX"] ?? "";
             if (shenchasf.IndexOf("true") > -1)
                 shenchasf = "true";
             else
@@ -920,6 +928,8 @@ namespace CKWMS.Controllers
                 p.ShangpinTM = shangpintm.Trim();
                 p.Chandi = chandi.Trim();
                 p.ShangpinMS = ShangpinMS.Trim();
+                p.WenduSX = WenduSX == "" ? 0 : float.Parse(WenduSX);
+                p.WenduXX = WenduXX == "" ? 0 : float.Parse(WenduXX);
 
                 ob_base_shangpinxxservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;
