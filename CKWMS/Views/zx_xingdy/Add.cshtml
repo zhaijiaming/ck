@@ -9,7 +9,7 @@
         $("#KaishiSJ").datepicker();
         $("#JieshuoSJ").datepicker();
         //'是否占用'绑定值
-        $("#ZhanyongSF").val("true");//默认赋值
+        $("#ZhanyongSF").val("false");//默认赋值
         $("#ZhanyongSF").change(function () {
             if ($("#ZhanyongSF").is(":checked")) {
                 $("#ZhanyongSF").val("true");//选中=true
@@ -18,7 +18,7 @@
             }
         });
         //'是否周转'绑定值
-        $("#ZhouzhuanSF").val("true");//默认赋值
+        $("#ZhouzhuanSF").val("false");//默认赋值
         $("#ZhouzhuanSF").change(function () {
             if ($("#ZhouzhuanSF").is(":checked")) {
                 $("#ZhouzhuanSF").val("true");//选中=true
@@ -80,7 +80,8 @@
                                     <div class="form-group">
                                         <label for="Xianghao" class="col-sm-2 control-label"><b>箱号</b></label>
                                         <div class="col-sm-9">
-                                            @Html.TextBoxFor(m => m.Xianghao, new { @class = "form-control readonly", @placeholder = "请填写型号" })
+                                            @*@Html.TextBoxFor(m => m.Xianghao, new { @class = "form-control readonly='true'", @placeholder = "请填写型号" })*@
+                                            <input type="text" id="Xianghao" name="Xianghao" class="form-control" placeholder="无需填写，自动生成箱号" readonly />
                                         </div>
                                     </div>                                    
                                     @*体积*@
@@ -137,7 +138,7 @@
                                         <div class="col-sm-9">
 
                                             <label class="control-group">
-                                                <input name="ZhanyongSF" id="ZhanyongSF" class="ace ace-switch ace-switch-7" checked="checked" type="checkbox">
+                                                <input name="ZhanyongSF" id="ZhanyongSF" class="ace ace-switch ace-switch-7" type="checkbox">
                                                 <span class="lbl"></span>
                                             </label>
                                             @*@Html.TextBoxFor(m => m.ZhanyongSF, new { @class = "form-control" })*@
@@ -148,7 +149,7 @@
                                         <label class="col-sm-2 control-label" for="ZhouzhuanSF"><b>是否周转</b></label>
                                         <div class="col-sm-9">
                                             <label class="control-group">
-                                                <input name="ZhouzhuanSF" id="ZhouzhuanSF" class="ace ace-switch ace-switch-7" checked="checked" type="checkbox">
+                                                <input name="ZhouzhuanSF" id="ZhouzhuanSF" class="ace ace-switch ace-switch-7" type="checkbox">
                                                 <span class="lbl"></span>
                                             </label>
                                             @*@Html.TextBoxFor(m => m.ZhouzhuanSF, new { @class = "form-control" })*@

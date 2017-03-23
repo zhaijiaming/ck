@@ -507,9 +507,9 @@
 <div class="page-content">
     <div class="page-header">
         <p>
-            <button type="button" class="btn btn-app btn-xs btn-primary radius-4" onclick="javascript:history.back(-1); "><i class="icon-reply icon-only"></i>返回</button>
+            <button type="button" class="btn btn-app btn-xs btn-primary radius-4" onclick="javascript:history.back(-1); "><i class="icon-reply icon-only"></i><b>返回</b></button>
             <button type="button" id="btn_save" class="btn btn-app btn-xs btn-primary radius-4">
-                <i class="icon-save"></i>保存
+                <i class="icon-save"></i><b>保存</b>
                 <span class="badge badge-transparent">
                     <i class="light-red icon-asterisk"></i>
                 </span>
@@ -746,18 +746,22 @@
                                         </div>
                                         @*温度上限*@
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label" for="Huansuanlv"><b>温度上限</b></label>
+                                            <label class="col-sm-2 control-label" for="WenduSX"><b>温度上限</b></label>
                                             <div class="col-sm-9">
-                                                @*@Html.TextBoxFor(m => m.WenduSX, new { @class = "form-control", @placeholder = "请填写温度上限" })*@
-                                                <input id="WenduSX" placeholder="请填写温度上限" name="WenduSX" class="form-control" type="text">
+                                                <div class="input-group">
+                                                    <input id="WenduSX" name="WenduSX" placeholder="请填写温度上限" class="form-control col-sm-10" type="text">
+                                                    <span class="input-group-addon input-group-sm"><b>&#8451;</b></span>
+                                                </div>
                                             </div>
                                         </div>
                                         @*温度下限*@
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label" for="Huansuanlv"><b>温度下限</b></label>
+                                            <label class="col-sm-2 control-label" for="WenduXX"><b>温度下限</b></label>
                                             <div class="col-sm-9">
-                                                @*@Html.TextBoxFor(m => m.WenduXX, new { @class = "form-control", @placeholder = "请填写温度下限" })*@
-                                                <input id="WenduXX" placeholder="请填写温度下限" name="WenduXX" class="form-control" type="text">
+                                                <div class="input-group">
+                                                    <input id="WenduXX" name="WenduXX" placeholder="请填写温度下限" class="form-control col-sm-10" type="text">
+                                                    <span class="input-group-addon input-group-sm"><b>&#8451;</b></span>
+                                                </div>
                                             </div>
                                         </div>
                                         @*是否审查*@

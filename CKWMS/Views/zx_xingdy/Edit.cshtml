@@ -18,7 +18,7 @@
                 $("#ZhanyongSF").val("false");//不选中=false
             }
         });
-        //'是否周转'赋值
+        //'是否占用'赋值
         var ZhanyongSF = "@Model.ZhanyongSF";
         if (ZhanyongSF == "True") {
             $("#ZhanyongSF").attr("checked", true);
@@ -94,7 +94,8 @@
                                     <div class="form-group">
                                         <label for="Xianghao" class="col-sm-2 control-label"><b>箱号</b></label>
                                         <div class="col-sm-9">
-                                            @Html.TextBoxFor(m => m.Xianghao, new { @class = "form-control", @placeholder = "请填写箱号" })
+                                            @*@Html.TextBoxFor(m => m.Xianghao, new { @class = "form-control", @placeholder = "请填写箱号" })*@
+                                            <input type="text" id="Xianghao" name="Xianghao" class="form-control" placeholder="无需填写，自动生成箱号" readonly value="@ViewData.Model.Xianghao" />
                                         </div>
                                     </div>                                    
                                     @*体积*@
