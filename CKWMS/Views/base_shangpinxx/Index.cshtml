@@ -142,45 +142,9 @@
         $("#pl_fn_close").click(function () {
             $("#pl_fun").hide();
         });
-        //固定表头
-        var th_new = $("#mydatatable tr").eq(0).clone();
-        $("#fixed-table-header").append(th_new);
-        trResize();//初始化表头
-        $("#sidebar").click(function () {//导航栏点击初始化表头
-            trResize();
-        });
-        $(window).resize(function () {
-            trResize();
-        });
-        $(".table-wapper").scroll(function () {
-            var scroll = -$(this).scrollLeft();
-            $(".fixed-table-wapper").css("left", scroll + "px");
-        });
-        $("#fixed-table-header tr").css("background-color", "#e1edfe");　 //固定表头颜色
-        $("#mydatatable tr:odd").css("background-color", "#f2f7fe");　 //偶行颜色
-        $("#mydatatable tr:even").css("background-color", "#e1edfe");//奇行颜色
-        $("#mydatatable tr").click(function () {//单击tr选中，附上颜色标记
-
-            //console.log($(this).attr('class'));
-            if ($(this).attr('class') != "success") {
-                $(this).addClass("success").siblings().removeClass("success").end();
-            } else {
-                $(this).removeClass("success").end();
-            }
-        });
+        //table样式
+        table_config(mydatatable);
     });
-    function trResize() {
-        var inner_width = $("#mydatatable").outerWidth();
-        $(".fixed-table-wapper").css("width", inner_width + "px");
-        $("#fixed-table-header th").each(function () {
-            var num = $(this).index();
-            var th_width = $("#mydatatable th").eq(num).outerWidth();
-            var th_height = $("#mydatatable th").eq(num).outerHeight();
-            //console.log("th_width:" + num + ":" + th_width);
-            $(this).css("width", th_width + "px");
-            $(this).css("height", th_height + "px");
-        });
-    }
     function AddInfo() {
         location.href = "/base_shangpinxx/Add";
     }
@@ -402,11 +366,11 @@
     </div>
     <div class="row">
         <div class="col-sm-12">
-            <div class="table-wapper-all" style="position:relative;overflow:hidden;">
-                <div class="fixed-table-wapper" style="position:absolute;top:0px;left:0px;background-color:#fff;border-bottom:1px solid #ddd;">
-                    <table class="table table-bordered table-condensed" id="fixed-table-header" style="margin-bottom:0px;"></table>
+            <div class="table-wapper-all">
+                <div class="fixed-table-wapper">
+                    <table class="table table-bordered table-condensed fixed-table-header"></table>
                 </div>
-                <div class="table-wapper" style="height:473px;overflow-y:auto;">
+                <div class="table-wapper">
                     <table class="table table-bordered table-condensed" id="mydatatable">
                         <tr>
                             <th></th>

@@ -884,6 +884,7 @@ namespace CKWMS.App_Code
                         case "首营状态":
                         case "入库状态":
                         case "出库状态":
+                        case "纸箱规格":
                         case "存货状态":
                             if (sc.ItemValue == null)
                                 svs = SelectItem_Common(sc.ItemCode, myclassitem, 0);

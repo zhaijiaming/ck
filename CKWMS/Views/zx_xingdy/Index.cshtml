@@ -8,13 +8,15 @@
 }
 <script type="text/javascript">
     $(document).ready(function () {
-        $("tr").bind("dblclick", function () {
-            var u_id = $(this).find('td').eq(0).find('input').val();
-            if (u_id != null) {
-                var url_go = "/zx_xingdy/Edit/" + u_id;
-                location.href = url_go;
-            }
-        });
+        //$("tr").bind("dblclick", function () {
+        //    var u_id = $(this).find('td').eq(0).find('input').val();
+        //    if (u_id != null) {
+        //        var url_go = "/zx_xingdy/Edit/" + u_id;
+        //        location.href = url_go;
+        //    }
+        //});
+        //table样式
+        table_config(mydatatable);
         //true => '是'，false => '否'
         var item_sum = $("#mydatatable tr").length - 1;//获取总行数
         for (var i = 0; i < item_sum; i++) {
@@ -31,45 +33,7 @@
                 $(".ZhouzhuanSF").eq(i).html("否")
             }
         }
-        //固定表头
-        var th_new = $("#mydatatable tr").eq(0).clone();
-        $("#fixed-table-header").append(th_new);
-        trResize();//初始化表头
-        $("#sidebar").click(function () {//导航栏点击初始化表头
-            trResize();
-        });
-        $(window).resize(function () {
-            trResize();
-        });
-        $(".table-wapper").scroll(function () {
-            var scroll = -$(this).scrollLeft();
-            $(".fixed-table-wapper").css("left", scroll + "px");
-        });
-        $("#fixed-table-header tr").css("background-color", "#e1edfe");　 //固定表头颜色
-        $("#mydatatable tr:odd").css("background-color", "#f2f7fe");　 //偶行颜色
-        $("#mydatatable tr:even").css("background-color", "#e1edfe");//奇行颜色
-        $("#mydatatable tr").click(function () {//单击tr选中
-            
-            //console.log($(this).attr('class'));
-            if ($(this).attr('class') != "success") {
-                $(this).addClass("success").siblings().removeClass("success").end();
-            } else {
-                $(this).removeClass("success").end();
-            }
-        });
     });
-    function trResize() {
-        var inner_width = $("#mydatatable").outerWidth();
-        $(".fixed-table-wapper").css("width", inner_width + "px");
-        $("#fixed-table-header th").each(function () {
-            var num = $(this).index();
-            var th_width = $("#mydatatable th").eq(num).outerWidth();
-            var th_height = $("#mydatatable th").eq(num).outerHeight();
-            //console.log("th_width:" + num + ":" + th_width);
-            $(this).css("width", th_width + "px");
-            $(this).css("height", th_height + "px");
-        });
-    }
     function AddInfo() {
         location.href = "/zx_xingdy/Add";
     }
@@ -97,8 +61,14 @@
     {
         SearchConditionModel scm = new SearchConditionModel();
         scm.ItemCode = "Xianghao";
-        scm.ItemTitle = "型号";
+        scm.ItemTitle = "箱号";
         scm.ItemType = "System.String";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "Xiangxing";
+        scm.ItemTitle = "箱型";
+        scm.ItemType = "纸箱规格.纸箱规格";
         scms.Add(scm);
     }
     else
@@ -108,13 +78,29 @@
         {
             SearchConditionModel scm = new SearchConditionModel();
             scm.ItemCode = "Xianghao";
-            scm.ItemTitle = "型号";
+            scm.ItemTitle = "箱号";
             scm.ItemType = "System.String";
             if (scs.Length > 1)
             {
                 scm.ItemValue = scs[0].Split(',')[1];
                 scm.ItemOpValue = scs[0].Split(',')[2];
                 scm.ItemJion = scs[0].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "Xiangxing";
+            scm.ItemTitle = "箱型";
+            scm.ItemType = "纸箱规格.纸箱规格";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[1].Split(',')[1];
+                if (scm.ItemValue.Length == 0)
+                {
+                    scm.ItemValue = "0";
+                }
+                scm.ItemOpValue = scs[1].Split(',')[2];
+                scm.ItemJion = scs[1].Split(',')[3];
             }
             scms.Add(scm);
         }
@@ -139,18 +125,18 @@
         <p>
             <button type="button" class="btn btn-primary btn-xs btn-app radius-4 " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i><b>查询</b></button>
             <button type="button" class="btn btn-primary btn-xs btn-app radius-4 " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i><b>新增</b></button>
-            <button type="button" class="btn btn-primary btn-xs btn-app radius-4 " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i><b>编辑</b></button>
+            @*<button type="button" class="btn btn-primary btn-xs btn-app radius-4 " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i><b>编辑</b></button>*@
             <button type="button" class="btn btn-primary btn-xs btn-app radius-4 " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i><b>删除</b></button>
             <button type="button" class="btn btn-primary btn-xs btn-app radius-4 " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i><b>刷新</b></button>
         </p>
     </div>
     <div class="row">
         <div class="col-sm-12">
-            <div class="table-wapper-all" style="position:relative;overflow:hidden;">
-                <div class="fixed-table-wapper" style="position:absolute;top:0px;left:0px;background-color:#fff;border-bottom:1px solid #ddd;">
-                    <table class="table table-bordered table-condensed" id="fixed-table-header" style="margin-bottom:0px;"></table>
+            <div class="table-wapper-all">
+                <div class="fixed-table-wapper">
+                    <table class="table table-bordered table-condensed fixed-table-header"></table>
                 </div>
-                <div class="table-wapper" style="height:473px;overflow-y:auto;">
+                <div class="table-wapper">
                     <table class="table table-bordered table-condensed" id="mydatatable">
                         <tr>
                             <th></th>

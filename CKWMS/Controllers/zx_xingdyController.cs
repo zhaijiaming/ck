@@ -55,6 +55,28 @@ namespace CKWMS.Controllers
                                 }
                             }
                             break;
+                        case "Xiangxing":
+                            string Xiangxing = scld[1];
+                            string Xiangxingequal = scld[2];
+                            string Xiangxingand = scld[3];
+                            if (!string.IsNullOrEmpty(Xiangxing))
+                            {
+                                if (Xiangxingequal.Equals("="))
+                                {
+                                    if (Xiangxingand.Equals("and"))
+                                        where = where.And(zx_xingdy => zx_xingdy.Xiangxing == int.Parse(Xiangxing));
+                                    else
+                                        where = where.Or(zx_xingdy => zx_xingdy.Xiangxing == int.Parse(Xiangxing));
+                                }
+                                if (Xiangxingequal.Equals("like"))
+                                {
+                                    if (Xiangxingand.Equals("and"))
+                                        where = where.And(zx_xingdy => zx_xingdy.Xiangxing == int.Parse(Xiangxing));
+                                    else
+                                        where = where.Or(zx_xingdy => zx_xingdy.Xiangxing == int.Parse(Xiangxing));
+                                }
+                            }
+                            break;
                         default:
                             break;
                     }
@@ -76,9 +98,18 @@ namespace CKWMS.Controllers
             int userid = (int)Session["user_id"];
             string pagetag = "zx_xingdy_index";
             string page = "1";
+            //xianghao
             string xianghao = Request["xianghao"] ?? "";
             string xianghaoequal = Request["xianghaoequal"] ?? "";
             string xianghaoand = Request["xianghaoand"] ?? "";
+            //Xiangxing
+            string Xiangxing = Request["Xiangxing"] ?? "";
+            string Xiangxingequal = Request["Xiangxingequal"] ?? "";
+            string Xiangxingand = Request["Xiangxingand"] ?? "";
+            if (Xiangxing == "0")
+            {
+                Xiangxing = "";
+            }
             Expression<Func<zx_xingdy, bool>> where = PredicateExtensionses.True<zx_xingdy>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -86,6 +117,7 @@ namespace CKWMS.Controllers
                 sc = new searchcondition();
                 sc.UserID = userid;
                 sc.PageBrief = pagetag;
+                //xianghao
                 if (!string.IsNullOrEmpty(xianghao))
                 {
                     if (xianghaoequal.Equals("="))
@@ -107,11 +139,34 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "xianghao", xianghao, xianghaoequal, xianghaoand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "xianghao", "", xianghaoequal, xianghaoand);
+                //Xiangxing
+                if (!string.IsNullOrEmpty(Xiangxing))
+                {
+                    if (Xiangxingequal.Equals("="))
+                    {
+                        if (Xiangxingand.Equals("and"))
+                            where = where.And(zx_xingdy => zx_xingdy.Xiangxing == int.Parse(Xiangxing));
+                        else
+                            where = where.Or(zx_xingdy => zx_xingdy.Xiangxing == int.Parse(Xiangxing));
+                    }
+                    if (Xiangxingequal.Equals("like"))
+                    {
+                        if (Xiangxingand.Equals("and"))
+                            where = where.And(zx_xingdy => zx_xingdy.Xiangxing == int.Parse(Xiangxing));
+                        else
+                            where = where.Or(zx_xingdy => zx_xingdy.Xiangxing == int.Parse(Xiangxing));
+                    }
+                }
+                if (!string.IsNullOrEmpty(Xiangxing))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "Xiangxing", Xiangxing, Xiangxingequal, Xiangxingand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "Xiangxing", "", Xiangxingequal, Xiangxingand);
                 searchconditionService.GetInstance().AddEntity(sc);
             }
             else
             {
                 sc.ConditionInfo = "";
+                //xianghao
                 if (!string.IsNullOrEmpty(xianghao))
                 {
                     if (xianghaoequal.Equals("="))
@@ -133,6 +188,28 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "xianghao", xianghao, xianghaoequal, xianghaoand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "xianghao", "", xianghaoequal, xianghaoand);
+                //Xiangxing
+                if (!string.IsNullOrEmpty(Xiangxing))
+                {
+                    if (Xiangxingequal.Equals("="))
+                    {
+                        if (Xiangxingand.Equals("and"))
+                            where = where.And(zx_xingdy => zx_xingdy.Xiangxing == int.Parse(Xiangxing));
+                        else
+                            where = where.Or(zx_xingdy => zx_xingdy.Xiangxing == int.Parse(Xiangxing));
+                    }
+                    if (Xiangxingequal.Equals("like"))
+                    {
+                        if (Xiangxingand.Equals("and"))
+                            where = where.And(zx_xingdy => zx_xingdy.Xiangxing == int.Parse(Xiangxing));
+                        else
+                            where = where.Or(zx_xingdy => zx_xingdy.Xiangxing == int.Parse(Xiangxing));
+                    }
+                }
+                if (!string.IsNullOrEmpty(Xiangxing))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "Xiangxing", Xiangxing, Xiangxingequal, Xiangxingand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "Xiangxing", "", Xiangxingequal, Xiangxingand);
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;
