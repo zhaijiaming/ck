@@ -8,11 +8,12 @@
 }
 
 <script type="text/javascript">
+    try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
     $(document).ready(function () {
         var _zczid = $("#zczbh").val();
         $("#pl_guige").draggable({ handle: '.tuodong' }, { containment: [-1000, 50, 1300, 600] });
         $(".guige").click(function () {
-            _zczid=$(this).parent().parent().find("input[type=checkbox]").val();
+            _zczid = $(this).parent().parent().find("input[type=checkbox]").val();
             getGuiGe(_zczid);
             $("#pl_guige").show();
         });
@@ -49,7 +50,7 @@
         });
         //全部取消
         $("#bt_guige_clear").click(function () {
-            $(".checkbox_guige").prop("checked",false);
+            $(".checkbox_guige").prop("checked", false);
         });
         $("tr").bind("dblclick", function () {
             var u_id = $(this).find('td').eq(0).find('input').val();
@@ -59,7 +60,7 @@
             }
         });
         //判断照片是否存在
-        var num = $("#mydatatable tr").length -1;
+        var num = $("#mydatatable tr").length - 1;
         for (var i = 0; i < num; i++) {
             var val_zczTP = $(".val_zczTP").eq(i).val();
             if (val_zczTP == "" || val_zczTP == null) {
@@ -69,7 +70,10 @@
                 $(".ZhucezhengTP").eq(i).html("浏览");
             }
         }
-        
+        //table样式
+        table_config(mydatatable);
+        trResize();//初始化表头
+
     });
     function AddInfo() {
         location.href = "/base_shangpinzcz/Add";
@@ -170,9 +174,6 @@
 }
 
 <div class="breadcrumbs" id="breadcrumbs">
-    <script type="text/javascript">
-        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
-    </script>
     <ul class="breadcrumb">
         <li>
             <i class="icon-home home-icon"></i>
@@ -184,83 +185,79 @@
 <div class="page-content">
     @Html.Search_Condition((int)Session["user_id"], "注册证_条件组合查询", "/base_shangpinzcz/index", "base_shangpinzczindex", scms)
     <div class="page-header">
-        <p>
-            <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
-            <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
-            <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
-            <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
-            <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
-            <button type="button" class="btn btn-default " id="bt_export" onclick="javascript: window.open('/base_shangpinzcz/registrationexport')"><i class="icon-inbox"></i>导出</button>
-        </p>
+        <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
+        <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
+        <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
+        <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
+        <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
+        <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_export" onclick="javascript: window.open('/base_shangpinzcz/registrationexport')"><i class="icon-inbox"></i>导出</button>
     </div>
-    <div style="overflow:auto;max-height:480px;">
-        <div class="table-responsive">
-            <table class="table" id="mydatatable">
-                <caption></caption>
-                <thead style="white-space: nowrap;">
-                    <tr>
-                        <td></td>
-                        <td>注册证编号</td>
-                        <td>商品名称</td>
-                        <td>规格</td>
-                        <td>产品标准</td>
-                        <td>注册证有效期</td>
-                        <td>批准日期</td>
-                        @*<td>录入日期</td>*@
-                        <td>中文编号</td>
-                        <td>产地</td>
-                        <td>生产企业</td>
-                        <td>服务机构</td>
-                        <td>注册证照片</td>
-                        @*<td>输入人</td>
-                        <td>备注</td>*@
-                        @*<td>是否失效</td>
-                        <td>适用范围</td>
-                        <td>注册代理</td>*@
-                       
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in ViewBag.base_shangpinzcz)
-                    {
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="table-wapper-all">
+                <div class="fixed-table-wapper">
+                    <table class="table table-bordered table-condensed fixed-table-header"></table>
+                </div>
+                <div class="table-wapper">
+                    <table class="table table-bordered table-condensed" id="mydatatable">
                         <tr>
-                            <td>
-                                <div class="checkbox">
-                                    <label><input type="checkbox" value="@item.ID"></label>
-                                </div>
-                            </td>
-                            <td>@item.Bianhao</td>
-                            <td>@item.Mingcheng</td>
-                            @*规格*@
-                            <td><a class="guige">浏览</a></td>
-                            <td>@item.Bianzhun</td>
-                            <td>@item.ZhucezhengYXQ.ToString("yyyy-MM-dd")</td>
-                            <td>@string.Format("{0:yyyy-MM-dd}", item.PizhunRQ==null?"":item.PizhunRQ)</td>
-                            @*<td>@item.MakeDate.ToString("yyyy-MM-dd")</td>*@
-                            <td>@item.BianhaoZW</td>
-                            <td>@item.Chandi</td>
-                            <td>@Html.GetDataValue_ID("生产企业", "名称", (int)item.ShengchanqiyeID)</td>
-                            <td>@item.ShouhuoJG</td>
-                            <td>
-                                <a href="/files/zhengzhao/@item.ZhucezhengTP" target="_blank" class="ZhucezhengTP"></a>
-                                <label><input type="hidden" class="val_zczTP" value="@item.ZhucezhengTP"></label>
-                            </td>
-                            @*<td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
-                            <td>@item.Beizhu</td>*@
-                            @*<td id="changeText">@item.ShixiaoSF</td>
-                            <td>@item.ShiyongFW</td>
-                            <td>@item.ZhuceDL</td>*@
-                            
+                            <th></th>
+                            <th>注册证编号</th>
+                            <th>商品名称</th>
+                            <th style="white-space: nowrap;">规格</th>
+                            <th>产品标准</th>
+                            <th>注册证有效期</th>
+                            <th>批准日期</th>
+                            <th>中文编号</th>
+                            <th>产地</th>
+                            <th>生产企业</th>
+                            <th>服务机构</th>
+                            <th>注册证照片</th>
+                            @*<td>输入人</td>
+                                <td>备注</td>*@
+                            @*<td>是否失效</td>
+                                <td>适用范围</td>
+                                <td>注册代理</td>*@
+
                         </tr>
-                }
-                </tbody>
-            </table>
+                        <tbody>
+                            @foreach (var item in ViewBag.base_shangpinzcz)
+                            {
+                                <tr>
+                                    <td>
+                                        <label><input type="checkbox" value="@item.ID"></label>
+                                    </td>
+                                    <td>@item.Bianhao</td>
+                                    <td>@item.Mingcheng</td>
+                                    @*规格*@
+                                    <td><a class="guige">浏览</a></td>
+                                    <td>@item.Bianzhun</td>
+                                    <td>@item.ZhucezhengYXQ.ToString("yyyy-MM-dd")</td>
+                                    <td>@string.Format("{0:yyyy-MM-dd}", item.PizhunRQ == null ? "" : item.PizhunRQ)</td>
+                                    @*<td>@item.MakeDate.ToString("yyyy-MM-dd")</td>*@
+                                    <td>@item.BianhaoZW</td>
+                                    <td>@item.Chandi</td>
+                                    <td>@Html.GetDataValue_ID("生产企业", "名称", (int)item.ShengchanqiyeID)</td>
+                                    <td>@item.ShouhuoJG</td>
+                                    <td>
+                                        <a href="/files/zhengzhao/@item.ZhucezhengTP" target="_blank" class="ZhucezhengTP"></a>
+                                        <label><input type="hidden" class="val_zczTP" value="@item.ZhucezhengTP"></label>
+                                    </td>
+                                    @*<td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
+                                        <td>@item.Beizhu</td>*@
+                                    @*<td id="changeText">@item.ShixiaoSF</td>
+                                        <td>@item.ShiyongFW</td>
+                                        <td>@item.ZhuceDL</td>*@
 
-            
-            <div class="pager">
-                @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
+            <span class="pager">
+                @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+            </span>
         </div>
     </div>
 </div>

@@ -123,7 +123,6 @@
                                                         <i class="icon-calendar bigger-110"></i>
                                                     </span>
                                                 </div>
-                                                @*<input id="KaishiSJ" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="KaishiSJ">*@
                                             </div>
                                         </div>
                                         @*结束装箱时间*@
@@ -144,12 +143,10 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label" for="ZhanyongSF"><b>是否占用</b></label>
                                             <div class="col-sm-9">
-
                                                 <label class="control-group">
                                                     <input name="ZhanyongSF" id="ZhanyongSF" class="ace ace-switch ace-switch-7" type="checkbox">
                                                     <span class="lbl"></span>
                                                 </label>
-                                                @*@Html.TextBoxFor(m => m.ZhanyongSF, new { @class = "form-control" })*@
                                             </div>
                                         </div>
                                         @*是否周转*@
@@ -170,12 +167,12 @@
                                                 @Html.TextBoxFor(m => m.Col1, new { @class = "form-control" })
                                             </div>
                                         </div>
-                                        @*输入日期*@
+                                        @*录入日期*@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label" for="makedate"><b>录入日期</b></label>
                                             <div class="col-sm-9">
                                                 <div class="input-group">
-                                                    <input name="makedate" disabled="disabled" placeholder="请填写录入日期" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" type="text">
+                                                    <input name="makedate" disabled="disabled" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" type="text">
                                                     <span class="input-group-addon">
                                                         <i class="icon-calendar bigger-110"></i>
                                                     </span>
@@ -196,7 +193,7 @@
                                         </div>
                                     </fieldset>
                                     <div class="form-actions center">
-                                        <button id="save_buttom" class="btn btn-primary" type="submit">
+                                        <button id="save_buttom" class="btn btn-primary" type="button">
                                             <b>保存</b>
                                             <i class="icon-save bigger-110"></i>
                                         </button>

@@ -15,6 +15,9 @@
                 location.href = url_go;
             }
         });
+        //table样式
+        table_config(mydatatable);
+        trResize();//初始化表头
     });
     function AddInfo() {
         location.href = "/base_renyuanxx/Add";
@@ -101,60 +104,62 @@
     @Html.Search_Condition((int)Session["user_id"], "人员信息_条件组合查询", "/base_renyuanxx/index", "base_renyuanxxindex", scms)
     <div class="page-header">
         <p>
-            <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
-            <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
-            <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
-            <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
-            <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
+            <button type="button" class="btn btn-primary btn-xs btn-app radius-4 " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i><b>查询</b></button>
+            <button type="button" class="btn btn-primary btn-xs btn-app radius-4 " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i><b>新增</b></button>
+            <button type="button" class="btn btn-primary btn-xs btn-app radius-4 " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i><b>编辑</b></button>
+            <button type="button" class="btn btn-primary btn-xs btn-app radius-4 " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i><b>删除</b></button>
+            <button type="button" class="btn btn-primary btn-xs btn-app radius-4 " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i><b>刷新</b></button>
         </p>
     </div>
     <div class="row">
-        <table class="table" id="mydatatable">
-            <caption></caption>
-            <thead>
-                <tr>
-                    <td></td>
-                    <td>用户账号</td>
-                    @*<td>编号</td>*@
-                    <td>姓名</td>
-                    <td>性别</td>
-                    <td>电话</td>
-                    <td>生日</td>
-                    <td>部门</td>
-                    <td>职位</td>
-                    <td>职责</td>
-                    <td>备注</td>
-                    <td>录入日期</td>
-                    <td>输入人</td>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in ViewBag.base_renyuanxx)
-                {
-                    <tr>
-                        <td>
-                            <div class="checkbox">
-                                <label><input type="checkbox" value="@item.ID"></label>
-                            </div>
-                        </td>
-                        <td>@Html.GetDataValue_ID("userinfo", "账号", (int)item.UserID)</td>
-                        @*<td>@item.Bianhao</td>*@
-                        <td>@item.Mingcheng</td>
-                        <td>@Html.GetCommonValue_ID("性别",(int)item.Xingbie)</td>
-                        <td>@item.Dianhua</td>
-                        <td>@item.Shengri.ToString("yyyy-MM-dd")</td>
-                        <td>@item.Bumen</td>
-                        <td>@item.Zhiwei</td>
-                        <td>@item.Zhize</td>
-                        <td>@item.Beizhu</td>
-                        <td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
-                        <td>@Html.GetDataValue_ID("userinfo","全名",(int)item.MakeMan)</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-    <div class="pager">
-        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+        <div class="col-sm-12">
+            <div class="table-wapper-all">
+                <div class="fixed-table-wapper">
+                    <table class="table table-bordered table-condensed fixed-table-header"></table>
+                </div>
+                <div class="table-wapper">
+                    <table class="table table-bordered table-condensed" id="mydatatable">
+                        <tr>
+                            <th></th>
+                            <th>用户账号</th>
+                            <th>姓名</th>
+                            <th>性别</th>
+                            <th>电话</th>
+                            <th>生日</th>
+                            <th>部门</th>
+                            <th>职位</th>
+                            <th>职责</th>
+                            <th>备注</th>
+                            <th>录入日期</th>
+                            <th>输入人</th>
+                        </tr>
+                        <tbody>
+                            @foreach (var item in ViewBag.base_renyuanxx)
+                            {
+                                <tr>
+                                    <td>
+                                        <label><input type="checkbox" value="@item.ID"></label>
+                                    </td>
+                                    <td>@Html.GetDataValue_ID("userinfo", "账号", (int)item.UserID)</td>
+                                    <td>@item.Mingcheng</td>
+                                    <td>@Html.GetCommonValue_ID("性别", (int)item.Xingbie)</td>
+                                    <td>@item.Dianhua</td>
+                                    <td>@item.Shengri.ToString("yyyy-MM-dd")</td>
+                                    <td>@item.Bumen</td>
+                                    <td>@item.Zhiwei</td>
+                                    <td>@item.Zhize</td>
+                                    <td>@item.Beizhu</td>
+                                    <td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
+                                    <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <span class="pager">
+                @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+            </span>
+        </div>
     </div>
 </div>

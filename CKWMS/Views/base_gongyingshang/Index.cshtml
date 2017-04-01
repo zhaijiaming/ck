@@ -102,6 +102,10 @@
                 $(".shencha").eq(i).html("否")
             }
         }
+        //table样式
+        table_config(mydatatable);
+        trResize();//初始化表头
+
     });
 
     function AddInfo() {
@@ -193,107 +197,62 @@
 <div class="page-content">
     @Html.Search_Condition((int)Session["user_id"], "供应商_条件组合查询", "/base_gongyingshang/index", "base_gongyingshangindex", scms)
     <div class="page-header">
-        <p>
-            <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
-            <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
-            <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
-            @*<button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>*@
-            <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
-            @*<button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="Export()">表格</button>*@
-            <button type="button" class="btn btn-default " id="bt_sendcheck"><i class="icon-check-sign"></i>送审</button>
-            <button type="button" class="btn btn-default " id="bt_export" onclick="javascript: window.open('/base_gongyingshang/supplierexport')"><i class="icon-inbox"></i>导出</button>
-            <button type="button" class="btn btn-default " id="bt_gspedit"><i class="icon-eraser"></i>GSP修改</button>
-       </p>
+        <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
+        <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
+        <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
+        @*<button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>*@
+        <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
+        @*<button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="Export()">表格</button>*@
+        <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_sendcheck"><i class="icon-check-sign"></i>送审</button>
+        <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_export" onclick="javascript: window.open('/base_gongyingshang/supplierexport')"><i class="icon-inbox"></i>导出</button>
+        <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_gspedit"><i class="icon-eraser"></i>GSP修改</button>
     </div>
-
     <div class="row">
-        <table class="table" id="mydatatable">
-            <caption></caption>
-            <thead>
-                <tr>
-                    <td></td>
-                    @*<td>
-                        @Html.ActionLink("代码", "Index", new
-                   {
-                       sortOrder = ViewBag.DaimaSortParm
-                   })
-                    </td>
-                    <td>@Html.ActionLink("名称", "Index", new
-                   {
-                       sortOrder = ViewBag.NameSortParm
-                   })
-                    </td>*@
-                    <td>首营状态</td>
-                    <td>代码</td>
-                    <td>名称</td>
-                    <td>营业执照编号</td>
-                    <td>营业执照有效期</td>
-                    <td>营业执照照片</td>
-                    <td>经营许可编号</td>
-                    <td>经营许可有效期</td>
-                    <td>经营许可照片</td>
-                    @*<td>@Html.ActionLink("营业执照编号", "Index", new
-                   {
-                       sortOrder = ViewBag.YyzzSortParm
-                   })</td>
-                    <td>@Html.ActionLink("营业执照有效期", "Index", new
-                   {
-                       sortOrder = ViewBag.YyzzyxqSortParm
-                   })</td>
-                    <td>@Html.ActionLink("营业执照照片", "Index", new
-                   {
-                       sortOrder = ViewBag.YyzztpSortParm
-                   })</td>
-                    <td>@Html.ActionLink("经营许可编号", "Index", new
-                   {
-                       sortOrder = ViewBag.JyxkSortParm
-                   })</td>
-                    <td>@Html.ActionLink("经营许可有效期", "Index", new
-                   {
-                       sortOrder = ViewBag.JyxkyxqSortParm
-                   })</td>
-                    <td>@Html.ActionLink("经营许可照片", "Index", new
-                   {
-                       sortOrder = ViewBag.JyxktpSortParm
-                   })</td>*@
-                    @*<td>经营范围</td>*@
-                    @*<td>经营范围简码</td>*@
-                    @*<td>首营状态</td>*@
-                    @*<td>录入日期</td>
-                        <td>输入人</td>*@
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in ViewBag.base_gongyingshang)
-                    {
+        <div class="col-sm-12">
+            <div class="table-wapper-all">
+                <div class="fixed-table-wapper">
+                    <table class="table table-bordered table-condensed fixed-table-header"></table>
+                </div>
+                <div class="table-wapper">
+                    <table class="table table-bordered table-condensed" id="mydatatable">
                         <tr>
-                            <td>
-                                <div class="checkbox" >
-                                    <label><input type="checkbox"  value="@item.ID"></label>
-                                </div>
-                            </td>
-                            <td>@Html.GetCommonValue_ID("首营状态", (int)item.Shouying)</td>
-                            <td>@item.Daima</td>
-                            <td>@item.Mingcheng</td>
-                            <td>@item.YingyezhizhaoBH</td>
-                            <td>@item.YingyezhizhaoYXQ.ToString("yyyy-MM-dd")</td>
-                            <td><a href="/files/zhengzhao/@item.YingyezhizhaoTP" target="_blank" class="yyzztp">浏览</a></td>
-                            <td>@item.JingyingxukeBH</td>
-                            <td>@item.JingyingxukeYXQ.ToString("yyyy-MM-dd")</td>
-                            <td><a href="/files/zhengzhao/@item.JingyingxukeTP" target="_blank" class="jjxktp">浏览</a></td>
-                            @*<td>@item.Jingyingfanwei</td>*@
-                            @*<td>@item.JingyingfanweiDM</td>*@
-                            @*<td>@item.Shouying</td>*@
-            @*<td>@Html.GetCommonValue_ID("首营状态", (int)item.Shouying)</td>*@
-            @*<td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
-                <td>@item.MakeMan</td>*@
-            </tr>
-            }
+                            <th></th>
+                            <th>首营状态</th>
+                            <th>代码</th>
+                            <th>名称</th>
+                            <th>营业执照编号</th>
+                            <th>营业执照有效期</th>
+                            <th>营业执照照片</th>
+                            <th>经营许可编号</th>
+                            <th>经营许可有效期</th>
+                            <th>经营许可照片</th>
+                        </tr>
+                        <tbody>
+                            @foreach (var item in ViewBag.base_gongyingshang)
+                            {
+                                <tr>
+                                    <td>
+                                        <label><input type="checkbox" value="@item.ID"></label>
+                                    </td>
+                                    <td>@Html.GetCommonValue_ID("首营状态", (int)item.Shouying)</td>
+                                    <td>@item.Daima</td>
+                                    <td>@item.Mingcheng</td>
+                                    <td>@item.YingyezhizhaoBH</td>
+                                    <td>@item.YingyezhizhaoYXQ.ToString("yyyy-MM-dd")</td>
+                                    <td><a href="/files/zhengzhao/@item.YingyezhizhaoTP" target="_blank" class="yyzztp">浏览</a></td>
+                                    <td>@item.JingyingxukeBH</td>
+                                    <td>@item.JingyingxukeYXQ.ToString("yyyy-MM-dd")</td>
+                                    <td><a href="/files/zhengzhao/@item.JingyingxukeTP" target="_blank" class="jjxktp">浏览</a></td>
+                                </tr>
+                            }
 
-            </tbody>
-        </table>
-    </div>
-    <div class="pager">
-        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <span class="pager">
+                @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+            </span>
+        </div>
     </div>
 </div>

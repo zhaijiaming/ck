@@ -736,7 +736,7 @@
                                                 <label class="col-sm-2 control-label" for="makedate"><b>录入日期</b></label>
                                                 <div class="col-sm-9">
                                                     <div class="input-group">
-                                                        <input disabled="disabled" class="form-control" value="@Html.GetCommonValue_ID("首营状态", (int)ViewData.Model.Shouying)" type="text">
+                                                        <input disabled="disabled" class="form-control" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.MakeDate)" type="text">
                                                         <span class="input-group-addon">
                                                             <i class="icon-calendar bigger-110"></i>
                                                         </span>
