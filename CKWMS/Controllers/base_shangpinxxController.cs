@@ -116,6 +116,28 @@ namespace CKWMS.Controllers
                                 }
                             }
                             break;
+                        case "Guige":
+                            string Guige = scld[1];
+                            string Guigeequal = scld[2];
+                            string Guigeand = scld[3];
+                            if (!string.IsNullOrEmpty(Guige))
+                            {
+                                if (Guigeequal.Equals("="))
+                                {
+                                    if (Guigeand.Equals("and"))
+                                        where = where.And(p => p.Guige == Guige);
+                                    else
+                                        where = where.Or(p => p.Guige == Guige);
+                                }
+                                if (Guigeequal.Equals("like"))
+                                {
+                                    if (Guigeand.Equals("and"))
+                                        where = where.And(p => p.Guige.Contains(Guige));
+                                    else
+                                        where = where.Or(p => p.Guige.Contains(Guige));
+                                }
+                            }
+                            break;
                         case "gongyingid":
                             string gongyingid = scld[1];
                             string gongyingidequal = scld[2];
@@ -210,6 +232,10 @@ namespace CKWMS.Controllers
             string mingcheng = Request["mingcheng"] ?? "";
             string mingchengequal = Request["mingchengequal"] ?? "";
             string mingchengand = Request["mingchengand"] ?? "";
+            //Guige
+            string Guige = Request["Guige"] ?? "";
+            string Guigeequal = Request["Guigeequal"] ?? "";
+            string Guigeand = Request["Guigeand"] ?? "";
             //zhucezhengbh
             string zhucezhengbh = Request["zhucezhengbh"] ?? "";
             string zhucezhengbhequal = Request["zhucezhengbhequal"] ?? "";
@@ -309,6 +335,28 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", mingcheng, mingchengequal, mingchengand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", "", mingchengequal, mingchengand);
+                //Guige
+                if (!string.IsNullOrEmpty(Guige))
+                {
+                    if (Guigeequal.Equals("="))
+                    {
+                        if (Guigeand.Equals("and"))
+                            where = where.And(p => p.Guige == Guige);
+                        else
+                            where = where.Or(p => p.Guige == Guige);
+                    }
+                    if (Guigeequal.Equals("like"))
+                    {
+                        if (Guigeand.Equals("and"))
+                            where = where.And(p => p.Guige.Contains(Guige));
+                        else
+                            where = where.Or(p => p.Guige.Contains(Guige));
+                    }
+                }
+                if (!string.IsNullOrEmpty(Guige))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "Guige", Guige, Guigeequal, Guigeand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "Guige", "", Guigeequal, Guigeand);
                 //zhucezhengbh
                 if (!string.IsNullOrEmpty(zhucezhengbh))
                 {
@@ -440,6 +488,28 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", mingcheng, mingchengequal, mingchengand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", "", mingchengequal, mingchengand);
+                //Guige
+                if (!string.IsNullOrEmpty(Guige))
+                {
+                    if (Guigeequal.Equals("="))
+                    {
+                        if (Guigeand.Equals("and"))
+                            where = where.And(p => p.Guige == Guige);
+                        else
+                            where = where.Or(p => p.Guige == Guige);
+                    }
+                    if (Guigeequal.Equals("like"))
+                    {
+                        if (Guigeand.Equals("and"))
+                            where = where.And(p => p.Guige.Contains(Guige));
+                        else
+                            where = where.Or(p => p.Guige.Contains(Guige));
+                    }
+                }
+                if (!string.IsNullOrEmpty(Guige))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "Guige", Guige, Guigeequal, Guigeand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "Guige", "", Guigeequal, Guigeand);
                 //zhucezhengbh
                 if (!string.IsNullOrEmpty(zhucezhengbh))
                 {
@@ -1028,6 +1098,28 @@ namespace CKWMS.Controllers
                                         where = where.And(base_shangpin_v => base_shangpin_v.mingcheng.Contains(mingcheng));
                                     else
                                         where = where.Or(base_shangpin_v => base_shangpin_v.mingcheng.Contains(mingcheng));
+                                }
+                            }
+                            break;
+                        case "Guige":
+                            string Guige = scld[1];
+                            string Guigeequal = scld[2];
+                            string Guigeand = scld[3];
+                            if (!string.IsNullOrEmpty(Guige))
+                            {
+                                if (Guigeequal.Equals("="))
+                                {
+                                    if (Guigeand.Equals("and"))
+                                        where = where.And(p => p.Guige == Guige);
+                                    else
+                                        where = where.Or(p => p.Guige == Guige);
+                                }
+                                if (Guigeequal.Equals("like"))
+                                {
+                                    if (Guigeand.Equals("and"))
+                                        where = where.And(p => p.Guige.Contains(Guige));
+                                    else
+                                        where = where.Or(p => p.Guige.Contains(Guige));
                                 }
                             }
                             break;

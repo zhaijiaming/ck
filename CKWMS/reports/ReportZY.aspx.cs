@@ -78,10 +78,27 @@ namespace CKWMS.reports
                             long jhd_DaijianSLs = 0;
                             float JianShus = 0;
                             float JianShu = 0;
+
                             try
                             {
                                 var _jhds = ob_wms_jianhuoservice.GetPickDetail(int.Parse(_outid), p => p.DaijianSL > 0).OrderBy(p => p.Kuwei).ThenBy(p => p.Pihao).ToList<wms_pick_v>();
-                                foreach (wms_pick_v _pv in _jhds)
+                                //相同库位、批号、序列码的数据相加。
+                                var afterList = _jhds.GroupBy(a => a.Kuwei + a.Pihao + a.Xuliema).Select(g => (new
+                                {
+                                    id = g.Key,
+                                    count = g.Count(),
+                                    ShangpinMC = g.First().ShangpinMC == null ? "" : g.First().ShangpinMC,
+                                    DaijianSL = g.Sum(item => item.DaijianSL),
+                                    Huansuanlv = g.First().Huansuanlv,
+                                    ShixiaoRQ = string.Format("{0:yyyy/MM/dd}", g.First().ShixiaoRQ == null ? "" : ((DateTime)g.First().ShixiaoRQ).ToString("yyyy/MM/dd")),
+                                    Guige = g.First().Guige,
+                                    Pihao = g.First().Pihao,
+                                    Kuwei = g.First().Kuwei,
+                                    Zhucezheng = g.First().Zhucezheng,
+                                    JianhuoSM = g.First().JianhuoSM,
+                                })).OrderBy(t => t.Kuwei).ThenBy(t=>t.Guige);
+
+                                foreach (var _pv in afterList)
                                 {
                                     drjhd = dtjhd.NewRow();
                                     drjhd["Mingcheng"] = _pv.ShangpinMC;
@@ -92,7 +109,7 @@ namespace CKWMS.reports
                                     drjhd["JianShu"] = JianShu;
                                     JianShus += JianShu;
 
-                                    drjhd["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _pv.ShixiaoRQ == null ? "" : ((DateTime)_pv.ShixiaoRQ).ToString("yyyy/MM/dd"));
+                                    drjhd["ShixiaoRQ"] = _pv.ShixiaoRQ;
                                     drjhd["Guige"] = _pv.Guige;
                                     drjhd["Pihao"] = _pv.Pihao;
                                     drjhd["Kuwei"] = _pv.Kuwei;
@@ -266,7 +283,6 @@ namespace CKWMS.reports
                                     drJSGRtx = dtJSGRtx.NewRow();
                                     drJSGRtx["Guige"] = _mx.Guige == null ? "" : _mx.Guige.Trim();
                                     drJSGRtx["ShangpinMC"] = _mx.ShangpinMC == null ? "" : _mx.ShangpinMC.Trim();
-                                    drJSGRtx["Changjia"] = _mx.Changjia == null ? "" : _mx.Changjia.Trim();
                                     drJSGRtx["Pihao"] = _mx.Pihao == null ? "" : _mx.Pihao.Trim();
                                     drJSGRtx["Xuliema"] = _mx.Xuliema == null ? "" : _mx.Xuliema.Trim();
                                     drJSGRtx["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _mx.ShixiaoRQ == null ? "" : ((DateTime)_mx.ShixiaoRQ).ToString("yyyy/MM/dd"));
@@ -278,6 +294,10 @@ namespace CKWMS.reports
                                     if (spxxData != null)
                                     {
                                         drJSGRtx["ShangpinMS"] = spxxData.ShangpinMS == null ? "" : spxxData.ShangpinMS;
+                                        base_gongyingshang gys = ServiceFactory.base_gongyingshangservice.GetEntityById(p => p.ID == spxxData.GongyingID && p.IsDelete == false);
+                                        drJSGRtx["gongYingShangMC"] = gys.Mingcheng == null ? "" : gys.Mingcheng.Trim();
+
+
                                     }
 
                                     JSGRChukuJS = _mx.JianhuoSL / _mx.Huansuanlv == null ? int.Parse("0.00") : (float)_mx.JianhuoSL / _mx.Huansuanlv;
@@ -586,21 +606,22 @@ namespace CKWMS.reports
                                     base_weituokehu wtkh_others = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == rkd_others.HuozhuID);
                                     drrkfhjy["HuozhuID"] = wtkh_others.Kehumingcheng;
                                 }
-                                drrkfhjy["MakeDate"] = string.Format("{0:yyyy/MM/dd}", rkd_others.RukuRQ == null ? "" : ((DateTime)rkd_others.RukuRQ).ToString("yyyy/MM/dd")); 
-                                //var _ysbgs = ServiceFactory.quan_rukuysservice.GetEntrycheckByRK(int.Parse(_rkysid)).ToList<quan_entrycheck_v>();
-                                //foreach (var _date in _ysbgs)
-                                //{
-                                //    var ystime = _date.ystime;
-                                //    if (ystime != null)
-                                //        drrkfhjy["MakeDate"] = string.Format("{0:yyyy/MM/dd}", ystime == null ? "" : ((DateTime)ystime).ToString("yyyy/MM/dd"));
-                                //    break;
-                                //}
+                                drrkfhjy["MakeDate"] = string.Format("{0:yyyy/MM/dd}", rkd_others.RukuRQ == null ? "" : ((DateTime)rkd_others.RukuRQ).ToString("yyyy/MM/dd"));
 
-                                userinfo man = ServiceFactory.userinfoservice.GetEntityById(p => p.ID == (int)Session["user_id"] && p.IsDelete == false);
-                                if (man != null)
+                                var _zlysbgs = ServiceFactory.quan_rukuysservice.GetEntrycheckByRK(int.Parse(_rkysid)).ToList<quan_entrycheck_v>();
+                                //取验收人
+                                var Yanshouren_first = "";
+                                foreach (var rkys in _zlysbgs)
                                 {
-                                    drrkfhjy["MakeMan"] = man.FullName;
+                                    var Yanshouren = rkys.Yanshouren;
+                                    if (Yanshouren != null)
+                                    {
+                                        Yanshouren_first = Yanshouren;
+                                        break;
+                                    }
                                 }
+                                drrkfhjy["MakeMan"] = Yanshouren_first;
+                                
 
                                 drrkfhjy["rkysbgSLs"] = rkysbg_Shuliangs;
                                 drrkfhjy["rkysbgYs"] = rkysbg_YanshouSL_Y;

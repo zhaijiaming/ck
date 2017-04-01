@@ -1125,7 +1125,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Changjia.Value</Value>
+                              <Value>=Fields!gongYingShangMC.Value</Value>
                               <Style>
                                 <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -3175,8 +3175,8 @@
           <DataField>JibenDW</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Changjia">
-          <DataField>Changjia</DataField>
+        <Field Name="gongYingShangMC">
+          <DataField>gongYingShangMC</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Beizhu">

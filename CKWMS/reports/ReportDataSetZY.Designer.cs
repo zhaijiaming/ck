@@ -1902,7 +1902,7 @@ namespace CKWMS.reports {
             
             private global::System.Data.DataColumn columnJibenDW;
             
-            private global::System.Data.DataColumn columnChangjia;
+            private global::System.Data.DataColumn columngongYingShangMC;
             
             private global::System.Data.DataColumn columnBeizhu;
             
@@ -2019,9 +2019,9 @@ namespace CKWMS.reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn ChangjiaColumn {
+            public global::System.Data.DataColumn gongYingShangMCColumn {
                 get {
-                    return this.columnChangjia;
+                    return this.columngongYingShangMC;
                 }
             }
             
@@ -2135,7 +2135,7 @@ namespace CKWMS.reports {
                         string Zhucezheng, 
                         string JianhuoSL, 
                         string JibenDW, 
-                        string Changjia, 
+                        string gongYingShangMC, 
                         string Beizhu, 
                         string ShengchanxukeBH, 
                         string BeianBH, 
@@ -2154,7 +2154,7 @@ namespace CKWMS.reports {
                         Zhucezheng,
                         JianhuoSL,
                         JibenDW,
-                        Changjia,
+                        gongYingShangMC,
                         Beizhu,
                         ShengchanxukeBH,
                         BeianBH,
@@ -2193,7 +2193,7 @@ namespace CKWMS.reports {
                 this.columnZhucezheng = base.Columns["Zhucezheng"];
                 this.columnJianhuoSL = base.Columns["JianhuoSL"];
                 this.columnJibenDW = base.Columns["JibenDW"];
-                this.columnChangjia = base.Columns["Changjia"];
+                this.columngongYingShangMC = base.Columns["gongYingShangMC"];
                 this.columnBeizhu = base.Columns["Beizhu"];
                 this.columnShengchanxukeBH = base.Columns["ShengchanxukeBH"];
                 this.columnBeianBH = base.Columns["BeianBH"];
@@ -2223,8 +2223,8 @@ namespace CKWMS.reports {
                 base.Columns.Add(this.columnJianhuoSL);
                 this.columnJibenDW = new global::System.Data.DataColumn("JibenDW", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnJibenDW);
-                this.columnChangjia = new global::System.Data.DataColumn("Changjia", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnChangjia);
+                this.columngongYingShangMC = new global::System.Data.DataColumn("gongYingShangMC", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columngongYingShangMC);
                 this.columnBeizhu = new global::System.Data.DataColumn("Beizhu", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnBeizhu);
                 this.columnShengchanxukeBH = new global::System.Data.DataColumn("ShengchanxukeBH", typeof(string), null, global::System.Data.MappingType.Element);
@@ -12531,17 +12531,17 @@ namespace CKWMS.reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Changjia {
+            public string gongYingShangMC {
                 get {
                     try {
-                        return ((string)(this[this.tableTongXingDan.ChangjiaColumn]));
+                        return ((string)(this[this.tableTongXingDan.gongYingShangMCColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("表“TongXingDan”中列“Changjia”的值为 DBNull。", e);
+                        throw new global::System.Data.StrongTypingException("表“TongXingDan”中列“gongYingShangMC”的值为 DBNull。", e);
                     }
                 }
                 set {
-                    this[this.tableTongXingDan.ChangjiaColumn] = value;
+                    this[this.tableTongXingDan.gongYingShangMCColumn] = value;
                 }
             }
             
@@ -12771,14 +12771,14 @@ namespace CKWMS.reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsChangjiaNull() {
-                return this.IsNull(this.tableTongXingDan.ChangjiaColumn);
+            public bool IsgongYingShangMCNull() {
+                return this.IsNull(this.tableTongXingDan.gongYingShangMCColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetChangjiaNull() {
-                this[this.tableTongXingDan.ChangjiaColumn] = global::System.Convert.DBNull;
+            public void SetgongYingShangMCNull() {
+                this[this.tableTongXingDan.gongYingShangMCColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
