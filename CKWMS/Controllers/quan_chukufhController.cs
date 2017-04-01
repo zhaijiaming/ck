@@ -83,6 +83,16 @@ namespace CKWMS.Controllers
             //var _ckid = Request["ck"] ?? "";
             //if (_ckid == "")
             //    _ckid = "0";
+            var _rights = ServiceFactory.auth_quanxianservice.GetPersonRights(_userid).ToList().Distinct().ToList();
+            var _authorized = from u in _rights
+                              where u.function == "OutInventoryCheck"
+                              select new
+                              {
+                                  id = u.ID,
+                                  function = u.function
+                              };
+            if (_authorized.Count() == 0)
+                return View("~/Views/Shared/Error.cshtml");
 
             var tempData = ServiceFactory.quan_chukufhservice.GetOutcheckByCK(id,p=>p.JianhuoSL>0).ToList<quan_outcheck_v>();
             ViewBag.waitcheck = tempData;

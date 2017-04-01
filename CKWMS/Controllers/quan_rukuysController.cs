@@ -145,12 +145,22 @@ namespace CKWMS.Controllers
             ViewBag.quan_inrec = tempData;
             return View(tempData);
         }
-        [OutputCache(Duration =30)]
+        [OutputCache(Duration = 30)]
         public ActionResult EntryCheckList(int id)
         {
             var rkysid = id;
-            var _username = Session["user_name"];
-            var _userid = Session["user_id"];
+            var _username = (string)Session["user_name"] ?? "";
+            var _userid = (int)Session["user_id"];
+            var _rights = ServiceFactory.auth_quanxianservice.GetPersonRights(_userid).ToList().Distinct().ToList();
+            var _authorized = from u in _rights
+                              where u.function == "EntryCheckList"
+                              select new
+                              {
+                                  id = u.ID,
+                                  function = u.function
+                              };
+            if (_authorized.Count() == 0)
+                return View("~/Views/Shared/Error.cshtml");
             var tempData = ob_quan_rukuysservice.GetEntrycheckByRK(id).ToList<quan_entrycheck_v>();
             ViewBag.userid = _userid;
             ViewBag.username = _username;
@@ -158,7 +168,7 @@ namespace CKWMS.Controllers
             ViewBag.rkysid = rkysid;
 
             ViewBag.linecount = tempData.Count;
-            ViewBag.totalproduct = tempData.Sum(p => p.YanshouSL/p.Huansuanlv);
+            ViewBag.totalproduct = tempData.Sum(p => p.YanshouSL / p.Huansuanlv);
             ViewBag.YanshouSLs = tempData.Sum(p => p.YanshouSL);
             return View();
         }
@@ -175,7 +185,7 @@ namespace CKWMS.Controllers
             {
                 if (int.Parse(_shmxid) == 0 || _shmxid.Length == 0)
                     return Json(-1);
-                wms_shouhuomx _orishmx = ServiceFactory.wms_shouhuomxservice.GetEntityById(p => p.ID ==int.Parse(_shmxid));
+                wms_shouhuomx _orishmx = ServiceFactory.wms_shouhuomxservice.GetEntityById(p => p.ID == int.Parse(_shmxid));
                 if (_orishmx == null)
                     return Json(-1);
                 wms_shouhuomx _newshmx = new wms_shouhuomx();
@@ -191,7 +201,7 @@ namespace CKWMS.Controllers
                 _newshmx.Jingzhong = _orishmx.Jingzhong;
                 _newshmx.MakeDate = _orishmx.MakeDate;
                 _newshmx.MakeMan = _orishmx.MakeMan;
-                _newshmx.Pihao= _orishmx.Pihao;
+                _newshmx.Pihao = _orishmx.Pihao;
                 _newshmx.Pihao1 = _orishmx.Pihao1;
                 _newshmx.RKMXID = _orishmx.RKMXID;
                 _newshmx.RukuID = _orishmx.RukuID;
@@ -204,11 +214,11 @@ namespace CKWMS.Controllers
                 _newshmx.Shuliang = _orishmx.Shuliang;
                 _newshmx.Tiji = _orishmx.Tiji;
                 _newshmx.Xuliema = _orishmx.Xuliema;
-                _newshmx.Yanshou= _orishmx.Yanshou;
+                _newshmx.Yanshou = _orishmx.Yanshou;
                 _newshmx.Zhongliang = _orishmx.Zhongliang;
                 _newshmx.Zhucezheng = _orishmx.Zhucezheng;
                 _newshmx.IsDelete = _orishmx.IsDelete;
-                _newshmx=ServiceFactory.wms_shouhuomxservice.AddEntity(_newshmx);
+                _newshmx = ServiceFactory.wms_shouhuomxservice.AddEntity(_newshmx);
 
                 quan_rukuys ob_quan_rukuys = new quan_rukuys();
                 ob_quan_rukuys.MingxiID = _orishmx.ID;
@@ -221,7 +231,7 @@ namespace CKWMS.Controllers
                 ob_quan_rukuys.MakeMan = _userid;
                 ob_quan_rukuys = ob_quan_rukuysservice.AddEntity(ob_quan_rukuys);
 
-                _orishmx.Shuliang= _ysslok == "" ? 0 : float.Parse(_ysslok);
+                _orishmx.Shuliang = _ysslok == "" ? 0 : float.Parse(_ysslok);
                 ServiceFactory.wms_shouhuomxservice.UpdateEntity(_orishmx);
 
                 quan_rukuys ob_quan_rukuys1 = new quan_rukuys();
@@ -235,7 +245,7 @@ namespace CKWMS.Controllers
                 ob_quan_rukuys1.MakeMan = _userid;
                 ob_quan_rukuys1 = ob_quan_rukuysservice.AddEntity(ob_quan_rukuys1);
 
-                _newshmx.Shuliang= _ysslng == "" ? 0 : float.Parse(_ysslng);
+                _newshmx.Shuliang = _ysslng == "" ? 0 : float.Parse(_ysslng);
                 ServiceFactory.wms_shouhuomxservice.UpdateEntity(_newshmx);
             }
             catch (Exception ex)
@@ -263,7 +273,7 @@ namespace CKWMS.Controllers
                 ob_quan_rukuys.YanshouSM = _yssm.Trim();
                 ob_quan_rukuys.YanshouZT = 3;
                 ob_quan_rukuys.MakeDate = DateTime.Now;
-                ob_quan_rukuys.MakeMan =_userid;
+                ob_quan_rukuys.MakeMan = _userid;
                 ob_quan_rukuys = ob_quan_rukuysservice.AddEntity(ob_quan_rukuys);
             }
             catch (Exception ex)
@@ -462,7 +472,7 @@ namespace CKWMS.Controllers
             var flag = 0;
             var tempdata = ServiceFactory.quan_rukuysservice.GetInrec(p => p.RukudanBH == zlgl_rkysbh && p.IsDelete == false);
             var firstdata = tempdata.FirstOrDefault();
-            if(firstdata != null)
+            if (firstdata != null)
             {
                 flag = 1;
             }
