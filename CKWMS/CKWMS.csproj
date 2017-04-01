@@ -317,9 +317,11 @@
     <Compile Include="Controllers\wms_chukudanController.cs" />
     <Compile Include="Controllers\wms_chukumxController.cs" />
     <Compile Include="Controllers\wms_chukuxlmController.cs" />
+    <Compile Include="Controllers\wms_inreportController.cs" />
     <Compile Include="Controllers\wms_jianhuoController.cs" />
     <Compile Include="Controllers\wms_kehukwController.cs" />
     <Compile Include="Controllers\wms_kuweiController.cs" />
+    <Compile Include="Controllers\wms_outreportController.cs" />
     <Compile Include="Controllers\wms_scanhomeController.cs" />
     <Compile Include="Controllers\wms_scaninController.cs" />
     <Compile Include="Controllers\wms_scanoutController.cs" />
@@ -984,6 +986,8 @@
     <Content Include="Views\zx_xuanxiang\Add.cshtml" />
     <Content Include="Views\zx_xuanxiang\Edit.cshtml" />
     <Content Include="Views\zx_xuanxiang\Index.cshtml" />
+    <Content Include="Views\wms_outreport\GetOutList.cshtml" />
+    <Content Include="Views\wms_inreport\GetInList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

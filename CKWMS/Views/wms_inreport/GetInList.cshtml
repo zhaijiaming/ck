@@ -1,0 +1,124 @@
+﻿@using CKWMS.App_Code
+@using CKWMS.Models
+@using X.PagedList
+@using X.PagedList.Mvc
+@{
+    ViewBag.Title = "入库信息";
+    string _searchcondition = ViewBag.SearchCondition;
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var i = 0;
+        $("#mydatatable tbody tr").each(function () {
+            i = i + 1;
+            $(this).find("td").eq(0).html(i);
+        });
+    });
+</script>
+
+@{
+    List<SearchConditionModel> scms = new List<SearchConditionModel>();
+    if (_searchcondition == null || _searchcondition == "")
+    {
+        SearchConditionModel scm = new SearchConditionModel();
+        scm.ItemCode = "RukuBH";
+        scm.ItemTitle = "入库编号";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+    }
+    else
+    {
+        string[] scs = _searchcondition.Split(';');
+        if (scs.Length > 0)
+        {
+            SearchConditionModel scm = new SearchConditionModel();
+            scm.ItemCode = "RukuBH";
+            scm.ItemTitle = "入库编号";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[0].Split(',')[1];
+                if (scm.ItemValue.Length == 0)
+                {
+                    scm.ItemValue = "0";
+                }
+                scm.ItemOpValue = scs[0].Split(',')[2];
+                scm.ItemJion = scs[0].Split(',')[3];
+            }
+            scms.Add(scm);
+        }
+    }
+}
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    </script>
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="/Home">首页</a>
+        </li>
+        <li class="active">入库信息</li>
+    </ul>
+</div>
+<div class="page-content">
+    @Html.Search_Condition((int)Session["user_id"], "入库_条件组合查询", "/wms_inreport/getinlist", "wms_inreport_list", scms)
+    <div class="page-header">
+        <p>
+            <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
+            <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
+        </p>
+    </div>
+    <div class="row" style="overflow:auto;">
+        <table class="table table-condensed table-hover" id="mydatatable" style="overflow: hidden;text-overflow:ellipsis;white-space: nowrap;">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <td>序号</td>
+                    <td>委托方企业名称</td>
+                    <td>入库日期</td>
+                    <td>入库类型</td>
+                    <td>产品名称</td>
+                    <td>规格(型号)</td>
+                    <td>生产企业</td>
+                    <td>产品注册证号</td>
+                    <td>备案凭证号</td>
+                    <td>生产批号/序列号</td>
+                    <td>生产日期和有效期(或者失效期)</td>
+                    <td>数量</td>
+                    <td>单位</td>
+                    <td>库存地点(货架号)</td>
+                    <td>质量状态</td>
+                    <td>备注</td>
+                </tr>
+            </thead>
+            <tbody style="overflow:auto;">
+                @foreach (var item in ViewBag.inreport)
+                {
+                    <tr>
+                        <td></td>
+                        <td>@Html.GetDataValue_ID("货主", "名称", (int)item.HuozhuID)</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.RukuRQ == null ? "" : item.RukuRQ)</td>
+                        <td>@Html.GetCommonValue_ID("入库类型", (int)item.YewuLX)</td>
+                        <td>@item.ShangpinMC</td>
+                        <td>@item.Guige</td>
+                        <td>@item.Changjia</td>
+                        <td>@item.Zhucezheng</td>
+                        <td>@item.Pihao</td>
+                        <td>@item.Xuliema</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ == null ? "" : item.ShengchanRQ)/@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ == null ? "" : item.ShixiaoRQ)</td>
+                        <td>@item.ChushiSL</td>
+                        <td>@item.JibenDW</td>
+                        <td>@item.Kuwei</td>
+                        <td>@string.Format("{0}", item.HegeSF == true ? "合格" : "不合格")</td>
+                        <td>@item.CunhuoSM</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="pager">
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("GetInList", new { page }))
+    </div>
+</div>
+
