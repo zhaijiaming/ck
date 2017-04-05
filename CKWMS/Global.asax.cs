@@ -127,6 +127,10 @@ namespace CKWMS
         /// 包装箱状态
         /// </summary>
         public static Dictionary<int, string> BoxState;
+        /// <summary>
+        /// 移位类型
+        /// </summary>
+        public static Dictionary<int, string> MoveType;
 
         protected void Application_Start()
         {
@@ -415,6 +419,14 @@ namespace CKWMS
             RemindObject.Add(12, "当前入库单");
             RemindObject.Add(13, "当前出库单");
             RemindObject.Add(14, "U8-无商品");
+
+            MoveType = new Dictionary<int, string>();
+            MoveType.Add(0, "");
+            MoveType.Add(1, "样品移位");
+            MoveType.Add(2, "不良移位");
+            MoveType.Add(3, "普通移位");
+            MoveType.Add(4, "货品移动");
+            MoveType.Add(5, "库位移动");
         }
     }
 }

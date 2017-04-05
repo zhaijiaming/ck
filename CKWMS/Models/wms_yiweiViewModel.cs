@@ -31,6 +31,10 @@ namespace CKWMS.Models
         public bool IsDelete { get; set; }
         [Display(Name = "制单人")]
         public int? MakeMan { get; set; }
+        [Display(Name ="移位类型")]
+        public int? YWLX { get; set; }
+        [Display(Name ="移位说明")]
+        public string YWSM { get; set; }
     }
 }
 

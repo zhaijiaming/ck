@@ -459,6 +459,9 @@ namespace CKWMS.App_Code
                 case "包装箱状态":
                     sb.Append(GetCommonSelect(selectedValue, MvcApplication.BoxState));
                     break;
+                case "移动类型":
+                    sb.Append(GetCommonSelect(selectedValue, MvcApplication.MoveType));
+                    break;
                 default:
                     break;
             }
@@ -1491,6 +1494,10 @@ namespace CKWMS.App_Code
                 case "包装箱状态":
                     if (MvcApplication.BoxState.ContainsKey(dataValue))
                         returnvalue = MvcApplication.BoxState[dataValue];
+                    break;
+                case "移动类型":
+                    if (MvcApplication.MoveType.ContainsKey(dataValue))
+                        returnvalue = MvcApplication.MoveType[dataValue];
                     break;
                 default:
                     break;

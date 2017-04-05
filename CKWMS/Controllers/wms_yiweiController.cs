@@ -730,6 +730,8 @@ namespace CKWMS.Controllers
             var _ochid = Request["ch"] ?? "";
             var _nloc = Request["loc"] ?? "";
             var _sl = Request["sl"] ?? "";
+            var _lx = Request["lx"] ?? "";
+            var _sm = Request["sm"] ?? "";
             if (string.IsNullOrEmpty(_ochid) || string.IsNullOrEmpty(_nloc) || string.IsNullOrEmpty(_sl))
                 return Json(-1);
             var _ch = ServiceFactory.wms_cunhuoservice.GetEntityById(p => p.ID == int.Parse(_ochid) && p.IsDelete == false);
@@ -776,6 +778,8 @@ namespace CKWMS.Controllers
                 _yw.XKWID = _nch.KuweiID;
                 _yw.MakeDate = DateTime.Now;
                 _yw.MakeMan = _userid;
+                _yw.YWLX = int.Parse(_lx);
+                _yw.YWSM = _sm.Trim();
                 _yw = ob_wms_yiweiservice.AddEntity(_yw);
                 if (_yw != null)
                 {
@@ -857,6 +861,7 @@ namespace CKWMS.Controllers
                     _yw.XKWID = _nch.KuweiID;
                     _yw.MakeDate = DateTime.Now;
                     _yw.MakeMan = _userid;
+                    _yw.YWLX = 5;
                     _yw = ob_wms_yiweiservice.AddEntity(_yw);
                     if (_yw != null)
                     {
@@ -889,6 +894,8 @@ namespace CKWMS.Controllers
             string xkwid = Request["xkwid"] ?? "";
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
+            string ywlx = Request["ywlx"] ?? "";
+            string ywsm = Request["ywsm"] ?? "";
             try
             {
                 wms_yiwei ob_wms_yiwei = new wms_yiwei();
@@ -902,6 +909,8 @@ namespace CKWMS.Controllers
                 ob_wms_yiwei.XKWID = xkwid == "" ? 0 : int.Parse(xkwid);
                 ob_wms_yiwei.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 ob_wms_yiwei.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
+                ob_wms_yiwei.YWLX = ywlx == "" ? 0 : int.Parse(ywlx);
+                ob_wms_yiwei.YWSM = ywsm.Trim();
                 ob_wms_yiwei = ob_wms_yiweiservice.AddEntity(ob_wms_yiwei);
                 ViewBag.wms_yiwei = ob_wms_yiwei;
             }
@@ -933,6 +942,8 @@ namespace CKWMS.Controllers
                 wms_yiweiviewmodel.XKWID = tempData.XKWID;
                 wms_yiweiviewmodel.MakeDate = tempData.MakeDate;
                 wms_yiweiviewmodel.MakeMan = tempData.MakeMan;
+                wms_yiweiviewmodel.YWLX = tempData.YWLX;
+                wms_yiweiviewmodel.YWSM = tempData.YWSM;
                 return View(wms_yiweiviewmodel);
             }
         }
@@ -952,6 +963,8 @@ namespace CKWMS.Controllers
             string xkwid = Request["xkwid"] ?? "";
             string makedate = Request["makedate"] ?? "";
             string makeman = Request["makeman"] ?? "";
+            string ywlx = Request["ywlx"] ?? "";
+            string ywsm = Request["ywsm"] ?? "";
             int uid = int.Parse(id);
             try
             {
@@ -966,6 +979,8 @@ namespace CKWMS.Controllers
                 p.XKWID = xkwid == "" ? 0 : int.Parse(xkwid);
                 p.MakeDate = makedate == "" ? DateTime.Now : DateTime.Parse(makedate);
                 p.MakeMan = makeman == "" ? 0 : int.Parse(makeman);
+                p.YWLX = ywlx == "" ? 0 : int.Parse(ywlx);
+                p.YWSM = ywsm.Trim();
                 ob_wms_yiweiservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;
             }

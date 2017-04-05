@@ -171,12 +171,14 @@
             <thead>
                 <tr>
                     <td></td>
+                    <td>移动类型</td>
                     <td>移位商品</td>
                     <td>库位编号</td>
                     <td>移出数量</td>
                     <td>新库位编号</td>
                     <td>移库日期</td>
                     <td>操作人</td>
+                    <td>移位说明</td>
                 </tr>
             </thead>
             <tbody>
@@ -186,12 +188,14 @@
                         <td>
                             <label><input type="checkbox" value="@item.ID"></label>
                         </td>
+                        <td>@Html.GetCommonValue_ID("移动类型",(int)(item.YWLX==null?0:item.YWLX))</td>
                         <td>@Html.GetDataValue_ID("收货", "全部", (int)item.SHID)</td>
                         <td>@item.KWBH</td>
                         <td>@item.Shuliang</td>
                         <td>@item.XKWBH</td>
                         <td>@string.Format("{0:d}", item.MakeDate)</td>
                         <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
+                        <td>@item.YWSM</td>
                     </tr>
                 }
             </tbody>
