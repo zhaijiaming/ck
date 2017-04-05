@@ -239,7 +239,7 @@
                     "json");
             return false;
         });
-        $("#save_buttom").click(function () {
+        $("#save_bottom").click(function () {
             if ($("#daima").val() == "") {
                 alert("代码不能为空");
                 document.getElementById("shengcheng").focus();
@@ -249,27 +249,6 @@
                 document.getElementById("shengcheng").focus();
             }
             else { form.submit(); }
-        })
-        var form = $("#tempform");
-        form.submit(function () {
-            $.post(form.attr("action"),
-                  form.serialize(),
-                  function (result, status) {
-                      //alert(status);
-                      if (result._flag == 1) {
-                          alert("保存成功");
-                          location.href = "/base_gongyingshang/Index";
-                      }
-                      else if (result._flag == -1) {
-                          alert("保存失败");
-                      }
-                      else if (result._flag == -2) {
-                          alert("保存失败，该代码已存在");
-                      }
-                      else { alert("未知异常"); }
-                  },
-                    "json");
-            return false;
         });
         //'是否合作'绑定值
         $("#HezuoSF").val("false");//默认赋值
@@ -685,7 +664,7 @@
 
                                     </fieldset>
                                     <div class="form-actions center">
-                                        <button id="save_buttom" class="btn btn-primary" type="button">
+                                        <button id="save_bottom" class="btn btn-primary" type="button">
                                             <b>保存</b>
                                             <i class="icon-save bigger-110"></i>
                                         </button>

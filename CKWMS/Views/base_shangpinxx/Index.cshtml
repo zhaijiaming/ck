@@ -269,8 +269,8 @@
             scms.Add(scm);
 
             scm = new SearchConditionModel();
-            scm.ItemCode = "ZhucezhengBH";
-            scm.ItemTitle = "注册证";
+            scm.ItemCode = "Guige";
+            scm.ItemTitle = "规格";
             scm.ItemType = "System.String";
             if (scs.Length > 1)
             {
@@ -281,26 +281,22 @@
             scms.Add(scm);
 
             scm = new SearchConditionModel();
-            scm.ItemCode = "GongyingID";
-            scm.ItemShowName = "gongyingid";
-            scm.ItemTitle = "供应商";
-            scm.ItemType = "供应商.供应商";
+            scm.ItemCode = "ZhucezhengBH";
+            scm.ItemTitle = "注册证";
+            scm.ItemType = "System.String";
             if (scs.Length > 1)
             {
                 scm.ItemValue = scs[4].Split(',')[1];
-                if (scm.ItemValue.Length == 0)
-                {
-                    scm.ItemValue = "0";
-                }
                 scm.ItemOpValue = scs[4].Split(',')[2];
                 scm.ItemJion = scs[4].Split(',')[3];
             }
             scms.Add(scm);
 
             scm = new SearchConditionModel();
-            scm.ItemCode = "Shouying";
-            scm.ItemTitle = "首营状态";
-            scm.ItemType = "首营状态.首营状态";
+            scm.ItemCode = "GongyingID";
+            scm.ItemShowName = "gongyingid";
+            scm.ItemTitle = "供应商";
+            scm.ItemType = "供应商.供应商";
             if (scs.Length > 1)
             {
                 scm.ItemValue = scs[5].Split(',')[1];
@@ -314,13 +310,29 @@
             scms.Add(scm);
 
             scm = new SearchConditionModel();
+            scm.ItemCode = "Shouying";
+            scm.ItemTitle = "首营状态";
+            scm.ItemType = "首营状态.首营状态";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[6].Split(',')[1];
+                if (scm.ItemValue.Length == 0)
+                {
+                    scm.ItemValue = "0";
+                }
+                scm.ItemOpValue = scs[6].Split(',')[2];
+                scm.ItemJion = scs[6].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
             scm.ItemCode = "ShenchaSF";
             scm.ItemShowName = "shenchasf";
             scm.ItemTitle = "是否审查";
             scm.ItemType = "是否.是否";
             if (scs.Length > 1)
             {
-                scm.ItemValue = scs[6].Split(',')[1];
+                scm.ItemValue = scs[7].Split(',')[1];
                 if (scm.ItemValue.Length == 0)
                 {
                     scm.ItemValue = "-1";
@@ -333,8 +345,8 @@
                 {
                     scm.ItemValue = "1";
                 }
-                scm.ItemOpValue = scs[6].Split(',')[2];
-                scm.ItemJion = scs[6].Split(',')[3];
+                scm.ItemOpValue = scs[7].Split(',')[2];
+                scm.ItemJion = scs[7].Split(',')[3];
             }
             scms.Add(scm);
 

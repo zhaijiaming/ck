@@ -68,5 +68,11 @@ namespace CKWMS.Controllers
             ViewBag.inreport = tempData;
             return View(tempData);
         }
+
+        public ActionResult PrintInReport()
+        {
+
+            return View();
+        }
     }
 }

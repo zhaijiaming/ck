@@ -214,29 +214,7 @@
             }
             else { form.submit(); }
         })
-
-        var form = $("#tempform");
-        form.submit(function () {
-            $.post(form.attr("action"),
-                  form.serialize(),
-                  function (result, status) {
-                      //alert(status);
-                      if (result._flag == 1) {
-                          alert("更新成功");
-                      }
-                      else if (result._flag == -1) {
-                          alert("更新失败");
-                      }
-                      else if (result._flag == -2) {
-                          alert("更新失败，该代码已存在");
-                      }
-                      else { alert("未知异常"); }
-                  },
-                    "json");
-            return false;
-
-        });
-        $("#save_buttom").click(function () {
+        $("#save_bottom").click(function () {
             if ($("#daima").val() == "") {
                 alert("代码不能为空");
                 document.getElementById("shengcheng").focus();
@@ -451,8 +429,8 @@
 </div>
 <div class="page-content">
     <div class="page-header">
-        <button type="button" class="btn btn-app btn-xs btn-primary radius-4" onclick="javascript: history.back(-1); "><i class="icon-reply icon-only"></i>返回</button>
-        <button type="button" id="save_top" class="btn btn-app btn-xs btn-primary radius-4"><i class="icon-save"></i>更新</button>
+        <button type="button" class="btn btn-app btn-xs btn-primary radius-4" onclick="javascript: history.back(-1); "><i class="icon-reply icon-only"></i><b>返回</b></button>
+        <button type="button" id="save_top" class="btn btn-app btn-xs btn-primary radius-4"><i class="icon-save"></i><b>更新</b></button>
     </div>
     <div class="wrapper" style="background: url('/Imgs/bg-cloud.png') repeat;">
         <div class="container">
@@ -710,7 +688,7 @@
                                         </div>
                                     </fieldset>
                                     <div class="form-actions center">
-                                        <button id="save_buttom" class="btn btn-primary" type="button">
+                                        <button id="save_bottom" class="btn btn-primary" type="button">
                                             <b>更新</b>
                                             <i class="icon-save bigger-110"></i>
                                         </button>

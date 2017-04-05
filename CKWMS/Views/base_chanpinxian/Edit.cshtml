@@ -14,7 +14,7 @@
         $("#save_top").bind("click", function () {
             $("#form").submit();
         });
-        $("#save_buttom").bind("click", function () {
+        $("#save_bottom").bind("click", function () {
             $("#form").submit();
         });
     });
@@ -35,8 +35,8 @@
 <div class="page-content">
     <div class="page-header">
         <p>
-            <button type="button" class="btn btn-app btn-xs btn-primary radius-4" onclick="javascript: history.back(-1); "><i class="icon-reply icon-only"></i>返回</button>
-            <button type="button" id="save_top" class="btn btn-app btn-xs btn-primary radius-4"><i class="icon-save"></i>更新</button>
+            <button type="button" class="btn btn-app btn-xs btn-primary radius-4" onclick="javascript: history.back(-1); "><i class="icon-reply icon-only"></i><b>返回</b></button>
+            <button type="button" id="save_top" class="btn btn-app btn-xs btn-primary radius-4"><i class="icon-save"></i><b>更新</b></button>
         </p>
     </div>
     <div class="wrapper" style="background: url('/Imgs/bg-cloud.png') repeat;">
@@ -101,7 +101,7 @@
                                         </div>
                                     </fieldset>
                                     <div class="form-actions center">
-                                        <button id="save_buttom" class="btn btn-primary" type="button">
+                                        <button id="save_bottom" class="btn btn-primary" type="button">
                                             <b>更新</b>
                                             <i class="icon-save bigger-110"></i>
                                         </button>

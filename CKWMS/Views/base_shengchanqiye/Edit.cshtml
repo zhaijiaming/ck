@@ -8,64 +8,7 @@
 @Html.GetFileUpload("yingyezhizhaotp", "yyzz", "z", "scqy", 3, 0, new Dictionary<string, string>() { { "yyzz", "yingyezhizhaotp" }, { "xktp", "shengchanxuketp" }, { "BATP", "beiantp" } })
 
 <script type="text/javascript">
-    //function doUpload() {
-    //    var formData = new FormData($("#uploadForm")[0]);
-    //    var strBack = "";
-    //    var strWrite = "";
-    //    var strSel = $("#btnSelect").val();
-    //    $.ajax({
-    //        url: 'http://localhost:6446/upload/UploadOK',
-    //        type: 'POST',
-    //        data: formData,
-    //        async: false,
-    //        cache: false,
-    //        contentType: false,
-    //        processData: false,
-    //        success: function (returndata) {
-    //            strBack = returndata;
-    //        },
-    //        error: function (returndata) {
-    //            strBack = "fail";
-    //        }
-    //    });
-    //    switch (strBack) {
-    //        case "0":
-    //            strWrite = "无传送值，上传失败！";
-    //            break;
-    //        case "1":
-    //            strWrite = "空文件，上传失败！";
-    //            break;
-    //        case "2":
-    //            strWrite = "错误，上传失败！";
-    //            break;
-    //        case "3":
-    //            strWrite = "文件尺寸超过4M，上传失败！";
-    //            break;
-    //        case "fail":
-    //            strWrite = "文件太大，上传失败！";
-    //            break;
-    //        default:
-    //            strWrite = "文件上传成功！";
-    //            break;
-    //    }
-    //    switch (strSel) {
-    //        case "picsel1":
-    //            $("#yingyezhizhaotp").val(strBack);
-    //            $("#zztp").html("<a href='/files/zhengzhao/" + strBack + "'  target='_blank'>浏览</a>");
-    //            break;
-    //        case "picsel2":
-    //            $("#shengchanxuketp").val(strBack);
-    //            $("#yxtp").html("<a href='/files/zhengzhao/" + strBack + "'  target='_blank'>浏览</a>");
-    //            break;
-    //        case "":
-    //        default:
-    //            $("#yingyezhizhaotp").val(strBack);
-    //            $("#zztp").html("<a href='/files/zhengzhao/" + strBack + "'  target='_blank'>浏览</a>");
-    //            break;
-    //    }
-    //    alert(strWrite);
-    //}
-
+    try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
     $(document).ready(function () {
         if (eval($("#syid").val()) > 1)
             $("#pl_fun").hide();
@@ -75,7 +18,7 @@
         $("#BeianYXQ").datepicker();
         $("#BeianPZRQ").datepicker();
         $("#XukePZRQ").datepicker();
-     
+
         var bj = 0;
         GetFanwei1(bj);
 
@@ -175,7 +118,7 @@
                 $("#guanlifenlei").val("全部");
                 GetFanwei1(bj);
             }
-            
+
         });
         //全选
         $("#bt_fanwei_all").click(function () {
@@ -219,7 +162,18 @@
         });
 
         //BUTTON提交
-        $("#sub").click(function () {
+        $("#save_top").click(function () {
+            if ($("#daima").val() == "") {
+                alert("代码不能为空");
+                document.getElementById("daima").focus();
+            }
+            else if ($("#shengcheng").val() == "") {
+                alert("名称不能为空");
+                document.getElementById("shengcheng").focus();
+            }
+            else { form.submit(); }
+        })
+        $("#save_bottom").click(function () {
             if ($("#daima").val() == "") {
                 alert("代码不能为空");
                 document.getElementById("daima").focus();
@@ -236,7 +190,7 @@
             $.post(form.attr("action"),
                   form.serialize(),
                   function (result, status) {
-                      //alert(status);                              
+                      //alert(status);
                       if (result._flag == 1) {
                           alert("更新成功");
                       }
@@ -251,6 +205,68 @@
                     "json");
             return false;
 
+        });
+        //'是否合作'绑定值
+        $("#HezuoSF").change(function () {
+            if ($("#HezuoSF").is(":checked")) {
+                $("#HezuoSF").val("true");//选中=true
+            } else {
+                $("#HezuoSF").val("false");//不选中=false
+            }
+        });
+        //'是否合作'赋值
+        var HezuoSF = "@ViewData.Model.HezuoSF";
+        if (HezuoSF == "True") {
+            $("#HezuoSF").attr("checked", true);
+            $("#HezuoSF").val("true");
+        } else {
+            $("#HezuoSF").attr("checked", false);
+            $("#HezuoSF").val("false");
+        }
+        //'是否审查'绑定值
+        $("#ShenchaSF").change(function () {
+            if ($("#ShenchaSF").is(":checked")) {
+                $("#ShenchaSF").val("true");//选中=true
+            } else {
+                $("#ShenchaSF").val("false");//不选中=false
+            }
+        });
+        //'是否审查'赋值
+        var ShenchaSF = "@ViewData.Model.ShenchaSF";
+        if (ShenchaSF == "True") {
+            $("#ShenchaSF").attr("checked", true);
+            $("#ShenchaSF").val("true");
+        } else {
+            $("#ShenchaSF").attr("checked", false);
+            $("#ShenchaSF").val("false");
+        }
+        //照片的点击事件
+        $(".yyzz_browse").click(function () {
+            var yyzz = "@ViewData.Model.YingyezhizhaoTP";
+            var img_url = $("#yyzz a").attr('href');
+            if (img_url != null && img_url != "") {
+                window.open(img_url);
+            } else if (yyzz != null && yyzz != "") {
+                window.open("/files/zhengzhao/@ViewData.Model.YingyezhizhaoTP");
+            }
+        });
+        $(".xktp_browse").click(function () {
+            var xktp = "@ViewData.Model.ShengchanxukeTP";
+            var img_url = $("#xktp a").attr('href');
+            if (img_url != null && img_url != "") {
+                window.open(img_url);
+            } else if (xktp != null && xktp != "") {
+                window.open("/files/zhengzhao/@ViewData.Model.ShengchanxukeTP");
+            }
+        });
+        $(".BATP_browse").click(function () {
+            var BATP = "@ViewData.Model.BeianTP";
+            var img_url = $("#BATP a").attr('href');
+            if (img_url != null && img_url != "") {
+                window.open(img_url);
+            } else if (BATP != null && BATP != "") {
+                window.open("/files/zhengzhao/@ViewData.Model.BeianTP");
+            }
         });
     });
 
@@ -333,13 +349,6 @@
             }
         }
     }
-    function bt1() {
-        $("#btnSelect").val("picsel1");
-    }
-    function bt2() {
-        $("#btnSelect").val("picsel2");
-    }
-
     function GetSpell() {
         $.post("/Service/GetSpellCode",
             {
@@ -350,39 +359,7 @@
         });
     }
 </script>
-<div class="modal fade" id="myModalUpload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                    &times;
-                </button>
-                <h3 class="modal-title center" id="myModalLabel">
-                    <i class="icon-file blue"></i><span class="large">
-                        文件上传
-                    </span>
-                </h3>
-            </div>
-            <div class="modal-body center">
-                <form id="uploadForm">
-                    <input type="hidden" name="uploadtype" id="uploadtype" value="z" />
-                    <input type="hidden" name="uploaditemName" id="uploaditemName" value="gys_@ViewData.Model.ID" />
-                    <div class="form-group">
-                        <input type="file" name="file" />
-                    </div>
-                    <div class="form-group">
-                        <input type="button" class="btn btn-default" value="确 定" onclick="doUpload()" />
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="breadcrumbs" id="breadcrumbs">
-    <script type="text/javascript">
-        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
-    </script>
     <ul class="breadcrumb">
         <li>
             <i class="icon-home home-icon"></i>
@@ -396,239 +373,303 @@
 </div>
 
 <div class="page-content">
-    @using (Html.BeginForm("Update", "base_shengchanqiye", FormMethod.Post, new { @role = "form",id = "tempform" }))
-    {
-        @Html.AntiForgeryToken()
-        <input type="hidden" name="id" value="@ViewData.Model.ID" />
-        <input type="hidden" id="btnSelect" value="" />
-        <input type="hidden" id="MakeMan" name="MakeMan" value=@Session["user_id"] />
-        <input type="hidden" name="MakeDate" value=@string.Format("{0:yyyy-MM-dd}",DateTime.Now) />
-        <input type="hidden" id="syid" name="Shouying" value="@ViewData.Model.Shouying" />
-        <div id="pl_fun" class="page-header">
-            <p>
-                <button type="button" class="btn btn-default" id="sub"><i class="icon-save"></i>更新</button>
-                <button type="button" class="btn btn-default" onclick="javascript: history.back(-1); "><i class="icon-hand-left"></i>返回</button>
-            </p>
-        </div>
+    <div class="page-header">
+        <button type="button" class="btn btn-app btn-xs btn-primary radius-4" onclick="javascript: history.back(-1); "><i class="icon-reply icon-only"></i>返回</button>
+        <button type="button" id="save_top" class="btn btn-app btn-xs btn-primary radius-4"><i class="icon-save"></i>更新</button>
+    </div>
+    <div class="wrapper" style="background: url('/Imgs/bg-cloud.png') repeat;">
         <div class="container">
-            <div class="form-group">
-                <div class="control-label col-sm-2">
-                    <i class="icon-leaf red"></i>@Html.LabelFor(m => m.Daima)
-                </div> 
-                <div class="col-sm-10" >
-                    @Html.TextBoxFor(m => m.Daima, new { @class = "form-control",id = "daima" })
+            <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                    <div class="widget-box radius-4">
+                        <div class="widget-header">
+                            <h3><b>包装箱信息</b></h3>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main no-padding">
+                                @using (Html.BeginForm("Update", "base_shengchanqiye", FormMethod.Post, new { @role = "form", @class = "form-horizontal", @id = "tempform" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@ViewData.Model.ID" />
+                                    <input type="hidden" id="btnSelect" value="" />
+                                    <input type="hidden" id="MakeMan" name="MakeMan" value=@Session["user_id"] />
+                                    <input type="hidden" name="MakeDate" value=@string.Format("{0:yyyy-MM-dd}",DateTime.Now) />
+                                    <input type="hidden" id="syid" name="Shouying" value="@ViewData.Model.Shouying" />
+                                    <fieldset>
+                                        @*代码*@
+                                        <div class="form-group">
+                                            <label for="Daima" class="col-sm-3 control-label"><i class="red glyphicon glyphicon-asterisk"></i> <b>代码</b></label>
+                                            <div class="col-sm-8">
+                                                <input type="text" id="daima" name="Daima" class="form-control" placeholder="无需填写，由名称生成代码" value="@ViewData.Model.Daima"/>
+                                            </div>
+                                        </div>
+                                        @*名称*@
+                                        <div class="form-group">
+                                            <label for="Qiyemingcheng" class="col-sm-3 control-label"><i class="red glyphicon glyphicon-asterisk"></i> <b>名称</b></label>
+                                            <div class="col-sm-8">
+                                                <div class="input-group">
+                                                    <input id="shengcheng" name="Qiyemingcheng" placeholder="请填写名称" class="form-control" type="text" value="@ViewData.Model.Qiyemingcheng">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" onclick="GetSpell()" class="btn btn-primary btn-sm">
+                                                            <b>生成代码</b>
+                                                            <i class="icon-hand-up icon-on-right bigger-110"></i>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*营业执照编号*@
+                                        <div class="form-group">
+                                            <label for="YingyezhizhaoBH" class="col-sm-3 control-label"><b>营业执照编号</b></label>
+                                            <div class="col-sm-8">
+                                                <input type="text" name="YingyezhizhaoBH" class="form-control" placeholder="请填写营业执照编号" value="@ViewData.Model.YingyezhizhaoBH"/>
+                                            </div>
+                                        </div>
+                                        @*营业执照有效期*@
+                                        <div class="form-group">
+                                            <label for="YingyezhizhaoYXQ" class="col-sm-3 control-label"><b>营业执照有效期</b></label>
+                                            <div class="col-sm-8">
+                                                <div class="input-group">
+                                                    <input id="YingyezhizhaoYXQ" name="YingyezhizhaoYXQ" placeholder="请填写营业执照有效期" class="form-control" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.YingyezhizhaoYXQ)" type="date">
+                                                    <span class="input-group-addon">
+                                                        <i class="icon-calendar bigger-110"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*营业执照照片*@
+                                        <div class="form-group">
+                                            <label for="YingyezhizhaoTP" class="col-sm-3 control-label"><b>营业执照照片</b></label>
+                                            <div class="col-sm-8">
+                                                <div class="input-group">
+                                                    <input id="yingyezhizhaotp" name="yingyezhizhaotp" readonly placeholder="请上传照片" class="form-control" type="text" value="@ViewData.Model.YingyezhizhaoTP">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" data-toggle="modal" data-target="#myModalUpload" onclick="btn1()" class="btn btn-primary btn-sm">
+                                                            <b>上传</b>
+                                                            <i class="icon-cloud-upload icon-on-right bigger-110"></i>
+                                                        </button>
+                                                        <span hidden id="yyzz"></span>
+                                                        <button type="button" class="btn btn-primary btn-sm yyzz_browse">
+                                                            <b>浏览</b>
+                                                            <i class="icon-camera icon-on-right bigger-110"></i>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*生产许可编号*@
+                                        <div class="form-group">
+                                            <label for="ShengchanxukeBH" class="col-sm-3 control-label"><b>生产许可编号</b></label>
+                                            <div class="col-sm-8">
+                                                <input type="text" name="ShengchanxukeBH" class="form-control" placeholder="请填写生产许可编号" value="@ViewData.Model.ShengchanxukeBH"/>
+                                            </div>
+                                        </div>
+                                        @*生产许可有效期*@
+                                        <div class="form-group">
+                                            <label for="ShengchanxukeYXQ" class="col-sm-3 control-label"><b>生产许可有效期</b></label>
+                                            <div class="col-sm-8">
+                                                <div class="input-group">
+                                                    <input id="ShengchanxukeYXQ" name="ShengchanxukeYXQ" placeholder="生产许可有效期" class="form-control" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.ShengchanxukeYXQ)" type="date">
+                                                    <span class="input-group-addon">
+                                                        <i class="icon-calendar bigger-110"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*生产许可照片*@
+                                        <div class="form-group">
+                                            <label for="ShengchanxukeTP" class="col-sm-3 control-label"><b>生产许可照片</b></label>
+                                            <div class="col-sm-8">
+                                                <div class="input-group">
+                                                    <input id="shengchanxuketp" name="shengchanxuketp" readonly placeholder="请上传照片" class="form-control" type="text" value="@ViewData.Model.ShengchanxukeTP">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" data-toggle="modal" data-target="#myModalUpload" onclick="btn2()" class="btn btn-primary btn-sm">
+                                                            <b>上传</b>
+                                                            <i class="icon-cloud-upload icon-on-right bigger-110"></i>
+                                                        </button>
+                                                        <span hidden id="xktp"></span>
+                                                        <button type="button" class="btn btn-primary btn-sm xktp_browse">
+                                                            <b>浏览</b>
+                                                            <i class="icon-camera icon-on-right bigger-110"></i>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*生产许可批准日期*@
+                                        <div class="form-group">
+                                            <label for="XukePZRQ" class="col-sm-3 control-label"><b>生产许可批准日期</b></label>
+                                            <div class="col-sm-8">
+                                                <div class="input-group">
+                                                    <input id="XukePZRQ" name="XukePZRQ" placeholder="生产许可批准日期" class="form-control" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.XukePZRQ)" type="date">
+                                                    <span class="input-group-addon">
+                                                        <i class="icon-calendar bigger-110"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*生产许可发证机关*@
+                                        <div class="form-group">
+                                            <label for="XukeFZJG" class="col-sm-3 control-label"><b>生产许可发证机关</b></label>
+                                            <div class="col-sm-8">
+                                                <input type="text" name="XukeFZJG" class="form-control" placeholder="请填写生产许可发证机关" value="@ViewData.Model.XukeFZJG"/>
+                                            </div>
+                                        </div>
+                                        @*生产许可范围*@
+                                        <div class="form-group">
+                                            <label for="Xukefanwei" class="col-sm-3 control-label"><b>生产许可范围</b></label>
+                                            <div class="col-sm-8">
+                                                <button type="button" class="btn btn-primary btn-sm" id="bt_Fanweiadd" onclick="Bt_Fanweiadd()"><b>增加</b><i class="icon-hand-up icon-on-right bigger-110"></i></button>
+                                                <textarea type="text" style="resize:vertical;" rows="6" class="form-control" readonly id="xukefanwei" name="Xukefanwei">@ViewData.Model.Xukefanwei</textarea>
+                                            </div>
+                                        </div>
+                                        @*生产许可范围简码*@
+                                        <div class="form-group" style="display:none">
+                                            <label for="XukefanweiDM" class="col-sm-3 control-label"><b>生产许可范围简码</b></label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control " id="xukefanweidm" name="XukefanweiDM" value="@ViewData.Model.XukefanweiDM">
+                                            </div>
+                                        </div>
+                                        @*备案编号*@
+                                        <div class="form-group">
+                                            <label for="BeianBH" class="col-sm-3 control-label"><b>备案编号</b></label>
+                                            <div class="col-sm-8">
+                                                <input type="text" name="BeianBH" class="form-control" placeholder="请填写备案编号" value="@ViewData.Model.BeianBH"/>
+                                            </div>
+                                        </div>
+                                        @*备案有效期*@
+                                        <div class="form-group">
+                                            <label for="BeianYXQ" class="col-sm-3 control-label"><b>备案有效期</b></label>
+                                            <div class="col-sm-8">
+                                                <div class="input-group">
+                                                    <input id="BeianYXQ" name="BeianYXQ" placeholder="备案有效期" class="form-control" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.BeianYXQ)" type="date" style="z-index:1000;position:relative;">
+                                                    <span class="input-group-addon">
+                                                        <i class="icon-calendar bigger-110"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*备案照片*@
+                                        <div class="form-group">
+                                            <label for="beiantp" class="col-sm-3 control-label"><b>备案照片</b></label>
+                                            <div class="col-sm-8">
+                                                <div class="input-group">
+                                                    <input id="beiantp" name="beiantp" readonly placeholder="请上传照片" class="form-control" type="text" value="@ViewData.Model.BeianTP">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" data-toggle="modal" data-target="#myModalUpload" onclick="btn3()" class="btn btn-primary btn-sm">
+                                                            <b>上传</b>
+                                                            <i class="icon-cloud-upload icon-on-right bigger-110"></i>
+                                                        </button>
+                                                        <span hidden id="BATP"></span>
+                                                        <button type="button" class="btn btn-primary btn-sm BATP_browse">
+                                                            <b>浏览</b>
+                                                            <i class="icon-camera icon-on-right bigger-110"></i>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*备案批准日期*@
+                                        <div class="form-group">
+                                            <label for="BeianPZRQ" class="col-sm-3 control-label"><b>备案批准日期</b></label>
+                                            <div class="col-sm-8">
+                                                <div class="input-group">
+                                                    <input id="BeianPZRQ" name="BeianPZRQ" placeholder="备案批准日期" class="form-control" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.BeianPZRQ)" type="date" style="z-index:1000;position:relative;">
+                                                    <span class="input-group-addon">
+                                                        <i class="icon-calendar bigger-110"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*备案发证机关*@
+                                        <div class="form-group">
+                                            <label for="BeianFZJG" class="col-sm-3 control-label"><b>备案发证机关</b></label>
+                                            <div class="col-sm-8">
+                                                <input type="text" id="BeianFZJG" name="BeianFZJG" class="form-control" placeholder="请填写备案发证机关" value="@ViewData.Model.BeianFZJG"/>
+                                            </div>
+                                        </div>
+                                        @*企业地址*@
+                                        <div class="form-group">
+                                            <label for="Qiyedizhi" class="col-sm-3 control-label"><b>企业地址</b></label>
+                                            <div class="col-sm-8">
+                                                <input type="text" id="Qiyedizhi" name="Qiyedizhi" class="form-control" placeholder="请填写企业地址" value="@ViewData.Model.Qiyedizhi"/>
+                                            </div>
+                                        </div>
+                                        @*生产地址*@
+                                        <div class="form-group">
+                                            <label for="Shengchandizhi" class="col-sm-3 control-label"><b>生产地址</b></label>
+                                            <div class="col-sm-8">
+                                                <input type="text" id="Shengchandizhi" name="Shengchandizhi" class="form-control" placeholder="请填写生产地址" value="@ViewData.Model.Shengchandizhi"/>
+                                            </div>
+                                        </div>
+                                        @*首营*@
+                                        <div class="form-group">
+                                            <label for="Shouying" class="col-sm-3 control-label"><b>首营</b></label>
+                                            <div class="col-sm-8">
+                                                <input type="text" readonly class="form-control" value="@Html.GetCommonValue_ID("首营状态", 1)" />
+                                            </div>
+                                        </div>
+                                        @*是否合作*@
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label" for="HezuoSF"><b>是否合作</b></label>
+                                            <div class="col-sm-8">
+                                                <label class="control-group">
+                                                    <input name="HezuoSF" id="HezuoSF" class="ace ace-switch ace-switch-7" type="checkbox">
+                                                    <span class="lbl"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        @*是否审查*@
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label" for="ShenchaSF"><b>是否审查</b></label>
+                                            <div class="col-sm-8">
+                                                <label class="control-group">
+                                                    <input name="ShenchaSF" id="ShenchaSF" class="ace ace-switch ace-switch-7" type="checkbox">
+                                                    <span class="lbl"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        @*录入日期*@
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label" for="MakeDate"><b>录入日期</b></label>
+                                            <div class="col-sm-8">
+                                                <div class="input-group">
+                                                    <input name="MakeDate" id="MakeDate" disabled="disabled" class="form-control" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.MakeDate)" type="text">
+                                                    <span class="input-group-addon">
+                                                        <i class="icon-calendar bigger-110"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*录入人*@
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label" for="MakeMan"><b>录入人</b></label>
+                                            <div class="col-sm-8">
+                                                <div class="input-group">
+                                                    <input placeholder="录入人" disabled="disabled" class="form-control" type="text" value="@Html.GetDataValue_ID("userinfo", "全名", (int)ViewData.Model.MakeMan)">
+                                                    <span class="input-group-addon">
+                                                        <i class="icon-user bigger-110"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <div class="form-actions center">
+                                        <button id="save_bottom" class="btn btn-primary" type="button">
+                                            <b>更新</b>
+                                            <i class="icon-save bigger-110"></i>
+                                        </button>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="center">
-                    @Html.ValidationMessageFor(m => m.Daima)
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="control-label col-sm-2">
-                    <i class="icon-leaf red"></i>@Html.LabelFor(m => m.Qiyemingcheng)
-                </div>
-                <div class="col-sm-8">
-                    @Html.TextBoxFor(m => m.Qiyemingcheng, new { @class = "form-control" , id = "shengcheng" })
-                </div>
-                <div class="col-sm-2">
-                    <button type="button" class="form-control" onclick="GetSpell()">生成代码</button>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="center">
-                    @Html.ValidationMessageFor(m => m.Qiyemingcheng)
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.YingyezhizhaoBH, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.YingyezhizhaoBH, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.YingyezhizhaoYXQ, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    <input type="date" class="form-control" name="YingyezhizhaoYXQ" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.YingyezhizhaoYXQ)" id="YingyezhizhaoYXQ">
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.YingyezhizhaoTP, new { @class = "control-label col-sm-2" })
-                @*<div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.YingyezhizhaoTP, new { @class = "form-control" })
-                    </div>*@
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" readonly name="yingyezhizhaotp" id="yingyezhizhaotp" value="@ViewData.Model.YingyezhizhaoTP">
-                </div>
-                <div class="col-sm-2">
-                    <button class="form-control" data-toggle="modal" data-target="#myModalUpload" onclick="bt1()">上传</button>
-                </div>
-                <div class="col-sm-2">
-                    <span id="zztp" class="form-control">
-                        <a href="/files/zhengzhao/@ViewData.Model.YingyezhizhaoTP" target="_blank">浏览</a>
-                    </span>
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.ShengchanxukeBH, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.ShengchanxukeBH, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.ShengchanxukeYXQ, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    <input type="date" class="form-control" name="ShengchanxukeYXQ" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.ShengchanxukeYXQ)" id="ShengchanxukeYXQ">
-                </div>
+        </div>
+    </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(m => m.ShengchanxukeTP, new { @class = "control-label col-sm-2" })
-                    @*<div class="col-sm-10">
-                            @Html.TextBoxFor(m => m.ShengchanxukeTP, new { @class = "form-control" })
-                        </div>*@
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" readonly id="shengchanxuketp" name="shengchanxuketp" value="@ViewData.Model.ShengchanxukeTP">
-                    </div>
-                    <div class="col-sm-2">
-                        <button class="form-control" data-toggle="modal" data-target="#myModalUpload" onclick="bt2()">上传</button>
-                    </div>
-                    <div class="col-sm-2">
-                        <span class="form-control" id="yxtp">
-                            <a href="/files/zhengzhao/@ViewData.Model.ShengchanxukeTP" target="_blank">浏览</a>
-                        </span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                @Html.LabelFor(m => m.XukePZRQ, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    <input type="date" class="form-control" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.XukePZRQ)" name="XukePZRQ" id="XukePZRQ">
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.XukeFZJG, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.XukeFZJG, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-2">
-                    @Html.LabelFor(m => m.Xukefanwei, new { @class = "control-label" })<br />
-                    <button type="button" class="icon-edit" id="bt_Fanweiadd" onclick="Bt_Fanweiadd()">修改</button>
-                </div>
-                <div class="col-sm-10">
-                    @Html.TextAreaFor(m => m.Xukefanwei, new { @class = "form-control", id = "xukefanwei", @readonly = true, rows = "3" })
-                </div>
-            </div>
-            <div class="form-group" style="display:none">
-                @Html.LabelFor(m => m.XukefanweiDM, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.XukefanweiDM, new { @class = "form-control", id = "xukefanweidm" })
-                </div>
-            </div>      
-            <div class="form-group">
-                @Html.LabelFor(m => m.BeianBH, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.BeianBH, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.BeianYXQ, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    <input type="date" class="form-control" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.BeianYXQ)" name="BeianYXQ" id="BeianYXQ">
-                </div>
-            </div>
-            @*备案图片*@
-            <div class="form-group">
-                @Html.LabelFor(m => m.BeianTP, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" readonly name="beiantp" id="beiantp" value="@ViewData.Model.BeianTP">
-                </div>
-                <div class="col-sm-2">
-                    <button class="form-control" data-toggle="modal" data-target="#myModalUpload" onclick="btn3()">上传</button>
-                </div>
-                <div class="col-sm-2">
-                    <span class="form-control" id="BATP">
-                        <a href="/files/zhengzhao/@ViewData.Model.BeianTP" target="_blank">浏览</a>
-                    </span>
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.BeianPZRQ, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    <input type="date" class="form-control" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.BeianPZRQ)" name="BeianPZRQ" id="BeianPZRQ">
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.BeianFZJG, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.BeianFZJG, new { @class = "form-control" })
-                </div>
-            </div>
-         @*企业地址*@
-        <div class="form-group">
-            @Html.LabelFor(m => m.Qiyedizhi, new { @class = "control-label col-sm-2" })
-            <div class="col-sm-10">
-                @Html.TextBoxFor(m => m.Qiyedizhi, new { @class = "form-control" })
-            </div>
-        </div>
-        @*生产地址*@
-        <div class="form-group">
-            @Html.LabelFor(m => m.Shengchandizhi, new { @class = "control-labe col-sm-2" })
-            <div class="col-sm-10">
-                @Html.TextBoxFor(m => m.Shengchandizhi, new { @class = "form-control" })
-            </div>
-        </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Shouying, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @*@Html.TextBoxFor(m => m.Shouying, new { @class = "form-control" })*@
-                    @*@Html.SelectList_Common("shouying", "首营状态", (int)ViewData.Model.Shouying)*@
-                    <input type="text" readonly class="form-control" value="@Html.GetCommonValue_ID("首营状态", (int)ViewData.Model.Shouying)" />
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="control-label col-sm-2">
-                    @Html.LabelFor(m => m.HezuoSF)
-                </div>
-                @*<div>
-                <label class="radio-inline">
-                    <input type="radio" name="hezuosf" value="true" checked>
-                    是
-                </label>
-                <label class="radio-inline">
-                    <input type="radio" name="hezuosf" value="false">
-                    否
-                </label>
-            </div>*@
-                <div class="col-sm-10">
-                    @Html.CheckBoxFor(m => m.HezuoSF, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="control-label col-sm-2">
-                    @Html.LabelFor(m => m.ShenchaSF)
-                </div>
-                <div class="col-sm-10">
-                    @Html.CheckBoxFor(m => m.ShenchaSF, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.MakeDate, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    <input type="text" readonly class="form-control" value="@string.Format("{0:yyyy-MM-dd}", ViewData.Model.MakeDate)" />
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.MakeMan, new { @class = "control-label col-sm-2" })
-                <div class="col-sm-10">
-                    @*@Html.SelectList_Auto("MakeMan", "userinfo", "fullname", (long)ViewData.Model.MakeMan)*@
-                    <input type="text" readonly class="form-control" value="@Html.GetDataValue_ID("userinfo", "全名", (int)ViewData.Model.MakeMan)" />
-                </div>
-            </div>
-        </div>
-    }
+
 </div>
 
 <div id="pl_Fanwei" class="panel panel-primary" hidden style="position:fixed;top:100px;left:200px;width:1100px;height:600px;z-index:999">

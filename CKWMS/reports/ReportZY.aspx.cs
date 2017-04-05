@@ -1590,6 +1590,79 @@ namespace CKWMS.reports
 
                             rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet2", _rds.Tables["JH_CKfuhejianyan_Title"]));
                             break;
+                        case "inReport":
+                            int ir_userid = (int)Session["user_id"];
+                            string ir_pagetag = "wms_inreport_list";
+                            Expression<Func<wms_recievelist_v, bool>> ir_where = PredicateExtensionses.True<wms_recievelist_v>();
+                            searchcondition ir_sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == ir_userid && searchcondition.PageBrief == ir_pagetag);
+                            if (ir_sc != null && ir_sc.ConditionInfo != null)
+                            {
+                                string[] sclist = ir_sc.ConditionInfo.Split(';');
+                                foreach (string scl in sclist)
+                                {
+                                    string[] scld = scl.Split(',');
+                                    switch (scld[0])
+                                    {
+                                        case "RukuBH":
+                                            string CPMC = scld[1];
+                                            string CPMCequal = scld[2];
+                                            string CPMCand = scld[3];
+                                            if (!string.IsNullOrEmpty(CPMC))
+                                            {
+                                                if (CPMCequal.Equals("="))
+                                                {
+                                                    if (CPMCand.Equals("and"))
+                                                        ir_where = ir_where.And(p => p.RukudanBH == CPMC.Trim());
+                                                    else
+                                                        ir_where = ir_where.Or(p => p.RukudanBH == CPMC.Trim());
+                                                }
+                                                if (CPMCequal.Equals("like"))
+                                                {
+                                                    if (CPMCand.Equals("and"))
+                                                        ir_where = ir_where.And(p => p.RukudanBH.Contains(CPMC.Trim()));
+                                                    else
+                                                        ir_where = ir_where.Or(p => p.RukudanBH.Contains(CPMC.Trim()));
+                                                }
+                                            }
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                            }
+
+                            rptView.Reset();
+                            rptView.LocalReport.ReportPath = "reports/rptInReport.rdlc";
+                            rptView.LocalReport.DataSources.Clear();
+                            DataTable dtir = _rds.Tables["rptInReport"];
+                            var ir_rkd = ServiceFactory.wms_rukudanservice.GetInList(ir_where.Compile());
+                            DataRow drir;
+                            foreach (wms_recievelist_v _pr in ir_rkd)
+                            {
+                                drir = dtir.NewRow();
+                                base_weituokehu ir_wtkh = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == _pr.HuozhuID);
+                                if(ir_wtkh != null)
+                                {
+                                    drir["Kehumingcheng"] = ir_wtkh.Kehumingcheng == null ? "" : ir_wtkh.Kehumingcheng;
+                                }
+                                drir["RukuRQ"] = string.Format("{0:yyyy-MM-dd}", _pr.RukuRQ == null ? "" : ((DateTime)_pr.RukuRQ).ToString("yyyy-MM-dd"));
+                                drir["YewuLX"] = MvcApplication.EntryType[_pr.YewuLX] == null ? MvcApplication.EntryType[0] : MvcApplication.EntryType[_pr.YewuLX];
+                                drir["ShangpinMC"] = _pr.ShangpinMC == null ? "" : _pr.ShangpinMC;
+                                drir["Guige"] = _pr.Guige == null ? "" : _pr.Guige;
+                                drir["Changjia"] = _pr.Changjia == null ? "" : _pr.Changjia;
+                                drir["Zhucezheng"] = _pr.Zhucezheng == null ? "" : _pr.Zhucezheng;
+                                drir["Pihao"] = _pr.Pihao == null ? "" : _pr.Pihao;
+                                drir["Xuliema"] = _pr.Xuliema == null ? "" : _pr.Xuliema;
+                                drir["MAN_EXP"] = string.Format("{0:yyyy-MM-dd}", _pr.ShengchanRQ == null ? "" : ((DateTime)_pr.ShengchanRQ).ToString("yyyy-MM-dd")) + "/" + string.Format("{0:yyyy-MM-dd}", _pr.ShixiaoRQ == null ? "" : ((DateTime)_pr.ShixiaoRQ).ToString("yyyy-MM-dd"));
+                                drir["ChushiSL"] = string.Format("{0:0.00}", _pr.ChushiSL == null ? int.Parse("0.00") : _pr.ChushiSL);
+                                drir["JibenDW"] = _pr.JibenDW == null ? "" : _pr.JibenDW;
+                                drir["Kuwei"] = _pr.Kuwei == null ? "" : _pr.Kuwei;
+                                drir["HegeSF"] = string.Format("{0}", _pr.HegeSF == true ? "合格" : "不合格");
+                                drir["CunhuoSM"] = _pr.CunhuoSM == null ? "" : _pr.CunhuoSM;
+                                dtir.Rows.Add(drir);
+                            }
+                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["rptInReport"]));
+                            break;
                         default:
                             break;
                     }

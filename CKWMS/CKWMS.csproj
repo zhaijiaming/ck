@@ -644,7 +644,7 @@
     <None Include="reports\ReportDataSetZY.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>ReportDataSetZY.Designer.cs</LastGenOutput>
+      <LastGenOutput>ReportDataSetZY1.Designer.cs</LastGenOutput>
     </None>
     <Content Include="reports\ReportDataSetZY.xss">
       <DependentUpon>ReportDataSetZY.xsd</DependentUpon>
@@ -988,6 +988,7 @@
     <Content Include="Views\zx_xuanxiang\Index.cshtml" />
     <Content Include="Views\wms_outreport\GetOutList.cshtml" />
     <Content Include="Views\wms_inreport\GetInList.cshtml" />
+    <Content Include="Views\wms_inreport\PrintInReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -1010,6 +1011,7 @@
     <EmbeddedResource Include="reports\daviskw.rdlc" />
     <EmbeddedResource Include="reports\rptCKFuheDan.rdlc" />
     <EmbeddedResource Include="reports\rptCKFuheJYdan.rdlc" />
+    <EmbeddedResource Include="reports\rptInReport.rdlc" />
     <EmbeddedResource Include="reports\rptJH_CKFuhejianyan.rdlc" />
     <EmbeddedResource Include="reports\rptJianHuoDan.rdlc" />
     <EmbeddedResource Include="reports\rptJSGRTongxing.rdlc" />
