@@ -6,76 +6,7 @@
     ViewBag.Title = "入库信息";
     string _searchcondition = ViewBag.SearchCondition;
 }
-<script type="text/javascript">
-    $(document).ready(function () {
-        var i = 0;
-        $("#mydatatable tbody tr").each(function () {
-            i = i + 1;
-            $(this).find("td").eq(0).html(i);
-        });
-        //table style
-        table_config(mydatatable);
-        trResize();//初始化表头
-        //report
-        $("#bt_print").click(function () {
-            window.open("/wms_inreport/PrintInReport");
-        });
-    });
-</script>
-
-@{
-    List<SearchConditionModel> scms = new List<SearchConditionModel>();
-    if (_searchcondition == null || _searchcondition == "")
-    {
-        SearchConditionModel scm = new SearchConditionModel();
-        scm.ItemCode = "RukuBH";
-        scm.ItemTitle = "入库编号";
-        scm.ItemType = "System.String";
-        scms.Add(scm);
-    }
-    else
-    {
-        string[] scs = _searchcondition.Split(';');
-        if (scs.Length > 0)
-        {
-            SearchConditionModel scm = new SearchConditionModel();
-            scm.ItemCode = "RukuBH";
-            scm.ItemTitle = "入库编号";
-            scm.ItemType = "System.String";
-            if (scs.Length > 1)
-            {
-                scm.ItemValue = scs[0].Split(',')[1];
-                if (scm.ItemValue.Length == 0)
-                {
-                    scm.ItemValue = "0";
-                }
-                scm.ItemOpValue = scs[0].Split(',')[2];
-                scm.ItemJion = scs[0].Split(',')[3];
-            }
-            scms.Add(scm);
-        }
-    }
-}
-<div class="breadcrumbs" id="breadcrumbs">
-    <script type="text/javascript">
-        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
-    </script>
-    <ul class="breadcrumb">
-        <li>
-            <i class="icon-home home-icon"></i>
-            <a href="/Home">首页</a>
-        </li>
-        <li class="active">入库信息</li>
-    </ul>
-</div>
 <div class="page-content">
-    @Html.Search_Condition((int)Session["user_id"], "入库_条件组合查询", "/wms_inreport/getinlist", "wms_inreport_list", scms)
-    <div class="page-header">
-        <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
-        <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
-        <button type="button" class="btn btn-primary btn-xs btn-app radius-4 " id="bt_print"><i class="icon-print"></i><b>打印</b></button>
-        <button type="button" class="btn btn-primary btn-xs btn-app radius-4 " id="bt_export" onclick="javascript: window.open('/wms_inreport/InReportExport')"><i class="icon-inbox"></i><b>导出</b></button>
-    </div>
     <div class="row">
         <div class="col-sm-12">
             <div class="table-wapper-all">
@@ -93,8 +24,8 @@
                             <th>规格(型号)</th>
                             <th>生产企业</th>
                             <th>产品注册证号</th>
-                            <th>生产批号</th>
-                            <th>序列号</th>
+                            <th>备案凭证号</th>
+                            <th>生产批号/序列号</th>
                             <th>生产日期和有效期(或者失效期)</th>
                             <th>数量</th>
                             <th>单位</th>
@@ -128,9 +59,6 @@
                     </table>
                 </div>
             </div>
-            <span class="pager">
-                @Html.PagedListPager((IPagedList)Model, page => Url.Action("GetInList", new { page }))
-            </span>
         </div>
     </div>
 </div>

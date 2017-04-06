@@ -1634,18 +1634,18 @@ namespace CKWMS.reports
                             rptView.Reset();
                             rptView.LocalReport.ReportPath = "reports/rptInReport.rdlc";
                             rptView.LocalReport.DataSources.Clear();
-                            DataTable dtir = _rds.Tables["rptInReport"];
+                            DataTable dtir = _rds.Tables["table_InReport"];
                             var ir_rkd = ServiceFactory.wms_rukudanservice.GetInList(ir_where.Compile());
                             DataRow drir;
                             foreach (wms_recievelist_v _pr in ir_rkd)
                             {
                                 drir = dtir.NewRow();
-                                base_weituokehu ir_wtkh = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == _pr.HuozhuID);
+                                var ir_wtkh = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == _pr.HuozhuID && p.IsDelete == false);
                                 if(ir_wtkh != null)
                                 {
                                     drir["Kehumingcheng"] = ir_wtkh.Kehumingcheng == null ? "" : ir_wtkh.Kehumingcheng;
                                 }
-                                drir["RukuRQ"] = string.Format("{0:yyyy-MM-dd}", _pr.RukuRQ == null ? "" : ((DateTime)_pr.RukuRQ).ToString("yyyy-MM-dd"));
+                                drir["RukuRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.RukuRQ == null ? "" : ((DateTime)_pr.RukuRQ).ToString("yyyy/MM/dd"));
                                 drir["YewuLX"] = MvcApplication.EntryType[_pr.YewuLX] == null ? MvcApplication.EntryType[0] : MvcApplication.EntryType[_pr.YewuLX];
                                 drir["ShangpinMC"] = _pr.ShangpinMC == null ? "" : _pr.ShangpinMC;
                                 drir["Guige"] = _pr.Guige == null ? "" : _pr.Guige;
@@ -1653,15 +1653,90 @@ namespace CKWMS.reports
                                 drir["Zhucezheng"] = _pr.Zhucezheng == null ? "" : _pr.Zhucezheng;
                                 drir["Pihao"] = _pr.Pihao == null ? "" : _pr.Pihao;
                                 drir["Xuliema"] = _pr.Xuliema == null ? "" : _pr.Xuliema;
-                                drir["MAN_EXP"] = string.Format("{0:yyyy-MM-dd}", _pr.ShengchanRQ == null ? "" : ((DateTime)_pr.ShengchanRQ).ToString("yyyy-MM-dd")) + "/" + string.Format("{0:yyyy-MM-dd}", _pr.ShixiaoRQ == null ? "" : ((DateTime)_pr.ShixiaoRQ).ToString("yyyy-MM-dd"));
-                                drir["ChushiSL"] = string.Format("{0:0.00}", _pr.ChushiSL == null ? int.Parse("0.00") : _pr.ChushiSL);
+                                drir["MAN_EXP"] = string.Format("{0:yyyy/MM/dd}", _pr.ShengchanRQ == null ? "" : ((DateTime)_pr.ShengchanRQ).ToString("yyyy/MM/dd")) + "/" + string.Format("{0:yyyy/MM/dd}", _pr.ShixiaoRQ == null ? "" : ((DateTime)_pr.ShixiaoRQ).ToString("yyyy/MM/dd"));
+                                drir["ChushiSL"] = _pr.ChushiSL == null ? float.Parse("0") : _pr.ChushiSL;
                                 drir["JibenDW"] = _pr.JibenDW == null ? "" : _pr.JibenDW;
                                 drir["Kuwei"] = _pr.Kuwei == null ? "" : _pr.Kuwei;
                                 drir["HegeSF"] = string.Format("{0}", _pr.HegeSF == true ? "合格" : "不合格");
                                 drir["CunhuoSM"] = _pr.CunhuoSM == null ? "" : _pr.CunhuoSM;
                                 dtir.Rows.Add(drir);
                             }
-                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["rptInReport"]));
+                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["table_InReport"]));
+                            break;
+                        case "outReport":
+                            int or_userid = (int)Session["user_id"];
+                            string or_pagetag = "wms_outreport_list";
+                            Expression<Func<wms_outdetaillist_v, bool>> or_where = PredicateExtensionses.True<wms_outdetaillist_v>();
+                            searchcondition or_sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == or_userid && searchcondition.PageBrief == or_pagetag);
+                            if (or_sc != null && or_sc.ConditionInfo != null)
+                            {
+                                string[] sclist = or_sc.ConditionInfo.Split(';');
+                                foreach (string scl in sclist)
+                                {
+                                    string[] scld = scl.Split(',');
+                                    switch (scld[0])
+                                    {
+                                        case "ChukuBH":
+                                            string CPMC = scld[1];
+                                            string CPMCequal = scld[2];
+                                            string CPMCand = scld[3];
+                                            if (!string.IsNullOrEmpty(CPMC))
+                                            {
+                                                if (CPMCequal.Equals("="))
+                                                {
+                                                    if (CPMCand.Equals("and"))
+                                                        or_where = or_where.And(p => p.ChukudanBH == CPMC.Trim());
+                                                    else
+                                                        or_where = or_where.Or(p => p.ChukudanBH == CPMC.Trim());
+                                                }
+                                                if (CPMCequal.Equals("like"))
+                                                {
+                                                    if (CPMCand.Equals("and"))
+                                                        or_where = or_where.And(p => p.ChukudanBH.Contains(CPMC.Trim()));
+                                                    else
+                                                        or_where = or_where.Or(p => p.ChukudanBH.Contains(CPMC.Trim()));
+                                                }
+                                            }
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                            }
+
+                            rptView.Reset();
+                            rptView.LocalReport.ReportPath = "reports/rptOutReport.rdlc";
+                            rptView.LocalReport.DataSources.Clear();
+                            DataTable dtor = _rds.Tables["table_outReport"];
+                            var or_ckd = ServiceFactory.wms_chukudanservice.GetOutList(or_where.Compile());
+                            DataRow dror;
+                            foreach (wms_outdetaillist_v _pr in or_ckd)
+                            {
+                                dror = dtor.NewRow();
+                                var or_wtkh = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == _pr.HuozhuID && p.IsDelete == false);
+                                if (or_wtkh != null)
+                                {
+                                    dror["Kehumingcheng"] = or_wtkh.Kehumingcheng == null ? "" : or_wtkh.Kehumingcheng;
+                                }
+                                dror["ChukuRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ChukuRQ == null ? "" : ((DateTime)_pr.ChukuRQ).ToString("yyyy/MM/dd"));
+                                dror["YewuLX"] = MvcApplication.OutgoingType[_pr.YewuLX] == null ? MvcApplication.OutgoingType[0] : MvcApplication.OutgoingType[_pr.YewuLX];
+                                dror["ShangpinMC"] = _pr.ShangpinMC == null ? "" : _pr.ShangpinMC;
+                                dror["Guige"] = _pr.Guige == null ? "" : _pr.Guige;
+                                dror["Changjia"] = _pr.Changjia == null ? "" : _pr.Changjia;
+                                dror["Zhucezheng"] = _pr.Zhucezheng == null ? "" : _pr.Zhucezheng;
+                                dror["Pihao"] = _pr.Pihao == null ? "" : _pr.Pihao;
+                                dror["Xuliema"] = _pr.Xuliema == null ? "" : _pr.Xuliema;
+                                dror["ChunyunYQ"] = _pr.ChunyunYQ == null ? "" : _pr.ChunyunYQ;
+                                dror["JibenDW"] = _pr.JibenDW == null ? "" : _pr.JibenDW;
+                                dror["ChukuSL"] = _pr.ChukuSL == null ? float.Parse("0") : _pr.ChukuSL;
+                                dror["KehuMC"] = _pr.KehuMC == null ? "" : _pr.KehuMC;
+                                dror["Yunsongdizhi"] = _pr.Yunsongdizhi == null ? "" : _pr.Yunsongdizhi;
+                                dror["Lianxiren"] = _pr.Lianxiren == null ? "" : _pr.Lianxiren;
+                                dror["LianxiDH"] = _pr.LianxiDH == null ? "" : _pr.LianxiDH;
+                                dror["Beizhu"] = _pr.Beizhu == null ? "" : _pr.Beizhu;
+                                dtor.Rows.Add(dror);
+                            }
+                            rptView.LocalReport.DataSources.Add(new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", _rds.Tables["table_outReport"]));
                             break;
                         default:
                             break;
