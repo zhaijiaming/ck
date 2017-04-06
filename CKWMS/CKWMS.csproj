@@ -374,11 +374,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ReportDataSet.xsd</DependentUpon>
     </Compile>
-    <None Include="reports\ReportDataSetZY.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ReportDataSetZY.xsd</DependentUpon>
-    </None>
     <Compile Include="reports\ReportDataSetZY1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -646,11 +641,11 @@
     <Content Include="reports\ReportDataSetZY.xsc">
       <DependentUpon>ReportDataSetZY.xsd</DependentUpon>
     </Content>
-    <Compile Include="reports\ReportDataSetZY.xsd">
+    <None Include="reports\ReportDataSetZY.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>ReportDataSetZY1.Designer.cs</LastGenOutput>
-    </Compile>
+    </None>
     <Content Include="reports\ReportDataSetZY.xss">
       <DependentUpon>ReportDataSetZY.xsd</DependentUpon>
     </Content>
