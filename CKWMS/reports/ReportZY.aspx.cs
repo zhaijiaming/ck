@@ -1603,25 +1603,120 @@ namespace CKWMS.reports
                                     string[] scld = scl.Split(',');
                                     switch (scld[0])
                                     {
-                                        case "RukuBH":
-                                            string CPMC = scld[1];
-                                            string CPMCequal = scld[2];
-                                            string CPMCand = scld[3];
-                                            if (!string.IsNullOrEmpty(CPMC))
+                                        case "rukubh":
+                                            string rukubh = scld[1];
+                                            string rukubhequal = scld[2];
+                                            string rukubhand = scld[3];
+                                            if (!string.IsNullOrEmpty(rukubh))
                                             {
-                                                if (CPMCequal.Equals("="))
+                                                if (rukubhequal.Equals("="))
                                                 {
-                                                    if (CPMCand.Equals("and"))
-                                                        ir_where = ir_where.And(p => p.RukudanBH == CPMC.Trim());
+                                                    if (rukubhand.Equals("and"))
+                                                        ir_where = ir_where.And(p => p.RukudanBH == rukubh);
                                                     else
-                                                        ir_where = ir_where.Or(p => p.RukudanBH == CPMC.Trim());
+                                                        ir_where = ir_where.Or(p => p.RukudanBH == rukubh);
                                                 }
-                                                if (CPMCequal.Equals("like"))
+                                                if (rukubhequal.Equals("like"))
                                                 {
-                                                    if (CPMCand.Equals("and"))
-                                                        ir_where = ir_where.And(p => p.RukudanBH.Contains(CPMC.Trim()));
+                                                    if (rukubhand.Equals("and"))
+                                                        ir_where = ir_where.And(p => p.RukudanBH.Contains(rukubh));
                                                     else
-                                                        ir_where = ir_where.Or(p => p.RukudanBH.Contains(CPMC.Trim()));
+                                                        ir_where = ir_where.Or(p => p.RukudanBH.Contains(rukubh));
+                                                }
+                                            }
+                                            break;
+                                        case "ShangpinMC":
+                                            string ShangpinMC = scld[1];
+                                            string ShangpinMCequal = scld[2];
+                                            string ShangpinMCand = scld[3];
+                                            if (!string.IsNullOrEmpty(ShangpinMC))
+                                            {
+                                                if (ShangpinMCequal.Equals("="))
+                                                {
+                                                    if (ShangpinMCand.Equals("and"))
+                                                        ir_where = ir_where.And(p => p.ShangpinMC == ShangpinMC);
+                                                    else
+                                                        ir_where = ir_where.Or(p => p.ShangpinMC == ShangpinMC);
+                                                }
+                                                if (ShangpinMCequal.Equals("like"))
+                                                {
+                                                    if (ShangpinMCand.Equals("and"))
+                                                        ir_where = ir_where.And(p => p.ShangpinMC.Contains(ShangpinMC));
+                                                    else
+                                                        ir_where = ir_where.Or(p => p.ShangpinMC.Contains(ShangpinMC));
+                                                }
+                                            }
+                                            break;
+                                        case "Guige":
+                                            string Guige = scld[1];
+                                            string Guigeequal = scld[2];
+                                            string Guigeand = scld[3];
+                                            if (!string.IsNullOrEmpty(Guige))
+                                            {
+                                                if (Guigeequal.Equals("="))
+                                                {
+                                                    if (Guigeand.Equals("and"))
+                                                        ir_where = ir_where.And(p => p.Guige == Guige);
+                                                    else
+                                                        ir_where = ir_where.Or(p => p.Guige == Guige);
+                                                }
+                                                if (Guigeequal.Equals("like"))
+                                                {
+                                                    if (Guigeand.Equals("and"))
+                                                        ir_where = ir_where.And(p => p.Guige.Contains(Guige));
+                                                    else
+                                                        ir_where = ir_where.Or(p => p.Guige.Contains(Guige));
+                                                }
+                                            }
+                                            break;
+                                        case "Pihao":
+                                            string Pihao = scld[1];
+                                            string Pihaoequal = scld[2];
+                                            string Pihaoand = scld[3];
+                                            if (!string.IsNullOrEmpty(Pihao))
+                                            {
+                                                if (Pihaoequal.Equals("="))
+                                                {
+                                                    if (Pihaoand.Equals("and"))
+                                                        ir_where = ir_where.And(p => p.Pihao == Pihao);
+                                                    else
+                                                        ir_where = ir_where.Or(p => p.Pihao == Pihao);
+                                                }
+                                                if (Pihaoequal.Equals("like"))
+                                                {
+                                                    if (Pihaoand.Equals("and"))
+                                                        ir_where = ir_where.And(p => p.Pihao.Contains(Pihao));
+                                                    else
+                                                        ir_where = ir_where.Or(p => p.Pihao.Contains(Pihao));
+                                                }
+                                            }
+                                            break;
+                                        case "RukuRQ":
+                                            string RukuRQ = scld[1];
+                                            string RukuRQequal = scld[2];
+                                            string RukuRQand = scld[3];
+                                            if (!string.IsNullOrEmpty(RukuRQ))
+                                            {
+                                                if (RukuRQequal.Equals("="))
+                                                {
+                                                    if (RukuRQand.Equals("and"))
+                                                        ir_where = ir_where.And(p => p.RukuRQ == DateTime.Parse(RukuRQ));
+                                                    else
+                                                        ir_where = ir_where.Or(p => p.RukuRQ == DateTime.Parse(RukuRQ));
+                                                }
+                                                if (RukuRQequal.Equals(">"))
+                                                {
+                                                    if (RukuRQand.Equals("and"))
+                                                        ir_where = ir_where.And(p => p.RukuRQ > DateTime.Parse(RukuRQ));
+                                                    else
+                                                        ir_where = ir_where.Or(p => p.RukuRQ > DateTime.Parse(RukuRQ));
+                                                }
+                                                if (RukuRQequal.Equals("<"))
+                                                {
+                                                    if (RukuRQand.Equals("and"))
+                                                        ir_where = ir_where.And(p => p.RukuRQ < DateTime.Parse(RukuRQ));
+                                                    else
+                                                        ir_where = ir_where.Or(p => p.RukuRQ < DateTime.Parse(RukuRQ));
                                                 }
                                             }
                                             break;
@@ -1676,25 +1771,120 @@ namespace CKWMS.reports
                                     string[] scld = scl.Split(',');
                                     switch (scld[0])
                                     {
-                                        case "ChukuBH":
-                                            string CPMC = scld[1];
-                                            string CPMCequal = scld[2];
-                                            string CPMCand = scld[3];
-                                            if (!string.IsNullOrEmpty(CPMC))
+                                        case "chukubh":
+                                            string chukubh = scld[1];
+                                            string chukubhequal = scld[2];
+                                            string chukubhand = scld[3];
+                                            if (!string.IsNullOrEmpty(chukubh))
                                             {
-                                                if (CPMCequal.Equals("="))
+                                                if (chukubhequal.Equals("="))
                                                 {
-                                                    if (CPMCand.Equals("and"))
-                                                        or_where = or_where.And(p => p.ChukudanBH == CPMC.Trim());
+                                                    if (chukubhand.Equals("and"))
+                                                        or_where = or_where.And(p => p.ChukudanBH == chukubh);
                                                     else
-                                                        or_where = or_where.Or(p => p.ChukudanBH == CPMC.Trim());
+                                                        or_where = or_where.Or(p => p.ChukudanBH == chukubh);
                                                 }
-                                                if (CPMCequal.Equals("like"))
+                                                if (chukubhequal.Equals("like"))
                                                 {
-                                                    if (CPMCand.Equals("and"))
-                                                        or_where = or_where.And(p => p.ChukudanBH.Contains(CPMC.Trim()));
+                                                    if (chukubhand.Equals("and"))
+                                                        or_where = or_where.And(p => p.ChukudanBH.Contains(chukubh));
                                                     else
-                                                        or_where = or_where.Or(p => p.ChukudanBH.Contains(CPMC.Trim()));
+                                                        or_where = or_where.Or(p => p.ChukudanBH.Contains(chukubh));
+                                                }
+                                            }
+                                            break;
+                                        case "ShangpinMC":
+                                            string ShangpinMC = scld[1];
+                                            string ShangpinMCequal = scld[2];
+                                            string ShangpinMCand = scld[3];
+                                            if (!string.IsNullOrEmpty(ShangpinMC))
+                                            {
+                                                if (ShangpinMCequal.Equals("="))
+                                                {
+                                                    if (ShangpinMCand.Equals("and"))
+                                                        or_where = or_where.And(p => p.ShangpinMC == ShangpinMC);
+                                                    else
+                                                        or_where = or_where.Or(p => p.ShangpinMC == ShangpinMC);
+                                                }
+                                                if (ShangpinMCequal.Equals("like"))
+                                                {
+                                                    if (ShangpinMCand.Equals("and"))
+                                                        or_where = or_where.And(p => p.ShangpinMC.Contains(ShangpinMC));
+                                                    else
+                                                        or_where = or_where.Or(p => p.ShangpinMC.Contains(ShangpinMC));
+                                                }
+                                            }
+                                            break;
+                                        case "Guige":
+                                            string Guige = scld[1];
+                                            string Guigeequal = scld[2];
+                                            string Guigeand = scld[3];
+                                            if (!string.IsNullOrEmpty(Guige))
+                                            {
+                                                if (Guigeequal.Equals("="))
+                                                {
+                                                    if (Guigeand.Equals("and"))
+                                                        or_where = or_where.And(p => p.Guige == Guige);
+                                                    else
+                                                        or_where = or_where.Or(p => p.Guige == Guige);
+                                                }
+                                                if (Guigeequal.Equals("like"))
+                                                {
+                                                    if (Guigeand.Equals("and"))
+                                                        or_where = or_where.And(p => p.Guige.Contains(Guige));
+                                                    else
+                                                        or_where = or_where.Or(p => p.Guige.Contains(Guige));
+                                                }
+                                            }
+                                            break;
+                                        case "Pihao":
+                                            string Pihao = scld[1];
+                                            string Pihaoequal = scld[2];
+                                            string Pihaoand = scld[3];
+                                            if (!string.IsNullOrEmpty(Pihao))
+                                            {
+                                                if (Pihaoequal.Equals("="))
+                                                {
+                                                    if (Pihaoand.Equals("and"))
+                                                        or_where = or_where.And(p => p.Pihao == Pihao);
+                                                    else
+                                                        or_where = or_where.Or(p => p.Pihao == Pihao);
+                                                }
+                                                if (Pihaoequal.Equals("like"))
+                                                {
+                                                    if (Pihaoand.Equals("and"))
+                                                        or_where = or_where.And(p => p.Pihao.Contains(Pihao));
+                                                    else
+                                                        or_where = or_where.Or(p => p.Pihao.Contains(Pihao));
+                                                }
+                                            }
+                                            break;
+                                        case "ChukuRQ":
+                                            string ChukuRQ = scld[1];
+                                            string ChukuRQequal = scld[2];
+                                            string ChukuRQand = scld[3];
+                                            if (!string.IsNullOrEmpty(ChukuRQ))
+                                            {
+                                                if (ChukuRQequal.Equals("="))
+                                                {
+                                                    if (ChukuRQand.Equals("and"))
+                                                        or_where = or_where.And(p => p.ChukuRQ == DateTime.Parse(ChukuRQ));
+                                                    else
+                                                        or_where = or_where.Or(p => p.ChukuRQ == DateTime.Parse(ChukuRQ));
+                                                }
+                                                if (ChukuRQequal.Equals(">"))
+                                                {
+                                                    if (ChukuRQand.Equals("and"))
+                                                        or_where = or_where.And(p => p.ChukuRQ > DateTime.Parse(ChukuRQ));
+                                                    else
+                                                        or_where = or_where.Or(p => p.ChukuRQ > DateTime.Parse(ChukuRQ));
+                                                }
+                                                if (ChukuRQequal.Equals("<"))
+                                                {
+                                                    if (ChukuRQand.Equals("and"))
+                                                        or_where = or_where.And(p => p.ChukuRQ < DateTime.Parse(ChukuRQ));
+                                                    else
+                                                        or_where = or_where.Or(p => p.ChukuRQ < DateTime.Parse(ChukuRQ));
                                                 }
                                             }
                                             break;

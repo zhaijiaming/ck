@@ -9,11 +9,6 @@
 <script type="text/javascript">
     try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
     $(document).ready(function () {
-        var i = 0;
-        $("#mydatatable tbody tr").each(function () {
-            i = i + 1;
-            $(this).find("td").eq(0).html(i);
-        });
         //table样式
         table_config(mydatatable);
         trResize();//初始化表头
@@ -33,6 +28,30 @@
         scm.ItemTitle = "出库编号";
         scm.ItemType = "System.String";
         scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "ShangpinMC";
+        scm.ItemTitle = "商品名称";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "Guige";
+        scm.ItemTitle = "规格";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "Pihao";
+        scm.ItemTitle = "批号";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "ChukuRQ";
+        scm.ItemTitle = "出库日期";
+        scm.ItemType = "System.DateTime";
+        scms.Add(scm);
     }
     else
     {
@@ -46,12 +65,56 @@
             if (scs.Length > 1)
             {
                 scm.ItemValue = scs[0].Split(',')[1];
-                if (scm.ItemValue.Length == 0)
-                {
-                    scm.ItemValue = "0";
-                }
                 scm.ItemOpValue = scs[0].Split(',')[2];
                 scm.ItemJion = scs[0].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "ShangpinMC";
+            scm.ItemTitle = "商品名称";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[1].Split(',')[1];
+                scm.ItemOpValue = scs[1].Split(',')[2];
+                scm.ItemJion = scs[1].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "Guige";
+            scm.ItemTitle = "规格";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[2].Split(',')[1];
+                scm.ItemOpValue = scs[2].Split(',')[2];
+                scm.ItemJion = scs[2].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "Pihao";
+            scm.ItemTitle = "批号";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[3].Split(',')[1];
+                scm.ItemOpValue = scs[3].Split(',')[2];
+                scm.ItemJion = scs[3].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "ChukuRQ";
+            scm.ItemTitle = "出库日期";
+            scm.ItemType = "System.DateTime";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[4].Split(',')[1];
+                scm.ItemOpValue = scs[4].Split(',')[2];
+                scm.ItemJion = scs[4].Split(',')[3];
             }
             scms.Add(scm);
 
@@ -84,7 +147,8 @@
                 <div class="table-wapper">
                     <table class="table table-bordered table-condensed" id="mydatatable">
                         <tr>
-                            <th>序号</th>
+                            <th></th>
+                            <th>出库单编号</th>
                             <th>委托方企业名称</th>
                             <th>出库日期</th>
                             <th>出库类型</th>
@@ -95,8 +159,8 @@
                             <th>生产批号</th>
                             <th>序列号</th>
                             <th>储运条件</th>
-                            <th>单位</th>
                             <th>数量</th>
+                            <th>单位</th>
                             <th>收货客户名称</th>
                             <th>收货地址</th>
                             <th>联系人</th>
@@ -107,7 +171,10 @@
                             @foreach (var item in ViewBag.outreport)
                             {
                                 <tr>
-                                    <td></td>
+                                    <td>
+                                        <label><input class="checkbox" type="checkbox"></label>
+                                    </td>
+                                    <td>@item.ChukudanBH</td>
                                     <td>@Html.GetDataValue_ID("货主", "名称", (int)item.HuozhuID)</td>
                                     <td>@string.Format("{0:yyyy-MM-dd}", item.ChukuRQ == null ? "" : item.ChukuRQ)</td>
                                     <td>@Html.GetCommonValue_ID("出库类型", (int)item.YewuLX)</td>
@@ -118,8 +185,8 @@
                                     <td>@item.Pihao</td>
                                     <td>@item.Xuliema</td>
                                     <td>@item.ChunyunYQ</td>
-                                    <td>@item.JibenDW</td>
                                     <td>@item.ChukuSL</td>
+                                    <td>@item.JibenDW</td>
                                     <td>@item.KehuMC</td>
                                     <td>@item.Yunsongdizhi</td>
                                     <td>@item.Lianxiren</td>

@@ -8,58 +8,47 @@
 }
 <div class="page-content">
     <div class="row">
-        <div class="col-sm-12">
-            <div class="table-wapper-all">
-                <div class="fixed-table-wapper">
-                    <table class="table table-bordered table-condensed fixed-table-header"></table>
-                </div>
-                <div class="table-wapper">
-                    <table class="table table-bordered table-condensed" id="mydatatable">
-                        <tr>
-                            <th>序号</th>
-                            <th>委托方企业名称</th>
-                            <th>入库日期</th>
-                            <th>入库类型</th>
-                            <th>产品名称</th>
-                            <th>规格(型号)</th>
-                            <th>生产企业</th>
-                            <th>产品注册证号</th>
-                            <th>备案凭证号</th>
-                            <th>生产批号/序列号</th>
-                            <th>生产日期和有效期(或者失效期)</th>
-                            <th>数量</th>
-                            <th>单位</th>
-                            <th>库存地点(货架号)</th>
-                            <th>质量状态</th>
-                            <th>备注</th>
-                        </tr>
-                        <tbody>
-                            @foreach (var item in ViewBag.inreport)
-                            {
-                                <tr>
-                                    <td></td>
-                                    <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
-                                    <td>@string.Format("{0:yyyy-MM-dd}", item.RukuRQ == null ? "" : item.RukuRQ)</td>
-                                    <td>@Html.GetCommonValue_ID("入库类型", (int)item.YewuLX)</td>
-                                    <td>@item.ShangpinMC</td>
-                                    <td>@item.Guige</td>
-                                    <td>@item.Changjia</td>
-                                    <td>@item.Zhucezheng</td>
-                                    <td>@item.Pihao</td>
-                                    <td>@item.Xuliema</td>
-                                    <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ == null ? "" : item.ShengchanRQ)/@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ == null ? "" : item.ShixiaoRQ)</td>
-                                    <td>@item.ChushiSL</td>
-                                    <td>@item.JibenDW</td>
-                                    <td>@item.Kuwei</td>
-                                    <td>@string.Format("{0}", item.HegeSF == true ? "合格" : "不合格")</td>
-                                    <td>@item.CunhuoSM</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+        <table class="table table-bordered table-condensed" id="mydatatable">
+            <tr>
+                <th>委托方企业名称</th>
+                <th>入库日期</th>
+                <th>入库类型</th>
+                <th>产品名称</th>
+                <th>规格(型号)</th>
+                <th>生产企业</th>
+                <th>产品注册证号</th>
+                <th>生产批号</th>
+                <th>序列号</th>
+                <th>生产日期和有效期(或者失效期)</th>
+                <th>数量</th>
+                <th>单位</th>
+                <th>库存地点(货架号)</th>
+                <th>质量状态</th>
+                <th>备注</th>
+            </tr>
+            <tbody>
+                @foreach (var item in ViewBag.inreport)
+                {
+                    <tr>
+                        <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.RukuRQ == null ? "" : item.RukuRQ)</td>
+                        <td>@Html.GetCommonValue_ID("入库类型", (int)item.YewuLX)</td>
+                        <td>@item.ShangpinMC</td>
+                        <td>@item.Guige</td>
+                        <td>@item.Changjia</td>
+                        <td>@item.Zhucezheng</td>
+                        <td>@item.Pihao</td>
+                        <td>@item.Xuliema</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ == null ? "" : item.ShengchanRQ)/@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ == null ? "" : item.ShixiaoRQ)</td>
+                        <td>@item.ChushiSL</td>
+                        <td>@item.JibenDW</td>
+                        <td>@item.Kuwei</td>
+                        <td>@string.Format("{0}", item.HegeSF == true ? "合格" : "不合格")</td>
+                        <td>@item.CunhuoSM</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>
 

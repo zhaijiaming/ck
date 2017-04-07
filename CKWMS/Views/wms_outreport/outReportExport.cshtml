@@ -8,61 +8,50 @@
 }
 <div class="page-content">
     <div class="row">
-        <div class="col-sm-12">
-            <div class="table-wapper-all">
-                <div class="fixed-table-wapper">
-                    <table class="table table-bordered table-condensed fixed-table-header"></table>
-                </div>
-                <div class="table-wapper">
-                    <table class="table table-bordered table-condensed" id="mydatatable">
-                        <tr>
-                            <th>序号</th>
-                            <th>委托方企业名称</th>
-                            <th>出库日期</th>
-                            <th>出库类型</th>
-                            <th>产品名称</th>
-                            <th>规格(型号)</th>
-                            <th>生产企业</th>
-                            <th>产品注册证号/备案凭证号</th>
-                            <th>生产批号</th>
-                            <th>序列号</th>
-                            <th>储运条件</th>
-                            <th>单位</th>
-                            <th>数量</th>
-                            <th>收货客户名称</th>
-                            <th>收货地址</th>
-                            <th>联系人</th>
-                            <th>联系方式</th>
-                            <th>备注</th>
-                        </tr>
-                        <tbody>
-                            @foreach (var item in ViewBag.outreport)
-                            {
-                                <tr>
-                                    <td></td>
-                                    <td>@Html.GetDataValue_ID("货主", "名称", (int)item.HuozhuID)</td>
-                                    <td>@string.Format("{0:yyyy-MM-dd}", item.ChukuRQ == null ? "" : item.ChukuRQ)</td>
-                                    <td>@Html.GetCommonValue_ID("出库类型", (int)item.YewuLX)</td>
-                                    <td>@item.ShangpinMC</td>
-                                    <td>@item.Guige</td>
-                                    <td>@item.Changjia</td>
-                                    <td>@item.Zhucezheng</td>
-                                    <td>@item.Pihao</td>
-                                    <td>@item.Xuliema</td>
-                                    <td>@item.ChunyunYQ</td>
-                                    <td>@item.JibenDW</td>
-                                    <td>@item.ChukuSL</td>
-                                    <td>@item.KehuMC</td>
-                                    <td>@item.Yunsongdizhi</td>
-                                    <td>@item.Lianxiren</td>
-                                    <td>@item.LianxiDH</td>
-                                    <td>@item.Beizhu</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+        <table class="table table-bordered table-condensed" id="mydatatable">
+            <tr>
+                <th>委托方企业名称</th>
+                <th>出库日期</th>
+                <th>出库类型</th>
+                <th>产品名称</th>
+                <th>规格(型号)</th>
+                <th>生产企业</th>
+                <th>产品注册证号/备案凭证号</th>
+                <th>生产批号</th>
+                <th>序列号</th>
+                <th>储运条件</th>
+                <th>单位</th>
+                <th>数量</th>
+                <th>收货客户名称</th>
+                <th>收货地址</th>
+                <th>联系人</th>
+                <th>联系方式</th>
+                <th>备注</th>
+            </tr>
+            <tbody>
+                @foreach (var item in ViewBag.outreport)
+                {
+                    <tr>
+                        <td>@Html.GetDataValue_ID("货主", "名称", (int)item.HuozhuID)</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ChukuRQ == null ? "" : item.ChukuRQ)</td>
+                        <td>@Html.GetCommonValue_ID("出库类型", (int)item.YewuLX)</td>
+                        <td>@item.ShangpinMC</td>
+                        <td>@item.Guige</td>
+                        <td>@item.Changjia</td>
+                        <td>@item.Zhucezheng</td>
+                        <td>@item.Pihao</td>
+                        <td>@item.Xuliema</td>
+                        <td>@item.ChunyunYQ</td>
+                        <td>@item.JibenDW</td>
+                        <td>@item.ChukuSL</td>
+                        <td>@item.KehuMC</td>
+                        <td>@item.Yunsongdizhi</td>
+                        <td>@item.Lianxiren</td>
+                        <td>@item.LianxiDH</td>
+                        <td>@item.Beizhu</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>

@@ -126,7 +126,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>入库日期</Value>
+                              <Value>出库日期</Value>
                               <Style>
                                 <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>9pt</FontSize>
@@ -182,7 +182,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>入库类型</Value>
+                              <Value>出库类型</Value>
                               <Style>
                                 <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>9pt</FontSize>
