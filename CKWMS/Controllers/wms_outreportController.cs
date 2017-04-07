@@ -19,6 +19,78 @@ namespace CKWMS.Controllers
         {
             return View();
         }
+        public ActionResult GetOutList()
+        {
+            int userid = (int)Session["user_id"];
+            string pagetag = "wms_outreport_list";
+            string page = "1";
+            string chukubh = Request["chukubh"] ?? "";
+            string chukubhequal = Request["chukubhequal"] ?? "";
+            string chukubhand = Request["chukubhand"] ?? "";
+            Expression<Func<wms_outdetaillist_v, bool>> where = PredicateExtensionses.True<wms_outdetaillist_v>();
+            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            if (sc == null)
+            {
+                sc = new searchcondition();
+                sc.UserID = userid;
+                sc.PageBrief = pagetag;
+                if (!string.IsNullOrEmpty(chukubh))
+                {
+                    if (chukubhequal.Equals("="))
+                    {
+                        if (chukubhand.Equals("and"))
+                            where = where.And(p => p.ChukudanBH == chukubh);
+                        else
+                            where = where.Or(p => p.ChukudanBH == chukubh);
+                    }
+                    if (chukubhequal.Equals("like"))
+                    {
+                        if (chukubhand.Equals("and"))
+                            where = where.And(p => p.ChukudanBH.Contains(chukubh));
+                        else
+                            where = where.Or(p => p.ChukudanBH.Contains(chukubh));
+                    }
+                }
+                if (!string.IsNullOrEmpty(chukubh))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "chukubh", chukubh, chukubhequal, chukubhand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "chukubh", "", chukubhequal, chukubhand);
+                searchconditionService.GetInstance().AddEntity(sc);
+            }
+            else
+            {
+                sc.ConditionInfo = "";
+                if (!string.IsNullOrEmpty(chukubh))
+                {
+                    if (chukubhequal.Equals("="))
+                    {
+                        if (chukubhand.Equals("and"))
+                            where = where.And(p => p.ChukudanBH == chukubh);
+                        else
+                            where = where.Or(p => p.ChukudanBH == chukubh);
+                    }
+                    if (chukubhequal.Equals("like"))
+                    {
+                        if (chukubhand.Equals("and"))
+                            where = where.And(p => p.ChukudanBH.Contains(chukubh));
+                        else
+                            where = where.Or(p => p.ChukudanBH.Contains(chukubh));
+                    }
+                }
+                if (!string.IsNullOrEmpty(chukubh))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "chukubh", chukubh, chukubhequal, chukubhand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "chukubh", "", chukubhequal, chukubhand);
+                searchconditionService.GetInstance().UpdateEntity(sc);
+            }
+            ViewBag.SearchCondition = sc.ConditionInfo;
+
+            var tempData = ServiceFactory.wms_chukudanservice.GetOutList(where.Compile()).ToPagedList<wms_outdetaillist_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            ViewBag.outreport = tempData;
+            return View(tempData);
+        }
+        [HttpPost]
+        [OutputCache(Duration =30)]
         public ActionResult GetOutList(string page)
         {
             if (string.IsNullOrEmpty(page))
