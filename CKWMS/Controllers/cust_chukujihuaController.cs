@@ -530,6 +530,7 @@ namespace CKWMS.Controllers
         public ActionResult Delete()
         {
             string sdel = Request["del"] ?? "";
+            int userid = (int)Session["user_id"];
             int id;
             cust_chukujihua ob_cust_chukujihua;
             foreach (string sD in sdel.Split(','))
@@ -539,6 +540,8 @@ namespace CKWMS.Controllers
                     id = int.Parse(sD);
                     ob_cust_chukujihua = ob_cust_chukujihuaservice.GetEntityById(cust_chukujihua => cust_chukujihua.ID == id && cust_chukujihua.IsDelete == false);
                     ob_cust_chukujihua.IsDelete = true;
+                    ob_cust_chukujihua.MakeMan = userid;
+                    ob_cust_chukujihua.MakeDate = DateTime.Now;
                     ob_cust_chukujihuaservice.UpdateEntity(ob_cust_chukujihua);
                 }
             }
@@ -556,6 +559,26 @@ namespace CKWMS.Controllers
                 var tempdata = ServiceFactory.cust_chukujihuamxservice.LoadSortEntities(p => p.JihuaID == int.Parse(chukujihua_id) && p.IsDelete == false, false, p => p.Pihao).ToList<cust_chukujihuamx>();
                 return Json(tempdata);
             }
+        }
+        public ActionResult ClosePlan()
+        {
+            string sdel = Request["del"] ?? "";
+            int userid = (int)Session["user_id"];
+            int id;
+            cust_chukujihua ob_cust_chukujihua;
+            foreach (string sD in sdel.Split(','))
+            {
+                if (sD.Length > 0)
+                {
+                    id = int.Parse(sD);
+                    ob_cust_chukujihua = ob_cust_chukujihuaservice.GetEntityById(cust_chukujihua => cust_chukujihua.ID == id && cust_chukujihua.IsDelete == false);
+                    ob_cust_chukujihua.JihuaZT=3;
+                    ob_cust_chukujihua.MakeMan = userid;
+                    ob_cust_chukujihua.MakeDate = DateTime.Now;
+                    ob_cust_chukujihuaservice.UpdateEntity(ob_cust_chukujihua);
+                }
+            }
+            return RedirectToAction("Index");
         }
     }
 }

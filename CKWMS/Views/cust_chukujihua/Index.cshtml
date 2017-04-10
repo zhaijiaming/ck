@@ -43,7 +43,7 @@
                         else if (data == -3) {
                             alert("已生成了出库单，不能再次生成出库dan！");
                         }
-                        else if(data==-4)
+                        else if (data == -4)
                             alert("生成的出库单商品和指令不符，请联系管理员！");
                         else
                             location.reload();
@@ -137,11 +137,29 @@
                 location.href = "/cust_chukujihua/Edit/" + $(this).val();
         });
     }
+    function CloseInfo() {
+        var sDel = "";
+        $("#mydatatable tr input[type=checkbox]").each(function () {
+            if (this.checked) {
+                var selstate = $(this).parent().parent().parent().find("td").eq(2).html();
+                alert(selstate);
+                if (selstate == "新建")
+                    sDel = sDel + ", " + $(this).val()
+            }
+        });
+        if (sDel.length < 2)
+            return;
+        var url_go = "/cust_chukujihua/closeplan/?del=" + sDel;
+        location.href = url_go;
+    }
     function DelInfo() {
         var sDel = "";
         $("#mydatatable tr input[type=checkbox]").each(function () {
-            if (this.checked)
-                sDel = sDel + ", " + $(this).val()
+            if (this.checked) {
+                var selstate = $(this).parent().parent().parent().find("td").eq(2).html();
+                if (selstate == "新建")
+                    sDel = sDel + ", " + $(this).val()
+            }
         });
         if (sDel.length < 2)
             return;
@@ -259,7 +277,8 @@
             <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
             <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
             <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
-            @*<button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>*@
+            <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
+            <button type="button" class="btn btn-default " id="bt_close" onclick="CloseInfo()"><i class="icon-circle-blank"></i>关闭</button>
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
             <button type="button" class="btn btn-default " id="bt_newout"><i class="icon-adn"></i>生成出库单</button>
         </p>
