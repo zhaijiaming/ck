@@ -552,7 +552,7 @@ namespace CKWMS.Controllers
             ViewBag.wms_storage_v = tempData;
             return View(tempData);
         }
-        [OutputCache(Duration =30)]
+        [OutputCache(Duration = 30)]
         public ActionResult StorageLocationMove(string page)
         {
             if (string.IsNullOrEmpty(page))
@@ -746,6 +746,30 @@ namespace CKWMS.Controllers
                 return Json(-4);
             if (_ch.Shuliang - _ch.DaijianSL < float.Parse(_sl))
                 return Json(-4);
+            var _oqy = ServiceFactory.wms_cangkuqyservice.GetEntityById(p => p.ID == _kw.QuyuID && p.IsDelete == false);
+            if (_oqy == null)
+                return Json(-8);
+            if (int.Parse(_lx) == 1)
+                if (_oqy.GongnengLX != 1)
+                    return Json(-6);
+            if (int.Parse(_lx) == 2)
+            {
+                if (_oqy.GongnengLX != 2)
+                    return Json(-6);
+            }
+            if (int.Parse(_lx) == 3)
+            {
+                if (_oqy.GongnengLX != 3)
+                    return Json(-6);
+                if (_ch.HegeSF == true)
+                    return Json(-7);
+            }
+            if (int.Parse(_lx) == 4)
+            {
+                if (_oqy.GongnengLX != 1)
+                    return Json(-6);
+            }
+
             wms_cunhuo _nch = new wms_cunhuo();
             _nch.Kuwei = _kw.Mingcheng;
             _nch.KuweiID = _kw.ID;

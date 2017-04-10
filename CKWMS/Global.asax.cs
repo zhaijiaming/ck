@@ -204,7 +204,7 @@ namespace CKWMS
             AreaFunType.Add(0, "");
             AreaFunType.Add(1, "正常");
             AreaFunType.Add(2, "特殊");
-            AreaFunType.Add(3, "临时");
+            AreaFunType.Add(3, "不良");
 
             EntryType = new Dictionary<int, string>();
             EntryType.Add(0, "");
@@ -422,10 +422,10 @@ namespace CKWMS
 
             MoveType = new Dictionary<int, string>();
             MoveType.Add(0, "");
-            MoveType.Add(1, "样品移位");
-            MoveType.Add(2, "不良移位");
-            MoveType.Add(3, "普通移位");
-            MoveType.Add(4, "货品移动");
+            MoveType.Add(1, "普通移位");
+            MoveType.Add(2, "特殊移位");
+            MoveType.Add(3, "不良移位");
+            MoveType.Add(4, "回复移动");
             MoveType.Add(5, "库位移动");
         }
     }

@@ -41,7 +41,6 @@
                 alert("移位的数量不能超出存货数量，请重新输入！");
                 return;
             }
-            alert($("#ywlx").val());
             if (eval($("#ywlx").val()) == 0)
             {
                 alert("移位类型必须选择！");
@@ -75,6 +74,12 @@
                         alert("移位时，库存数量不够！");
                     if (data == -5)
                         alert("系统出错，请联系管理员！");
+                    if (data == -6)
+                        alert("库位属性与操作要求不符！");
+                    if (data == -7)
+                        alert("只有质量不合格的货品才能移到不良品库区！");
+                    if (data == -8)
+                        alert("库位区域属性不正确！");
                     if (data == 1) {
                         $("#mydatatable tbody tr").each(function () {
                             var _cb = $(this).find("input");
