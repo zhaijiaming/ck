@@ -7,6 +7,7 @@
     string _searchcondition = ViewBag.SearchCondition;
 }
 <script type="text/javascript">
+    try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
     $(document).ready(function () {
         $("tr").bind("dblclick", function () {
             var u_id = $(this).find('td').eq(0).find('input').val();
@@ -15,6 +16,10 @@
                 location.href = url_go;
             }
         });
+        //table样式
+        table_config(mydatatable);
+        trResize();//初始化表头
+
         var t = document.getElementsByClassName('sfz0');
 
         for (var i = 0; i < t.length; i++) {
@@ -126,9 +131,6 @@
 }
 
 <div class="breadcrumbs" id="breadcrumbs">
-    <script type="text/javascript">
-        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
-    </script>
     <ul class="breadcrumb">
         <li>
             <i class="icon-home home-icon"></i>
@@ -140,68 +142,57 @@
 <div class="page-content">
     @Html.Search_Condition((int)Session["user_id"], "销售人员_条件组合查询", "/base_xiaoshou/index", "base_xiaoshouindex", scms)
     <div class="page-header">
-        <p>
-            <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
-            <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
-            <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
-            <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
-            <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
-        </p>
+        <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
+        <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
+        <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
+        <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
+        <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
     </div>
     <div class="row">
-        <table class="table" id="mydatatable">
-            <caption></caption>
-            <thead>
-                <tr>
-                    <td></td>
-                    @*<td>类别</td>*@
-                    <td>货主</td>
-                    @*<td>授权单位名称</td>*@
-                    <td>姓名</td>
-                    <td>电话</td>
-                    <td>身份证编号</td>
-                    <td>身份证正面照片</td>
-                    <td>身份证背面照片</td>
-                    <td>授权书有效期</td>
-                    <td>授权书照片</td>
-                    <td>首营状态</td>
-                    @*<td>录入日期</td>
-                    <td>录入人</td>*@
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in ViewBag.base_xiaoshou)
-                {
-                    <tr>
-                        <td>
-                            <div class="checkbox">
-                                <label><input type="checkbox" value="@item.ID"></label>
-                            </div>
-                        </td>
-                        @*<td>@item.Leibie</td>*@
-                        @*<td>@item.ShouquanID</td>*@
-                        <td>@Html.GetDataValue_ID("货主", "名称", (int)item.ShouquanID)</td>
-                        @*<td>@item.Shouquanmingcheng</td>*@
-                        <td>@item.Xingming</td>
-                        <td>@item.Dianhua</td>
-                        <td>@item.ShenfenzhengBH</td>
-                        @*<td>@item.Shenfenzheng0TP</td>*@
-                        <td><a href="/files/zhengzhao/@item.Shenfenzheng0TP" target="_blank" class="sfz0">浏览</a></td>
-                        @*<td>@item.Shenfenzheng1TP</td>*@
-                        <td><a href="/files/zhengzhao/@item.Shenfenzheng1TP" target="_blank" class="sfz1">浏览</a></td>
-                        <td>@item.ShouquanshuYXQ.ToString("yyyy-MM-dd")</td>
-                        @*<td>@item.ShouquanshuTP</td>*@
-                        <td><a href="/files/zhengzhao/@item.ShouquanshuTP" target="_blank" class="sqs">浏览</a></td>
-                        @*<td>@item.Shouying</td>*@
-                        <td>@Html.GetCommonValue_ID("首营状态", (int)item.Shouying)</td>
-                        @*<td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
-                        <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>*@
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-    <div class="pager">
-        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+        <div class="col-sm-12">
+            <div class="table-wapper-all">
+                <div class="fixed-table-wapper">
+                    <table class="table table-bordered table-condensed fixed-table-header"></table>
+                </div>
+                <div class="table-wapper">
+                    <table class="table table-bordered table-condensed" id="mydatatable">
+                        <tr>
+                            <th></th>
+                            <th>货主</th>
+                            <th>姓名</th>
+                            <th>电话</th>
+                            <th>身份证编号</th>
+                            <th>身份证正面照片</th>
+                            <th>身份证背面照片</th>
+                            <th>授权书有效期</th>
+                            <th>授权书照片</th>
+                            <th>首营状态</th>
+                        </tr>
+                        <tbody>
+                            @foreach (var item in ViewBag.base_xiaoshou)
+                            {
+                                <tr>
+                                    <td>
+                                        <label><input type="checkbox" value="@item.ID"></label>
+                                    </td>
+                                    <td>@Html.GetDataValue_ID("货主", "名称", (int)item.ShouquanID)</td>
+                                    <td>@item.Xingming</td>
+                                    <td>@item.Dianhua</td>
+                                    <td>@item.ShenfenzhengBH</td>
+                                    <td><a href="/files/zhengzhao/@item.Shenfenzheng0TP" target="_blank" class="sfz0">浏览</a></td>
+                                    <td><a href="/files/zhengzhao/@item.Shenfenzheng1TP" target="_blank" class="sfz1">浏览</a></td>
+                                    <td>@item.ShouquanshuYXQ.ToString("yyyy-MM-dd")</td>
+                                    <td><a href="/files/zhengzhao/@item.ShouquanshuTP" target="_blank" class="sqs">浏览</a></td>
+                                    <td>@Html.GetCommonValue_ID("首营状态", (int)item.Shouying)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <span class="pager">
+                @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+            </span>
+        </div>
     </div>
 </div>

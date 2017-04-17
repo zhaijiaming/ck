@@ -15,6 +15,9 @@
                 location.href = url_go;
             }
         });
+        //table样式
+        table_config(mydatatable);
+        trResize();//初始化表头
     });
     function AddInfo() {
         location.href = "/base_feiyongxm/Add";
@@ -101,54 +104,58 @@
     @Html.Search_Condition((int)Session["user_id"], "费用项目_条件组合查询", "/base_feiyongxm/index", "base_feiyongxmindex", scms)
     <div class="page-header">
         <p>
-            <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
-            <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
-            <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
-            <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
-            <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
+            <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
+            <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
+            <button type="button" class="btn btn-primary btn-xs btn-app radius-4 " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
+            <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
+            <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
         </p>
     </div>
     <div class="row">
-        <table class="table" id="mydatatable">
-            <caption></caption>
-            <thead>
-                <tr>
-                    <td></td>
-                    <td>编号</td>
-                    <td>名称</td>
-                    <td>公司</td>
-                    <td>描述</td>
-                    <td>科目</td>
-                    <td>对码</td>
-                    @*<td>制单日期</td>
-                    <td>制单人</td>*@
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in ViewBag.base_feiyongxm)
-                {
-                    <tr>
-                        <td>
-                            <div class="checkbox">
-                                <label><input type="checkbox" value="@item.ID"></label>
-                            </div>
-                        </td>
-                        <td>@item.Bianhao</td>
-                        <td>@item.Mingcheng</td>
-                        @*<td>@item.Gongsi</td>*@
-                        <td>@Html.GetDataValue_ID("公司", "名称", (int)item.Gongsi)</td>
-                        <td>@item.Miaoshu</td>
-                        <td>@item.Kemu</td>
-                        <td>@item.Duima</td>
-                        @*<td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
-                        <td>@item.MakeMan</td>*@
+        <div class="col-sm-12">
+            <div class="table-wapper-all">
+                <div class="fixed-table-wapper">
+                    <table class="table table-bordered table-condensed fixed-table-header"></table>
+                </div>
+                <div class="table-wapper">
+                    <table class="table table-bordered table-condensed" id="mydatatable">
+                        <tr>
+                            <th></th>
+                            <th>编号</th>
+                            <th>名称</th>
+                            <th>公司</th>
+                            <th>描述</th>
+                            <th>科目</th>
+                            <th>对码</th>
+                            @*<td>制单日期</td>
+                                <td>制单人</td>*@
+                        </tr>
+                        <tbody>
+                            @foreach (var item in ViewBag.base_feiyongxm)
+                            {
+                                <tr>
+                                    <td>
+                                        <label><input type="checkbox" value="@item.ID"></label>
+                                    </td>
+                                    <td>@item.Bianhao</td>
+                                    <td>@item.Mingcheng</td>
+                                    @*<td>@item.Gongsi</td>*@
+                                    <td>@Html.GetDataValue_ID("公司", "名称", (int)item.Gongsi)</td>
+                                    <td>@item.Miaoshu</td>
+                                    <td>@item.Kemu</td>
+                                    <td>@item.Duima</td>
+                                    @*<td>@item.MakeDate.ToString("yyyy-MM-dd")</td>
+                                        <td>@item.MakeMan</td>*@
 
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-    <div class="pager">
-        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <span class="pager">
+                @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+            </span>
+        </div>
     </div>
 </div>
