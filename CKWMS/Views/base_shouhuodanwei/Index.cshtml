@@ -7,6 +7,7 @@
     string _searchcondition = ViewBag.SearchCondition;
 }
 <script type="text/javascript">
+    try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
     $(document).ready(function () {
         $("tr").bind("dblclick", function () {
             var u_id = $(this).find('td').eq(0).find('input').val();
@@ -84,6 +85,9 @@
                 $(".JingyingxukeTP").eq(i).html("浏览");
             }
         }
+        //table样式
+        table_config(mydatatable);
+        trResize();//初始化表头
     });
     function AddInfo() {
         location.href = "/base_shouhuodanwei/Add";
@@ -163,9 +167,6 @@
     }
 }
 <div class="breadcrumbs" id="breadcrumbs">
-    <script type="text/javascript">
-        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
-    </script>
     <ul class="breadcrumb">
         <li>
             <i class="icon-home home-icon"></i>
@@ -178,68 +179,71 @@
 <div class="page-content">
     @Html.Search_Condition(5, "收货单位_条件组合查询", "/base_shouhuodanwei/index", "base_shouhuodanweiindex", scms)
     <div class="page-header">
-        <p>
-            <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
-            <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
-            <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
+            <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
+            <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
+            <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
             @*<button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>*@
-            <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
-            <button type="button" class="btn btn-default " id="bt_sendcheck"><i class="icon-check-sign"></i>送审</button>
-            <button type="button" class="btn btn-default " id="bt_export" onclick="javascript: window.open('/base_shouhuodanwei/recipiententityexport')"><i class="icon-inbox"></i>导出</button>
-            <button type="button" class="btn btn-default " id="bt_gspedit"><i class="icon-eraser"></i>GSP修改</button>
-</p>
+            <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
+            <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_sendcheck"><i class="icon-check-sign"></i>送审</button>
+            <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_export" onclick="javascript: window.open('/base_shouhuodanwei/recipiententityexport')"><i class="icon-inbox"></i>导出</button>
+            <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_gspedit"><i class="icon-eraser"></i>GSP修改</button>
     </div>
-    <div class="row" style="overflow:auto;height:445px;">
-        <table class="table" id="mydatatable" style="white-space: nowrap; ">
-            <caption></caption>
-            <thead>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="table-wapper-all">
+                <div class="fixed-table-wapper">
+                    <table class="table table-bordered table-condensed fixed-table-header"></table>
+                </div>
+                <div class="table-wapper">
+                    <table class="table table-bordered table-condensed" id="mydatatable">
+                        <tr>
+                            <th></th>
+                            <th>首营状态</th>
+                            <th>货主</th>
+                            <th>单位名称</th>
+                            <th>送货地址</th>
+                            <th>营业执照编号</th>
+                            <th>有效期</th>
+                            <th>照片</th>
+                            <th>经营许可编号</th>
+                            <th>有效期</th>
+                            <th>照片</th>
+                            @*<td>首营状态</td>*@
+                        </tr>
+                        <tbody>
+                            @foreach (var item in ViewBag.base_shouhuodanwei)
+                            {
+                                <tr>
+                                    <td>
+                                        <label><input class="checkbox" type="checkbox" value="@item.ID"></label>
+                                    </td>
+                                    <td>@Html.GetCommonValue_ID("首营状态", (int)item.Shouying)</td>
+                                    <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
+                                    <td>@item.Mingcheng</td>
+                                    <td>@item.SonghuoDZ</td>
+                                    <td>@item.YingyezhizhaoBH</td>
+                                    <td>@item.YingyezhizhaoYXQ.ToString("yyyy-MM-dd")</td>
+                                    <td>
+                                        <a href="/files/zhengzhao/@item.YingyezhizhaoTP" target="_blank" class="YingyezhizhaoTP"></a>
+                                        <label><input type="hidden" class="val_yyzzTP" value="@item.YingyezhizhaoTP"></label>
+                                    </td>
+                                    <td>@item.JingyingxukeBH</td>
+                                    <td>@item.JingyingxukeYXQ.ToString("yyyy-MM-dd")</td>
+                                    <td>
+                                        <a href="/files/zhengzhao/@item.JingyingxukeTP" target="_blank" class="JingyingxukeTP"></a>
+                                        <label><input type="hidden" class="val_jyxkTP" value="@item.JingyingxukeTP"></label>
+                                    </td>
 
-                <tr>
-                    <td></td>
-                    <td>首营状态</td>
-                    <td>货主</td>
-                    <td>单位名称</td>
-                    <td>送货地址</td>
-                    <td>营业执照编号</td>
-                    <td>有效期</td>
-                    <td>照片</td>
-                    <td>经营许可编号</td>
-                    <td>有效期</td>
-                    <td>照片</td>
-                    @*<td>首营状态</td>*@
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in ViewBag.base_shouhuodanwei)
-                {
-                    <tr>
-                        <td>
-                            <label><input class="checkbox" type="checkbox" value="@item.ID"></label>
-                        </td>
-                        <td>@Html.GetCommonValue_ID("首营状态", (int)item.Shouying)</td>
-                        <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
-                        <td>@item.Mingcheng</td>
-                        <td>@item.SonghuoDZ</td>
-                        <td>@item.YingyezhizhaoBH</td>
-                        <td>@item.YingyezhizhaoYXQ.ToString("yyyy-MM-dd")</td>
-                        <td>
-                            <a href="/files/zhengzhao/@item.YingyezhizhaoTP" target="_blank" class="YingyezhizhaoTP"></a>
-                            <label><input type="hidden" class="val_yyzzTP" value="@item.YingyezhizhaoTP"></label>
-                        </td>
-                        <td>@item.JingyingxukeBH</td>
-                        <td>@item.JingyingxukeYXQ.ToString("yyyy-MM-dd")</td>
-                        <td>
-                            <a href="/files/zhengzhao/@item.JingyingxukeTP" target="_blank" class="JingyingxukeTP"></a>
-                            <label><input type="hidden" class="val_jyxkTP" value="@item.JingyingxukeTP"></label>
-                        </td>
-
-                        @*<td>@Html.GetCommonValue_ID("首营状态", (int)item.Shouying)</td>*@
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-    <div class="pager" style="height:0px;">
-        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+                                    @*<td>@Html.GetCommonValue_ID("首营状态", (int)item.Shouying)</td>*@
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <span class="pager">
+                @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+            </span>
+        </div>
     </div>
 </div>
