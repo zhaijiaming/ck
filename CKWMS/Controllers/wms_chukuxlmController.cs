@@ -326,7 +326,7 @@ namespace CKWMS.Controllers
                 return Json(-2);
             if (_ckdxx.JihuaZT > 3)
                 return Json(-3);
-            ServiceFactory.wms_chukudanservice.UploadU8(_ckdxx.ChukudanBH);
+            //ServiceFactory.wms_chukudanservice.UploadU8(_ckdxx.ChukudanBH);
             string[] _xlms = _xlm.Split();
             foreach (var _m in _xlms)
             {

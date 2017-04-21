@@ -222,6 +222,7 @@ namespace CKWMS
             EntryPlanState.Add(3, "部分入库");
             EntryPlanState.Add(4, "入库完成");
             EntryPlanState.Add(5, "历史入库");
+            EntryPlanState.Add(6, "人工关闭");
 
             OutgoingType = new Dictionary<int, string>();
             OutgoingType.Add(0, "");
@@ -239,6 +240,7 @@ namespace CKWMS
             OutPlanState.Add(3, "部分出库");
             OutPlanState.Add(4, "出库完成");
             OutPlanState.Add(5, "历史出库");
+            OutPlanState.Add(6, "人工关闭");
 
             CheckState = new Dictionary<int, string>();
             CheckState.Add(0, "");
