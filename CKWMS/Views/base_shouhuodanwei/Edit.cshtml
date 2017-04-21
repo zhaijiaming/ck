@@ -587,7 +587,7 @@
     <div id="pl_fun" class="page-header">
         <button type="button" class="btn btn-app btn-xs btn-primary radius-4" onclick="javascript: history.back(-1); "><i class="icon-reply icon-only"></i><b>返回</b></button>
         <button type="button" id="save_top" class="btn btn-app btn-xs btn-primary radius-4"><i class="icon-save"></i><b>更新</b></button>
-        <button type="button" class="btn btn-app btn-xs btn-primary radius-4" id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
+        <button type="button" class="btn btn-app btn-xs btn-primary radius-4" id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i><b>刷新</b></button>
     </div>
     <div class="wrapper" style="background: url('/Imgs/bg-cloud.png') repeat;">
         <div class="container-fluid">
@@ -835,7 +835,7 @@
                                             <div class="form-group" style="display:none">
                                                 <label for="name" class="col-sm-2">首营状态</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" name="ob_base_shouhuodanwei_shouying">
+                                                    <input type="text" class="form-control" name="Shouying" value="@item.Shouying">
                                                     @Html.SelectList_Common("ob_base_shouhuodanwei_shouying", "首营状态", (int)item.Shouying)
                                                 </div>
                                             </div>
