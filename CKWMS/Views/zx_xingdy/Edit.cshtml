@@ -80,7 +80,7 @@
                 <div class="col-sm-8 col-sm-offset-2">
                     <div class="widget-box radius-4">
                         <div class="widget-header">
-                            <h3><b>包装箱信息</b></h3>
+                            <h4><b>包装箱信息</b></h4>
                         </div>
                         <div class="widget-body">
                             <div class="widget-main no-padding">
@@ -93,37 +93,37 @@
                                     <fieldset>
                                         @*箱号*@
                                         <div class="form-group">
-                                            <label for="Xianghao" class="col-sm-2 control-label"><b>箱号</b></label>
-                                            <div class="col-sm-9">
+                                            <label for="Xianghao" class="col-sm-3 control-label"><b>箱号</b></label>
+                                            <div class="col-sm-8">
                                                 @*@Html.TextBoxFor(m => m.Xianghao, new { @class = "form-control", @placeholder = "请填写箱号" })*@
                                                 <input type="text" id="Xianghao" name="Xianghao" class="form-control" placeholder="无需填写，自动生成箱号" readonly value="@ViewData.Model.Xianghao" />
                                             </div>
                                         </div>
                                         @*体积*@
                                         <div class="form-group">
-                                            <label for="Tiji" class="col-sm-2 control-label"><b>体积</b></label>
-                                            <div class="col-sm-9">
+                                            <label for="Tiji" class="col-sm-3 control-label"><b>体积</b></label>
+                                            <div class="col-sm-8">
                                                 @Html.TextBoxFor(m => m.Tiji, new { @class = "form-control", @placeholder = "请填写体积" })
                                             </div>
                                         </div>
                                         @*箱型*@
                                         <div class="form-group">
-                                            <label for="Xiangxing" class="col-sm-2 control-label"><b>箱型</b></label>
-                                            <div class="col-sm-9">
+                                            <label for="Xiangxing" class="col-sm-3 control-label"><b>箱型</b></label>
+                                            <div class="col-sm-8">
                                                 @Html.SelectList_Common("Xiangxing", "纸箱规格", (int)ViewData.Model.Xiangxing)
                                             </div>
                                         </div>
                                         @*状态*@
                                         <div class="form-group">
-                                            <label for="Zhuangtai" class="col-sm-2 control-label"><b>状态</b></label>
-                                            <div class="col-sm-9">
+                                            <label for="Zhuangtai" class="col-sm-3 control-label"><b>状态</b></label>
+                                            <div class="col-sm-8">
                                                 @Html.SelectList_Common("Zhuangtai", "包装箱状态", (int)ViewData.Model.Zhuangtai)
                                             </div>
                                         </div>
                                         @*开始装箱时间*@
                                         <div class="form-group">
-                                            <label for="KaishiSJ" class="col-sm-2 control-label"><b>开始装箱时间</b></label>
-                                            <div class="col-sm-9">
+                                            <label for="KaishiSJ" class="col-sm-3 control-label"><b>开始装箱时间</b></label>
+                                            <div class="col-sm-8">
                                                 <div class="input-group">
                                                     <input id="KaishiSJ" name="KaishiSJ" placeholder="开始装箱时间" class="form-control" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.KaishiSJ)" type="date" style="z-index:1000;position:relative;">
                                                     <span class="input-group-addon">
@@ -135,8 +135,8 @@
                                         </div>
                                         @*结束装箱时间*@
                                         <div class="form-group">
-                                            <label for="JieshuoSJ" class="col-sm-2 control-label"><b>结束装箱时间</b></label>
-                                            <div class="col-sm-9">
+                                            <label for="JieshuoSJ" class="col-sm-3 control-label"><b>结束装箱时间</b></label>
+                                            <div class="col-sm-8">
                                                 <div class="input-group">
                                                     <input id="JieshuoSJ" name="JieshuoSJ" placeholder="请填写结束装箱时间" class="form-control" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.JieshuoSJ)" type="date" style="z-index:1000;position:relative;">
                                                     <span class="input-group-addon">
@@ -148,8 +148,8 @@
                                         </div>
                                         @*是否占用*@
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label" for="ZhanyongSF"><b>是否占用</b></label>
-                                            <div class="col-sm-9">
+                                            <label class="col-sm-3 control-label" for="ZhanyongSF"><b>是否占用</b></label>
+                                            <div class="col-sm-8">
 
                                                 <label class="control-group">
                                                     <input name="ZhanyongSF" id="ZhanyongSF" class="ace ace-switch ace-switch-7" checked="checked" type="checkbox">
@@ -160,8 +160,8 @@
                                         </div>
                                         @*是否周转*@
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label" for="ZhouzhuanSF"><b>是否周转</b></label>
-                                            <div class="col-sm-9">
+                                            <label class="col-sm-3 control-label" for="ZhouzhuanSF"><b>是否周转</b></label>
+                                            <div class="col-sm-8">
                                                 <label class="control-group">
                                                     <input name="ZhouzhuanSF" id="ZhouzhuanSF" class="ace ace-switch ace-switch-7" checked="checked" type="checkbox">
                                                     <span class="lbl"></span>
@@ -178,8 +178,8 @@
                                         </div>
                                         @*输入日期*@
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label" for="makedate"><b>录入日期</b></label>
-                                            <div class="col-sm-9">
+                                            <label class="col-sm-3 control-label" for="makedate"><b>录入日期</b></label>
+                                            <div class="col-sm-8">
                                                 <div class="input-group">
                                                     <input disabled="disabled" placeholder="请填写录入日期" class="form-control" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.MakeDate)" type="text">
                                                     <span class="input-group-addon">
@@ -190,8 +190,8 @@
                                         </div>
                                         @*录入人*@
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label" for="MakeMan"><b>录入人</b></label>
-                                            <div class="col-sm-9">
+                                            <label class="col-sm-3 control-label" for="MakeMan"><b>录入人</b></label>
+                                            <div class="col-sm-8">
                                                 <div class="input-group">
                                                     <input placeholder="MakeMan" disabled="disabled" class="form-control" type="text" value="@Html.GetDataValue_ID("userinfo", "全名", (int)ViewData.Model.MakeMan)">
                                                     <span class="input-group-addon">
