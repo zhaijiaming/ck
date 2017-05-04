@@ -262,7 +262,8 @@
                 data: {
                     xlm: $("#xlm").val(),
                     ckd: $("#ckd").val(),
-                    ck: $("#ck").val()
+                    ck: $("#ck").val(),
+                    pch:$("#pl_xlm_patch").val()
                 },
                 success: function (data) {
                     if (data == -1)
@@ -287,6 +288,33 @@
             $("#ckd").val(_sr.find("td").eq(1).html());
             $("#xlm").val("");
             $("#totalnum").html("0");
+            $.ajax({
+                async: true,
+                beforeSend: function () {
+                    ShowWait();
+                },
+                complete: function () {
+                    HiddenWait();
+                },
+                type: "POST",
+                url: "/wms_chukumx/getpatch",
+                data: {
+                    ck: $("#ck").val()
+                },
+                success: function (data) {
+                    var selstr='<option value=""></option>';
+                    if (data == -1){
+                        alert("出库单编号传送失败！");
+                        return;
+                    }                    
+                    else {
+                        for (var i in data) {
+                            selstr = selstr + '<option value="'+data[i]+'">'+data[i]+'</option>';
+                        }
+                            $("#pl_xlm_patch").html(selstr);
+                    }
+                }
+            });
             $("#pl_xlm").show();
             $.ajax({
                 async: true,
@@ -825,6 +853,14 @@
             <div class="col-sm-2"><p class="btn default" id="pl_xlm_clear"><i class="icon-ok"></i>清除</p></div>
             <div class="col-sm-2"><p class="btn default" id="pl_xlm_ok"><i class="icon-ok"></i>确定</p></div>
             <div class="col-sm-2"><p class="btn default" id="pl_xlm_cancel"><i class="icon-search"></i>取消</p></div>
+        </div>
+        <div>
+            <div class="col-sm-2">
+            <p>批号：</p>
+            </div>
+            <div class="col-sm-10">
+                <select id="pl_xlm_patch" class="form-control"></select>
+            </div>
         </div>
         <div class="center">
             <textarea id="xlm" style="width:480px;height:400px;overflow:auto"></textarea>

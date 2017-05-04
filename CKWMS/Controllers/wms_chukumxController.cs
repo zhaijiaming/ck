@@ -1151,6 +1151,17 @@ namespace CKWMS.Controllers
             ob_wms_chukumxservice.UpdateEntity(_ckmx);
             return Json(1);
         }
+        public JsonResult GetPatch()
+        {
+            int _userid = (int)Session["user_id"];
+            var _ckid = Request["ck"] ?? "";
+            if (string.IsNullOrEmpty(_ckid))
+                return Json(-1);
+            var _ckmxs = ob_wms_chukumxservice.LoadSortEntities(p => p.ChukuID == int.Parse(_ckid) && p.IsDelete == false, true, s => s.Pihao).ToList();
+            var _ckms = from u in _ckmxs
+                        select u.Pihao;
+            return Json(_ckms.Distinct());
+        }
     }
 }
 
