@@ -319,6 +319,7 @@ namespace CKWMS.Controllers
             var _xlm = Request["xlm"] ?? "";
             var _ck = Request["ck"] ?? "";
             var _ckd = Request["ckd"] ?? "";
+            var _ph = Request["ph"] ?? "";
             if (_xlm == "" || _ck == "" || _ckd == "")
                 return Json(-1);
             var _ckdxx = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_ck) && p.IsDelete == false);
@@ -332,14 +333,18 @@ namespace CKWMS.Controllers
             {
                 if (_m.Length > 0)
                 {
-                    wms_chukuxlm _nm = new wms_chukuxlm();
-                    _nm.Chukudan = _ckd;
-                    _nm.ChukuID = int.Parse(_ck);
-                    _nm.MakeDate = DateTime.Now;
-                    _nm.MakeMan = _userid;
-                    _nm.Xuliema = _m;
-
-                    _nm = ob_wms_chukuxlmservice.AddEntity(_nm);
+                    wms_chukuxlm _pm = ob_wms_chukuxlmservice.GetEntityById(p => p.ChukuID == int.Parse(_ck) && p.Xuliema == _m && p.IsDelete == false);
+                    if (_pm == null)
+                    {
+                        wms_chukuxlm _nm = new wms_chukuxlm();
+                        _nm.Chukudan = _ckd;
+                        _nm.ChukuID = int.Parse(_ck);
+                        _nm.MakeDate = DateTime.Now;
+                        _nm.MakeMan = _userid;
+                        _nm.Xuliema = _m;
+                        _nm.Pihao = _ph;
+                        _nm = ob_wms_chukuxlmservice.AddEntity(_nm);
+                    }
                 }
             }
             _ckdxx.JihuaZT = -12;
