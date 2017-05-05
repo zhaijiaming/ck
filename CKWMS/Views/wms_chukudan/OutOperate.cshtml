@@ -79,11 +79,11 @@
         //随货同行单打印
         $("#mydatatable").on("click", ".outOperateid", function () {
             var outOperateid = $(this).find(".input_outOperateid").val();
-            var huozhuid = $(this).parent().find(".huozhuid").text();
-            if (huozhuid == "嘉事国润") {
+            var huozhumc = $(this).parent().find(".huozhumc").text();
+            if (huozhumc == "嘉事国润") {
                 window.open("/wms_chukudan/PrintJSGRTongxing?out=" + outOperateid);
-            } else {
-                window.open("/wms_chukudan/PrintTongxing?out=" + outOperateid);
+            } else if (huozhumc == "嘉事唯众") {
+                window.open("/wms_chukudan/PrintJSWZTongxing?out=" + outOperateid);
             }
         });
         $(".icon-bookmark-empty").click(function () {
@@ -767,7 +767,7 @@
                             </label>
                         </td>
                         <td>@item.ChukudanBH</td>
-                        <td class="huozhuid">@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
+                        <td class="huozhumc">@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
                         <td>@item.KehuMC</td>
                         <td>@item.Yunsongdizhi</td>
                         <td>@string.Format("{0:yyyy-MM-dd}", item.ChukuRQ == null ? "" : item.ChukuRQ)</td>
