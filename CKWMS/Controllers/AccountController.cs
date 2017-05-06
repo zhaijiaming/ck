@@ -12,6 +12,7 @@ using CKWMS.Models;
 using CKWMS.EFModels;
 using CKWMS.IBSL;
 using CKWMS.BSL;
+using CKWMS.Common;
 namespace CKWMS.Controllers
 {
     [Authorize]
@@ -92,10 +93,12 @@ namespace CKWMS.Controllers
                     }
                     else
                     {
-                        Session["user_account"] = model.Email;
-                        Session["user_id"] = ui.ID;
-                        Session["user_name"] = ui.FullName;
+                        StateGroup.CreateSession(this.HttpContext, model.Email, ui.ID, ui.FullName);
+                        //Session["user_account"] = model.Email;
+                        //Session["user_id"] = ui.ID;
+                        //Session["user_name"] = ui.FullName;
                         log4net.LogManager.GetLogger(ui.ID.ToString()).Info(string.Format("{0} login at {1}!", ui.FullName, DateTime.Now.ToString()));
+                        StateGroup.CreateCookie(this.HttpContext, model.Email, ui.ID, ui.FullName);
                         if (smallscreen == "1")
                             return RedirectToLocal("/wms_scanhome");
                         else

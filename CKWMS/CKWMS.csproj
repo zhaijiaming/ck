@@ -288,6 +288,7 @@
     <Compile Include="Common\BarcodeRead.cs" />
     <Compile Include="Common\ExportNow.cs" />
     <Compile Include="Common\PageMenu.cs" />
+    <Compile Include="Common\StateGroup.cs" />
     <Compile Include="Controllers\auth_gongsiController.cs" />
     <Compile Include="Controllers\base_bumenController.cs" />
     <Compile Include="Controllers\base_feiyongxmController.cs" />
