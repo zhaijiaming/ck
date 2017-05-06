@@ -27,5 +27,21 @@ namespace CKWMS.Common
         {
             httpContext.Response.Cookies.Add(httpCookie);
         }
+
+        public static void ClearState(HttpContextBase httpContext)
+        {
+            httpContext.Session["user_account"] = null;
+            httpContext.Session["user_id"] =null;
+            httpContext.Session["user_name"] =null;
+
+            HttpCookie httpCookie = new HttpCookie("Cookie");
+            httpCookie.Value = "Davis Cookie! CreatedOn: " + DateTime.Now.ToShortTimeString();
+            httpCookie["ex"] = DateTime.Now.AddDays(1).ToShortDateString();
+            httpCookie["username"] = "";
+            httpCookie["account"] = "";
+            httpCookie["userid"] = "0";
+            httpContext.Response.Cookies.Add(httpCookie);
+
+        }
     }
 }

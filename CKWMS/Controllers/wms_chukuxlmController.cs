@@ -26,7 +26,7 @@ namespace CKWMS.Controllers
 
             PageMenu.Set("Index", "wms_chukuxlm", "仓库操作");
 
-            Expression<Func<wms_chukuxlm, bool>> where = PredicateExtensionses.True<wms_chukuxlm>();
+            Expression<Func<wms_outserial_v, bool>> where = PredicateExtensionses.True<wms_outserial_v>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc != null && sc.ConditionInfo != null)
             {
@@ -116,9 +116,9 @@ namespace CKWMS.Controllers
                 ViewBag.SearchCondition = sc.ConditionInfo;
             }
 
-            where = where.And(wms_chukuxlm => wms_chukuxlm.IsDelete == false);
+            //where = where.And(wms_chukuxlm => wms_chukuxlm.IsDelete == false);
 
-            var tempData = ob_wms_chukuxlmservice.LoadSortEntities(where.Compile(), false, wms_chukuxlm => wms_chukuxlm.ID).ToPagedList<wms_chukuxlm>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            var tempData = ob_wms_chukuxlmservice.GetOutSerialList(where.Compile()).ToPagedList<wms_outserial_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.wms_chukuxlm = tempData;
             return View(tempData);
         }
@@ -145,7 +145,7 @@ namespace CKWMS.Controllers
 
             PageMenu.Set("Index", "wms_chukuxlm", "仓库操作");
 
-            Expression<Func<wms_chukuxlm, bool>> where = PredicateExtensionses.True<wms_chukuxlm>();
+            Expression<Func<wms_outserial_v, bool>> where = PredicateExtensionses.True<wms_outserial_v>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
             {
@@ -307,9 +307,9 @@ namespace CKWMS.Controllers
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;
-            where = where.And(wms_chukuxlm => wms_chukuxlm.IsDelete == false);
+            //where = where.And(wms_chukuxlm => wms_chukuxlm.IsDelete == false);
 
-            var tempData = ob_wms_chukuxlmservice.LoadSortEntities(where.Compile(), false, wms_chukuxlm => wms_chukuxlm.ID).ToPagedList<wms_chukuxlm>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            var tempData = ob_wms_chukuxlmservice.GetOutSerialList(where.Compile()).ToPagedList<wms_outserial_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.wms_chukuxlm = tempData;
             return View(tempData);
         }
@@ -389,7 +389,7 @@ namespace CKWMS.Controllers
         {
             int userid = (int)Session["user_id"];
             string pagetag = "wms_chukuxlm_index";
-            Expression<Func<wms_chukuxlm, bool>> where = PredicateExtensionses.True<wms_chukuxlm>();
+            Expression<Func<wms_outserial_v, bool>> where = PredicateExtensionses.True<wms_outserial_v>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc != null && sc.ConditionInfo != null)
             {
@@ -479,9 +479,7 @@ namespace CKWMS.Controllers
                 ViewBag.SearchCondition = sc.ConditionInfo;
             }
 
-            where = where.And(wms_chukuxlm => wms_chukuxlm.IsDelete == false);
-
-            var tempData = ob_wms_chukuxlmservice.LoadSortEntities(where.Compile(), false, wms_chukuxlm => wms_chukuxlm.ID).ToList<wms_chukuxlm>();
+            var tempData = ob_wms_chukuxlmservice.GetOutSerialList(where.Compile()).ToList();
             ViewBag.wms_chukuxlm = tempData;
             ViewData.Model = tempData;
             string viewHtml = ExportNow.RenderPartialViewToString(this, "SerialExport");

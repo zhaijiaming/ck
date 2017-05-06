@@ -21,12 +21,12 @@
                 @foreach (var item in ViewBag.wms_chukuxlm)
                 {
                     <tr>
-                        <td>@Html.GetOtherValue_ID("出库单客户名称", (int)item.ChukuID)</td>
+                        <td>@item.KehuMC</td>
                         <td>@item.Chukudan</td>
                         <td>@item.Pihao</td>
                         <td>'@item.Xuliema</td>
                         <td>@string.Format("{0:yyyy-MM-dd}", item.MakeDate)</td>
-                        <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
+                        <td>@item.FullName</td>
                     </tr>
                 }
             </tbody>

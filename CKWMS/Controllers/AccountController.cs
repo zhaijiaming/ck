@@ -440,10 +440,11 @@ namespace CKWMS.Controllers
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             log4net.LogManager.GetLogger(Session["user_id"].ToString()).Info(string.Format("{0} log out at {1}", Session["user_name"].ToString(), DateTime.Now.ToString()));
 
-            Session["user_account"] = null;
-            Session["user_id"] = null;
-            Session["user_name"] = null;
+            //Session["user_account"] = null;
+            //Session["user_id"] = null;
+            //Session["user_name"] = null;
 
+            StateGroup.ClearState(this.HttpContext);
             return RedirectToAction("Index", "Home");
         }
 

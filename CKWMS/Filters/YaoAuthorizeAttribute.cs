@@ -23,10 +23,14 @@ namespace CKWMS.Filters
                         if (httpContext.Request.Cookies.AllKeys.Contains("Cookie"))
                         {
                             var _cookie = httpContext.Request.Cookies["Cookie"];
-                            if (DateTime.Parse(_cookie["ex"]) > DateTime.Now)
+                            if (_cookie != null)
                             {
-                                StateGroup.CreateSession(httpContext, _cookie["account"], int.Parse(_cookie["userid"]), _cookie["username"]);
-                                isAuthorized = true;
+                                if (DateTime.Parse(_cookie["ex"]) > DateTime.Now && int.Parse(_cookie["userid"])>0)
+                                {
+                                    StateGroup.CreateSession(httpContext, _cookie["account"], int.Parse(_cookie["userid"]), _cookie["username"]);
+                                    isAuthorized = true;
+                                }
+
                             }
                         }
                     }

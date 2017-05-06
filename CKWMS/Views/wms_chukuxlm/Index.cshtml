@@ -131,12 +131,12 @@
                         <td>
                                 <label><input type="checkbox" value="@item.ID"></label>
                         </td>
-                        <td>@Html.GetOtherValue_ID("出库单客户名称", (int)item.ChukuID)</td>
+                        <td>@item.KehuMC)</td>
                         <td>@item.Chukudan</td>
                         <td>@item.Pihao</td>
                         <td>@item.Xuliema</td>
                         <td>@string.Format("{0:yyyy/MM/dd}",item.MakeDate==null ? "" : ((DateTime)item.MakeDate).ToString("yyyy-MM-dd"))</td>
-                        <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
+                        <td>@item.FullName</td>
                     </tr>
                 }
             </tbody>
