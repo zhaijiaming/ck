@@ -106,7 +106,7 @@ namespace CKWMS.reports
                                     drjhd["Mingcheng"] = _pv.ShangpinMC == null ? "" : _pv.ShangpinMC;
                                     if (!string.IsNullOrEmpty(_pv.ShangpinMC))
                                     {
-                                        var spxx = ServiceFactory.base_shangpinxxservice.GetEntityById(p => p.Mingcheng == _pv.ShangpinMC && p.IsDelete == false);
+                                        var spxx = ServiceFactory.base_shangpinxxservice.GetEntityById(p => p.Mingcheng == _pv.ShangpinMC && p.Guige == _pv.Guige && p.IsDelete == false);
                                         if(spxx != null)
                                         {
                                             drjhd["JianhuoSM"] = spxx.Baozhuangyaoqiu == null ? "" : spxx.Baozhuangyaoqiu;
