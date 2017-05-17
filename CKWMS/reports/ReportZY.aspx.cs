@@ -103,7 +103,15 @@ namespace CKWMS.reports
                                 foreach (var _pv in afterList)
                                 {
                                     drjhd = dtjhd.NewRow();
-                                    drjhd["Mingcheng"] = _pv.ShangpinMC;
+                                    drjhd["Mingcheng"] = _pv.ShangpinMC == null ? "" : _pv.ShangpinMC;
+                                    if (!string.IsNullOrEmpty(_pv.ShangpinMC))
+                                    {
+                                        var spxx = ServiceFactory.base_shangpinxxservice.GetEntityById(p => p.Mingcheng == _pv.ShangpinMC && p.IsDelete == false);
+                                        if(spxx != null)
+                                        {
+                                            drjhd["JianhuoSM"] = spxx.Baozhuangyaoqiu == null ? "" : spxx.Baozhuangyaoqiu;
+                                        }
+                                    }
                                     drjhd["DaijianSL"] = _pv.DaijianSL;
                                     drjhd["Huansuanlv"] = _pv.Huansuanlv;
 
@@ -116,7 +124,6 @@ namespace CKWMS.reports
                                     drjhd["Pihao"] = _pv.Pihao;
                                     drjhd["Kuwei"] = _pv.Kuwei;
                                     drjhd["Zhucezheng"] = _pv.Zhucezheng;
-                                    drjhd["JianhuoSM"] = _pv.JianhuoSM;
                                     jhd_DaijianSLs += (long)_pv.DaijianSL;
 
                                     dtjhd.Rows.Add(drjhd);
