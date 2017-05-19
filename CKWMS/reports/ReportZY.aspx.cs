@@ -84,8 +84,8 @@ namespace CKWMS.reports
                             try
                             {
                                 var _jhds = ob_wms_jianhuoservice.GetPickDetail(int.Parse(_outid), p => p.DaijianSL > 0).OrderBy(p => p.Kuwei).ThenBy(p => p.Pihao).ToList<wms_pick_v>();
-                                //相同库位、批号、序列码的数据相加。
-                                var afterList = _jhds.GroupBy(a => a.Kuwei + a.Pihao + a.Xuliema).Select(g => (new
+                                //相同库位、批号、序列码、规格、商品名称、商品代码的数据相加。
+                                var afterList = _jhds.GroupBy(a => a.Kuwei + a.Pihao + a.Xuliema + a.Guige + a.ShangpinMC + a.ShangpinDM).Select(g => (new
                                 {
                                     id = g.Key,
                                     count = g.Count(),
