@@ -18,6 +18,34 @@
             $("#form").submit();
 
         });
+        //照片的点击事件
+        $(".sfz0_browse").click(function () {
+            var sfz0 = "@Model.Shenfenzheng0TP";
+            var img_url = $("#sfz0 a").attr('href');
+            if (img_url != null && img_url != "") {
+                window.open(img_url);
+            } else if (sfz0 != null && sfz0 != "") {
+                window.open("/files/zhengzhao/@Model.Shenfenzheng0TP");
+            }
+        });
+        $(".sfz1_browse").click(function () {
+            var sfz1 = "@Model.Shenfenzheng1TP";
+            var img_url = $("#sfz1 a").attr('href');
+            if (img_url != null && img_url != "") {
+                window.open(img_url);
+            } else if (sfz1 != null && sfz1 != "") {
+                window.open("/files/zhengzhao/@Model.Shenfenzheng1TP");
+            }
+        });
+        $(".sqs_browse").click(function () {
+            var sqs = "@Model.ShouquanshuTP";
+            var img_url = $("#sqs a").attr('href');
+            if (img_url != null && img_url != "") {
+                window.open(img_url);
+            } else if (sqs != null && sqs != "") {
+                window.open("/files/zhengzhao/@Model.ShouquanshuTP");
+            }
+        });
     });
 </script>
 <div class="breadcrumbs" id="breadcrumbs">
@@ -122,7 +150,7 @@
                                             <label for="Shenfenzheng1TP" class="col-sm-3 control-label"><b>身份证背面照片</b></label>
                                             <div class="col-sm-8">
                                                 <div class="input-group">
-                                                    <input id="Shenfenzheng1TP" name="Shenfenzheng1TP" readonly placeholder="请上传身份证背面照片" class="form-control" type="text" value="@ViewData.Model.Shenfenzheng1TP">
+                                                    <input id="shenfenzheng1tp" name="Shenfenzheng1TP" readonly placeholder="请上传身份证背面照片" class="form-control" type="text" value="@ViewData.Model.Shenfenzheng1TP">
                                                     <span class="input-group-btn">
                                                         <button type="button" data-toggle="modal" data-target="#myModalUpload" onclick="btn2()" class="btn btn-primary btn-sm">
                                                             <b>上传</b>
@@ -154,7 +182,7 @@
                                             <label for="ShouquanshuTP" class="col-sm-3 control-label"><b>授权书照片</b></label>
                                             <div class="col-sm-8">
                                                 <div class="input-group">
-                                                    <input id="ShouquanshuTP" name="ShouquanshuTP" readonly placeholder="请上传授权书照片" class="form-control" type="text" value="@ViewData.Model.ShouquanshuTP">
+                                                    <input id="shouquanshutp" name="shouquanshutp" readonly placeholder="请上传授权书照片" class="form-control" type="text" value="@ViewData.Model.ShouquanshuTP">
                                                     <span class="input-group-btn">
                                                         <button type="button" data-toggle="modal" data-target="#myModalUpload" onclick="btn3()" class="btn btn-primary btn-sm">
                                                             <b>上传</b>
