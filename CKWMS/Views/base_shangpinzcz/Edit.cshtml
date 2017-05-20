@@ -107,6 +107,8 @@
             _fillall = false;
         if (_guige == "")
             _fillall = false;
+        var reg = new RegExp(" ", "g");
+        _guige=_guige.replace(reg, "?");
         if (_fillall) {
             $.post("/base_zhucezhenggg/addnow",
                 {

@@ -560,7 +560,7 @@ namespace CKWMS.App_Code
             return MvcHtmlString.Create(sb.ToString());
         }
 
-        public static MvcHtmlString Search_UserRights(this HtmlHelper html, int userid, string currentpage,string currentcontrol, string currentmodel)
+        public static MvcHtmlString Search_UserRights(this HtmlHelper html, int userid, string currentpage, string currentcontrol, string currentmodel)
         {
             string curmodule = "";
             bool currentfunction = false;
@@ -596,7 +596,7 @@ namespace CKWMS.App_Code
                             {
                                 if (rp.module.Trim() == currentmodel.Trim())
                                     sb.AppendLine("<li class=\"active open\">");
-                                else 
+                                else
                                     sb.AppendLine("<li>");
                             }
                             else
@@ -615,7 +615,7 @@ namespace CKWMS.App_Code
                     {
                         Console.WriteLine(rp.ryid);
                     }
-                }                
+                }
             }
             if (userid == -1)
             {
@@ -1580,6 +1580,7 @@ namespace CKWMS.App_Code
             sb.AppendLine("break;");
             sb.AppendLine("}");
             //sb.AppendLine("alert(strWrite);");
+            sb.AppendLine("$(\"#loadinfo\").text(strWrite);");
             sb.AppendLine("}");
             for (int j = 1; j <= selTime; j++)
             {
@@ -1607,9 +1608,11 @@ namespace CKWMS.App_Code
             sb.AppendFormat("<input type=\"hidden\" name=\"uploaditemName\" id=\"uploaditemName\" value=\"{0}_{1}\" />", loadClass, itemValue);
             sb.AppendLine("<div class=\"form-group\">");
             sb.AppendLine("<input type=\"file\" name=\"file\" />");
+            sb.AppendLine("<p><label id=\"loadinfo\" class=\"red middle\"></label></p>");
             sb.AppendLine("</div>");
             sb.AppendLine("<div class=\"form-group\">");
-            sb.AppendLine("<input type=\"button\" class=\"btn btn-default\" value=\"确 定\" onclick=\"doUpload()\" />");
+            sb.AppendLine("<button type=\"button\" class=\"btn btn-primary\" onclick=\"doUpload()\"><i class=\"icon-upload\"></i>上传</button>");
+            sb.AppendLine("<button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">关闭</button>");
             sb.AppendLine("</div>");
             sb.AppendLine("</form>");
             sb.AppendLine("</div>");

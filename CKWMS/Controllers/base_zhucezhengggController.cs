@@ -226,7 +226,7 @@ namespace CKWMS.Controllers
                         {
                             ob_base_zhucezhenggg = new base_zhucezhenggg();
                             ob_base_zhucezhenggg.ZCZID = int.Parse(_zczid);
-                            ob_base_zhucezhenggg.Guige = gg.Trim();
+                            ob_base_zhucezhenggg.Guige = gg.Replace('?',' ');
                             ob_base_zhucezhenggg.Memo = _memo.Trim();
                             ob_base_zhucezhenggg.MakeDate = DateTime.Now;
                             ob_base_zhucezhenggg.MakeMan = _userid;
