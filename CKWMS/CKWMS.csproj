@@ -590,6 +590,7 @@
     <Content Include="assets\js\x-editable\bootstrap-editable.min.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\login.css" />
     <Content Include="Content\js\Common.js" />
     <Content Include="Content\FrameworkList.css" />
     <Content Include="Content\PagedList.css" />
@@ -606,6 +607,7 @@
     <Content Include="Imgs\ck1.jpg" />
     <Content Include="Imgs\ckflow.jpg" />
     <Content Include="Imgs\LOADING.gif" />
+    <Content Include="Imgs\loading2.gif" />
     <Content Include="Imgs\page1_pic4.jpg" />
     <Content Include="Imgs\wait.gif" />
     <Content Include="reports\ReportNow.aspx" />

@@ -185,10 +185,10 @@
             $.ajax({
                 async: true,
                 beforeSend: function () {
-                    ShowWait();
+                    $.myloading({ title: "数据正在加载，请稍等..." });
                 },
                 complete: function () {
-                    HiddenWait();
+                    $.myloading("hide");
                 },
                 type: "POST",
                 url: "/wms_shouhuomx/addbyrukumx",
