@@ -119,10 +119,12 @@
             $.ajax({
                 async: true,
                 beforeSend: function () {
-                    ShowWait();
+                    //ShowWait();
+                    $.myloading({ title: "数据正在加载，请稍等..." });
                 },
                 complete: function () {
-                    HiddenWait();
+                    //HiddenWait();
+                    $.myloading("hide");
                 },
                 type: "POST",
                 url: "/wms_jianhuo/addpickgoods",
@@ -253,10 +255,12 @@
             $.ajax({
                 async: true,
                 beforeSend: function () {
-                    ShowWait();
+                    //ShowWait();
+                    $.myloading({ title: "数据正在加载，请稍等..." });
                 },
                 complete: function () {
-                    HiddenWait();
+                    //HiddenWait();
+                    $.myloading("hide");
                 },
                 type: "POST",
                 url: "/wms_jianhuo/getstorecargo/",

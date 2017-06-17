@@ -328,13 +328,23 @@ namespace CKWMS.Controllers
             if (_ckdxx.JihuaZT > 3)
                 return Json(-3);
             //ServiceFactory.wms_chukudanservice.UploadU8(_ckdxx.ChukudanBH);
+            List<wms_chukuxlm> _ckxlms = ob_wms_chukuxlmservice.LoadEntities(p => p.ChukuID == int.Parse(_ck) && p.IsDelete == false).ToList();
             string[] _xlms = _xlm.Split();
-            foreach (var _m in _xlms)
+            foreach (var _m in _xlms.Distinct())
             {
                 if (_m.Length > 0)
                 {
-                    wms_chukuxlm _pm = ob_wms_chukuxlmservice.GetEntityById(p => p.ChukuID == int.Parse(_ck) && p.Xuliema == _m && p.IsDelete == false);
-                    if (_pm == null)
+                    //wms_chukuxlm _pm = ob_wms_chukuxlmservice.GetEntityById(p => p.ChukuID == int.Parse(_ck) && p.Xuliema == _m && p.IsDelete == false);
+                    var _allreadyhas = false;
+                    foreach (wms_chukuxlm ckxlm in _ckxlms)
+                    {
+                        if (_m == ckxlm.Xuliema)
+                        {
+                            _allreadyhas = true;
+                            break;
+                        }
+                    }
+                    if (!_allreadyhas)
                     {
                         wms_chukuxlm _nm = new wms_chukuxlm();
                         _nm.Chukudan = _ckd;

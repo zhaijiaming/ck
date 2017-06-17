@@ -34,10 +34,12 @@ String.prototype.toDate = function () {
 //显示加载等待
 function ShowWait() {
     $("#loading").show();
+    //$.myloading({ title: "数据正在加载，请稍等..." });
 }
 //隐藏加载等待
 function HiddenWait() {
     $("#loading").hide();
+    //$.myloading("hide");
 }
 //将check的值写入隐含变量，选种为1,不选种为0
 function CheckToHidden(oCheck, oHidden) {
