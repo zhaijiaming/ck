@@ -42,7 +42,7 @@
     if (_searchcondition == null || _searchcondition == "")
     {
         SearchConditionModel scm = new SearchConditionModel();
-        scm.ItemCode = "RukuID";
+        scm.ItemCode = "rukubh";
         scm.ItemTitle = "入库编号";
         scm.ItemType = "System.String";
         scms.Add(scm);
@@ -75,6 +75,12 @@
         scm.ItemCode = "MakeDate";
         scm.ItemTitle = "录入日期";
         scm.ItemType = "System.DateTime";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "KehuDH";
+        scm.ItemTitle = "客户单号";
+        scm.ItemType = "System.String";
         scms.Add(scm);
     }
     else
@@ -151,6 +157,18 @@
                 scm.ItemValue = scs[5].Split(',')[1];
                 scm.ItemOpValue = scs[5].Split(',')[2];
                 scm.ItemJion = scs[5].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "KehuDH";
+            scm.ItemTitle = "客户单号";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[6].Split(',')[1];
+                scm.ItemOpValue = scs[6].Split(',')[2];
+                scm.ItemJion = scs[6].Split(',')[3];
             }
             scms.Add(scm);
         }

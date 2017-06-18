@@ -182,6 +182,37 @@ namespace CKWMS.Controllers
                                 }
                             }
                             break;
+                        case "kehudh":
+                            string kehudh = scld[1];
+                            string kehudhequal = scld[2];
+                            string kehudhand = scld[3];
+                            if (!string.IsNullOrEmpty(kehudh))
+                            {
+                                var tempdate = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.KehuDH == kehudh.Trim() && p.IsDelete == false);
+                                var rukuid = tempdate.ID;
+                                if (kehudhequal.Equals("="))
+                                {
+                                    if (kehudhand.Equals("and"))
+                                        where = where.And(p => p.RukuID == rukuid);
+                                    else
+                                        where = where.Or(p => p.RukuID == rukuid);
+                                }
+                                if (kehudhequal.Equals(">"))
+                                {
+                                    if (kehudhand.Equals("and"))
+                                        where = where.And(p => p.RukuID > rukuid);
+                                    else
+                                        where = where.Or(p => p.RukuID > rukuid);
+                                }
+                                if (kehudhequal.Equals("<"))
+                                {
+                                    if (kehudhand.Equals("and"))
+                                        where = where.And(p => p.RukuID < rukuid);
+                                    else
+                                        where = where.Or(p => p.RukuID < rukuid);
+                                }
+                            }
+                            break;
                         default:
                             break;
                     }
@@ -230,8 +261,12 @@ namespace CKWMS.Controllers
             string makedate = Request["makedate"] ?? "";
             string makedateequal = Request["makedateequal"] ?? "";
             string makedateand = Request["makedateand"] ?? "";
-
+            //kehudh
+            string kehudh = Request["kehudh"] ?? "";
+            string kehudhequal = Request["kehudhequal"] ?? "";
+            string kehudhand = Request["kehudhand"] ?? "";
             PageMenu.Set("Index", "wms_shouhuomx", "仓库操作");
+
             Expression<Func<wms_shouhuomx, bool>> where = PredicateExtensionses.True<wms_shouhuomx>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -388,6 +423,37 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "makedate", makedate, makedateequal, makedateand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "makedate", "", makedateequal, makedateand);
+                //kehudh
+                if (!string.IsNullOrEmpty(kehudh))
+                {
+                    var tempdate = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.KehuDH == kehudh.Trim() && p.IsDelete == false);
+                    var rukuid = tempdate.ID;
+                    if (kehudhequal.Equals("="))
+                    {
+                        if (kehudhand.Equals("and"))
+                            where = where.And(p => p.RukuID == rukuid);
+                        else
+                            where = where.Or(p => p.RukuID == rukuid);
+                    }
+                    if (kehudhequal.Equals(">"))
+                    {
+                        if (kehudhand.Equals("and"))
+                            where = where.And(p => p.RukuID > rukuid);
+                        else
+                            where = where.Or(p => p.RukuID > rukuid);
+                    }
+                    if (kehudhequal.Equals("<"))
+                    {
+                        if (kehudhand.Equals("and"))
+                            where = where.And(p => p.RukuID < rukuid);
+                        else
+                            where = where.Or(p => p.RukuID < rukuid);
+                    }
+                }
+                if (!string.IsNullOrEmpty(kehudh))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "kehudh", kehudh, kehudhequal, kehudhand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "kehudh", "", kehudhequal, kehudhand);
 
                 searchconditionService.GetInstance().AddEntity(sc);
             }
@@ -542,6 +608,37 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "makedate", makedate, makedateequal, makedateand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "makedate", "", makedateequal, makedateand);
+                //kehudh
+                if (!string.IsNullOrEmpty(kehudh))
+                {
+                    var tempdate = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.KehuDH == kehudh.Trim() && p.IsDelete == false);
+                    var rukuid = tempdate.ID;
+                    if (kehudhequal.Equals("="))
+                    {
+                        if (kehudhand.Equals("and"))
+                            where = where.And(p => p.RukuID == rukuid);
+                        else
+                            where = where.Or(p => p.RukuID == rukuid);
+                    }
+                    if (kehudhequal.Equals(">"))
+                    {
+                        if (kehudhand.Equals("and"))
+                            where = where.And(p => p.RukuID > rukuid);
+                        else
+                            where = where.Or(p => p.RukuID > rukuid);
+                    }
+                    if (kehudhequal.Equals("<"))
+                    {
+                        if (kehudhand.Equals("and"))
+                            where = where.And(p => p.RukuID < rukuid);
+                        else
+                            where = where.Or(p => p.RukuID < rukuid);
+                    }
+                }
+                if (!string.IsNullOrEmpty(kehudh))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "kehudh", kehudh, kehudhequal, kehudhand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "kehudh", "", kehudhequal, kehudhand);
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;

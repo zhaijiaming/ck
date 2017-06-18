@@ -755,7 +755,7 @@ namespace CKWMS.Controllers
                             where = where.Or(p => p.cpxmingcheng.Contains(chanpinxian));
                     }
                 }
-                if (!string.IsNullOrEmpty(pihao))
+                if (!string.IsNullOrEmpty(chanpinxian))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "chanpinxian", chanpinxian, chanpinxianequal, chanpinxianand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "chanpinxian", "", chanpinxianequal, chanpinxianand);
