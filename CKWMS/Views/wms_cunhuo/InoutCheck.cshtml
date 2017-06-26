@@ -7,6 +7,7 @@
     string _searchcondition = ViewBag.SearchCondition;
 }
 <script type="text/javascript">
+    try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
     $(document).ready(function () {
         $("tr").bind("dblclick", function () {
             var u_id = $(this).find('td').eq(0).find('input').val();
@@ -15,6 +16,10 @@
             //    location.href = url_go;
             //}
         });
+        //table样式
+        table_config(mydatatable);
+        trResize();//初始化表头
+
     });
     function AddInfo() {
         location.href = "/wms_cunhuo/Add";
@@ -104,9 +109,6 @@
 }
 
 <div class="breadcrumbs" id="breadcrumbs">
-    <script type="text/javascript">
-        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
-    </script>
     <ul class="breadcrumb">
         <li>
             <i class="icon-home home-icon"></i>
@@ -119,58 +121,64 @@
     @Html.Search_Condition((int)Session["user_id"], "存货_条件组合查询", "/wms_cunhuo/inoutcheck", "wms_inoutcheck", scms)
     <div class="page-header">
         <p>
-            <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
+            <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
             @*<button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
             <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
             <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>*@
-            <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
+            <button type="button" class="btn btn-primary btn-xs btn-app radius-4" id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
         </p>
     </div>
     <div class="row">
-        <table class="table table-condensed table-hover" id="mydatatable">
-            <caption></caption>
-            <thead>
-                <tr>
-                    <td></td>
-                    <td>名称</td>
-                    <td>规格</td>
-                    <td>批号</td>
-                    <td>生产日期</td>
-                    <td>失效日期</td>
-                    <td>收货数量</td>
-                    <td>上架数量</td>
-                    <td>库存数量</td>
-                    <td>锁定数量</td>
-                    <td>出库数量</td>
-                    @*<td>数量差异</td>*@
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in ViewBag.wms_cunhuo)
-                {
-                    <tr>
-                        <td>
-                            <div class="checkbox">
-                                <label><input type="checkbox" value="@item.id"></label>
-                            </div>
-                        </td>
-                        <td>@item.shangpinmc</td>
-                        <td>@item.guige</td>
-                        <td>@item.pihao</td>
-                        <td>@string.Format("{0:yyyy-MM-dd}", item.shengchanrq == null ? "" : item.shengchanrq)</td>
-                        <td>@string.Format("{0:yyyy-MM-dd}", item.shixiaorq == null ? "" : item.shixiaorq)</td>
-                        <td>@item.shuliang</td>
-                        <td>@item.shangjiasl</td>
-                        <td>@item.chsl</td>
-                        <td>@item.sdsl</td>
-                        <td>@item.jhsl</td>
-                        @*<td>@item.cysl</td>*@
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-    <div class="pager">
-        @Html.PagedListPager((IPagedList)Model, page => Url.Action("InoutCheck", new { page }))
+        <div class="col-sm-12">
+            <div class="table-wapper-all">
+                <div class="fixed-table-wapper">
+                    <table class="table table-bordered table-condensed fixed-table-header"></table>
+                </div>
+                <div class="table-wapper">
+                    <table class="table table-bordered table-condensed" id="mydatatable">
+                        <tr>
+                            <th></th>
+                            <th>名称</th>
+                            <th>规格</th>
+                            <th>批号</th>
+                            <th>生产日期</th>
+                            <th>失效日期</th>
+                            <th>收货数量</th>
+                            <th>上架数量</th>
+                            <th>库存数量</th>
+                            <th>锁定数量</th>
+                            <th>出库数量</th>
+                            @*<td>数量差异</td>*@
+                        </tr>
+                        <tbody>
+                            @foreach (var item in ViewBag.wms_cunhuo)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" value="@item.id"></label>
+                                        </div>
+                                    </td>
+                                    <td>@item.shangpinmc</td>
+                                    <td>@item.guige</td>
+                                    <td>@item.pihao</td>
+                                    <td>@string.Format("{0:yyyy-MM-dd}", item.shengchanrq == null ? "" : item.shengchanrq)</td>
+                                    <td>@string.Format("{0:yyyy-MM-dd}", item.shixiaorq == null ? "" : item.shixiaorq)</td>
+                                    <td>@item.shuliang</td>
+                                    <td>@item.shangjiasl</td>
+                                    <td>@item.chsl</td>
+                                    <td>@item.sdsl</td>
+                                    <td>@item.jhsl</td>
+                                    @*<td>@item.cysl</td>*@
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <span class="pager">
+                @Html.PagedListPager((IPagedList)Model, page => Url.Action("InoutCheck", new { page }))
+            </span>
+        </div>
     </div>
 </div>
