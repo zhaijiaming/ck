@@ -53,11 +53,11 @@
         scm.ItemType = "System.String";
         scms.Add(scm);
 
-        scm = new SearchConditionModel();
-        scm.ItemCode = "cysl";
-        scm.ItemTitle = "数量差异";
-        scm.ItemType = "System.Int32";
-        scms.Add(scm);
+        //scm = new SearchConditionModel();
+        //scm.ItemCode = "cysl";
+        //scm.ItemTitle = "数量差异";
+        //scm.ItemType = "System.Int32";
+        //scms.Add(scm);
     }
     else
     {
@@ -88,17 +88,17 @@
             }
             scms.Add(scm);
 
-            scm = new SearchConditionModel();
-            scm.ItemCode = "cysl";
-            scm.ItemTitle = "数量差异";
-            scm.ItemType = "System.Int32";
-            if (scs.Length > 1)
-            {
-                scm.ItemValue = scs[2].Split(',')[1];
-                scm.ItemOpValue = scs[2].Split(',')[2];
-                scm.ItemJion = scs[2].Split(',')[3];
-            }
-            scms.Add(scm);
+            //scm = new SearchConditionModel();
+            //scm.ItemCode = "cysl";
+            //scm.ItemTitle = "数量差异";
+            //scm.ItemType = "System.Int32";
+            //if (scs.Length > 1)
+            //{
+            //    scm.ItemValue = scs[2].Split(',')[1];
+            //    scm.ItemOpValue = scs[2].Split(',')[2];
+            //    scm.ItemJion = scs[2].Split(',')[3];
+            //}
+            //scms.Add(scm);
         }
     }
 }
@@ -141,8 +141,8 @@
                     <td>上架数量</td>
                     <td>库存数量</td>
                     <td>锁定数量</td>
-                    <td>拣货数量</td>
-                    <td>数量差异</td>
+                    <td>出库数量</td>
+                    @*<td>数量差异</td>*@
                 </tr>
             </thead>
             <tbody>
@@ -164,7 +164,7 @@
                         <td>@item.chsl</td>
                         <td>@item.sdsl</td>
                         <td>@item.jhsl</td>
-                        <td>@item.cysl</td>
+                        @*<td>@item.cysl</td>*@
                     </tr>
                 }
             </tbody>
