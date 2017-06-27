@@ -53,13 +53,13 @@
                 @*<label for="name">账号</label>
                     <input type="text" class="form-control" name="ob_userinfo_account" value="@item.Account">*@
             </div>
-            @*<div class="form-group">
+            <div class="form-group">
                 @Html.LabelFor(m => m.Password, new { @class = "control-label" })
                 @Html.TextBoxFor(m => m.Password, new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                <label for="name">密码</label>
-                    <input type="text" class="form-control" name="ob_userinfo_password" value="@item.Password">
-            </div>*@
+                @*<label for="name">密码</label>
+                    <input type="text" class="form-control" name="ob_userinfo_password" value="@item.Password">*@
+            </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.FullName, new { @class = "control-label" })
                 @Html.TextBoxFor(m => m.FullName, new { @class = "form-control" })
@@ -74,27 +74,28 @@
                 @*<label for="name">员工号</label>
                     <input type="text" class="form-control" name="ob_userinfo_employeeid" value="@item.EmployeeID">*@
             </div>
-            @*<div class="form-group">
-                @Html.LabelFor(m => m.AccountType, new { @class = "control-label" })
+            <div class="form-group">
+                @*@Html.LabelFor(m => m.AccountType, new { @class = "control-label" })
                 @Html.TextBoxFor(m => m.AccountType, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.AccountType, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(m => m.AccountType, "", new { @class = "text-danger" })*@
                 <label for="name">类型</label>
-                    <input type="text" class="form-control" name="ob_userinfo_accounttype" value="@item.AccountType">
-            </div>*@
+                @Html.SelectList_Common("AccountType", "用户类型",(long)(item.AccountType==null?0:item.AccountType))
+                @*<input type="text" class="form-control" name="ob_userinfo_accounttype" value="@item.AccountType">*@
+            </div>
+            <div class="form-group">
+                @*@Html.LabelFor(m => m.Status, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.Status, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Status, "", new { @class = "text-danger" })
+                <label for="name">状态</label>
+                <input type="text" class="form-control" name="ob_userinfo_status" value="@item.Status">*@
+            </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.Remark, new { @class = "control-label" })
                 @Html.TextBoxFor(m => m.Remark, new { @class = "form-control" })
                 @*<label for="name">备注</label>
-                    <input type="text" class="form-control" name="ob_userinfo_remark" value="@item.Remark">*@
+            <input type="text" class="form-control" name="ob_userinfo_remark" value="@item.Remark">*@
             </div>
             @*<div class="form-group">
-                @Html.LabelFor(m => m.Status, new { @class = "control-label" })
-                @Html.TextBoxFor(m => m.Status, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Status, "", new { @class = "text-danger" })
-                <label for="name">状态</label>
-                    <input type="text" class="form-control" name="ob_userinfo_status" value="@item.Status">
-            </div>
-            <div class="form-group">
                 @Html.LabelFor(m => m.InputMan, new { @class = "control-label" })
                 @Html.TextBoxFor(m => m.InputMan, new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.InputMan, "", new { @class = "text-danger" })

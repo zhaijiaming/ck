@@ -128,12 +128,6 @@
         scms.Add(scm);
 
         scm = new SearchConditionModel();
-        scm.ItemCode = "HuozhuID";
-        scm.ItemTitle = "货主";
-        scm.ItemType = "货主.名称";
-        scms.Add(scm);
-
-        scm = new SearchConditionModel();
         scm.ItemCode = "KehuDH";
         scm.ItemTitle = "客户单号";
         scm.ItemType = "System.String";
@@ -166,23 +160,7 @@
                 scm.ItemOpValue = scs[0].Split(',')[2];
                 scm.ItemJion = scs[0].Split(',')[3];
             }
-            scms.Add(scm);
-
-            scm = new SearchConditionModel();
-            scm.ItemCode = "HuozhuID";
-            scm.ItemTitle = "货主";
-            scm.ItemType = "货主.名称";
-            if (scs.Length > 1)
-            {
-                scm.ItemValue = scs[1].Split(',')[1];
-                if (scm.ItemValue.Length == 0)
-                {
-                    scm.ItemValue = "0";
-                }
-                scm.ItemOpValue = scs[1].Split(',')[2];
-                scm.ItemJion = scs[1].Split(',')[3];
-            }
-            scms.Add(scm);
+            scms.Add(scm);  
 
             scm = new SearchConditionModel();
             scm.ItemCode = "KehuDH";
@@ -236,19 +214,15 @@
             <i class="icon-home home-icon"></i>
             <a href="/Home">首页</a>
         </li>
-        <li class="active">入库历史</li>
+        <li class="active">入库记录</li>
     </ul>
 </div>
 <div class="page-content">
-    @Html.Search_Condition((int)Session["user_id"], "入库单_条件组合查询", "/wms_rukudan/index", "wms_rukudan_index", scms)
+    @Html.Search_Condition((int)Session["user_id"], "入库记录_条件组合查询", "/wms_rukudan/customerinlist", "wms_rukudan_customerinlist", scms)
     <div class="page-header">
         <p>
             <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
-            @*<button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
-                <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
-                <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>*@
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
-            <button type="button" class="btn btn-default " id="bt_export" onclick="javascript: window.open('/wms_rukudan/historyofinexport')"><i class="icon-inbox"></i>导出</button>
         </p>
     </div>
     <div class="row">
@@ -308,7 +282,7 @@
         </table>
     </div>
     <div class="pager">
-        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("CustomerInList", new { page }))
     </div>
 </div>
 <div id="pl_cargo" class="panel panel-primary" style="display:none;position:fixed;top:50px;left:100px;width:1200px;height:600px;z-index:999;overflow:hidden">

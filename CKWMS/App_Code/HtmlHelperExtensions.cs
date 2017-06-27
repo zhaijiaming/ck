@@ -462,6 +462,9 @@ namespace CKWMS.App_Code
                 case "移动类型":
                     sb.Append(GetCommonSelect(selectedValue, MvcApplication.MoveType));
                     break;
+                case "用户类型":
+                    sb.Append(GetCommonSelect(selectedValue, MvcApplication.UserType));
+                    break;
                 default:
                     break;
             }
@@ -1498,6 +1501,10 @@ namespace CKWMS.App_Code
                 case "移动类型":
                     if (MvcApplication.MoveType.ContainsKey(dataValue))
                         returnvalue = MvcApplication.MoveType[dataValue];
+                    break;
+                case "用户类型":
+                    if (MvcApplication.UserType.ContainsKey(dataValue))
+                        returnvalue = MvcApplication.UserType[dataValue];
                     break;
                 default:
                     break;

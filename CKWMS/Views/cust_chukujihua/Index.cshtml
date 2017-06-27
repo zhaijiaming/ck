@@ -8,6 +8,8 @@
 }
 <script type="text/javascript">
     $(document).ready(function () {
+        if (eval($("#usertype").val()) > 0)
+            $("#bt_newout").hide();
         $("tr").bind("dblclick", function () {
             var u_id = $(this).find('td').eq(0).find('input').val();
             if (u_id != null) {
@@ -271,6 +273,7 @@
 </div>
 <div id="loading"><img src="~/Imgs/wait.gif" alt="" />...系统正在加载数据,请耐心等待...</div>
 <div class="page-content">
+    <input type="hidden" id="usertype" value="@ViewBag.usertype" />
     @Html.Search_Condition((int)Session["user_id"], "出库计划_条件组合查询", "/cust_chukujihua/index", "cust_chukujihua_index", scms)
     <div class="page-header">
         <p>

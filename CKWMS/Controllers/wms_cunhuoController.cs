@@ -2081,6 +2081,816 @@ namespace CKWMS.Controllers
             _zl = ServiceFactory.quan_zhiliangwhservice.AddEntity(_zl);
             return Json(1);
         }
+
+        [HttpPost]
+        [OutputCache(Duration = 30)]
+        public ActionResult CustomerStorage()
+        {
+            int userid = (int)Session["user_id"];
+            string pagetag = "wms_cunhuo_CustomerStorage";
+            string page = "1";
+            //huozhuid
+            string huozhuid = Request["huozhuid"] ?? "";
+            string huozhuidequal = Request["huozhuidequal"] ?? "";
+            string huozhuidand = Request["huozhuidand"] ?? "";
+            //rukudanbh
+            string rukudanbh = Request["rukudanbh"] ?? "";
+            string rukudanbhequal = Request["rukudanbhequal"] ?? "";
+            string rukudanbhand = Request["rukudanbhand"] ?? "";
+            //kuwei
+            string kuwei = Request["kuwei"] ?? "";
+            string kuweiequal = Request["kuweiequal"] ?? "";
+            string kuweiand = Request["kuweiand"] ?? "";
+            //shangpindm
+            string shangpindm = Request["shangpindm"] ?? "";
+            string shangpindmequal = Request["shangpindmequal"] ?? "";
+            string shangpindmand = Request["shangpindmand"] ?? "";
+            //shangpinmc
+            string shangpinmc = Request["shangpinmc"] ?? "";
+            string shangpinmcequal = Request["shangpinmcequal"] ?? "";
+            string shangpinmcand = Request["shangpinmcand"] ?? "";
+            //pihao
+            string pihao = Request["pihao"] ?? "";
+            string pihaoequal = Request["pihaoequal"] ?? "";
+            string pihaoand = Request["pihaoand"] ?? "";
+            //shixiaorq
+            string shixiaorq = Request["shixiaorq"] ?? "";
+            string shixiaorqequal = Request["shixiaorqequal"] ?? "";
+            string shixiaorqand = Request["shixiaorqand"] ?? "";
+            //入库日期
+            string rukurq = Request["rukurq"] ?? "";
+            string rukurqequal = Request["rukurqequal"] ?? "";
+            string rukurqand = Request["rukurqand"] ?? "";
+            //chanpinxian
+            string chanpinxian = Request["chanpinxian"] ?? "";
+            string chanpinxianequal = Request["chanpinxianequal"] ?? "";
+            string chanpinxianand = Request["chanpinxianand"] ?? "";
+
+            PageMenu.Set("CustomerStorage", "wms_cunhuo", "客户服务");
+
+            Expression<Func<wms_inventory_v, bool>> where = PredicateExtensionses.True<wms_inventory_v>();
+            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            if (sc == null)
+            {
+                sc = new searchcondition();
+                sc.UserID = userid;
+                sc.PageBrief = pagetag;
+                //huozhuid
+                if (!string.IsNullOrEmpty(huozhuid))
+                {
+                    if (huozhuidequal.Equals("="))
+                    {
+                        if (huozhuidand.Equals("and"))
+                            where = where.And(wms_inventory_v => wms_inventory_v.HuozhuID == int.Parse(huozhuid));
+                        else
+                            where = where.Or(wms_inventory_v => wms_inventory_v.HuozhuID == int.Parse(huozhuid));
+                    }
+                    if (huozhuidequal.Equals(">"))
+                    {
+                        if (huozhuidand.Equals("and"))
+                            where = where.And(wms_inventory_v => wms_inventory_v.HuozhuID > int.Parse(huozhuid));
+                        else
+                            where = where.Or(wms_inventory_v => wms_inventory_v.HuozhuID > int.Parse(huozhuid));
+                    }
+                    if (huozhuidequal.Equals("<"))
+                    {
+                        if (huozhuidand.Equals("and"))
+                            where = where.And(wms_inventory_v => wms_inventory_v.HuozhuID < int.Parse(huozhuid));
+                        else
+                            where = where.Or(wms_inventory_v => wms_inventory_v.HuozhuID < int.Parse(huozhuid));
+                    }
+                }
+                if (!string.IsNullOrEmpty(huozhuid))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", huozhuid, huozhuidequal, huozhuidand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", "", huozhuidequal, huozhuidand);
+                //rukudanbh
+                if (!string.IsNullOrEmpty(rukudanbh))
+                {
+                    if (rukudanbhequal.Equals("="))
+                    {
+                        if (rukudanbhand.Equals("and"))
+                            where = where.And(wms_inventory_v => wms_inventory_v.RukudanBH == rukudanbh);
+                        else
+                            where = where.Or(wms_inventory_v => wms_inventory_v.RukudanBH == rukudanbh);
+                    }
+                    if (rukudanbhequal.Equals("like"))
+                    {
+                        if (rukudanbhand.Equals("and"))
+                            where = where.And(wms_inventory_v => wms_inventory_v.RukudanBH.Contains(rukudanbh));
+                        else
+                            where = where.Or(wms_inventory_v => wms_inventory_v.RukudanBH.Contains(rukudanbh));
+                    }
+                }
+                if (!string.IsNullOrEmpty(rukudanbh))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukudanbh", rukudanbh, rukudanbhequal, rukudanbhand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukudanbh", "", rukudanbhequal, rukudanbhand);
+                //kuwei
+                if (!string.IsNullOrEmpty(kuwei))
+                {
+                    if (kuweiequal.Equals("="))
+                    {
+                        if (kuweiand.Equals("and"))
+                            where = where.And(wms_inventory_v => wms_inventory_v.Kuwei == kuwei);
+                        else
+                            where = where.Or(wms_inventory_v => wms_inventory_v.Kuwei == kuwei);
+                    }
+                    if (kuweiequal.Equals("like"))
+                    {
+                        if (kuweiand.Equals("and"))
+                            where = where.And(wms_inventory_v => wms_inventory_v.Kuwei.Contains(kuwei));
+                        else
+                            where = where.Or(wms_inventory_v => wms_inventory_v.Kuwei.Contains(kuwei));
+                    }
+                }
+                if (!string.IsNullOrEmpty(kuwei))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "kuwei", kuwei, kuweiequal, kuweiand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "kuwei", "", kuweiequal, kuweiand);
+                //shangpindm
+                if (!string.IsNullOrEmpty(shangpindm))
+                {
+                    if (shangpindmequal.Equals("="))
+                    {
+                        if (shangpindmand.Equals("and"))
+                            where = where.And(wms_inventory_v => wms_inventory_v.ShangpinDM == shangpindm);
+                        else
+                            where = where.Or(wms_inventory_v => wms_inventory_v.ShangpinDM == shangpindm);
+                    }
+                    if (shangpindmequal.Equals("like"))
+                    {
+                        if (shangpindmand.Equals("and"))
+                            where = where.And(wms_inventory_v => wms_inventory_v.ShangpinDM.Contains(shangpindm));
+                        else
+                            where = where.Or(wms_inventory_v => wms_inventory_v.ShangpinDM.Contains(shangpindm));
+                    }
+                }
+                if (!string.IsNullOrEmpty(shangpindm))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpindm", shangpindm, shangpindmequal, shangpindmand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpindm", "", shangpindmequal, shangpindmand);
+                //shangpinmc
+                if (!string.IsNullOrEmpty(shangpinmc))
+                {
+                    if (shangpinmcequal.Equals("="))
+                    {
+                        if (shangpinmcand.Equals("and"))
+                            where = where.And(wms_inventory_v => wms_inventory_v.ShangpinMC == shangpinmc);
+                        else
+                            where = where.Or(wms_inventory_v => wms_inventory_v.ShangpinMC == shangpinmc);
+                    }
+                    if (shangpinmcequal.Equals("like"))
+                    {
+                        if (shangpinmcand.Equals("and"))
+                            where = where.And(wms_inventory_v => wms_inventory_v.ShangpinMC.Contains(shangpinmc));
+                        else
+                            where = where.Or(wms_inventory_v => wms_inventory_v.ShangpinMC.Contains(shangpinmc));
+                    }
+                }
+                if (!string.IsNullOrEmpty(shangpinmc))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpinmc", shangpinmc, shangpinmcequal, shangpinmcand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpinmc", "", shangpinmcequal, shangpinmcand);
+                //pihao
+                if (!string.IsNullOrEmpty(pihao))
+                {
+                    if (pihaoequal.Equals("="))
+                    {
+                        if (pihaoand.Equals("and"))
+                            where = where.And(p => p.Pihao == pihao);
+                        else
+                            where = where.Or(p => p.Pihao == pihao);
+                    }
+                    if (pihaoequal.Equals("like"))
+                    {
+                        if (pihaoand.Equals("and"))
+                            where = where.And(p => p.Pihao.Contains(pihao));
+                        else
+                            where = where.Or(p => p.Pihao.Contains(pihao));
+                    }
+                }
+                if (!string.IsNullOrEmpty(pihao))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pihao", pihao, pihaoequal, pihaoand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pihao", "", pihaoequal, pihaoand);
+                //shixiaorq
+                if (!string.IsNullOrEmpty(shixiaorq))
+                {
+                    if (shixiaorqequal.Equals("="))
+                    {
+                        if (shixiaorqand.Equals("and"))
+                            where = where.And(p => p.ShixiaoRQ == DateTime.Now.AddDays(int.Parse(shixiaorq)));// DateTime.Parse());
+                        else
+                            where = where.Or(p => p.ShixiaoRQ == DateTime.Now.AddDays(int.Parse(shixiaorq)));
+                    }
+                    if (shixiaorqequal.Equals(">"))
+                    {
+                        if (shixiaorqand.Equals("and"))
+                            where = where.And(p => p.ShixiaoRQ > DateTime.Now.AddDays(int.Parse(shixiaorq)));
+                        else
+                            where = where.Or(p => p.ShixiaoRQ > DateTime.Now.AddDays(int.Parse(shixiaorq)));
+                    }
+                    if (shixiaorqequal.Equals("<"))
+                    {
+                        if (shixiaorqand.Equals("and"))
+                            where = where.And(p => p.ShixiaoRQ < DateTime.Now.AddDays(int.Parse(shixiaorq)));
+                        else
+                            where = where.Or(p => p.ShixiaoRQ < DateTime.Now.AddDays(int.Parse(shixiaorq)));
+                    }
+                }
+                if (!string.IsNullOrEmpty(shixiaorq))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shixiaorq", shixiaorq, shixiaorqequal, shixiaorqand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shixiaorq", "", shixiaorqequal, shixiaorqand);
+                //rukurq
+                if (!string.IsNullOrEmpty(rukurq))
+                {
+                    if (rukurqequal.Equals("="))
+                    {
+                        if (rukurqand.Equals("and"))
+                            where = where.And(wms_inventory_v => wms_inventory_v.RukuRQ == DateTime.Parse(rukurq));
+                        else
+                            where = where.Or(wms_inventory_v => wms_inventory_v.RukuRQ == DateTime.Parse(rukurq));
+                    }
+                    if (rukurqequal.Equals(">"))
+                    {
+                        if (rukurqand.Equals("and"))
+                            where = where.And(wms_inventory_v => wms_inventory_v.RukuRQ > DateTime.Parse(rukurq));
+                        else
+                            where = where.Or(wms_inventory_v => wms_inventory_v.RukuRQ > DateTime.Parse(rukurq));
+                    }
+                    if (rukurqequal.Equals("<"))
+                    {
+                        if (rukurqand.Equals("and"))
+                            where = where.And(wms_inventory_v => wms_inventory_v.RukuRQ < DateTime.Parse(rukurq));
+                        else
+                            where = where.Or(wms_inventory_v => wms_inventory_v.RukuRQ < DateTime.Parse(rukurq));
+                    }
+                }
+                if (!string.IsNullOrEmpty(rukurq))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukurq", rukurq, rukurqequal, rukurqand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukurq", "", rukurqequal, rukurqand);
+                //chanpinxian
+                if (!string.IsNullOrEmpty(chanpinxian))
+                {
+                    if (chanpinxianequal.Equals("="))
+                    {
+                        if (chanpinxianand.Equals("and"))
+                            where = where.And(p => p.cpxmingcheng == chanpinxian);
+                        else
+                            where = where.Or(p => p.cpxmingcheng == chanpinxian);
+                    }
+                    if (chanpinxianequal.Equals("like"))
+                    {
+                        if (chanpinxianand.Equals("and"))
+                            where = where.And(p => p.cpxmingcheng.Contains(chanpinxian));
+                        else
+                            where = where.Or(p => p.cpxmingcheng.Contains(chanpinxian));
+                    }
+                }
+                if (!string.IsNullOrEmpty(chanpinxian))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "chanpinxian", chanpinxian, chanpinxianequal, chanpinxianand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "chanpinxian", "", chanpinxianequal, chanpinxianand);
+
+                searchconditionService.GetInstance().AddEntity(sc);
+            }
+            else
+            {
+                sc.ConditionInfo = "";
+                //huozhuid
+                if (!string.IsNullOrEmpty(huozhuid))
+                {
+                    if (huozhuidequal.Equals("="))
+                    {
+                        if (huozhuidand.Equals("and"))
+                            where = where.And(wms_inventory_v => wms_inventory_v.HuozhuID == int.Parse(huozhuid));
+                        else
+                            where = where.Or(wms_inventory_v => wms_inventory_v.HuozhuID == int.Parse(huozhuid));
+                    }
+                    if (huozhuidequal.Equals(">"))
+                    {
+                        if (huozhuidand.Equals("and"))
+                            where = where.And(wms_inventory_v => wms_inventory_v.HuozhuID > int.Parse(huozhuid));
+                        else
+                            where = where.Or(wms_inventory_v => wms_inventory_v.HuozhuID > int.Parse(huozhuid));
+                    }
+                    if (huozhuidequal.Equals("<"))
+                    {
+                        if (huozhuidand.Equals("and"))
+                            where = where.And(wms_inventory_v => wms_inventory_v.HuozhuID < int.Parse(huozhuid));
+                        else
+                            where = where.Or(wms_inventory_v => wms_inventory_v.HuozhuID < int.Parse(huozhuid));
+                    }
+                }
+                if (!string.IsNullOrEmpty(huozhuid))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", huozhuid, huozhuidequal, huozhuidand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", "", huozhuidequal, huozhuidand);
+                //rukudanbh
+                if (!string.IsNullOrEmpty(rukudanbh))
+                {
+                    if (rukudanbhequal.Equals("="))
+                    {
+                        if (rukudanbhand.Equals("and"))
+                            where = where.And(wms_inventory_v => wms_inventory_v.RukudanBH == rukudanbh);
+                        else
+                            where = where.Or(wms_inventory_v => wms_inventory_v.RukudanBH == rukudanbh);
+                    }
+                    if (rukudanbhequal.Equals("like"))
+                    {
+                        if (rukudanbhand.Equals("and"))
+                            where = where.And(wms_inventory_v => wms_inventory_v.RukudanBH.Contains(rukudanbh));
+                        else
+                            where = where.Or(wms_inventory_v => wms_inventory_v.RukudanBH.Contains(rukudanbh));
+                    }
+                }
+                if (!string.IsNullOrEmpty(rukudanbh))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukudanbh", rukudanbh, rukudanbhequal, rukudanbhand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukudanbh", "", rukudanbhequal, rukudanbhand);
+                //kuwei
+                if (!string.IsNullOrEmpty(kuwei))
+                {
+                    if (kuweiequal.Equals("="))
+                    {
+                        if (kuweiand.Equals("and"))
+                            where = where.And(wms_inventory_v => wms_inventory_v.Kuwei == kuwei);
+                        else
+                            where = where.Or(wms_inventory_v => wms_inventory_v.Kuwei == kuwei);
+                    }
+                    if (kuweiequal.Equals("like"))
+                    {
+                        if (kuweiand.Equals("and"))
+                            where = where.And(wms_inventory_v => wms_inventory_v.Kuwei.Contains(kuwei));
+                        else
+                            where = where.Or(wms_inventory_v => wms_inventory_v.Kuwei.Contains(kuwei));
+                    }
+                }
+                if (!string.IsNullOrEmpty(kuwei))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "kuwei", kuwei, kuweiequal, kuweiand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "kuwei", "", kuweiequal, kuweiand);
+                //shangpindm
+                if (!string.IsNullOrEmpty(shangpindm))
+                {
+                    if (shangpindmequal.Equals("="))
+                    {
+                        if (shangpindmand.Equals("and"))
+                            where = where.And(wms_inventory_v => wms_inventory_v.ShangpinDM == shangpindm);
+                        else
+                            where = where.Or(wms_inventory_v => wms_inventory_v.ShangpinDM == shangpindm);
+                    }
+                    if (shangpindmequal.Equals("like"))
+                    {
+                        if (shangpindmand.Equals("and"))
+                            where = where.And(wms_inventory_v => wms_inventory_v.ShangpinDM.Contains(shangpindm));
+                        else
+                            where = where.Or(wms_inventory_v => wms_inventory_v.ShangpinDM.Contains(shangpindm));
+                    }
+                }
+                if (!string.IsNullOrEmpty(shangpindm))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpindm", shangpindm, shangpindmequal, shangpindmand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpindm", "", shangpindmequal, shangpindmand);
+                //shangpinmc
+                if (!string.IsNullOrEmpty(shangpinmc))
+                {
+                    if (shangpinmcequal.Equals("="))
+                    {
+                        if (shangpinmcand.Equals("and"))
+                            where = where.And(wms_inventory_v => wms_inventory_v.ShangpinMC == shangpinmc);
+                        else
+                            where = where.Or(wms_inventory_v => wms_inventory_v.ShangpinMC == shangpinmc);
+                    }
+                    if (shangpinmcequal.Equals("like"))
+                    {
+                        if (shangpinmcand.Equals("and"))
+                            where = where.And(wms_inventory_v => wms_inventory_v.ShangpinMC.Contains(shangpinmc));
+                        else
+                            where = where.Or(wms_inventory_v => wms_inventory_v.ShangpinMC.Contains(shangpinmc));
+                    }
+                }
+                if (!string.IsNullOrEmpty(shangpinmc))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpinmc", shangpinmc, shangpinmcequal, shangpinmcand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shangpinmc", "", shangpinmcequal, shangpinmcand);
+                //pihao
+                if (!string.IsNullOrEmpty(pihao))
+                {
+                    if (pihaoequal.Equals("="))
+                    {
+                        if (pihaoand.Equals("and"))
+                            where = where.And(p => p.Pihao == pihao);
+                        else
+                            where = where.Or(p => p.Pihao == pihao);
+                    }
+                    if (pihaoequal.Equals("like"))
+                    {
+                        if (pihaoand.Equals("and"))
+                            where = where.And(p => p.Pihao.Contains(pihao));
+                        else
+                            where = where.Or(p => p.Pihao.Contains(pihao));
+                    }
+                }
+                if (!string.IsNullOrEmpty(pihao))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pihao", pihao, pihaoequal, pihaoand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pihao", "", pihaoequal, pihaoand);
+                //shixiaorq
+                if (!string.IsNullOrEmpty(shixiaorq))
+                {
+                    if (shixiaorqequal.Equals("="))
+                    {
+                        if (shixiaorqand.Equals("and"))
+                            where = where.And(p => p.ShixiaoRQ == DateTime.Now.AddDays(int.Parse(shixiaorq)));// DateTime.Parse());
+                        else
+                            where = where.Or(p => p.ShixiaoRQ == DateTime.Now.AddDays(int.Parse(shixiaorq)));
+                    }
+                    if (shixiaorqequal.Equals(">"))
+                    {
+                        if (shixiaorqand.Equals("and"))
+                            where = where.And(p => p.ShixiaoRQ > DateTime.Now.AddDays(int.Parse(shixiaorq)));
+                        else
+                            where = where.Or(p => p.ShixiaoRQ > DateTime.Now.AddDays(int.Parse(shixiaorq)));
+                    }
+                    if (shixiaorqequal.Equals("<"))
+                    {
+                        if (shixiaorqand.Equals("and"))
+                            where = where.And(p => p.ShixiaoRQ < DateTime.Now.AddDays(int.Parse(shixiaorq)));
+                        else
+                            where = where.Or(p => p.ShixiaoRQ < DateTime.Now.AddDays(int.Parse(shixiaorq)));
+                    }
+                }
+                if (!string.IsNullOrEmpty(shixiaorq))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shixiaorq", shixiaorq, shixiaorqequal, shixiaorqand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shixiaorq", "", shixiaorqequal, shixiaorqand);
+                //rukurq
+                if (!string.IsNullOrEmpty(rukurq))
+                {
+                    if (rukurqequal.Equals("="))
+                    {
+                        if (rukurqand.Equals("and"))
+                            where = where.And(wms_inventory_v => wms_inventory_v.RukuRQ == DateTime.Parse(rukurq));
+                        else
+                            where = where.Or(wms_inventory_v => wms_inventory_v.RukuRQ == DateTime.Parse(rukurq));
+                    }
+                    if (rukurqequal.Equals(">"))
+                    {
+                        if (rukurqand.Equals("and"))
+                            where = where.And(wms_inventory_v => wms_inventory_v.RukuRQ > DateTime.Parse(rukurq));
+                        else
+                            where = where.Or(wms_inventory_v => wms_inventory_v.RukuRQ > DateTime.Parse(rukurq));
+                    }
+                    if (rukurqequal.Equals("<"))
+                    {
+                        if (rukurqand.Equals("and"))
+                            where = where.And(wms_inventory_v => wms_inventory_v.RukuRQ < DateTime.Parse(rukurq));
+                        else
+                            where = where.Or(wms_inventory_v => wms_inventory_v.RukuRQ < DateTime.Parse(rukurq));
+                    }
+                }
+                if (!string.IsNullOrEmpty(rukurq))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukurq", rukurq, rukurqequal, rukurqand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukurq", "", rukurqequal, rukurqand);
+                //chanpinxian
+                if (!string.IsNullOrEmpty(chanpinxian))
+                {
+                    if (chanpinxianequal.Equals("="))
+                    {
+                        if (chanpinxianand.Equals("and"))
+                            where = where.And(p => p.cpxmingcheng == chanpinxian);
+                        else
+                            where = where.Or(p => p.cpxmingcheng == chanpinxian);
+                    }
+                    if (chanpinxianequal.Equals("like"))
+                    {
+                        if (chanpinxianand.Equals("and"))
+                            where = where.And(p => p.cpxmingcheng.Contains(chanpinxian));
+                        else
+                            where = where.Or(p => p.cpxmingcheng.Contains(chanpinxian));
+                    }
+                }
+                if (!string.IsNullOrEmpty(chanpinxian))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "chanpinxian", chanpinxian, chanpinxianequal, chanpinxianand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "chanpinxian", "", chanpinxianequal, chanpinxianand);
+
+                searchconditionService.GetInstance().UpdateEntity(sc);
+            }
+            ViewBag.SearchCondition = sc.ConditionInfo;
+            userinfo _user = ServiceFactory.userinfoservice.GetEntityById(p => p.ID == userid && p.IsDelete == false);
+            if (_user == null)
+            {
+                where = where.And(p => p.ID < 1);
+            }
+            else
+            {
+                switch (_user.AccountType)
+                {
+                    case 100:
+                        where = where.And(p => p.HuozhuID == _user.EmployeeID);
+                        break;
+                    case 200:
+                        where = where.And(p => p.ID < 1);
+                        break;
+                    case 300:
+                        where = where.And(p => p.ID < 1);
+                        break;
+                    case 0:
+                    default:
+                        break;
+                }
+            }
+
+            var tempdt = ob_wms_cunhuoservice.GetInventory(where.Compile());
+            ViewBag.totalproduct = tempdt.Sum(p => p.sshuliang);
+            ViewBag.totalbox = tempdt.Sum(p => p.sshuliang / (p.Huansuanlv != 0 ? p.Huansuanlv : 1));
+            var tempData = ob_wms_cunhuoservice.GetInventory(where.Compile()).ToPagedList<wms_inventory_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            ViewBag.wms_storage_v = tempData;
+            return View(tempData);
+        }
+        [OutputCache(Duration = 30)]
+        public ActionResult CustomerStorage(string page)
+        {
+            if (string.IsNullOrEmpty(page))
+                page = "1";
+            int userid = (int)Session["user_id"];
+            string pagetag = "wms_cunhuo_CustomerStorage";
+
+            PageMenu.Set("CustomerStorage", "wms_cunhuo", "客户服务");
+
+            Expression<Func<wms_inventory_v, bool>> where = PredicateExtensionses.True<wms_inventory_v>();
+            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            if (sc != null && sc.ConditionInfo != null)
+            {
+                string[] sclist = sc.ConditionInfo.Split(';');
+                foreach (string scl in sclist)
+                {
+                    string[] scld = scl.Split(',');
+                    switch (scld[0])
+                    {
+                        case "huozhuid":
+                            string huozhuid = scld[1];
+                            string huozhuidequal = scld[2];
+                            string huozhuidand = scld[3];
+                            if (!string.IsNullOrEmpty(huozhuid))
+                            {
+                                if (huozhuidequal.Equals("="))
+                                {
+                                    if (huozhuidand.Equals("and"))
+                                        where = where.And(wms_inventory_v => wms_inventory_v.HuozhuID == int.Parse(huozhuid));
+                                    else
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.HuozhuID == int.Parse(huozhuid));
+                                }
+                                if (huozhuidequal.Equals(">"))
+                                {
+                                    if (huozhuidand.Equals("and"))
+                                        where = where.And(wms_inventory_v => wms_inventory_v.HuozhuID > int.Parse(huozhuid));
+                                    else
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.HuozhuID > int.Parse(huozhuid));
+                                }
+                                if (huozhuidequal.Equals("<"))
+                                {
+                                    if (huozhuidand.Equals("and"))
+                                        where = where.And(wms_inventory_v => wms_inventory_v.HuozhuID < int.Parse(huozhuid));
+                                    else
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.HuozhuID < int.Parse(huozhuid));
+                                }
+                            }
+                            break;
+                        case "rukudanbh":
+                            string rukudanbh = scld[1];
+                            string rukudanbhequal = scld[2];
+                            string rukudanbhand = scld[3];
+                            if (!string.IsNullOrEmpty(rukudanbh))
+                            {
+                                if (rukudanbhequal.Equals("="))
+                                {
+                                    if (rukudanbhand.Equals("and"))
+                                        where = where.And(wms_inventory_v => wms_inventory_v.RukudanBH == rukudanbh);
+                                    else
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.RukudanBH == rukudanbh);
+                                }
+                                if (rukudanbhequal.Equals("like"))
+                                {
+                                    if (rukudanbhand.Equals("and"))
+                                        where = where.And(wms_inventory_v => wms_inventory_v.RukudanBH.Contains(rukudanbh));
+                                    else
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.RukudanBH.Contains(rukudanbh));
+                                }
+                            }
+                            break;
+                        case "kuwei":
+                            string kuwei = scld[1];
+                            string kuweiequal = scld[2];
+                            string kuweiand = scld[3];
+                            if (!string.IsNullOrEmpty(kuwei))
+                            {
+                                if (kuweiequal.Equals("="))
+                                {
+                                    if (kuweiand.Equals("and"))
+                                        where = where.And(wms_inventory_v => wms_inventory_v.Kuwei == kuwei);
+                                    else
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.Kuwei == kuwei);
+                                }
+                                if (kuweiequal.Equals("like"))
+                                {
+                                    if (kuweiand.Equals("and"))
+                                        where = where.And(wms_inventory_v => wms_inventory_v.Kuwei.Contains(kuwei));
+                                    else
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.Kuwei.Contains(kuwei));
+                                }
+                            }
+                            break;
+                        case "shangpindm":
+                            string shangpindm = scld[1];
+                            string shangpindmequal = scld[2];
+                            string shangpindmand = scld[3];
+                            if (!string.IsNullOrEmpty(shangpindm))
+                            {
+                                if (shangpindmequal.Equals("="))
+                                {
+                                    if (shangpindmand.Equals("and"))
+                                        where = where.And(wms_inventory_v => wms_inventory_v.ShangpinDM == shangpindm);
+                                    else
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.ShangpinDM == shangpindm);
+                                }
+                                if (shangpindmequal.Equals("like"))
+                                {
+                                    if (shangpindmand.Equals("and"))
+                                        where = where.And(wms_inventory_v => wms_inventory_v.ShangpinDM.Contains(shangpindm));
+                                    else
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.ShangpinDM.Contains(shangpindm));
+                                }
+                            }
+                            break;
+                        case "shangpinmc":
+                            string shangpinmc = scld[1];
+                            string shangpinmcequal = scld[2];
+                            string shangpinmcand = scld[3];
+                            if (!string.IsNullOrEmpty(shangpinmc))
+                            {
+                                if (shangpinmcequal.Equals("="))
+                                {
+                                    if (shangpinmcand.Equals("and"))
+                                        where = where.And(wms_inventory_v => wms_inventory_v.ShangpinMC == shangpinmc);
+                                    else
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.ShangpinMC == shangpinmc);
+                                }
+                                if (shangpinmcequal.Equals("like"))
+                                {
+                                    if (shangpinmcand.Equals("and"))
+                                        where = where.And(wms_inventory_v => wms_inventory_v.ShangpinMC.Contains(shangpinmc));
+                                    else
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.ShangpinMC.Contains(shangpinmc));
+                                }
+                            }
+                            break;
+                        case "pihao":
+                            string pihao = scld[1];
+                            string pihaoequal = scld[2];
+                            string pihaoand = scld[3];
+                            if (!string.IsNullOrEmpty(pihao))
+                            {
+                                if (pihaoequal.Equals("="))
+                                {
+                                    if (pihaoand.Equals("and"))
+                                        where = where.And(p => p.Pihao == pihao);
+                                    else
+                                        where = where.Or(p => p.Pihao == pihao);
+                                }
+                                if (pihaoequal.Equals("like"))
+                                {
+                                    if (pihaoand.Equals("and"))
+                                        where = where.And(p => p.Pihao.Contains(pihao));
+                                    else
+                                        where = where.Or(p => p.Pihao.Contains(pihao));
+                                }
+                            }
+                            break;
+                        case "shixiaorq":
+                            string shixiaorq = scld[1];
+                            string shixiaorqequal = scld[2];
+                            string shixiaorqand = scld[3];
+                            if (!string.IsNullOrEmpty(shixiaorq))
+                            {
+                                if (shixiaorqequal.Equals("="))
+                                {
+                                    if (shixiaorqand.Equals("and"))
+                                        where = where.And(p => p.ShixiaoRQ == DateTime.Now.AddDays(int.Parse(shixiaorq)));// DateTime.Parse());
+                                    else
+                                        where = where.Or(p => p.ShixiaoRQ == DateTime.Now.AddDays(int.Parse(shixiaorq)));
+                                }
+                                if (shixiaorqequal.Equals(">"))
+                                {
+                                    if (shixiaorqand.Equals("and"))
+                                        where = where.And(p => p.ShixiaoRQ > DateTime.Now.AddDays(int.Parse(shixiaorq)));
+                                    else
+                                        where = where.Or(p => p.ShixiaoRQ > DateTime.Now.AddDays(int.Parse(shixiaorq)));
+                                }
+                                if (shixiaorqequal.Equals("<"))
+                                {
+                                    if (shixiaorqand.Equals("and"))
+                                        where = where.And(p => p.ShixiaoRQ < DateTime.Now.AddDays(int.Parse(shixiaorq)));
+                                    else
+                                        where = where.Or(p => p.ShixiaoRQ < DateTime.Now.AddDays(int.Parse(shixiaorq)));
+                                }
+                            }
+                            break;
+                        case "rukurq":
+                            string rukurq = scld[1];
+                            string rukurqequal = scld[2];
+                            string rukurqand = scld[3];
+                            if (!string.IsNullOrEmpty(rukurq))
+                            {
+                                if (rukurqequal.Equals("="))
+                                {
+                                    if (rukurqand.Equals("and"))
+                                        where = where.And(wms_inventory_v => wms_inventory_v.RukuRQ == DateTime.Parse(rukurq));
+                                    else
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.RukuRQ == DateTime.Parse(rukurq));
+                                }
+                                if (rukurqequal.Equals(">"))
+                                {
+                                    if (rukurqand.Equals("and"))
+                                        where = where.And(wms_inventory_v => wms_inventory_v.RukuRQ > DateTime.Parse(rukurq));
+                                    else
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.RukuRQ > DateTime.Parse(rukurq));
+                                }
+                                if (rukurqequal.Equals("<"))
+                                {
+                                    if (rukurqand.Equals("and"))
+                                        where = where.And(wms_inventory_v => wms_inventory_v.RukuRQ < DateTime.Parse(rukurq));
+                                    else
+                                        where = where.Or(wms_inventory_v => wms_inventory_v.RukuRQ < DateTime.Parse(rukurq));
+                                }
+                            }
+                            break;
+                        case "chanpinxian":
+                            string chanpinxian = scld[1];
+                            string chanpinxianequal = scld[2];
+                            string chanpinxianand = scld[3];
+                            if (!string.IsNullOrEmpty(chanpinxian))
+                            {
+                                if (chanpinxianequal.Equals("="))
+                                {
+                                    if (chanpinxianand.Equals("and"))
+                                        where = where.And(p => p.cpxmingcheng == chanpinxian);
+                                    else
+                                        where = where.Or(p => p.cpxmingcheng == chanpinxian);
+                                }
+                                if (chanpinxianequal.Equals("like"))
+                                {
+                                    if (chanpinxianand.Equals("and"))
+                                        where = where.And(p => p.cpxmingcheng.Contains(chanpinxian));
+                                    else
+                                        where = where.Or(p => p.cpxmingcheng.Contains(chanpinxian));
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                ViewBag.SearchCondition = sc.ConditionInfo;
+            }
+            userinfo _user = ServiceFactory.userinfoservice.GetEntityById(p => p.ID == userid && p.IsDelete == false);
+            if (_user == null)
+            {
+                where = where.And(p => p.ID < 1);
+            }
+            else
+            {
+                switch (_user.AccountType)
+                {
+                    case 100:
+                        where = where.And(p => p.HuozhuID == _user.EmployeeID);
+                        break;
+                    case 200:
+                        where = where.And(p => p.ID<1);
+                        break;
+                    case 300:
+                        where = where.And(p => p.ID<1);
+                        break;
+                    case 0:
+                    default:
+                        break;
+                }
+            }
+
+            var tempdt = ob_wms_cunhuoservice.GetInventory(where.Compile());
+            ViewBag.totalproduct = tempdt.Sum(p => p.sshuliang);
+            ViewBag.totalbox = tempdt.Sum(p => p.sshuliang / (p.Huansuanlv != 0 ? p.Huansuanlv : 1));
+
+            var tempData = ob_wms_cunhuoservice.GetInventory(where.Compile()).ToPagedList(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            ViewBag.wms_storage_v = tempData;
+            return View(tempData);
+        }
     }
 }
 

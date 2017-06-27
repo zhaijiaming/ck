@@ -18,18 +18,6 @@
                 location.href = url_go;
             }
         });
-        $("#bt_Express").click(function () {
-            //var sDel = "";
-            //$("#mydatatable tbody tr input[type=checkbox]").each(function () {
-            //    if (this.checked) {
-            //        sDel = sDel + ", " + $(this).val()
-            //    }
-            //});
-            //if (sDel.length < 2)
-            //    return;
-            //window.open("/wms_chukudan/expressexport?ck=" + sDel, "_blank");
-            window.open("/wms_chukudan/expressexport" , "_blank");
-        });
         $("#pl_cargo_close").click(function () {
             $("#pl_cargo").hide();
         });
@@ -46,83 +34,8 @@
          *同行单打印
          *获取到'出库编号'，查找'出库ID'，把'出库ID'传值过去。
         */
-        $("#bt_print").click(function () {
-            $("#pl_fun").show();
-            $("#chukuBH").val("");
-        });
-        $("#Yes_print").click(function () {
-            var chukuBH = $("#chukuBH").val().trim();//获取出库编号，去掉空格。
-            if (chukuBH.length > 0) {
-                //验证出库编号是否存在
-                $.post(
-                "/wms_chukudan/Check_chukuBH",
-                {
-                    chukuBH: chukuBH
-                },
-                function (data) {
-                    if (data == 1) {
-                        //编号存在
-                        $("#mydatatable tbody tr").each(function () {
-                            var table_chukuBH = $(this).find(".table_chukuBH").text();
-                            if (table_chukuBH == chukuBH) {
-                                var huozhu = $(this).find(".huozhu").text();
-                                var chukuID = $(this).find(".table_chukuID").val();
-                                if (huozhu == "嘉事国润") {
-                                    window.open("/wms_chukudan/PrintJSGRTongxing?out=" + chukuID);
-                                } else {
-                                    window.open("/wms_chukudan/PrintTongxing?out=" + chukuID);
-                                }
-                            }
-                        });
-                        $("#pl_fun").hide();
-                    } else {
-                        alert("该出库单编号不存在，请检查！");
-                        $("#chukuBH").val("");
-                    }
-                });
-            } else {
-                alert("出库编号不可为空！");
-            }
-        });
         $("#pl_fn_close").click(function () {
             $("#pl_fun").hide();
-        });
-        //拣货单打印
-        $("#bt_jhd_print").click(function () {
-            $("#panel_jhd").show();
-            $("#jhd_BH").val("");
-        });
-        $("#jhd_print").click(function () {
-            var chukuBH = $("#jhd_BH").val().trim();//获取出库编号，去掉空格。
-            if (chukuBH.length > 0) {
-                //验证出库编号是否存在
-                $.post(
-                "/wms_chukudan/Check_chukuBH",
-                {
-                    chukuBH: chukuBH
-                },
-                function (data) {
-                    if (data == 1) {
-                        //编号存在
-                        $("#mydatatable tbody tr").each(function () {
-                            var table_chukuBH = $(this).find(".table_chukuBH").text();
-                            if (table_chukuBH == chukuBH) {
-                                var chukuid = $(this).find(".table_chukuID").val();
-                                window.open("/wms_jianhuo/PrintJianhuodan?id=" + chukuid);
-                            }
-                        });
-                        $("#panel_jhd").hide();
-                    } else {
-                        alert("该出库单编号不存在，请检查！");
-                        $("#jhd_BH").val("");
-                    }
-                });
-            } else {
-                alert("出库编号不可为空！");
-            }
-        });
-        $("#panel_jhd_close").click(function () {
-            $("#panel_jhd").hide();
         });
     });
     function getCargos(ckd) {
@@ -232,13 +145,6 @@
         scms.Add(scm);
 
         scm = new SearchConditionModel();
-        scm.ItemCode = "HuozhuID";
-        scm.ItemTitle = "货主";
-        scm.ItemType = "货主.名称";
-        scms.Add(scm);
-
-
-        scm = new SearchConditionModel();
         scm.ItemCode = "KehuMC";
         scm.ItemTitle = "客户";
         scm.ItemType = "System.String";
@@ -264,22 +170,6 @@
                 scm.ItemValue = scs[1].Split(',')[1];
                 scm.ItemOpValue = scs[1].Split(',')[2];
                 scm.ItemJion = scs[1].Split(',')[3];
-            }
-            scms.Add(scm);
-
-            scm = new SearchConditionModel();
-            scm.ItemCode = "HuozhuID";
-            scm.ItemTitle = "货主";
-            scm.ItemType = "货主.名称";
-            if (scs.Length > 1)
-            {
-                scm.ItemValue = scs[0].Split(',')[1];
-                if (scm.ItemValue.Length == 0)
-                {
-                    scm.ItemValue = "0";
-                }
-                scm.ItemOpValue = scs[0].Split(',')[2];
-                scm.ItemJion = scs[0].Split(',')[3];
             }
             scms.Add(scm);
 
@@ -319,22 +209,15 @@
             <i class="icon-home home-icon"></i>
             <a href="/Home">首页</a>
         </li>
-        <li class="active">出库历史</li>
+        <li class="active">出库记录</li>
     </ul>
 </div>
 <div class="page-content">
-    @Html.Search_Condition((int)Session["user_id"], "出库单_条件组合查询", "/wms_chukudan/index", "wms_chukudan_index", scms)
+    @Html.Search_Condition((int)Session["user_id"], "出库记录_条件组合查询", "/wms_chukudan/customeroutlist", "wms_chukudan_customeroutlist", scms)
     <div class="page-header">
         <p>
             <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
-            @*<button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
-                <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
-                <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>*@
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
-            <button type="button" class="btn btn-default " id="bt_export" onclick="javascript: window.open('/wms_chukudan/historyofoutexport')"><i class="icon-inbox"></i>导出</button>
-            <button type="button" class="btn btn-default " id="bt_print"><i class="icon-print"></i>同行单打印</button>
-            <button type="button" class="btn btn-default " id="bt_jhd_print"><i class="icon-print"></i>拣货单打印</button>
-            <button type="button" class="btn btn-default " id="bt_Express"><i class="icon-file"></i>快递导出</button>
         </p>
     </div>
     <div class="row">
@@ -396,7 +279,7 @@
         </table>
     </div>
     <div class="pager">
-        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("CustomerOutList", new { page }))
     </div>
 </div>
 <div id="pl_cargo" class="panel panel-primary" style="display:none;position:fixed;top:50px;left:100px;width:1200px;height:600px;z-index:999;overflow:hidden">
@@ -435,42 +318,6 @@
                 </thead>
                 <tbody></tbody>
             </table>
-        </div>
-    </div>
-</div>
-@*嘉事国润通行单打印*@
-<div id="pl_fun" class="panel panel-primary" style="display:none;position:fixed;top:200px;left:300px;overflow:auto;">
-    <div class="panel-heading tuodong">
-        <h3 class="panel-title">嘉事国润通行单打印<button id="pl_fn_close" class="pull-right">X</button></h3>
-    </div>
-    <div class="panel-body">
-        <div class="row">
-            <div class="form-group">
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" id="chukuBH" placeholder="请输入出库编号" />
-                </div>
-                <div class="col-sm-4">
-                    <input type="button" class="form-control btn btn-default" id="Yes_print" value="打印" />
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@*拣货单打印*@
-<div id="panel_jhd" class="panel panel-primary" style="display:none;position:fixed;top:200px;left:300px;overflow:auto;">
-    <div class="panel-heading tuodong">
-        <h3 class="panel-title">拣货单打印<button id="panel_jhd_close" class="pull-right">X</button></h3>
-    </div>
-    <div class="panel-body">
-        <div class="row">
-            <div class="form-group">
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" id="jhd_BH" placeholder="请输入出库编号" />
-                </div>
-                <div class="col-sm-4">
-                    <input type="button" class="form-control btn btn-default" id="jhd_print" value="打印" />
-                </div>
-            </div>
         </div>
     </div>
 </div>

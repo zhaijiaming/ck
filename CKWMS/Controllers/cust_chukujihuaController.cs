@@ -128,11 +128,35 @@ namespace CKWMS.Controllers
                 }
                 ViewBag.SearchCondition = sc.ConditionInfo;
             }
-
-            where = where.And(cust_chukujihua => cust_chukujihua.IsDelete == false);
+            userinfo _user = ServiceFactory.userinfoservice.GetEntityById(p => p.ID == userid && p.IsDelete == false);
+            if (_user == null)
+            {
+                where = where.And(p => p.ID < 1);
+            }
+            else
+            {
+                switch (_user.AccountType)
+                {
+                    case 100:
+                        where = where.And(p => p.HuozhuID == _user.EmployeeID && p.IsDelete == false);
+                        break;
+                    case 200:
+                        where = where.And(p => p.ID < 1);
+                        break;
+                    case 300:
+                        where = where.And(p => p.KefuID == _user.EmployeeID && p.IsDelete == false);
+                        break;
+                    case 0:
+                    default:
+                        where = where.And(cust_chukujihua => cust_chukujihua.IsDelete == false); 
+                        break;
+                }
+            }
+            //where = where.And(cust_chukujihua => cust_chukujihua.IsDelete == false);
 
             var tempData = ob_cust_chukujihuaservice.LoadSortEntities(where.Compile(), true, cust_chukujihua => cust_chukujihua.JihuaZT).ToPagedList<cust_chukujihua>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.cust_chukujihua = tempData;
+            ViewBag.usertype = _user.AccountType;
             return View(tempData);
         }
 
@@ -352,10 +376,35 @@ namespace CKWMS.Controllers
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;
-            where = where.And(cust_chukujihua => cust_chukujihua.IsDelete == false);
+            userinfo _user = ServiceFactory.userinfoservice.GetEntityById(p => p.ID == userid && p.IsDelete == false);
+            if (_user == null)
+            {
+                where = where.And(p => p.ID < 1);
+            }
+            else
+            {
+                switch (_user.AccountType)
+                {
+                    case 100:
+                        where = where.And(p => p.HuozhuID == _user.EmployeeID && p.IsDelete == false);
+                        break;
+                    case 200:
+                        where = where.And(p => p.KehuID == _user.EmployeeID && p.IsDelete == false);
+                        break;
+                    case 300:
+                        where = where.And(p => p.KefuID == _user.EmployeeID && p.IsDelete == false);
+                        break;
+                    case 0:
+                    default:
+                        where = where.And(cust_chukujihua => cust_chukujihua.IsDelete == false);
+                        break;
+                }
+            }
+            //where = where.And(cust_chukujihua => cust_chukujihua.IsDelete == false);
 
             var tempData = ob_cust_chukujihuaservice.LoadSortEntities(where.Compile(), true, cust_chukujihua => cust_chukujihua.JihuaZT).ToPagedList<cust_chukujihua>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.cust_chukujihua = tempData;
+            ViewBag.usertype = _user.AccountType;
             return View(tempData);
         }
 

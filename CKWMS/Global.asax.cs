@@ -131,6 +131,10 @@ namespace CKWMS
         /// 移位类型
         /// </summary>
         public static Dictionary<int, string> MoveType;
+        /// <summary>
+        /// 用户类型
+        /// </summary>
+        public static Dictionary<int, string> UserType;
 
         protected void Application_Start()
         {
@@ -429,6 +433,12 @@ namespace CKWMS
             MoveType.Add(3, "不良移位");
             MoveType.Add(4, "回复移动");
             MoveType.Add(5, "库位移动");
+
+            UserType = new Dictionary<int, string>();
+            UserType.Add(0, "内部");
+            UserType.Add(100, "货主");
+            UserType.Add(200, "客户");
+            UserType.Add(300, "平台");
         }
     }
 }

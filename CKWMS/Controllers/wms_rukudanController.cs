@@ -1004,5 +1004,510 @@ namespace CKWMS.Controllers
             }
             return Json(1);
         }
+
+        [OutputCache(Duration = 30)]
+        public ActionResult CustomerInList(string page)
+        {
+            if (string.IsNullOrEmpty(page))
+                page = "1";
+            int userid = (int)Session["user_id"];
+            string pagetag = "wms_rukudan_CustomerInList";
+            PageMenu.Set("CustomerInList", "wms_rukudan", "客户服务");
+            Expression<Func<wms_rukudan, bool>> where = PredicateExtensionses.True<wms_rukudan>();
+            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            if (sc != null && sc.ConditionInfo != null)
+            {
+                string[] sclist = sc.ConditionInfo.Split(';');
+                foreach (string scl in sclist)
+                {
+                    string[] scld = scl.Split(',');
+                    switch (scld[0])
+                    {
+
+                        case "rukudanbh":
+                            string rukudanbh = scld[1];
+                            string rukudanbhequal = scld[2];
+                            string rukudanbhand = scld[3];
+                            if (!string.IsNullOrEmpty(rukudanbh))
+                            {
+                                if (rukudanbhequal.Equals("="))
+                                {
+                                    if (rukudanbhand.Equals("and"))
+                                        where = where.And(wms_rukudan => wms_rukudan.RukudanBH == rukudanbh);
+                                    else
+                                        where = where.Or(wms_rukudan => wms_rukudan.RukudanBH == rukudanbh);
+                                }
+                                if (rukudanbhequal.Equals("like"))
+                                {
+                                    if (rukudanbhand.Equals("and"))
+                                        where = where.And(wms_rukudan => wms_rukudan.RukudanBH.Contains(rukudanbh));
+                                    else
+                                        where = where.Or(wms_rukudan => wms_rukudan.RukudanBH.Contains(rukudanbh));
+                                }
+                            }
+                            break;
+                        case "huozhuid":
+                            string huozhuid = scld[1];
+                            string huozhuidequal = scld[2];
+                            string huozhuidand = scld[3];
+                            if (!string.IsNullOrEmpty(huozhuid))
+                            {
+                                if (huozhuidequal.Equals("="))
+                                {
+                                    if (huozhuidand.Equals("and"))
+                                        where = where.And(wms_rukudan => wms_rukudan.HuozhuID == int.Parse(huozhuid));
+                                    else
+                                        where = where.Or(wms_rukudan => wms_rukudan.HuozhuID == int.Parse(huozhuid));
+                                }
+                                if (huozhuidequal.Equals(">"))
+                                {
+                                    if (huozhuidand.Equals("and"))
+                                        where = where.And(wms_rukudan => wms_rukudan.HuozhuID > int.Parse(huozhuid));
+                                    else
+                                        where = where.Or(wms_rukudan => wms_rukudan.HuozhuID > int.Parse(huozhuid));
+                                }
+                                if (huozhuidequal.Equals("<"))
+                                {
+                                    if (huozhuidand.Equals("and"))
+                                        where = where.And(wms_rukudan => wms_rukudan.HuozhuID < int.Parse(huozhuid));
+                                    else
+                                        where = where.Or(wms_rukudan => wms_rukudan.HuozhuID < int.Parse(huozhuid));
+                                }
+                            }
+                            break;
+                        case "KehuDH":
+                            string KehuDH = scld[1];
+                            string KehuDHequal = scld[2];
+                            string KehuDHand = scld[3];
+                            if (!string.IsNullOrEmpty(KehuDH))
+                            {
+                                if (KehuDHequal.Equals("="))
+                                {
+                                    if (KehuDHand.Equals("and"))
+                                        where = where.And(wms_rukudan => wms_rukudan.KehuDH == KehuDH);
+                                    else
+                                        where = where.Or(wms_rukudan => wms_rukudan.KehuDH == KehuDH);
+                                }
+                                if (KehuDHequal.Equals("like"))
+                                {
+                                    if (KehuDHand.Equals("and"))
+                                        where = where.And(wms_rukudan => wms_rukudan.KehuDH.Contains(KehuDH));
+                                    else
+                                        where = where.Or(wms_rukudan => wms_rukudan.KehuDH.Contains(KehuDH));
+                                }
+                            }
+                            break;
+                        case "gongyingshangid":
+                            string gongyingshangid = scld[1];
+                            string gongyingshangidequal = scld[2];
+                            string gongyingshangidand = scld[3];
+                            if (!string.IsNullOrEmpty(gongyingshangid))
+                            {
+                                if (gongyingshangidequal.Equals("="))
+                                {
+                                    if (gongyingshangidand.Equals("and"))
+                                        where = where.And(wms_rukudan => wms_rukudan.GongyingshangID == int.Parse(gongyingshangid));
+                                    else
+                                        where = where.Or(wms_rukudan => wms_rukudan.GongyingshangID == int.Parse(gongyingshangid));
+                                }
+                                if (gongyingshangidequal.Equals(">"))
+                                {
+                                    if (gongyingshangidand.Equals("and"))
+                                        where = where.And(wms_rukudan => wms_rukudan.GongyingshangID > int.Parse(gongyingshangid));
+                                    else
+                                        where = where.Or(wms_rukudan => wms_rukudan.GongyingshangID > int.Parse(gongyingshangid));
+                                }
+                                if (gongyingshangidequal.Equals("<"))
+                                {
+                                    if (gongyingshangidand.Equals("and"))
+                                        where = where.And(wms_rukudan => wms_rukudan.GongyingshangID < int.Parse(gongyingshangid));
+                                    else
+                                        where = where.Or(wms_rukudan => wms_rukudan.GongyingshangID < int.Parse(gongyingshangid));
+                                }
+                            }
+                            break;
+                        case "fahuodizhi":
+                            string fahuodizhi = scld[1];
+                            string fahuodizhiequal = scld[2];
+                            string fahuodizhiand = scld[3];
+                            if (!string.IsNullOrEmpty(fahuodizhi))
+                            {
+                                if (fahuodizhiequal.Equals("="))
+                                {
+                                    if (fahuodizhiand.Equals("and"))
+                                        where = where.And(wms_rukudan => wms_rukudan.Fahuodizhi == fahuodizhi);
+                                    else
+                                        where = where.Or(wms_rukudan => wms_rukudan.Fahuodizhi == fahuodizhi);
+                                }
+                                if (fahuodizhiequal.Equals("like"))
+                                {
+                                    if (fahuodizhiand.Equals("and"))
+                                        where = where.And(wms_rukudan => wms_rukudan.Fahuodizhi.Contains(fahuodizhi));
+                                    else
+                                        where = where.Or(wms_rukudan => wms_rukudan.Fahuodizhi.Contains(fahuodizhi));
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                ViewBag.SearchCondition = sc.ConditionInfo;
+            }
+            userinfo _user = ServiceFactory.userinfoservice.GetEntityById(p => p.ID == userid && p.IsDelete == false);
+            if (_user == null)
+            {
+                where = where.And(wms_rukudan => wms_rukudan.ID < 1);
+            }
+            else
+            {
+                switch (_user.AccountType)
+                {
+                    case 100:
+                        where = where.And(wms_rukudan => wms_rukudan.HuozhuID == _user.EmployeeID && wms_rukudan.IsDelete == false && wms_rukudan.RukuZT > 4);
+                        break;
+                    case 200:
+                        where = where.And(wms_rukudan => wms_rukudan.GongyingshangID == _user.EmployeeID && wms_rukudan.IsDelete == false && wms_rukudan.RukuZT > 4);
+                        break;
+                    case 300:
+                        where = where.And(wms_rukudan => wms_rukudan.KefuID == _user.EmployeeID && wms_rukudan.IsDelete == false && wms_rukudan.RukuZT > 4);
+                        break;
+                    case 0:
+                    default:
+                        where = where.And(wms_rukudan => wms_rukudan.IsDelete == false && wms_rukudan.RukuZT > 4);
+                        break;
+                }
+            }
+            //where = where.And(wms_rukudan => wms_rukudan.IsDelete == false && wms_rukudan.RukuZT > 4);
+
+            var tempData = ob_wms_rukudanservice.LoadSortEntities(where.Compile(), false, wms_rukudan => wms_rukudan.ID).ToPagedList<wms_rukudan>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            ViewBag.wms_rukudan = tempData;
+            return View(tempData);
+        }
+
+        [HttpPost]
+        [OutputCache(Duration = 30)]
+        public ActionResult CustomerInList()
+        {
+            int userid = (int)Session["user_id"];
+            string pagetag = "wms_rukudan_CustomerInList";
+            string page = "1";
+            //rukudanbh
+            string rukudanbh = Request["rukudanbh"] ?? "";
+            string rukudanbhequal = Request["rukudanbhequal"] ?? "";
+            string rukudanbhand = Request["rukudanbhand"] ?? "";
+            //huozhuid
+            string huozhuid = Request["huozhuid"] ?? "";
+            string huozhuidequal = Request["huozhuidequal"] ?? "";
+            string huozhuidand = Request["huozhuidand"] ?? "";
+            //KehuDH 
+            string KehuDH = Request["KehuDH"] ?? "";
+            string KehuDHequal = Request["KehuDHequal"] ?? "";
+            string KehuDHand = Request["KehuDHand"] ?? "";
+            //gongyingshangid
+            string gongyingshangid = Request["gongyingshangid"] ?? "";
+            string gongyingshangidequal = Request["gongyingshangidequal"] ?? "";
+            string gongyingshangidand = Request["gongyingshangidand"] ?? "";
+            //fahuodizhi
+            string fahuodizhi = Request["fahuodizhi"] ?? "";
+            string fahuodizhiequal = Request["fahuodizhiequal"] ?? "";
+            string fahuodizhiand = Request["fahuodizhiand"] ?? "";
+            PageMenu.Set("CustomerInList", "wms_rukudan", "客户服务");
+            Expression<Func<wms_rukudan, bool>> where = PredicateExtensionses.True<wms_rukudan>();
+            searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            if (sc == null)
+            {
+                sc = new searchcondition();
+                sc.UserID = userid;
+                sc.PageBrief = pagetag;
+                //rukudanbh
+                if (!string.IsNullOrEmpty(rukudanbh))
+                {
+                    if (rukudanbhequal.Equals("="))
+                    {
+                        if (rukudanbhand.Equals("and"))
+                            where = where.And(wms_rukudan => wms_rukudan.RukudanBH == rukudanbh);
+                        else
+                            where = where.Or(wms_rukudan => wms_rukudan.RukudanBH == rukudanbh);
+                    }
+                    if (rukudanbhequal.Equals("like"))
+                    {
+                        if (rukudanbhand.Equals("and"))
+                            where = where.And(wms_rukudan => wms_rukudan.RukudanBH.Contains(rukudanbh));
+                        else
+                            where = where.Or(wms_rukudan => wms_rukudan.RukudanBH.Contains(rukudanbh));
+                    }
+                }
+                if (!string.IsNullOrEmpty(rukudanbh))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukudanbh", rukudanbh, rukudanbhequal, rukudanbhand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukudanbh", "", rukudanbhequal, rukudanbhand);
+                //huozhuid
+                if (!string.IsNullOrEmpty(huozhuid))
+                {
+                    if (huozhuidequal.Equals("="))
+                    {
+                        if (huozhuidand.Equals("and"))
+                            where = where.And(wms_rukudan => wms_rukudan.HuozhuID == int.Parse(huozhuid));
+                        else
+                            where = where.Or(wms_rukudan => wms_rukudan.HuozhuID == int.Parse(huozhuid));
+                    }
+                    if (huozhuidequal.Equals(">"))
+                    {
+                        if (huozhuidand.Equals("and"))
+                            where = where.And(wms_rukudan => wms_rukudan.HuozhuID > int.Parse(huozhuid));
+                        else
+                            where = where.Or(wms_rukudan => wms_rukudan.HuozhuID > int.Parse(huozhuid));
+                    }
+                    if (huozhuidequal.Equals("<"))
+                    {
+                        if (huozhuidand.Equals("and"))
+                            where = where.And(wms_rukudan => wms_rukudan.HuozhuID < int.Parse(huozhuid));
+                        else
+                            where = where.Or(wms_rukudan => wms_rukudan.HuozhuID < int.Parse(huozhuid));
+                    }
+                }
+                if (!string.IsNullOrEmpty(huozhuid))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", huozhuid, huozhuidequal, huozhuidand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", "", huozhuidequal, huozhuidand);
+                //KehuDH
+                if (!string.IsNullOrEmpty(KehuDH))
+                {
+                    if (KehuDHequal.Equals("="))
+                    {
+                        if (KehuDHand.Equals("and"))
+                            where = where.And(wms_rukudan => wms_rukudan.KehuDH == KehuDH);
+                        else
+                            where = where.Or(wms_rukudan => wms_rukudan.KehuDH == KehuDH);
+                    }
+                    if (KehuDHequal.Equals("like"))
+                    {
+                        if (KehuDHand.Equals("and"))
+                            where = where.And(wms_rukudan => wms_rukudan.KehuDH.Contains(KehuDH));
+                        else
+                            where = where.Or(wms_rukudan => wms_rukudan.KehuDH.Contains(KehuDH));
+                    }
+                }
+                if (!string.IsNullOrEmpty(KehuDH))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "KehuDH", KehuDH, KehuDHequal, KehuDHand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "KehuDH", "", KehuDHequal, KehuDHand);
+                //gongyingshangid
+                if (!string.IsNullOrEmpty(gongyingshangid))
+                {
+                    if (gongyingshangidequal.Equals("="))
+                    {
+                        if (gongyingshangidand.Equals("and"))
+                            where = where.And(wms_rukudan => wms_rukudan.GongyingshangID == int.Parse(gongyingshangid));
+                        else
+                            where = where.Or(wms_rukudan => wms_rukudan.GongyingshangID == int.Parse(gongyingshangid));
+                    }
+                    if (gongyingshangidequal.Equals(">"))
+                    {
+                        if (gongyingshangidand.Equals("and"))
+                            where = where.And(wms_rukudan => wms_rukudan.GongyingshangID > int.Parse(gongyingshangid));
+                        else
+                            where = where.Or(wms_rukudan => wms_rukudan.GongyingshangID > int.Parse(gongyingshangid));
+                    }
+                    if (gongyingshangidequal.Equals("<"))
+                    {
+                        if (gongyingshangidand.Equals("and"))
+                            where = where.And(wms_rukudan => wms_rukudan.GongyingshangID < int.Parse(gongyingshangid));
+                        else
+                            where = where.Or(wms_rukudan => wms_rukudan.GongyingshangID < int.Parse(gongyingshangid));
+                    }
+                }
+                if (!string.IsNullOrEmpty(gongyingshangid))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "gongyingshangid", gongyingshangid, gongyingshangidequal, gongyingshangidand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "gongyingshangid", "", gongyingshangidequal, gongyingshangidand);
+                //fahuodizhi
+                if (!string.IsNullOrEmpty(fahuodizhi))
+                {
+                    if (fahuodizhiequal.Equals("="))
+                    {
+                        if (fahuodizhiand.Equals("and"))
+                            where = where.And(wms_rukudan => wms_rukudan.Fahuodizhi == fahuodizhi);
+                        else
+                            where = where.Or(wms_rukudan => wms_rukudan.Fahuodizhi == fahuodizhi);
+                    }
+                    if (fahuodizhiequal.Equals("like"))
+                    {
+                        if (fahuodizhiand.Equals("and"))
+                            where = where.And(wms_rukudan => wms_rukudan.Fahuodizhi.Contains(fahuodizhi));
+                        else
+                            where = where.Or(wms_rukudan => wms_rukudan.Fahuodizhi.Contains(fahuodizhi));
+                    }
+                }
+                if (!string.IsNullOrEmpty(fahuodizhi))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "fahuodizhi", fahuodizhi, fahuodizhiequal, fahuodizhiand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "fahuodizhi", "", fahuodizhiequal, fahuodizhiand);
+
+                searchconditionService.GetInstance().AddEntity(sc);
+            }
+            else
+            {
+                sc.ConditionInfo = "";
+                //rukudanbh
+                if (!string.IsNullOrEmpty(rukudanbh))
+                {
+                    if (rukudanbhequal.Equals("="))
+                    {
+                        if (rukudanbhand.Equals("and"))
+                            where = where.And(wms_rukudan => wms_rukudan.RukudanBH == rukudanbh);
+                        else
+                            where = where.Or(wms_rukudan => wms_rukudan.RukudanBH == rukudanbh);
+                    }
+                    if (rukudanbhequal.Equals("like"))
+                    {
+                        if (rukudanbhand.Equals("and"))
+                            where = where.And(wms_rukudan => wms_rukudan.RukudanBH.Contains(rukudanbh));
+                        else
+                            where = where.Or(wms_rukudan => wms_rukudan.RukudanBH.Contains(rukudanbh));
+                    }
+                }
+                if (!string.IsNullOrEmpty(rukudanbh))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukudanbh", rukudanbh, rukudanbhequal, rukudanbhand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "rukudanbh", "", rukudanbhequal, rukudanbhand);
+                //huozhuid
+                if (!string.IsNullOrEmpty(huozhuid))
+                {
+                    if (huozhuidequal.Equals("="))
+                    {
+                        if (huozhuidand.Equals("and"))
+                            where = where.And(wms_rukudan => wms_rukudan.HuozhuID == int.Parse(huozhuid));
+                        else
+                            where = where.Or(wms_rukudan => wms_rukudan.HuozhuID == int.Parse(huozhuid));
+                    }
+                    if (huozhuidequal.Equals(">"))
+                    {
+                        if (huozhuidand.Equals("and"))
+                            where = where.And(wms_rukudan => wms_rukudan.HuozhuID > int.Parse(huozhuid));
+                        else
+                            where = where.Or(wms_rukudan => wms_rukudan.HuozhuID > int.Parse(huozhuid));
+                    }
+                    if (huozhuidequal.Equals("<"))
+                    {
+                        if (huozhuidand.Equals("and"))
+                            where = where.And(wms_rukudan => wms_rukudan.HuozhuID < int.Parse(huozhuid));
+                        else
+                            where = where.Or(wms_rukudan => wms_rukudan.HuozhuID < int.Parse(huozhuid));
+                    }
+                }
+                if (!string.IsNullOrEmpty(huozhuid))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", huozhuid, huozhuidequal, huozhuidand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", "", huozhuidequal, huozhuidand);
+                //KehuDH
+                if (!string.IsNullOrEmpty(KehuDH))
+                {
+                    if (KehuDHequal.Equals("="))
+                    {
+                        if (KehuDHand.Equals("and"))
+                            where = where.And(wms_rukudan => wms_rukudan.KehuDH == KehuDH);
+                        else
+                            where = where.Or(wms_rukudan => wms_rukudan.KehuDH == KehuDH);
+                    }
+                    if (KehuDHequal.Equals("like"))
+                    {
+                        if (KehuDHand.Equals("and"))
+                            where = where.And(wms_rukudan => wms_rukudan.KehuDH.Contains(KehuDH));
+                        else
+                            where = where.Or(wms_rukudan => wms_rukudan.KehuDH.Contains(KehuDH));
+                    }
+                }
+                if (!string.IsNullOrEmpty(KehuDH))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "KehuDH", KehuDH, KehuDHequal, KehuDHand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "KehuDH", "", KehuDHequal, KehuDHand);
+                //gongyingshangid
+                if (!string.IsNullOrEmpty(gongyingshangid))
+                {
+                    if (gongyingshangidequal.Equals("="))
+                    {
+                        if (gongyingshangidand.Equals("and"))
+                            where = where.And(wms_rukudan => wms_rukudan.GongyingshangID == int.Parse(gongyingshangid));
+                        else
+                            where = where.Or(wms_rukudan => wms_rukudan.GongyingshangID == int.Parse(gongyingshangid));
+                    }
+                    if (gongyingshangidequal.Equals(">"))
+                    {
+                        if (gongyingshangidand.Equals("and"))
+                            where = where.And(wms_rukudan => wms_rukudan.GongyingshangID > int.Parse(gongyingshangid));
+                        else
+                            where = where.Or(wms_rukudan => wms_rukudan.GongyingshangID > int.Parse(gongyingshangid));
+                    }
+                    if (gongyingshangidequal.Equals("<"))
+                    {
+                        if (gongyingshangidand.Equals("and"))
+                            where = where.And(wms_rukudan => wms_rukudan.GongyingshangID < int.Parse(gongyingshangid));
+                        else
+                            where = where.Or(wms_rukudan => wms_rukudan.GongyingshangID < int.Parse(gongyingshangid));
+                    }
+                }
+                if (!string.IsNullOrEmpty(gongyingshangid))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "gongyingshangid", gongyingshangid, gongyingshangidequal, gongyingshangidand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "gongyingshangid", "", gongyingshangidequal, gongyingshangidand);
+                //fahuodizhi
+                if (!string.IsNullOrEmpty(fahuodizhi))
+                {
+                    if (fahuodizhiequal.Equals("="))
+                    {
+                        if (fahuodizhiand.Equals("and"))
+                            where = where.And(wms_rukudan => wms_rukudan.Fahuodizhi == fahuodizhi);
+                        else
+                            where = where.Or(wms_rukudan => wms_rukudan.Fahuodizhi == fahuodizhi);
+                    }
+                    if (fahuodizhiequal.Equals("like"))
+                    {
+                        if (fahuodizhiand.Equals("and"))
+                            where = where.And(wms_rukudan => wms_rukudan.Fahuodizhi.Contains(fahuodizhi));
+                        else
+                            where = where.Or(wms_rukudan => wms_rukudan.Fahuodizhi.Contains(fahuodizhi));
+                    }
+                }
+                if (!string.IsNullOrEmpty(fahuodizhi))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "fahuodizhi", fahuodizhi, fahuodizhiequal, fahuodizhiand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "fahuodizhi", "", fahuodizhiequal, fahuodizhiand);
+
+                searchconditionService.GetInstance().UpdateEntity(sc);
+            }
+            ViewBag.SearchCondition = sc.ConditionInfo;
+            userinfo _user = ServiceFactory.userinfoservice.GetEntityById(p => p.ID == userid && p.IsDelete == false);
+            if (_user == null)
+            {
+                where = where.And(wms_rukudan => wms_rukudan.ID < 1);
+            }
+            else
+            {
+                switch (_user.AccountType)
+                {
+                    case 100:
+                        where = where.And(wms_rukudan => wms_rukudan.HuozhuID == _user.EmployeeID && wms_rukudan.IsDelete == false && wms_rukudan.RukuZT > 4);
+                        break;
+                    case 200:
+                        where = where.And(wms_rukudan => wms_rukudan.GongyingshangID == _user.EmployeeID && wms_rukudan.IsDelete == false && wms_rukudan.RukuZT > 4);
+                        break;
+                    case 300:
+                        where = where.And(wms_rukudan => wms_rukudan.KefuID == _user.EmployeeID && wms_rukudan.IsDelete == false && wms_rukudan.RukuZT > 4);
+                        break;
+                    case 0:
+                    default:
+                        where = where.And(wms_rukudan => wms_rukudan.IsDelete == false && wms_rukudan.RukuZT > 4);
+                        break;
+                }
+            }
+            //where = where.And(wms_rukudan => wms_rukudan.IsDelete == false && wms_rukudan.RukuZT > 4);
+
+            var tempData = ob_wms_rukudanservice.LoadSortEntities(where.Compile(), false, wms_rukudan => wms_rukudan.ID).ToPagedList<wms_rukudan>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            ViewBag.wms_rukudan = tempData;
+            return View(tempData);
+        }
+
     }
 }

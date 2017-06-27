@@ -998,6 +998,9 @@
     <Content Include="Views\wms_outreport\outReportExport.cshtml" />
     <Content Include="Views\wms_outreport\printOutReport.cshtml" />
     <Content Include="Views\wms_chukudan\PrintJSWZTongxing.cshtml" />
+    <Content Include="Views\wms_cunhuo\CustomerStorage.cshtml" />
+    <Content Include="Views\wms_chukudan\CustomerOutList.cshtml" />
+    <Content Include="Views\wms_rukudan\CustomerInList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
