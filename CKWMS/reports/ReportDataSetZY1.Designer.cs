@@ -1743,6 +1743,8 @@ namespace CKWMS.reports {
             
             private global::System.Data.DataColumn columnJianShu;
             
+            private global::System.Data.DataColumn columnXuliema;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public JianHuoDanDataTable() {
@@ -1858,6 +1860,14 @@ namespace CKWMS.reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn XuliemaColumn {
+                get {
+                    return this.columnXuliema;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1893,7 +1903,7 @@ namespace CKWMS.reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public JianHuoDanRow AddJianHuoDanRow(string Mingcheng, string DaijianSL, string ShixiaoRQ, string Guige, string Pihao, string Kuwei, string Zhucezheng, string Huansuanlv, string JianhuoSM, string JianShu) {
+            public JianHuoDanRow AddJianHuoDanRow(string Mingcheng, string DaijianSL, string ShixiaoRQ, string Guige, string Pihao, string Kuwei, string Zhucezheng, string Huansuanlv, string JianhuoSM, string JianShu, string Xuliema) {
                 JianHuoDanRow rowJianHuoDanRow = ((JianHuoDanRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Mingcheng,
@@ -1905,7 +1915,8 @@ namespace CKWMS.reports {
                         Zhucezheng,
                         Huansuanlv,
                         JianhuoSM,
-                        JianShu};
+                        JianShu,
+                        Xuliema};
                 rowJianHuoDanRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowJianHuoDanRow);
                 return rowJianHuoDanRow;
@@ -1938,6 +1949,7 @@ namespace CKWMS.reports {
                 this.columnHuansuanlv = base.Columns["Huansuanlv"];
                 this.columnJianhuoSM = base.Columns["JianhuoSM"];
                 this.columnJianShu = base.Columns["JianShu"];
+                this.columnXuliema = base.Columns["Xuliema"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1963,6 +1975,8 @@ namespace CKWMS.reports {
                 base.Columns.Add(this.columnJianhuoSM);
                 this.columnJianShu = new global::System.Data.DataColumn("JianShu", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnJianShu);
+                this.columnXuliema = new global::System.Data.DataColumn("Xuliema", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnXuliema);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -14878,6 +14892,22 @@ namespace CKWMS.reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Xuliema {
+                get {
+                    try {
+                        return ((string)(this[this.tableJianHuoDan.XuliemaColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("表“JianHuoDan”中列“Xuliema”的值为 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableJianHuoDan.XuliemaColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsMingchengNull() {
                 return this.IsNull(this.tableJianHuoDan.MingchengColumn);
             }
@@ -14994,6 +15024,18 @@ namespace CKWMS.reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetJianShuNull() {
                 this[this.tableJianHuoDan.JianShuColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsXuliemaNull() {
+                return this.IsNull(this.tableJianHuoDan.XuliemaColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetXuliemaNull() {
+                this[this.tableJianHuoDan.XuliemaColumn] = global::System.Convert.DBNull;
             }
         }
         

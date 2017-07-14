@@ -95,10 +95,11 @@ namespace CKWMS.reports
                                     ShixiaoRQ = string.Format("{0:yyyy/MM/dd}", g.First().ShixiaoRQ == null ? "" : ((DateTime)g.First().ShixiaoRQ).ToString("yyyy/MM/dd")),
                                     Guige = g.First().Guige,
                                     Pihao = g.First().Pihao,
+                                    Xuliema = g.First().Xuliema,
                                     Kuwei = g.First().Kuwei,
                                     Zhucezheng = g.First().Zhucezheng,
                                     JianhuoSM = g.First().JianhuoSM,
-                                })).OrderBy(t => t.Kuwei).ThenBy(t=>t.Guige);
+                                })).OrderBy(t => t.Kuwei).ThenBy(t => t.Guige);
 
                                 foreach (var _pv in afterList)
                                 {
@@ -107,7 +108,7 @@ namespace CKWMS.reports
                                     if (!string.IsNullOrEmpty(_pv.ShangpinMC))
                                     {
                                         var spxx = ServiceFactory.base_shangpinxxservice.GetEntityById(p => p.Mingcheng == _pv.ShangpinMC && p.Guige == _pv.Guige && p.IsDelete == false);
-                                        if(spxx != null)
+                                        if (spxx != null)
                                         {
                                             drjhd["JianhuoSM"] = spxx.Baozhuangyaoqiu == null ? "" : spxx.Baozhuangyaoqiu;
                                         }
@@ -122,6 +123,7 @@ namespace CKWMS.reports
                                     drjhd["ShixiaoRQ"] = _pv.ShixiaoRQ;
                                     drjhd["Guige"] = _pv.Guige;
                                     drjhd["Pihao"] = _pv.Pihao;
+                                    drjhd["Xuliema"] = _pv.Xuliema;
                                     drjhd["Kuwei"] = _pv.Kuwei;
                                     drjhd["Zhucezheng"] = _pv.Zhucezheng;
                                     jhd_DaijianSLs += (long)_pv.DaijianSL;
@@ -188,12 +190,13 @@ namespace CKWMS.reports
                             float tx_ChukuJSs = 0;
                             try
                             {
-                                var _ckmxs = ob_wms_chukumxservice.LoadSortEntities(p => p.ChukuID == int.Parse(_outid) && p.IsDelete == false, true, p => p.Pihao);
+                                var _ckmxs = ob_wms_chukumxservice.LoadSortEntities(p => p.ChukuID == int.Parse(_outid) && p.IsDelete == false, true, p => p.Pihao).ToList();
                                 foreach (wms_chukumx _mx in _ckmxs)
                                 {
                                     drtx = dttx.NewRow();
                                     drtx["Guige"] = _mx.Guige == null ? "" : _mx.Guige.Trim();
-                                    drtx["Changjia"] = _mx.Changjia == null ? "" : _mx.Changjia.Trim();
+                                    //drtx["Changjia"] = _mx.Changjia == null ? "" : _mx.Changjia.Trim();
+                                    drtx["Beizhu"] = _mx.Changjia == null ? "" : _mx.Changjia.Trim();
                                     drtx["ShangpinMC"] = _mx.ShangpinMC == null ? "" : _mx.ShangpinMC.Trim();
                                     drtx["Pihao"] = _mx.Pihao == null ? "" : _mx.Pihao.Trim();
                                     drtx["Xuliema"] = _mx.Xuliema == null ? "" : _mx.Xuliema.Trim();
@@ -204,8 +207,9 @@ namespace CKWMS.reports
                                     drtx["ChukuJS"] = ChukuJS;
                                     tx_ChukuJSs += ChukuJS;
 
-                                    drtx["JibenDW"] = _mx.JibenDW == null ? "" : _mx.JibenDW.Trim();
-
+                                    //drtx["JibenDW"] = _mx.JibenDW == null ? "" : _mx.JibenDW.Trim();
+                                    drtx["JibenDW"] = _mx.BaozhuangDW == null ? "" : _mx.BaozhuangDW.Trim();
+                                    drtx["BeianBH"] = _mx.ShangpinDM == null ? "" :_mx.ShangpinDM.Trim();
                                     wms_chukudan _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid) && p.IsDelete == false);
                                     if (_ckd != null)
                                     {
@@ -215,8 +219,8 @@ namespace CKWMS.reports
                                     base_shengchanqiye _scqy = ServiceFactory.base_shengchanqiyeservice.GetEntityById(p => p.Qiyemingcheng == _mx.Changjia && p.IsDelete == false);
                                     if (_scqy != null)
                                     {
-                                        drtx["ShengchanxukeBH"] = _scqy.ShengchanxukeBH == null ? "" : _scqy.ShengchanxukeBH.Trim();
-                                        drtx["BeianBH"] = _scqy.BeianBH == null ? "" : _scqy.BeianBH.Trim();
+                                        drtx["ShengchanxukeBH"] = _scqy.ShengchanxukeBH == null ? (_scqy.BeianBH == null ? "" : _scqy.BeianBH) : _scqy.ShengchanxukeBH.Trim();
+                                        //drtx["BeianBH"] = _scqy.BeianBH == null ? "" : _scqy.BeianBH.Trim();
                                     }
 
                                     tx_ChukuSL += (long)_mx.ChukuSL;
@@ -286,7 +290,7 @@ namespace CKWMS.reports
                             float JSGRtx_ChukuJSs = 0;//件数总计
                             try
                             {
-                                var _ckmxs = ob_wms_chukumxservice.LoadSortEntities(p => p.ChukuID == int.Parse(_outid) && p.IsDelete == false, true, p => p.Pihao);
+                                var _ckmxs = ob_wms_chukumxservice.LoadSortEntities(p => p.ChukuID == int.Parse(_outid) && p.IsDelete == false, true, p => p.Pihao).ToList();
                                 foreach (wms_chukumx _mx in _ckmxs)
                                 {
                                     drJSGRtx = dtJSGRtx.NewRow();
@@ -304,7 +308,7 @@ namespace CKWMS.reports
                                     {
                                         drJSGRtx["ShangpinMS"] = spxxData.ShangpinMS == null ? "" : spxxData.ShangpinMS;
                                         base_gongyingshang gys = ServiceFactory.base_gongyingshangservice.GetEntityById(p => p.ID == spxxData.GongyingID && p.IsDelete == false);
-                                        if(gys != null)
+                                        if (gys != null)
                                         {
                                             drJSGRtx["gongYingShangMC"] = gys.Mingcheng == null ? "" : gys.Mingcheng.Trim();
                                         }
@@ -413,7 +417,7 @@ namespace CKWMS.reports
                                     drJSWZTx["Pihao"] = _mx.Pihao == null ? "" : _mx.Pihao.Trim();
                                     //嘉事唯纵需要获取出库序列码
                                     var _xlms = "";
-                                    var xlms = ServiceFactory.wms_chukuxlmservice.LoadSortEntities(p=>p.ChukuID == _mx.ChukuID && p.IsDelete==false && p.Pihao==_mx.Pihao, false, p => p.Pihao).ToList<wms_chukuxlm>();
+                                    var xlms = ServiceFactory.wms_chukuxlmservice.LoadSortEntities(p => p.ChukuID == _mx.ChukuID && p.IsDelete == false && p.Pihao == _mx.Pihao, false, p => p.Pihao).ToList<wms_chukuxlm>();
                                     foreach (wms_chukuxlm xlm in xlms)
                                     {
                                         if (!string.IsNullOrEmpty(xlm.Xuliema))
@@ -757,7 +761,7 @@ namespace CKWMS.reports
                                     }
                                 }
                                 drrkfhjy["MakeMan"] = Yanshouren_first;
-                                
+
 
                                 drrkfhjy["rkysbgSLs"] = rkysbg_Shuliangs;
                                 drrkfhjy["rkysbgYs"] = rkysbg_YanshouSL_Y;
@@ -1004,20 +1008,20 @@ namespace CKWMS.reports
                                 }
                             }
                             var _grouplist = from p in lists
-                                             group p by new {p.ShangpinID,p.ShangpinDM,p.Pihao } into g
+                                             group p by new { p.ShangpinID, p.ShangpinDM, p.Pihao } into g
                                              select new
                                              {
-                                                 spid=g.Key.ShangpinID,
-                                                 sp=g.Key.ShangpinDM,
-                                                 ph=g.Key.Pihao,
+                                                 spid = g.Key.ShangpinID,
+                                                 sp = g.Key.ShangpinDM,
+                                                 ph = g.Key.Pihao,
                                                  num = g.Sum(p => p.DaohuoSL)
                                              };
                             List<wms_rukumx> _newLists = new List<wms_rukumx>();
-                            foreach(var gl in _grouplist)
+                            foreach (var gl in _grouplist)
                             {
-                                foreach(var mx in lists)
+                                foreach (var mx in lists)
                                 {
-                                    if(mx.ShangpinID==gl.spid && mx.Pihao==gl.ph && mx.ShangpinDM==gl.sp)
+                                    if (mx.ShangpinID == gl.spid && mx.Pihao == gl.ph && mx.ShangpinDM == gl.sp)
                                     {
                                         mx.DaohuoSL = gl.num;
                                         _newLists.Add(mx);
@@ -1027,7 +1031,7 @@ namespace CKWMS.reports
                             }
                             try
                             {
-                                foreach (wms_rukumx _pr in _newLists.OrderBy(p=>p.Guige).ThenBy(p=>p.Pihao))
+                                foreach (wms_rukumx _pr in _newLists.OrderBy(p => p.Guige).ThenBy(p => p.Pihao))
                                 {
                                     drRuKuMX = dtRuKuMX.NewRow();
                                     drRuKuMX["Guige"] = _pr.Guige;
@@ -1062,7 +1066,7 @@ namespace CKWMS.reports
                                 wms_rukudan RuKuMX_others = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_rkmxid));
                                 if (RuKuMX_others != null)
                                 {
-                                    drRuKuMX_others["RukudanBH"] =RuKuMX_others.RukudanBH;
+                                    drRuKuMX_others["RukudanBH"] = RuKuMX_others.RukudanBH;
                                     drRuKuMX_others["RukuRQ"] = string.Format("{0:yyyy/MM/dd}", RuKuMX_others.RukuRQ == null ? "" : ((DateTime)RuKuMX_others.RukuRQ).ToString("yyyy/MM/dd"));
                                     drRuKuMX_others["ChunyunYQ"] = RuKuMX_others.ChunyunYQ;
                                     //base_weituokehu:'货主'.
@@ -1235,7 +1239,7 @@ namespace CKWMS.reports
                                     drzlgl_ckfhbg["Xuliema"] = _pr.Xuliema == null ? "" : _pr.Xuliema;
                                     drzlgl_ckfhbg["ShengchanRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShengchanRQ == null ? "" : ((DateTime)_pr.ShengchanRQ).ToString("yyyy/MM/dd"));
                                     drzlgl_ckfhbg["ShixiaoRQ"] = string.Format("{0:yyyy/MM/dd}", _pr.ShixiaoRQ == null ? "" : ((DateTime)_pr.ShixiaoRQ).ToString("yyyy/MM/dd"));
-                                    drzlgl_ckfhbg["JianhuoSL"] = _pr.JianhuoSL ==null? int.Parse("0"): _pr.JianhuoSL;
+                                    drzlgl_ckfhbg["JianhuoSL"] = _pr.JianhuoSL == null ? int.Parse("0") : _pr.JianhuoSL;
                                     drzlgl_ckfhbg["Changjia"] = _pr.Changjia == null ? "" : _pr.Changjia;
                                     drzlgl_ckfhbg["Chandi"] = _pr.Chandi == null ? "" : _pr.Chandi;
                                     //验收结果
@@ -1871,7 +1875,7 @@ namespace CKWMS.reports
                             {
                                 drir = dtir.NewRow();
                                 var ir_wtkh = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == _pr.HuozhuID && p.IsDelete == false);
-                                if(ir_wtkh != null)
+                                if (ir_wtkh != null)
                                 {
                                     drir["Kehumingcheng"] = ir_wtkh.Kehumingcheng == null ? "" : ir_wtkh.Kehumingcheng;
                                 }

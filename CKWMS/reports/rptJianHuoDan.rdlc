@@ -18,25 +18,28 @@
               <Width>2.09122cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.34475cm</Width>
+              <Width>2.00079cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.64118cm</Width>
+              <Width>2.24865cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.02813cm</Width>
+              <Width>1.78563cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>2.73709cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.62688cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.05021cm</Width>
+              <Width>1.60042cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.01102cm</Width>
+              <Width>1.57477cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>4.02811cm</Width>
+              <Width>3.57832cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -240,6 +243,41 @@
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox11</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox37">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>序列码</Value>
+                              <Style>
+                                <FontFamily>微软雅黑</FontFamily>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox37</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -645,6 +683,41 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
+                    <Textbox Name="Xuliema">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Xuliema.Value</Value>
+                              <Style>
+                                <FontFamily>微软雅黑</FontFamily>
+                                <FontSize>9pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Xuliema</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
                     <Textbox Name="Kuwei">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
@@ -1035,6 +1108,41 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
+                    <Textbox Name="Textbox39">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style>
+                                <FontFamily>微软雅黑</FontFamily>
+                                <FontSize>9pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox39</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
                     <Textbox Name="Textbox69">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
@@ -1225,6 +1333,7 @@
             <TablixMember />
             <TablixMember />
             <TablixMember />
+            <TablixMember />
           </TablixMembers>
         </TablixColumnHierarchy>
         <TablixRowHierarchy>
@@ -1244,7 +1353,7 @@
         <DataSetName>DataSet1</DataSetName>
         <Top>0.07056cm</Top>
         <Height>1.8cm</Height>
-        <Width>27.17928cm</Width>
+        <Width>26.60154cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1255,7 +1364,7 @@
     <Height>0.77316in</Height>
     <Style />
   </Body>
-  <Width>10.7005in</Width>
+  <Width>10.49897in</Width>
   <Page>
     <PageHeader>
       <Height>4.983cm</Height>
@@ -2060,10 +2169,14 @@
           <DataField>JianShu</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Xuliema">
+          <DataField>Xuliema</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>ReportDataSetZY</rd:DataSetName>
-        <rd:SchemaPath>C:\Users\lawli\Source\Repos12\CKWMS\CKWMS\reports\ReportDataSetZY.xsd</rd:SchemaPath>
+        <rd:SchemaPath>D:\Projects\CKWMS\CKWMS\reports\ReportDataSetZY.xsd</rd:SchemaPath>
         <rd:TableName>JianHuoDan</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />

@@ -167,7 +167,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>注册证号</Value>
+                              <Value>注册证号/备案编号</Value>
                               <Style>
                                 <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -671,7 +671,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>备案编号</Value>
+                              <Value>商品编码</Value>
                               <Style>
                                 <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -1227,7 +1227,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Changjia.Value</Value>
+                              <Value>=Fields!Beizhu.Value</Value>
                               <Style>
                                 <FontFamily>微软雅黑</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -1381,6 +1381,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -2084,7 +2085,6 @@
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
         <Top>0.07617cm</Top>
-        <Left>0cm</Left>
         <Height>2.14396cm</Height>
         <Width>26.04851cm</Width>
         <Style>

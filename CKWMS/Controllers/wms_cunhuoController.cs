@@ -2891,6 +2891,60 @@ namespace CKWMS.Controllers
             ViewBag.wms_storage_v = tempData;
             return View(tempData);
         }
+        public JsonResult AddUploadCombin()
+        {
+            int _userid = (int)Session["user_id"];
+            string _shmx = Request["sh"] ?? "";
+            string _kw = Request["kw"] ?? "";
+            string _sm = Request["sm"] ?? "";
+            string _sjr = Request["sjr"] ?? "";
+
+            if (string.IsNullOrEmpty(_shmx) || string.IsNullOrEmpty(_kw) || string.IsNullOrEmpty(_sjr))
+                return Json(-1);
+            var _kuwei = ServiceFactory.wms_kuweiservice.GetEntityById(p => p.Mingcheng == _kw && p.IsDelete == false);
+            if (_kuwei == null)
+                return Json(-2);
+            string[] _mxs = _shmx.Split(',');
+            foreach(var mx in _mxs)
+            {
+                if (mx.Length == 0)
+                    continue;
+                var _shid = int.Parse(mx);
+                var _sh = ServiceFactory.wms_shouhuomxservice.GetEntityById(p => p.ID == _shid && p.IsDelete == false);
+                if (_sh == null)
+                    continue;
+                if (!_sh.Yanshou)
+                    continue;
+                try
+                {
+                    wms_cunhuo _cunhuo = new wms_cunhuo();
+                    _cunhuo.RKMXID = _shid;
+                    _cunhuo.Shuliang = _sh.Shuliang - _sh.ShangjiaSL;
+                    _cunhuo.Tiji=_sh.Tiji*((_sh.Shuliang - _sh.ShangjiaSL)/_sh.Shuliang);
+                    _cunhuo.Jingzhong=_sh.Jingzhong* ((_sh.Shuliang - _sh.ShangjiaSL) / _sh.Shuliang);
+                    _cunhuo.Jifeidun=_sh.Jifeidun* ((_sh.Shuliang - _sh.ShangjiaSL) / _sh.Shuliang);
+                    _cunhuo.CunhuoSM = _sm;
+                    _cunhuo.Kuwei = _kuwei.Mingcheng;
+                    _cunhuo.KuweiID = _kuwei.ID;
+                    _cunhuo.RenSJ = _sjr;
+                    _cunhuo.MakeMan = _userid;
+                    _cunhuo.MakeDate = DateTime.Now;
+                    _cunhuo.HegeSF = true;
+                    _cunhuo.SuodingSF = false;
+                    _cunhuo.CunhuoZT = 1;
+                    _cunhuo.JiahuoSF = true;
+                    _cunhuo.ChushiSL = _sh.Shuliang - _sh.ShangjiaSL;
+                    _cunhuo = ob_wms_cunhuoservice.AddEntity(_cunhuo);
+                    if (_cunhuo == null)
+                        return Json(-3);
+                }
+                catch(Exception ex)
+                {
+                    return Json(ex.Message);
+                }
+            }
+            return Json(1);
+        }
     }
 }
 

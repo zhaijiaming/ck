@@ -42,6 +42,76 @@
         $("#pl_fn_close").click(function () {
             $("#pl_fun").hide();
         });
+        $("#bt_fn_combin").click(function () {
+            $("#pl_fun").hide();
+            $("#pl_combin").show();
+        });
+        $("#pl_combin").draggable({ handle: '.panel-heading' }, { containment: "parent" });
+        $("#pl_m_close").click(function () {
+            $("#pl_combin").hide();
+        });
+        $("#m_sjsave").click(function () {
+            var _kw = $("#m_kuwei").val();
+            var _sm = $("#m_sjSM").val();
+            var _sjr=$("#m_sjren").val();
+            if (_kw == "" || _kw.length < 3) {
+                alert("必须填写正确的库位！");
+                return;
+            }
+            var _ggdel = "";
+            $("#mydatatable tbody tr input[type=checkbox]").each(function () {
+                if (this.checked) {
+                    _ggdel = _ggdel + $(this).val() + ",";
+                }
+            });
+            if (_ggdel == "") {
+                alert("请选择需要上架的货品！");
+                return;
+            }
+            $.ajax({
+                async: true,
+                beforeSend: function () {
+                    ShowWait();
+                },
+                complete: function () {
+                    HiddenWait();
+                },
+                type: "POST",
+                url: "/wms_cunhuo/adduploadcombin",
+                data: {
+                    kw: _kw,
+                    sm: _sm,
+                    sjr:_sjr,
+                    sh:_ggdel
+                },
+                success: function (data) {
+                    if (data == -1) {
+                        alert("参数传送失败");
+                        return;
+                    }
+                    if (data == -2) {
+                        alert("库位无效，请填写正确的库位");
+                        return;
+                    }
+                    if (data == -3) {
+                        alert("上架出现错误，请联系管理员");
+                        return;
+                    }
+                    if (data == 1)
+                        location.reload();
+                    else
+                    {
+                        alert(data);
+                        return;
+                    }
+                }
+            });
+        });
+        $("#m_sjcancel").click(function () {
+            $("#pl_combin").hide();
+            $("#m_sjSM").val("");
+            $("#m_kuwei").val("");
+        });
         $("#bt_fn_del").click(function () {
             var _sl = _selrow.find('td').eq(13).html();
             if (eval(_sl) <= 0)
@@ -486,6 +556,8 @@
     </div>
     <div class="panel-body">
         <div class="row">
+            <div class="center"><p id="bt_fn_combin" class="btn btn-default">合并</p></div>
+            <br />
             <div class="center"><p id="bt_fn_del" class="btn btn-default">删除</p></div>
             <br />
             <div class="center"><p id="bt_fn_print" class="btn btn-default">打印</p></div>
@@ -539,6 +611,39 @@
         <div class="form-group">
             <div class="col-sm-6 center"><p id="shsave" class="btn btn-default"><i class="icon-save"></i>保存</p></div>
             <div class="col-sm-6 center"><p id="shcancel" class="btn btn-default"><i class="icon-backward"></i>取消</p></div>
+        </div>
+    </div>
+</div>
+<div id="pl_combin" class="panel panel-info" style="display:none;position:fixed;top:100px;left:200px;width:600px;z-index:999;">
+    <div class="panel-heading">
+        <h3 class="panel-title">货品合并上架<button id="pl_m_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="m_sjren">上架人</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="m_sjren" name="m_sjren" type="text" value="@ViewBag.username" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="m_kuwei">库位</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="m_kuwei" name="m_kuwei" type="text" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="m_sjSM">上架说明</label>
+        </div>
+        <div class="form-group">
+            <textarea class="form-control" id="m_sjSM" name="m_sjSM"></textarea>
+        </div>
+        <div class="form-group">
+            <label class="red">合并上架时请注意：1、不能选择上架数量；2、只上合格货品</label>
+        </div>
+        <hr />
+        <div class="form-group">
+            <div class="col-sm-6 center"><p id="m_sjsave" class="btn btn-default"><i class="icon-save"></i>完成</p></div>
+            <div class="col-sm-6 center"><p id="m_sjcancel" class="btn btn-default"><i class="glyphicon-backward"></i>取消</p></div>
         </div>
     </div>
 </div>
