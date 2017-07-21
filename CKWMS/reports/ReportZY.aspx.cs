@@ -209,19 +209,20 @@ namespace CKWMS.reports
 
                                     //drtx["JibenDW"] = _mx.JibenDW == null ? "" : _mx.JibenDW.Trim();
                                     drtx["JibenDW"] = _mx.BaozhuangDW == null ? "" : _mx.BaozhuangDW.Trim();
-                                    drtx["BeianBH"] = _mx.ShangpinDM == null ? "" :_mx.ShangpinDM.Trim();
+                                    drtx["BeianBH"] = _mx.ShangpinDM == null ? "" : _mx.ShangpinDM.Trim();
                                     wms_chukudan _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid) && p.IsDelete == false);
                                     if (_ckd != null)
                                     {
                                         drtx["ChunyunYQ"] = _ckd.ChunyunYQ == null ? "" : _ckd.ChunyunYQ.Trim();
                                     }
 
-                                    base_shengchanqiye _scqy = ServiceFactory.base_shengchanqiyeservice.GetEntityById(p => p.Qiyemingcheng == _mx.Changjia && p.IsDelete == false);
-                                    if (_scqy != null)
-                                    {
-                                        drtx["ShengchanxukeBH"] = _scqy.ShengchanxukeBH == null ? (_scqy.BeianBH == null ? "" : _scqy.BeianBH) : _scqy.ShengchanxukeBH.Trim();
-                                        //drtx["BeianBH"] = _scqy.BeianBH == null ? "" : _scqy.BeianBH.Trim();
-                                    }
+                                    drtx["ShengchanxukeBH"] = _mx.Changjia == null ? "" : _mx.Changjia.Trim();
+                                    //base_shengchanqiye _scqy = ServiceFactory.base_shengchanqiyeservice.GetEntityById(p => p.Qiyemingcheng == _mx.Changjia && p.IsDelete == false);
+                                    //if (_scqy != null)
+                                    //{
+                                    //    drtx["ShengchanxukeBH"] = _scqy.ShengchanxukeBH == null ? (_scqy.BeianBH == null ? "" : _scqy.BeianBH) : _scqy.ShengchanxukeBH.Trim();
+                                    //    //drtx["BeianBH"] = _scqy.BeianBH == null ? "" : _scqy.BeianBH.Trim();
+                                    //}
 
                                     tx_ChukuSL += (long)_mx.ChukuSL;
 
@@ -335,6 +336,9 @@ namespace CKWMS.reports
                                             drJSGRtx["ShengchanxukeBH"] = _scqy.Qiyemingcheng;
                                         //drJSGRtx["ShengchanxukeBH"] = _scqy.ShengchanxukeBH == null ? "" : _scqy.ShengchanxukeBH.Trim();
                                     }
+                                    else
+                                        drJSGRtx["ShengchanxukeBH"] = _mx.Changjia == null ? "" : _mx.Changjia.Trim();
+
                                     //注册证&备案编号2选1
                                     if (string.IsNullOrEmpty(_mx.Zhucezheng))
                                     {

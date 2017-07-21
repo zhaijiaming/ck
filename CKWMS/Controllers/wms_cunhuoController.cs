@@ -2922,6 +2922,7 @@ namespace CKWMS.Controllers
                     _cunhuo.Shuliang = _sh.Shuliang - _sh.ShangjiaSL;
                     _cunhuo.Tiji=_sh.Tiji*((_sh.Shuliang - _sh.ShangjiaSL)/_sh.Shuliang);
                     _cunhuo.Jingzhong=_sh.Jingzhong* ((_sh.Shuliang - _sh.ShangjiaSL) / _sh.Shuliang);
+                    _cunhuo.Zhongliang = _sh.Zhongliang * ((_sh.Shuliang - _sh.ShangjiaSL) / _sh.Shuliang);
                     _cunhuo.Jifeidun=_sh.Jifeidun* ((_sh.Shuliang - _sh.ShangjiaSL) / _sh.Shuliang);
                     _cunhuo.CunhuoSM = _sm;
                     _cunhuo.Kuwei = _kuwei.Mingcheng;

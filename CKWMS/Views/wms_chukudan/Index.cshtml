@@ -261,9 +261,9 @@
             scm.ItemType = "System.String";
             if (scs.Length > 1)
             {
-                scm.ItemValue = scs[1].Split(',')[1];
-                scm.ItemOpValue = scs[1].Split(',')[2];
-                scm.ItemJion = scs[1].Split(',')[3];
+                scm.ItemValue = scs[0].Split(',')[1];
+                scm.ItemOpValue = scs[0].Split(',')[2];
+                scm.ItemJion = scs[0].Split(',')[3];
             }
             scms.Add(scm);
 
@@ -273,13 +273,13 @@
             scm.ItemType = "货主.名称";
             if (scs.Length > 1)
             {
-                scm.ItemValue = scs[0].Split(',')[1];
+                scm.ItemValue = scs[1].Split(',')[1];
                 if (scm.ItemValue.Length == 0)
                 {
                     scm.ItemValue = "0";
                 }
-                scm.ItemOpValue = scs[0].Split(',')[2];
-                scm.ItemJion = scs[0].Split(',')[3];
+                scm.ItemOpValue = scs[1].Split(',')[2];
+                scm.ItemJion = scs[1].Split(',')[3];
             }
             scms.Add(scm);
 
