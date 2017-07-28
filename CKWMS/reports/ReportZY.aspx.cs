@@ -190,7 +190,25 @@ namespace CKWMS.reports
                             float tx_ChukuJSs = 0;
                             try
                             {
+                                var _cyyq = "";
+                                wms_chukudan _ckd000 = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid) && p.IsDelete == false);
+                                if (_ckd000 != null)
+                                {
+                                    _cyyq= _ckd000.ChunyunYQ == null ? "" : _ckd000.ChunyunYQ.Trim();
+                                }
                                 var _ckmxs = ob_wms_chukumxservice.LoadSortEntities(p => p.ChukuID == int.Parse(_outid) && p.IsDelete == false, true, p => p.Pihao).ToList();
+                                var _cjlist = _ckmxs.GroupBy(p =>p.Changjia ).Select(g => g.First());
+                                List<base_shengchanqiye> _scqylist = new List<base_shengchanqiye>();
+                                foreach(var cj in _cjlist)
+                                {
+                                    base_shengchanqiye _scqy = ServiceFactory.base_shengchanqiyeservice.GetEntityById(p => p.Qiyemingcheng == cj.Changjia && p.IsDelete == false);
+                                    if (_scqy != null)
+                                    {
+                                        _scqylist.Add(_scqy);
+                                        //drtx["ShengchanxukeBH"] = _scqy.ShengchanxukeBH == null ? (_scqy.BeianBH == null ? "" : _scqy.BeianBH) : _scqy.ShengchanxukeBH.Trim();
+                                        //drtx["BeianBH"] = _scqy.BeianBH == null ? "" : _scqy.BeianBH.Trim();
+                                    }
+                                }
                                 foreach (wms_chukumx _mx in _ckmxs)
                                 {
                                     drtx = dttx.NewRow();
@@ -210,20 +228,24 @@ namespace CKWMS.reports
                                     //drtx["JibenDW"] = _mx.JibenDW == null ? "" : _mx.JibenDW.Trim();
                                     drtx["JibenDW"] = _mx.BaozhuangDW == null ? "" : _mx.BaozhuangDW.Trim();
                                     drtx["BeianBH"] = _mx.ShangpinDM == null ? "" : _mx.ShangpinDM.Trim();
-                                    wms_chukudan _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid) && p.IsDelete == false);
-                                    if (_ckd != null)
-                                    {
-                                        drtx["ChunyunYQ"] = _ckd.ChunyunYQ == null ? "" : _ckd.ChunyunYQ.Trim();
-                                    }
-
-                                    drtx["ShengchanxukeBH"] = _mx.Changjia == null ? "" : _mx.Changjia.Trim();
+                                    //wms_chukudan _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid) && p.IsDelete == false);
+                                    //if (_ckd != null)
+                                    //{
+                                    //    drtx["ChunyunYQ"] = _ckd.ChunyunYQ == null ? "" : _ckd.ChunyunYQ.Trim();
+                                    //}
+                                    drtx["ChunyunYQ"] =_cyyq;
+                                    //drtx["ShengchanxukeBH"] = _mx.Changjia == null ? "" : _mx.Changjia.Trim();
                                     //base_shengchanqiye _scqy = ServiceFactory.base_shengchanqiyeservice.GetEntityById(p => p.Qiyemingcheng == _mx.Changjia && p.IsDelete == false);
                                     //if (_scqy != null)
                                     //{
                                     //    drtx["ShengchanxukeBH"] = _scqy.ShengchanxukeBH == null ? (_scqy.BeianBH == null ? "" : _scqy.BeianBH) : _scqy.ShengchanxukeBH.Trim();
                                     //    //drtx["BeianBH"] = _scqy.BeianBH == null ? "" : _scqy.BeianBH.Trim();
                                     //}
-
+                                    foreach(var sqcy in _scqylist)
+                                    {
+                                        if(_mx.Changjia==sqcy.Qiyemingcheng)
+                                            drtx["ShengchanxukeBH"] = sqcy.ShengchanxukeBH == null ? (sqcy.BeianBH == null ? "" : sqcy.BeianBH) : sqcy.ShengchanxukeBH.Trim();
+                                    }
                                     tx_ChukuSL += (long)_mx.ChukuSL;
 
                                     dttx.Rows.Add(drtx);
@@ -291,6 +313,12 @@ namespace CKWMS.reports
                             float JSGRtx_ChukuJSs = 0;//件数总计
                             try
                             {
+                                var _grcyyq = "";
+                                wms_chukudan _ckd001 = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid) && p.IsDelete == false);
+                                if (_ckd001 != null)
+                                {
+                                    _grcyyq= _ckd001.ChunyunYQ == null ? "" : _ckd001.ChunyunYQ.Trim();
+                                }
                                 var _ckmxs = ob_wms_chukumxservice.LoadSortEntities(p => p.ChukuID == int.Parse(_outid) && p.IsDelete == false, true, p => p.Pihao).ToList();
                                 foreach (wms_chukumx _mx in _ckmxs)
                                 {
@@ -321,12 +349,12 @@ namespace CKWMS.reports
                                     JSGRtx_ChukuJSs += (long)JSGRChukuJS;//件数总计
                                     JSGRtx_JianhuoSLs += (long)_mx.JianhuoSL;//数量总计
 
-                                    wms_chukudan _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid) && p.IsDelete == false);
-                                    if (_ckd != null)
-                                    {
-                                        drJSGRtx["ChunyunYQ"] = _ckd.ChunyunYQ == null ? "" : _ckd.ChunyunYQ.Trim();
-                                    }
-
+                                    //wms_chukudan _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid) && p.IsDelete == false);
+                                    //if (_ckd != null)
+                                    //{
+                                    //    drJSGRtx["ChunyunYQ"] = _ckd.ChunyunYQ == null ? "" : _ckd.ChunyunYQ.Trim();
+                                    //}
+                                    drJSGRtx["ChunyunYQ"] =_grcyyq;
                                     base_shengchanqiye _scqy = ServiceFactory.base_shengchanqiyeservice.GetEntityById(p => p.Qiyemingcheng == _mx.Changjia && p.IsDelete == false);
                                     if (_scqy != null)
                                     {
@@ -412,6 +440,12 @@ namespace CKWMS.reports
                             DataRow drJSWZTx;
                             try
                             {
+                                var _wzcyyq = "";
+                                wms_chukudan _ckd002 = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_JSWZ_TXD_id) && p.IsDelete == false);
+                                if (_ckd002 != null)
+                                {
+                                    _wzcyyq = _ckd002.ChunyunYQ == null ? "" : _ckd002.ChunyunYQ.Trim();
+                                }
                                 var _ckmxs = ob_wms_chukumxservice.LoadSortEntities(p => p.ChukuID == int.Parse(_JSWZ_TXD_id) && p.IsDelete == false, true, p => p.Pihao).ToList();
                                 foreach (wms_chukumx _mx in _ckmxs)
                                 {
@@ -451,12 +485,12 @@ namespace CKWMS.reports
                                     JSGRChukuJS = _mx.JianhuoSL / _mx.Huansuanlv == null ? int.Parse("0.00") : (float)_mx.JianhuoSL / _mx.Huansuanlv;
                                     drJSWZTx["ChukuJS"] = string.Format("{0:0.00}", JSGRChukuJS);
 
-                                    wms_chukudan _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_JSWZ_TXD_id) && p.IsDelete == false);
-                                    if (_ckd != null)
-                                    {
-                                        drJSWZTx["ChunyunYQ"] = _ckd.ChunyunYQ == null ? "" : _ckd.ChunyunYQ.Trim();
-                                    }
-
+                                    //wms_chukudan _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_JSWZ_TXD_id) && p.IsDelete == false);
+                                    //if (_ckd != null)
+                                    //{
+                                    //    drJSWZTx["ChunyunYQ"] = _ckd.ChunyunYQ == null ? "" : _ckd.ChunyunYQ.Trim();
+                                    //}
+                                    drJSWZTx["ChunyunYQ"] =_wzcyyq;
                                     base_shengchanqiye _scqy = ServiceFactory.base_shengchanqiyeservice.GetEntityById(p => p.Qiyemingcheng == _mx.Changjia && p.IsDelete == false);
                                     if (_scqy != null)
                                     {

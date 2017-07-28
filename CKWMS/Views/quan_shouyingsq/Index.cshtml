@@ -29,6 +29,10 @@
                     url_go = "/base_shouhuodanwei/edit/" + pp.data("sq");
                 if (pp.data("sqt") == 5)
                     url_go = "/base_shengchanqiye/edit/" + pp.data("sq");
+                if (pp.data("sqt") == 9)
+                    url_go = "/quan_gspspxx/addgsp/" + pp.data("sq")+"?ed=1";
+                if (pp.data("sqt") == 10)
+                    url_go = "/quan_gspwtkh/addgspvendor/" + pp.data("sq")+"?ed=1";
                 location.href = url_go;
             }
         });

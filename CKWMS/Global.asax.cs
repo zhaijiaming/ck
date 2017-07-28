@@ -294,6 +294,8 @@ namespace CKWMS
             ShouYingType.Add(6, "销售");
             ShouYingType.Add(7, "发货方");
             ShouYingType.Add(8, "运输单位");
+            ShouYingType.Add(9, "GSP商品");
+            ShouYingType.Add(10, "GSP委托方");
 
             CheckStandard = new Dictionary<int, string>();
             CheckStandard.Add(0, "");

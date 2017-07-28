@@ -29,19 +29,33 @@
                 alert("请选择需要进行修改的资料！");
                 return;
             }
-            alert(stateinfo);
             if (stateinfo !== "已通过") {
                 alert("未通过的信息，不能使用GSP进行修改！");
                 return;
             }
-            window.open("/quan_gspwtkh/edit/" + sendval);
+            if (!confirm("确定要修改货主吗？"))
+                return;
+            window.open("/quan_gspwtkh/addgspvendor/" + sendval);
         });
         $("#bt_sendcheck").click(function () {
             var sendval = "";
+            var stateinfo = "";
+            var ng = false;
             $("tr input[type=checkbox]").each(function () {
-                if (this.checked)
-                    sendval = sendval + $(this).val()+",";
+                if (this.checked) {
+                    sendval = sendval + $(this).val() + ",";
+                    stateinfo = $(this).parent().parent().parent().parent().find("td").eq(1).html();
+                    if (stateinfo != "新建")
+                        ng = true;
+                }
             });
+            if (ng)
+            {
+                alert("只有新建状态才能送审！");
+                return;
+            }
+            if (!confirm("送审后不能再修改数据，确定要送审吗？"))
+                return;
             //$.post("/quan_shouyingsq/checkadd", { checkval: sendval,checktype:"2" }, function (data, status) {
             //    if (data = "ok")
             //        window.location.reload();

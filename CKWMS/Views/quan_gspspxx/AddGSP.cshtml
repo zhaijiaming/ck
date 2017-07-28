@@ -2,7 +2,7 @@
 @using CKWMS.Models
 @model base_shangpinxxViewModel
 @{
-    ViewBag.Title = "商品资料修改";
+    ViewBag.Title = "GSP商品资料修改";
 }
 <script type="text/javascript">
     $(document).ready(function () {
@@ -441,7 +441,7 @@
             <a href="/Home">首页</a>
         </li>
         <li>
-            <a href="/base_shangpinxx">商品资料</a>
+            <a href="/quan_gspspxx">GSP商品</a>
         </li>
         <li class="active"> 编辑</li>
     </ul>
@@ -463,10 +463,11 @@
                         </div>
                         <div class="widget-body">
                             <div class="widget-main no-padding">
-                                @using (Html.BeginForm("Update", "base_shangpinxx", FormMethod.Post, new { @role = "form", id = "spxx_form", @class = "form-horizontal" }))
+                                @using (Html.BeginForm("Update", "quan_gspspxx", FormMethod.Post, new { @role = "form", id = "spxx_form", @class = "form-horizontal" }))
                                 {
                                     @Html.AntiForgeryToken()
-                                    <input type="hidden" name="id" id="spid" value="@Model.ID" />
+                                    <input type="hidden" name="spid" id="spid" value="@Model.ID" />
+                                    <input type="hidden" name="id"  value="@ViewBag.gspspid" />
                                     <input type="hidden" name="qiyeid" id="qiyeid" value="@Model.QiyeID" />
                                     <input type="hidden" name="Muluxuhao" id="muluxuhao" value="@Model.Muluxuhao" />
                                     <input type="hidden" name="zhucezhengbh" id="zhucezhengbh" value="@Model.ZhucezhengBH" />
@@ -500,7 +501,7 @@
                                                 <div class="input-group">
                                                     <input id="zczbh" placeholder="请填写注册证" class="form-control" type="text" readonly value="@ViewData.Model.ZhucezhengBH">
                                                     <span class="input-group-btn">
-                                                        <button id="selzcz" type="button" class="btn btn-grey btn-sm">
+                                                        <button id="selzcz" type="button" class="btn btn-grey btn-sm" disabled>
                                                             选择
                                                             <i class="icon-hand-up icon-on-right bigger-110"></i>
                                                         </button>

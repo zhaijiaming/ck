@@ -89,6 +89,10 @@ namespace CKWMS.Models
         public string ShangpinMS { get; set; }
         [Display(Name = "对象序号")]
         public int? SPID { get; set; }
+        [Display(Name = "温度上限")]
+        public float? WenduSX { get; set; }
+        [Display(Name = "温度下限")]
+        public float? WenduXX { get; set; }
     }
 }
 

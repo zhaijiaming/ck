@@ -17,11 +17,67 @@
         });
         $("#pl_fun").draggable({ handle: '.tuodong' }, { containment: [-1000, 50, 1300, 600] });
         $("#pl_imp").draggable({ handle: ".panel-heading" }, { containment: [-1000, 50, 1300, 600] });
+        $("#pl_card").draggable({ handle: ".panel-heading" }, { containment: [-1000, 50, 1300, 600] });
+        $("#pl_cd_close").click(function () {
+            $("#pl_card").hide();
+        });
         $("#bt_cancel").click(function () {
             $("#pl_imp").hide();
         });
         $("#pl_pk_close").click(function () {
             $("#pl_imp").hide();
+        });
+        $("#bt_gspcard").click(function () {
+            $("#pl_cd_new").val("");
+            $("#pl_card").show();
+        });
+        $("#pl_cd_save").click(function () {
+            var sendval = "";
+            var stateinfo = "";
+            var ng = false;
+            var _newcard = $("#pl_cd_new").val();
+            if (_newcard == "")
+            {
+                alert("请录入新证编号！");
+                return;
+            }
+            $("#mydatatable tr input[type=checkbox]").each(function () {
+                if (this.checked) {
+                    sendval = sendval + $(this).val() + ",";
+                    stateinfo = $(this).parent().parent().parent().find("td").eq(1).html();
+                    if (stateinfo != "已通过")
+                        ng = true;
+                }
+            });
+            if (ng) {
+                alert("只有通过审批的商品才需要更换注册证！");
+                $("#pl_card").hide();
+                return;
+            }
+            $.ajax({
+                async: true,
+                beforeSend: function () {
+                    ShowWait();
+                },
+                complete: function () {
+                    HiddenWait();
+                },
+                type: "POST",
+                url: "/quan_gspsphz/changecard",
+                data: {
+                    newcard: _newcard,
+                    sps: sendval
+                },
+                success: function (data) {
+                    if (data == -1)
+                        alert("传送信息失败，请重试！");
+                    if (data == -2)
+                        alert("注册证编号不正确！");
+                    if (data == 1) {
+                        location.reload();
+                    }
+                }
+            });
         });
         $("#bt_ok").click(function () {
             var _info = $("#tximp").val();
@@ -70,18 +126,32 @@
                 alert("请选择需要进行修改的资料！");
                 return;
             }
-            if (stateinfo !== "已通过") {
+            if (stateinfo != "已通过") {
                 alert("未通过的信息，不能使用GSP进行修改！");
                 return;
             }
-            window.open("/quan_gspspxx/edit/" + sendval);
+            if (confirm("确定要进行修改？") == false)
+                return;
+            window.open("/quan_gspspxx/addgsp/" + sendval);
         });
         $("#bt_sendcheck").click(function () {
             var sendval = "";
+            var stateinfo = "";
+            var ng = false;
             $("#mydatatable tr input[type=checkbox]").each(function () {
-                if (this.checked)
+                if (this.checked) {
                     sendval = sendval + $(this).val() + ",";
+                    stateinfo = $(this).parent().parent().parent().parent().find("td").eq(1).html();
+                    if (stateinfo != "新建")
+                        ng = true;
+                }
             });
+            if (ng) {
+                alert("只有新建状态才能送审！");
+                return;
+            }
+            if (!confirm("送审后不能再修改数据，确定要送审吗？"))
+                return;
             //$.post("/quan_shouyingsq/checkadd", { checkval: sendval, checktype: "1" }, function (data, status) {
             //    if (data = "ok")
             //        window.location.reload();
@@ -381,6 +451,7 @@
             <button type="button" class="btn btn-primary btn-xs btn-app radius-4 " id="bt_export" onclick="javascript: window.open('/base_shangpinxx/commodityexport')"><i class="icon-inbox"></i><b>导出</b></button>
             <button type="button" class="btn btn-primary btn-xs btn-app radius-4 " id="bt_print"><i class="icon-print"></i><b>打印</b></button>
             <button type="button" class="btn btn-primary btn-xs btn-app radius-4 " id="bt_gspedit"><i class="icon-eraser"></i><b>GSP修改</b></button>
+            <button type="button" class="btn btn-primary btn-xs btn-app radius-4 " id="bt_gspcard"><i class="icon-eraser"></i><b>换证</b></button>
         </p>
     </div>
     <div class="row">
@@ -478,20 +549,42 @@
         </div>
     </div>
 </div>
-@*<div id="pl_fun" class="panel panel-primary" style="display:none;position:fixed;top:200px;left:300px;overflow:auto;z-index:999;">
-        <div class="panel-heading tuodong">
-            <h3 class="panel-title">打印选项<button id="pl_fn_close" class="pull-right">X</button></h3>
-        </div>
-        <div class="panel-body">
-            <div class="row">
-                <div class="form-group">
-                    <div class="col-sm-8">
-                        @Html.SelectList_Auto("spxx_huozhuid", "货主", "名称")
-                    </div>
+<div id="pl_card" class="panel panel-primary" style="display:none;position:fixed;top:200px;left:300px;overflow:auto;z-index:999;">
+    <div class="panel-heading">
+        <h3 class="panel-title">商品换证<button id="pl_cd_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            @*<div class="form-group">
                     <div class="col-sm-4">
-                        <input type="button" class="form-control btn btn-default" id="Yes_print" value="打印" />
+                        <label>商品</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="text" id="pl_cd_cargo" class="form-control" readonly/>
                     </div>
                 </div>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <label>旧证</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="text" id="pl_cd_old" class="form-control" readonly />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <label>新证</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="text" id="pl_cd_new" class="form-control" />
+                   </div>
+                </div>*@
+            <div class="form-group">
+                <input type="text" id="pl_cd_new" class="form-control" />
+            </div>
+            <div>
+                <input type="button" class="form-control btn btn-default" id="pl_cd_save" value="保存" />
             </div>
         </div>
-    </div>*@
+    </div>
+</div>

@@ -73,9 +73,26 @@
             }
         });
         $("#pl_fun").draggable();
+        $("#pl_zcz").draggable({ handle: ".panel-heading" });
         //$("#dt_sh tbody").on("dblclick", "tr", function () {
         //    $("#pl_fun").show();
         //});
+        $("#pl_zcz_close").click(function () {
+            $("#pl_zcz").hide();
+        });
+        $("#pl_zcz_ok").click(function () {
+            var _selzcz = "";
+            $("#zcztable tbody tr input[type=checkbox]").each(function () {
+                if (this.checked)
+                    _selzcz = $(this).val();
+            });
+            $("#Zhucezheng").val(_selzcz);
+            $("#pl_zcz").hide();
+        });
+        $("#zcz_sel").click(function () {
+            GetZCZ($("#selsp").val());
+            $("#pl_zcz").show();
+        });
         $("#bt_fn_cancel").click(function () {
             $("#pl_fun").hide();
         });
@@ -108,6 +125,7 @@
             $("#Jifeidun").val(_rk.data("jfd"));
             $("#Beizhu").val(_rk.data("bz"));
             $("#Huansuanlv").val(_rk.data("hsl"));
+            $("#selsp").val(_rk.data("sp"));
             $("#pl_Shouhuo").show();
         });
         $("#pl_close").click(function () {
@@ -390,6 +408,35 @@
                     });
                 });
     }
+    function GetZCZ(spid) {
+        var filltable = "";
+        $.post(
+                "/quan_gspsphz/getcardlist",
+                {
+                    sp:spid
+                },
+                function (data) {
+                    if (data == -1)
+                        alert("查询注册证出错！")
+                    else {
+                        if (data == 0) {
+                            $("#zcztable tbody").html("");
+                        }
+                        else {
+                            for (var i in data) {
+                                filltable = filltable + '<tr class="bg"><td style="width:4%"><label><input class="checkbox" type="checkbox" class ="checkbox" value="';
+                                filltable = filltable + data[i].ZCZDM;
+                                filltable = filltable + '"></label></td><td style="width:10%"><span class="bh">';
+                                filltable = filltable + data[i].SPDM;
+                                filltable = filltable + '</span></td><td style="width:66%"><span class="mc">';
+                                filltable = filltable + data[i].ZCZDM;
+                                filltable = filltable + '</span></td></tr>';
+                            }
+                            $("#zcztable tbody").html(filltable);
+                        }
+                    }
+                });
+    }
     function AddInfo() {
         location.href = "/wms_shouhuomx/Add";
     }
@@ -426,6 +473,7 @@
     <input type="hidden" id="selrk" />
     <input type="hidden" id="selnum" />
     <input type="hidden" id="plmod" />
+    <input type="hidden" id="selsp" />
     @*<div class="page-header">
             <p>
                 <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
@@ -554,15 +602,18 @@
         </div>
     </div>
 </div>
-<div id="pl_Shouhuo" class="panel panel-info" style="display:none;position:fixed;top:100px;left:200px;width:700px;z-index:999;">
+<div id="pl_Shouhuo" class="panel panel-info" style="display:none;position:fixed;top:100px;left:200px;width:700px;">
     <div class="panel-heading">
         <h3 class="panel-title">收货登记<button id="pl_close" class="pull-right">X</button></h3>
     </div>
     <div class="panel-body">
         <div class="form-group">
             <label class="control-label col-sm-2" for="Zhucezheng">注册证</label>
-            <div class="col-sm-10">
+            <div class="col-sm-8">
                 <input class="form-control" id="Zhucezheng" name="Zhucezheng" type="text" value="" />
+            </div>
+            <div class="col-sm-2">             
+                <input type="button" class="form-control" value="..." id="zcz_sel" />
             </div>
         </div>
         <div class="form-group">
@@ -655,7 +706,7 @@
         <div class="form-group"></div>
         <div class="form-group">
             <div class="col-sm-6 center"><p id="shsave" class="btn btn-default"><i class="icon-save"></i>保存</p></div>
-            <div class="col-sm-6 center"><p id="shcancel" class="btn btn-default"><i class="glyphicon-backward"></i>取消</p></div>
+            <div class="col-sm-6 center"><p id="shcancel" class="btn btn-default"><i class="ui-icon-cancel"></i>取消</p></div>
         </div>
     </div>
 </div>
@@ -670,6 +721,29 @@
             <div class="center"><p id="bt_fn_print" class="btn btn-default">打印</p></div>
             <br />
             <div class="center"><p id="bt_fn_cancel" class="btn btn-default">取消</p></div>
+        </div>
+    </div>
+</div>
+<div id="pl_zcz" class="panel panel-info" style="display:none;position:fixed;top:200px;left:300px;width:300px;">
+    <div class="panel-heading">
+        <h3 class="panel-title">注册证<button id="pl_zcz_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <table class="table" id="zcztable">
+                <caption></caption>
+                <thead style="display:block">
+                    <tr>
+                        <td style="width:4%"></td>
+                        <td style="width:30%">商品</td>
+                        <td style="width:66%">注册证</td>
+                    </tr>
+                </thead>
+                <tbody style="display:block; max-height:330px;overflow:auto;"></tbody>
+            </table>
+        </div>
+        <div class="row center">
+            <button class="btn btn-default" id="pl_zcz_ok"><i class="icon-ok"></i>选择</button>
         </div>
     </div>
 </div>

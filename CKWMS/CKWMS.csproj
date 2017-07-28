@@ -309,6 +309,9 @@
     <Compile Include="Controllers\json_importController.cs" />
     <Compile Include="Controllers\json_packageController.cs" />
     <Compile Include="Controllers\quan_chukufhController.cs" />
+    <Compile Include="Controllers\quan_gspsphzController.cs" />
+    <Compile Include="Controllers\quan_gspspxxController.cs" />
+    <Compile Include="Controllers\quan_gspwtkhController.cs" />
     <Compile Include="Controllers\quan_zhiliangwhController.cs" />
     <Compile Include="Controllers\rmd_myreminderController.cs" />
     <Compile Include="Controllers\u8_lackcargoController.cs" />
@@ -351,6 +354,7 @@
     <Compile Include="Models\quan_chukufhViewModel.cs" />
     <Compile Include="Models\quan_gspgysViewModel.cs" />
     <Compile Include="Models\quan_gspshdwViewModel.cs" />
+    <Compile Include="Models\quan_gspsphzViewModel.cs" />
     <Compile Include="Models\quan_gspspxxViewModel.cs" />
     <Compile Include="Models\quan_gspwtkhViewModel.cs" />
     <Compile Include="Models\quan_zhiliangwhViewModel.cs" />
@@ -522,6 +526,7 @@
     <Content Include="assets\css\jquery.gritter.css" />
     <Content Include="assets\css\select2.css" />
     <Content Include="assets\css\ui.jqgrid.css" />
+    <Content Include="assets\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="assets\images\gallery\image-1.jpg" />
     <Content Include="assets\images\gallery\image-2.jpg" />
     <Content Include="assets\images\gallery\image-3.jpg" />
@@ -628,6 +633,9 @@
     <Content Include="apiapp.json" />
     <Content Include="assets\font\glyphicons-halflings-regular.ttf" />
     <Content Include="assets\font\glyphicons-halflings-regular.woff" />
+    <Content Include="assets\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="assets\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="assets\fonts\glyphicons-halflings-regular.woff" />
     <None Include="Properties\PublishProfiles\davis-ck.pubxml" />
     <None Include="Properties\PublishProfiles\davis-ck1.pubxml" />
     <None Include="Properties\PublishProfiles\davis-ck2.pubxml" />
@@ -1001,6 +1009,17 @@
     <Content Include="Views\wms_cunhuo\CustomerStorage.cshtml" />
     <Content Include="Views\wms_chukudan\CustomerOutList.cshtml" />
     <Content Include="Views\wms_rukudan\CustomerInList.cshtml" />
+    <Content Include="Views\quan_gspspxx\Add.cshtml" />
+    <Content Include="Views\quan_gspspxx\Edit.cshtml" />
+    <Content Include="Views\quan_gspspxx\Index.cshtml" />
+    <Content Include="Views\quan_gspwtkh\Add.cshtml" />
+    <Content Include="Views\quan_gspwtkh\Edit.cshtml" />
+    <Content Include="Views\quan_gspwtkh\Index.cshtml" />
+    <Content Include="Views\quan_gspspxx\AddGSP.cshtml" />
+    <Content Include="Views\quan_gspwtkh\AddGSPVendor.cshtml" />
+    <Content Include="Views\quan_gspsphz\Add.cshtml" />
+    <Content Include="Views\quan_gspsphz\Edit.cshtml" />
+    <Content Include="Views\quan_gspsphz\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

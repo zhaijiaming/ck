@@ -42,16 +42,38 @@ namespace CKWMS.Controllers
                                 if (daimaequal.Equals("="))
                                 {
                                     if (daimaand.Equals("and"))
-                                        where = where.And(quan_gspwtkh => quan_gspwtkh.Daima == daima);
+                                        where = where.And(p => p.Daima == daima);
                                     else
-                                        where = where.Or(quan_gspwtkh => quan_gspwtkh.Daima == daima);
+                                        where = where.Or(p => p.Daima == daima);
                                 }
                                 if (daimaequal.Equals("like"))
                                 {
                                     if (daimaand.Equals("and"))
-                                        where = where.And(quan_gspwtkh => quan_gspwtkh.Daima.Contains(daima));
+                                        where = where.And(p => p.Daima.Contains(daima));
                                     else
-                                        where = where.Or(quan_gspwtkh => quan_gspwtkh.Daima.Contains(daima));
+                                        where = where.Or(p => p.Daima.Contains(daima));
+                                }
+                            }
+                            break;
+                        case "jiancheng":
+                            string jiancheng = scld[1];
+                            string jianchengequal = scld[2];
+                            string jianchengand = scld[3];
+                            if (!string.IsNullOrEmpty(jiancheng))
+                            {
+                                if (jianchengequal.Equals("="))
+                                {
+                                    if (jianchengand.Equals("and"))
+                                        where = where.And(p => p.Jiancheng == jiancheng);
+                                    else
+                                        where = where.Or(p => p.Jiancheng == jiancheng);
+                                }
+                                if (jianchengequal.Equals("like"))
+                                {
+                                    if (jianchengand.Equals("and"))
+                                        where = where.And(p => p.Jiancheng.Contains(jiancheng));
+                                    else
+                                        where = where.Or(p => p.Jiancheng.Contains(jiancheng));
                                 }
                             }
                             break;
@@ -76,9 +98,15 @@ namespace CKWMS.Controllers
             int userid = (int)Session["user_id"];
             string pagetag = "quan_gspwtkh_index";
             string page = "1";
+            //daima
             string daima = Request["daima"] ?? "";
             string daimaequal = Request["daimaequal"] ?? "";
             string daimaand = Request["daimaand"] ?? "";
+
+            //jiancheng
+            string jiancheng = Request["jiancheng"] ?? "";
+            string jianchengequal = Request["jianchengequal"] ?? "";
+            string jianchengand = Request["jianchengand"] ?? "";
             Expression<Func<quan_gspwtkh, bool>> where = PredicateExtensionses.True<quan_gspwtkh>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -86,53 +114,101 @@ namespace CKWMS.Controllers
                 sc = new searchcondition();
                 sc.UserID = userid;
                 sc.PageBrief = pagetag;
+                //daima
                 if (!string.IsNullOrEmpty(daima))
                 {
                     if (daimaequal.Equals("="))
                     {
                         if (daimaand.Equals("and"))
-                            where = where.And(quan_gspwtkh => quan_gspwtkh.Daima == daima);
+                            where = where.And(p => p.Daima == daima);
                         else
-                            where = where.Or(quan_gspwtkh => quan_gspwtkh.Daima == daima);
+                            where = where.Or(p => p.Daima == daima);
                     }
                     if (daimaequal.Equals("like"))
                     {
                         if (daimaand.Equals("and"))
-                            where = where.And(quan_gspwtkh => quan_gspwtkh.Daima.Contains(daima));
+                            where = where.And(p => p.Daima.Contains(daima));
                         else
-                            where = where.Or(quan_gspwtkh => quan_gspwtkh.Daima.Contains(daima));
+                            where = where.Or(p => p.Daima.Contains(daima));
                     }
                 }
                 if (!string.IsNullOrEmpty(daima))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "daima", daima, daimaequal, daimaand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "daima", "", daimaequal, daimaand);
+
+                //jiancheng
+                if (!string.IsNullOrEmpty(jiancheng))
+                {
+                    if (jianchengequal.Equals("="))
+                    {
+                        if (jianchengand.Equals("and"))
+                            where = where.And(p => p.Jiancheng == jiancheng);
+                        else
+                            where = where.Or(p => p.Jiancheng == jiancheng);
+                    }
+                    if (jianchengequal.Equals("like"))
+                    {
+                        if (jianchengand.Equals("and"))
+                            where = where.And(p => p.Jiancheng.Contains(jiancheng));
+                        else
+                            where = where.Or(p => p.Jiancheng.Contains(jiancheng));
+                    }
+                }
+                if (!string.IsNullOrEmpty(jiancheng))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "jiancheng", jiancheng, jianchengequal, jianchengand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "jiancheng", "", jianchengequal, jianchengand);
                 searchconditionService.GetInstance().AddEntity(sc);
             }
             else
             {
                 sc.ConditionInfo = "";
+                //daima
                 if (!string.IsNullOrEmpty(daima))
                 {
                     if (daimaequal.Equals("="))
                     {
                         if (daimaand.Equals("and"))
-                            where = where.And(quan_gspwtkh => quan_gspwtkh.Daima == daima);
+                            where = where.And(p => p.Daima == daima);
                         else
-                            where = where.Or(quan_gspwtkh => quan_gspwtkh.Daima == daima);
+                            where = where.Or(p => p.Daima == daima);
                     }
                     if (daimaequal.Equals("like"))
                     {
                         if (daimaand.Equals("and"))
-                            where = where.And(quan_gspwtkh => quan_gspwtkh.Daima.Contains(daima));
+                            where = where.And(p => p.Daima.Contains(daima));
                         else
-                            where = where.Or(quan_gspwtkh => quan_gspwtkh.Daima.Contains(daima));
+                            where = where.Or(p => p.Daima.Contains(daima));
                     }
                 }
                 if (!string.IsNullOrEmpty(daima))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "daima", daima, daimaequal, daimaand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "daima", "", daimaequal, daimaand);
+
+                //jiancheng
+                if (!string.IsNullOrEmpty(jiancheng))
+                {
+                    if (jianchengequal.Equals("="))
+                    {
+                        if (jianchengand.Equals("and"))
+                            where = where.And(p => p.Jiancheng == jiancheng);
+                        else
+                            where = where.Or(p => p.Jiancheng == jiancheng);
+                    }
+                    if (jianchengequal.Equals("like"))
+                    {
+                        if (jianchengand.Equals("and"))
+                            where = where.And(p => p.Jiancheng.Contains(jiancheng));
+                        else
+                            where = where.Or(p => p.Jiancheng.Contains(jiancheng));
+                    }
+                }
+                if (!string.IsNullOrEmpty(jiancheng))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "jiancheng", jiancheng, jianchengequal, jianchengand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "jiancheng", "", jianchengequal, jianchengand);
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;
@@ -396,6 +472,16 @@ namespace CKWMS.Controllers
             string heyisf = Request["heyisf"] ?? "";
             string wtkhid = Request["wtkhid"] ?? "";
             int uid = int.Parse(id);
+            if (tiezwbq.IndexOf("true") > -1)
+                tiezwbq = "true";
+            else
+                tiezwbq = "false";
+            if (shenchasf.IndexOf("true") > -1)
+                shenchasf = "true";
+            if (hezuosf.IndexOf("true") > -1)
+                hezuosf = "true";
+            if (heyisf.IndexOf("true") > -1)
+                heyisf = "true";
             try
             {
                 quan_gspwtkh p = ob_quan_gspwtkhservice.GetEntityById(quan_gspwtkh => quan_gspwtkh.ID == uid);
@@ -420,7 +506,6 @@ namespace CKWMS.Controllers
                 p.Lianxiren = lianxiren.Trim();
                 p.Lianxidianhua = lianxidianhua.Trim();
                 p.Beizhu = beizhu.Trim();
-                p.Shouying = shouying == "" ? 0 : int.Parse(shouying);
                 p.Col1 = col1.Trim();
                 p.Col2 = col2.Trim();
                 p.Col3 = col3.Trim();
@@ -477,6 +562,194 @@ namespace CKWMS.Controllers
                 }
             }
             return RedirectToAction("Index");
+        }
+        public ActionResult AddGSPVendor(int id)
+        {
+            int _userid = (int)Session["user_id"];
+            var _ed = Request["ed"] ?? "0";
+            base_weituokehu _wtkh=null;
+            quan_gspwtkh tempData=null;
+            if (_ed == "1")
+                tempData = ob_quan_gspwtkhservice.GetEntityById(p => p.ID == id && p.IsDelete == false);
+            else
+            {
+                _wtkh = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == id && p.IsDelete == false);
+                if (_wtkh == null)
+                    return View();
+                tempData = ob_quan_gspwtkhservice.GetEntityById(p => p.WTKHID == id && p.IsDelete == false && p.Shouying < 5);
+            }
+            if (tempData != null)
+            {
+                base_weituokehuViewModel base_weituokehuviewmodel = new base_weituokehuViewModel();
+                base_weituokehuviewmodel.ID = tempData.WTKHID;
+                base_weituokehuviewmodel.Daima = tempData.Daima;
+                base_weituokehuviewmodel.Jiancheng = tempData.Jiancheng;
+                base_weituokehuviewmodel.Kehumingcheng = tempData.Kehumingcheng;
+                base_weituokehuviewmodel.Hetongbianhao = tempData.Hetongbianhao;
+                base_weituokehuviewmodel.YingyezhizhaoBH = tempData.YingyezhizhaoBH;
+                base_weituokehuviewmodel.YingyezhizhaoYXQ = tempData.YingyezhizhaoYXQ;
+                base_weituokehuviewmodel.YingyezhizhaoTP = tempData.YingyezhizhaoTP;
+                base_weituokehuviewmodel.ZuzhijigouBH = tempData.ZuzhijigouBH;
+                base_weituokehuviewmodel.ZuzhijigouYXQ = tempData.ZuzhijigouYXQ;
+                base_weituokehuviewmodel.ZuzhijigouTP = tempData.ZuzhijigouTP;
+                base_weituokehuviewmodel.ShuiwudengjiBH = tempData.ShuiwudengjiBH;
+                base_weituokehuviewmodel.ShuiwudengjiYXQ = tempData.ShuiwudengjiYXQ;
+                base_weituokehuviewmodel.ShuiwudengjiTP = tempData.ShuiwudengjiTP;
+                base_weituokehuviewmodel.JingyingxukeBH = tempData.JingyingxukeBH;
+                base_weituokehuviewmodel.JingyingxukeYXQ = tempData.JingyingxukeYXQ;
+                base_weituokehuviewmodel.JingyingxukeTP = tempData.JingyingxukeTP;
+                base_weituokehuviewmodel.Jingyingfanwei = tempData.Jingyingfanwei;
+                base_weituokehuviewmodel.JingyingfanweiDM = tempData.JingyingfanweiDM;
+                base_weituokehuviewmodel.Lianxiren = tempData.Lianxiren;
+                base_weituokehuviewmodel.Lianxidianhua = tempData.Lianxidianhua;
+                base_weituokehuviewmodel.Beizhu = tempData.Beizhu;
+                base_weituokehuviewmodel.Shouying = tempData.Shouying;
+                base_weituokehuviewmodel.Col1 = tempData.Col1;
+                base_weituokehuviewmodel.Col2 = tempData.Col2;
+                base_weituokehuviewmodel.Col3 = tempData.Col3;
+                base_weituokehuviewmodel.Col4 = tempData.Col4;
+                base_weituokehuviewmodel.Col5 = tempData.Col5;
+                base_weituokehuviewmodel.Col6 = tempData.Col6;
+                base_weituokehuviewmodel.MakeDate = tempData.MakeDate;
+                base_weituokehuviewmodel.MakeMan = tempData.MakeMan;
+                base_weituokehuviewmodel.ShenchaSF = tempData.ShenchaSF;
+                base_weituokehuviewmodel.HezuoSF = tempData.HezuoSF;
+                base_weituokehuviewmodel.BeianBH = tempData.BeianBH;
+                base_weituokehuviewmodel.BeianYXQ = tempData.BeianYXQ;
+                base_weituokehuviewmodel.BeianPZRQ = tempData.BeianPZRQ;
+                base_weituokehuviewmodel.BeianFZJG = tempData.BeianFZJG;
+                base_weituokehuviewmodel.BeianTP = tempData.BeianTP;
+                base_weituokehuviewmodel.XukePZRQ = tempData.XukePZRQ;
+                base_weituokehuviewmodel.XukeFZJG = tempData.XukeFZJG;
+                base_weituokehuviewmodel.ZhuceDZ = tempData.ZhuceDZ;
+                base_weituokehuviewmodel.JingyinDZ = tempData.JingyinDZ;
+                base_weituokehuviewmodel.KufangDZ = tempData.KufangDZ;
+                base_weituokehuviewmodel.WeituoNR = tempData.WeituoNR;
+                base_weituokehuviewmodel.WeituoKSRQ = tempData.WeituoKSRQ;
+                base_weituokehuviewmodel.WeituoJSRQ = tempData.WeituoJSRQ;
+                base_weituokehuviewmodel.WeituoQX = tempData.WeituoQX;
+                base_weituokehuviewmodel.TieZWBQ = tempData.TieZWBQ;
+                base_weituokehuviewmodel.HetongTP = tempData.HetongTP;
+                base_weituokehuviewmodel.Faren = tempData.Faren;
+                base_weituokehuviewmodel.Fuzeren = tempData.Fuzeren;
+                base_weituokehuviewmodel.HeyiSF = tempData.HeyiSF;
+                ViewBag.gspkhid = tempData.ID;
+                return View(base_weituokehuviewmodel);
+            }
+            quan_gspwtkh _gspkh = new quan_gspwtkh();
+            _gspkh.WTKHID = _wtkh.ID;
+            _gspkh.BeianBH = _wtkh.BeianBH;
+            _gspkh.BeianFZJG = _wtkh.BeianFZJG;
+            _gspkh.BeianPZRQ = _wtkh.BeianPZRQ;
+            _gspkh.BeianTP = _wtkh.BeianTP;
+            _gspkh.BeianYXQ = _wtkh.BeianYXQ;
+            _gspkh.Beizhu = _wtkh.Beizhu;
+            _gspkh.Col1 = _wtkh.Col1;
+            _gspkh.Col2 = _wtkh.Col2;
+            _gspkh.Col3 = _wtkh.Col3;
+            _gspkh.Col4 = _wtkh.Col4;
+            _gspkh.Col5 = _wtkh.Col5;
+            _gspkh.Col6 = _wtkh.Col6;
+            _gspkh.Daima = _wtkh.Daima;
+            _gspkh.Faren = _wtkh.Faren;
+            _gspkh.Fuzeren = _wtkh.Fuzeren;
+            _gspkh.Hetongbianhao = _wtkh.Hetongbianhao;
+            _gspkh.HetongTP = _wtkh.HetongTP;
+            _gspkh.HeyiSF = _wtkh.HeyiSF;
+            _gspkh.HezuoSF = _wtkh.HezuoSF;
+            _gspkh.Jiancheng = _wtkh.Jiancheng;
+            _gspkh.JingyinDZ = _wtkh.JingyinDZ;
+            _gspkh.Jingyingfanwei = _wtkh.Jingyingfanwei;
+            _gspkh.JingyingfanweiDM = _wtkh.JingyingfanweiDM;
+            _gspkh.JingyingxukeBH = _wtkh.JingyingxukeBH;
+            _gspkh.JingyingxukeTP = _wtkh.JingyingxukeTP;
+            _gspkh.JingyingxukeYXQ = _wtkh.JingyingxukeYXQ;
+            _gspkh.Kehumingcheng = _wtkh.Kehumingcheng;
+            _gspkh.KufangDZ = _wtkh.KufangDZ;
+            _gspkh.Lianxidianhua = _wtkh.Lianxidianhua;
+            _gspkh.Lianxiren = _wtkh.Lianxiren;
+            _gspkh.MakeDate = DateTime.Now;
+            _gspkh.MakeMan = _userid;
+            _gspkh.ShenchaSF = _wtkh.ShenchaSF;
+            _gspkh.Shouying = 1;
+            _gspkh.ShuiwudengjiBH = _wtkh.ShuiwudengjiBH;
+            _gspkh.ShuiwudengjiTP = _wtkh.ShuiwudengjiTP;
+            _gspkh.ShuiwudengjiYXQ = _wtkh.ShuiwudengjiYXQ;
+            _gspkh.TieZWBQ = _wtkh.TieZWBQ;
+            _gspkh.WeituoJSRQ = _wtkh.WeituoJSRQ;
+            _gspkh.WeituoKSRQ = _wtkh.WeituoKSRQ;
+            _gspkh.WeituoNR = _wtkh.WeituoNR;
+            _gspkh.WeituoQX = _wtkh.WeituoQX;
+            _gspkh.XukeFZJG = _wtkh.XukeFZJG;
+            _gspkh.XukePZRQ = _wtkh.XukePZRQ;
+            _gspkh.YingyezhizhaoBH = _wtkh.YingyezhizhaoBH;
+            _gspkh.YingyezhizhaoTP = _wtkh.YingyezhizhaoTP;
+            _gspkh.YingyezhizhaoYXQ = _wtkh.YingyezhizhaoYXQ;
+            _gspkh.ZhuceDZ = _wtkh.ZhuceDZ;
+            _gspkh.ZuzhijigouBH = _wtkh.ZuzhijigouBH;
+            _gspkh.ZuzhijigouTP = _wtkh.ZuzhijigouTP;
+            _gspkh.ZuzhijigouYXQ = _wtkh.ZuzhijigouYXQ;
+            _gspkh = ob_quan_gspwtkhservice.AddEntity(_gspkh);
+            if (_gspkh != null)
+            {
+                tempData = _gspkh;
+                base_weituokehuViewModel base_weituokehuviewmodel = new base_weituokehuViewModel();
+                base_weituokehuviewmodel.ID = tempData.WTKHID;
+                base_weituokehuviewmodel.Daima = tempData.Daima;
+                base_weituokehuviewmodel.Jiancheng = tempData.Jiancheng;
+                base_weituokehuviewmodel.Kehumingcheng = tempData.Kehumingcheng;
+                base_weituokehuviewmodel.Hetongbianhao = tempData.Hetongbianhao;
+                base_weituokehuviewmodel.YingyezhizhaoBH = tempData.YingyezhizhaoBH;
+                base_weituokehuviewmodel.YingyezhizhaoYXQ = tempData.YingyezhizhaoYXQ;
+                base_weituokehuviewmodel.YingyezhizhaoTP = tempData.YingyezhizhaoTP;
+                base_weituokehuviewmodel.ZuzhijigouBH = tempData.ZuzhijigouBH;
+                base_weituokehuviewmodel.ZuzhijigouYXQ = tempData.ZuzhijigouYXQ;
+                base_weituokehuviewmodel.ZuzhijigouTP = tempData.ZuzhijigouTP;
+                base_weituokehuviewmodel.ShuiwudengjiBH = tempData.ShuiwudengjiBH;
+                base_weituokehuviewmodel.ShuiwudengjiYXQ = tempData.ShuiwudengjiYXQ;
+                base_weituokehuviewmodel.ShuiwudengjiTP = tempData.ShuiwudengjiTP;
+                base_weituokehuviewmodel.JingyingxukeBH = tempData.JingyingxukeBH;
+                base_weituokehuviewmodel.JingyingxukeYXQ = tempData.JingyingxukeYXQ;
+                base_weituokehuviewmodel.JingyingxukeTP = tempData.JingyingxukeTP;
+                base_weituokehuviewmodel.Jingyingfanwei = tempData.Jingyingfanwei;
+                base_weituokehuviewmodel.JingyingfanweiDM = tempData.JingyingfanweiDM;
+                base_weituokehuviewmodel.Lianxiren = tempData.Lianxiren;
+                base_weituokehuviewmodel.Lianxidianhua = tempData.Lianxidianhua;
+                base_weituokehuviewmodel.Beizhu = tempData.Beizhu;
+                base_weituokehuviewmodel.Shouying = tempData.Shouying;
+                base_weituokehuviewmodel.Col1 = tempData.Col1;
+                base_weituokehuviewmodel.Col2 = tempData.Col2;
+                base_weituokehuviewmodel.Col3 = tempData.Col3;
+                base_weituokehuviewmodel.Col4 = tempData.Col4;
+                base_weituokehuviewmodel.Col5 = tempData.Col5;
+                base_weituokehuviewmodel.Col6 = tempData.Col6;
+                base_weituokehuviewmodel.MakeDate = tempData.MakeDate;
+                base_weituokehuviewmodel.MakeMan = tempData.MakeMan;
+                base_weituokehuviewmodel.ShenchaSF = tempData.ShenchaSF;
+                base_weituokehuviewmodel.HezuoSF = tempData.HezuoSF;
+                base_weituokehuviewmodel.BeianBH = tempData.BeianBH;
+                base_weituokehuviewmodel.BeianYXQ = tempData.BeianYXQ;
+                base_weituokehuviewmodel.BeianPZRQ = tempData.BeianPZRQ;
+                base_weituokehuviewmodel.BeianFZJG = tempData.BeianFZJG;
+                base_weituokehuviewmodel.BeianTP = tempData.BeianTP;
+                base_weituokehuviewmodel.XukePZRQ = tempData.XukePZRQ;
+                base_weituokehuviewmodel.XukeFZJG = tempData.XukeFZJG;
+                base_weituokehuviewmodel.ZhuceDZ = tempData.ZhuceDZ;
+                base_weituokehuviewmodel.JingyinDZ = tempData.JingyinDZ;
+                base_weituokehuviewmodel.KufangDZ = tempData.KufangDZ;
+                base_weituokehuviewmodel.WeituoNR = tempData.WeituoNR;
+                base_weituokehuviewmodel.WeituoKSRQ = tempData.WeituoKSRQ;
+                base_weituokehuviewmodel.WeituoJSRQ = tempData.WeituoJSRQ;
+                base_weituokehuviewmodel.WeituoQX = tempData.WeituoQX;
+                base_weituokehuviewmodel.TieZWBQ = tempData.TieZWBQ;
+                base_weituokehuviewmodel.HetongTP = tempData.HetongTP;
+                base_weituokehuviewmodel.Faren = tempData.Faren;
+                base_weituokehuviewmodel.Fuzeren = tempData.Fuzeren;
+                base_weituokehuviewmodel.HeyiSF = tempData.HeyiSF;
+                ViewBag.gspkhid = tempData.ID;
+                return View(base_weituokehuviewmodel);
+            }
+            return View();
         }
     }
 }

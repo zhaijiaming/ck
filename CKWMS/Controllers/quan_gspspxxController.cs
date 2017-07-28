@@ -42,23 +42,72 @@ namespace CKWMS.Controllers
                                 if (huozhuidequal.Equals("="))
                                 {
                                     if (huozhuidand.Equals("and"))
-                                        where = where.And(quan_gspspxx => quan_gspspxx.HuozhuID == int.Parse(huozhuid));
+                                        where = where.And(p => p.HuozhuID == int.Parse(huozhuid));
                                     else
-                                        where = where.Or(quan_gspspxx => quan_gspspxx.HuozhuID == int.Parse(huozhuid));
+                                        where = where.Or(p => p.HuozhuID == int.Parse(huozhuid));
                                 }
-                                if (huozhuidequal.Equals(">"))
+                            }
+                            break;
+                        case "daima":
+                            string daima = scld[1];
+                            string daimaequal = scld[2];
+                            string daimaand = scld[3];
+                            if (!string.IsNullOrEmpty(daima))
+                            {
+                                if (daimaequal.Equals("="))
                                 {
-                                    if (huozhuidand.Equals("and"))
-                                        where = where.And(quan_gspspxx => quan_gspspxx.HuozhuID > int.Parse(huozhuid));
+                                    if (daimaand.Equals("and"))
+                                        where = where.And(p => p.Daima == daima);
                                     else
-                                        where = where.Or(quan_gspspxx => quan_gspspxx.HuozhuID > int.Parse(huozhuid));
+                                        where = where.Or(p => p.Daima == daima);
                                 }
-                                if (huozhuidequal.Equals("<"))
+                                if (daimaequal.Equals("like"))
                                 {
-                                    if (huozhuidand.Equals("and"))
-                                        where = where.And(quan_gspspxx => quan_gspspxx.HuozhuID < int.Parse(huozhuid));
+                                    if (daimaand.Equals("and"))
+                                        where = where.And(p => p.Daima.Contains(daima));
                                     else
-                                        where = where.Or(quan_gspspxx => quan_gspspxx.HuozhuID < int.Parse(huozhuid));
+                                        where = where.Or(p => p.Daima.Contains(daima));
+                                }
+                            }
+                            break;
+                        case "mingcheng":
+                            string mingcheng = scld[1];
+                            string mingchengequal = scld[2];
+                            string mingchengand = scld[3];
+                            if (!string.IsNullOrEmpty(mingcheng))
+                            {
+                                if (mingchengequal.Equals("="))
+                                {
+                                    if (mingchengand.Equals("and"))
+                                        where = where.And(p => p.Mingcheng == mingcheng);
+                                    else
+                                        where = where.Or(p => p.Mingcheng == mingcheng);
+                                }
+                                if (mingchengequal.Equals("like"))
+                                {
+                                    if (mingchengand.Equals("and"))
+                                        where = where.And(p => p.Mingcheng.Contains(mingcheng));
+                                    else
+                                        where = where.Or(p => p.Mingcheng.Contains(mingcheng));
+                                }
+                            }
+                            break;
+                        case "shouying":
+                            string shouying = scld[1];
+                            string shouyingequal = scld[2];
+                            string shouyingand = scld[3];
+                            if (shouying == "0")
+                            {
+                                shouying = "";
+                            }
+                            if (!string.IsNullOrEmpty(shouying))
+                            {
+                                if (shouyingequal.Equals("="))
+                                {
+                                    if (shouyingand.Equals("and"))
+                                        where = where.And(p => p.Shouying == int.Parse(shouying));
+                                    else
+                                        where = where.Or(p => p.Shouying == int.Parse(shouying));
                                 }
                             }
                             break;
@@ -83,9 +132,27 @@ namespace CKWMS.Controllers
             int userid = (int)Session["user_id"];
             string pagetag = "quan_gspspxx_index";
             string page = "1";
+            //huozhuid
             string huozhuid = Request["huozhuid"] ?? "";
             string huozhuidequal = Request["huozhuidequal"] ?? "";
             string huozhuidand = Request["huozhuidand"] ?? "";
+            //daima
+            string daima = Request["daima"] ?? "";
+            string daimaequal = Request["daimaequal"] ?? "";
+            string daimaand = Request["daimaand"] ?? "";
+            //mingcheng
+            string mingcheng = Request["mingcheng"] ?? "";
+            string mingchengequal = Request["mingchengequal"] ?? "";
+            string mingchengand = Request["mingchengand"] ?? "";
+            //shouying
+            string shouying = Request["shouying"] ?? "";
+            string shouyingequal = Request["shouyingequal"] ?? "";
+            string shouyingand = Request["shouyingand"] ?? "";
+            if (shouying == "0")
+            {
+                shouying = "";
+            }
+
             Expression<Func<quan_gspspxx, bool>> where = PredicateExtensionses.True<quan_gspspxx>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
             if (sc == null)
@@ -93,67 +160,163 @@ namespace CKWMS.Controllers
                 sc = new searchcondition();
                 sc.UserID = userid;
                 sc.PageBrief = pagetag;
+                //huozhuid
                 if (!string.IsNullOrEmpty(huozhuid))
                 {
                     if (huozhuidequal.Equals("="))
                     {
                         if (huozhuidand.Equals("and"))
-                            where = where.And(quan_gspspxx => quan_gspspxx.HuozhuID == int.Parse(huozhuid));
+                            where = where.And(p => p.HuozhuID == int.Parse(huozhuid));
                         else
-                            where = where.Or(quan_gspspxx => quan_gspspxx.HuozhuID == int.Parse(huozhuid));
-                    }
-                    if (huozhuidequal.Equals(">"))
-                    {
-                        if (huozhuidand.Equals("and"))
-                            where = where.And(quan_gspspxx => quan_gspspxx.HuozhuID > int.Parse(huozhuid));
-                        else
-                            where = where.Or(quan_gspspxx => quan_gspspxx.HuozhuID > int.Parse(huozhuid));
-                    }
-                    if (huozhuidequal.Equals("<"))
-                    {
-                        if (huozhuidand.Equals("and"))
-                            where = where.And(quan_gspspxx => quan_gspspxx.HuozhuID < int.Parse(huozhuid));
-                        else
-                            where = where.Or(quan_gspspxx => quan_gspspxx.HuozhuID < int.Parse(huozhuid));
+                            where = where.Or(p => p.HuozhuID == int.Parse(huozhuid));
                     }
                 }
                 if (!string.IsNullOrEmpty(huozhuid))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", huozhuid, huozhuidequal, huozhuidand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", "", huozhuidequal, huozhuidand);
+
+                //daima
+                if (!string.IsNullOrEmpty(daima))
+                {
+                    if (daimaequal.Equals("="))
+                    {
+                        if (daimaand.Equals("and"))
+                            where = where.And(quan_gspspxx => quan_gspspxx.Daima == daima);
+                        else
+                            where = where.Or(quan_gspspxx => quan_gspspxx.Daima == daima);
+                    }
+                    if (daimaequal.Equals("like"))
+                    {
+                        if (daimaand.Equals("and"))
+                            where = where.And(quan_gspspxx => quan_gspspxx.Daima.Contains(daima));
+                        else
+                            where = where.Or(quan_gspspxx => quan_gspspxx.Daima.Contains(daima));
+                    }
+                }
+                if (!string.IsNullOrEmpty(daima))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "daima", daima, daimaequal, daimaand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "daima", "", daimaequal, daimaand);
+                //mingcheng
+                if (!string.IsNullOrEmpty(mingcheng))
+                {
+                    if (mingchengequal.Equals("="))
+                    {
+                        if (mingchengand.Equals("and"))
+                            where = where.And(quan_gspspxx => quan_gspspxx.Mingcheng == mingcheng);
+                        else
+                            where = where.Or(quan_gspspxx => quan_gspspxx.Mingcheng == mingcheng);
+                    }
+                    if (mingchengequal.Equals("like"))
+                    {
+                        if (mingchengand.Equals("and"))
+                            where = where.And(quan_gspspxx => quan_gspspxx.Mingcheng.Contains(mingcheng));
+                        else
+                            where = where.Or(quan_gspspxx => quan_gspspxx.Mingcheng.Contains(mingcheng));
+                    }
+                }
+                if (!string.IsNullOrEmpty(mingcheng))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", mingcheng, mingchengequal, mingchengand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", "", mingchengequal, mingchengand);
+                //shouying
+                if (!string.IsNullOrEmpty(shouying))
+                {
+                    if (shouyingequal.Equals("="))
+                    {
+                        if (shouyingand.Equals("and"))
+                            where = where.And(p => p.Shouying == int.Parse(shouying));
+                        else
+                            where = where.Or(p => p.Shouying == int.Parse(shouying));
+                    }
+                }
+                if (!string.IsNullOrEmpty(shouying))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouying", shouying, shouyingequal, shouyingand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouying", "", shouyingequal, shouyingand);
+
                 searchconditionService.GetInstance().AddEntity(sc);
             }
             else
             {
                 sc.ConditionInfo = "";
+                //huozhuid
                 if (!string.IsNullOrEmpty(huozhuid))
                 {
                     if (huozhuidequal.Equals("="))
                     {
                         if (huozhuidand.Equals("and"))
-                            where = where.And(quan_gspspxx => quan_gspspxx.HuozhuID == int.Parse(huozhuid));
+                            where = where.And(p => p.HuozhuID == int.Parse(huozhuid));
                         else
-                            where = where.Or(quan_gspspxx => quan_gspspxx.HuozhuID == int.Parse(huozhuid));
-                    }
-                    if (huozhuidequal.Equals(">"))
-                    {
-                        if (huozhuidand.Equals("and"))
-                            where = where.And(quan_gspspxx => quan_gspspxx.HuozhuID > int.Parse(huozhuid));
-                        else
-                            where = where.Or(quan_gspspxx => quan_gspspxx.HuozhuID > int.Parse(huozhuid));
-                    }
-                    if (huozhuidequal.Equals("<"))
-                    {
-                        if (huozhuidand.Equals("and"))
-                            where = where.And(quan_gspspxx => quan_gspspxx.HuozhuID < int.Parse(huozhuid));
-                        else
-                            where = where.Or(quan_gspspxx => quan_gspspxx.HuozhuID < int.Parse(huozhuid));
+                            where = where.Or(p => p.HuozhuID == int.Parse(huozhuid));
                     }
                 }
                 if (!string.IsNullOrEmpty(huozhuid))
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", huozhuid, huozhuidequal, huozhuidand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "huozhuid", "", huozhuidequal, huozhuidand);
+
+                //daima
+                if (!string.IsNullOrEmpty(daima))
+                {
+                    if (daimaequal.Equals("="))
+                    {
+                        if (daimaand.Equals("and"))
+                            where = where.And(p => p.Daima == daima);
+                        else
+                            where = where.Or(p => p.Daima == daima);
+                    }
+                    if (daimaequal.Equals("like"))
+                    {
+                        if (daimaand.Equals("and"))
+                            where = where.And(p => p.Daima.Contains(daima));
+                        else
+                            where = where.Or(p => p.Daima.Contains(daima));
+                    }
+                }
+                if (!string.IsNullOrEmpty(daima))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "daima", daima, daimaequal, daimaand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "daima", "", daimaequal, daimaand);
+                //mingcheng
+                if (!string.IsNullOrEmpty(mingcheng))
+                {
+                    if (mingchengequal.Equals("="))
+                    {
+                        if (mingchengand.Equals("and"))
+                            where = where.And(p => p.Mingcheng == mingcheng);
+                        else
+                            where = where.Or(p => p.Mingcheng == mingcheng);
+                    }
+                    if (mingchengequal.Equals("like"))
+                    {
+                        if (mingchengand.Equals("and"))
+                            where = where.And(p => p.Mingcheng.Contains(mingcheng));
+                        else
+                            where = where.Or(p => p.Mingcheng.Contains(mingcheng));
+                    }
+                }
+                if (!string.IsNullOrEmpty(mingcheng))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", mingcheng, mingchengequal, mingchengand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "mingcheng", "", mingchengequal, mingchengand);
+
+                //shouying
+                if (!string.IsNullOrEmpty(shouying))
+                {
+                    if (shouyingequal.Equals("="))
+                    {
+                        if (shouyingand.Equals("and"))
+                            where = where.And(p => p.Shouying == int.Parse(shouying));
+                        else
+                            where = where.Or(p => p.Shouying == int.Parse(shouying));
+                    }
+                }
+                if (!string.IsNullOrEmpty(shouying))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouying", shouying, shouyingequal, shouyingand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "shouying", "", shouyingequal, shouyingand);
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;
@@ -415,7 +578,7 @@ namespace CKWMS.Controllers
                 Console.WriteLine(ex.Message);
                 ViewBag.saveok = ViewAddTag.ModifyNo;
             }
-            return RedirectToAction("Edit", new { id = uid });
+            return RedirectToAction("Index");
         }
         public ActionResult Delete()
         {
@@ -433,6 +596,159 @@ namespace CKWMS.Controllers
                 }
             }
             return RedirectToAction("Index");
+        }
+        public ActionResult AddGSP(int id)
+        {
+            int _userid = (int)Session["user_id"];
+            var _ed = Request["ed"] ?? "0";
+            base_shangpinxx _spxx=null;
+            quan_gspspxx _gspsp=null;
+
+            if (_ed == "1")
+                _gspsp = ob_quan_gspspxxservice.GetEntityById(p => p.ID == id && p.IsDelete == false);
+            else
+            {
+                _spxx = ServiceFactory.base_shangpinxxservice.GetEntityById(p => p.ID == id && p.IsDelete == false);
+                if (_spxx == null)
+                    return View();
+                _gspsp = ob_quan_gspspxxservice.GetEntityById(p => p.SPID == _spxx.ID && p.Shouying < 5 && p.IsDelete == false);
+            }
+            if (_gspsp != null)
+            {
+                base_shangpinxxViewModel quan_gspspxxviewmodel = new base_shangpinxxViewModel();
+                quan_gspspxxviewmodel.ID = _gspsp.SPID;// _gspsp.ID;
+                quan_gspspxxviewmodel.HuozhuID = _gspsp.HuozhuID;
+                quan_gspspxxviewmodel.HuozhuSQID = _gspsp.HuozhuSQID;
+                quan_gspspxxviewmodel.Daima = _gspsp.Daima;
+                quan_gspspxxviewmodel.Mingcheng = _gspsp.Mingcheng;
+                quan_gspspxxviewmodel.ZhucezhengID = _gspsp.ZhucezhengID;
+                quan_gspspxxviewmodel.ZhucezhengBH = _gspsp.ZhucezhengBH;
+                quan_gspspxxviewmodel.Guige = _gspsp.Guige;
+                quan_gspspxxviewmodel.Xinghao = _gspsp.Xinghao;
+                quan_gspspxxviewmodel.Danwei = _gspsp.Danwei;
+                quan_gspspxxviewmodel.Huansuanlv = _gspsp.Huansuanlv;
+                quan_gspspxxviewmodel.Volchang = _gspsp.Volchang;
+                quan_gspspxxviewmodel.Volkuan = _gspsp.Volkuan;
+                quan_gspspxxviewmodel.Volgao = _gspsp.Volgao;
+                quan_gspspxxviewmodel.Chanpinxian = _gspsp.Chanpinxian;
+                quan_gspspxxviewmodel.Muluxuhao = _gspsp.Muluxuhao;
+                quan_gspspxxviewmodel.Guanlifenlei = _gspsp.Guanlifenlei;
+                quan_gspspxxviewmodel.Baozhuangyaoqiu = _gspsp.Baozhuangyaoqiu;
+                quan_gspspxxviewmodel.Cunchutiaojian = _gspsp.Cunchutiaojian;
+                quan_gspspxxviewmodel.QiyeID = _gspsp.QiyeID;
+                quan_gspspxxviewmodel.Qiyemingcheng = _gspsp.Qiyemingcheng;
+                quan_gspspxxviewmodel.GongyingID = _gspsp.GongyingID;
+                quan_gspspxxviewmodel.GongyingSQID = _gspsp.GongyingSQID;
+                quan_gspspxxviewmodel.GongyingXSID = _gspsp.GongyingXSID;
+                quan_gspspxxviewmodel.Shouying = _gspsp.Shouying;
+                quan_gspspxxviewmodel.Col1 = _gspsp.Col1;
+                quan_gspspxxviewmodel.Col2 = _gspsp.Col2;
+                quan_gspspxxviewmodel.Col3 = _gspsp.Col3;
+                quan_gspspxxviewmodel.Col4 = _gspsp.Col4;
+                quan_gspspxxviewmodel.Col5 = _gspsp.Col5;
+                quan_gspspxxviewmodel.Col6 = _gspsp.Col6;
+                quan_gspspxxviewmodel.MakeDate = _gspsp.MakeDate;
+                quan_gspspxxviewmodel.MakeMan = _gspsp.MakeMan;
+                quan_gspspxxviewmodel.ShenchaSF = _gspsp.ShenchaSF;
+                quan_gspspxxviewmodel.JingyinSF = _gspsp.JingyinSF;
+                quan_gspspxxviewmodel.BaozhuangDW = _gspsp.BaozhuangDW;
+                quan_gspspxxviewmodel.ShangpinTM = _gspsp.ShangpinTM;
+                quan_gspspxxviewmodel.Chandi = _gspsp.Chandi;
+                quan_gspspxxviewmodel.ShangpinMS = _gspsp.ShangpinMS;
+                //quan_gspspxxviewmodel.SPID = _gspsp.SPID;
+                ViewBag.gspspid = _gspsp.ID;
+                return View(quan_gspspxxviewmodel);
+            }
+
+            _gspsp = new quan_gspspxx();
+            _gspsp.HuozhuID = (int)_spxx.HuozhuID;
+            _gspsp.HuozhuSQID = _spxx.HuozhuSQID;
+            _gspsp.Daima = _spxx.Daima;
+            _gspsp.Mingcheng = _spxx.Mingcheng;
+            _gspsp.ZhucezhengID = _spxx.ZhucezhengID;
+            _gspsp.ZhucezhengBH = _spxx.ZhucezhengBH;
+            _gspsp.Guige = _spxx.Guige;
+            _gspsp.Xinghao = _spxx.Xinghao;
+            _gspsp.Danwei = _spxx.Danwei;
+            _gspsp.Huansuanlv = _spxx.Huansuanlv;
+            _gspsp.Volchang = _spxx.Volchang;
+            _gspsp.Volkuan = _spxx.Volkuan;
+            _gspsp.Volgao = _spxx.Volgao;
+            _gspsp.Chanpinxian = _spxx.Chanpinxian;
+            _gspsp.Muluxuhao = _spxx.Muluxuhao;
+            _gspsp.Guanlifenlei = _spxx.Guanlifenlei;
+            _gspsp.Baozhuangyaoqiu = _spxx.Baozhuangyaoqiu;
+            _gspsp.Cunchutiaojian = _spxx.Cunchutiaojian;
+            _gspsp.QiyeID = _spxx.QiyeID;
+            _gspsp.Qiyemingcheng = _spxx.Qiyemingcheng;
+            _gspsp.GongyingID = _spxx.GongyingID;
+            _gspsp.GongyingSQID = _spxx.GongyingSQID;
+            _gspsp.GongyingXSID = _spxx.GongyingXSID;
+            _gspsp.Shouying = 1;
+            _gspsp.Col1 = _spxx.Col1;
+            _gspsp.Col2 = _spxx.Col2;
+            _gspsp.Col3 = _spxx.Col3;
+            _gspsp.Col4 = _spxx.Col4;
+            _gspsp.Col5 = _spxx.Col5;
+            _gspsp.Col6 = _spxx.Col6;
+            _gspsp.MakeDate = DateTime.Now;
+            _gspsp.MakeMan = _userid;
+            _gspsp.ShenchaSF = _spxx.ShenchaSF;
+            _gspsp.JingyinSF = _spxx.JingyinSF;
+            _gspsp.BaozhuangDW = _spxx.BaozhuangDW;
+            _gspsp.ShangpinTM = _spxx.ShangpinTM;
+            _gspsp.Chandi = _spxx.Chandi;
+            _gspsp.ShangpinTM = _spxx.ShangpinTM;
+            _gspsp.SPID = _spxx.ID;
+            _gspsp = ob_quan_gspspxxservice.AddEntity(_gspsp);
+            if (_gspsp != null)
+            {
+                base_shangpinxxViewModel quan_gspspxxviewmodel = new base_shangpinxxViewModel();
+                quan_gspspxxviewmodel.ID = _gspsp.SPID;// _gspsp.ID;
+                quan_gspspxxviewmodel.HuozhuID = _gspsp.HuozhuID;
+                quan_gspspxxviewmodel.HuozhuSQID = _gspsp.HuozhuSQID;
+                quan_gspspxxviewmodel.Daima = _gspsp.Daima;
+                quan_gspspxxviewmodel.Mingcheng = _gspsp.Mingcheng;
+                quan_gspspxxviewmodel.ZhucezhengID = _gspsp.ZhucezhengID;
+                quan_gspspxxviewmodel.ZhucezhengBH = _gspsp.ZhucezhengBH;
+                quan_gspspxxviewmodel.Guige = _gspsp.Guige;
+                quan_gspspxxviewmodel.Xinghao = _gspsp.Xinghao;
+                quan_gspspxxviewmodel.Danwei = _gspsp.Danwei;
+                quan_gspspxxviewmodel.Huansuanlv = _gspsp.Huansuanlv;
+                quan_gspspxxviewmodel.Volchang = _gspsp.Volchang;
+                quan_gspspxxviewmodel.Volkuan = _gspsp.Volkuan;
+                quan_gspspxxviewmodel.Volgao = _gspsp.Volgao;
+                quan_gspspxxviewmodel.Chanpinxian = _gspsp.Chanpinxian;
+                quan_gspspxxviewmodel.Muluxuhao = _gspsp.Muluxuhao;
+                quan_gspspxxviewmodel.Guanlifenlei = _gspsp.Guanlifenlei;
+                quan_gspspxxviewmodel.Baozhuangyaoqiu = _gspsp.Baozhuangyaoqiu;
+                quan_gspspxxviewmodel.Cunchutiaojian = _gspsp.Cunchutiaojian;
+                quan_gspspxxviewmodel.QiyeID = _gspsp.QiyeID;
+                quan_gspspxxviewmodel.Qiyemingcheng = _gspsp.Qiyemingcheng;
+                quan_gspspxxviewmodel.GongyingID = _gspsp.GongyingID;
+                quan_gspspxxviewmodel.GongyingSQID = _gspsp.GongyingSQID;
+                quan_gspspxxviewmodel.GongyingXSID = _gspsp.GongyingXSID;
+                quan_gspspxxviewmodel.Shouying = _gspsp.Shouying;
+                quan_gspspxxviewmodel.Col1 = _gspsp.Col1;
+                quan_gspspxxviewmodel.Col2 = _gspsp.Col2;
+                quan_gspspxxviewmodel.Col3 = _gspsp.Col3;
+                quan_gspspxxviewmodel.Col4 = _gspsp.Col4;
+                quan_gspspxxviewmodel.Col5 = _gspsp.Col5;
+                quan_gspspxxviewmodel.Col6 = _gspsp.Col6;
+                quan_gspspxxviewmodel.MakeDate = _gspsp.MakeDate;
+                quan_gspspxxviewmodel.MakeMan = _gspsp.MakeMan;
+                quan_gspspxxviewmodel.ShenchaSF = _gspsp.ShenchaSF;
+                quan_gspspxxviewmodel.JingyinSF = _gspsp.JingyinSF;
+                quan_gspspxxviewmodel.BaozhuangDW = _gspsp.BaozhuangDW;
+                quan_gspspxxviewmodel.ShangpinTM = _gspsp.ShangpinTM;
+                quan_gspspxxviewmodel.Chandi = _gspsp.Chandi;
+                quan_gspspxxviewmodel.ShangpinMS = _gspsp.ShangpinMS;
+                //quan_gspspxxviewmodel.SPID = _gspsp.SPID;
+                ViewBag.gspspid = _gspsp.ID;
+                return View(quan_gspspxxviewmodel);
+            }
+
+            return View();
         }
     }
 }

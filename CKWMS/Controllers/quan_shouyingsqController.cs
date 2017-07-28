@@ -770,6 +770,8 @@ namespace CKWMS.Controllers
             //ShouYingType.Add(6, "销售");
             //ShouYingType.Add(7, "发货方");
             //ShouYingType.Add(8, "运输单位");
+            //9,gsp 商品
+            //10,gsp 委托方
             string _sqcontent = "";
             switch (valtype)
             {
@@ -804,6 +806,16 @@ namespace CKWMS.Controllers
                 case 7:
                     break;
                 case 8:
+                    break;
+                case 9:
+                    var _gspsp = ServiceFactory.quan_gspspxxservice.GetEntityById(p => p.ID == valid);
+                    if (_gspsp != null)
+                        _sqcontent = string.Format("GSP商品修改：名称，{0}；规格：{3}；注册证编号：{1}；厂家：{2}；",_gspsp.Mingcheng,_gspsp.ZhucezhengBH,_gspsp.Qiyemingcheng,_gspsp.Guige);
+                    break;
+                case 10:
+                    var _gspwtkh = ServiceFactory.quan_gspwtkhservice.GetEntityById(p => p.ID == valid);
+                    if (_gspwtkh != null)
+                        _sqcontent = string.Format("GSP货主修改：名称，{0}；营业执照：{1}；经营许可：{2}；", _gspwtkh.Kehumingcheng, _gspwtkh.YingyezhizhaoBH, _gspwtkh.JingyingxukeBH);
                     break;
                 default:
                     break;

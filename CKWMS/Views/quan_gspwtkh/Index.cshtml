@@ -11,10 +11,71 @@
         $("tr").bind("dblclick", function () {
             var u_id = $(this).find('td').eq(0).find('input').val();
             if (u_id != null) {
-                var url_go = "/quan_gspwtkh/Edit/" + u_id;
+                var url_go = "/quan_gspwtkh/addgspvendor/" + u_id+"?ed=1";
                 location.href = url_go;
             }
         });
+        $("#bt_sendcheck").click(function () {
+            var sendval = "";
+            var stateinfo = "";
+            var ng = false;
+            $("tr input[type=checkbox]").each(function () {
+                if (this.checked) {
+                    sendval = sendval + $(this).val() + ",";
+                    stateinfo = $(this).parent().parent().parent().find("td").eq(1).html();
+                    if (stateinfo != "新建")
+                        ng = true;
+                }
+            });
+            if (ng) {
+                alert("只有新建状态才能送审！");
+                return;
+            }
+            if (!confirm("送审后不能再修改数据，确定要送审吗？"))
+                return;
+            $.ajax({
+                async: true,
+                beforeSend: function () {
+                    ShowWait();
+                },
+                complete: function () {
+                    HiddenWait();
+                },
+                type: "POST",
+                url: "/quan_shouyingsq/checkadd",
+                data: {
+                    checkval: sendval,
+                    checktype: "10"
+                },
+                success: function (data) {
+                    if (data != "ok")
+                        alert("送审失败，请重新上传！");
+                    else
+                        window.location.reload();
+                }
+            });
+        });
+        //判断照片是否存在
+        var num = $("#mydatatable tr").length - 1;
+        for (var i = 0; i < num; i++) {
+            //营业执照
+            var val_yyzzTP = $(".val_yyzzTP").eq(i).val();
+            if (val_yyzzTP == "" || val_yyzzTP == null) {
+                $(".YingyezhizhaoTP").eq(i).removeAttr("href");
+                $(".YingyezhizhaoTP").eq(i).html("暂无");
+            } else {
+                $(".YingyezhizhaoTP").eq(i).html("浏览");
+            }
+            //经营许可
+            var val_jyxkTP = $(".val_jyxkTP").eq(i).val();
+            if (val_jyxkTP == "" || val_jyxkTP == null) {
+
+                $(".JingyingxukeTP").eq(i).removeAttr("href");
+                $(".JingyingxukeTP").eq(i).html("暂无");
+            } else {
+                $(".JingyingxukeTP").eq(i).html("浏览");
+            }
+        }
     });
     function AddInfo() {
         location.href = "/quan_gspwtkh/Add";
@@ -22,19 +83,33 @@
     function EditInfo() {
         $("#mydatatable tr input[type=checkbox]").each(function () {
             if (this.checked)
-                location.href = "/quan_gspwtkh/Edit/" + $(this).val();
+                location.href = "/quan_gspwtkh/addgspvendor/" + $(this).val()+"?ed=1";
         });
     }
     function DelInfo() {
         var sDel = "";
+        var stateinfo = "";
+        var ng = false;
         $("#mydatatable tr input[type=checkbox]").each(function () {
-            if (this.checked)
+            if (this.checked) {
                 sDel = sDel + ", " + $(this).val()
+                stateinfo = $(this).parent().parent().parent().find("td").eq(1).html();
+                if (stateinfo != "新建")
+                    ng = true;
+            }
         });
+        if (ng) {
+            alert("只有新建状态才能删除！");
+            return;
+        }
         if (sDel.length < 2)
             return;
-        var url_go = "/quan_gspwtkh/Delete/?del=" + sDel;
-        location.href = url_go;
+        if (!confirm("确定要删除吗？"))
+        {
+            var url_go = "/quan_gspwtkh/Delete/?del=" + sDel;
+            location.href = url_go;
+
+        }
     }
 </script>
 @{
@@ -43,7 +118,13 @@
     {
         SearchConditionModel scm = new SearchConditionModel();
         scm.ItemCode = "Daima";
-        scm.ItemTitle = "代码";
+        scm.ItemTitle = "客户代码";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "Jiancheng";
+        scm.ItemTitle = "客户简称";
         scm.ItemType = "System.String";
         scms.Add(scm);
     }
@@ -54,7 +135,7 @@
         {
             SearchConditionModel scm = new SearchConditionModel();
             scm.ItemCode = "Daima";
-            scm.ItemTitle = "代码";
+            scm.ItemTitle = "客户代码";
             scm.ItemType = "System.String";
             if (scs.Length > 1)
             {
@@ -63,10 +144,22 @@
                 scm.ItemJion = scs[0].Split(',')[3];
             }
             scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "Jiancheng";
+            scm.ItemTitle = "客户简称";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[1].Split(',')[1];
+                scm.ItemOpValue = scs[1].Split(',')[2];
+                scm.ItemJion = scs[1].Split(',')[3];
+            }
+            scms.Add(scm);
         }
     }
 }
-
+<div id="loading"><img src="~/Imgs/wait.gif" alt="" />...系统正在加载数据,请耐心等待...</div>
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
         try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
@@ -87,6 +180,7 @@
             <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
             <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
             <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
+            <button type="button" class="btn btn-default " id="bt_sendcheck"><i class="icon-check-sign"></i>送审</button>
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
         </p>
     </div>
@@ -96,52 +190,21 @@
             <thead>
                 <tr>
                     <td></td>
-                    <td>代码</td>
-                    <td>简称</td>
-                    <td>名称</td>
-                    <td>合同编号</td>
-                    <td>营业执照编号</td>
-                    <td>营业执照有效期</td>
-                    <td>营业执照图片</td>
-                    <td>组织机构编号</td>
-                    <td>组织机构有效期</td>
-                    <td>组织机构图片</td>
-                    <td>税务登记编号</td>
-                    <td>税务登记有效期</td>
-                    <td>税务登记图片</td>
-                    <td>经营许可编号</td>
-                    <td>经营许可有效期</td>
-                    <td>经营许可图片</td>
-                    <td>经营范围</td>
-                    <td>经营范围代码</td>
-                    <td>联系人</td>
-                    <td>联系电话</td>
-                    <td>备注</td>
-                    <td>首营</td>
-                    <td>制单日期</td>
-                    <td>制单人</td>
-                    <td>是否合作</td>
-                    <td>是否合作</td>
-                    <td>备案编号</td>
-                    <td>备案有效期</td>
-                    <td>备案批准日期</td>
-                    <td>备案发证机关</td>
-                    <td>备案图片</td>
-                    <td>许可批准日期</td>
-                    <td>许可发证机关</td>
-                    <td>注册地址</td>
-                    <td>经营地址</td>
-                    <td>库房地址</td>
-                    <td>委托内容</td>
-                    <td>委托开始日期</td>
-                    <td>委托结束日期</td>
-                    <td>委托期限</td>
-                    <td>贴中文标签</td>
-                    <td>合同文件</td>
-                    <td>法人</td>
-                    <td>负责人</td>
-                    <td>三证合一</td>
-                    <td>对象序号</td>
+                    <th>首营状态</th>
+                    <th>客户代码</th>
+                    <th>客户简称</th>
+                    <th>合同编号</th>
+                    <th>营业执照编号</th>
+                    <th>营业执照有效期</th>
+                    <th>营业执照照片</th>
+                    <th>经营许可编号</th>
+                    <th>经营许可有效期</th>
+                    <th>经营许可照片</th>
+                    <th>联系人</th>
+                    <th>联系电话</th>
+                    <th>备注</th>
+                    <th>录入日期</th>
+                    <th>录入人</th>
                 </tr>
             </thead>
             <tbody>
@@ -151,52 +214,27 @@
                         <td>
                             <label><input type="checkbox" value="@item.ID"></label>
                         </td>
+                        <td>@Html.GetCommonValue_ID("首营状态", (int)item.Shouying)</td>
                         <td>@item.Daima</td>
                         <td>@item.Jiancheng</td>
-                        <td>@item.Kehumingcheng</td>
                         <td>@item.Hetongbianhao</td>
                         <td>@item.YingyezhizhaoBH</td>
-                        <td>@item.YingyezhizhaoYXQ</td>
-                        <td>@item.YingyezhizhaoTP</td>
-                        <td>@item.ZuzhijigouBH</td>
-                        <td>@item.ZuzhijigouYXQ</td>
-                        <td>@item.ZuzhijigouTP</td>
-                        <td>@item.ShuiwudengjiBH</td>
-                        <td>@item.ShuiwudengjiYXQ</td>
-                        <td>@item.ShuiwudengjiTP</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.YingyezhizhaoYXQ)</td>
+                        <td>
+                            <a href='/files/zhengzhao/@item.YingyezhizhaoTP' target='_blank' class="YingyezhizhaoTP"></a>
+                            <label><input type="hidden" class="val_yyzzTP" value="@item.YingyezhizhaoTP"></label>
+                        </td>
                         <td>@item.JingyingxukeBH</td>
-                        <td>@item.JingyingxukeYXQ</td>
-                        <td>@item.JingyingxukeTP</td>
-                        <td>@item.Jingyingfanwei</td>
-                        <td>@item.JingyingfanweiDM</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.JingyingxukeYXQ)</td>
+                        <td>
+                            <a href='/files/zhengzhao/@item.JingyingxukeTP' target='_blank' class="JingyingxukeTP"></a>
+                            <label><input type="hidden" class="val_jyxkTP" value="@item.JingyingxukeTP"></label>
+                        </td>
                         <td>@item.Lianxiren</td>
                         <td>@item.Lianxidianhua</td>
                         <td>@item.Beizhu</td>
-                        <td>@item.Shouying</td>
-                        <td>@item.MakeDate</td>
-                        <td>@item.MakeMan</td>
-                        <td>@item.ShenchaSF</td>
-                        <td>@item.HezuoSF</td>
-                        <td>@item.BeianBH</td>
-                        <td>@item.BeianYXQ</td>
-                        <td>@item.BeianPZRQ</td>
-                        <td>@item.BeianFZJG</td>
-                        <td>@item.BeianTP</td>
-                        <td>@item.XukePZRQ</td>
-                        <td>@item.XukeFZJG</td>
-                        <td>@item.ZhuceDZ</td>
-                        <td>@item.JingyinDZ</td>
-                        <td>@item.KufangDZ</td>
-                        <td>@item.WeituoNR</td>
-                        <td>@item.WeituoKSRQ</td>
-                        <td>@item.WeituoJSRQ</td>
-                        <td>@item.WeituoQX</td>
-                        <td>@item.TieZWBQ</td>
-                        <td>@item.HetongTP</td>
-                        <td>@item.Faren</td>
-                        <td>@item.Fuzeren</td>
-                        <td>@item.HeyiSF</td>
-                        <td>@item.WTKHID</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.MakeDate)</td>
+                        <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
                     </tr>
                 }
             </tbody>
