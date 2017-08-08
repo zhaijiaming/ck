@@ -57,6 +57,10 @@
             var _sc = _sr.find("input");
             var _sn = _sr.find("td").eq(11).html();
             var _sj = _sr.find("td").eq(12).html();
+            var _ph = _sr.find("td").eq(6).html();
+            var _xlm = _sr.find("td").eq(8).html();
+            var _hpzt = _sr.find("td").eq(18).html();
+            var _spid = _sc.data("sp");
             if (eval(_sj) == eval(_sn))
                 return;
             $("#picknum").val("");
@@ -67,7 +71,7 @@
             else
                 $("#picknum").val(eval(_sn) - eval(_sj));
             $("#dt_ch tbody").html("");
-            GetInvetoryCargo($("#selmx").val());
+            GetInvetoryCargo($("#selmx").val(),_ph,_xlm,_hpzt,_spid);
             $("#pl_pk").show();
             _sr.addClass("brown");
         });
@@ -249,7 +253,7 @@
                 $(this).addClass("blue");
         });
     }
-    function GetInvetoryCargo(_ck) {
+    function GetInvetoryCargo(_ck,_ph,_xlm,_hpzt,_spid) {
         if (_ck != null) {
             var filltable = "";
             $.ajax({
@@ -264,7 +268,13 @@
                 },
                 type: "POST",
                 url: "/wms_jianhuo/getstorecargo/",
-                data:{ mx: _ck },
+                data: {
+                    mx: _ck,
+                    ph: _ph,
+                    xlm: _xlm,
+                    sp:_spid,
+                    hz:$("#hzid").val()
+                },
                 success: function (data) {
                     if (data != -1) {
                         for (var i in data) {
@@ -490,6 +500,7 @@
     <input type="hidden" id="ckd" value="@ViewBag.chukudan" />
     <input type="hidden" id="selmx" />
     <input type="hidden" id="ck" />
+    <input type="hidden" id="hzid" value="@ViewBag.huozhu" />
     <div id="pl_data" class="row" style="overflow:auto;">
         <table class="table table-condensed table-hover" id="mydatatable">
             <caption></caption>
@@ -521,7 +532,7 @@
                 {
                     <tr>
                         <td>
-                            <label><input type="checkbox" value="@item.ID"></label>
+                            <label><input type="checkbox" value="@item.ID" data-sp="@item.ShangpinID"></label>
                         </td>
                         <td><i class="icon-hand-right bigger-200"></i></td>
                         <td>@item.ShangpinDM</td>

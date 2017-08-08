@@ -1296,6 +1296,8 @@ namespace CKWMS.Controllers
             if (_custid.Length == 0)
                 return Json(-1);
             Expression<Func<wms_invgoods_v, bool>> where = PredicateExtensionses.True<wms_invgoods_v>();
+            if (string.IsNullOrEmpty(_mc) && string.IsNullOrEmpty(_gg) && string.IsNullOrEmpty(_ph))
+                return Json(-1);
             if (!string.IsNullOrEmpty(_mc))
                 where = where.And(p => p.ShangpinMC.Contains(_mc));
             if (!string.IsNullOrEmpty(_gg))

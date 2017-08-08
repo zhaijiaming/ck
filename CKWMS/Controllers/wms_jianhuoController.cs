@@ -168,7 +168,7 @@ namespace CKWMS.Controllers
             var id = Request["id"] ?? "";
             if (id.Length < 1)
                 id = "0";
-            var _ckmxs = ServiceFactory.wms_chukumxservice.LoadEntities(p => p.ChukuID == int.Parse(id) && p.IsDelete==false).ToList();
+            var _ckmxs = ServiceFactory.wms_chukumxservice.LoadEntities(p => p.ChukuID == int.Parse(id) && p.IsDelete == false).ToList();
             var _cksl = _ckmxs.Sum(p => p.ChukuSL);
             var _jhsl = _ckmxs.Sum(p => p.JianhuoSL);
             if (_cksl != _jhsl)
@@ -192,6 +192,7 @@ namespace CKWMS.Controllers
                 _outid = "0";
             var _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid));
             ViewBag.chukubh = _ckd.ChukudanBH;
+            ViewBag.huozhu = _ckd.HuozhuID;
 
             var _outdetail = ServiceFactory.wms_chukumxservice.LoadSortEntities(p => p.ChukuID == int.Parse(_outid) && p.IsDelete == false, true, s => s.Guige).ToList<wms_chukumx>();
             ViewBag.outdetail = _outdetail;
@@ -200,8 +201,8 @@ namespace CKWMS.Controllers
             ViewBag.linecount = _outdetail.Count;
             ViewBag.totalproduct = _outdetail.Sum(p => p.ChukuSL);
             ViewBag.JianhuoSLs = _outdetail.Sum(p => p.JianhuoSL);
-            ViewBag.totalbox = _outdetail.Sum(p => p.ChukuSL/p.Huansuanlv);
-            ViewBag.JianhuoJSs = _outdetail.Sum(p => p.JianhuoSL/p.Huansuanlv);
+            ViewBag.totalbox = _outdetail.Sum(p => p.ChukuSL / p.Huansuanlv);
+            ViewBag.JianhuoJSs = _outdetail.Sum(p => p.JianhuoSL / p.Huansuanlv);
 
             return View();
         }
@@ -225,18 +226,28 @@ namespace CKWMS.Controllers
         {
             int _userid = (int)Session["user_id"];
             var _mxid = Request["mx"] ?? "";
+            var _hzid = Request["hz"] ?? "";
+            var _spid = Request["sp"] ?? "";
+            var _ph = Request["ph"] ?? "";
+            var _xlm = Request["xlm"] ?? "";
             int _custid = 0;
-            if (_mxid == "")
+            if (string.IsNullOrEmpty(_mxid) || string.IsNullOrEmpty(_hzid))
                 return Json(-1);
+            _custid = int.Parse(_hzid);
             Expression<Func<wms_storage_v, bool>> where = PredicateExtensionses.True<wms_storage_v>();
-
-            wms_chukumx _mx = ServiceFactory.wms_chukumxservice.GetEntityById(p => p.ID == int.Parse(_mxid));
-            if (_mx == null)
-                return Json(-1);
-            wms_chukudan _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == _mx.ChukuID);
-            _custid = (int)_ckd.HuozhuID;
-            if (_mx.ShangpinID != null)
-                where = where.And(p => p.ShangpinID == _mx.ShangpinID);
+            if (!string.IsNullOrEmpty(_spid))
+                where = where.And(p => p.ShangpinID == int.Parse(_spid));
+            if (!string.IsNullOrEmpty(_ph))
+                where = where.And(p => p.Pihao == _ph);
+            if (!string.IsNullOrEmpty(_xlm))
+                where = where.And(p => p.Xuliema == _xlm);
+            //wms_chukumx _mx = ServiceFactory.wms_chukumxservice.GetEntityById(p => p.ID == int.Parse(_mxid));
+            //if (_mx == null)
+            //    return Json(-1);
+            //wms_chukudan _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == _mx.ChukuID);
+            //_custid = (int)_ckd.HuozhuID;
+            //if (_mx.ShangpinID != null)
+            //    where = where.And(p => p.ShangpinID == _mx.ShangpinID);
             //if (_mx.ShangpinDM != null)
             //    where = where.And(p => p.ShangpinDM == _mx.ShangpinDM);
             //if (_mx.ShangpinMC != null)
@@ -247,18 +258,18 @@ namespace CKWMS.Controllers
             //    where = where.And(p => p.Guige == _mx.Guige);
             //if (_mx.Zhucezheng != null)
             //    where = where.And(p => p.Zhucezheng == _mx.Zhucezheng);
-            if (_mx.Pihao != null)
-                where = where.And(p => p.Pihao.Contains(_mx.Pihao));
-            if (_mx.Pihao1 != null)
-                where = where.And(p => p.Pihao1.Contains(_mx.Pihao1));
+            //if (_mx.Pihao != null)
+            //    where = where.And(p => p.Pihao.Contains(_mx.Pihao));
+            //if (_mx.Pihao1 != null)
+            //    where = where.And(p => p.Pihao1.Contains(_mx.Pihao1));
             //if (_mx.ShengchanRQ != null)
             //    where = where.And(p => p.ShengchanRQ == _mx.ShengchanRQ);
             //if (_mx.ShixiaoRQ != null)
             //    where = where.And(p => p.ShixiaoRQ == _mx.ShixiaoRQ);
-            if (_mx.Xuliema != null)
-                where = where.And(p => p.Xuliema.Contains(_mx.Xuliema));
-            if (_mx.HuopinZT != null)
-                where = where.And(p => p.CunhuoZT == _mx.HuopinZT);
+            //if (_mx.Xuliema != null)
+            //    where = where.And(p => p.Xuliema.Contains(_mx.Xuliema));
+            //if (_mx.HuopinZT != null)
+            //    where = where.And(p => p.CunhuoZT == _mx.HuopinZT);
             where = where.And(p => p.sshuliang > 0);
             var tempData = ServiceFactory.wms_cunhuoservice.GetStorageList(_custid, where.Compile());//.OrderBy(s=>s.ShixiaoRQ).ThenBy(s=>s.RukuRQ);
             if (tempData == null)
@@ -280,41 +291,44 @@ namespace CKWMS.Controllers
                     float _pknum = float.Parse(_rec[1]);
                     string _pkmemo = _rec[2];
                     int _chmx = int.Parse(_rec[3]);
-
-                    wms_cunhuo _ch = ServiceFactory.wms_cunhuoservice.GetEntityById(p => p.ID == _chmx);
-                    if (_ch != null)
+                    wms_chukumx _ck = ServiceFactory.wms_chukumxservice.GetEntityById(p => p.ID == _ckmx);
+                    if (_ck != null)
                     {
-                        if (_pknum > _ch.Shuliang - _ch.DaijianSL)
-                            return Json(-2);
-                        var _rt = _pknum / _ch.Shuliang;
-                        wms_jianhuo _jh = new wms_jianhuo();
-                        _jh.CKMXID = _ckmx;
-                        _jh.DaijianSL = _pknum;
-                        _jh.JianhuoRQ = DateTime.Now;
-                        _jh.JianhuoSM = _pkmemo;
-                        _jh.KCID = _chmx;
-                        _jh.Fuhe = _ch.HegeSF;
-                        _jh.Kuwei = _ch.Kuwei;
-                        _jh.KuweiID = _ch.KuweiID;
-                        _jh.Zhongliang = (float)Math.Round((double)(_rt * _ch.Zhongliang), 3);
-                        _jh.Jingzhong = (float)Math.Round((double)(_rt * _ch.Jingzhong), 3);
-                        _jh.Tiji = (float)Math.Round((double)(_rt * _ch.Tiji), 3);
-                        _jh.Jifeidun = (float)Math.Round((double)(_rt * _ch.Jifeidun), 3);
-                        _jh.MakeMan = _userid;
-                        //扫描拣货后去除
-                        _jh.Jianhuoren = _userid;
-                        //_jh.ShijianSL = _pknum;
-                        _jh = ob_wms_jianhuoservice.AddEntity(_jh);
-                        if (_jh != null)
+                        if (_ck.ChukuSL >= _ck.JianhuoSL + _pknum)
                         {
-                            wms_chukumx _ck = ServiceFactory.wms_chukumxservice.GetEntityById(p => p.ID == _ckmx);
-                            if (_ck != null)
+                            wms_cunhuo _ch = ServiceFactory.wms_cunhuoservice.GetEntityById(p => p.ID == _chmx);
+                            if (_ch != null)
                             {
-                                _ck.Jianhuo = true;
-                                if (_ck.JianhuoSL == null)
-                                    _ck.JianhuoSL = 0;
-                                _ck.JianhuoSL = _ck.JianhuoSL + _pknum;
-                                ServiceFactory.wms_chukumxservice.UpdateEntity(_ck);
+                                if (_pknum > _ch.Shuliang - _ch.DaijianSL)
+                                    return Json(-2);
+                                var _rt = _pknum / _ch.Shuliang;
+                                wms_jianhuo _jh = new wms_jianhuo();
+                                _jh.CKMXID = _ckmx;
+                                _jh.DaijianSL = _pknum;
+                                _jh.JianhuoRQ = DateTime.Now;
+                                _jh.JianhuoSM = _pkmemo;
+                                _jh.KCID = _chmx;
+                                _jh.Fuhe = _ch.HegeSF;
+                                _jh.Kuwei = _ch.Kuwei;
+                                _jh.KuweiID = _ch.KuweiID;
+                                _jh.Zhongliang = (float)Math.Round((double)(_rt * _ch.Zhongliang), 3);
+                                _jh.Jingzhong = (float)Math.Round((double)(_rt * _ch.Jingzhong), 3);
+                                _jh.Tiji = (float)Math.Round((double)(_rt * _ch.Tiji), 3);
+                                _jh.Jifeidun = (float)Math.Round((double)(_rt * _ch.Jifeidun), 3);
+                                _jh.MakeMan = _userid;
+                                //扫描拣货后去除
+                                _jh.Jianhuoren = _userid;
+                                //_jh.ShijianSL = _pknum;
+                                _jh = ob_wms_jianhuoservice.AddEntity(_jh);
+
+                                if (_jh != null)
+                                {
+                                    _ck.Jianhuo = true;
+                                    if (_ck.JianhuoSL == null)
+                                        _ck.JianhuoSL = 0;
+                                    _ck.JianhuoSL = _ck.JianhuoSL + _pknum;
+                                    ServiceFactory.wms_chukumxservice.UpdateEntity(_ck);
+                                }
                             }
                         }
                     }
@@ -427,7 +441,7 @@ namespace CKWMS.Controllers
                 return Json(-1);
             if (_ckd.JihuaZT > 2)
                 return Json(-2);
-            wms_jianhuo _jh = ob_wms_jianhuoservice.GetEntityById(p => p.ID == int.Parse(_delid) && p.IsDelete==false);
+            wms_jianhuo _jh = ob_wms_jianhuoservice.GetEntityById(p => p.ID == int.Parse(_delid) && p.IsDelete == false);
             if (_jh == null)
                 return Json(-1);
             var b = ob_wms_jianhuoservice.DeleteEntity(_jh);
@@ -475,7 +489,7 @@ namespace CKWMS.Controllers
                 foreach (var _pk in _pklist.ToList<wms_pick_v>())
                 {
                     var _pid = _pk.pickid;
-                    wms_jianhuo _jh = ob_wms_jianhuoservice.GetEntityById(g => g.ID ==_pid && g.IsDelete==false);
+                    wms_jianhuo _jh = ob_wms_jianhuoservice.GetEntityById(g => g.ID == _pid && g.IsDelete == false);
                     if (_jh != null)
                     {
                         _jh.Fuhe = false;

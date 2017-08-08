@@ -24,60 +24,67 @@
                 $("#DaohuoSL").val(_sl);
             });
             $("#bt_selsp").click(function () {
-                if (!_spload) {
-                    getShangPin();
-                }
                 $("#pl_shangpin").show();
             });
             $("#pl_close").click(function () {
                 $("#pl_shangpin").hide();
             });
             $("#pl_ok").click(function () {
-                $("#mydatatable tr input[type=checkbox]").each(function () {
-                    if (this.checked) {
-                        $("#spid").val($(this).val());
-                        $("#ShangpinMC").val($(this).data("mc"));
-                        $("#ShangpinDM").val($(this).data("dm"));
-                        $("#Zhucezheng").val($(this).data("zcz"));
-                        $("#Guige").val($(this).data("gg"));
-                        $("#JibenDW").val($(this).data("dw"));
-                        $("#BaozhuangDW").val($(this).data("bdw"));
-                        $("#Changjia").val($(this).data("qymc"));
-                        $("#ShangpinTM").val($(this).data("tm"));
-                        $("#Huansuanlv").val($(this).data("hsl"));
-                        $("#Chandi").val($(this).data("chd"));
-                    }
-                });
-                $("#pl_shangpin").hide();
+                if ($("#pl_dm").val() == "" && $("#pl_mc").val() == "" && $("#pl_gg").val() == "") {
+                    alert("请设定条件后查询商品！");
+                    return;
+                }
+                getShangPin();
+                //$("#mydatatable tr input[type=checkbox]").each(function () {
+                //    if (this.checked) {
+                //        $("#spid").val($(this).val());
+                //        $("#ShangpinMC").val($(this).data("mc"));
+                //        $("#ShangpinDM").val($(this).data("dm"));
+                //        $("#Zhucezheng").val($(this).data("zcz"));
+                //        $("#Guige").val($(this).data("gg"));
+                //        $("#JibenDW").val($(this).data("dw"));
+                //        $("#BaozhuangDW").val($(this).data("bdw"));
+                //        $("#Changjia").val($(this).data("qymc"));
+                //        $("#ShangpinTM").val($(this).data("tm"));
+                //        $("#Huansuanlv").val($(this).data("hsl"));
+                //        $("#Chandi").val($(this).data("chd"));
+                //    }
+                //});
+                //$("#pl_shangpin").hide();
             });
             $("#pl_refresh").click(function () {
                 getShangPin();
             });
             $("#mydatatable").on('dblclick', 'tr', function () {
-                    var u_id = $(this).find("td").eq(0).find("input");
-                    var u_idd = u_id.val();
-                    if (u_idd != null) {
-                        $("#spid").val(u_id.val());
-                        $("#ShangpinMC").val(u_id.data("mc"));
-                        $("#ShangpinDM").val(u_id.data("dm"));
-                        $("#Zhucezheng").val(u_id.data("zcz"));
-                        $("#Guige").val(u_id.data("gg"));
-                        $("#JibenDW").val(u_id.data("dw"));
-                        $("#BaozhuangDW").val(u_id.data("bdw"));
-                        $("#Changjia").val(u_id.data("qymc"));
-                        $("#ShangpinTM").val(u_id.data("tm"));
-                        $("#Huansuanlv").val(u_id.data("hsl"));
-                        $("#Chandi").val(u_id.data("chd"));
-                        $("#pl_shangpin").hide();
-                    }
+                var u_id = $(this).find("td").eq(0).find("input");
+                var u_idd = u_id.val();
+                if (u_idd != null) {
+                    $("#spid").val(u_id.val());
+                    $("#ShangpinMC").val(u_id.data("mc"));
+                    $("#ShangpinDM").val(u_id.data("dm"));
+                    $("#Zhucezheng").val(u_id.data("zcz"));
+                    $("#Guige").val(u_id.data("gg"));
+                    $("#JibenDW").val(u_id.data("dw"));
+                    $("#BaozhuangDW").val(u_id.data("bdw"));
+                    $("#Changjia").val(u_id.data("qymc"));
+                    $("#ShangpinTM").val(u_id.data("tm"));
+                    $("#Huansuanlv").val(u_id.data("hsl"));
+                    $("#Chandi").val(u_id.data("chd"));
+                    $("#pl_shangpin").hide();
+                }
             });
         });
         function getShangPin() {
             var rkd = $("#rkd").val();
             _spload = true;
             $.post(
-                "/base_shangpinxx/GetCustomerCargosByEntryID",
-                { rkd: rkd },
+                "/base_shangpinxx/GetCustomerCargosByCode",
+                {
+                    rkd: rkd,
+                    mc: $("#pl_mc").val(),
+                    dm: $("#pl_dm").val(),
+                    gg: $("#pl_gg").val()
+                },
                 function (data) {
                     if (data.length > 0) {
                         var _filldata = '';
@@ -145,11 +152,11 @@
         <li class="active"> 新增</li>
     </ul>
 </div>
-    <div class="page-content">
-        @using (Html.BeginForm("Save", "wms_rukumx", FormMethod.Post, new { @role = "form" }))
-        {
-            @Html.AntiForgeryToken()
-            <input type="hidden" name="id" />
+<div class="page-content">
+    @using (Html.BeginForm("Save", "wms_rukumx", FormMethod.Post, new { @role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="id" />
             <input type="hidden" name="RukuID" id="rkd" value="@ViewBag.rkdid" />
             <input type="hidden" name="ShangpinID" id="spid" value="" />
             <div class="page-header">
@@ -231,7 +238,7 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.YishouSL, new { @class = "control-label col-sm-2" })
                     <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.YishouSL, new { @class = "form-control",@readonly="true"})
+                        @Html.TextBoxFor(m => m.YishouSL, new { @class = "form-control", @readonly = "true" })
                     </div>
                 </div>
                 <div class="form-group">
@@ -318,47 +325,56 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.MakeMan, new { @class = "control-label col-sm-2" })
                     <div class="col-sm-10">
-                        @Html.SelectList_Auto("MakeMan", "userinfo", "fullname",(int)ViewBag.userid)
+                        @Html.SelectList_Auto("MakeMan", "userinfo", "fullname", (int)ViewBag.userid)
                     </div>
                 </div>
             </div>
-        }
+    }
+</div>
+<div id="pl_shangpin" class="panel panel-primary" style="display:none;position:absolute;top:50px;left:100px;width:1000px;height:600px;z-index:999;">
+    <div class="panel-heading">
+        <h3 class="panel-title">商品选择<button id="pl_close" class="pull-right">X</button></h3>
     </div>
-    <div id="pl_shangpin" class="panel panel-primary" style="display:none;position:absolute;top:50px;left:100px;width:800px;height:600px;z-index:999;">
-        <div class="panel-heading">
-            <h3 class="panel-title">商品选择<button id="pl_close" class="pull-right">X</button></h3>
-        </div>
-        <div class="panel-body">
-            <div class="center">
-                <p class="btn default" id="pl_ok"><i class="icon-ok"></i>确定</p>
-                <p class="btn default" id="pl_refresh"><i class="icon-refresh"></i>刷新</p>
+    <div class="panel-body">
+        <div class="center">
+            <div class="col-sm-9">
+                <div class="col-sm-1"><label>名称</label></div>
+                <div class="col-sm-3"><input type="text" id="pl_mc" /></div>
+                <div class="col-sm-1"><label>代码</label></div>
+                <div class="col-sm-3"><input type="text" id="pl_dm" /></div>
+                <div class="col-sm-1"><label>规格</label></div>
+                <div class="col-sm-3"><input type="text" id="pl_gg" /></div>
             </div>
-            <div class="row" style="width:782px;height:500px;overflow:auto;">
-                <table class="table table-condensed" id="mydatatable">
-                    <caption></caption>
-                    <thead>
-                        <tr>
-                            <td></td>
-                            <td>商品代码</td>
-                            <td>商品名称</td>
-                            <td>注册证</td>
-                            <td>规格</td>
-                            <td>型号</td>
-                            <td>单位</td>
-                            <td>包装单位</td>
-                            <td>换算率</td>
-                            <td>产品线</td>
-                            <td>分类目录</td>
-                            <td>管理分类</td>
-                            <td>存储条件</td>
-                            <td>生产企业</td>
-                            @*<td>供应商</td>*@
-                            <td>商品条码</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+            <div class="col-sm-3">
+                <div class="col-sm-6"><p class="btn default" id="pl_ok"><i class="icon-search"></i>查询</p></div>
+                <div class="col-sm-6"><p class="btn default" id="pl_refresh"><i class="icon-refresh"></i>刷新</p></div>
             </div>
         </div>
+        <div class="row" style="width:980px;height:500px;overflow:auto;">
+            <table class="table table-condensed" id="mydatatable">
+                <caption></caption>
+                <thead>
+                    <tr>
+                        <td></td>
+                        <td>商品代码</td>
+                        <td>商品名称</td>
+                        <td>注册证</td>
+                        <td>规格</td>
+                        <td>型号</td>
+                        <td>单位</td>
+                        <td>包装单位</td>
+                        <td>换算率</td>
+                        <td>产品线</td>
+                        <td>分类目录</td>
+                        <td>管理分类</td>
+                        <td>存储条件</td>
+                        <td>生产企业</td>
+                        @*<td>供应商</td>*@
+                        <td>商品条码</td>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
     </div>
+</div>

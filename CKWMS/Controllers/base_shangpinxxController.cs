@@ -644,7 +644,7 @@ namespace CKWMS.Controllers
                 {
                     if (_rkd.JianguanSF)
                     {
-                        var _splist0 = ServiceFactory.base_shangpinxxservice.LoadShangpinCust((int)_rkd.HuozhuID).Where<base_shangpin_v>(p => p.Shouying == 5 && p.jingyinsf == true && p.IsDelete==false).ToList<base_shangpin_v>().OrderBy(s => s.mingcheng);
+                        var _splist0 = ServiceFactory.base_shangpinxxservice.LoadShangpinCust((int)_rkd.HuozhuID).Where<base_shangpin_v>(p => p.Shouying == 5 && p.jingyinsf == true && p.IsDelete == false).ToList<base_shangpin_v>().OrderBy(s => s.mingcheng);
                         if (_splist0 == null)
                             return Json("");
                         else
@@ -653,7 +653,7 @@ namespace CKWMS.Controllers
                     else
                     {
                         //var _splist= ServiceFactory.base_shangpinxxservice.LoadSortEntities(g => g.HuozhuID == _rkd.HuozhuID && g.JingyinSF==true && g.IsDelete == false, true, s => s.Mingcheng).ToList<base_shangpinxx>();
-                        var _splist = ServiceFactory.base_shangpinxxservice.LoadShangpinCust((int)_rkd.HuozhuID).Where<base_shangpin_v>(p => p.jingyinsf == true && p.IsDelete==false).ToList<base_shangpin_v>().OrderBy(s => s.mingcheng);
+                        var _splist = ServiceFactory.base_shangpinxxservice.LoadShangpinCust((int)_rkd.HuozhuID).Where<base_shangpin_v>(p => p.jingyinsf == true && p.IsDelete == false).ToList<base_shangpin_v>().OrderBy(s => s.mingcheng);
                         if (_splist == null)
                             return Json("");
                         else
@@ -1248,6 +1248,58 @@ namespace CKWMS.Controllers
             }
             return Json(flag);
         }
+        /// <summary>
+        /// 以入库序号查货主经营的商品列表
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetCustomerCargosByCode()
+        {
+            string _rkdid = Request["rkd"] ?? "";
+            string _mc = Request["mc"] ?? "";
+            string _gg = Request["gg"] ?? "";
+            string _dm = Request["dm"] ?? "";
+
+            if (_rkdid.Length == 0)
+                return Json("");
+            else
+            {
+                wms_rukudan _rkd = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_rkdid) && p.IsDelete == false);
+                if (_rkd == null)
+                    return Json("");
+                else
+                {
+                    Expression<Func<base_shangpin_v, bool>> where = PredicateExtensionses.True<base_shangpin_v>();
+                    if (string.IsNullOrEmpty(_mc) && string.IsNullOrEmpty(_gg) && string.IsNullOrEmpty(_dm))
+                        return Json("");
+                    if (!string.IsNullOrEmpty(_mc))
+                        where = where.And(p => p.mingcheng.Contains(_mc));
+                    if (!string.IsNullOrEmpty(_gg))
+                        where = where.And(p => p.Guige.Contains(_gg));
+                    if (!string.IsNullOrEmpty(_dm))
+                        where = where.And(p => p.daima.Contains(_dm));
+                    if (_rkd.JianguanSF)
+                    {
+                        where = where.And(p => p.Shouying == 5 && p.jingyinsf == true && p.IsDelete == false);
+                        var _splist0 = ServiceFactory.base_shangpinxxservice.LoadShangpinCust((int)_rkd.HuozhuID).Where<base_shangpin_v>(where.Compile()).ToList<base_shangpin_v>().OrderBy(s => s.mingcheng);
+                        if (_splist0 == null)
+                            return Json("");
+                        else
+                            return Json(_splist0);
+                    }
+                    else
+                    {
+                        where = where.And(p => p.jingyinsf == true && p.IsDelete == false);
+                        //var _splist= ServiceFactory.base_shangpinxxservice.LoadSortEntities(g => g.HuozhuID == _rkd.HuozhuID && g.JingyinSF==true && g.IsDelete == false, true, s => s.Mingcheng).ToList<base_shangpinxx>();
+                        var _splist = ServiceFactory.base_shangpinxxservice.LoadShangpinCust((int)_rkd.HuozhuID).Where<base_shangpin_v>(where.Compile()).ToList<base_shangpin_v>().OrderBy(s => s.mingcheng);
+                        if (_splist == null)
+                            return Json("");
+                        else
+                            return Json(_splist);
+                    }
+                }
+            }
+        }
+
     }
 }
 
