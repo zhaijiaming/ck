@@ -1,0 +1,273 @@
+﻿@using CKWMS.App_Code
+@using CKWMS.Models
+@using X.PagedList
+@using X.PagedList.Mvc
+@{
+    ViewBag.Title = "养护货品添加";
+    string _searchcondition = ViewBag.SearchCondition;
+    string _surl = "/gsp_hpyhmx/addmaintencedetail?mid=" + ViewBag.mdid + "&hzid=" + ViewBag.hzid;
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("tr").bind("dblclick", function () {
+            var u_id = $(this).find('td').eq(0).find('input').val();
+        });
+        $("#mydatatable tbody tr").each(function () {
+            if ($(this).find("td").eq(14).html() == "不合格")
+                $(this).addClass("red");
+            if ($(this).find("td").eq(15).html() != "正常")
+                $(this).add("blue");
+        });
+        $("#bt_add").click(function () {
+            var _adstr = "";
+            $("#mydatatable tbody tr input[type=checkbox]").each(function () {
+                if (this.checked) {
+                    _adstr = $(this).val() + ","+_adstr;
+                }
+                    alert($(this).val());
+            });
+            if (_adstr.length < 2) {
+                alert("请选择货品后添加！");
+                return;
+            }
+            $.ajax({
+                async: true,
+                beforeSend: function () {
+                    ShowWait();
+                },
+                complete: function () {
+                    HiddenWait();
+                },
+                type: "POST",
+                url: "/gsp_hpyhmx/addcargos",
+                data: {
+                    mid: $("#mid").val(),
+                    hps:_adstr
+                },
+                success: function (data) {
+                    if (data == -1)
+                        alert("传值失败，请重试！");
+                    if (data == 1)
+                        window.close();
+                }
+            });
+
+        });
+    });
+</script>
+@{
+    List <SearchConditionModel> scms = new List<SearchConditionModel>();
+    if (_searchcondition == null || _searchcondition == "")
+    {
+        SearchConditionModel scm = new SearchConditionModel();
+        scm.ItemCode = "ShangpinDM";
+        scm.ItemTitle = "商品代码";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "ShangpinMC";
+        scm.ItemTitle = "商品名称";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "Pihao";
+        scm.ItemTitle = "批号";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "ShixiaoRQ";
+        scm.ItemTitle = "近效期";
+        scm.ItemType = "System.Int32";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "RukuRQ";
+        scm.ItemTitle = "入库日期";
+        scm.ItemType = "System.DateTime";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "Chanpinxian";
+        scm.ItemTitle = "产品线";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+    }
+    else
+    {
+        string[] scs = _searchcondition.Split(';');
+        if (scs.Length > 0)
+        {
+            SearchConditionModel scm = new SearchConditionModel();
+            scm.ItemCode = "ShangpinDM";
+            scm.ItemTitle = "商品代码";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[0].Split(',')[1];
+                scm.ItemOpValue = scs[0].Split(',')[2];
+                scm.ItemJion = scs[0].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "ShangpinMC";
+            scm.ItemTitle = "商品名称";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[1].Split(',')[1];
+                scm.ItemOpValue = scs[1].Split(',')[2];
+                scm.ItemJion = scs[1].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "Pihao";
+            scm.ItemTitle = "批号";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[2].Split(',')[1];
+                scm.ItemOpValue = scs[2].Split(',')[2];
+                scm.ItemJion = scs[2].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "ShixiaoRQ";
+            scm.ItemTitle = "近效期";
+            scm.ItemType = "System.Int32";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[3].Split(',')[1];
+                scm.ItemOpValue = scs[3].Split(',')[2];
+                scm.ItemJion = scs[3].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "RukuRQ";
+            scm.ItemTitle = "入库日期";
+            scm.ItemType = "System.DateTime";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[4].Split(',')[1];
+                scm.ItemOpValue = scs[4].Split(',')[2];
+                scm.ItemJion = scs[4].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "Chanpinxian";
+            scm.ItemTitle = "产品线";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[5].Split(',')[1];
+                scm.ItemOpValue = scs[5].Split(',')[2];
+                scm.ItemJion = scs[5].Split(',')[3];
+            }
+            scms.Add(scm);
+
+        }
+    }
+}
+<div id="loading"><img src="~/Imgs/wait.gif" alt="" />系统正在加载数据,请耐心等待...</div>
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    </script>
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="/Home">首页</a>
+        </li>
+        <li><a href="/gsp_hpyhmx/bill/@ViewBag.yhid">养护记录</a></li>
+        <li class="active">添加</li>
+    </ul>
+</div>
+<div class="page-content">
+    @Html.Search_Condition((int)Session["user_id"], "养护货品添加_条件组合查询",_surl, "gsp_hpyhmx_addmaintencedetail", scms)
+    <input type="hidden" id="yhid" value="@ViewBag.yhid" />
+    <input type="hidden" id="hzid" name="hzid" value="@ViewBag.hzid" />
+    <input type="hidden" id="mid" name="mid" value="@ViewBag.mdid" />
+    <div class="page-header">
+        <p>
+            <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
+            <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
+            <button type="button" class="btn btn-default " id="bt_add"><i class="icon-adn"></i>添加</button>
+            <button type="button" class="btn btn-default" id="bt_back"  onclick="javascript: history.back(-1);"><i class="icon-backward"></i>返回</button>
+        </p>
+    </div>
+    <div class="row">
+        <table class="table table-condensed table-hover" id="mydatatable">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>货主</td>
+                    <td>入库单</td>
+                    <td>库位</td>
+                    <td>入库日期</td>
+                    <td>商品代码</td>
+                    <td>商品名称</td>
+                    <td>规格</td>
+                    <td>产品线</td>
+                    <td>注册证</td>
+                    <td>批号</td>
+                    <td>生产日期</td>
+                    <td>失效日期</td>
+                    <td>序列码</td>
+                    <td>数量</td>
+                    <td>单位</td>
+                    <td>换算率</td>
+                    <td>件数</td>
+                    <td>质量状态</td>
+                    <td>货品状态</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.wms_storage_v)
+                {
+                    <tr>
+                        <td>
+                            <label><input type="checkbox" value="@item.sid"></label>
+                        </td>
+                        <td>@Html.GetDataValue_ID("货主", "简称", (int)item.HuozhuID)</td>
+                        <td>@item.RukudanBH</td>
+                        <td>@item.Kuwei</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.RukuRQ == null ? "" : item.RukuRQ)</td>
+                        <td>@item.ShangpinDM</td>
+                        <td>@item.ShangpinMC</td>
+                        <td>@item.Guige</td>
+                        <td>@item.cpxmingcheng</td>
+                        <td>@item.Zhucezheng</td>
+                        <td>@item.Pihao</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShengchanRQ == null ? "" : item.ShengchanRQ)</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ == null ? "" : item.ShixiaoRQ)</td>
+                        <td>@item.Xuliema</td>
+                        <td>@item.sshuliang</td>
+                        <td>@item.JibenDW</td>
+                        <td>@item.Huansuanlv</td>
+                        <td>@string.Format("{0}", item.Huansuanlv != null && item.Huansuanlv > 0 ? item.sshuliang / item.Huansuanlv : item.sshuliang)</td>
+                        <td>@Html.Encode(item.HegeSF == true ? "合格" : "不合格")</td>
+                        <td>@Html.GetCommonValue_ID("存货状态", (int)(item.CunhuoZT == null ? 0 : item.CunhuoZT))</td>
+                        <td>@item.CunhuoSM</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="pager">
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("AddMaintenceDetail", new {mid=ViewBag.mdid,hzid=ViewBag.hzid,page }))
+    </div>
+    <div class="row">
+        <p>&emsp;数量总计:@ViewBag.totalproduct</p>
+        <p class="pull-right">&emsp;件数总计:@ViewBag.totalbox</p>
+
+    </div>
+</div>

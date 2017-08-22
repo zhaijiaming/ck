@@ -1,0 +1,135 @@
+﻿@using CKWMS.App_Code
+@using CKWMS.Models
+@model gsp_hpyhViewModel
+@{
+    ViewBag.Title = "货品养护修改";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#Jiegu").change(function () {
+            if ($("#Jiegu").is(":checked")) {
+                    $("#Jiegu").val("true");
+            } else {
+                $("#Jiegu").val("false");
+            }
+        });
+        var sf = "@Model.Jiegu";
+        if (sf == "True") {
+            $("#Jiegu").attr("checked", true);
+            $("#Jiegu").val("true");
+            $("#funarea").hide();
+        } else {
+            $("#Jiegu").attr("checked", false);
+            $("#Jiegu").val("false");
+        }
+        $("#bt_add").click(function () {
+            window.open("/gsp_hpyhmx/addmaintencedetail?mid=@Model.ID&hzid=@Model.HZID", "_blank");
+        });
+        $("#bt_list").click(function () {
+            window.open("/gsp_hpyhmx/getbill?mid=@Model.ID","_blank");
+        });
+    });
+</script>
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    </script>
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="/Home">首页</a>
+        </li>
+        <li>
+            <a href="/gsp_hpyh">货品养护</a>
+        </li>
+        <li class="active"> 编辑</li>
+    </ul>
+</div>
+
+<div class="page-content">
+    @using (Html.BeginForm("Update", "gsp_hpyh", FormMethod.Post, new { @role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="id" value="@ViewData.Model.ID" />
+        <div class="page-header">
+            <p id="funarea">
+                <button type="submit" class="btn btn-default"><i class="icon-save"></i>更新</button>
+                <button type="button" class="btn btn-default" onclick="javascript: history.back(-1); "><i class="icon-hand-left"></i>返回</button>
+                <button type="button" class="btn btn-default" id="bt_add"><i class="icon-adn"></i>添加货品</button>
+                <button type="button" class="btn btn-default" id="bt_list"><i class="icon-list"></i>养护清单</button>
+            </p>
+        </div>
+        <div class="container">
+            <div class="form-group">
+                @Html.LabelFor(m => m.HZID, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.SelectList_Auto("HZID","货主","名称",(long)Model.HZID)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.YanghuoRQ, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    <input id="YanghuoRQ" type="date" class="form-control" name="YanghuoRQ" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.YanghuoRQ)">
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Jiegu, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @*@Html.TextBoxFor(m => m.Jiegu, new { @class = "form-control" })*@
+                    <label class="control-group">
+                        <input name="Jiegu" id="Jiegu" class="ace ace-switch ace-switch-7" type="checkbox">
+                        <span class="lbl"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ZCTJ, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.ZCTJ, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ZYLC, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.ZYLC, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.HPBS, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.HPBS, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.FHCS, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.FHCS, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.WSHJ, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.WSHJ, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Beizhu, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.Beizhu, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.MakeDate, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    <input id="MakeDate" type="date" class="form-control" name="MakeDate" value="@string.Format("{0:yyyy-MM-dd}",ViewData.Model.MakeDate)">
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.MakeMan, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.SelectList_Auto("MakeMan", "userinfo", "fullname", (long)ViewData.Model.MakeMan)
+                </div>
+            </div>
+        </div>
+    }
+</div>

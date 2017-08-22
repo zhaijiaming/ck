@@ -270,7 +270,7 @@ namespace CKWMS.Controllers
             //    where = where.And(p => p.Xuliema.Contains(_mx.Xuliema));
             //if (_mx.HuopinZT != null)
             //    where = where.And(p => p.CunhuoZT == _mx.HuopinZT);
-            where = where.And(p => p.sshuliang > 0);
+            where = where.And(p => p.sshuliang > 0 && p.ShixiaoRQ>DateTime.Now.AddDays(-1));
             var tempData = ServiceFactory.wms_cunhuoservice.GetStorageList(_custid, where.Compile());//.OrderBy(s=>s.ShixiaoRQ).ThenBy(s=>s.RukuRQ);
             if (tempData == null)
                 return Json(-1);
@@ -294,9 +294,12 @@ namespace CKWMS.Controllers
                     wms_chukumx _ck = ServiceFactory.wms_chukumxservice.GetEntityById(p => p.ID == _ckmx);
                     if (_ck != null)
                     {
+                        if (_ck.JianhuoSL == null)
+                            _ck.JianhuoSL = 0;
                         if (_ck.ChukuSL >= _ck.JianhuoSL + _pknum)
                         {
                             wms_cunhuo _ch = ServiceFactory.wms_cunhuoservice.GetEntityById(p => p.ID == _chmx);
+                            //wms_cunhuo _ch = ServiceFactory.wms_cunhuoservice.GetEntityByIdNoTracking(p => p.ID == _chmx);
                             if (_ch != null)
                             {
                                 if (_pknum > _ch.Shuliang - _ch.DaijianSL)
@@ -324,8 +327,6 @@ namespace CKWMS.Controllers
                                 if (_jh != null)
                                 {
                                     _ck.Jianhuo = true;
-                                    if (_ck.JianhuoSL == null)
-                                        _ck.JianhuoSL = 0;
                                     _ck.JianhuoSL = _ck.JianhuoSL + _pknum;
                                     ServiceFactory.wms_chukumxservice.UpdateEntity(_ck);
                                 }

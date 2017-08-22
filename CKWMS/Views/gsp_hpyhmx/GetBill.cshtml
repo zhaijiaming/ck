@@ -1,0 +1,217 @@
+﻿@using CKWMS.App_Code
+@using CKWMS.Models
+@using X.PagedList
+@using X.PagedList.Mvc
+@{
+    ViewBag.Title = "养护清单";
+    string _searchcondition = ViewBag.SearchCondition;
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("tr").bind("dblclick", function () {
+            var u_id = $(this).find('td').eq(0).find('input').val();
+            if (u_id != null) {
+                //var url_go = "/gsp_hpyhmx/Edit/" + u_id;
+                //location.href = url_go;
+                var b = confirm("确定要删除记录吗？");
+                if (b) {
+                    $.ajax({
+                        async: true,
+                        beforeSend: function () {
+                            ShowWait();
+                        },
+                        complete: function () {
+                            HiddenWait();
+                        },
+                        type: "POST",
+                        url: "/gsp_hpyhmx/deleterecord",
+                        data: {
+                            yhid: u_id
+                        },
+                        success: function (data) {
+                            if (data == -1)
+                                alert("传值失败，请重试！");
+                            if (data == 1) {
+                                location.reload();
+                            }
+                        }
+                    });
+
+                }
+            }
+        });
+        $("#pl_yh_close").click(function () {
+            $("#pl_yanghu").hide();
+        });
+        $("#pl_yanghu").draggable({ handle: ".panel-heading" });
+        $("#yh_cancel").click(function () {
+            $("#pl_yanghu").hide();
+        });
+        $("#yh_save").click(function () {
+            var _jcnr = $("#yhjc").val();
+            var _jcjg = $("#yhjg").val();
+            var _yhr = $("#yhren").val();
+            var _yhbz = $("#yhbz").val();
+            if (_jcnr.length < 1)
+            {
+                alert("请录入检查内容！");
+                return;
+            }
+            if (_jcjg.length < 1)
+            {
+                alert("请录入检查结果！");
+                return;
+            }
+            $.ajax({
+                async: true,
+                beforeSend: function () {
+                    ShowWait();
+                },
+                complete: function () {
+                    HiddenWait();
+                },
+                type: "POST",
+                url: "/gsp_hpyhmx/addcheck",
+                data: {
+                    yhid: $("#selid").val(),
+                    yhr: _yhr,
+                    yhjc: _jcnr,
+                    yhjg: _jcjg,
+                    yhbz:_yhbz
+                },
+                success: function (data) {
+                    if (data == -1)
+                        alert("传值失败，请重试！");
+                    if (data == 1)
+                    {
+                        location.reload();
+                    }
+                }
+            });
+
+        });
+        $(".icon-star").click(function () {
+            var _selrow = $(this).parent().parent();
+            var _selyh = _selrow.find("input");
+            var _ch = _selyh.data("ch");
+            var _yhid = _selyh.val();
+            $("#yhren").val($("#un").val());
+            $("#selid").val(_yhid);
+            $("#pl_yanghu").show();
+        });
+    });
+</script>
+<div id="loading"><img src="~/Imgs/wait.gif" alt="" />系统正在加载数据,请耐心等待...</div>
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    </script>
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="/Home">首页</a>
+        </li>
+        <li class="active">养护清单</li>
+    </ul>
+</div>
+<div class="page-content">
+    <input type="hidden" id="un" value="@ViewBag.username" />
+    <input type="hidden" id="selid" />
+    <div class="row">
+        <table class="table" id="mydatatable">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <td><i class="icon-gear bigger-300"></i></td>
+                    <td>养护</td>
+                    <td>养护编号</td>
+                    <td>养护日期</td>
+                    <td>库龄</td>
+                    <td>产品名称</td>
+                    <td>规格型号</td>
+                    <td>批号</td>
+                    <td>序列号</td>
+                    <td>数量</td>
+                    <td>单位</td>
+                    <td>失效日期</td>
+                    <td>生产厂家</td>
+                    <td>注册证号</td>
+                    <td>库位</td>
+                    <td>检查内容</td>
+                    <td>处理结果</td>
+                    <td>养护人</td>
+                    <td>备注</td>
+                    <td>制单日期</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.mbill)
+                {
+                    <tr>
+                        <td>
+                            <label><input type="checkbox" value="@item.ID" data-ch="@item.CHID" data-yh="@item.YHID"></label>
+                        </td>
+                        <td><i class="icon-star bigger-200"></i></td>
+                        <td>@item.YHID</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}",item.YanghuoRQ==null?"":item.YanghuoRQ)</td>
+                        <td>@item.Kulin</td>
+                        <td>@item.ShangpinMC</td>
+                        <td>@item.Guige</td>
+                        <td>@item.Pihao</td>
+                        <td>@item.Xuliema</td>
+                        <td>@item.Shuliang</td>
+                        <td>@item.JibenDW</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.ShixiaoRQ==null?"": item.ShixiaoRQ)</td>
+                        <td>@item.Changjia</td>
+                        <td>@item.Zhucezheng</td>
+                        <td>@item.Kuwei</td>
+                        <td>@item.Jiancha</td>
+                        <td>@item.CLJG</td>
+                        <td>@item.YHR</td>
+                        <td>@item.Beizhu</td>
+                        <td>@string.Format("{0:yyyy-MM-dd}", item.MakeDate==null?"":item.MakeDate)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="pager">
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("GetBill", new { page }))
+    </div>
+</div>
+<div id="pl_yanghu" class="panel panel-info" style="display:none;position:fixed;top:100px;left:200px;width:600px;z-index:999;">
+    <div class="panel-heading">
+        <h3 class="panel-title">货品养护<button id="pl_yh_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="yhren">养护人</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="yhren" name="yhren" type="text" value="@ViewBag.username" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="yhjc">检查内容</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="yhjc" type="text" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="yhjg">养护结果</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="yhjg" type="text" value="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="yhbz">备注说明</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="yhbz" type="text" value="" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-6 center"><p id="yh_save" class="btn btn-default"><i class="icon-save"></i>完成</p></div>
+            <div class="col-sm-6 center"><p id="yh_cancel" class="btn btn-default"><i class="glyphicon-backward"></i>取消</p></div>
+        </div>
+    </div>
+</div>

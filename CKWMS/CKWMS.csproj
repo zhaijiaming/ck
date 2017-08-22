@@ -304,6 +304,8 @@
     <Compile Include="Controllers\cust_chukujihuamxController.cs" />
     <Compile Include="Controllers\cust_rukujihuaController.cs" />
     <Compile Include="Controllers\cust_rukujihuamxController.cs" />
+    <Compile Include="Controllers\gsp_hpyhController.cs" />
+    <Compile Include="Controllers\gsp_hpyhmxController.cs" />
     <Compile Include="Controllers\json_batchController.cs" />
     <Compile Include="Controllers\json_deliveryController.cs" />
     <Compile Include="Controllers\json_importController.cs" />
@@ -347,6 +349,8 @@
     <Compile Include="Models\cust_chukujihuaViewModel.cs" />
     <Compile Include="Models\cust_rukujihuamxViewModel.cs" />
     <Compile Include="Models\cust_rukujihuaViewModel.cs" />
+    <Compile Include="Models\gsp_hpyhmxViewModel.cs" />
+    <Compile Include="Models\gsp_hpyhViewModel.cs" />
     <Compile Include="Models\json_batchViewModel.cs" />
     <Compile Include="Models\json_deliveryViewModel.cs" />
     <Compile Include="Models\json_importViewModel.cs" />
@@ -1020,6 +1024,14 @@
     <Content Include="Views\quan_gspsphz\Add.cshtml" />
     <Content Include="Views\quan_gspsphz\Edit.cshtml" />
     <Content Include="Views\quan_gspsphz\Index.cshtml" />
+    <Content Include="Views\gsp_hpyh\Add.cshtml" />
+    <Content Include="Views\gsp_hpyh\Edit.cshtml" />
+    <Content Include="Views\gsp_hpyh\Index.cshtml" />
+    <Content Include="Views\gsp_hpyhmx\Add.cshtml" />
+    <Content Include="Views\gsp_hpyhmx\Edit.cshtml" />
+    <Content Include="Views\gsp_hpyhmx\Index.cshtml" />
+    <Content Include="Views\gsp_hpyhmx\AddMaintenceDetail.cshtml" />
+    <Content Include="Views\gsp_hpyhmx\GetBill.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

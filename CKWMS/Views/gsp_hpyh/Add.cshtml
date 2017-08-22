@@ -1,0 +1,120 @@
+﻿@using CKWMS.App_Code
+@using CKWMS.Models
+@model gsp_hpyhViewModel
+@{ViewBag.Title = "货品养护添加";}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#Jiegu").val("false");
+        $("#Jiegu").attr("checked", false);
+        $("#Jiegu").change(function () {
+            if ($("#Jiegu").is(":checked")) {
+                $("#Jiegu").val("true");
+            } else {
+                $("#Jiegu").val("false");
+            }
+        });
+    });
+</script>
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+    </script>
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="/Home">首页</a>
+        </li>
+        <li>
+            <a href="/gsp_hpyh">货品养护</a>
+        </li>
+        <li class="active"> 新增</li>
+    </ul>
+</div>
+
+<div class="page-content">
+    @using (Html.BeginForm("Save", "gsp_hpyh", FormMethod.Post, new { @role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="id" />
+        <div class="page-header">
+            <p>
+                <button type="submit" class="btn btn-default"><i class="icon-save"></i>保存</button>
+                <button type="button" class="btn btn-default" onclick="javascript:history.back(-1); "><i class="icon-hand-left"></i>返回</button>
+            </p>
+        </div>
+        <div class="container">
+            <div class="form-group">
+                @Html.LabelFor(m => m.HZID, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @*@Html.TextBoxFor(m => m.HZID, new { @class = "form-control" })*@
+                    @Html.SelectList_Auto("HZID","货主","名称")
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.YanghuoRQ, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    <input id="YanghuoRQ" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="YanghuoRQ">
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Jiegu, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @*@Html.TextBoxFor(m => m.Jiegu, new { @class = "form-control" })*@
+                    <label class="control-group">
+                        <input name="Jiegu" id="Jiegu" class="ace ace-switch ace-switch-7" checked="checked" type="checkbox">
+                        <span class="lbl"></span>
+                    </label>
+               </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ZCTJ, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.ZCTJ, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ZYLC, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.ZYLC, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.HPBS, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.HPBS, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.FHCS, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.FHCS, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.WSHJ, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.WSHJ, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Beizhu, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.Beizhu, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.MakeDate, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    <input id="MakeDate" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="MakeDate">
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.MakeMan, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10 disabled">
+                    @Html.SelectList_Auto("MakeMan", "userinfo", "fullname",(long)ViewBag.userid )
+                </div>
+            </div>
+        </div>
+    }
+</div>
