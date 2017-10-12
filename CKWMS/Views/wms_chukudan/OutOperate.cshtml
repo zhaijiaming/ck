@@ -16,6 +16,10 @@
             //}
             $(this).addClass("blue");
         });
+        $("#HuozhuID0").change(function () {
+            var _hz = $(this).val();
+            location.href = "/wms_chukudan/outoperate?hz=" + _hz;
+        });
         $("#bt_Express").click(function () {
             //var sDel = "";
             //$("#mydatatable tbody tr input[type=checkbox]").each(function () {
@@ -26,6 +30,8 @@
             //if (sDel.length < 2)
             //    return;
             window.open("/wms_chukudan/expressexportnow", "_blank");
+        });
+        $("#pl_xlm_patch").click(function () {
         });
         $("#bt_over").click(function () {
             var sDel = "";
@@ -82,8 +88,15 @@
             var huozhumc = $(this).parent().find(".huozhumc").text();
             if (huozhumc == "嘉事国润") {
                 window.open("/wms_chukudan/PrintJSGRTongxing?out=" + outOperateid);
+                //window.open("/wms_chukudan/PrintBJTongxing?out=" + outOperateid);    //北京用
             } else if (huozhumc == "嘉事唯众") {
                 window.open("/wms_chukudan/PrintJSWZTongxing?out=" + outOperateid);
+            }
+            else if (huozhumc == "百多力") {
+                window.open("/wms_chukudan/PrintBDLTongxing?out=" + outOperateid);
+            }
+            else if (huozhumc == "亦舸") {
+                window.open("/wms_chukudan/PrintYGTongxing?out=" + outOperateid);
             }
             else {
                 window.open("/wms_chukudan/PrintTongxing?out=" + outOperateid);
@@ -251,7 +264,7 @@
             //            alert("导入序列码失败，请与管理员联系！");
             //        $("#pl_xlm").hide();
             //    });
-            $("#pl_xlm").hide();
+            //$("#pl_xlm").hide();
             $.ajax({
                 async: true,
                 beforeSend: function () {
@@ -275,8 +288,12 @@
                         alert("此出库单已被删除！");
                     else if (data == -3)
                         alert("这些状态下不能进行扫码！");
-                    else
-                        location.reload();
+                    else {
+                        alert("保存成功！");
+                        //location.reload();
+                        $("#xlm").val("");
+                        $("#totalnum").html("0");
+                    }
                 }
             });
 
@@ -501,7 +518,8 @@
                 cust: _cust,
                 mc: $("#mc").val(),
                 gg: $("#gg").val(),
-                ph: $("#ph").val()
+                ph: $("#ph").val(),
+                dm:$("#dm").val()
             },
             success: function (data) {
                 if (data != -1) {
@@ -710,14 +728,15 @@
         <input type="hidden" id="kh" />
         <input type="hidden" id="ck" />
         <input type="hidden" id="ckd" />
-        <p>
-            <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
-            <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
-            @*<button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>*@
-            <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
-            <button type="button" class="btn btn-default " id="bt_over"><i class="icon-ok"></i>完成</button>
-            <button type="button" class="btn btn-default " id="bt_Express"><i class="icon-file"></i>快递导出</button>
-        </p>
+            <div class="col-sm-9">
+                <button type="button" class="btn btn-default " id="bt_addInfo" onclick="AddInfo()"><i class="icon-adn"></i>新增</button>
+                <button type="button" class="btn btn-default " id="bt_updateInfo" onclick="EditInfo()"><i class="icon-edit"></i>编辑</button>
+                @*<button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>*@
+                <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
+                <button type="button" class="btn btn-default " id="bt_over"><i class="icon-ok"></i>完成</button>
+                <button type="button" class="btn btn-default " id="bt_Express"><i class="icon-file"></i>快递导出</button>
+            </div>            
+            <div class="col-sm-3">@Html.SelectList_Auto("HuozhuID0", "货主", "都有")</div>
     </div>
     <div class="row">
         <table class="table table-condensed table-hover" id="mydatatable">
@@ -803,14 +822,16 @@
     </div>
     <div class="panel-body">
         <div class="center">
+            <div class="col-sm-1"><label>代码</label></div>
+            <div class="col-sm-1"><input type="text" id="dm" size="12" /></div>
             <div class="col-sm-1"><label>名称</label></div>
             <div class="col-sm-1"><input type="text" id="mc" size="12" /></div>
             <div class="col-sm-1"><label>批号</label></div>
             <div class="col-sm-1"><input type="text" id="ph" size="12" /></div>
             <div class="col-sm-1"><label>规格</label></div>
             <div class="col-sm-1"><input type="text" id="gg" size="12" /></div>
-            <div class="col-sm-3"><p class="btn default" id="pl_search"><i class="icon-search"></i>查询</p></div>
-            <div class="col-sm-3"><p class="btn default" id="pl_ok"><i class="icon-ok"></i>添加</p></div>
+            <div class="col-sm-2"><p class="btn default" id="pl_search"><i class="icon-search"></i>查询</p></div>
+            <div class="col-sm-2"><p class="btn default" id="pl_ok"><i class="icon-ok"></i>添加</p></div>
 
         </div>
         <div class="row" style="width:1190px;height:500px;overflow:auto">

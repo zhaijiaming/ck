@@ -98,7 +98,7 @@ namespace CKWMS.Controllers
                 case 14:
                     var _u8c = ServiceFactory.u8_lackcargoservice.LoadEntities(p => p.IsDelete == false).ToList();
                     var _u8cCount = (from s in _u8c select s.ID).Count();
-                    _rmd.Info = "系统与U8对接时发现有" + _u8cCount.ToString() + "中商品还没有备案！";
+                    _rmd.Info = "系统与U8对接时发现有" + _u8cCount.ToString() + "种商品还没有备案！";
                     _rmd.Ref = "/u8_lackcargo/index";
                     break;
                 case 0:

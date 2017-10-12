@@ -124,6 +124,10 @@
                 success: function (data) {
                     if (data == -1)
                         alert("操作失败，请联系管理员！");
+                    if (data == -2)
+                        alert("-2");
+                    if (data == -3)
+                        alert("-3");
                     else
                         location.reload();
                 }

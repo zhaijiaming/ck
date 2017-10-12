@@ -112,6 +112,7 @@ namespace CKWMS.Controllers
         [HttpPost]
         public string UploadOK(FormCollection form)
         {
+            
             //file.FileName.Substring(file.FileName.LastIndexOf('.'))
             string newfile = "0";
             try
@@ -120,7 +121,7 @@ namespace CKWMS.Controllers
                 {
                     return "0";
                 }
-
+                
                 var file = Request.Files[0];
                 if (file.ContentLength == 0)
                 {

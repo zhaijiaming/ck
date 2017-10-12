@@ -106,7 +106,86 @@ namespace CKWMS.Controllers
                                 }
                             }
                             break;
-
+                        case "Guige":
+                            string Guige = scld[1];
+                            string Guigeequal = scld[2];
+                            string Guigeand = scld[3];
+                            if (!string.IsNullOrEmpty(Guige))
+                            {
+                                if (Guigeequal.Equals("="))
+                                {
+                                    if (Guigeand.Equals("and"))
+                                        where = where.And(p => p.Guige == Guige);
+                                    else
+                                        where = where.Or(p => p.Guige == Guige);
+                                }
+                                if (Guigeequal.Equals("like"))
+                                {
+                                    if (Guigeand.Equals("and"))
+                                        where = where.And(p => p.Guige.Contains(Guige));
+                                    else
+                                        where = where.Or(p => p.Guige.Contains(Guige));
+                                }
+                            }
+                            break;
+                        case "YHID":
+                            string YHID = scld[1];
+                            string YHIDequal = scld[2];
+                            string YHIDand = scld[3];
+                            if (!string.IsNullOrEmpty(YHID))
+                            {
+                                if (YHIDequal.Equals("="))
+                                {
+                                    if (YHIDand.Equals("and"))
+                                        where = where.And(p => p.YHID == int.Parse(YHID));
+                                    else
+                                        where = where.Or(p => p.YHID == int.Parse(YHID));
+                                }
+                                if (YHIDequal.Equals(">"))
+                                {
+                                    if (YHIDand.Equals("and"))
+                                        where = where.And(p => p.YHID > int.Parse(YHID));
+                                    else
+                                        where = where.Or(p => p.YHID > int.Parse(YHID));
+                                }
+                                if (YHIDequal.Equals("<"))
+                                {
+                                    if (YHIDand.Equals("and"))
+                                        where = where.And(p => p.YHID < int.Parse(YHID));
+                                    else
+                                        where = where.Or(p => p.YHID < int.Parse(YHID));
+                                }
+                            }
+                            break;
+                        case "YanghuoRQ":
+                            string YanghuoRQ = scld[1];
+                            string YanghuoRQequal = scld[2];
+                            string YanghuoRQand = scld[3];
+                            if (!string.IsNullOrEmpty(YanghuoRQ))
+                            {
+                                if (YanghuoRQequal.Equals("="))
+                                {
+                                    if (YanghuoRQand.Equals("and"))
+                                        where = where.And(p => p.YanghuoRQ.Value.ToString("yyyy-MM-dd") == YanghuoRQ);
+                                    else
+                                        where = where.Or(p => p.YanghuoRQ.Value.ToString("yyyy-MM-dd") == YanghuoRQ);
+                                }
+                                if (YanghuoRQequal.Equals(">"))
+                                {
+                                    if (YanghuoRQand.Equals("and"))
+                                        where = where.And(p => p.YanghuoRQ > DateTime.Parse(YanghuoRQ));
+                                    else
+                                        where = where.Or(p => p.YanghuoRQ > DateTime.Parse(YanghuoRQ));
+                                }
+                                if (YanghuoRQequal.Equals("<"))
+                                {
+                                    if (YanghuoRQand.Equals("and"))
+                                        where = where.And(p => p.YanghuoRQ < DateTime.Parse(YanghuoRQ));
+                                    else
+                                        where = where.Or(p => p.YanghuoRQ < DateTime.Parse(YanghuoRQ));
+                                }
+                            }
+                            break;
                         default:
                             break;
                     }
@@ -137,6 +216,18 @@ namespace CKWMS.Controllers
             string pihao = Request["pihao"] ?? "";
             string pihaoequal = Request["pihaoequal"] ?? "";
             string pihaoand = Request["pihaoand"] ?? "";
+            //Guige
+            string Guige = Request["Guige"] ?? "";
+            string Guigeequal = Request["Guigeequal"] ?? "";
+            string Guigeand = Request["Guigeand"] ?? "";
+            //YHID
+            string YHID = Request["YHID"] ?? "";
+            string YHIDequal = Request["YHIDequal"] ?? "";
+            string YHIDand = Request["YHIDand"] ?? "";
+            //YanghuoRQ
+            string YanghuoRQ = Request["YanghuoRQ"] ?? "";
+            string YanghuoRQequal = Request["YanghuoRQequal"] ?? "";
+            string YanghuoRQand = Request["YanghuoRQand"] ?? "";
 
             Expression<Func<quan_maintenance_v, bool>> where = PredicateExtensionses.True<quan_maintenance_v>();
             searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
@@ -189,6 +280,87 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pihao", pihao, pihaoequal, pihaoand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pihao", "", pihaoequal, pihaoand);
+               
+                //Guige
+                if (!string.IsNullOrEmpty(Guige))
+                {
+                    if (Guigeequal.Equals("="))
+                    {
+                        if (Guigeand.Equals("and"))
+                            where = where.And(p => p.Guige == Guige);
+                        else
+                            where = where.Or(p => p.Guige == Guige);
+                    }
+                    if (Guigeequal.Equals("like"))
+                    {
+                        if (Guigeand.Equals("and"))
+                            where = where.And(p => p.Guige.Contains(Guige));
+                        else
+                            where = where.Or(p => p.Guige.Contains(Guige));
+                    }
+                }
+                if (!string.IsNullOrEmpty(Guige))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "Guige", Guige, Guigeequal, Guigeand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "Guige", "", Guigeequal, Guigeand);
+                //YHID
+                if (!string.IsNullOrEmpty(YHID))
+                {
+                    if (YHIDequal.Equals("="))
+                    {
+                        if (YHIDand.Equals("and"))
+                            where = where.And(p => p.YHID == int.Parse(YHID));
+                        else
+                            where = where.Or(p => p.YHID == int.Parse(YHID));
+                    }
+                    if (YHIDequal.Equals(">"))
+                    {
+                        if (YHIDand.Equals("and"))
+                            where = where.And(p => p.YHID > int.Parse(YHID));
+                        else
+                            where = where.Or(p => p.YHID > int.Parse(YHID));
+                    }
+                    if (YHIDequal.Equals("<"))
+                    {
+                        if (YHIDand.Equals("and"))
+                            where = where.And(p => p.YHID < int.Parse(YHID));
+                        else
+                            where = where.Or(p => p.YHID < int.Parse(YHID));
+                    }
+                }
+                if (!string.IsNullOrEmpty(YHID))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "YHID", YHID, YHIDequal, YHIDand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "YHID", "", YHIDequal, YHIDand);
+                //YanghuoRQ
+                if (!string.IsNullOrEmpty(YanghuoRQ))
+                {
+                    if (YanghuoRQequal.Equals("="))
+                    {
+                        if (YanghuoRQand.Equals("and"))
+                            where = where.And(p => p.YanghuoRQ.Value.ToString("yyyy-MM-dd") == YanghuoRQ);
+                        else
+                            where = where.Or(p => p.YanghuoRQ.Value.ToString("yyyy-MM-dd") == YanghuoRQ);
+                    }
+                    if (YanghuoRQequal.Equals(">"))
+                    {
+                        if (YanghuoRQand.Equals("and"))
+                            where = where.And(p => p.YanghuoRQ > DateTime.Parse(YanghuoRQ));
+                        else
+                            where = where.Or(p => p.YanghuoRQ > DateTime.Parse(YanghuoRQ));
+                    }
+                    if (YanghuoRQequal.Equals("<"))
+                    {
+                        if (YanghuoRQand.Equals("and"))
+                            where = where.And(p => p.YanghuoRQ < DateTime.Parse(YanghuoRQ));
+                        else
+                            where = where.Or(p => p.YanghuoRQ < DateTime.Parse(YanghuoRQ));
+                    }
+                }
+                if (!string.IsNullOrEmpty(YanghuoRQ))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "YanghuoRQ", YanghuoRQ, YanghuoRQequal, YanghuoRQand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "YanghuoRQ", "", YanghuoRQequal, YanghuoRQand);
                 searchconditionService.GetInstance().AddEntity(sc);
             }
             else
@@ -238,6 +410,88 @@ namespace CKWMS.Controllers
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pihao", pihao, pihaoequal, pihaoand);
                 else
                     sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "pihao", "", pihaoequal, pihaoand);
+
+
+                //Guige
+                if (!string.IsNullOrEmpty(Guige))
+                {
+                    if (Guigeequal.Equals("="))
+                    {
+                        if (Guigeand.Equals("and"))
+                            where = where.And(p => p.Guige == Guige);
+                        else
+                            where = where.Or(p => p.Guige == Guige);
+                    }
+                    if (Guigeequal.Equals("like"))
+                    {
+                        if (Guigeand.Equals("and"))
+                            where = where.And(p => p.Guige.Contains(Guige));
+                        else
+                            where = where.Or(p => p.Guige.Contains(Guige));
+                    }
+                }
+                if (!string.IsNullOrEmpty(Guige))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "Guige", Guige, Guigeequal, Guigeand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "Guige", "", Guigeequal, Guigeand);
+                //YHID
+                if (!string.IsNullOrEmpty(YHID))
+                {
+                    if (YHIDequal.Equals("="))
+                    {
+                        if (YHIDand.Equals("and"))
+                            where = where.And(p => p.YHID == int.Parse(YHID));
+                        else
+                            where = where.Or(p => p.YHID == int.Parse(YHID));
+                    }
+                    if (YHIDequal.Equals(">"))
+                    {
+                        if (YHIDand.Equals("and"))
+                            where = where.And(p => p.YHID > int.Parse(YHID));
+                        else
+                            where = where.Or(p => p.YHID > int.Parse(YHID));
+                    }
+                    if (YHIDequal.Equals("<"))
+                    {
+                        if (YHIDand.Equals("and"))
+                            where = where.And(p => p.YHID < int.Parse(YHID));
+                        else
+                            where = where.Or(p => p.YHID < int.Parse(YHID));
+                    }
+                }
+                if (!string.IsNullOrEmpty(YHID))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "YHID", YHID, YHIDequal, YHIDand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "YHID", "", YHIDequal, YHIDand);
+                //YanghuoRQ
+                if (!string.IsNullOrEmpty(YanghuoRQ))
+                {
+                    if (YanghuoRQequal.Equals("="))
+                    {
+                        if (YanghuoRQand.Equals("and"))
+                            where = where.And(p => p.YanghuoRQ.Value.ToString("yyyy-MM-dd") == YanghuoRQ);
+                        else
+                            where = where.Or(p => p.YanghuoRQ.Value.ToString("yyyy-MM-dd") == YanghuoRQ);
+                    }
+                    if (YanghuoRQequal.Equals(">"))
+                    {
+                        if (YanghuoRQand.Equals("and"))
+                            where = where.And(p => p.YanghuoRQ > DateTime.Parse(YanghuoRQ));
+                        else
+                            where = where.Or(p => p.YanghuoRQ > DateTime.Parse(YanghuoRQ));
+                    }
+                    if (YanghuoRQequal.Equals("<"))
+                    {
+                        if (YanghuoRQand.Equals("and"))
+                            where = where.And(p => p.YanghuoRQ < DateTime.Parse(YanghuoRQ));
+                        else
+                            where = where.Or(p => p.YanghuoRQ < DateTime.Parse(YanghuoRQ));
+                    }
+                }
+                if (!string.IsNullOrEmpty(YanghuoRQ))
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "YanghuoRQ", YanghuoRQ, YanghuoRQequal, YanghuoRQand);
+                else
+                    sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "YanghuoRQ", "", YanghuoRQequal, YanghuoRQand);
                 searchconditionService.GetInstance().UpdateEntity(sc);
             }
             ViewBag.SearchCondition = sc.ConditionInfo;

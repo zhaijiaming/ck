@@ -691,7 +691,9 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
@@ -1032,6 +1034,9 @@
     <Content Include="Views\gsp_hpyhmx\Index.cshtml" />
     <Content Include="Views\gsp_hpyhmx\AddMaintenceDetail.cshtml" />
     <Content Include="Views\gsp_hpyhmx\GetBill.cshtml" />
+    <Content Include="Views\wms_chukudan\PrintBDLTongxing.cshtml" />
+    <Content Include="Views\wms_chukudan\PrintBJTongxing.cshtml" />
+    <Content Include="Views\wms_chukudan\PrintYGTongxing.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -1059,6 +1064,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="reports\rptJH_CKFuhejianyan.rdlc" />
     <EmbeddedResource Include="reports\rptJianHuoDan.rdlc" />
+    <EmbeddedResource Include="reports\rptBDLTongxing.rdlc" />
+    <EmbeddedResource Include="reports\rptBJTongxing.rdlc" />
+    <EmbeddedResource Include="reports\rptYGTongxing.rdlc" />
     <EmbeddedResource Include="reports\rptJSWZTongxing.rdlc" />
     <EmbeddedResource Include="reports\rptJSGRTongxing.rdlc" />
     <EmbeddedResource Include="reports\rptOutReport.rdlc">

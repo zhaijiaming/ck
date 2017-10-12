@@ -655,6 +655,8 @@ namespace CKWMS.Controllers
                 quan_gspspxxviewmodel.ShangpinTM = _gspsp.ShangpinTM;
                 quan_gspspxxviewmodel.Chandi = _gspsp.Chandi;
                 quan_gspspxxviewmodel.ShangpinMS = _gspsp.ShangpinMS;
+                quan_gspspxxviewmodel.WenduSX = _gspsp.WenduSX;
+                quan_gspspxxviewmodel.WenduXX = _gspsp.WenduXX;
                 //quan_gspspxxviewmodel.SPID = _gspsp.SPID;
                 ViewBag.gspspid = _gspsp.ID;
                 return View(quan_gspspxxviewmodel);
@@ -698,7 +700,9 @@ namespace CKWMS.Controllers
             _gspsp.BaozhuangDW = _spxx.BaozhuangDW;
             _gspsp.ShangpinTM = _spxx.ShangpinTM;
             _gspsp.Chandi = _spxx.Chandi;
-            _gspsp.ShangpinTM = _spxx.ShangpinTM;
+            _gspsp.ShangpinMS = _spxx.ShangpinMS;
+            _gspsp.WenduSX = _spxx.WenduSX;
+            _gspsp.WenduXX = _spxx.WenduXX;
             _gspsp.SPID = _spxx.ID;
             _gspsp = ob_quan_gspspxxservice.AddEntity(_gspsp);
             if (_gspsp != null)
@@ -743,6 +747,8 @@ namespace CKWMS.Controllers
                 quan_gspspxxviewmodel.ShangpinTM = _gspsp.ShangpinTM;
                 quan_gspspxxviewmodel.Chandi = _gspsp.Chandi;
                 quan_gspspxxviewmodel.ShangpinMS = _gspsp.ShangpinMS;
+                quan_gspspxxviewmodel.WenduSX = _gspsp.WenduSX;
+                quan_gspspxxviewmodel.WenduXX = _gspsp.WenduXX;
                 //quan_gspspxxviewmodel.SPID = _gspsp.SPID;
                 ViewBag.gspspid = _gspsp.ID;
                 return View(quan_gspspxxviewmodel);

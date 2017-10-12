@@ -69,7 +69,15 @@
                                 var chukuID = $(this).find(".table_chukuID").val();
                                 if (huozhu == "嘉事国润") {
                                     window.open("/wms_chukudan/PrintJSGRTongxing?out=" + chukuID);
-                                } else {
+                                    //window.open("/wms_chukudan/PrintBJTongxing?out=" + chukuID);   //北京用
+                                }
+                                else if (huozhu == "百多力") {
+                                    window.open("/wms_chukudan/PrintBDLTongxing?out=" + chukuID);
+                                }
+                                else if (huozhu == "亦舸") {
+                                    window.open("/wms_chukudan/PrintYGTongxing?out=" + chukuID);
+                                }
+                                else {
                                     window.open("/wms_chukudan/PrintTongxing?out=" + chukuID);
                                 }
                             }

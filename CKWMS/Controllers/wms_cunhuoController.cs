@@ -1293,10 +1293,11 @@ namespace CKWMS.Controllers
             var _mc = Request["mc"] ?? "";
             var _gg = Request["gg"] ?? "";
             var _ph = Request["ph"] ?? "";
+            var _dm = Request["dm"] ?? "";
             if (_custid.Length == 0)
                 return Json(-1);
             Expression<Func<wms_invgoods_v, bool>> where = PredicateExtensionses.True<wms_invgoods_v>();
-            if (string.IsNullOrEmpty(_mc) && string.IsNullOrEmpty(_gg) && string.IsNullOrEmpty(_ph))
+            if (string.IsNullOrEmpty(_mc) && string.IsNullOrEmpty(_gg) && string.IsNullOrEmpty(_ph) && string.IsNullOrEmpty(_dm))
                 return Json(-1);
             if (!string.IsNullOrEmpty(_mc))
                 where = where.And(p => p.ShangpinMC.Contains(_mc));
@@ -1304,7 +1305,9 @@ namespace CKWMS.Controllers
                 where = where.And(p => p.Guige.Contains(_gg));
             if (!string.IsNullOrEmpty(_ph))
                 where = where.And(p => p.Pihao.Contains(_ph));
-            where = where.And(p => p.chsl > 0 && p.ShixiaoRQ>DateTime.Now.AddDays(-1).Date);
+            if (!string.IsNullOrEmpty(_dm))
+                where = where.And(p => p.ShangpinDM.Contains(_dm));
+            where = where.And(p => p.chsl > 0);
             //var tempData = ob_wms_cunhuoservice.GetInventoryGoodsByCust(int.Parse(_custid),p=>p.chsl>0);
             var tempData = ob_wms_cunhuoservice.GetInventoryGoodsByCust(int.Parse(_custid), where.Compile());
             if (tempData == null)

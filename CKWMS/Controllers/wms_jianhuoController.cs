@@ -191,6 +191,10 @@ namespace CKWMS.Controllers
             if (_outid.Length < 1)
                 _outid = "0";
             var _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_outid));
+            if (_ckd.YewuLX == 7)
+                ViewBag.ngck = "1";
+            else
+                ViewBag.ngck = "0";
             ViewBag.chukubh = _ckd.ChukudanBH;
             ViewBag.huozhu = _ckd.HuozhuID;
 
@@ -241,40 +245,36 @@ namespace CKWMS.Controllers
                 where = where.And(p => p.Pihao == _ph);
             if (!string.IsNullOrEmpty(_xlm))
                 where = where.And(p => p.Xuliema == _xlm);
-            //wms_chukumx _mx = ServiceFactory.wms_chukumxservice.GetEntityById(p => p.ID == int.Parse(_mxid));
-            //if (_mx == null)
-            //    return Json(-1);
-            //wms_chukudan _ckd = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == _mx.ChukuID);
-            //_custid = (int)_ckd.HuozhuID;
-            //if (_mx.ShangpinID != null)
-            //    where = where.And(p => p.ShangpinID == _mx.ShangpinID);
-            //if (_mx.ShangpinDM != null)
-            //    where = where.And(p => p.ShangpinDM == _mx.ShangpinDM);
-            //if (_mx.ShangpinMC != null)
-            //    where = where.And(p => p.ShangpinMC == _mx.ShangpinMC);
-            //if (_mx.ShangpinTM != null)
-            //    where = where.And(p => p.ShangpinTM == _mx.ShangpinTM);
-            //if (_mx.Guige != null)
-            //    where = where.And(p => p.Guige == _mx.Guige);
-            //if (_mx.Zhucezheng != null)
-            //    where = where.And(p => p.Zhucezheng == _mx.Zhucezheng);
-            //if (_mx.Pihao != null)
-            //    where = where.And(p => p.Pihao.Contains(_mx.Pihao));
-            //if (_mx.Pihao1 != null)
-            //    where = where.And(p => p.Pihao1.Contains(_mx.Pihao1));
-            //if (_mx.ShengchanRQ != null)
-            //    where = where.And(p => p.ShengchanRQ == _mx.ShengchanRQ);
-            //if (_mx.ShixiaoRQ != null)
-            //    where = where.And(p => p.ShixiaoRQ == _mx.ShixiaoRQ);
-            //if (_mx.Xuliema != null)
-            //    where = where.And(p => p.Xuliema.Contains(_mx.Xuliema));
-            //if (_mx.HuopinZT != null)
-            //    where = where.And(p => p.CunhuoZT == _mx.HuopinZT);
             where = where.And(p => p.sshuliang > 0 && p.ShixiaoRQ>DateTime.Now.AddDays(-1));
             var tempData = ServiceFactory.wms_cunhuoservice.GetStorageList(_custid, where.Compile());//.OrderBy(s=>s.ShixiaoRQ).ThenBy(s=>s.RukuRQ);
             if (tempData == null)
                 return Json(-1);
-            return Json(tempData.ToList<wms_storage_v>());
+            return Json(tempData.ToList());
+        }
+        public JsonResult GetStoreCargo1()
+        {
+            int _userid = (int)Session["user_id"];
+            var _mxid = Request["mx"] ?? "";
+            var _hzid = Request["hz"] ?? "";
+            var _spid = Request["sp"] ?? "";
+            var _ph = Request["ph"] ?? "";
+            var _xlm = Request["xlm"] ?? "";
+            int _custid = 0;
+            if (string.IsNullOrEmpty(_mxid) || string.IsNullOrEmpty(_hzid))
+                return Json(-1);
+            _custid = int.Parse(_hzid);
+            Expression<Func<wms_inventory_v, bool>> where = PredicateExtensionses.True<wms_inventory_v>();
+            if (!string.IsNullOrEmpty(_spid))
+                where = where.And(p => p.ShangpinID == int.Parse(_spid));
+            if (!string.IsNullOrEmpty(_ph))
+                where = where.And(p => p.Pihao == _ph);
+            if (!string.IsNullOrEmpty(_xlm))
+                where = where.And(p => p.Xuliema == _xlm);
+            where = where.And(p => p.sshuliang > 0);
+            var tempData = ServiceFactory.wms_cunhuoservice.GetInventory(where.Compile());
+            if (tempData == null)
+                return Json(-1);
+            return Json(tempData.ToList());
         }
         public JsonResult AddPickGoods()
         {
@@ -298,8 +298,8 @@ namespace CKWMS.Controllers
                             _ck.JianhuoSL = 0;
                         if (_ck.ChukuSL >= _ck.JianhuoSL + _pknum)
                         {
-                            wms_cunhuo _ch = ServiceFactory.wms_cunhuoservice.GetEntityById(p => p.ID == _chmx);
-                            //wms_cunhuo _ch = ServiceFactory.wms_cunhuoservice.GetEntityByIdNoTracking(p => p.ID == _chmx);
+                            //wms_cunhuo _ch = ServiceFactory.wms_cunhuoservice.GetEntityById(p => p.ID == _chmx);
+                            wms_cunhuo _ch = ServiceFactory.wms_cunhuoservice.GetEntityByIdNoTracking(p => p.ID == _chmx);
                             if (_ch != null)
                             {
                                 if (_pknum > _ch.Shuliang - _ch.DaijianSL)

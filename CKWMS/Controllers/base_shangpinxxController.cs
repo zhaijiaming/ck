@@ -806,6 +806,9 @@ namespace CKWMS.Controllers
             string ShangpinMS = Request["ShangpinMS"] ?? "";
             string WenduSX = Request["WenduSX"] ?? "";
             string WenduXX = Request["WenduXX"] ?? "";
+            string Col1 = Request["Col1"] ?? "";
+            string Col2 = Request["Col2"] ?? "";
+            string Col3 = Request["Col3"] ?? "";
             if (shenchasf.IndexOf("true") > -1)
                 shenchasf = "true";
             else
@@ -854,6 +857,9 @@ namespace CKWMS.Controllers
                     ob_base_shangpinxx.ShangpinMS = ShangpinMS.Trim();
                     ob_base_shangpinxx.WenduSX = WenduSX == "" ? 0 : float.Parse(WenduSX);
                     ob_base_shangpinxx.WenduXX = WenduXX == "" ? 0 : float.Parse(WenduXX);
+                    ob_base_shangpinxx.Col1 = Col1.Trim();
+                    ob_base_shangpinxx.Col2 = Col2.Trim();
+                    ob_base_shangpinxx.Col3 = Col3.Trim();
 
                     ob_base_shangpinxx = ob_base_shangpinxxservice.AddEntity(ob_base_shangpinxx);
                 }
@@ -911,6 +917,9 @@ namespace CKWMS.Controllers
                 base_shangpinxxviewmodel.ShangpinMS = tempData.ShangpinMS;
                 base_shangpinxxviewmodel.WenduSX = tempData.WenduSX;
                 base_shangpinxxviewmodel.WenduXX = tempData.WenduXX;
+                base_shangpinxxviewmodel.Col1 = tempData.Col1;
+                base_shangpinxxviewmodel.Col2 = tempData.Col2;
+                base_shangpinxxviewmodel.Col3 = tempData.Col3;
                 return View(base_shangpinxxviewmodel);
             }
         }
@@ -954,6 +963,9 @@ namespace CKWMS.Controllers
             string ShangpinMS = Request["ShangpinMS"] ?? "";
             string WenduSX = Request["WenduSX"] ?? "";
             string WenduXX = Request["WenduXX"] ?? "";
+            string Col1 = Request["Col1"] ?? "";
+            string Col2 = Request["Col2"] ?? "";
+            string Col3 = Request["Col3"] ?? "";
             if (shenchasf.IndexOf("true") > -1)
                 shenchasf = "true";
             else
@@ -1000,6 +1012,9 @@ namespace CKWMS.Controllers
                 p.ShangpinMS = ShangpinMS.Trim();
                 p.WenduSX = WenduSX == "" ? 0 : float.Parse(WenduSX);
                 p.WenduXX = WenduXX == "" ? 0 : float.Parse(WenduXX);
+                p.Col1 = Col1.Trim();
+                p.Col2 = Col2.Trim();
+                p.Col3 = Col3.Trim();
 
                 ob_base_shangpinxxservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;

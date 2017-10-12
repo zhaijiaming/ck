@@ -476,9 +476,17 @@ namespace CKWMS.Controllers
         public ActionResult OperateList()
         {
             int userid = (int)Session["user_id"];
+            var _hz = Request["hz"] ?? "";
 
+            if (string.IsNullOrEmpty(_hz))
+                _hz = "0";
             PageMenu.Set("OperateList", "wms_rukudan", "仓库操作");
-            var tempData = ob_wms_rukudanservice.LoadSortEntities(p => p.IsDelete == false && p.RukuZT < 5, false, s => s.MakeDate);
+            Expression<Func<wms_rukudan, bool>> where = PredicateExtensionses.True<wms_rukudan>();
+            if (_hz == "0")
+                where = where.And(p => p.IsDelete == false && p.RukuZT < 5);
+            else
+                where = where.And(p=>p.HuozhuID==int.Parse(_hz) && p.IsDelete == false && p.RukuZT < 5);
+            var tempData = ob_wms_rukudanservice.LoadSortEntities(where.Compile(), false, s => s.MakeDate);
             ViewBag.wms_rukudan = tempData;
             return View();
         }

@@ -399,6 +399,25 @@ namespace CKWMS.Controllers
             ViewBag.id = id;
             return View();
         }
+        public ActionResult PrintYGTongxing()
+        {
+            var id = Request["out"] ?? "";
+            ViewBag.id = id;
+            return View();
+        }
+        public ActionResult PrintBDLTongxing()
+        {
+            var id = Request["out"] ?? "";
+            ViewBag.id = id;
+            return View();
+        }
+
+        public ActionResult PrintBJTongxing()
+        {
+            var id = Request["out"] ?? "";
+            ViewBag.id = id;
+            return View();
+        }
         public ActionResult PrintJSWZTongxing()
         {
             var id = Request["out"] ?? "";
@@ -408,9 +427,17 @@ namespace CKWMS.Controllers
         public ActionResult OutOperate()
         {
             int userid = (int)Session["user_id"];
+            var _hz = Request["hz"] ?? "";
             string page = Request["page"] ?? "1";
+            if (string.IsNullOrEmpty(_hz))
+                _hz = "0";
             PageMenu.Set("OutOperate", "wms_chukudan", "仓库操作");
-            var tempData = ob_wms_chukudanservice.LoadSortEntities(wms_chukudan => wms_chukudan.IsDelete == false && wms_chukudan.JihuaZT < 5, false, wms_chukudan => wms_chukudan.ID).ToPagedList<wms_chukudan>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            Expression<Func<wms_chukudan, bool>> where = PredicateExtensionses.True<wms_chukudan>();
+            if (_hz == "0")
+                where = where.And(wms_chukudan => wms_chukudan.IsDelete == false && wms_chukudan.JihuaZT < 5);
+            else
+                where = where.And(wms_chukudan =>wms_chukudan.HuozhuID==int.Parse(_hz) && wms_chukudan.IsDelete == false && wms_chukudan.JihuaZT < 5);
+            var tempData = ob_wms_chukudanservice.LoadSortEntities(where.Compile(), false, wms_chukudan => wms_chukudan.ID).ToPagedList<wms_chukudan>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
             ViewBag.wms_chukudan = tempData;
             return View(tempData);
         }
@@ -1097,7 +1124,7 @@ namespace CKWMS.Controllers
                             if (_totaljhsl != _totalmxsl)
                             {
                                 _ckd.JihuaZT = 6;
-                                _ckd.Beizhu = _ckd.Beizhu + "；生成出库单时，计划数量与出库数量不一至！";
+                                _ckd.Beizhu = _ckd.Beizhu + "；生成出库单时，计划数量与出库数量不一致！";
                                 ServiceFactory.wms_chukudanservice.UpdateEntity(_ckd);
                                 return Json(-4);
                             }
@@ -1302,7 +1329,7 @@ namespace CKWMS.Controllers
             var _ckd = ob_wms_chukudanservice.GetEntityById(p => p.ChukudanBH == _ckdbh && p.IsDelete == false);
             if (_ckd == null)
                 return Json(-2);
-            if (_ckd.JihuaZT > 5)
+            if (_ckd.JihuaZT > 7)
                 return Json(-5);
             int _rv = ob_wms_chukudanservice.BillCancel(_ckd.ID);
             if (_ckd.JihuaID != null)
@@ -1718,13 +1745,13 @@ namespace CKWMS.Controllers
                 switch (_user.AccountType)
                 {
                     case 100:
-                        where = where.And(wms_chukudan =>wms_chukudan.HuozhuID==_user.EmployeeID && wms_chukudan.IsDelete == false && wms_chukudan.JihuaZT > 4);
+                        where = where.And(wms_chukudan => wms_chukudan.HuozhuID == _user.EmployeeID && wms_chukudan.IsDelete == false && wms_chukudan.JihuaZT > 4);
                         break;
                     case 200:
-                        where = where.And(wms_chukudan => wms_chukudan.KehuID==_user.EmployeeID && wms_chukudan.IsDelete == false && wms_chukudan.JihuaZT > 4);
+                        where = where.And(wms_chukudan => wms_chukudan.KehuID == _user.EmployeeID && wms_chukudan.IsDelete == false && wms_chukudan.JihuaZT > 4);
                         break;
                     case 300:
-                        where = where.And(wms_chukudan =>wms_chukudan.KefuID==_user.EmployeeID && wms_chukudan.IsDelete == false && wms_chukudan.JihuaZT > 4);
+                        where = where.And(wms_chukudan => wms_chukudan.KefuID == _user.EmployeeID && wms_chukudan.IsDelete == false && wms_chukudan.JihuaZT > 4);
                         break;
                     case 0:
                     default:

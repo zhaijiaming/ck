@@ -256,6 +256,10 @@
     function GetInvetoryCargo(_ck,_ph,_xlm,_hpzt,_spid) {
         if (_ck != null) {
             var filltable = "";
+            var _ng = $("#ngck").val();
+            var _url = "/wms_jianhuo/getstorecargo";
+            if (_ng == "1")
+                _url = "/wms_jianhuo/getstorecargo1";
             $.ajax({
                 async: true,
                 beforeSend: function () {
@@ -267,7 +271,7 @@
                     $.myloading("hide");
                 },
                 type: "POST",
-                url: "/wms_jianhuo/getstorecargo/",
+                url: _url,
                 data: {
                     mx: _ck,
                     ph: _ph,
@@ -277,49 +281,97 @@
                 },
                 success: function (data) {
                     if (data != -1) {
-                        for (var i in data) {
-                            filltable = filltable + '<tr><td><input type="checkbox" value="';
-                            filltable = filltable + data[i].sid;
-                            filltable = filltable + '" data-kw="';
-                            filltable = filltable + data[i].KuweiID;
-                            filltable = filltable + '"/></td><td>';
-                            filltable = filltable + '<input type="text" size="5" value=""/>';
-                            filltable = filltable + '</td><td>';
-                            filltable = filltable + '<input type="text" size="10" value=""/>';
-                            filltable = filltable + '</td><td>';
-                            filltable = filltable + data[i].Kuwei;
-                            filltable = filltable + '</td><td>';
-                            filltable = filltable + data[i].sshuliang;
-                            filltable = filltable + '</td><td>';
-                            filltable = filltable + data[i].DaijianSL;
-                            filltable = filltable + '</td><td>';
-                            filltable = filltable + data[i].Guige;
-                            filltable = filltable + '</td><td>';
-                            filltable = filltable + data[i].Pihao;
-                            filltable = filltable + '</td><td>';
-                            filltable = filltable + data[i].Xuliema;
-                            filltable = filltable + '</td><td>';
-                            filltable = filltable + data[i].Zhucezheng;
-                            filltable = filltable + '</td><td>';
-                            filltable = filltable + data[i].ShengchanRQ.toDate().Format("yyyy-MM-dd");
-                            filltable = filltable + '</td><td>';
-                            filltable = filltable + data[i].ShixiaoRQ.toDate().Format("yyyy-MM-dd");
-                            filltable = filltable + '</td><td>';
-                            if (eval(data[i].CunhuoZT) == 0)
-                                filltable = filltable + '';
-                            if (eval(data[i].CunhuoZT) == 1)
-                                filltable = filltable + '正常';
-                            if (eval(data[i].CunhuoZT) == 2)
-                                filltable = filltable + '破损';
-                            if (eval(data[i].CunhuoZT) == 3)
-                                filltable = filltable + '污染';
-                            if (eval(data[i].CunhuoZT) == 4)
-                                filltable = filltable + '渗漏';
-                            if (eval(data[i].CunhuoZT) == 5)
-                                filltable = filltable + '其它';
-                            filltable = filltable + '</td><td>';
-                            filltable = filltable + data[i].CunhuoSM;
-                            filltable = filltable + '</td></tr>';
+                        if (_ng == "1") {
+                            for (var i in data) {
+                                filltable = filltable + '<tr><td><input type="checkbox" value="';
+                                filltable = filltable + data[i].sid;
+                                filltable = filltable + '" data-kw="';
+                                filltable = filltable + data[i].KuweiID;
+                                filltable = filltable + '"/></td><td>';
+                                filltable = filltable + '<input type="text" size="5" value=""/>';
+                                filltable = filltable + '</td><td>';
+                                filltable = filltable + '<input type="text" size="10" value=""/>';
+                                filltable = filltable + '</td><td>';
+                                filltable = filltable + data[i].Kuwei;
+                                filltable = filltable + '</td><td>';
+                                filltable = filltable + data[i].sshuliang;
+                                filltable = filltable + '</td><td>';
+                                filltable = filltable + data[i].DaijianSL;
+                                filltable = filltable + '</td><td>';
+                                filltable = filltable + data[i].Guige;
+                                filltable = filltable + '</td><td>';
+                                filltable = filltable + data[i].Pihao;
+                                filltable = filltable + '</td><td>';
+                                filltable = filltable + data[i].Xuliema;
+                                filltable = filltable + '</td><td>';
+                                filltable = filltable + data[i].Zhucezheng;
+                                filltable = filltable + '</td><td>';
+                                filltable = filltable + data[i].ShengchanRQ.toDate().Format("yyyy-MM-dd");
+                                filltable = filltable + '</td><td>';
+                                filltable = filltable + data[i].ShixiaoRQ.toDate().Format("yyyy-MM-dd");
+                                filltable = filltable + '</td><td>';
+                                if (eval(data[i].CunhuoZT) == 0)
+                                    filltable = filltable + '';
+                                if (eval(data[i].CunhuoZT) == 1)
+                                    filltable = filltable + '正常';
+                                if (eval(data[i].CunhuoZT) == 2)
+                                    filltable = filltable + '破损';
+                                if (eval(data[i].CunhuoZT) == 3)
+                                    filltable = filltable + '污染';
+                                if (eval(data[i].CunhuoZT) == 4)
+                                    filltable = filltable + '渗漏';
+                                if (eval(data[i].CunhuoZT) == 5)
+                                    filltable = filltable + '其它';
+                                filltable = filltable + '</td><td>';
+                                filltable = filltable + data[i].CunhuoSM;
+                                filltable = filltable + '</td></tr>';
+                            }
+                        }
+                        else {
+                            for (var i in data) {
+                                filltable = filltable + '<tr><td><input type="checkbox" value="';
+                                filltable = filltable + data[i].sid;
+                                filltable = filltable + '" data-kw="';
+                                filltable = filltable + data[i].KuweiID;
+                                filltable = filltable + '"/></td><td>';
+                                filltable = filltable + '<input type="text" size="5" value=""/>';
+                                filltable = filltable + '</td><td>';
+                                filltable = filltable + '<input type="text" size="10" value=""/>';
+                                filltable = filltable + '</td><td>';
+                                filltable = filltable + data[i].Kuwei;
+                                filltable = filltable + '</td><td>';
+                                filltable = filltable + data[i].sshuliang;
+                                filltable = filltable + '</td><td>';
+                                filltable = filltable + data[i].DaijianSL;
+                                filltable = filltable + '</td><td>';
+                                filltable = filltable + data[i].Guige;
+                                filltable = filltable + '</td><td>';
+                                filltable = filltable + data[i].Pihao;
+                                filltable = filltable + '</td><td>';
+                                filltable = filltable + data[i].Xuliema;
+                                filltable = filltable + '</td><td>';
+                                filltable = filltable + data[i].Zhucezheng;
+                                filltable = filltable + '</td><td>';
+                                filltable = filltable + data[i].ShengchanRQ.toDate().Format("yyyy-MM-dd");
+                                filltable = filltable + '</td><td>';
+                                filltable = filltable + data[i].ShixiaoRQ.toDate().Format("yyyy-MM-dd");
+                                filltable = filltable + '</td><td>';
+                                if (eval(data[i].CunhuoZT) == 0)
+                                    filltable = filltable + '';
+                                if (eval(data[i].CunhuoZT) == 1)
+                                    filltable = filltable + '正常';
+                                if (eval(data[i].CunhuoZT) == 2)
+                                    filltable = filltable + '破损';
+                                if (eval(data[i].CunhuoZT) == 3)
+                                    filltable = filltable + '污染';
+                                if (eval(data[i].CunhuoZT) == 4)
+                                    filltable = filltable + '渗漏';
+                                if (eval(data[i].CunhuoZT) == 5)
+                                    filltable = filltable + '其它';
+                                filltable = filltable + '</td><td>';
+                                filltable = filltable + data[i].CunhuoSM;
+                                filltable = filltable + '</td></tr>';
+                            }
                         }
                     }
                     $("#dt_ch tbody").html(filltable);
@@ -501,6 +553,7 @@
     <input type="hidden" id="selmx" />
     <input type="hidden" id="ck" />
     <input type="hidden" id="hzid" value="@ViewBag.huozhu" />
+    <input type="hidden" id="ngck" value="@ViewBag.ngck" />
     <div id="pl_data" class="row" style="overflow:auto;">
         <table class="table table-condensed table-hover" id="mydatatable">
             <caption></caption>

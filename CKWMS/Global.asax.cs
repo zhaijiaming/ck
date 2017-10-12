@@ -236,6 +236,7 @@ namespace CKWMS
             OutgoingType.Add(4, "赠品");
             OutgoingType.Add(5, "换货");
             OutgoingType.Add(6, "其它");
+            OutgoingType.Add(7, "销毁");
 
             OutPlanState = new Dictionary<int, string>();
             OutPlanState.Add(0, "");

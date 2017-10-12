@@ -518,24 +518,40 @@ namespace CKWMS.Controllers
                 _rkmx.YishouSL = 0;
                 _rkmx.DaohuoSL =jhmx.JihuaSL;
 
-                //_rkmx.ShangpinID = jhmx.ShangpinID;
-                //_rkmx.ShangpinDM = jhmx.ShangpinDM;
-                //_rkmx.ShangpinMC =jhmx.ShangpinMC;
-                //_rkmx.ShangpinTM = batch.ShangpinTM;
-                //_rkmx.BaozhuangDW =jhmx.BaozhuangDW;
-                //_rkmx.Chandi = jhmx.Chandi;
-                //_rkmx.Changjia = jhmx.Qiyemingcheng;
-                //_rkmx.Guige =jhmx.Guige;
-                //_rkmx.Huansuanlv =jhmx.Huansuanlv;
-                //_rkmx.JibenDW = batch.Danwei;
-                //_rkmx.Pihao = batch.BATCH_NUMBER;
-                //_rkmx.ShixiaoRQ = batch.EXP_DATE;
-                //_rkmx.Zhucezheng = batch.ZhucezhengBH;
-                //_rkmx = ServiceFactory.wms_rukumxservice.AddEntity(_rkmx);
+                _rkmx.ShangpinID = jhmx.ShangpinID;
+                _rkmx.ShangpinDM = jhmx.ShangpinDM;
+                _rkmx.ShangpinMC = jhmx.ShangpinMC;
+                //var spxx = ServiceFactory.base_shangpinxxservice.LoadEntities(p => p.ID == jhmx.ShangpinID && p.IsDelete == false).ToList();
+                //if (spxx.Count == 0)
+                //    return Json(-1);
+                //_rkmx.ShangpinTM = spxx[0].ShangpinTM;
+                _rkmx.BaozhuangDW = jhmx.BaozhuangDW;
+                _rkmx.Chandi = jhmx.Chandi;
+                _rkmx.Changjia = jhmx.Changjia;
+                _rkmx.Guige = jhmx.Guige;
+                _rkmx.Huansuanlv = jhmx.Huansuanlv;
+                _rkmx.JibenDW = jhmx.JibenDW;
+                _rkmx.Pihao = jhmx.Pihao;
+                _rkmx.ShixiaoRQ = jhmx.ShixiaoRQ;
+                _rkmx.Zhucezheng = jhmx.Zhucezheng;
+                _rkmx.Col1 = jhmx.Col1;
+                _rkmx.Col2 = jhmx.Col2;
+                _rkmx.Col3 = jhmx.Col3;
+                _rkmx = ServiceFactory.wms_rukumxservice.AddEntity(_rkmx);
             }
             return Json(1);
         }
-
+        public JsonResult GetPatch()
+        {
+            int _userid = (int)Session["user_id"];
+            var _rkid = Request["rk"] ?? "";
+            if (string.IsNullOrEmpty(_rkid))
+                return Json(-1);
+            var _rkmxs = ob_wms_rukumxservice.LoadSortEntities(p => p.RukuID == int.Parse(_rkid) && p.IsDelete == false, true, s => s.Pihao).ToList();
+            var _rkms = from u in _rkmxs
+                        select u.Pihao;
+            return Json(_rkms.Distinct());
+        }
     }
 }
 

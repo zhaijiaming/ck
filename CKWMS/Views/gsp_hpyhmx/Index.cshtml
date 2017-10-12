@@ -38,6 +38,24 @@
         scm.ItemTitle = "批号";
         scm.ItemType = "System.String";
         scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "Guige";
+        scm.ItemTitle = "规格";
+        scm.ItemType = "System.String";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "YHID";
+        scm.ItemTitle = "养护编号";
+        scm.ItemType = "System.Int32";
+        scms.Add(scm);
+
+        scm = new SearchConditionModel();
+        scm.ItemCode = "YanghuoRQ";
+        scm.ItemTitle = "养护日期";
+        scm.ItemType = "System.DateTime";
+        scms.Add(scm);
     }
     else
     {
@@ -65,6 +83,42 @@
                 scm.ItemValue = scs[1].Split(',')[1];
                 scm.ItemOpValue = scs[1].Split(',')[2];
                 scm.ItemJion = scs[1].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "Guige";
+            scm.ItemTitle = "规格";
+            scm.ItemType = "System.String";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[2].Split(',')[1];
+                scm.ItemOpValue = scs[2].Split(',')[2];
+                scm.ItemJion = scs[2].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "YHID";
+            scm.ItemTitle = "养护编号";
+            scm.ItemType = "System.Int32";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[3].Split(',')[1];
+                scm.ItemOpValue = scs[3].Split(',')[2];
+                scm.ItemJion = scs[3].Split(',')[3];
+            }
+            scms.Add(scm);
+
+            scm = new SearchConditionModel();
+            scm.ItemCode = "YanghuoRQ";
+            scm.ItemTitle = "养护日期";
+            scm.ItemType = "System.DateTime";
+            if (scs.Length > 1)
+            {
+                scm.ItemValue = scs[4].Split(',')[1];
+                scm.ItemOpValue = scs[4].Split(',')[2];
+                scm.ItemJion = scs[4].Split(',')[3];
             }
             scms.Add(scm);
         }
