@@ -834,6 +834,9 @@ namespace CKWMS.Controllers
                     _shmx.Tiji = float.Parse(_tj);
                     _shmx.Jifeidun = float.Parse(_jfd);
                     _shmx.Beizhu = _bz;
+                    _shmx.Col1 = _rkmx.Col1;
+                    _shmx.Col2 = _rkmx.Col2;
+                    _shmx.Col3 = _rkmx.Col3;
 
                     _shmx.MakeMan = _user;
                     _shmx = ServiceFactory.wms_shouhuomxservice.AddEntity(_shmx);

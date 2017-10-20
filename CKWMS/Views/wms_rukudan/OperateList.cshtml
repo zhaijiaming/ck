@@ -331,9 +331,9 @@
                     <td>录入人</td>
                     <td>状态</td>
                     <td>货品</td>
-                    <td>登记</td>
-                    <td>序列</td>
+                    <td>登记</td>                
                     <td>收货</td>
+                    <td>序列</td>
                     <td>验收</td>
                     <td>上架</td>
                     <td>详单</td>
@@ -357,9 +357,9 @@
                         <td>@Html.GetDataValue_ID("userinfo","全名",(int)item.MakeMan )</td>
                         <td>@Html.GetCommonValue_ID("入库状态",(int)item.RukuZT)</td>
                         <td><a href="/wms_rukumx/getcargos/@item.ID" target="_blank"><i class="icon-list bigger-200 blue"></i></a></td>
-                        <td><a href="/wms_rukumx/add/?rkid=@item.ID" target="_blank"><i class="icon-pencil bigger-200 blue"></i></a></td>
-                        <td><i class="icon-barcode bigger-200 blue"></i></td>
+                        <td><a href="/wms_rukumx/add/?rkid=@item.ID" target="_blank"><i class="icon-pencil bigger-200 blue"></i></a></td>               
                         <td><a href="/wms_shouhuomx/recieving/?rkd=@item.ID" target="_blank"><i class="icon-hand-up bigger-200 blue"></i></a></td>
+                        <td><i class="icon-barcode bigger-200 blue"></i></td>
                         <td><a href="/quan_rukuys/entrychecklist/@item.ID" target="_blank"><i class="icon-check bigger-200 blue"></i></a></td>
                         <td><a href="/wms_cunhuo/getuploadlist/@item.ID" target="_blank"><i class="icon-shopping-cart bigger-200 blue"></i></a></td>
                         <td class="operatelistid"><i class="icon-print bigger-200 blue"><input type="hidden" class="input_operatelistid" value="@item.ID" /></i></td>

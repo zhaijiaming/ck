@@ -310,6 +310,7 @@ namespace CKWMS
             CheckStandard.Add(8, "运输温度");
 
             EntryState = new Dictionary<int, string>();
+            EntryState.Add(-12, "扫码");
             EntryState.Add(0, "");
             EntryState.Add(1, "新建");
             EntryState.Add(2, "收货");

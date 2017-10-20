@@ -218,6 +218,9 @@ namespace CKWMS.Controllers
                 _newshmx.Zhongliang = _orishmx.Zhongliang;
                 _newshmx.Zhucezheng = _orishmx.Zhucezheng;
                 _newshmx.IsDelete = _orishmx.IsDelete;
+                _newshmx.Col1 = _orishmx.Col1;
+                _newshmx.Col2 = _orishmx.Col2;
+                _newshmx.Col3 = _orishmx.Col3;
                 _newshmx = ServiceFactory.wms_shouhuomxservice.AddEntity(_newshmx);
 
                 quan_rukuys ob_quan_rukuys = new quan_rukuys();

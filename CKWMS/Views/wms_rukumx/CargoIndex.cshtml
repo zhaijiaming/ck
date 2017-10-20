@@ -108,6 +108,9 @@
         $("#bt_importu8").click(function () {
             if ($("#rkid").val() == "")
                 return;
+            if (!confirm("确定要导入U8数据?")) {
+                return;
+            }
             $.ajax({
                 async: true,
                 beforeSend: function () {

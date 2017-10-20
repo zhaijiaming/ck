@@ -178,6 +178,9 @@ namespace CKWMS.Controllers
             _sh.MakeMan = op;
             _sh.MakeDate = DateTime.Now;
             _sh.Shuliang = recnum;
+            _sh.Col1 = rkmx.Col1;
+            _sh.Col2 = rkmx.Col2;
+            _sh.Col3 = rkmx.Col3;
             if (rkmx.Zhongliang == null)
                 _sh.Zhongliang = 0;
             else

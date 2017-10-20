@@ -534,6 +534,7 @@ namespace CKWMS.Controllers
                 _rkmx.Pihao = jhmx.Pihao;
                 _rkmx.ShixiaoRQ = jhmx.ShixiaoRQ;
                 _rkmx.Zhucezheng = jhmx.Zhucezheng;
+                _rkmx.Beizhu = jhmx.Beizhu;
                 _rkmx.Col1 = jhmx.Col1;
                 _rkmx.Col2 = jhmx.Col2;
                 _rkmx.Col3 = jhmx.Col3;
