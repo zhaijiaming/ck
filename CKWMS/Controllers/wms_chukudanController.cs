@@ -411,6 +411,12 @@ namespace CKWMS.Controllers
             ViewBag.id = id;
             return View();
         }
+        public ActionResult PrintMLTongxing()
+        {
+            var id = Request["out"] ?? "";
+            ViewBag.id = id;
+            return View();
+        }
 
         public ActionResult PrintBJTongxing()
         {

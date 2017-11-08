@@ -1322,6 +1322,7 @@ namespace CKWMS.Controllers
             var _mc = Request["mc"] ?? "";
             var _gg = Request["gg"] ?? "";
             var _ph = Request["ph"] ?? "";
+            var _ckid = Request["ckid_"] ?? "";
             if (int.Parse(_custid)== 0)
             {
                 //if (string.IsNullOrEmpty(_ph))
@@ -1329,11 +1330,14 @@ namespace CKWMS.Controllers
                 //var _pp = ob_wms_cunhuoservice.GetInventoryGoods(p => p.Pihao == _ph).ToList<wms_invgoods_v>();
                 //if (_pp.Count == 0)
                 //    return Json(-1);
-                if (string.IsNullOrEmpty(_gg))
-                    return Json(-1);
-                var _pp = ServiceFactory.base_shangpinxxservice.GetEntityById(p => p.Guige == _gg);
-                if (_pp == null)
-                    return Json(-1);
+
+                //if (string.IsNullOrEmpty(_gg))
+                //    return Json(-1);
+                //var _pp = ServiceFactory.base_shangpinxxservice.GetEntityById(p => p.Guige == _gg);
+                //if (_pp == null)
+                //    return Json(-1);
+                //_custid = _pp.HuozhuID.ToString();
+                var _pp = ServiceFactory.wms_chukudanservice.GetEntityById(p => p.ID == int.Parse(_ckid));
                 _custid = _pp.HuozhuID.ToString();
             }
             //return Json(-1);

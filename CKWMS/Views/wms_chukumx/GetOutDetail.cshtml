@@ -202,7 +202,8 @@
                 cust: _cust,
                 mc: $("#mc").val(),
                 gg: $("#gg").val(),
-                ph: $("#ph").val()
+                ph: $("#ph").val(),
+                ckid_: $("#ckid_").val(),
             },
             success: function (data) {
                 if (data != -1) {
@@ -313,6 +314,7 @@
     <input type="hidden" id="mc" />
     <input type="hidden" id="gg" />
     <input type="hidden" id="maxval" value="@ViewBag.totalproduct"/>
+    <input type="hidden" id="ckid_" value="@ViewBag.ckid_" />
     <div class="page-header">
         <p>
             @*<button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>*@
