@@ -809,6 +809,7 @@ namespace CKWMS.Controllers
             string Col1 = Request["Col1"] ?? "";
             string Col2 = Request["Col2"] ?? "";
             string Col3 = Request["Col3"] ?? "";
+            string Col4 = Request["Col4"] ?? "";
             if (shenchasf.IndexOf("true") > -1)
                 shenchasf = "true";
             else
@@ -817,6 +818,10 @@ namespace CKWMS.Controllers
                 jingyinsf = "true";
             else
                 jingyinsf = "false";
+            if (Col4.IndexOf("true") > -1)
+                Col4 = "1";
+            else
+                Col4 = "0";
             try
             {
                 base_shangpinxx ob_base_shangpinxx = ob_base_shangpinxxservice.GetEntityById(p => p.HuozhuID == int.Parse(huozhuid) && p.Guige == guige.Trim() && p.Mingcheng == mingcheng.Trim() && p.IsDelete == false);
@@ -860,6 +865,7 @@ namespace CKWMS.Controllers
                     ob_base_shangpinxx.Col1 = Col1.Trim();
                     ob_base_shangpinxx.Col2 = Col2.Trim();
                     ob_base_shangpinxx.Col3 = Col3.Trim();
+                    ob_base_shangpinxx.Col4 = Col4.Trim();
 
                     ob_base_shangpinxx = ob_base_shangpinxxservice.AddEntity(ob_base_shangpinxx);
                 }
@@ -920,6 +926,7 @@ namespace CKWMS.Controllers
                 base_shangpinxxviewmodel.Col1 = tempData.Col1;
                 base_shangpinxxviewmodel.Col2 = tempData.Col2;
                 base_shangpinxxviewmodel.Col3 = tempData.Col3;
+                base_shangpinxxviewmodel.Col4 = tempData.Col4;
                 return View(base_shangpinxxviewmodel);
             }
         }
@@ -966,6 +973,7 @@ namespace CKWMS.Controllers
             string Col1 = Request["Col1"] ?? "";
             string Col2 = Request["Col2"] ?? "";
             string Col3 = Request["Col3"] ?? "";
+            string Col4 = Request["Col4"] ?? "";
             if (shenchasf.IndexOf("true") > -1)
                 shenchasf = "true";
             else
@@ -974,6 +982,10 @@ namespace CKWMS.Controllers
                 jingyinsf = "true";
             else
                 jingyinsf = "false";
+            if (Col4.IndexOf("true") > -1)
+                Col4 = "1";
+            else
+                Col4 = "0";
             int uid = int.Parse(id);
             try
             {
@@ -1015,6 +1027,7 @@ namespace CKWMS.Controllers
                 p.Col1 = Col1.Trim();
                 p.Col2 = Col2.Trim();
                 p.Col3 = Col3.Trim();
+                p.Col4 = Col4.Trim();
 
                 ob_base_shangpinxxservice.UpdateEntity(p);
                 ViewBag.saveok = ViewAddTag.ModifyOk;
