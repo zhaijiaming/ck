@@ -1,11 +1,11 @@
 ﻿@{
-    ViewBag.Title = "明伦随货同行单";
+    ViewBag.Title = "佰礼出库随货同行单";
     Layout = "~/Views/Shared/EmptyView.cshtml";
 }
 <script type="text/javascript">
     $(window).load(function () {
         var tongxingdan = $("#tongxingdan").val();
-        document.getElementById("myReport").src = "../../reports/ReportZY.aspx?pid=MLtongxingdan&out=" + tongxingdan;
+        document.getElementById("myReport").src = "../../reports/ReportZY.aspx?pid=BLJGtongxingdan&out=" + tongxingdan;
         $("#autoUpdate").show();
     });
 </script>

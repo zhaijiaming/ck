@@ -10,6 +10,7 @@ using CKWMS.BSL;
 using CKWMS.Common;
 using CKWMS.Models;
 using CKWMS.Filters;
+using System.IO;
 
 namespace CKWMS.Controllers
 {
@@ -263,6 +264,17 @@ namespace CKWMS.Controllers
             if (_imp != null)
                 return Json(-4);
             int _i = ServiceFactory.json_batchservice.ImportBatch(_del.DELIVERY_NUMBER, _rkd.KehuDH, _rkd.ID, _del.ID, _userid,_hzid);
+            //记录强生发货单号
+            if (System.IO.File.Exists("C:\\xy\\DELIVERY_NUMBER.txt"))
+            {
+                StreamWriter sw_ = new StreamWriter("C:\\xy\\DELIVERY_NUMBER.txt", true);
+                sw_.WriteLine(_del.DELIVERY_NUMBER);
+                sw_.Close();
+            }
+            else
+            {
+            }
+            
             return Json(_i);
         }
         [HttpPost]

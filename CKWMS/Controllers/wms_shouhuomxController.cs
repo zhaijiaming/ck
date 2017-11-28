@@ -1239,7 +1239,17 @@ namespace CKWMS.Controllers
             }
             return Json(1);
         }
-
+        public JsonResult GetPatch()
+        {
+            int _userid = (int)Session["user_id"];
+            var _rkid = Request["rk"] ?? "";
+            if (string.IsNullOrEmpty(_rkid))
+                return Json(-1);
+            var _rkmxs = ob_wms_shouhuomxservice.LoadSortEntities(p => p.RukuID == int.Parse(_rkid) && p.IsDelete == false, true, s => s.Pihao).ToList();
+            var _rkms = from u in _rkmxs
+                        select u.Pihao;
+            return Json(_rkms.Distinct());
+        }
     }
 }
 
