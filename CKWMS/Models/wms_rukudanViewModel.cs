@@ -51,7 +51,7 @@ namespace CKWMS.Models
         public int? Shouhuoren { get; set; }
         [Display(Name = "备注")]
         public string Beizhu { get; set; }
-        [Display(Name = "机动1")]
+        [Display(Name = "客户")]
         public string Col1 { get; set; }
         [Display(Name = "机动2")]
         public string Col2 { get; set; }

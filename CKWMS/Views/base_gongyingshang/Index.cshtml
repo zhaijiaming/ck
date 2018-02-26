@@ -22,7 +22,8 @@
             $("tr input[type=checkbox]").each(function () {
                 if (this.checked) {
                     sendval = $(this).val();
-                    stateinfo = $(this).parent().parent().parent().parent().find("td").eq(1).html();
+                    //stateinfo = $(this).parent().parent().parent().parent().find("td").eq(1).html();
+                    stateinfo = $(this).parent().parent().parent().find("td").eq(1).html();
                 }
             });
             if (sendval == "") {

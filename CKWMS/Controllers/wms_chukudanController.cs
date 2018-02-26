@@ -10,12 +10,15 @@ using CKWMS.BSL;
 using CKWMS.Common;
 using CKWMS.Models;
 using CKWMS.Filters;
+using System.IO;
 
 namespace CKWMS.Controllers
 {
     public class wms_chukudanController : Controller
     {
         private Iwms_chukudanService ob_wms_chukudanservice = ServiceFactory.wms_chukudanservice;
+        private Iwms_jianhuoService ob_wms_jianhuoservice = ServiceFactory.wms_jianhuoservice;
+
         [OutputCache(Duration = 30)]
         public ActionResult Index(string page)
         {
@@ -1145,7 +1148,319 @@ namespace CKWMS.Controllers
             }
             return Json(1);
         }
+        public JsonResult AddBySalesPlan_ph()
+        {
+            int _userid = (int)Session["user_id"];
+            var _ckinfo = Request["ck"] ?? "";
+            string str = "";
+            if (string.IsNullOrEmpty(_ckinfo))
+                return Json(-1);
 
+            var _cks = _ckinfo.Split(',');
+            if (_cks.Count() == 0)
+                return Json(-1);
+            foreach (var ck in _cks)
+            {
+                if (ck.Length > 0)
+                {
+                    cust_chukujihua _ckjh = ServiceFactory.cust_chukujihuaservice.GetEntityById(p => p.ID == int.Parse(ck) && p.IsDelete == false);
+                    if (_ckjh != null)
+                    {
+                        if (_ckjh.ChukudanSL != null)
+                        {
+                            if (_ckjh.ChukudanSL >= 1)
+                                return Json(-3);
+                        }
+                        //wms_chukudan _ckdcheck = ob_wms_chukudanservice.GetEntityById(p => p.KehuDH == _ckjh.KehuDH && p.IsDelete == false);
+                        //if (_ckdcheck != null)
+                        //    return Json(-3);
+                        if (_ckjh.JihuaZT > 1)      //测试
+                        {                           //
+                            return Json(-3);        //
+                        }                           //
+
+                        wms_chukudan _ckd = new wms_chukudan();
+                        _ckd.BaifangQY = "";
+                        _ckd.BaoshuiSF = false;
+                        _ckd.ChunyunYQ = "常温";
+                        _ckd.CKID = 1;
+                        _ckd.FuheSF = true;
+                        _ckd.JianguanSF = true;
+                        _ckd.HuozhuID = _ckjh.HuozhuID;
+                        _ckd.Jianhuoren = 0;
+                        _ckd.JiesuanFS = 1;
+                        _ckd.JihuaZT = 1;
+                        _ckd.KDdanhao = "";
+                        _ckd.KefuID = 0;
+                        _ckd.Kuaidi = 1;
+                        _ckd.MakeDate = DateTime.Now;
+                        _ckd.MakeMan = _userid;
+                        _ckd.XinxiLY = 1;
+                        _ckd.YunsongFS = 1;
+                        _ckd.ChukuRQ = DateTime.Parse(DateTime.Now.ToShortDateString());
+                        //_ckd.ChukuRQ = _ckjh.ChukuRQ;
+                        _ckd.JihuaID = _ckjh.ID;
+                        _ckd.KehuDH = _ckjh.KehuDH;
+                        _ckd.Beizhu = _ckjh.Beizhu;
+                        _ckd.Fahuodizhi = _ckjh.Fahuodizhi;
+                        _ckd.KehuID = _ckjh.KehuID;
+                        _ckd.KehuMC = _ckjh.KehuMC;
+                        _ckd.LianxiDH = _ckjh.LianxiDH;
+                        _ckd.Lianxiren = _ckjh.Lianxiren;
+                        _ckd.YewuLX = (int)_ckjh.YewuLX;
+                        _ckd.Yunsongdizhi = _ckjh.Yunsongdizhi;
+                        _ckd.Kuaidi = GetExpress(_ckjh.Kuaidi);
+                        _ckd.JiesuanFS = GetCollectway(_ckjh.JiesuanFS);
+                        _ckd.YunsongFS = GetDeliverType(_ckjh.YunsongFS);
+                        //自动推送货位标记
+                        _ckd.Col1 = "HW";
+                        _ckd = ob_wms_chukudanservice.AddEntity(_ckd);
+                        
+                        if (_ckd != null)
+                        {
+                            _ckjh.JihuaZT = 2;
+                            if (_ckjh.ChukudanSL == null)
+                                _ckjh.ChukudanSL = 1;
+                            else
+                                _ckjh.ChukudanSL = _ckjh.ChukudanSL + 1;
+                            ServiceFactory.cust_chukujihuaservice.UpdateEntity(_ckjh);
+                            var _ckjhmx = ServiceFactory.cust_chukujihuamxservice.LoadEntities(p => p.JihuaID == _ckjh.ID && p.IsDelete == false).ToList<cust_chukujihuamx>();
+                            foreach (var ckjhmx in _ckjhmx)
+                            {
+                                //var _ch = ServiceFactory.wms_cunhuoservice.GetInventoryGoodsByCust((int)_ckd.HuozhuID, p => p.ShangpinDM == ckjhmx.ShangpinDM).OrderBy(s => s.ShixiaoRQ).ToList<wms_invgoods_v>();
+                                var _ch = ServiceFactory.wms_cunhuoservice.GetInventoryGoodsByCustBatch((int)_ckd.HuozhuID, p => p.ShangpinDM == ckjhmx.ShangpinDM && p.Pihao == ckjhmx.Pihao).OrderBy(s => s.ShixiaoRQ).ToList<wms_invgoods_v>();
+                                if (_ch != null)
+                                {
+                                    var _fpsl = ckjhmx.JihuaSL;
+                                    //判断现存量是否满足
+                                    float? totalsl = 0;
+                                    foreach (var ch in _ch)
+                                    {
+                                        totalsl = totalsl + (ch.chsl ?? 0) - (ch.sdsl ?? 0);
+                                    }
+                                    if (totalsl < _fpsl)
+                                    {
+                                        _ckd.JihuaZT = 6;
+                                        _ckd.Beizhu = _ckd.Beizhu + "；生成出库单时，批号不一致！";
+                                        ServiceFactory.wms_chukudanservice.UpdateEntity(_ckd);
+                                        delch(str);
+                                        return Json(-7);
+                                    }
+
+                                    foreach (var ch in _ch)
+                                    {
+                                        if (ch.sdsl == null)
+                                            ch.sdsl = 0;
+                                        if (_fpsl == 0)
+                                            break;
+                                        if (ch.chsl >= ch.sdsl + _fpsl)
+                                        {
+                                            wms_chukumx _ckmx = new wms_chukumx();
+                                            _ckmx.ChukuID = _ckd.ID;
+                                            _ckmx.Beizhu = ckjhmx.Beizhu;
+                                            //_ckmx.Col1 = string.Format("{0:N2}", ckjhmx.HSDJ);// ckjhmx.HSDJ.ToString();
+                                            _ckmx.ChukuSL = _fpsl;
+                                            _ckmx.Col2 = ckjhmx.TBH;
+                                            _ckmx.Col3 = ckjhmx.Col1;
+                                            //_ckmx.JianhuoSL = 0;
+                                            //_ckmx.Jianhuo = false;
+                                              _ckmx.JianhuoSL = _fpsl;
+                                            _ckmx.Jianhuo = true;
+                                            _ckmx.MakeDate = DateTime.Now;
+                                            _ckmx.MakeMan = _userid;
+
+                                            _ckmx.HuopinZT = ch.CunhuoZT;
+                                            _ckmx.BaozhuangDW = ch.BaozhuangDW;
+                                            _ckmx.Chandi = ch.Chandi;
+                                            _ckmx.Changjia = ch.Changjia;
+                                            _ckmx.Guige = ch.Guige;
+                                            _ckmx.Huansuanlv = ch.Huansuanlv;
+                                            _ckmx.JibenDW = ch.JibenDW;
+                                            _ckmx.Jifeidun = (_fpsl / ch.chsl) * ch.jfd;
+                                            _ckmx.Tiji = (_fpsl / ch.chsl) * ch.tj;
+                                            _ckmx.Zhongliang = (_fpsl / ch.chsl) * ch.zl;
+                                            _ckmx.Jingzhong = (_fpsl / ch.chsl) * ch.jz;
+                                            _ckmx.Pihao = ch.Pihao;
+                                            _ckmx.Pihao1 = ch.Pihao1;
+                                            _ckmx.ShangpinDM = ch.ShangpinDM;
+                                            _ckmx.ShangpinID = ch.ShangpinID;
+                                            _ckmx.ShangpinMC = ch.ShangpinMC;
+                                            _ckmx.ShengchanRQ = ch.ShengchanRQ;
+                                            _ckmx.ShixiaoRQ = ch.ShixiaoRQ;
+                                            _ckmx.Xuliema = ch.Xuliema;
+                                            _ckmx.Zhucezheng = ch.Zhucezheng;
+                                            _ckmx = ServiceFactory.wms_chukumxservice.AddEntity(_ckmx);
+                                            //_fpsl = 0;
+                                            //生成拣货信息
+                                            wms_jianhuo _jh = new wms_jianhuo();
+                                            _jh.CKMXID = _ckmx.ID;
+                                            _jh.DaijianSL = _fpsl;
+                                            _jh.JianhuoRQ = DateTime.Now;
+                                            _jh.JianhuoSM = "";
+                                            _jh.KCID = ch.sid;
+                                            _jh.Fuhe = true;
+                                            _jh.Kuwei = ch.Kuwei;
+                                            _jh.KuweiID = ch.KuweiID;
+                                            _jh.Zhongliang = (_fpsl / ch.chsl) * ch.zl;
+                                            _jh.Jingzhong = (_fpsl / ch.chsl) * ch.jz;
+                                            _jh.Tiji = (_fpsl / ch.chsl) * ch.tj;
+                                            _jh.Jifeidun = (_fpsl / ch.chsl) * ch.jfd;
+                                            _jh.MakeMan = _userid;
+                                            _jh.Jianhuoren = _userid;
+                                            _jh = ob_wms_jianhuoservice.AddEntity(_jh);
+
+                                            str = str + ch.sid + "," + ch.sdsl + "," + (ch.sdsl + _fpsl) + ";";
+                                            //wms_cunhuo cunhuo = ServiceFactory.wms_cunhuoservice.GetEntityById(p => p.ID == ch.sid && p.IsDelete == false);
+                                            //cunhuo.DaijianSL = cunhuo.DaijianSL + _fpsl;
+                                            //ServiceFactory.wms_cunhuoservice.UpdateEntity(cunhuo);
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            if (ch.chsl - ch.sdsl > 0)
+                                            {
+                                                wms_chukumx _ckmx = new wms_chukumx();
+                                                _ckmx.ChukuID = _ckd.ID;
+                                                _ckmx.Beizhu = ckjhmx.Beizhu;
+                                                //_ckmx.Col1 = ckjhmx.HSDJ.ToString();
+                                                _ckmx.Col2 = ckjhmx.TBH;
+                                                _ckmx.Col3 = ckjhmx.Col1;
+                                                _ckmx.ChukuSL = ch.chsl - ch.sdsl;
+                                                //_ckmx.JianhuoSL = 0;
+                                                //_ckmx.Jianhuo = false;
+                                                _ckmx.JianhuoSL = ch.chsl - ch.sdsl;
+                                                _ckmx.Jianhuo = true;
+                                                _ckmx.MakeDate = DateTime.Now;
+                                                _ckmx.MakeMan = _userid;
+
+                                                _ckmx.HuopinZT = ch.CunhuoZT;
+                                                _ckmx.BaozhuangDW = ch.BaozhuangDW;
+                                                _ckmx.Chandi = ch.Chandi;
+                                                _ckmx.Changjia = ch.Changjia;
+                                                _ckmx.Guige = ch.Guige;
+                                                _ckmx.Huansuanlv = ch.Huansuanlv;
+                                                _ckmx.JibenDW = ch.JibenDW;
+                                                _ckmx.Jifeidun = ((ch.chsl - ch.sdsl) / ch.chsl) * ch.jfd;
+                                                _ckmx.Tiji = ((ch.chsl - ch.sdsl) / ch.chsl) * ch.tj;
+                                                _ckmx.Zhongliang = ((ch.chsl - ch.sdsl) / ch.chsl) * ch.zl;
+                                                _ckmx.Jingzhong = ((ch.chsl - ch.sdsl) / ch.chsl) * ch.jz;
+                                                _ckmx.Pihao = ch.Pihao;
+                                                _ckmx.Pihao1 = ch.Pihao1;
+                                                _ckmx.ShangpinDM = ch.ShangpinDM;
+                                                _ckmx.ShangpinID = ch.ShangpinID;
+                                                _ckmx.ShangpinMC = ch.ShangpinMC;
+                                                _ckmx.ShengchanRQ = ch.ShengchanRQ;
+                                                _ckmx.ShixiaoRQ = ch.ShixiaoRQ;
+                                                _ckmx.Xuliema = ch.Xuliema;
+                                                _ckmx.Zhucezheng = ch.Zhucezheng;
+                                                _ckmx = ServiceFactory.wms_chukumxservice.AddEntity(_ckmx);
+                                                if (_ckmx != null)
+                                                    _fpsl = _fpsl - (float)(ch.chsl - ch.sdsl);
+                                                //生成拣货信息
+                                                wms_jianhuo _jh = new wms_jianhuo();
+                                                _jh.CKMXID = _ckmx.ID;
+                                                _jh.DaijianSL = (ch.chsl - ch.sdsl);
+                                                _jh.JianhuoRQ = DateTime.Now;
+                                                _jh.JianhuoSM = "";
+                                                _jh.KCID = ch.sid;
+                                                _jh.Fuhe = true;
+                                                _jh.Kuwei = ch.Kuwei;
+                                                _jh.KuweiID = ch.KuweiID;
+                                                _jh.Zhongliang = ((ch.chsl - ch.sdsl) / ch.chsl) * ch.zl;
+                                                _jh.Jingzhong = ((ch.chsl - ch.sdsl) / ch.chsl) * ch.jz;
+                                                _jh.Tiji = ((ch.chsl - ch.sdsl) / ch.chsl) * ch.tj;
+                                                _jh.Jifeidun = ((ch.chsl - ch.sdsl) / ch.chsl) * ch.jfd;
+                                                _jh.MakeMan = _userid;
+                                                _jh.Jianhuoren = _userid;
+                                                _jh = ob_wms_jianhuoservice.AddEntity(_jh);
+
+                                                str = str + ch.sid + "," + ch.sdsl + "," + ch.chsl + ";";
+                                                //wms_cunhuo cunhuo = ServiceFactory.wms_cunhuoservice.GetEntityById(p => p.ID == ch.sid && p.IsDelete == false);
+                                                //cunhuo.DaijianSL = cunhuo.DaijianSL + ch.chsl - ch.sdsl;
+                                                //ServiceFactory.wms_cunhuoservice.UpdateEntity(cunhuo);
+                                            }
+                                            else
+                                            {
+                                                
+                                            }
+                                        }
+                                    }
+                                    if (_fpsl > 0)
+                                    {
+                                        //wms_chukumx _ckmx = new wms_chukumx();
+                                        //_ckmx.ChukuID = _ckd.ID;
+                                        //_ckmx.Beizhu = ckjhmx.Beizhu;
+                                        //_ckmx.Col1 = ckjhmx.HSDJ.ToString();
+                                        //_ckmx.ChukuSL = _fpsl;
+                                        //_ckmx.JianhuoSL = 0;
+                                        //_ckmx.Jianhuo = false;
+                                        //_ckmx.MakeDate = DateTime.Now;
+                                        //_ckmx.MakeMan = _userid;
+
+                                        //_ckmx.HuopinZT = ch.CunhuoZT;
+                                        //_ckmx.BaozhuangDW = ch.BaozhuangDW;
+                                        //_ckmx.Chandi = ch.Chandi;
+                                        //_ckmx.Changjia = ch.Changjia;
+                                        //_ckmx.Guige = ch.Guige;
+                                        //_ckmx.Huansuanlv = ch.Huansuanlv;
+                                        //_ckmx.JibenDW = ch.JibenDW;
+                                        //_ckmx.Jifeidun =0;
+                                        //_ckmx.Tiji = 0;
+                                        //_ckmx.Zhongliang =0;
+                                        //_ckmx.Jingzhong =0;
+                                        //_ckmx.Pihao ="";
+                                        //_ckmx.Pihao1 ="";
+                                        //_ckmx.ShangpinDM = ch.ShangpinDM;
+                                        //_ckmx.ShangpinID = ch.ShangpinID;
+                                        //_ckmx.ShangpinMC = ch.ShangpinMC;
+                                        //_ckmx.ShengchanRQ = ch.ShengchanRQ;
+                                        //_ckmx.ShixiaoRQ = ch.ShixiaoRQ;
+                                        //_ckmx.Xuliema = ch.Xuliema;
+                                        //_ckmx.Zhucezheng = ch.Zhucezheng;
+                                        //_ckmx = ServiceFactory.wms_chukumxservice.AddEntity(_ckmx);
+                                        //_fpsl = 0;
+                                    }
+                                }
+                                else
+                                {
+                                    return Json(-5);
+                                }
+                            }
+                            var _ckmxs = ServiceFactory.wms_chukumxservice.LoadEntities(p => p.ChukuID == _ckd.ID && p.IsDelete == false).ToList();
+                            var _totalmxsl = _ckmxs.Sum(p => p.ChukuSL);
+                            var _totaljhsl = _ckjhmx.Sum(p => p.JihuaSL);
+                            if (_totaljhsl != _totalmxsl)
+                            {
+                                _ckd.JihuaZT = 6;
+                                _ckd.Beizhu = _ckd.Beizhu + "；生成出库单时，计划数量与出库数量不一致！";
+                                ServiceFactory.wms_chukudanservice.UpdateEntity(_ckd);
+                                delch(str);
+                                return Json(-4);
+                            }
+                        }
+                    }
+                }
+            }
+            return Json(1);
+        }
+        public void delch(string str)
+        {
+            var _strs = str.Split(';');
+            foreach (var ss in _strs)
+            {
+                if (ss.Length > 1)
+                {
+                    var _ss = ss.Split(',');
+                    wms_cunhuo cunhuo = ServiceFactory.wms_cunhuoservice.GetEntityById(p => p.ID == int.Parse(_ss[0]) && p.IsDelete == false);
+                    if (float.Parse(_ss[2]) == cunhuo.DaijianSL)
+                    {
+                        cunhuo.DaijianSL = float.Parse(_ss[1]);
+                        ServiceFactory.wms_cunhuoservice.UpdateEntity(cunhuo);
+                    }
+                    else { }
+                }
+            }
+        }
         public int GetTransfertype(string transfertype)
         {
             foreach (var key in MvcApplication.TransferType)
@@ -1342,6 +1657,23 @@ namespace CKWMS.Controllers
                 return Json(-2);
             if (_ckd.JihuaZT > 7)
                 return Json(-5);
+
+            try
+            {
+                //新增删除类型为推送批号的单据
+                if (_ckd.JihuaZT == 6 && _ckd.Col1 == "HW")
+                {
+                    _ckd.IsDelete = true;
+                    _ckd.MakeDate = DateTime.Now;
+                    ServiceFactory.wms_chukudanservice.UpdateEntity(_ckd);
+                    return Json(1);
+                }
+            }
+            catch
+            {
+                return Json(-4);
+            }
+            
             int _rv = ob_wms_chukudanservice.BillCancel(_ckd.ID);
             if (_ckd.JihuaID != null)
             {
@@ -1776,5 +2108,6 @@ namespace CKWMS.Controllers
             return View(tempData);
         }
     }
+    
 }
 

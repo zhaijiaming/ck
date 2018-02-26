@@ -22,6 +22,7 @@
                     <td>联系电话</td>
                     <td>出库日期</td>
                     <td>送货地址</td>
+                    <td>制单人</td>
                 </tr>
             </thead>
             <tbody>
@@ -39,6 +40,7 @@
                         <td>@item.LianxiDH</td>
                         <td>@string.Format("{0:yyyy-MM-dd}", item.ChukuRQ)</td>
                         <td>@item.Yunsongdizhi</td>
+                        <td>@Html.GetDataValue_ID("userinfo", "全名", (int)item.MakeMan)</td>
                     </tr>
                 }
             </tbody>

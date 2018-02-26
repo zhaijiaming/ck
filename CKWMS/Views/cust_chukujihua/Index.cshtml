@@ -9,7 +9,10 @@
 <script type="text/javascript">
     $(document).ready(function () {
         if (eval($("#usertype").val()) > 0)
+        {
             $("#bt_newout").hide();
+            $("#bt_newout_ph").hide();
+    }
         $("tr").bind("dblclick", function () {
             var u_id = $(this).find('td').eq(0).find('input').val();
             if (u_id != null) {
@@ -47,6 +50,54 @@
                         }
                         else if (data == -4)
                             alert("生成的出库单商品和指令不符，请联系管理员！");
+                        else
+                            location.reload();
+                    }
+                });
+            }
+        });
+        $("#bt_newout_ph").click(function () {
+            var _selval = "";
+            $("#mydatatable tbody tr input[type=checkbox]").each(function () {
+                if (this.checked) {
+                    //_selval = _selval + $(this).val() + ",";
+                    _selval = $(this).val() + ",";
+                }
+            });
+            if (_selval != "") {
+                $.ajax({
+                    async: true,
+                    beforeSend: function () {
+                        ShowWait();
+                    },
+                    complete: function () {
+                        HiddenWait();
+                    },
+                    type: "POST",
+                    url: "/wms_chukudan/addbysalesplan_ph",
+                    data: {
+                        ck: _selval
+                    },
+                    success: function (data) {
+                        if (data == -1)
+                            alert("操作失败，请联系管理员！");
+                        else if (data == -3) {
+                            alert("已生成了出库单，不能再次生成出库dan！");
+                        }
+                        else if (data == -4)
+                            alert("生成的出库单商品和指令不符，请联系管理员！");
+                        else if (data == -5) {
+                            alert("拣货失败，无指定库存！");
+                            location.reload();
+                        }
+                        else if (data == -6) {
+                            alert("存货出现问题，请联系管理员");
+                            location.reload();
+                        }
+                        else if (data == -7) {
+                            alert("现存量不足，请联系管理员");
+                            location.reload();
+                        }
                         else
                             location.reload();
                     }
@@ -284,6 +335,7 @@
             <button type="button" class="btn btn-default " id="bt_close" onclick="CloseInfo()"><i class="icon-circle-blank"></i>关闭</button>
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
             <button type="button" class="btn btn-default " id="bt_newout"><i class="icon-adn"></i>生成出库单</button>
+            <button type="button" class="btn btn-default " id="bt_newout_ph"><i class="icon-adn"></i>国润生成出库单</button>
         </p>
     </div>
     <div class="row" style="overflow:auto;height:445px;">

@@ -24,7 +24,62 @@
 
                 $("form").submit();
             });
+
+            //客户
+            $("#HuozhuID").change(function () {
+                var _selval = $(this).find("option:selected").val();
+                if (eval(_selval) == 0) {
+                    $("#huozhuid").val(0);
+                    return;
+                }
+                $("#huozhuid").val(_selval);
+                GetCustPanel(_selval);
+            });
+            $("#dt_cust tbody").on("dblclick", "tr", function () {
+                var _sr = $(this);
+                var _cid = _sr.find("input").val();
+                var _cnm = _sr.find("td").eq(1).html();
+                $("#Col1").val(_cnm);
+                $("#kehuid").val(_cid);
+                $("#khmc").val(_cnm);
+                $("#pl_cust").hide();
+            });
+            $("#pl_cust").draggable({ handle: ".panel-heading" }, { containment: "parent" });
+            $("#pl_cust_close").click(function () {
+                $("#pl_cust").hide();
+            });
+            $("#selcust").click(function () {
+                $("#pl_cust").show();
+            });
+
         });
+
+        function GetCustPanel(_hz) {
+            if (_hz != null) {
+                var _dz = "";
+                $.post("/base_shouhuodanwei/getcust",
+                    { hz: _hz },
+                    function (data) {
+                        if (data != -1) {
+                            for (var i in data) {
+                                _dz = _dz + '<tr><td><label><input type="checkbox" class ="checkbox" value="';
+                                _dz = _dz + data[i].ID;
+                                _dz = _dz + '"></label></td><td>';
+                                _dz = _dz + data[i].Mingcheng;
+                                _dz = _dz + '</td><td>';
+                                _dz = _dz + data[i].SonghuoDZ;
+                                _dz = _dz + '</td><td>';
+                                _dz = _dz + data[i].Lianxiren;
+                                _dz = _dz + '</td><td>';
+                                _dz = _dz + data[i].LianxiDH;
+                                _dz = _dz + '</td></tr>';
+                            }
+                            $("#dt_cust tbody").html(_dz);
+                        }
+                    });
+            }
+        }
+     
     </script>
     <ul class="breadcrumb">
         <li>
@@ -44,6 +99,8 @@
         @Html.AntiForgeryToken()
         <input type="hidden" name="id" />
         <input type="hidden" id="planid" name="planid" />
+        <input type="hidden" name="KehuID" id="kehuid" />
+        <input type="hidden" id="khmc" />
         <input type="hidden" id="xxly" name="XinxiLY" value="1" />
         <div class="page-header">
             <p>
@@ -64,6 +121,16 @@
                 <div class="col-sm-10">
                     @*@Html.TextBoxFor(m => m.HuozhuID, new { @class = "form-control" })*@
                     @Html.SelectList_Auto("HuozhuID","货主", "都有")
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Col1, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(m => m.Col1, new { @class = "form-control" })
+                    @*<select id="selkh" class="form-control"></select>*@
+                </div>
+                <div class="col-sm-2">
+                    <p id="selcust" class="form-control blue">选择</p>
                 </div>
             </div>
             <div class="form-group">
@@ -235,6 +302,28 @@
                         </tr>
                     }
                 </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div id="pl_cust" class="panel panel-primary" style="display:none;position:fixed;top:50px;left:100px;width:600px;z-index:999;overflow:auto;">
+    <div class="panel-heading">
+        <h3 class="panel-title">请选择客户<button id="pl_cust_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body" style="width:600px;height:360px;overflow:auto;">
+        <div class="row">
+            <table class="table table-condensed" id="dt_cust">
+                <caption></caption>
+                <thead>
+                    <tr>
+                        <td></td>
+                        <td>名称</td>
+                        <td>地址</td>
+                        <td>联系人</td>
+                        <td>电话</td>
+                    </tr>
+                </thead>
+                <tbody></tbody>
             </table>
         </div>
     </div>

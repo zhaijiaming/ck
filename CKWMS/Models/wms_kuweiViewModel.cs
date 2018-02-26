@@ -31,7 +31,7 @@ namespace CKWMS.Models
         public float? MaxVolumn { get; set; }
         [Display(Name = "是否启用")]
         public bool QiyongSF { get; set; }
-        [Display(Name = "机动1")]
+        [Display(Name = "格数")]
         public string Col1 { get; set; }
         [Display(Name = "机动2")]
         public string Col2 { get; set; }

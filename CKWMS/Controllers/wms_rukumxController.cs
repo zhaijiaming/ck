@@ -268,7 +268,22 @@ namespace CKWMS.Controllers
             if (System.IO.File.Exists("C:\\xy\\DELIVERY_NUMBER.txt"))
             {
                 StreamWriter sw_ = new StreamWriter("C:\\xy\\DELIVERY_NUMBER.txt", true);
-                sw_.WriteLine(_del.DELIVERY_NUMBER);
+                if (string.IsNullOrEmpty(_rkd.KehuDH))
+                {
+                    if (_rkd.Beizhu.IndexOf("样品") > -1)
+                    {
+                        sw_.WriteLine(_del.DELIVERY_NUMBER + "YP");
+                    }
+                    else if (_rkd.Beizhu.IndexOf("投诉") > -1)
+                    {
+                        sw_.WriteLine(_del.DELIVERY_NUMBER + "TS");
+                    }
+                }
+                else
+                {
+                    sw_.WriteLine(_del.DELIVERY_NUMBER);
+                }
+                
                 sw_.Close();
             }
             else

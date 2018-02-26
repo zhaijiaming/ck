@@ -286,6 +286,44 @@ namespace CKWMS.Controllers
             }
             return Json(1);
         }
+        public JsonResult AddCheck_all()
+        {
+            int _userid = (int)Session["user_id"];
+            string _shmxid = Request["shmx"] ?? "";
+            string _yssl = Request["sl"] ?? "";
+            string _ysresult = Request["ys"] ?? "";
+            string _ysren = Request["ysr"] ?? "";
+            string _yssm = Request["yssm"] ?? "";
+            string[] sids = _shmxid.Split(',');
+            string[] ssls = _yssl.Split(',');
+            int i = 0;
+            foreach (string sid in sids)
+            {
+                if (sid.Length > 0)
+                {
+                    try
+                    {
+                        quan_rukuys ob_quan_rukuys = new quan_rukuys();
+                        ob_quan_rukuys.MingxiID = _shmxid == "" ? 0 : int.Parse(sid);
+                        ob_quan_rukuys.YanshouSL = _yssl == "" ? 0 : float.Parse(ssls[i]);
+                        ob_quan_rukuys.Yanshou = _ysresult == "" ? 0 : int.Parse(_ysresult);
+                        ob_quan_rukuys.Yanshouren = _ysren.Trim();
+                        ob_quan_rukuys.YanshouSM = _yssm.Trim();
+                        ob_quan_rukuys.YanshouZT = 3;
+                        ob_quan_rukuys.MakeDate = DateTime.Now;
+                        ob_quan_rukuys.MakeMan = _userid;
+                        ob_quan_rukuys = ob_quan_rukuysservice.AddEntity(ob_quan_rukuys);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        return Json(-1);
+                    }
+                }
+                i++;
+            }      
+            return Json(1);
+        }
         public ActionResult Add()
         {
             ViewBag.userid = (int)Session["user_id"];
@@ -325,6 +363,33 @@ namespace CKWMS.Controllers
             _ys.IsDelete = true;
             if (!ob_quan_rukuysservice.UpdateEntity(_ys))
                 return Json(-1);
+            return Json(1);
+        }
+        public JsonResult CheckDelete_new()
+        {
+            int _userid = (int)Session["user_id"];
+            var _rkid = Request["rk"] ?? "";
+            var _ysid = Request["ys"] ?? "";
+            if (string.IsNullOrEmpty(_rkid) || string.IsNullOrEmpty(_ysid))
+                return Json(-1);
+            string[] sids = _ysid.Split(',');
+            var _rkd = ServiceFactory.wms_rukudanservice.GetEntityById(p => p.ID == int.Parse(_rkid));
+            if (_rkd == null)
+                return Json(-1);
+            if (_rkd.RukuZT > 3)
+                return Json(-2);
+            foreach (string sid in sids)
+            {
+                if (sid.Length > 0)
+                {             
+                    var _ys = ob_quan_rukuysservice.GetEntityById(p => p.ID == int.Parse(sid) && p.IsDelete == false);
+                    if (_ys == null)
+                        return Json(-1);
+                    _ys.IsDelete = true;
+                    if (!ob_quan_rukuysservice.UpdateEntity(_ys))
+                        return Json(-1);
+                }
+            }        
             return Json(1);
         }
         [HttpPost]

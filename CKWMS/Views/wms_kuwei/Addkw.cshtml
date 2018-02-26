@@ -463,6 +463,12 @@
                 </div>
             </div>
             <div class="form-group">
+                @Html.LabelFor(m => m.Col1, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.Col1, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
                 @Html.LabelFor(m => m.ShangpinSL, new { @class = "control-label col-sm-2" })
                 <div class="col-sm-10">
                     @Html.TextBoxFor(m => m.ShangpinSL, new { @class = "form-control" })

@@ -308,6 +308,9 @@ namespace CKWMS.Controllers
             string _cs = "";
             int zimu;
             char tempchar;
+
+            for (int g = 1; g <= int.Parse(col1); g++)
+            {
             for (int i = 0; i < _huojia; i++)
             {
                 _huojiaxh = (int)huojiaxh + i + 1;
@@ -373,7 +376,7 @@ namespace CKWMS.Controllers
                           
 
                             wms_kuwei ob_wms_kuwei = new wms_kuwei();
-                            ob_wms_kuwei.Mingcheng = qydaima + "-" + _hj + "-" + _ls + "-" + _cs + "1";
+                            ob_wms_kuwei.Mingcheng = qydaima + "-" + _hj + "-" + _ls + "-" + _cs + g.ToString();
 
                             ob_wms_kuwei.QuyuID = quyuid == "" ? 0 : int.Parse(quyuid);
                             //ob_wms_kuwei.Mingcheng = mingcheng.Trim();
@@ -405,6 +408,7 @@ namespace CKWMS.Controllers
                         }
                     }
                 }
+            }
             }
             //return RedirectToAction("Index");
             return Json(new { _flag = flag });

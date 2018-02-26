@@ -11,6 +11,18 @@
         $("tr").bind("dblclick", function () {
             var u_id = $(this).find('td').eq(0).find('input').val();
         });
+        //全部选中
+        $("#bt_sel_all").click(function () {
+            $("#mydatatable tr input[type=checkbox]").each(function () {
+                $(this).prop("checked", true);
+            });
+        });
+        //取消全选
+        $("#bt_sel_none").click(function () {
+            $("#mydatatable tr input[type=checkbox]").each(function () {
+                $(this).prop("checked", false);
+            });
+        });
         //入库质量验收报告
         var rkysid = $("#rkysid").val();
         $("#bt_fn_print").click(function () {
@@ -47,21 +59,120 @@
         });
         $("#bt_fn_delete").click(function () {
             $("#pl_fun").hide();
-            $.post("/quan_rukuys/checkdelete",
-                {
+            
+            //旧
+            //$.post("/quan_rukuys/checkdelete",
+            //    {
+            //        rk: $("#rkysid").val(),
+            //        ys: $("#ysid").val()
+            //    }, function (data) {
+            //        if (data == -1)
+            //            alert("验收记录删除失败，请重试！");
+            //        if (data == -2)
+            //            alert("入库验收已经完成，不能再删除记录！");
+            //        if (data == 1)
+            //            location.reload();
+            //    });
+
+            var sid = "";
+            $("#mydatatable tr input[type=checkbox]").each(function () {
+                if (this.checked)
+                    sid = sid + "," + $(this).data("ys")
+            });
+            if (sid == "")
+            {
+                alert("尚未选中验收记录");
+                return;
+            }
+            if (!confirm("确定要删除验收记录吗？"))
+                return;
+            $.ajax({
+                async: true,
+                beforeSend: function () {
+                    ShowWait();
+                },
+                complete: function () {
+                    HiddenWait();
+                },
+                type: "POST",
+                url: "/quan_rukuys/checkdelete_new",
+                data: {
                     rk: $("#rkysid").val(),
-                    ys: $("#ysid").val()
-                }, function (data) {
+                    ys: sid
+                },
+                success: function (data) {
                     if (data == -1)
                         alert("验收记录删除失败，请重试！");
                     if (data == -2)
                         alert("入库验收已经完成，不能再删除记录！");
                     if (data == 1)
                         location.reload();
-                });
+                }
+            });
         });
+        $("#pl_yanshou_all").draggable();
+        $("#bt_fn_all").click(function () {
+            $("#pl_yanshou_all").show();
+        });
+        $("#yssave_all").click(function () {
+            var _ysresult = $("#Yanshou_all").find("option:selected").val();
+            if (eval(_ysresult) == 0) {
+                alert("请选择验收结果后再完成检验！");
+                return;
+            }
+            $("#pl_yanshou_all").hide();
+            var sid = "";
+            var ssl = "";
+            $("#mydatatable tr input[type=checkbox]").each(function () {
+                if (this.checked && $(this).parent().parent().parent().find("td").eq(13).html()=="")
+                { 
+                    sid = sid + "," + $(this).val();
+                    ssl = ssl + "," + $(this).parent().parent().parent().find("td").eq(10).html();
+                }
+            });
+            if (eval(_ysresult) == 2)
+            {
+                alert("部分合格不能批量验收！");
+                $("#pl_fun").hide();
+                return;
+            }
+            $.ajax({
+                async: true,
+                beforeSend: function () {
+                    ShowWait();
+                },
+                complete: function () {
+                    HiddenWait();
+                },
+                type: "POST",
+                url: "/quan_rukuys/addcheck_all",
+                data: {
+                    shmx: sid,
+                    sl: ssl,
+                    ys: _ysresult,
+                    ysr: $("#Yanshouren_all").val(),
+                    yssm: $("#YanshouSM_all").val(),
+                },
+                success: function (data) {
+                    if (data == -1)
+                        alert("验收数据保存失败，请重新验收！");
+                    else {
+                        location.reload();
+                        //ShowCheck();
+                    }
+                }
+            });
+        });
+        $("#yscancel_all").click(function () {
+            $("#pl_yanshou_all").hide();
+        });
+        $("#pl_close_all").click(function () {
+            $("#pl_yanshou_all").hide();
+        });
+
         $("#pl_fun").draggable();
         $("#mydatatable tbody").on("dblclick", "tr", function () {
+            $(this).children().children().children().prop("checked", true);
             $("#ysid").val($(this).find("input").data("ys"));
             $("#pl_fun").show();
         });
@@ -76,6 +187,9 @@
         });
         $("#yhsm").change(function () {
             $("#YanshouSM").val($(this).find("option:selected").text());
+        });
+        $("#yhsm_all").change(function () {
+            $("#YanshouSM_all").val($(this).find("option:selected").text());
         });
         $("#Yanshou").change(function () {
             var _sval = $(this).find("option:selected").val();
@@ -458,12 +572,51 @@
         </div>
     </div>
 </div>
+<div id="pl_yanshou_all" class="panel panel-info" style="display:none;position:fixed;top:100px;left:200px;width:600px;z-index:999;">
+    <div class="panel-heading">
+        <h3 class="panel-title">货品批量验收<button id="pl_close_all" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Yanshouren_all">验收人</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="Yanshouren_all" name="Yanshouren_all" type="text" value="@ViewBag.username" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="Yanshou_all">验收结果</label>
+            <div class="col-sm-10">
+                @*<input class="form-control" id="Yanshou" name="Yanshou" type="text" value="" />*@
+                @Html.SelectList_Common("Yanshou_all", "验收结果")
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="YanshouSM_all">检验说明</label>
+            <div class="col-sm-10">
+                @Html.SelectList_Common("yhsm_all", "验收不符合项说明")
+            </div>
+        </div>
+        <div class="form-group">
+            <textarea class="form-control" id="YanshouSM_all" name="YanshouSM_all"></textarea>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-6 center"><p id="yssave_all" class="btn btn-default"><i class="icon-save"></i>完成</p></div>
+            <div class="col-sm-6 center"><p id="yscancel_all" class="btn btn-default"><i class="glyphicon-backward"></i>取消</p></div>
+        </div>
+    </div>
+</div>
 <div id="pl_fun" class="panel panel-info" style="display:none;position:fixed;top:200px;left:300px;width:200px;overflow:auto;">
     <div class="panel-heading">
         <h3 class="panel-title">功能菜单<button id="pl_fn_close" class="pull-right">X</button></h3>
     </div>
     <div class="panel-body">
         <div class="row">
+            <div class="center"><p id="bt_sel_all" class="btn btn-default">全部选中</p></div>
+            <br />
+            <div class="center"><p id="bt_sel_none" class="btn btn-default">取消全选</p></div>
+            <br />
+            <div class="center"><p id="bt_fn_all" class="btn btn-default">批量验收</p></div>
+            <br />
             <div class="center"><p id="bt_fn_JLprint" class="btn btn-default">验收记录</p></div>
             <br />
             <div class="center"><p id="bt_fn_print" class="btn btn-default">验收报告</p></div>

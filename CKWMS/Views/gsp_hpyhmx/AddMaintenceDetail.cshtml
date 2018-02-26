@@ -20,11 +20,13 @@
         });
         $("#bt_add").click(function () {
             var _adstr = "";
+            var _slstr = "";
             $("#mydatatable tbody tr input[type=checkbox]").each(function () {
                 if (this.checked) {
-                    _adstr = $(this).val() + ","+_adstr;
+                    _adstr = $(this).val() + "," + _adstr;
+                    _slstr = $(this).parent().parent().parent().find("td").eq(14).html() + "," + _slstr;
                 }
-                    alert($(this).val());
+                    //alert($(this).val());
             });
             if (_adstr.length < 2) {
                 alert("请选择货品后添加！");
@@ -42,7 +44,8 @@
                 url: "/gsp_hpyhmx/addcargos",
                 data: {
                     mid: $("#mid").val(),
-                    hps:_adstr
+                    hps: _adstr,
+                    hpsl: _slstr
                 },
                 success: function (data) {
                     if (data == -1)

@@ -21,6 +21,9 @@
     function ExportFile() {
         window.open("/wms_chukuxlm/serialexport", "_blank");
     }
+    function Return() {
+        window.open("/wms_chukuxlm/return", "_blank");
+    }
 </script>
 @{
     List<SearchConditionModel> scms = new List<SearchConditionModel>();
@@ -108,6 +111,7 @@
             <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
             <button type="button" class="btn btn-default " id="bt_export" onclick="ExportFile()"><i class="icon-inbox"></i>导出</button>
+            <button type="button" class="btn btn-default " id="bt_return" onclick="Return()"><i class="icon-inbox"></i>退货单</button>
         </p>
     </div>
     <div class="row">
@@ -131,7 +135,7 @@
                         <td>
                                 <label><input type="checkbox" value="@item.ID"></label>
                         </td>
-                        <td>@item.KehuMC)</td>
+                        <td>@item.KehuMC</td>
                         <td>@item.Chukudan</td>
                         <td>@item.Pihao</td>
                         <td>@item.Xuliema</td>

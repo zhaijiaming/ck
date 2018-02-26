@@ -1183,15 +1183,21 @@ namespace CKWMS.Controllers
             string _username = (string)Session["user_name"];
             var _chs = Request["hps"] ?? "";
             var _mid = Request["mid"] ?? "";
+            var _sl = Request["hpsl"] ?? "";
 
             if (string.IsNullOrEmpty(_chs) || string.IsNullOrEmpty(_mid))
                 return Json(-1);
 
+            var _sls = _sl.Split(',');
+            int i = 0;
             var _cargos = _chs.Split(',');
             foreach(var cargo in _cargos)
             {
                 if (cargo.Length < 1)
+                {
+                    i++;
                     continue;
+                }
                 gsp_hpyhmx _mx = new gsp_hpyhmx();
                 _mx.CHID = int.Parse(cargo);
                 _mx.CLJG = "";
@@ -1200,7 +1206,9 @@ namespace CKWMS.Controllers
                 _mx.YHR = "";
                 _mx.MakeDate = DateTime.Now;
                 _mx.MakeMan = _userid;
-                _mx=ob_gsp_hpyhmxservice.AddEntity(_mx);
+                _mx.YHSL = float.Parse(_sls[i]);
+                _mx =ob_gsp_hpyhmxservice.AddEntity(_mx);
+                i++;
             }
             return Json(1);
         }
