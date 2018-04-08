@@ -263,9 +263,8 @@ namespace CKWMS.Controllers
             json_import _imp = ServiceFactory.json_importservice.GetEntityById(p => p.BillNum == _del.DELIVERY_NUMBER && p.PlanID == _rkd.ID && p.IsDelete == false);
             if (_imp != null)
                 return Json(-4);
-            //int _i = ServiceFactory.json_batchservice.ImportBatch(_del.DELIVERY_NUMBER, _rkd.KehuDH, _rkd.ID, _del.ID, _userid,_hzid);
+            int _i = ServiceFactory.json_batchservice.ImportBatch(_del.DELIVERY_NUMBER, _rkd.KehuDH, _rkd.ID, _del.ID, _userid, _hzid);
 
-            int _i = ServiceFactory.json_batchservice.ImportBatch(_del.DELIVERY_NUMBER, _rkd.Col3, _rkd.ID, _del.ID, _userid, _hzid);
             //记录强生发货单号
             if (System.IO.File.Exists("C:\\xy\\DELIVERY_NUMBER.txt"))
             {
