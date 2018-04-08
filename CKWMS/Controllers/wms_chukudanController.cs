@@ -414,6 +414,12 @@ namespace CKWMS.Controllers
             ViewBag.id = id;
             return View();
         }
+        public ActionResult PrintMYSMTongxing()
+        {
+            var id = Request["out"] ?? "";
+            ViewBag.id = id;
+            return View();
+        }
         public ActionResult PrintMLTongxing()
         {
             var id = Request["out"] ?? "";
@@ -609,6 +615,7 @@ namespace CKWMS.Controllers
         public JsonResult OutFinish()
         {
             var _ids = Request["ck"] ?? "";
+            wancheng(_ids);        //记录完成单号
             if (string.IsNullOrEmpty(_ids))
                 return Json(-1);
             string[] _efs = _ids.Split(',');
@@ -659,6 +666,21 @@ namespace CKWMS.Controllers
                 }
             }
             return Json(1);
+        }
+        public void wancheng(string _ids)
+        {
+            int _userid = (int)Session["user_id"];
+            try
+            {
+                if (System.IO.File.Exists("C:\\EAI\\wancheng.txt"))
+                {
+                    StreamWriter sw_ = new StreamWriter("C:\\EAI\\wancheng.txt", true);
+                    sw_.WriteLine(DateTime.Now + "," + _userid.ToString() +  _ids);
+                    sw_.Close();
+                }
+            }
+            catch
+            { }
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -1310,6 +1332,7 @@ namespace CKWMS.Controllers
                                             _jh = ob_wms_jianhuoservice.AddEntity(_jh);
 
                                             str = str + ch.sid + "," + ch.sdsl + "," + (ch.sdsl + _fpsl) + ";";
+
                                             //wms_cunhuo cunhuo = ServiceFactory.wms_cunhuoservice.GetEntityById(p => p.ID == ch.sid && p.IsDelete == false);
                                             //cunhuo.DaijianSL = cunhuo.DaijianSL + _fpsl;
                                             //ServiceFactory.wms_cunhuoservice.UpdateEntity(cunhuo);

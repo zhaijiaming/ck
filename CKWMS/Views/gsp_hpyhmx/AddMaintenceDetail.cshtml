@@ -231,6 +231,8 @@
                     <td>质量状态</td>
                     <td>货品状态</td>
                     <td>说明</td>
+                    <td>库龄</td>
+                    <td>近效期</td>
                 </tr>
             </thead>
             <tbody>
@@ -260,6 +262,8 @@
                         <td>@Html.Encode(item.HegeSF == true ? "合格" : "不合格")</td>
                         <td>@Html.GetCommonValue_ID("存货状态", (int)(item.CunhuoZT == null ? 0 : item.CunhuoZT))</td>
                         <td>@item.CunhuoSM</td>
+                        <td>@((DateTime.Now.Date - Convert.ToDateTime(item.RukuRQ)).Days)</td>
+                        <td>@((Convert.ToDateTime(item.ShixiaoRQ)- DateTime.Now.Date).Days)</td>
                     </tr>
                 }
             </tbody>

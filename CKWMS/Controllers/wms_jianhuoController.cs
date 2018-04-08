@@ -208,6 +208,12 @@ namespace CKWMS.Controllers
             ViewBag.totalbox = _outdetail.Sum(p => p.ChukuSL / p.Huansuanlv);
             ViewBag.JianhuoJSs = _outdetail.Sum(p => p.JianhuoSL / p.Huansuanlv);
 
+            ViewBag.jhsl = "";
+            if (_ckd.JihuaID != null || _ckd.JihuaID != 0)
+            {
+                var jihua = ServiceFactory.cust_chukujihuamxservice.LoadSortEntities(p => p.JihuaID == _ckd.JihuaID && p.IsDelete == false, true, s => s.Guige).ToList<cust_chukujihuamx>();
+                ViewBag.jhsl = jihua.Sum(p => p.JihuaSL);
+            }                 
             return View();
         }
         public JsonResult GetPickByOut()

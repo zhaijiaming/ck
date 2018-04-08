@@ -313,6 +313,304 @@ namespace CKWMS.Controllers
             ViewBag.wms_chukuxlm = tempData;
             return View(tempData);
         }
+
+        public ActionResult Check(string page)
+        {
+            if (string.IsNullOrEmpty(page))
+                page = "1";
+            int userid = (int)Session["user_id"];
+            //string pagetag = "wms_chukuxlm_check";
+
+            PageMenu.Set("Check", "wms_chukuxlm", "仓库操作");
+
+            Expression<Func<wms_outserial_v, bool>> where = PredicateExtensionses.True<wms_outserial_v>();
+            //searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            //if (sc != null && sc.ConditionInfo != null)
+            //{
+            //    string[] sclist = sc.ConditionInfo.Split(';');
+            //    foreach (string scl in sclist)
+            //    {
+            //        string[] scld = scl.Split(',');
+            //        switch (scld[0])
+            //        {
+            //            case "Chukudan":
+            //                string Chukudan = scld[1];
+            //                string Chukudanequal = scld[2];
+            //                string Chukudanand = scld[3];
+            //                if (!string.IsNullOrEmpty(Chukudan))
+            //                {
+            //                    if (Chukudanequal.Equals("="))
+            //                    {
+            //                        if (Chukudanand.Equals("and"))
+            //                            where = where.And(p => p.Chukudan == Chukudan);
+            //                        else
+            //                            where = where.Or(p => p.Chukudan == Chukudan);
+            //                    }
+            //                    if (Chukudanequal.Equals("like"))
+            //                    {
+            //                        if (Chukudanand.Equals("and"))
+            //                            where = where.And(p => p.Chukudan.Contains(Chukudan));
+            //                        else
+            //                            where = where.Or(p => p.Chukudan.Contains(Chukudan));
+            //                    }
+            //                }
+            //                break;
+            //            case "Xuliema":
+            //                string Xuliema = scld[1];
+            //                string Xuliemaequal = scld[2];
+            //                string Xuliemaand = scld[3];
+            //                if (!string.IsNullOrEmpty(Xuliema))
+            //                {
+            //                    if (Xuliemaequal.Equals("="))
+            //                    {
+            //                        if (Xuliemaand.Equals("and"))
+            //                            where = where.And(p => p.Xuliema == Xuliema);
+            //                        else
+            //                            where = where.Or(p => p.Xuliema == Xuliema);
+            //                    }
+            //                    if (Xuliemaequal.Equals("like"))
+            //                    {
+            //                        if (Xuliemaand.Equals("and"))
+            //                            where = where.And(p => p.Xuliema.Contains(Xuliema));
+            //                        else
+            //                            where = where.Or(p => p.Xuliema.Contains(Xuliema));
+            //                    }
+            //                }
+            //                break;
+            //            case "makedate":
+            //                string makedate = scld[1];
+            //                string makedateequal = scld[2];
+            //                string makedateand = scld[3];
+            //                if (!string.IsNullOrEmpty(makedate))
+            //                {
+            //                    if (makedateequal.Equals("="))
+            //                    {
+            //                        if (makedateand.Equals("and"))
+            //                            where = where.And(p => p.MakeDate.ToString("yyyy-MM-dd") == makedate || p.MakeDate.ToString("yyyy/MM/dd") == makedate || p.MakeDate.ToString("yyyy.MM.dd") == makedate);
+            //                        else
+            //                            where = where.Or(p => p.MakeDate.ToString("yyyy-MM-dd") == makedate || p.MakeDate.ToString("yyyy/MM/dd") == makedate || p.MakeDate.ToString("yyyy.MM.dd") == makedate);
+            //                    }
+            //                    if (makedateequal.Equals(">"))
+            //                    {
+            //                        if (makedateand.Equals("and"))
+            //                            where = where.And(p => p.MakeDate > DateTime.Parse(makedate));
+            //                        else
+            //                            where = where.Or(p => p.MakeDate > DateTime.Parse(makedate));
+            //                    }
+            //                    if (makedateequal.Equals("<"))
+            //                    {
+            //                        if (makedateand.Equals("and"))
+            //                            where = where.And(p => p.MakeDate < DateTime.Parse(makedate));
+            //                        else
+            //                            where = where.Or(p => p.MakeDate < DateTime.Parse(makedate));
+            //                    }
+            //                }
+            //                break;
+            //            default:
+            //                break;
+            //        }
+            //    }
+            //    ViewBag.SearchCondition = sc.ConditionInfo;
+            //}
+
+            where = where.And(wms_chukuxlm => (wms_chukuxlm.Pihao == "" || wms_chukuxlm.Pihao == null) && wms_chukuxlm.MakeDate>= Convert.ToDateTime("2018-01-01 00:29:17"));
+
+            var tempData = ob_wms_chukuxlmservice.GetOutSerialList(where.Compile()).ToPagedList<wms_outserial_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            ViewBag.wms_chukuxlm = tempData;
+            return View(tempData);
+        }
+
+        [HttpPost]
+        [OutputCache(Duration = 30)]
+        public ActionResult Check()
+        {
+            int userid = (int)Session["user_id"];
+            //string pagetag = "wms_chukuxlm_index";
+            string page = "1";
+            ////Chukudan
+            //string Chukudan = Request["Chukudan"] ?? "";
+            //string Chukudanequal = Request["Chukudanequal"] ?? "";
+            //string Chukudanand = Request["Chukudanand"] ?? "";
+            ////Xuliema
+            //string Xuliema = Request["Xuliema"] ?? "";
+            //string Xuliemaequal = Request["Xuliemaequal"] ?? "";
+            //string Xuliemaand = Request["Xuliemaand"] ?? "";
+            ////makedate
+            //string makedate = Request["makedate"] ?? "";
+            //string makedateequal = Request["makedateequal"] ?? "";
+            //string makedateand = Request["makedateand"] ?? "";
+
+            PageMenu.Set("Check", "wms_chukuxlm", "仓库操作");
+
+            Expression<Func<wms_outserial_v, bool>> where = PredicateExtensionses.True<wms_outserial_v>();
+            //searchcondition sc = searchconditionService.GetInstance().GetEntityById(searchcondition => searchcondition.UserID == userid && searchcondition.PageBrief == pagetag);
+            //if (sc == null)
+            //{
+            //    sc = new searchcondition();
+            //    sc.UserID = userid;
+            //    sc.PageBrief = pagetag;
+            //    //Chukudan
+            //    if (!string.IsNullOrEmpty(Chukudan))
+            //    {
+            //        if (Chukudanequal.Equals("="))
+            //        {
+            //            if (Chukudanand.Equals("and"))
+            //                where = where.And(p => p.Chukudan == Chukudan);
+            //            else
+            //                where = where.Or(p => p.Chukudan == Chukudan);
+            //        }
+            //        if (Chukudanequal.Equals("like"))
+            //        {
+            //            if (Chukudanand.Equals("and"))
+            //                where = where.And(p => p.Chukudan.Contains(Chukudan));
+            //            else
+            //                where = where.Or(p => p.Chukudan.Contains(Chukudan));
+            //        }
+            //    }
+            //    if (!string.IsNullOrEmpty(Chukudan))
+            //        sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "Chukudan", Chukudan, Chukudanequal, Chukudanand);
+            //    else
+            //        sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "Chukudan", "", Chukudanequal, Chukudanand);
+            //    //Xuliema
+            //    if (!string.IsNullOrEmpty(Xuliema))
+            //    {
+            //        if (Xuliemaequal.Equals("="))
+            //        {
+            //            if (Xuliemaand.Equals("and"))
+            //                where = where.And(p => p.Xuliema == Xuliema);
+            //            else
+            //                where = where.Or(p => p.Xuliema == Xuliema);
+            //        }
+            //        if (Xuliemaequal.Equals("like"))
+            //        {
+            //            if (Xuliemaand.Equals("and"))
+            //                where = where.And(p => p.Xuliema.Contains(Xuliema));
+            //            else
+            //                where = where.Or(p => p.Xuliema.Contains(Xuliema));
+            //        }
+            //    }
+            //    if (!string.IsNullOrEmpty(Xuliema))
+            //        sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "Xuliema", Xuliema, Xuliemaequal, Xuliemaand);
+            //    else
+            //        sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "Xuliema", "", Xuliemaequal, Xuliemaand);
+            //    //makedate
+            //    if (!string.IsNullOrEmpty(makedate))
+            //    {
+            //        if (makedateequal.Equals("="))
+            //        {
+            //            if (makedateand.Equals("and"))
+            //                where = where.And(p => p.MakeDate.ToString("yyyy-MM-dd") == makedate || p.MakeDate.ToString("yyyy/MM/dd") == makedate || p.MakeDate.ToString("yyyy.MM.dd") == makedate);
+            //            else
+            //                where = where.Or(p => p.MakeDate.ToString("yyyy-MM-dd") == makedate || p.MakeDate.ToString("yyyy/MM/dd") == makedate || p.MakeDate.ToString("yyyy.MM.dd") == makedate);
+            //        }
+            //        if (makedateequal.Equals(">"))
+            //        {
+            //            if (makedateand.Equals("and"))
+            //                where = where.And(p => p.MakeDate > DateTime.Parse(makedate));
+            //            else
+            //                where = where.Or(p => p.MakeDate > DateTime.Parse(makedate));
+            //        }
+            //        if (makedateequal.Equals("<"))
+            //        {
+            //            if (makedateand.Equals("and"))
+            //                where = where.And(p => p.MakeDate < DateTime.Parse(makedate));
+            //            else
+            //                where = where.Or(p => p.MakeDate < DateTime.Parse(makedate));
+            //        }
+            //    }
+            //    if (!string.IsNullOrEmpty(makedate))
+            //        sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "makedate", makedate, makedateequal, makedateand);
+            //    else
+            //        sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "makedate", "", makedateequal, makedateand);
+            //    searchconditionService.GetInstance().AddEntity(sc);
+            //}
+            //else
+            //{
+            //    sc.ConditionInfo = "";
+            //    //Chukudan
+            //    if (!string.IsNullOrEmpty(Chukudan))
+            //    {
+            //        if (Chukudanequal.Equals("="))
+            //        {
+            //            if (Chukudanand.Equals("and"))
+            //                where = where.And(p => p.Chukudan == Chukudan);
+            //            else
+            //                where = where.Or(p => p.Chukudan == Chukudan);
+            //        }
+            //        if (Chukudanequal.Equals("like"))
+            //        {
+            //            if (Chukudanand.Equals("and"))
+            //                where = where.And(p => p.Chukudan.Contains(Chukudan));
+            //            else
+            //                where = where.Or(p => p.Chukudan.Contains(Chukudan));
+            //        }
+            //    }
+            //    if (!string.IsNullOrEmpty(Chukudan))
+            //        sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "Chukudan", Chukudan, Chukudanequal, Chukudanand);
+            //    else
+            //        sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "Chukudan", "", Chukudanequal, Chukudanand);
+            //    //Xuliema
+            //    if (!string.IsNullOrEmpty(Xuliema))
+            //    {
+            //        if (Xuliemaequal.Equals("="))
+            //        {
+            //            if (Xuliemaand.Equals("and"))
+            //                where = where.And(p => p.Xuliema == Xuliema);
+            //            else
+            //                where = where.Or(p => p.Xuliema == Xuliema);
+            //        }
+            //        if (Xuliemaequal.Equals("like"))
+            //        {
+            //            if (Xuliemaand.Equals("and"))
+            //                where = where.And(p => p.Xuliema.Contains(Xuliema));
+            //            else
+            //                where = where.Or(p => p.Xuliema.Contains(Xuliema));
+            //        }
+            //    }
+            //    if (!string.IsNullOrEmpty(Xuliema))
+            //        sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "Xuliema", Xuliema, Xuliemaequal, Xuliemaand);
+            //    else
+            //        sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "Xuliema", "", Xuliemaequal, Xuliemaand);
+            //    //makedate
+            //    if (!string.IsNullOrEmpty(makedate))
+            //    {
+            //        if (makedateequal.Equals("="))
+            //        {
+            //            if (makedateand.Equals("and"))
+            //                where = where.And(p => p.MakeDate.ToString("yyyy-MM-dd") == makedate || p.MakeDate.ToString("yyyy/MM/dd") == makedate || p.MakeDate.ToString("yyyy.MM.dd") == makedate);
+            //            else
+            //                where = where.Or(p => p.MakeDate.ToString("yyyy-MM-dd") == makedate || p.MakeDate.ToString("yyyy/MM/dd") == makedate || p.MakeDate.ToString("yyyy.MM.dd") == makedate);
+            //        }
+            //        if (makedateequal.Equals(">"))
+            //        {
+            //            if (makedateand.Equals("and"))
+            //                where = where.And(p => p.MakeDate > DateTime.Parse(makedate));
+            //            else
+            //                where = where.Or(p => p.MakeDate > DateTime.Parse(makedate));
+            //        }
+            //        if (makedateequal.Equals("<"))
+            //        {
+            //            if (makedateand.Equals("and"))
+            //                where = where.And(p => p.MakeDate < DateTime.Parse(makedate));
+            //            else
+            //                where = where.Or(p => p.MakeDate < DateTime.Parse(makedate));
+            //        }
+            //    }
+            //    if (!string.IsNullOrEmpty(makedate))
+            //        sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "makedate", makedate, makedateequal, makedateand);
+            //    else
+            //        sc.ConditionInfo = sc.ConditionInfo + string.Format("{0},{1},{2},{3};", "makedate", "", makedateequal, makedateand);
+
+            //    searchconditionService.GetInstance().UpdateEntity(sc);
+            //}
+            //ViewBag.SearchCondition = sc.ConditionInfo;
+            //where = where.And(wms_chukuxlm => wms_chukuxlm.IsDelete == false);
+            where = where.And(wms_chukuxlm => (wms_chukuxlm.Pihao == "" || wms_chukuxlm.Pihao == null) && wms_chukuxlm.MakeDate >= Convert.ToDateTime("2018-01-01 00:29:17"));
+
+            var tempData = ob_wms_chukuxlmservice.GetOutSerialList(where.Compile()).ToPagedList<wms_outserial_v>(int.Parse(page), int.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["ShowPerPage"]));
+            ViewBag.wms_chukuxlm = tempData;
+            return View(tempData);
+        }
         public JsonResult AddXLM()
         {
             int _userid = (int)Session["user_id"];

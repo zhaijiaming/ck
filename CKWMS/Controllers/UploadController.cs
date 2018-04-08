@@ -147,6 +147,9 @@ namespace CKWMS.Controllers
                         case "y"://业务
                             lp = lp +System.Web.Configuration.WebConfigurationManager.AppSettings["UpDirectoryBus"] + "\\";
                             break;
+                        case "s"://生产日期
+                            lp = lp + System.Web.Configuration.WebConfigurationManager.AppSettings["UpDirectoryShengchan"] + "\\";
+                            break;
                         default://其它
                             lp = lp +System.Web.Configuration.WebConfigurationManager.AppSettings["other"]+ "\\";
                             break;

@@ -6,6 +6,8 @@
     ViewBag.Title = "入库操作";
     string _searchcondition = ViewBag.SearchCondition;
 }
+@Html.GetFileUpload("bt_shengchan", "scrq", "s", "sc", 1, 0, new Dictionary<string, string>() { { "scrq", "bt_shengchan" } })
+
 <script type="text/javascript">
     $(document).ready(function () {
         $("tr").bind("click", function () {
@@ -57,8 +59,8 @@
                         alert("操作失败,上架数量不对或是没有完全验收，请联系管理员！");
                     else if(data==-3)
                         alert("操作失败，收货数量与计划入库数量不符，请检查计划入库信息！");
-                    else if(data==-4)
-                        alert("严重错误，收货数量出现错误，马上与管理员联系！");
+                    //else if(data==-4)
+                    //    alert("严重错误，收货数量出现错误，马上与管理员联系！");
                     else
                         location.reload();
                 }
@@ -216,6 +218,48 @@
             }
         });
 
+        $("#pl_scexcel").draggable({ handler: ".panel-heading" });
+        //生产日期导入
+        $("#bt_sc").on("click", function () {
+            $("#pl_scexcel").show();
+        });
+        $("#pl_scexcel_close").on("click", function () {
+            $("#pl_scexcel").hide();
+        });
+        $(".scrq_import").click(function () {
+            var img_url = $("#scrq a").attr('href');
+            if (img_url != null && img_url != "") {
+                alert(img_url);
+                //var scurl = img_url.Substring(img_url.LastIndexOf("/") + 1, img_url.Length - img_url.LastIndexOf("/") - 1);
+                //scurl = "C:/inetpub/wwwroot/ckwms/files/shengchan/" + img_url;
+                //alert(scurl);
+                $.ajax({
+                    async: true,
+                    beforeSend: function () {
+                        ShowWait();
+                    },
+                    complete: function () {
+                        HiddenWait();
+                    },
+                    type: "POST",
+                    url: "/wms_rukudan/SC_import",
+                    data: {
+                        scurl: img_url
+                    },
+                    success: function (data) {
+                        if (data == -1)
+                            alert("-1");
+                        else if (data == -2)
+                            alert("-2");
+                        else if (data == 1)
+                            alert("1");
+                        else {
+                            alert("888888");
+                        }
+                    }
+                });
+            }
+        });   
     });
     function getCount() {
         var p = $("#xlm").val();
@@ -312,6 +356,8 @@
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
             <button type="button" class="btn btn-default " id="bt_over"><i class="icon-ok"></i>完成</button>
             <button type="button" class="btn btn-default " id="bt_print"><i class="icon-print"></i>打印</button>
+            @*<button type="button" class="btn btn-default " id="bt_sc"><i class="icon-print"></i>生产日期</button><span hidden id="scrq"></span>*@
+                 
         </div>
         <div class="col-sm-3">@Html.SelectList_Auto("HuozhuID", "货主", "都有")</div>
     </div>
@@ -396,4 +442,34 @@
             <textarea id="xlm" style="width:480px;height:400px;overflow:auto"></textarea>
         </div>
     </div>
+</div>
+<div id="pl_scexcel" class="panel panel-info" style="display:none;position:fixed;top:200px;left:300px;width:500px;height:300px;overflow:auto;">
+    <div class="panel-heading">
+        <h3 class="panel-title">文件<button id="pl_scexcel_close" class="pull-right">X</button></h3>
+    </div>
+    <div class="panel-body">
+        @*<div class="row">
+            <div class="center">
+                <input type="text" id="pl_code" value="" />
+            </div>
+            <br />
+            <div class="center"><p id="bt_scexcel_ok" class="btn btn-default">确定</p></div>
+            <br />
+            <div class="center"><p id="pl_scexcel_cancel" class="btn btn-default">取消</p></div>
+        </div>*@
+        <label for="bt_shengchan" class="col-sm-3 control-label"><b>生产日期导入</b></label>
+        <input id="bt_shengchan" name="bt_shengchan" readonly placeholder="请上传文件" class="form-control" type="text">
+        <span class="input-group-btn">
+            <button type="button" data-toggle="modal" data-target="#myModalUpload" onclick="btn()" class="btn btn-primary btn-sm">
+                <b>上传</b>
+                <i class="icon-cloud-upload icon-on-right bigger-110"></i>
+            </button>
+            <span hidden id="scrq"></span>
+            <button type="button" class="btn btn-primary btn-sm scrq_import">
+                <b>导入</b>
+                <i class="icon-camera icon-on-right bigger-110"></i>
+            </button>
+        </span>      
+    </div>
+
 </div>

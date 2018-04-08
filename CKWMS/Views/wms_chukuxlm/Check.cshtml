@@ -24,9 +24,6 @@
     function Return() {
         window.open("/wms_chukuxlm/return", "_blank");
     }
-    function Check() {
-        window.open("/wms_chukuxlm/check", "_blank");
-    }
 </script>
 @{
     List<SearchConditionModel> scms = new List<SearchConditionModel>();
@@ -110,12 +107,11 @@
     @Html.Search_Condition((int)Session["user_id"], "出库序列码_条件组合查询", "/wms_chukuxlm/index", "wms_chukuxlm_index", scms)
     <div class="page-header">
         <p>
-            <button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
+            @*<button type="button" class="btn btn-default " id="bt_searchInfo" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>查询</button>
             <button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
             <button type="button" class="btn btn-default " id="bt_export" onclick="ExportFile()"><i class="icon-inbox"></i>导出</button>
-            <button type="button" class="btn btn-default " id="bt_return" onclick="Return()"><i class="icon-inbox"></i>退货单</button>
-            <button type="button" class="btn btn-default " id="bt_check" onclick="Check()"><i class="icon-inbox"></i>查看</button>
+            <button type="button" class="btn btn-default " id="bt_return" onclick="Return()"><i class="icon-inbox"></i>退货单</button>*@
         </p>
     </div>
     <div class="row">
@@ -151,6 +147,6 @@
         </table>
     </div>
     <div class="pager">
-        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Check", new { page }))
     </div>
 </div>

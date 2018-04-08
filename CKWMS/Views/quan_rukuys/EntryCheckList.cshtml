@@ -59,57 +59,74 @@
         });
         $("#bt_fn_delete").click(function () {
             $("#pl_fun").hide();
-            
-            //旧
-            //$.post("/quan_rukuys/checkdelete",
-            //    {
-            //        rk: $("#rkysid").val(),
-            //        ys: $("#ysid").val()
-            //    }, function (data) {
-            //        if (data == -1)
-            //            alert("验收记录删除失败，请重试！");
-            //        if (data == -2)
-            //            alert("入库验收已经完成，不能再删除记录！");
-            //        if (data == 1)
-            //            location.reload();
-            //    });
-
-            var sid = "";
-            $("#mydatatable tr input[type=checkbox]").each(function () {
-                if (this.checked)
-                    sid = sid + "," + $(this).data("ys")
-            });
-            if (sid == "")
-            {
-                alert("尚未选中验收记录");
-                return;
-            }
-            if (!confirm("确定要删除验收记录吗？"))
-                return;
-            $.ajax({
-                async: true,
-                beforeSend: function () {
-                    ShowWait();
-                },
-                complete: function () {
-                    HiddenWait();
-                },
-                type: "POST",
-                url: "/quan_rukuys/checkdelete_new",
-                data: {
+            $.post("/quan_rukuys/checkdelete",
+                {
                     rk: $("#rkysid").val(),
-                    ys: sid
-                },
-                success: function (data) {
+                    ys: $("#ysid").val()
+                }, function (data) {
                     if (data == -1)
                         alert("验收记录删除失败，请重试！");
                     if (data == -2)
                         alert("入库验收已经完成，不能再删除记录！");
                     if (data == 1)
                         location.reload();
-                }
-            });
+                });
         });
+
+        //新，将来(批量验收)用
+        //$("#bt_fn_delete").click(function () {
+        //    $("#pl_fun").hide();
+            
+        //    //旧
+        //    //$.post("/quan_rukuys/checkdelete",
+        //    //    {
+        //    //        rk: $("#rkysid").val(),
+        //    //        ys: $("#ysid").val()
+        //    //    }, function (data) {
+        //    //        if (data == -1)
+        //    //            alert("验收记录删除失败，请重试！");
+        //    //        if (data == -2)
+        //    //            alert("入库验收已经完成，不能再删除记录！");
+        //    //        if (data == 1)
+        //    //            location.reload();
+        //    //    });
+
+        //    var sid = "";
+        //    $("#mydatatable tr input[type=checkbox]").each(function () {
+        //        if (this.checked)
+        //            sid = sid + "," + $(this).data("ys")
+        //    });
+        //    if (sid == "")
+        //    {
+        //        alert("尚未选中验收记录");
+        //        return;
+        //    }
+        //    if (!confirm("确定要删除验收记录吗？"))
+        //        return;
+        //    $.ajax({
+        //        async: true,
+        //        beforeSend: function () {
+        //            ShowWait();
+        //        },
+        //        complete: function () {
+        //            HiddenWait();
+        //        },
+        //        type: "POST",
+        //        url: "/quan_rukuys/checkdelete_new",
+        //        data: {
+        //            rk: $("#rkysid").val(),
+        //            ys: sid
+        //        },
+        //        success: function (data) {
+        //            if (data == -1)
+        //                alert("验收记录删除失败，请重试！");
+        //            if (data == -2)
+        //                alert("入库验收已经完成，不能再删除记录！");
+        //            if (data == 1)
+        //                location.reload();
+        //        }
+        //    });
+        //});
         $("#pl_yanshou_all").draggable();
         $("#bt_fn_all").click(function () {
             $("#pl_yanshou_all").show();
@@ -611,12 +628,12 @@
     </div>
     <div class="panel-body">
         <div class="row">
-            <div class="center"><p id="bt_sel_all" class="btn btn-default">全部选中</p></div>
+            @*<div class="center"><p id="bt_sel_all" class="btn btn-default">全部选中</p></div>
             <br />
             <div class="center"><p id="bt_sel_none" class="btn btn-default">取消全选</p></div>
             <br />
             <div class="center"><p id="bt_fn_all" class="btn btn-default">批量验收</p></div>
-            <br />
+            <br />*@
             <div class="center"><p id="bt_fn_JLprint" class="btn btn-default">验收记录</p></div>
             <br />
             <div class="center"><p id="bt_fn_print" class="btn btn-default">验收报告</p></div>

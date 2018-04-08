@@ -197,6 +197,7 @@ namespace CKWMS
             TranCondition.Add(3, "冷藏");
             TranCondition.Add(4, "冷冻");
             TranCondition.Add(5, "8℃以下");
+            TranCondition.Add(6, "-16℃~8.0℃");
 
             AreaType = new Dictionary<int, string>();
             AreaType.Add(0, "");
@@ -205,6 +206,7 @@ namespace CKWMS
             AreaType.Add(3, "冷藏");
             AreaType.Add(4, "冷冻");
             AreaType.Add(5, "8℃以下");
+            AreaType.Add(6, "-16℃~8.0℃");
 
             AreaFunType = new Dictionary<int, string>();
             AreaFunType.Add(0, "");

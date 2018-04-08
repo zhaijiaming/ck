@@ -11,6 +11,7 @@ using CKWMS.Common;
 using CKWMS.Models;
 using CKWMS.Filters;
 using System.Text;
+using System.IO;
 
 namespace CKWMS.Controllers
 {
@@ -997,7 +998,8 @@ namespace CKWMS.Controllers
                         _rkd.Lianxiren = _rkjh.Lianxiren;
                         _rkd.YewuLX = _rkjh.YewuLX;
                         _rkd.Yunsongdizhi = _rkjh.Yunsongdizhi;
-                        _rkd=ob_wms_rukudanservice.AddEntity(_rkd);
+                        _rkd.Col3 = _rkjh.Col3;
+                        _rkd =ob_wms_rukudanservice.AddEntity(_rkd);
                         if(_rkd!=null)
                         {
                             _rkjh.JihuaZT = 2;
@@ -1516,6 +1518,45 @@ namespace CKWMS.Controllers
             ViewBag.wms_rukudan = tempData;
             return View(tempData);
         }
-
+        public JsonResult SC_import()
+        {
+            var _scurl = Request["scurl"] ?? "";
+            string scurl = _scurl.Substring(_scurl.LastIndexOf("/") + 1, _scurl.Length - _scurl.LastIndexOf("/") - 1);
+            int sss = excel(scurl);
+            return Json(sss);
+        }
+        public int excel(string url)
+        {
+            object missing = System.Reflection.Missing.Value;
+            Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
+            excel.Visible = false; excel.UserControl = true;
+            Microsoft.Office.Interop.Excel.Workbook wb = excel.Workbooks.Open(url, missing, true, missing, missing, missing, missing, missing, missing, true, missing, missing, missing, missing, missing);
+            Microsoft.Office.Interop.Excel.Worksheet ws = (Microsoft.Office.Interop.Excel.Worksheet)wb.Worksheets.get_Item(1);
+            int rowsint = ws.UsedRange.Cells.Rows.Count;
+            if (rowsint == 1)
+            {
+                
+                return -1;
+            }
+            //取得数据范围区域 (不包括标题列) 
+            Microsoft.Office.Interop.Excel.Range rng1 = ws.Cells.get_Range("B2", "B" + rowsint);
+            object[,] arry1 = (object[,])rng1.Value2;   //get range's value
+            try
+            {
+                for (int i = 1; i <= rowsint - 1; i++)
+                {
+                    //dt.Rows.Add(arry1[i, 1] == null ? "" : arry1[i, 1].ToString());
+                    StreamWriter sw = new StreamWriter("C:\\xy\\log.txt", true);
+                    sw.WriteLine(arry1[i, 1].ToString());
+                    sw.Close();
+                }
+            }
+            catch
+            {
+                
+                return -2;
+            }
+            return 1;
+        }
     }
 }
