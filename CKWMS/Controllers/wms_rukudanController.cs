@@ -535,6 +535,7 @@ namespace CKWMS.Controllers
                     {
                         _rkd.RukuZT = 5;
                         _rkd.MakeDate = DateTime.Now;
+                        _rkd.Col3 = DateTime.Now.ToString();
                         ob_wms_rukudanservice.UpdateEntity(_rkd);
                         if(_rkd.JihuaID!=null && _rkd.JihuaID > 0)
                         {
@@ -998,7 +999,7 @@ namespace CKWMS.Controllers
                         _rkd.Lianxiren = _rkjh.Lianxiren;
                         _rkd.YewuLX = _rkjh.YewuLX;
                         _rkd.Yunsongdizhi = _rkjh.Yunsongdizhi;
-                        _rkd.Col3 = _rkjh.Col3;
+                        //_rkd.Col3 = _rkjh.Col3;
                         _rkd =ob_wms_rukudanservice.AddEntity(_rkd);
                         if(_rkd!=null)
                         {

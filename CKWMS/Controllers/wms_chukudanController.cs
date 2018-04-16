@@ -652,6 +652,7 @@ namespace CKWMS.Controllers
                     {
                         _ckd.JihuaZT = 5;
                         _ckd.MakeDate = DateTime.Now;
+                        _ckd.Col3 = DateTime.Now.ToString();
                         var backval = ob_wms_chukudanservice.UpdateEntity(_ckd);
                         if (!backval)
                         {
