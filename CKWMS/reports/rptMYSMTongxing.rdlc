@@ -2516,6 +2516,8 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
+        <Top>0.45889cm</Top>
+        <Left>0cm</Left>
         <Height>2.11666cm</Height>
         <Width>25.9558cm</Width>
         <Style>
@@ -2525,13 +2527,13 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>0.83333in</Height>
+    <Height>1.014in</Height>
     <Style />
   </Body>
   <Width>10.21882in</Width>
   <Page>
     <PageHeader>
-      <Height>4.13744cm</Height>
+      <Height>4.18181cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -2950,6 +2952,88 @@
             <PaddingBottom>2pt</PaddingBottom>
           </Style>
         </Textbox>
+        <Textbox Name="Textbox9">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>项目：</Value>
+                  <Style>
+                    <FontFamily>微软雅黑</FontFamily>
+                    <FontSize>8pt</FontSize>
+                  </Style>
+                </TextRun>
+                <TextRun>
+                  <Value>=First(Fields!Col1.Value, "DataSet2")</Value>
+                  <Style>
+                    <FontFamily>微软雅黑</FontFamily>
+                    <FontSize>8pt</FontSize>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox2</rd:DefaultName>
+          <Top>3.58181cm</Top>
+          <Left>0.94417cm</Left>
+          <Height>0.6cm</Height>
+          <Width>10.11318cm</Width>
+          <ZIndex>10</ZIndex>
+          <Style>
+            <Border />
+            <VerticalAlign>Middle</VerticalAlign>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="Textbox15">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>采购数量：</Value>
+                  <Style>
+                    <FontFamily>微软雅黑</FontFamily>
+                    <FontSize>8pt</FontSize>
+                  </Style>
+                </TextRun>
+                <TextRun>
+                  <Value>=First(Fields!Col2.Value, "DataSet2")</Value>
+                  <Style>
+                    <FontFamily>微软雅黑</FontFamily>
+                    <FontSize>8pt</FontSize>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox2</rd:DefaultName>
+          <Top>3.58181cm</Top>
+          <Left>11.70465cm</Left>
+          <Height>0.6cm</Height>
+          <Width>6.77945cm</Width>
+          <ZIndex>11</ZIndex>
+          <Style>
+            <Border />
+            <VerticalAlign>Middle</VerticalAlign>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
       </ReportItems>
       <Style>
         <Border>
@@ -2992,7 +3076,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox20</rd:DefaultName>
-          <Top>0.77639cm</Top>
+          <Top>1.37639cm</Top>
           <Left>0.94098cm</Left>
           <Height>0.6cm</Height>
           <Width>9.50999cm</Width>
@@ -3025,7 +3109,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox20</rd:DefaultName>
-          <Top>1.55278cm</Top>
+          <Top>2.01139cm</Top>
           <Left>0.94098cm</Left>
           <Height>0.6cm</Height>
           <Width>7.31631cm</Width>
@@ -3059,7 +3143,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox20</rd:DefaultName>
-          <Top>2.32917cm</Top>
+          <Top>2.64667cm</Top>
           <Left>0.94098cm</Left>
           <Height>0.6cm</Height>
           <Width>7.31631cm</Width>
@@ -3100,8 +3184,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox20</rd:DefaultName>
-          <Top>0.77639cm</Top>
-          <Left>18.89451cm</Left>
+          <Top>1.37639cm</Top>
+          <Left>18.89132cm</Left>
           <Height>0.6cm</Height>
           <Width>6.22598cm</Width>
           <ZIndex>3</ZIndex>
@@ -3134,7 +3218,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox20</rd:DefaultName>
-          <Top>1.55278cm</Top>
+          <Top>2.01139cm</Top>
           <Left>18.89451cm</Left>
           <Height>0.6cm</Height>
           <Width>6.22598cm</Width>
@@ -3168,7 +3252,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox20</rd:DefaultName>
-          <Top>2.32917cm</Top>
+          <Top>2.64667cm</Top>
           <Left>18.89451cm</Left>
           <Height>0.6cm</Height>
           <Width>6.22598cm</Width>
@@ -3202,6 +3286,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox20</rd:DefaultName>
+          <Top>0.63528cm</Top>
           <Left>0.94098cm</Left>
           <Height>0.6cm</Height>
           <Width>7.31631cm</Width>
@@ -3514,6 +3599,14 @@
         </Field>
         <Field Name="tx_JianhuoSLs">
           <DataField>tx_JianhuoSLs</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Col1">
+          <DataField>Col1</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Col2">
+          <DataField>Col2</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>

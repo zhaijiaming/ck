@@ -1362,6 +1362,8 @@ namespace CKWMS.reports
                                     drMYSMckd["Lianxiren"] = ckd.Lianxiren == null ? "" : ckd.Lianxiren.Trim();
                                     drMYSMckd["LianxiDH"] = ckd.LianxiDH == null ? "" : ckd.LianxiDH.Trim();
                                     drMYSMckd["Beizhu"] = ckd.Beizhu == null ? "" : ckd.Beizhu.Trim();
+                                    drMYSMckd["Col1"] = ckd.Col1 == null ? "" : ckd.Col1.Trim();
+                                    drMYSMckd["Col2"] = ckd.Col2 == null ? "" : ckd.Col2.Trim();
                                     //表头储运要求
                                     drMYSMckd["ChunyunYQ"] = mysmchucun;
                                     base_weituokehu wtkhdata = ServiceFactory.base_weituokehuservice.GetEntityById(p => p.ID == ckd.HuozhuID && p.IsDelete == false);

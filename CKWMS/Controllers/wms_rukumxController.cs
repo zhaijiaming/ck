@@ -17,6 +17,7 @@ namespace CKWMS.Controllers
     public class wms_rukumxController : Controller
     {
         private Iwms_rukumxService ob_wms_rukumxservice = ServiceFactory.wms_rukumxservice;
+        private Iwms_rukudanService ob_wms_rukudanservice = ServiceFactory.wms_rukudanservice;
         [OutputCache(Duration = 30)]
         public ActionResult Index(string page)
         {
@@ -290,7 +291,10 @@ namespace CKWMS.Controllers
             else
             {
             }
-            
+
+            _rkd.Col2 = _rkd.Col2 == null ? (_bh) : (_rkd.Col2 + "/" + _bh);
+            ob_wms_rukudanservice.UpdateEntity(_rkd);
+
             return Json(_i);
         }
         [HttpPost]
