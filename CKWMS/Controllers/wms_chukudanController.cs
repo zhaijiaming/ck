@@ -1467,6 +1467,229 @@ namespace CKWMS.Controllers
             }
             return Json(1);
         }
+
+        public JsonResult AddBySalesPlan_other()
+        {
+            int _userid = (int)Session["user_id"];
+            var _ckinfo = Request["ck"] ?? "";
+            if (string.IsNullOrEmpty(_ckinfo))
+                return Json(-1);
+
+            var _cks = _ckinfo.Split(',');
+            if (_cks.Count() == 0)
+                return Json(-1);
+            foreach (var ck in _cks)
+            {
+                if (ck.Length > 0)
+                {
+                    cust_chukujihua _ckjh = ServiceFactory.cust_chukujihuaservice.GetEntityById(p => p.ID == int.Parse(ck) && p.IsDelete == false);
+                    if (_ckjh != null)
+                    {
+                        if (_ckjh.ChukudanSL != null)
+                        {
+                            if (_ckjh.ChukudanSL >= 1)
+                                return Json(-3);
+                        }
+                        wms_chukudan _ckdcheck = ob_wms_chukudanservice.GetEntityById(p => p.KehuDH == _ckjh.KehuDH && p.IsDelete == false);
+                        if (_ckdcheck != null)
+                            return Json(-3);
+                        wms_chukudan _ckd = new wms_chukudan();
+                        _ckd.BaifangQY = "";
+                        _ckd.BaoshuiSF = false;
+                        _ckd.ChunyunYQ = "常温";
+                        _ckd.CKID = 1;
+                        _ckd.FuheSF = true;
+                        _ckd.JianguanSF = true;
+                        _ckd.HuozhuID = _ckjh.HuozhuID;
+                        _ckd.Jianhuoren = 0;
+                        _ckd.JiesuanFS = 1;
+                        _ckd.JihuaZT = 1;
+                        _ckd.KDdanhao = "";
+                        _ckd.KefuID = 0;
+                        _ckd.Kuaidi = 1;
+                        _ckd.MakeDate = DateTime.Now;
+                        _ckd.MakeMan = _userid;
+                        _ckd.XinxiLY = 1;
+                        _ckd.YunsongFS = 1;
+                        _ckd.ChukuRQ = DateTime.Parse(DateTime.Now.ToShortDateString());
+
+                        //_ckd.ChukuRQ = _ckjh.ChukuRQ;
+                        _ckd.JihuaID = _ckjh.ID;
+                        _ckd.KehuDH = _ckjh.KehuDH;
+                        _ckd.Beizhu = _ckjh.Beizhu;
+                        _ckd.Fahuodizhi = _ckjh.Fahuodizhi;
+                        _ckd.KehuID = _ckjh.KehuID;
+                        _ckd.KehuMC = _ckjh.KehuMC;
+                        _ckd.LianxiDH = _ckjh.LianxiDH;
+                        _ckd.Lianxiren = _ckjh.Lianxiren;
+                        _ckd.YewuLX = (int)_ckjh.YewuLX;
+                        _ckd.Yunsongdizhi = _ckjh.Yunsongdizhi;
+                        _ckd.Kuaidi = GetExpress(_ckjh.Kuaidi);
+                        _ckd.JiesuanFS = GetCollectway(_ckjh.JiesuanFS);
+                        _ckd.YunsongFS = GetDeliverType(_ckjh.YunsongFS);
+                        _ckd = ob_wms_chukudanservice.AddEntity(_ckd);
+
+                        if (_ckd != null)
+                        {
+                            _ckjh.JihuaZT = 2;
+                            if (_ckjh.ChukudanSL == null)
+                                _ckjh.ChukudanSL = 1;
+                            else
+                                _ckjh.ChukudanSL = _ckjh.ChukudanSL + 1;
+                            ServiceFactory.cust_chukujihuaservice.UpdateEntity(_ckjh);
+
+                            var _ckjhmx = ServiceFactory.cust_chukujihuamxservice.LoadEntities(p => p.JihuaID == _ckjh.ID && p.IsDelete == false).ToList<cust_chukujihuamx>();
+                            foreach (var ckjhmx in _ckjhmx)
+                            {
+                                ////var _ch = ServiceFactory.wms_cunhuoservice.GetInventoryGoodsByCust((int)_ckd.HuozhuID, p => p.ShangpinDM == ckjhmx.ShangpinDM).OrderBy(s => s.ShixiaoRQ).ToList<wms_invgoods_v>();
+                                //var _ch = ServiceFactory.wms_cunhuoservice.GetInventoryGoodsByCustNormal((int)_ckd.HuozhuID, p => p.ShangpinDM == ckjhmx.ShangpinDM).OrderBy(s => s.ShixiaoRQ).ToList<wms_invgoods_v>();
+                                //if (_ch != null)
+                                //{
+                                //    var _fpsl = ckjhmx.JihuaSL;
+                                //    foreach (var ch in _ch)
+                                //    {
+                                //        if (ch.sdsl == null)
+                                //            ch.sdsl = 0;
+                                //        if (_fpsl == 0)
+                                //            break;
+                                //        if (ch.chsl >= ch.sdsl + _fpsl)
+                                //        {
+                                //            wms_chukumx _ckmx = new wms_chukumx();
+                                //            _ckmx.ChukuID = _ckd.ID;
+                                //            _ckmx.Beizhu = ckjhmx.Beizhu;
+                                //            _ckmx.Col1 = string.Format("{0:N2}", ckjhmx.HSDJ);// ckjhmx.HSDJ.ToString();
+                                //            _ckmx.ChukuSL = _fpsl;
+                                //            _ckmx.Col2 = ckjhmx.TBH;
+                                //            _ckmx.Col3 = ckjhmx.Col1;
+                                //            _ckmx.JianhuoSL = 0;
+                                //            _ckmx.Jianhuo = false;
+                                //            _ckmx.MakeDate = DateTime.Now;
+                                //            _ckmx.MakeMan = _userid;
+
+                                //            _ckmx.HuopinZT = ch.CunhuoZT;
+                                //            _ckmx.BaozhuangDW = ch.BaozhuangDW;
+                                //            _ckmx.Chandi = ch.Chandi;
+                                //            _ckmx.Changjia = ch.Changjia;
+                                //            _ckmx.Guige = ch.Guige;
+                                //            _ckmx.Huansuanlv = ch.Huansuanlv;
+                                //            _ckmx.JibenDW = ch.JibenDW;
+                                //            _ckmx.Jifeidun = (_fpsl / ch.chsl) * ch.jfd;
+                                //            _ckmx.Tiji = (_fpsl / ch.chsl) * ch.tj;
+                                //            _ckmx.Zhongliang = (_fpsl / ch.chsl) * ch.zl;
+                                //            _ckmx.Jingzhong = (_fpsl / ch.chsl) * ch.jz;
+                                //            _ckmx.Pihao = ch.Pihao;
+                                //            _ckmx.Pihao1 = ch.Pihao1;
+                                //            _ckmx.ShangpinDM = ch.ShangpinDM;
+                                //            _ckmx.ShangpinID = ch.ShangpinID;
+                                //            _ckmx.ShangpinMC = ch.ShangpinMC;
+                                //            _ckmx.ShengchanRQ = ch.ShengchanRQ;
+                                //            _ckmx.ShixiaoRQ = ch.ShixiaoRQ;
+                                //            _ckmx.Xuliema = ch.Xuliema;
+                                //            _ckmx.Zhucezheng = ch.Zhucezheng;
+                                //            _ckmx = ServiceFactory.wms_chukumxservice.AddEntity(_ckmx);
+                                //            _fpsl = 0;
+                                //            break;
+                                //        }
+                                //        else
+                                //        {
+                                //            if (ch.chsl - ch.sdsl > 0)
+                                //            {
+                                //                wms_chukumx _ckmx = new wms_chukumx();
+                                //                _ckmx.ChukuID = _ckd.ID;
+                                //                _ckmx.Beizhu = ckjhmx.Beizhu;
+                                //                _ckmx.Col1 = ckjhmx.HSDJ.ToString();
+                                //                _ckmx.Col2 = ckjhmx.TBH;
+                                //                _ckmx.Col3 = ckjhmx.Col1;
+                                //                _ckmx.ChukuSL = ch.chsl - ch.sdsl;
+                                //                _ckmx.JianhuoSL = 0;
+                                //                _ckmx.Jianhuo = false;
+                                //                _ckmx.MakeDate = DateTime.Now;
+                                //                _ckmx.MakeMan = _userid;
+
+                                //                _ckmx.HuopinZT = ch.CunhuoZT;
+                                //                _ckmx.BaozhuangDW = ch.BaozhuangDW;
+                                //                _ckmx.Chandi = ch.Chandi;
+                                //                _ckmx.Changjia = ch.Changjia;
+                                //                _ckmx.Guige = ch.Guige;
+                                //                _ckmx.Huansuanlv = ch.Huansuanlv;
+                                //                _ckmx.JibenDW = ch.JibenDW;
+                                //                _ckmx.Jifeidun = (_fpsl / ch.chsl) * ch.jfd;
+                                //                _ckmx.Tiji = (_fpsl / ch.chsl) * ch.tj;
+                                //                _ckmx.Zhongliang = (_fpsl / ch.chsl) * ch.zl;
+                                //                _ckmx.Jingzhong = (_fpsl / ch.chsl) * ch.jz;
+                                //                _ckmx.Pihao = ch.Pihao;
+                                //                _ckmx.Pihao1 = ch.Pihao1;
+                                //                _ckmx.ShangpinDM = ch.ShangpinDM;
+                                //                _ckmx.ShangpinID = ch.ShangpinID;
+                                //                _ckmx.ShangpinMC = ch.ShangpinMC;
+                                //                _ckmx.ShengchanRQ = ch.ShengchanRQ;
+                                //                _ckmx.ShixiaoRQ = ch.ShixiaoRQ;
+                                //                _ckmx.Xuliema = ch.Xuliema;
+                                //                _ckmx.Zhucezheng = ch.Zhucezheng;
+                                //                _ckmx = ServiceFactory.wms_chukumxservice.AddEntity(_ckmx);
+                                //                if (_ckmx != null)
+                                //                    _fpsl = _fpsl - (float)(ch.chsl - ch.sdsl);
+                                //            }
+                                //        }
+                                //    }
+                                //    if (_fpsl > 0)
+                                //    {;
+                                //    }
+                                //}
+                                //else
+                                //{
+                                    wms_chukumx _ckmx = new wms_chukumx();
+                                    _ckmx.ChukuID = _ckd.ID;
+                                    _ckmx.Beizhu = ckjhmx.Beizhu;
+                                    _ckmx.Col1 = string.Format("{0:N2}", ckjhmx.HSDJ); /*ckjhmx.HSDJ.ToString();*/
+                                    _ckmx.Col2 = ckjhmx.TBH;
+                                    _ckmx.Col3 = ckjhmx.Col1;
+                                    _ckmx.ChukuSL = ckjhmx.JihuaSL;
+                                    _ckmx.JianhuoSL = 0;
+                                    _ckmx.Jianhuo = false;
+                                    _ckmx.MakeDate = DateTime.Now;
+                                    _ckmx.MakeMan = _userid;
+
+                                    //_ckmx.HuopinZT = ckjhmx.CunhuoZT;
+                                    _ckmx.HuopinZT = 1;
+                                    _ckmx.BaozhuangDW = ckjhmx.BaozhuangDW;
+                                    _ckmx.Chandi = ckjhmx.Chandi;
+                                    _ckmx.Changjia = ckjhmx.Changjia;
+                                    _ckmx.Guige = ckjhmx.Guige;
+                                    _ckmx.Huansuanlv = ckjhmx.Huansuanlv;
+                                    _ckmx.JibenDW = ckjhmx.JibenDW;
+                                    _ckmx.Jifeidun = 0;
+                                    _ckmx.Tiji = 0;
+                                    _ckmx.Zhongliang = 0;
+                                    _ckmx.Jingzhong = 0;
+                                    _ckmx.Pihao = ckjhmx.Pihao;
+                                    _ckmx.Pihao1 = ckjhmx.Pihao1;
+                                    _ckmx.ShangpinDM = ckjhmx.ShangpinDM;
+                                    _ckmx.ShangpinID = ckjhmx.ShangpinID;
+                                    _ckmx.ShangpinMC = ckjhmx.ShangpinMC;
+                                    _ckmx.ShengchanRQ = ckjhmx.ShengchanRQ;
+                                    _ckmx.ShixiaoRQ = ckjhmx.ShiXiaoRQ;
+                                    _ckmx.Xuliema = ckjhmx.Xuliema;
+                                    _ckmx.Zhucezheng = ckjhmx.Zhucezheng;
+                                    _ckmx = ServiceFactory.wms_chukumxservice.AddEntity(_ckmx);
+                                //}
+                            }
+                            //var _ckmxs = ServiceFactory.wms_chukumxservice.LoadEntities(p => p.ChukuID == _ckd.ID && p.IsDelete == false).ToList();
+                            //var _totalmxsl = _ckmxs.Sum(p => p.ChukuSL);
+                            //var _totaljhsl = _ckjhmx.Sum(p => p.JihuaSL);
+                            //if (_totaljhsl != _totalmxsl)
+                            //{
+                            //    _ckd.JihuaZT = 6;
+                            //    _ckd.Beizhu = _ckd.Beizhu + "；生成出库单时，计划数量与出库数量不一致！";
+                            //    ServiceFactory.wms_chukudanservice.UpdateEntity(_ckd);
+                            //    return Json(-4);
+                            //}
+                        }
+                    }
+                }
+            }
+            return Json(1);
+        }
         public void delch(string str)
         {
             var _strs = str.Split(';');

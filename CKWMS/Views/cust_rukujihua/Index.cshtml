@@ -18,6 +18,9 @@
             }
         });
         $("#bt_newentry").click(function () {
+            if (!confirm("确定要生成入库单吗?")) {
+                return;
+            }
             var _selval = "";
             $("#mydatatable tbody tr input[type=checkbox]").each(function () {
                 if (this.checked) {
@@ -45,6 +48,40 @@
                             window.open("/cust_rukujihua/index", "_parent");
                             //location.reload();
                             //location.href("");
+                    }
+                });
+            }
+        }); $("#bt_newentry_other").click(function () {
+            if (!confirm("确定要生成其他入库单吗?")) {
+                return;
+            }
+            var _selval = "";
+            $("#mydatatable tbody tr input[type=checkbox]").each(function () {
+                if (this.checked) {
+                    _selval = _selval + $(this).val() + ",";
+                }
+            });
+            if (_selval != "") {
+                $.ajax({
+                    async: true,
+                    beforeSend: function () {
+                        ShowWait();
+                    },
+                    complete: function () {
+                        HiddenWait();
+                    },
+                    type: "POST",
+                    url: "/wms_rukudan/addbypurchaseplan_other",
+                    data: {
+                        rk: _selval
+                    },
+                    success: function (data) {
+                        if (data == -1)
+                            alert("操作失败，请联系管理员！");
+                        else
+                            window.open("/cust_rukujihua/index", "_parent");
+                        //location.reload();
+                        //location.href("");
                     }
                 });
             }
@@ -267,6 +304,7 @@
             @*<button type="button" class="btn btn-default " id="bt_deleteInfo" onclick="DelInfo()"><i class="icon-remove"></i>删除</button>*@
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>                    
             <button type="button" class="btn btn-default " id="bt_newentry"><i class="icon-adn"></i>生成入库单</button>
+            <button type="button" class="btn btn-default " id="bt_newentry_other"><i class="icon-adn"></i>其他入库单</button>
         </p>
     </div>
     <div class="row" style="overflow:auto;height:445px;">

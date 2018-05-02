@@ -21,6 +21,9 @@
             }
         });
         $("#bt_newout").click(function () {
+            if (!confirm("确定要生成出库单吗?")) {
+                return;
+            }
             var _selval = "";
             $("#mydatatable tbody tr input[type=checkbox]").each(function () {
                 if (this.checked) {
@@ -57,6 +60,9 @@
             }
         });
         $("#bt_newout_ph").click(function () {
+            if (!confirm("确定要生成出库单吗?")) {
+                return;
+            }
             var _selval = "";
             $("#mydatatable tbody tr input[type=checkbox]").each(function () {
                 if (this.checked) {
@@ -75,6 +81,57 @@
                     },
                     type: "POST",
                     url: "/wms_chukudan/addbysalesplan_ph",
+                    data: {
+                        ck: _selval
+                    },
+                    success: function (data) {
+                        if (data == -1)
+                            alert("操作失败，请联系管理员！");
+                        else if (data == -3) {
+                            alert("已生成了出库单，不能再次生成出库dan！");
+                        }
+                        else if (data == -4)
+                            alert("生成的出库单商品和指令不符，请联系管理员！");
+                        else if (data == -5) {
+                            alert("拣货失败，无指定库存！");
+                            location.reload();
+                        }
+                        else if (data == -6) {
+                            alert("存货出现问题，请联系管理员");
+                            location.reload();
+                        }
+                        else if (data == -7) {
+                            alert("现存量不足，请联系管理员");
+                            location.reload();
+                        }
+                        else
+                            location.reload();
+                    }
+                });
+            }
+        });
+        $("#bt_newout_other").click(function () {
+            if (!confirm("确定要生成其他出库单吗?")) {
+                return;
+            }
+            var _selval = "";
+            $("#mydatatable tbody tr input[type=checkbox]").each(function () {
+                if (this.checked) {
+                    //_selval = _selval + $(this).val() + ",";
+                    _selval = $(this).val() + ",";
+                }
+            });
+            if (_selval != "") {
+                $.ajax({
+                    async: true,
+                    beforeSend: function () {
+                        ShowWait();
+                    },
+                    complete: function () {
+                        HiddenWait();
+                    },
+                    type: "POST",
+                    url: "/wms_chukudan/addbysalesplan_other",
                     data: {
                         ck: _selval
                     },
@@ -336,6 +393,7 @@
             <button type="button" class="btn btn-default " id="bt_refreshInfo" onclick="javascript: location.reload()"><i class="icon-refresh"></i>刷新</button>
             <button type="button" class="btn btn-default " id="bt_newout"><i class="icon-adn"></i>生成出库单</button>
             <button type="button" class="btn btn-default " id="bt_newout_ph"><i class="icon-adn"></i>国润生成出库单</button>
+            <button type="button" class="btn btn-default " id="bt_newout_other"><i class="icon-adn"></i>其他出库单</button>
         </p>
     </div>
     <div class="row" style="overflow:auto;height:445px;">
