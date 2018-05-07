@@ -1046,6 +1046,9 @@
     <Content Include="Views\wms_chukudan\PrintBLJGTongxing.cshtml" />
     <Content Include="Views\wms_chukuxlm\Check.cshtml" />
     <Content Include="Views\wms_chukudan\PrintMYSMTongxing.cshtml" />
+    <Content Include="Views\wms_chukudan\PrintHQTongxing.cshtml" />
+    <Content Include="Views\wms_chukudan\PrintWQTongxing.cshtml" />
+    <Content Include="Views\wms_chukudan\PrintGR_DBTongxing.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -1076,6 +1079,9 @@
     <EmbeddedResource Include="reports\rptJianHuoDan.rdlc" />
     <EmbeddedResource Include="reports\rptBDLTongxing.rdlc" />
     <EmbeddedResource Include="reports\rptBJTongxing.rdlc" />
+    <EmbeddedResource Include="reports\rptHQTongxing.rdlc" />
+    <EmbeddedResource Include="reports\rptGR_DBTongxing.rdlc" />
+    <EmbeddedResource Include="reports\rptWQTongxing.rdlc" />
     <EmbeddedResource Include="reports\rptMYSMTongxing.rdlc" />
     <EmbeddedResource Include="reports\rptMLTongxing.rdlc" />
     <EmbeddedResource Include="reports\rptYGTongxing.rdlc" />

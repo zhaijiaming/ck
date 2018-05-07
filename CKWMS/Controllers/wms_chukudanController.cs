@@ -402,6 +402,18 @@ namespace CKWMS.Controllers
             ViewBag.id = id;
             return View();
         }
+        public ActionResult PrintWQTongxing()
+        {
+            var id = Request["out"] ?? "";
+            ViewBag.id = id;
+            return View();
+        }
+        public ActionResult PrintHQTongxing()
+        {
+            var id = Request["out"] ?? "";
+            ViewBag.id = id;
+            return View();
+        }
         public ActionResult PrintYGTongxing()
         {
             var id = Request["out"] ?? "";
@@ -439,6 +451,12 @@ namespace CKWMS.Controllers
             return View();
         }
         public ActionResult PrintJSWZTongxing()
+        {
+            var id = Request["out"] ?? "";
+            ViewBag.id = id;
+            return View();
+        }
+        public ActionResult PrintGR_DBTongxing()
         {
             var id = Request["out"] ?? "";
             ViewBag.id = id;

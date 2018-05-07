@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "宏确随货同行单";
+    Layout = "~/Views/Shared/EmptyView.cshtml";
+}
+<script type="text/javascript">
+    $(window).load(function () {
+        var tongxingdan = $("#tongxingdan").val();
+        document.getElementById("myReport").src = "../../reports/ReportZY.aspx?pid=HQtongxingdan&out=" + tongxingdan;
+        $("#autoUpdate").show();
+    });
+</script>
+<div id="autoUpdate" style="display:none; overflow-y: auto;background-color:white">
+    <input type="hidden" id="tongxingdan" value="@ViewBag.id" />
+    <table style="height:100%;width:100%">
+        <tr>
+
+            <td></td>
+        </tr>
+        <tr><td class="center"><iframe id="myReport" style="width:1030px;height:750px;"></iframe></td></tr>
+    </table>
+</div>
+
