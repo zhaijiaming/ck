@@ -315,7 +315,7 @@ namespace CKWMS.Controllers
                                 _jh.CKMXID = _ckmx;
                                 _jh.DaijianSL = _pknum;
                                 _jh.JianhuoRQ = DateTime.Now;
-                                _jh.JianhuoSM = _pkmemo;
+                                _jh.JianhuoSM = _pkmemo == "" ? _ck.Beizhu : _pkmemo;
                                 _jh.KCID = _chmx;
                                 _jh.Fuhe = _ch.HegeSF;
                                 _jh.Kuwei = _ch.Kuwei;
